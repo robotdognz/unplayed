@@ -134,7 +134,7 @@ class Player {
     lastXPos = position.x;
   }
 
-  void draw() {
+  void draw(Game g) {
     //draw player
     fill(playerColor);
     noStroke();
@@ -142,21 +142,21 @@ class Player {
     image(player, position.x, position.y, playerW, playerH);
     
     //draw player-off-screen arrows
-    if (position.x+playerW-10 <= leftEdge) {
+    if (position.x+playerW-10 <= g.leftEdge) {
       //left edge
-      triangle(leftEdge+20, position.y+playerH/2, leftEdge+60, position.y+playerH/2-40, leftEdge+60, position.y+playerH/2+40);
+      triangle(g.leftEdge+20, position.y+playerH/2, g.leftEdge+60, position.y+playerH/2-40, g.leftEdge+60, position.y+playerH/2+40);
     }
-    if (position.x+10 >= rightEdge) {
+    if (position.x+10 >= g.rightEdge) {
       //right edge
-      triangle(rightEdge-20, position.y+playerH/2, rightEdge-60, position.y+playerH/2-40, rightEdge-60, position.y+playerH/2+40);
+      triangle(g.rightEdge-20, position.y+playerH/2, g.rightEdge-60, position.y+playerH/2-40, g.rightEdge-60, position.y+playerH/2+40);
     }
-    if (position.y+playerH-10 <= topEdge){
+    if (position.y+playerH-10 <= g.topEdge){
       //top edge
-      triangle(position.x+playerW/2, topEdge+20, position.x+40+playerW/2, topEdge+60, position.x-40+playerW/2, topEdge+60);
+      triangle(position.x+playerW/2, g.topEdge+20, position.x+40+playerW/2, g.topEdge+60, position.x-40+playerW/2, g.topEdge+60);
     }
-    if (position.y+10 >= bottomEdge){
+    if (position.y+10 >= g.bottomEdge){
       //top edge
-      triangle(position.x+playerW/2, bottomEdge-20, position.x+40+playerW/2, bottomEdge-60, position.x-40+playerW/2, bottomEdge-60);
+      triangle(position.x+playerW/2, g.bottomEdge-20, position.x+40+playerW/2, g.bottomEdge-60, position.x-40+playerW/2, g.bottomEdge-60);
     }
     //need to add corner arrows
   }

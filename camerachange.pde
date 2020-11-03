@@ -46,21 +46,21 @@ class CameraChange implements Event{
     return type;
   }
   
-  public void activate(){
+  public void activate(Game g){
     //change center
-    if(newCenter != newCent){
-      newCenter = new PVector(newCent.x,newCent.y);
+    if(g.newCenter != newCent){
+      g.newCenter = new PVector(newCent.x,newCent.y);
     }
     //change scale
-    if(newScale != newScreen){
-      newScreen = newScale;
+    if(newScale != g.newScreen){
+      g.newScreen = newScale;
     }
-    zoomSpeed = cameraZoom;
-    boarderZoomSpeed = edgeZoom;
-    newTopEdge = (int)cameraTopLeft.y;
-    newBottomEdge = (int)cameraBottomRight.y;
-    newLeftEdge = (int)cameraTopLeft.x;
-    newRightEdge = (int)cameraBottomRight.x;
+    g.zoomSpeed = cameraZoom;
+    g.boarderZoomSpeed = edgeZoom;
+    g.newTopEdge = (int)cameraTopLeft.y;
+    g.newBottomEdge = (int)cameraBottomRight.y;
+    g.newLeftEdge = (int)cameraTopLeft.x;
+    g.newRightEdge = (int)cameraBottomRight.x;
   }
   
   public void draw(){

@@ -1,10 +1,10 @@
-
-private Player player;
-private Level level;
-private ArrayList<Platform> platforms;
-private ArrayList<Event> events;
-private boolean eventVis;
 class Game {
+  private Player player;
+  private Level level;
+  private ArrayList<Platform> platforms;
+  private ArrayList<Event> events;
+  private boolean eventVis;
+
   //touch screen stuff
   //private TouchTesting testing = new TouchTesting();
   private ArrayList<PVector> touch = new ArrayList<PVector>();
@@ -12,10 +12,10 @@ class Game {
 
   //variables for camera
   private float screen;
-  float newScreen;
+  public float newScreen;
   private PVector center;
-  PVector newCenter;
-  float zoomSpeed = 0.1; //0.1 is the default
+  public PVector newCenter;
+  public float zoomSpeed = 0.1; //0.1 is the default
 
   //variables for camera tall screen space
   private float subScale = 1; //1 is the default
@@ -23,14 +23,14 @@ class Game {
 
   //variables for black border
   private float topEdge;
-  float newTopEdge;
+  public float newTopEdge;
   private float bottomEdge;
-  float newBottomEdge;
+  public float newBottomEdge;
   private float leftEdge;
-  float newLeftEdge;
+  public float newLeftEdge;
   private float rightEdge;
-  float newRightEdge;
-  float boarderZoomSpeed = 0.1; //0.1 is default
+  public float newRightEdge;
+  public float boarderZoomSpeed = 0.1; //0.1 is default
 
   //vibration
   import android.os.Vibrator;
@@ -86,7 +86,7 @@ class Game {
         e.draw();
       }
     }
-    player.draw();
+    player.draw(this);
 
     //draw black bars
     fill(20, 255); //10, 255
