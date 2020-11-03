@@ -79,7 +79,7 @@ class Player {
     }
   }
 
-  void step(ArrayList<Platform> platforms, ArrayList<Event> events) {
+  void step(ArrayList<Platform> platforms, ArrayList<Event> events, Game g) {
     float previousY = position.y;
     vibration = 0;
     if(velocity.y < terminalVelocity){
@@ -125,7 +125,7 @@ class Player {
       //if colliding with the event
       if (eventTopLeft.y < position.y+playerH+velocity.y && eventBottomRight.y > position.y+velocity.y &&
       eventTopLeft.x < position.x+playerW && eventBottomRight.x > position.x) {
-        e.activate();
+        e.activate(g);
       }
     }
     

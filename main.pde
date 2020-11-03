@@ -75,7 +75,7 @@ class Game {
 
     //update player position
     playerDirection();
-    player.step(platforms, events);
+    player.step(platforms, events, this);
 
     //draw player and environment
     for (Platform p : platforms) {
@@ -209,22 +209,4 @@ class Game {
       player.jump();
     }
   }
-}
-
-//interfaces
-interface Level {
-  public PVector getPlayerStart();
-  public ArrayList<Platform> getPlatforms();
-  public ArrayList<Event> getEvents();
-  public int getStartScale();
-  public PVector getStartCenter();
-  public int getTopBar();
-  public int getBottomBar();
-}
-interface Event {
-  public PVector getTopLeft();
-  public PVector getBottomRight();
-  public String getType();
-  public void activate();
-  public void draw();
 }
