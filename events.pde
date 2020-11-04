@@ -1,3 +1,4 @@
+//------------------CameraChange---------------------
 class CameraChange implements Event{
   private PVector position;
   private int eventW;

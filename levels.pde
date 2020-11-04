@@ -1,3 +1,4 @@
+//------------------Level1---------------------
 class Level1 implements Level {
   private ArrayList<Platform> platforms;
   private ArrayList<Event> events;
@@ -75,6 +76,7 @@ class Level1 implements Level {
   }
 }
 
+//------------------Level2---------------------
 class Level2 implements Level {
   private ArrayList<Platform> platforms;
   private ArrayList<Event> events;

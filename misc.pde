@@ -1,3 +1,4 @@
+//------------------Vibe---------------------
 class Vibe{
   Vibrator vibe;
   
@@ -18,11 +19,8 @@ class Vibe{
   }
 }
 
+//------------------TouchTesting---------------------
 class TouchTesting{
-  TouchTesting(){
-    
-  }
-  
   void draw(){
     //go through the list of touches and draw them
     for(int i = 0; i < touches.length; i++){

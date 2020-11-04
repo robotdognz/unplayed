@@ -1,3 +1,4 @@
+//------------------Pause---------------------
 class Pause implements Widget{
   PVector position;
   float width, height;
@@ -25,13 +26,4 @@ class Pause implements Widget{
       gPaused = !gPaused; //switch pause state
     }
   }
-  
-  //public PVector getTopLeft(){
-  //   return position; 
-  //}
-  
-  //public PVector getBottomRight(){
-  //  return bottomRight;
-  //}
-  
 }

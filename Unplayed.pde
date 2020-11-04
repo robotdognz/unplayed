@@ -118,8 +118,6 @@ interface Event {
 interface Widget {
   public void draw();
   public void click(PVector lastTouch);
-  //public PVector getTopLeft();
-  //public PVector getBottomRight();
 }
 interface Menu {
   public void draw();
