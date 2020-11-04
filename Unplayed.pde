@@ -1,4 +1,9 @@
-//holds the game logic
+import android.os.Vibrator;
+import android.os.VibrationEffect;
+import android.content.Context;
+import android.app.Activity;
+  
+//holds the game class
 Game g;
 
 //touch screen stuff

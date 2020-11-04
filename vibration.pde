@@ -1,8 +1,5 @@
 class Vibe{
-  import android.os.Vibrator;
-  import android.os.VibrationEffect;
-  import android.content.Context;
-  import android.app.Activity;
+
   Vibrator vibe;
   
   public Vibe(){
