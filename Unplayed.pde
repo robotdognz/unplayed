@@ -1,3 +1,4 @@
+//holds the game logic
 Game g;
 
 //touch screen stuff
