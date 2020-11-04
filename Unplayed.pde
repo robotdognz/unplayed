@@ -2,25 +2,35 @@ import android.os.Vibrator;
 import android.os.VibrationEffect;
 import android.content.Context;
 import android.app.Activity;
-  
-//holds the game class
-Game g;
+
+Game g; //holds the game class
+boolean gPaused = false; //is the game class paused
+private ArrayList<Widget> widgets = new ArrayList<Widget>();
 
 //touch screen stuff
 private ArrayList<PVector> touch = new ArrayList<PVector>();
 private PVector lastTouch = new PVector(0, 0);
 
 void setup() {
+  //setup graphics
   fullScreen(OPENGL);
   frameRate(60);
+  
+  //make game and widgets
   g = new Game();
+  Pause p = new Pause();
+  widgets.add(p);
 }
 
 void draw() {
-  g.draw();
+  g.draw(); //draw/step the game
+  for (Widget w : widgets) { //draw the widgets
+      w.draw();
+  }
 }
 
 void touchStarted() {
+  if (!gPaused) {
     //find true last touch
     if (touches.length >= touch.size() && touches.length > 1) {
       for (int i = 0; i < touches.length; i++) {
@@ -44,6 +54,7 @@ void touchStarted() {
       g.player.jump();
     }
   }
+}
 
 //interfaces
 interface Level {
@@ -61,4 +72,9 @@ interface Event {
   public String getType();
   public void activate(Game g);
   public void draw();
+}
+
+interface Widget {
+  public void draw();
+  public void click();
 }
