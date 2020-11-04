@@ -24,18 +24,14 @@ void setup() {
 }
 
 void draw() {
-  if (!gPaused) { //step the game
-    //update player position
-    playerDirection();
-    //g.player.step(g.platforms, g.events, g);
-    //step game
-    g.step();
+  if (!gPaused) { //step the game if it is not paused
+    playerDirection(); //update player left right controls
+    g.step(); //step game
   }
   g.draw(); //draw the game
   for (Widget w : widgets) { //draw the widgets
     w.draw();
   }
-
   //draw touch events
   testing.draw();
   //reset stored touch events
@@ -66,11 +62,11 @@ void touchStarted() {
 
   //check for clicking on widgets
   for (Widget w : widgets) {
-    PVector topLeft = w.getTopLeft();
-    PVector bottomRight = w.getBottomRight();
-    if (lastTouch.x >= topLeft.x && lastTouch.y >= topLeft.y && lastTouch.x <= bottomRight.x && lastTouch.y <= bottomRight.y) {
-      w.click();
-    }
+    //PVector topLeft = w.getTopLeft();
+    //PVector bottomRight = w.getBottomRight();
+    //if (lastTouch.x >= topLeft.x && lastTouch.y >= topLeft.y && lastTouch.x <= bottomRight.x && lastTouch.y <= bottomRight.y) {
+      w.click(lastTouch);
+    //}
   }
 
   //player jumping
@@ -119,10 +115,13 @@ interface Event {
   public void activate(Game g);
   public void draw();
 }
-
 interface Widget {
   public void draw();
-  public void click();
-  public PVector getTopLeft();
-  public PVector getBottomRight();
+  public void click(PVector lastTouch);
+  //public PVector getTopLeft();
+  //public PVector getBottomRight();
+}
+interface Menu {
+  public void draw();
+  public void click(PVector lastTouch);
 }

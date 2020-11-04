@@ -20,17 +20,18 @@ class Pause implements Widget{
     ellipse(position.x, position.y, width, height);
   }
   
-  public void click(){
-    gPaused = !gPaused; //switch pause state
-    //println("click - " + millis());
+  public void click(PVector lastTouch){
+    if (lastTouch.x >= position.x && lastTouch.y >= position.y && lastTouch.x <= bottomRight.x && lastTouch.y <= bottomRight.y) {
+      gPaused = !gPaused; //switch pause state
+    }
   }
   
-  public PVector getTopLeft(){
-     return position; 
-  }
+  //public PVector getTopLeft(){
+  //   return position; 
+  //}
   
-  public PVector getBottomRight(){
-    return bottomRight;
-  }
+  //public PVector getBottomRight(){
+  //  return bottomRight;
+  //}
   
 }
