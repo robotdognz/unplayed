@@ -11,7 +11,11 @@ class Pause implements Widget{
   }
   
   public void draw(){
-    fill(100);
+    if(!gPaused){
+      fill(100);
+    }else{
+      fill(60);
+    }
     ellipse(position.x, position.y, width, height);
   }
   
