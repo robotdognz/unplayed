@@ -14,13 +14,14 @@ class Pause implements Widget{
     if(!gPaused){
       fill(100);
     }else{
-      fill(60);
+      fill(150,0,0);
     }
     ellipse(position.x, position.y, width, height);
   }
   
   public void click(){
     gPaused = !gPaused; //switch pause state
+    println("click - " + millis());
   }
   
   public PVector getTopLeft(){
