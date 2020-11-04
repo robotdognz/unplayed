@@ -54,6 +54,15 @@ void touchStarted() {
       g.player.jump();
     }
   }
+  
+  //check for clicking on widgets
+  for(Widget w : widgets){
+    PVector topLeft = w.getTopLeft();
+    PVector bottomRight = w.getBottomRight();
+    if(lastTouch.x >= topLeft.x && lastTouch.y >= topLeft.y && lastTouch.x <= bottomRight.x && lastTouch.y <= bottomRight.y){
+      w.click();
+    }
+  }
 }
 
 //interfaces
@@ -77,4 +86,6 @@ interface Event {
 interface Widget {
   public void draw();
   public void click();
+  public PVector getTopLeft();
+  public PVector getBottomRight();
 }
