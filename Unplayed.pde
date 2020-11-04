@@ -30,7 +30,7 @@ void draw() {
   for (Widget w : widgets) { //draw the widgets
     w.draw();
   }
-  
+
   //draw touch events
   testing.draw();
   //reset stored touch events
@@ -70,7 +70,7 @@ void touchStarted() {
     }
   }
 
-  //game movement
+  //player movement
   if (!gPaused && !widgetClicked) {
     //jump if the last true touch was in the middle of the screen
     if (lastTouch.x > width/4 && lastTouch.x < (width/4)*3) {
@@ -78,8 +78,31 @@ void touchStarted() {
     }
 
     //do left/right movement
+    //update player position
+    playerDirection();
+    g.player.step(g.platforms, g.events, g);
   }
 }
+
+void playerDirection() {
+    int left = 0;
+    int right = 0;
+    for (TouchEvent.Pointer t : touches) {
+      if (t.x < width/4) {
+        left++;
+      }
+      if (t.x > (width/4)*3) {
+        right++;
+      }
+    }
+    if (left > right) {
+      g.player.left();
+    } else if (left < right) {
+      g.player.right();
+    } else {
+      g.player.still();
+    }
+  }
 
 //interfaces
 interface Level {

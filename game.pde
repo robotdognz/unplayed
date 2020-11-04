@@ -1,8 +1,8 @@
 class Game {
   public Player player;
   private Level level;
-  private ArrayList<Platform> platforms;
-  private ArrayList<Event> events;
+  public ArrayList<Platform> platforms;
+  public ArrayList<Event> events;
   private boolean eventVis;
 
   //variables for camera
@@ -62,9 +62,9 @@ class Game {
 
     background(140); //100
 
-    //update player position
-    playerDirection();
-    player.step(platforms, events, this);
+    ////update player position
+    //playerDirection();
+    //player.step(platforms, events, this);
 
     //draw player and environment
     for (Platform p : platforms) {
@@ -139,26 +139,6 @@ class Game {
     }
     if (bottomEdge != newBottomEdge) {
       bottomEdge = lerp(bottomEdge, newBottomEdge, exp(-boarderZoomSpeed));
-    }
-  }
-
-  void playerDirection() {
-    int left = 0;
-    int right = 0;
-    for (TouchEvent.Pointer t : touches) {
-      if (t.x < width/4) {
-        left++;
-      }
-      if (t.x > (width/4)*3) {
-        right++;
-      }
-    }
-    if (left > right) {
-      player.left();
-    } else if (left < right) {
-      player.right();
-    } else {
-      player.still();
     }
   }
 
