@@ -6,6 +6,7 @@ import android.app.Activity;
 Game g; //holds the game class
 boolean gPaused = false; //is the game class paused
 private ArrayList<Widget> widgets = new ArrayList<Widget>();
+private ArrayList<Menu> menus = new ArrayList<Menu>();
 
 //touch screen stuff
 private TouchTesting testing = new TouchTesting();
@@ -60,21 +61,23 @@ void touchStarted() {
     lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
   }
 
-  //check for clicking on widgets
-  for (Widget w : widgets) {
-    //PVector topLeft = w.getTopLeft();
-    //PVector bottomRight = w.getBottomRight();
-    //if (lastTouch.x >= topLeft.x && lastTouch.y >= topLeft.y && lastTouch.x <= bottomRight.x && lastTouch.y <= bottomRight.y) {
-      w.click(lastTouch);
-    //}
-  }
-
   //player jumping
   if (!gPaused) {
     //jump if the last true touch was in the middle of the screen
     if (lastTouch.x > width/4 && lastTouch.x < (width/4)*3) {
       g.player.jump();
     }
+  }
+}
+
+void touchEnded(){
+  //check for clicking on widgets
+  for (Widget w : widgets) {
+    w.click(lastTouch);
+  }
+  //check for clicking on menus
+  for (Menu m : menus) {
+    m.click(lastTouch);
   }
 }
 
