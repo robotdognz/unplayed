@@ -15,14 +15,15 @@ class Player {
   
   //vibration
   //private KetaiVibrate vibe; //vibration object
-  private Vibrator vibe;
+  //private Vibrator vibe;
+  private Vibe vibe;
   private int vibration = 0; //y vibration amount(milliseconds)
   private boolean wall = false; //colliding with wall
   private float vibeVelocity = 0; //extra vibration added on after max velocity
   private float lastXPos; //x position one step back
   private float lastLastXPos; //x position two steps back
   
-  Player(int x, int y, Vibrator v) {
+  Player(int x, int y, Vibe v) {
     vibe = v;
     lastXPos = x-playerW/2;
     lastLastXPos = lastXPos;
@@ -111,11 +112,13 @@ class Player {
     
     //ground and roof vibration
     if(position.y != previousY && vibration > 0){
-      vibe.vibrate(VibrationEffect.createOneShot(vibration, 255));
+      //vibe.vibrate(VibrationEffect.createOneShot(vibration, 255));
+      vibe.vibrate(vibration);
     }
     //wall vibration
     if(wall && lastLastXPos != position.x){
-      vibe.vibrate(VibrationEffect.createOneShot(1, 160));
+      //vibe.vibrate(VibrationEffect.createOneShot(1, 160));
+      vibe.vibrate(1, 160);
     }
     
     //event collision

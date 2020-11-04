@@ -32,16 +32,18 @@ class Game {
   public float boarderZoomSpeed = 0.1; //0.1 is default
 
   //vibration
-  import android.os.Vibrator;
-  import android.os.VibrationEffect;
-  import android.content.Context;
-  import android.app.Activity;
-  Vibrator vibe;
+  //import android.os.Vibrator;
+  //import android.os.VibrationEffect;
+  //import android.content.Context;
+  //import android.app.Activity;
+  //Vibrator vibe;
 
   Game() {
     level = new Level1();
     eventVis = true;
-    vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE); 
+    
+    //vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE); 
+    Vibe vibe = new Vibe();
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, vibe);
     screen = level.getStartScale();
