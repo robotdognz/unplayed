@@ -26,6 +26,9 @@ void setup() {
 void draw() {
   if (!gPaused) { //draw/step the game
     g.draw();
+    //update player position
+    playerDirection();
+    g.player.step(g.platforms, g.events, g);
   }
   for (Widget w : widgets) { //draw the widgets
     w.draw();
@@ -60,27 +63,25 @@ void touchStarted() {
   }
 
   //check for clicking on widgets
-  boolean widgetClicked = false; //was a widget clicked this step?
+  //boolean widgetClicked = false; //was a widget clicked this step?
   for (Widget w : widgets) {
     PVector topLeft = w.getTopLeft();
     PVector bottomRight = w.getBottomRight();
     if (lastTouch.x >= topLeft.x && lastTouch.y >= topLeft.y && lastTouch.x <= bottomRight.x && lastTouch.y <= bottomRight.y) {
       w.click();
-      widgetClicked = true;
+      //widgetClicked = true;
     }
   }
 
   //player movement
-  if (!gPaused && !widgetClicked) {
+  if (!gPaused) {
     //jump if the last true touch was in the middle of the screen
     if (lastTouch.x > width/4 && lastTouch.x < (width/4)*3) {
       g.player.jump();
     }
 
     //do left/right movement
-    //update player position
-    playerDirection();
-    g.player.step(g.platforms, g.events, g);
+    
   }
 }
 
