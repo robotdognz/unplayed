@@ -5,11 +5,6 @@ class Game {
   private ArrayList<Event> events;
   private boolean eventVis;
 
-  //touch screen stuff
-  //private ArrayList<PVector> touch = new ArrayList<PVector>();
-  //private PVector lastTouch = new PVector(0, 0);
-  private TouchTesting testing = new TouchTesting();
-
   //variables for camera
   private float screen;
   public float newScreen;
@@ -107,9 +102,6 @@ class Game {
     //text(frameRate, 115, 250); //125, 240
     //text(touch.toString(), 115, 300);
     //text(lastTouch.toString(), 320, 350);
-
-    //draw touch events
-    testing.draw();
 
     //reset stored touch events
     touch.clear();

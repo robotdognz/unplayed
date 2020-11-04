@@ -8,6 +8,7 @@ boolean gPaused = false; //is the game class paused
 private ArrayList<Widget> widgets = new ArrayList<Widget>();
 
 //touch screen stuff
+private TouchTesting testing = new TouchTesting();
 private ArrayList<PVector> touch = new ArrayList<PVector>();
 private PVector lastTouch = new PVector(0, 0);
 
@@ -15,7 +16,7 @@ void setup() {
   //setup graphics
   fullScreen(OPENGL);
   frameRate(60);
-  
+
   //make game and widgets
   g = new Game();
   Pause p = new Pause();
@@ -23,12 +24,14 @@ void setup() {
 }
 
 void draw() {
-  if(!gPaused){ //draw/step the game
+  if (!gPaused) { //draw/step the game
     g.draw();
   }
   for (Widget w : widgets) { //draw the widgets
-      w.draw();
+    w.draw();
   }
+  //draw touch events
+  testing.draw();
 }
 
 void touchStarted() {
@@ -51,32 +54,31 @@ void touchStarted() {
       lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
     }
   }
-  
+
   //check for clicking on widgets
   boolean widgetClicked = false; //was a widget clicked this step?
   //rough fix, hopefully it can be cleaned up later
-  if(touches.length == 1){
+  if (touches.length == 1) {
     lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
   }
-  for(Widget w : widgets){
+  for (Widget w : widgets) {
     PVector topLeft = w.getTopLeft();
     PVector bottomRight = w.getBottomRight();
-    if(lastTouch.x >= topLeft.x && lastTouch.y >= topLeft.y && lastTouch.x <= bottomRight.x && lastTouch.y <= bottomRight.y){
+    if (lastTouch.x >= topLeft.x && lastTouch.y >= topLeft.y && lastTouch.x <= bottomRight.x && lastTouch.y <= bottomRight.y) {
       w.click();
       widgetClicked = true;
       //println(lastTouch);
     }
   }
-  
+
   //game movement
   if (!gPaused && !widgetClicked) {
     //jump if the last true touch was in the middle of the screen
     if (lastTouch.x > width/4 && lastTouch.x < (width/4)*3) {
       g.player.jump();
     }
-    
+
     //do left/right movement
-    
   }
 }
 
