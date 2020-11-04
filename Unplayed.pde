@@ -30,44 +30,43 @@ void draw() {
   for (Widget w : widgets) { //draw the widgets
     w.draw();
   }
+  
   //draw touch events
   testing.draw();
+  //reset stored touch events
+  touch.clear();
+  for (TouchEvent.Pointer t : touches) {
+    touch.add(new PVector(t.x, t.y));
+  }
 }
 
 void touchStarted() {
-  if (!gPaused) {
-    //find true last touch
-    if (touches.length >= touch.size() && touches.length > 1) {
-      for (int i = 0; i < touches.length; i++) {
-        boolean match = false;
-        for (PVector t : touch) {
-          float currentDiff = sqrt(sq(t.x-touches[i].x)+sq(t.x-touches[i].x));
-          if (currentDiff < 10) {
-            match = true;
-          }
-        }
-        if (!match) { //no match for current touch, so it's new
-          lastTouch = new PVector(touches[i].x, touches[i].y);
+  //find true last touch
+  if (touches.length >= touch.size() && touches.length > 1) {
+    for (int i = 0; i < touches.length; i++) {
+      boolean match = false;
+      for (PVector t : touch) {
+        float currentDiff = sqrt(sq(t.x-touches[i].x)+sq(t.x-touches[i].x));
+        if (currentDiff < 10) {
+          match = true;
         }
       }
-    } else if (touches.length == 1) {
-      lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
+      if (!match) { //no match for current touch, so it's new
+        lastTouch = new PVector(touches[i].x, touches[i].y);
+      }
     }
+  } else if (touches.length == 1) {
+    lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
   }
 
   //check for clicking on widgets
   boolean widgetClicked = false; //was a widget clicked this step?
-  //rough fix, hopefully it can be cleaned up later
-  if (touches.length == 1) {
-    lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
-  }
   for (Widget w : widgets) {
     PVector topLeft = w.getTopLeft();
     PVector bottomRight = w.getBottomRight();
     if (lastTouch.x >= topLeft.x && lastTouch.y >= topLeft.y && lastTouch.x <= bottomRight.x && lastTouch.y <= bottomRight.y) {
       w.click();
       widgetClicked = true;
-      //println(lastTouch);
     }
   }
 

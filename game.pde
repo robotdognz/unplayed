@@ -102,12 +102,6 @@ class Game {
     //text(frameRate, 115, 250); //125, 240
     //text(touch.toString(), 115, 300);
     //text(lastTouch.toString(), 320, 350);
-
-    //reset stored touch events
-    touch.clear();
-    for (TouchEvent.Pointer t : touches) {
-      touch.add(new PVector(t.x, t.y));
-    }
   }
 
   void screenMovement() {
