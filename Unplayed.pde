@@ -40,6 +40,9 @@ void draw() {
   for (TouchEvent.Pointer t : touches) {
     touch.add(new PVector(t.x, t.y));
   }
+  if (touches.length > 0) {
+    lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
+  }
 }
 
 void touchStarted() {
@@ -64,13 +67,13 @@ void touchStarted() {
   //player jumping
   if (!gPaused) {
     //jump if the last true touch was in the middle of the screen
-    if (lastTouch.x > width/4 && lastTouch.x < (width/4)*3) {
+    if (lastTouch.y >= height/2 && lastTouch.x > width/4 && lastTouch.x < (width/4)*3) {
       g.player.jump();
     }
   }
 }
 
-void touchEnded(){
+void touchEnded() {
   //check for clicking on widgets
   for (Widget w : widgets) {
     w.click(lastTouch);
@@ -82,9 +85,10 @@ void touchEnded(){
 }
 
 void playerDirection() {
-    int left = 0;
-    int right = 0;
-    for (TouchEvent.Pointer t : touches) {
+  int left = 0;
+  int right = 0;
+  for (TouchEvent.Pointer t : touches) {
+    if (t.y >= height/2) {
       if (t.x < width/4) {
         left++;
       }
@@ -92,14 +96,15 @@ void playerDirection() {
         right++;
       }
     }
-    if (left > right) {
-      g.player.left();
-    } else if (left < right) {
-      g.player.right();
-    } else {
-      g.player.still();
-    }
   }
+  if (left > right) {
+    g.player.left();
+  } else if (left < right) {
+    g.player.right();
+  } else {
+    g.player.still();
+  }
+}
 
 //interfaces
 interface Level {
