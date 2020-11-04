@@ -27,7 +27,9 @@ void draw() {
   if (!gPaused) { //step the game
     //update player position
     playerDirection();
-    g.player.step(g.platforms, g.events, g);
+    //g.player.step(g.platforms, g.events, g);
+    //step game
+    g.step();
   }
   g.draw(); //draw the game
   for (Widget w : widgets) { //draw the widgets

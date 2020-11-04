@@ -62,10 +62,6 @@ class Game {
 
     background(140); //100
 
-    ////update player position
-    //playerDirection();
-    //player.step(platforms, events, this);
-
     //draw player and environment
     for (Platform p : platforms) {
       p.draw();
@@ -91,17 +87,21 @@ class Game {
     rect(rightEdge, center.y-barSize, barSize+center.x, center.y+barSize);
     rectMode(CORNER);
 
-    screenMovement();
     popMatrix(); //start working at screen scale
 
     //draw inspirational quote for the level (could look cool if colour changes depending on what it's in front of)
     //needs a dynamic system for line breaks and screen scaling font size
-    fill(color(255));
-    textSize(50);
+    //fill(color(255));
+    //textSize(50);
     //text("\"Our proposed approach (to be confirmed) to thinking \nabout organising to plan for this work is in two prongs:\"", 120, 100); //135, 90
     //text(frameRate, 115, 250); //125, 240
     //text(touch.toString(), 115, 300);
     //text(lastTouch.toString(), 320, 350);
+  }
+  
+  void step(){
+    player.step(platforms, events, this);
+    screenMovement();
   }
 
   void screenMovement() {
