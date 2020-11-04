@@ -8,6 +8,7 @@ class Game {
   //touch screen stuff
   //private ArrayList<PVector> touch = new ArrayList<PVector>();
   //private PVector lastTouch = new PVector(0, 0);
+  private TouchTesting testing = new TouchTesting();
 
   //variables for camera
   private float screen;
@@ -31,18 +32,10 @@ class Game {
   public float newRightEdge;
   public float boarderZoomSpeed = 0.1; //0.1 is default
 
-  //vibration
-  //import android.os.Vibrator;
-  //import android.os.VibrationEffect;
-  //import android.content.Context;
-  //import android.app.Activity;
-  //Vibrator vibe;
-
   Game() {
     level = new Level1();
     eventVis = true;
     
-    //vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE); 
     Vibe vibe = new Vibe();
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, vibe);
@@ -116,7 +109,7 @@ class Game {
     //text(lastTouch.toString(), 320, 350);
 
     //draw touch events
-    //testing.draw();
+    testing.draw();
 
     //reset stored touch events
     touch.clear();
@@ -183,31 +176,4 @@ class Game {
     }
   }
 
-  //void touchStarted() {
-  //  //default last touch is end of touch array
-  //  //lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
-
-  //  //find true last touch
-  //  if (touches.length >= touch.size() && touches.length > 1) {
-  //    for (int i = 0; i < touches.length; i++) {
-  //      boolean match = false;
-  //      for (PVector t : touch) {
-  //        float currentDiff = sqrt(sq(t.x-touches[i].x)+sq(t.x-touches[i].x));
-  //        if (currentDiff < 10) {
-  //          match = true;
-  //        }
-  //      }
-  //      if (!match) { //no match for current touch, so it's new
-  //        lastTouch = new PVector(touches[i].x, touches[i].y);
-  //      }
-  //    }
-  //  } else if (touches.length == 1) {
-  //    lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
-  //  }
-
-  //  //jump if the last true touch was in the middle of the screen
-  //  if (lastTouch.x > width/4 && lastTouch.x < (width/4)*3) {
-  //    player.jump();
-  //  }
-  //}
 }

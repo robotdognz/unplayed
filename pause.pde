@@ -16,12 +16,13 @@ class Pause implements Widget{
     }else{
       fill(150,0,0);
     }
+    ellipseMode(CORNER);
     ellipse(position.x, position.y, width, height);
   }
   
   public void click(){
     gPaused = !gPaused; //switch pause state
-    println("click - " + millis());
+    //println("click - " + millis());
   }
   
   public PVector getTopLeft(){

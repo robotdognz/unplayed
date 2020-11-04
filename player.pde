@@ -14,8 +14,6 @@ class Player {
   private PImage player;
   
   //vibration
-  //private KetaiVibrate vibe; //vibration object
-  //private Vibrator vibe;
   private Vibe vibe;
   private int vibration = 0; //y vibration amount(milliseconds)
   private boolean wall = false; //colliding with wall
