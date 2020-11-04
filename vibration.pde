@@ -1,0 +1,7 @@
+class Vibe{
+  
+  public Vibe(){
+    
+  }
+  
+}

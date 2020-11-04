@@ -16,9 +16,6 @@ void draw() {
 }
 
 void touchStarted() {
-    //default last touch is end of touch array
-    //lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
-
     //find true last touch
     if (touches.length >= touch.size() && touches.length > 1) {
       for (int i = 0; i < touches.length; i++) {
