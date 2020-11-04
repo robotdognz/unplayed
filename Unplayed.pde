@@ -23,7 +23,9 @@ void setup() {
 }
 
 void draw() {
-  g.draw(); //draw/step the game
+  if(!gPaused){ //draw/step the game
+    g.draw();
+  }
   for (Widget w : widgets) { //draw the widgets
       w.draw();
   }
@@ -49,19 +51,32 @@ void touchStarted() {
       lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
     }
 
-    //jump if the last true touch was in the middle of the screen
-    if (lastTouch.x > width/4 && lastTouch.x < (width/4)*3) {
-      g.player.jump();
-    }
+    ////jump if the last true touch was in the middle of the screen
+    //if (lastTouch.x > width/4 && lastTouch.x < (width/4)*3) {
+    //  g.player.jump();
+    //}
   }
   
   //check for clicking on widgets
+  boolean widgetClicked = false; //was a widget clicked this step?
   for(Widget w : widgets){
     PVector topLeft = w.getTopLeft();
     PVector bottomRight = w.getBottomRight();
     if(lastTouch.x >= topLeft.x && lastTouch.y >= topLeft.y && lastTouch.x <= bottomRight.x && lastTouch.y <= bottomRight.y){
       w.click();
+      widgetClicked = true;
     }
+  }
+  
+  //game movement
+  if (!gPaused && !widgetClicked) {
+    //jump if the last true touch was in the middle of the screen
+    if (lastTouch.x > width/4 && lastTouch.x < (width/4)*3) {
+      g.player.jump();
+    }
+    
+    //do left/right movement
+    
   }
 }
 
