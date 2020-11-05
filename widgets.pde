@@ -14,34 +14,34 @@ class Pause implements Widget{
   
   public void draw(){
     if(!gPaused){
-      fill(100);
+      fill(0,150,0);
     }else{
       fill(150,0,0);
     }
     ellipseMode(CORNER);
-    ellipse(position.x, position.y, width, height);
+    
     if(hover){
       ellipse(position.x-width, position.y-height, width*2, height*2);
+    }else{
+      ellipse(position.x, position.y, width, height);
     }
   }
   
   public void hover(PVector lastTouch){
-    if (lastTouch.x >= position.x && lastTouch.y >= position.y && lastTouch.x <= bottomRight.x && lastTouch.y <= bottomRight.y) {
+    if (lastTouch.x >= position.x-width && 
+    lastTouch.y >= position.y-height && 
+    lastTouch.x <= bottomRight.x+width && 
+    lastTouch.y <= bottomRight.y+height) {
       hover = true;
     }else{
       hover = false;
     }
   }
   
-  //public void click(PVector lastTouch){
-  //  if (lastTouch.x >= position.x && lastTouch.y >= position.y && lastTouch.x <= bottomRight.x && lastTouch.y <= bottomRight.y) {
-  //    gPaused = !gPaused; //switch pause state
-  //  }
-  //}
-  
   public void click(){
     if(hover){
       gPaused = !gPaused; //switch pause state
+      hover = false;
     }
   }
 }

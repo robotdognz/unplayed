@@ -32,7 +32,7 @@ void draw() {
   g.draw(); //draw the game
   
   //draw touch events
-  testing.draw();
+  //testing.draw();
   //reset stored touch events
   touch.clear();
   for (TouchEvent.Pointer t : touches) {
@@ -40,6 +40,8 @@ void draw() {
   }
   if (touches.length > 0) {
     lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
+  }else{
+    lastTouch = new PVector(0,0);
   }
   
   for (Widget w : widgets) { //draw the widgets
@@ -134,7 +136,8 @@ interface Widget {
 }
 interface Menu {
   public void draw();
-  public void click(PVector lastTouch);
+  public void hover(PVector lastTouch);
+  public void click();
   
   class Button{
     PVector position;

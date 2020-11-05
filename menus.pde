@@ -5,7 +5,11 @@ class PauseMenu implements Menu{
     
   }
   
-  public void click(PVector lastTouch){
+  public void hover(PVector lastTouch){
+    
+  }
+  
+  public void click(){
     
   }
   
