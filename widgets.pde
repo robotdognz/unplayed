@@ -6,7 +6,7 @@ class Pause implements Widget{
   boolean hover = false;
   
   public Pause(){
-    position = new PVector(150,150);
+    position = new PVector(120,120);
     pWidth = 60;
     pHeight = 60;
     bottomRight = new PVector(position.x+pWidth, position.y+pHeight);
@@ -14,17 +14,17 @@ class Pause implements Widget{
   
   public void draw(){
     if(!gPaused){
-      fill(0,150,0);
+      fill(150);
     }else{
-      fill(150,0,0);
+      fill(150,0,0,0);
     }
     ellipseMode(CENTER);
     
-    if(hover){
-      ellipse(position.x, position.y, pWidth*3, pHeight*3);
-    }else{
+   //if(hover){
+   // ellipse(position.x, position.y, pWidth*3, pHeight*3);
+   //}else{
       ellipse(position.x, position.y, pWidth, pHeight);
-    }
+   //}
     ellipseMode(CORNER);
   }
   

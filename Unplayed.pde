@@ -85,7 +85,6 @@ void touchStarted() {
 void touchEnded() {
   //check for clicking on widgets
   for (Widget w : widgets) {
-    //w.click(lastTouch);
     w.click();
   }
   //check for clicking on menus
