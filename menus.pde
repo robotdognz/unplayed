@@ -1,4 +1,6 @@
 //------------------PauseMenu---------------------
+//abstract class might work better for menus
+//might be able to bake in drawing code
 class PauseMenu implements Menu {
   ArrayList<Button> buttons = new ArrayList<Button>();
   String resume = "Resume";
@@ -28,7 +30,7 @@ class PauseMenu implements Menu {
     for (Button b : buttons) {
       if (b.click().equals(resume)) { //resume the game if resume button pressed
         gPaused = false;
-        menus.remove(this); //this is problematic
+        menu = null; //this is problematic
       }
     }
   }
@@ -36,26 +38,34 @@ class PauseMenu implements Menu {
 
 //------------------Button---------------------
 class Button {
-  private PVector position;
+  private PVector bPosition;
   private float bWidth, bHeight;
   PVector bottomRight;
   private String text;
   private boolean hover = false;
 
   public Button(PVector position, float bWidth, float bHeight, String text) {
-    this. position = position;
+    this.bPosition = position;
     this.bWidth = bWidth;
     this.bHeight = bHeight;
     this.text = text;
-    bottomRight = new PVector(position.x+bWidth, position.y+bHeight);
+    bottomRight = new PVector(bPosition.x+bWidth, bPosition.y+bHeight);
   }
 
   public void draw() {
     //can use textWidth() to figure out how wide text is and center it
-    fill(200);
-    rect(position.x, position.y, bWidth, bHeight);
+    if(!hover){
+      fill(200);
+    }else{
+      fill(100);
+    }
+    rectMode(CENTER);
+    rect(width/2, bPosition.y, bWidth, bHeight);
+    rectMode(CORNER);
     fill(50);
-    text(text, position.x, position.y);
+    textSize(60);
+    textAlign(CENTER, CENTER);
+    text(text, width/2, bPosition.y);
   }
 
   public String click() {
@@ -67,10 +77,10 @@ class Button {
   }
 
   public void hover(PVector lastTouch) {
-    if (lastTouch.x >= position.x-bWidth && 
-      lastTouch.y >= position.y-bHeight && 
-      lastTouch.x <= bottomRight.x+bWidth && 
-      lastTouch.y <= bottomRight.y+bHeight) {
+    if (lastTouch.x >= bPosition.x && 
+      lastTouch.y >= bPosition.y && 
+      lastTouch.x <= bottomRight.x && 
+      lastTouch.y <= bottomRight.y) {
       hover = true;
     } else {
       hover = false;
