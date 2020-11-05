@@ -6,7 +6,7 @@ class Pause implements Widget{
   boolean hover = false;
   
   public Pause(){
-    position = new PVector(100,100);
+    position = new PVector(150,150);
     pWidth = 60;
     pHeight = 60;
     bottomRight = new PVector(position.x+pWidth, position.y+pHeight);
@@ -18,20 +18,21 @@ class Pause implements Widget{
     }else{
       fill(150,0,0);
     }
-    ellipseMode(CORNER);
+    ellipseMode(CENTER);
     
     if(hover){
-      ellipse(position.x-pWidth, position.y-pHeight, pWidth*3, pHeight*3);
+      ellipse(position.x, position.y, pWidth*3, pHeight*3);
     }else{
       ellipse(position.x, position.y, pWidth, pHeight);
     }
+    ellipseMode(CORNER);
   }
   
   public void hover(PVector lastTouch){
-    if (lastTouch.x >= position.x-pWidth && 
-    lastTouch.y >= position.y-pHeight && 
-    lastTouch.x <= bottomRight.x+pWidth && 
-    lastTouch.y <= bottomRight.y+pHeight) {
+    if (lastTouch.x >= position.x-pWidth*1.5 && 
+    lastTouch.y >= position.y-pHeight*1.5 && 
+    lastTouch.x <= position.x+pWidth*1.5 && 
+    lastTouch.y <= position.y+pHeight*1.5) {
       hover = true;
     }else{
       hover = false;
