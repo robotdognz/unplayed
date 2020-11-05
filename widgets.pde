@@ -21,7 +21,7 @@ class Pause implements Widget{
     ellipseMode(CORNER);
     
     if(hover){
-      ellipse(position.x-width, position.y-height, width*2, height*2);
+      ellipse(position.x-width, position.y-height, width*3, height*3);
     }else{
       ellipse(position.x, position.y, width, height);
     }

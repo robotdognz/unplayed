@@ -86,7 +86,7 @@ void touchEnded() {
   }
   //check for clicking on menus
   for (Menu m : menus) {
-    m.click(lastTouch);
+    m.click();
   }
 }
 
