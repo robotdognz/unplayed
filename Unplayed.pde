@@ -9,7 +9,7 @@ private ArrayList<Widget> widgets = new ArrayList<Widget>();
 private ArrayList<Menu> menus = new ArrayList<Menu>();
 
 //touch screen stuff
-private TouchTesting testing = new TouchTesting();
+//private TouchTesting testing = new TouchTesting();
 private ArrayList<PVector> touch = new ArrayList<PVector>();
 private PVector lastTouch = new PVector(0, 0);
 

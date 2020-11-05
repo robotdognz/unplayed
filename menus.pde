@@ -4,13 +4,15 @@ class PauseMenu implements Menu {
   String resume = "Resume";
 
   public PauseMenu() {
-    Button r = new Button(new PVector(500, 500), 200, 100, resume);
+    Button r = new Button(new PVector(500, 1000), 500, 200, resume);
     buttons.add(r);
   }
 
   public void draw() {
     fill(150);
-    rect(200, 200, 800, 800);
+    rectMode(CORNERS);
+    rect(200, 800, width-200, height-800);
+    rectMode(CORNER);
     for (Button b : buttons) {
       b.draw();
     }
@@ -26,33 +28,32 @@ class PauseMenu implements Menu {
     for (Button b : buttons) {
       if (b.click().equals(resume)) { //resume the game if resume button pressed
         gPaused = false;
-        menus.clear();
+        menus.remove(this); //this is problematic
       }
     }
   }
 }
 
-//probably should use a button object that can be passed 
-//can use textWidth() to figure out how wide text is and center it
-
+//------------------Button---------------------
 class Button {
   private PVector position;
-  private float width, height;
+  private float bWidth, bHeight;
   PVector bottomRight;
   private String text;
   private boolean hover = false;
 
-  public Button(PVector position, float width, float height, String text) {
+  public Button(PVector position, float bWidth, float bHeight, String text) {
     this. position = position;
-    this.width = width;
-    this.height = height;
+    this.bWidth = bWidth;
+    this.bHeight = bHeight;
     this.text = text;
-    bottomRight = new PVector(position.x+width, position.y+height);
+    bottomRight = new PVector(position.x+bWidth, position.y+bHeight);
   }
 
   public void draw() {
+    //can use textWidth() to figure out how wide text is and center it
     fill(200);
-    rect(position.x, position.y, width, height);
+    rect(position.x, position.y, bWidth, bHeight);
     fill(50);
     text(text, position.x, position.y);
   }
@@ -66,10 +67,10 @@ class Button {
   }
 
   public void hover(PVector lastTouch) {
-    if (lastTouch.x >= position.x-width && 
-      lastTouch.y >= position.y-height && 
-      lastTouch.x <= bottomRight.x+width && 
-      lastTouch.y <= bottomRight.y+height) {
+    if (lastTouch.x >= position.x-bWidth && 
+      lastTouch.y >= position.y-bHeight && 
+      lastTouch.x <= bottomRight.x+bWidth && 
+      lastTouch.y <= bottomRight.y+bHeight) {
       hover = true;
     } else {
       hover = false;

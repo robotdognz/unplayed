@@ -1,15 +1,15 @@
 //------------------Pause---------------------
 class Pause implements Widget{
   PVector position;
-  float width, height;
+  float pWidth, pHeight;
   PVector bottomRight;
   boolean hover = false;
   
   public Pause(){
     position = new PVector(100,100);
-    width = 60;
-    height = 60;
-    bottomRight = new PVector(position.x+width, position.y+height);
+    pWidth = 60;
+    pHeight = 60;
+    bottomRight = new PVector(position.x+pWidth, position.y+pHeight);
   }
   
   public void draw(){
@@ -21,17 +21,17 @@ class Pause implements Widget{
     ellipseMode(CORNER);
     
     if(hover){
-      ellipse(position.x-width, position.y-height, width*3, height*3);
+      ellipse(position.x-pWidth, position.y-pHeight, pWidth*3, pHeight*3);
     }else{
-      ellipse(position.x, position.y, width, height);
+      ellipse(position.x, position.y, pWidth, pHeight);
     }
   }
   
   public void hover(PVector lastTouch){
-    if (lastTouch.x >= position.x-width && 
-    lastTouch.y >= position.y-height && 
-    lastTouch.x <= bottomRight.x+width && 
-    lastTouch.y <= bottomRight.y+height) {
+    if (lastTouch.x >= position.x-pWidth && 
+    lastTouch.y >= position.y-pHeight && 
+    lastTouch.x <= bottomRight.x+pWidth && 
+    lastTouch.y <= bottomRight.y+pHeight) {
       hover = true;
     }else{
       hover = false;
@@ -42,7 +42,6 @@ class Pause implements Widget{
     if(hover){
       gPaused = true; //switch pause state
       menus.add(new PauseMenu());
-      //hover = false;
     }
   }
 }
