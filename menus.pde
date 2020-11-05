@@ -1,15 +1,7 @@
 //------------------PauseMenu---------------------
-//abstract class might work better for menus
-//might be able to bake in drawing code
-class PauseMenu implements Menu {
+abstract class AbstractMenu {
   ArrayList<Button> buttons = new ArrayList<Button>();
-  String resume = "Resume";
-
-  public PauseMenu() {
-    Button r = new Button(new PVector(width/2, 1000), 500, 200, resume);
-    buttons.add(r);
-  }
-
+  
   public void draw() {
     fill(150);
     rectMode(CORNERS);
@@ -19,22 +11,73 @@ class PauseMenu implements Menu {
       b.draw();
     }
   }
-
+  
   public void hover(PVector lastTouch) {
     for (Button b : buttons) {
       b.hover(lastTouch);
     }
   }
+  
+  public void click() {
+    
+  }
+}
 
+class PauseMenu extends AbstractMenu{
+  String resume = "Resume";
+  
+  public PauseMenu() {
+    Button r = new Button(new PVector(width/2, 1000), 500, 200, resume);
+    buttons.add(r);
+  }
+  
   public void click() {
     for (Button b : buttons) {
       if (b.click().equals(resume)) { //resume the game if resume button pressed
         gPaused = false;
-        menu = null; //this is problematic
+        menu = null;
       }
     }
   }
 }
+
+
+//abstract class might work better for menus
+//might be able to bake in drawing code
+//class PauseMenu implements Menu {
+//  ArrayList<Button> buttons = new ArrayList<Button>();
+//  String resume = "Resume";
+
+//  public PauseMenu() {
+//    Button r = new Button(new PVector(width/2, 1000), 500, 200, resume);
+//    buttons.add(r);
+//  }
+
+//  public void draw() {
+//    fill(150);
+//    rectMode(CORNERS);
+//    rect(200, 800, width-200, height-800);
+//    rectMode(CORNER);
+//    for (Button b : buttons) {
+//      b.draw();
+//    }
+//  }
+
+//  public void hover(PVector lastTouch) {
+//    for (Button b : buttons) {
+//      b.hover(lastTouch);
+//    }
+//  }
+
+//  public void click() {
+//    for (Button b : buttons) {
+//      if (b.click().equals(resume)) { //resume the game if resume button pressed
+//        gPaused = false;
+//        menu = null; //this is problematic
+//      }
+//    }
+//  }
+//}
 
 //------------------Button---------------------
 class Button {

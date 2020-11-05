@@ -6,7 +6,7 @@ import android.app.Activity;
 Game g; //holds the game class
 boolean gPaused = false; //is the game class paused
 private ArrayList<Widget> widgets = new ArrayList<Widget>();
-private Menu menu;
+private AbstractMenu menu;
 
 //touch screen stuff
 //private TouchTesting testing = new TouchTesting();
@@ -137,8 +137,8 @@ interface Widget {
   public void hover(PVector lastTouch);
   public void click();
 }
-interface Menu {
-  public void draw();
-  public void hover(PVector lastTouch);
-  public void click();
-}
+//interface Menu {
+//  public void draw();
+//  public void hover(PVector lastTouch);
+//  public void click();
+//}
