@@ -1,21 +1,17 @@
 //------------------AbstractMenu---------------------
 abstract class Menu {
+  float menuTopY = 0;
   float menuCenterX = 0;
   float menuWidth = 0;
   float buttonHeight = 0;
   float buttonDistance = 0;
   ArrayList<Button> buttons = new ArrayList<Button>();
   
-  
   public void draw() {
     fill(150);
-    //rectMode(CORNERS);
     float menuHeight = buttonDistance+(buttonHeight+buttonDistance)*buttons.size();
-    rect(menuCenterX+menuWidth/2, 800, menuWidth, menuHeight);
-    //rectMode(CORNER);
-    //for (Button b : buttons) {
-    //  b.draw();
-    //}
+    rect(menuCenterX-menuWidth/2, menuTopY, menuWidth, menuHeight);
+    //draw the buttons
     for(int i = 0; i < buttons.size(); i++){
       float y = 800 +buttonDistance+(buttonHeight+buttonDistance)*i+buttonHeight/2;
       buttons.get(i).draw(y);
@@ -28,25 +24,27 @@ abstract class Menu {
     }
   }
   
-  public void click() {
-    
-  }
+  public void click() {}
 }
 
 //------------------PauseMenu---------------------
 class PauseMenu extends Menu{
   String resume = "Resume";
-  String test = "Test";
+  String sCamera = "Standard Camera";
+  String eCamera = "Editor Camera";
   
   public PauseMenu() {
+    menuTopY = 800;
     menuCenterX = width/2;
-    menuWidth = width-400;
+    menuWidth = 660;
     buttonHeight = 200;
-    buttonDistance = 20;
+    buttonDistance = 80;
     Button r = new Button(new PVector(width/2, 1000), 500, buttonHeight, resume);
     buttons.add(r);
-    Button t = new Button(new PVector(width/2, 1000), 500, buttonHeight, test);
-    buttons.add(t);
+    Button s = new Button(new PVector(width/2, 1000), 500, buttonHeight, sCamera);
+    buttons.add(s);
+    Button e = new Button(new PVector(width/2, 1000), 500, buttonHeight, eCamera);
+    buttons.add(e);
   }
   
   public void click() {
@@ -59,10 +57,10 @@ class PauseMenu extends Menu{
   }
 }
 
-
 //------------------Button---------------------
 class Button {
   private PVector bCenter;
+  private float yCenter = 0;
   private float bWidth, bHeight;
   private String text;
   private boolean hover = false;
@@ -76,18 +74,19 @@ class Button {
 
   public void draw(float y) {
     //can use textWidth() to figure out how wide text is and center it
+    yCenter = y;
     if(!hover){
       fill(200);
     }else{
       fill(100);
     }
     rectMode(CENTER);
-    rect(bCenter.x, y, bWidth, bHeight);
+    rect(bCenter.x, yCenter, bWidth, bHeight);
     rectMode(CORNER);
     fill(50);
     textSize(60);
     textAlign(CENTER, CENTER);
-    text(text, bCenter.x, bCenter.y);
+    text(text, bCenter.x, yCenter);
     //text(text, bCenter.x-bWidth/2, bCenter.y-bHeight/2, bCenter.x+bWidth/2, bCenter.y+bHeight/2);
   }
 
@@ -101,9 +100,9 @@ class Button {
 
   public void hover(PVector lastTouch) {
     if (lastTouch.x >= bCenter.x-bWidth/2 && 
-      lastTouch.y >= bCenter.y-bHeight/2 && 
+      lastTouch.y >= yCenter-bHeight/2 && 
       lastTouch.x <= bCenter.x+bWidth/2 && 
-      lastTouch.y <= bCenter.y+bHeight/2) {
+      lastTouch.y <= yCenter+bHeight/2) {
       hover = true;
     } else {
       hover = false;

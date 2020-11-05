@@ -56,7 +56,8 @@ void draw() {
 
 void touchStarted() {
   //find true last touch
-  if (touches.length >= touch.size() && touches.length > 1) {
+  if (touches.length >= touch.size() && 
+  touches.length > 1) {
     for (int i = 0; i < touches.length; i++) {
       boolean match = false;
       for (PVector t : touch) {
@@ -76,7 +77,9 @@ void touchStarted() {
   //player jumping
   if (!gPaused) {
     //jump if the last true touch was in the middle of the screen
-    if (lastTouch.y >= height/2 && lastTouch.x > width/4 && lastTouch.x < (width/4)*3) {
+    if (lastTouch.y >= height/3 && 
+    lastTouch.x > width/4 && 
+    lastTouch.x < (width/4)*3) {
       g.player.jump();
     }
   }
@@ -87,7 +90,7 @@ void touchEnded() {
   for (Widget w : widgets) {
     w.click();
   }
-  //check for clicking on menus
+  //check for clicking on menu
   if (menu != null) {
     menu.click();
   }
@@ -97,7 +100,7 @@ void playerDirection() {
   int left = 0;
   int right = 0;
   for (TouchEvent.Pointer t : touches) {
-    if (t.y >=  height/2) {
+    if (t.y >=  height/3) {
       if (t.x < width/4) {
         left++;
       }
@@ -131,9 +134,4 @@ interface Event {
   public String getType();
   public void activate(Game g);
   public void draw();
-}
-interface Widget {
-  public void draw();
-  public void hover(PVector lastTouch);
-  public void click();
 }

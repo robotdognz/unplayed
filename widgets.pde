@@ -1,26 +1,8 @@
-//------------------Pause---------------------
-class Pause implements Widget{
-  Menu widgetMenu = new PauseMenu();
+//------------------AbstractWidget---------------------
+abstract class Widget{
   PVector position;
   float pWidth, pHeight;
-  PVector bottomRight;
   boolean hover = false;
-  
-  public Pause(){
-    position = new PVector(120,120);
-    pWidth = 60;
-    pHeight = 60;
-    bottomRight = new PVector(position.x+pWidth, position.y+pHeight);
-  }
-  
-  public void draw(){
-    if(!gPaused){ //if not paused, draw the widget
-      fill(150);
-      ellipseMode(CENTER);
-      ellipse(position.x, position.y, pWidth, pHeight);
-      ellipseMode(CORNER);
-    }
-  }
   
   public void hover(PVector lastTouch){
     if (lastTouch.x >= position.x-pWidth*1.5 && 
@@ -33,10 +15,32 @@ class Pause implements Widget{
     }
   }
   
+  public void draw(){}
+  public void click(){}
+}
+
+//------------------Pause---------------------
+class Pause extends Widget{
+  
+  public Pause(){
+    position = new PVector(120,120);
+    pWidth = 60;
+    pHeight = 60;
+  }
+  
+  public void draw(){
+    if(!gPaused){ //if not paused, draw the widget
+      fill(150);
+      ellipseMode(CENTER);
+      ellipse(position.x, position.y, pWidth, pHeight);
+      ellipseMode(CORNER);
+    }
+  }
+  
   public void click(){
     if(hover){
       gPaused = true; //switch pause state
-      menu = widgetMenu;
+      menu = new PauseMenu();
     }
   }
 }
