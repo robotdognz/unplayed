@@ -30,7 +30,7 @@ void draw() {
     g.step(); //step game
   }
   g.draw(); //draw the game
-  
+
   //draw touch events
   //testing.draw();
   //reset stored touch events
@@ -40,13 +40,17 @@ void draw() {
   }
   if (touches.length > 0) {
     lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
-  }else{
-    lastTouch = new PVector(0,0);
+  } else {
+    lastTouch = new PVector(0, 0);
   }
-  
+
   for (Widget w : widgets) { //draw the widgets
     w.draw();
     w.hover(lastTouch);
+  }
+  for (Menu m : menus) { //draw the menus
+    m.draw();
+    m.hover(lastTouch);
   }
 }
 
@@ -138,22 +142,4 @@ interface Menu {
   public void draw();
   public void hover(PVector lastTouch);
   public void click();
-  
-  class Button{
-    PVector position;
-    float width, height;
-    String text;
-    
-    public Button(PVector position, float width, float height, String text){
-      this. position = position;
-      this.width = width;
-      this.height = height;
-      this.text = text;
-    }
-    
-    public void draw(){
-      
-    }
-    
-  }
 }

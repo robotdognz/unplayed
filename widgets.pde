@@ -40,8 +40,9 @@ class Pause implements Widget{
   
   public void click(){
     if(hover){
-      gPaused = !gPaused; //switch pause state
-      hover = false;
+      gPaused = true; //switch pause state
+      menus.add(new PauseMenu());
+      //hover = false;
     }
   }
 }
