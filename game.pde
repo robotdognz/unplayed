@@ -6,8 +6,8 @@ class Game {
   private boolean eventVis;
 
   //variables for camera
-  private float screen;
-  public float newScreen;
+  private float scale;
+  public float newScale;
   private PVector center;
   public PVector newCenter;
   public float zoomSpeed = 0.1; //0.1 is the default
@@ -34,8 +34,8 @@ class Game {
     Vibe vibe = new Vibe();
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, vibe);
-    screen = level.getStartScale();
-    newScreen = level.getStartScale();
+    scale = level.getStartScale();
+    newScale = level.getStartScale();
     center = level.getStartCenter();
     newCenter = new PVector(center.x, center.y);
 
@@ -43,9 +43,9 @@ class Game {
     newTopEdge = topEdge;
     bottomEdge = level.getBottomBar();
     newBottomEdge = bottomEdge;
-    leftEdge = center.x-newScreen/2;
+    leftEdge = center.x-newScale/2;
     newLeftEdge = leftEdge;
-    rightEdge = center.x+newScreen/2;
+    rightEdge = center.x+newScale/2;
     newRightEdge = rightEdge;
 
     platforms = level.getPlatforms();
@@ -56,7 +56,7 @@ class Game {
   void draw() {
     pushMatrix(); //start working at game scale
     translate(width/2, height/2); //set x=0 and y=0 to the middle of the screen
-    scale((float)width/(float)screen); //width/screen fits the level scale to the screen
+    scale((float)width/(float)scale); //width/screen fits the level scale to the screen
     scale(subScale); //apply offset for tall screen spaces
     translate(-center.x, -center.y); //moves the view around the level
 
@@ -99,7 +99,7 @@ class Game {
     //tall screen space scaling
     //uses the new... versions of edge variables so that
     //scaling happens immediately
-    if (screen != newScreen || topEdge != newTopEdge || bottomEdge != newBottomEdge) {
+    if (scale != newScale || topEdge != newTopEdge || bottomEdge != newBottomEdge) {
       //if there might be a difference in tall screen scale
       if ((newBottomEdge-newTopEdge)/(newRightEdge-newLeftEdge) > (float)height/(float)width) {
         newSubScale = ((float)height/((float)width/(float)(newRightEdge-newLeftEdge)))/(newBottomEdge-newTopEdge);
@@ -111,8 +111,8 @@ class Game {
       subScale = lerp(subScale, newSubScale, exp(-zoomSpeed));
     }
     //main scale
-    if (screen != newScreen) {
-      screen = lerp(screen, newScreen, exp(-zoomSpeed));
+    if (scale != newScale) {
+      scale = lerp(scale, newScale, exp(-zoomSpeed));
     }
     //translate
     if (center != newCenter) {

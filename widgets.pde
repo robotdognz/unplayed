@@ -1,8 +1,8 @@
 //------------------AbstractWidget---------------------
 abstract class Widget{
-  PVector position;
-  float pWidth, pHeight;
-  boolean hover = false;
+  protected PVector position;
+  protected float pWidth, pHeight;
+  protected boolean hover = false;
   
   public void hover(PVector lastTouch){
     if (lastTouch.x >= position.x-pWidth*1.5 && 

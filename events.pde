@@ -53,8 +53,8 @@ class CameraChange implements Event{
       g.newCenter = new PVector(newCent.x,newCent.y);
     }
     //change scale
-    if(newScale != g.newScreen){
-      g.newScreen = newScale;
+    if(newScale != g.newScale){
+      g.newScale = newScale;
     }
     g.zoomSpeed = cameraZoom;
     g.boarderZoomSpeed = edgeZoom;
