@@ -4,7 +4,7 @@ import android.content.Context;
 import android.app.Activity;
 
 Game g; //holds the game class
-Camera c;
+Camera c; //holds the camera
 boolean gPaused = false; //is the game class paused
 private ArrayList<Widget> widgets = new ArrayList<Widget>();
 private Menu menu;
@@ -13,6 +13,9 @@ private Menu menu;
 //private TouchTesting testing = new TouchTesting();
 private ArrayList<PVector> touch = new ArrayList<PVector>();
 private PVector lastTouch = new PVector(0, 0);
+
+//camera movement
+private PVector dragStart = new PVector(0, 0);
 
 void setup() {
   //setup graphics
@@ -75,6 +78,11 @@ void touchStarted() {
   } else if (touches.length == 1) {
     lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
   }
+  
+  //move camera
+  if(gPaused  && menu == null){ //if the game is paused and there is no active menu
+    dragStart = new PVector(lastTouch.x, lastTouch.y);
+  }
 
   //player jumping
   if (!gPaused) {
@@ -95,6 +103,12 @@ void touchEnded() {
   //check for clicking on menu
   if (menu != null) {
     menu.click();
+  }
+  
+  //move camera
+  if(gPaused  && menu == null && dragStart.x != 0 && dragStart.y != 0){ //if the game is paused and there is no active menu
+    PVector diff = dragStart.sub(lastTouch);
+    println(diff);
   }
 }
 
