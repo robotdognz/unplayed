@@ -4,6 +4,7 @@ import android.content.Context;
 import android.app.Activity;
 
 Game g; //holds the game class
+Camera c;
 boolean gPaused = false; //is the game class paused
 private ArrayList<Widget> widgets = new ArrayList<Widget>();
 private Menu menu;
@@ -19,7 +20,8 @@ void setup() {
   frameRate(60);
 
   //make game and widgets
-  g = new Game();
+  c = new GameCamera();
+  g = new Game(c);
   Pause p = new Pause();
   widgets.add(p);
 }

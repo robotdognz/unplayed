@@ -14,7 +14,6 @@ abstract class Menu {
   
   public void draw() {
     fill(150);
-    //float menuHeight = buttonDistance+(buttonHeight+buttonDistance)*buttons.size();
     rect(menuCenterX-menuWidth/2, menuTopY, menuWidth, menuHeight);
     //draw the buttons
     for(int i = 0; i < buttons.size(); i++){
@@ -57,6 +56,12 @@ class PauseMenu extends Menu{
     for (Button b : buttons) {
       if (b.click().equals(resume)) { //resume the game if resume button pressed
         gPaused = false; //unpause
+        menu = null; //remove pause menu
+      }else if(b.click().equals(sCamera)){
+        c = new GameCamera();
+        menu = null; //remove pause menu
+      }else if(b.click().equals(eCamera)){
+        c = new FreeCamera();
         menu = null; //remove pause menu
       }
     }

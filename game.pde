@@ -5,6 +5,8 @@ class Game {
   public ArrayList<Event> events;
   private boolean eventVis;
 
+  Camera camera;
+
   //variables for camera
   private float scale;
   public float newScale;
@@ -27,13 +29,16 @@ class Game {
   public float newRightEdge;
   public float boarderZoomSpeed = 0.1; //0.1 is default
 
-  Game() {
+  Game(Camera c) {
+    camera = c;
     level = new Level1();
     eventVis = true;
-    
+
     Vibe vibe = new Vibe();
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, vibe);
+
+    //camera
     scale = level.getStartScale();
     newScale = level.getStartScale();
     center = level.getStartCenter();
@@ -56,13 +61,14 @@ class Game {
   void draw() {
     pushMatrix(); //start working at game scale
     translate(width/2, height/2); //set x=0 and y=0 to the middle of the screen
+
+    //camera
     scale((float)width/(float)scale); //width/screen fits the level scale to the screen
     scale(subScale); //apply offset for tall screen spaces
     translate(-center.x, -center.y); //moves the view around the level
 
-    background(140); //100
-
     //draw player and environment
+    background(140);
     for (Platform p : platforms) {
       p.draw();
     }
@@ -74,25 +80,29 @@ class Game {
     player.draw(this);
 
     //draw black bars
-    fill(20, 255); //10, 255
-    int barSize = 1000000;
-    rectMode(CORNERS);
-    //top bar
-    rect(-barSize+center.x, center.y-barSize, barSize+center.x, topEdge);
-    //bottom bar
-    rect(-barSize+center.x, bottomEdge, barSize+center.x, center.y+barSize);
-    //left bar
-    rect(-barSize+center.x, center.y-barSize, leftEdge, center.y+barSize);
-    //right bar
-    rect(rightEdge, center.y-barSize, barSize+center.x, center.y+barSize);
-    rectMode(CORNER);
+    if (camera.getGame()) {
+      fill(20, 255); //10, 255
+      int barSize = 1000000;
+      rectMode(CORNERS);
+      //top bar
+      rect(-barSize+center.x, center.y-barSize, barSize+center.x, topEdge);
+      //bottom bar
+      rect(-barSize+center.x, bottomEdge, barSize+center.x, center.y+barSize);
+      //left bar
+      rect(-barSize+center.x, center.y-barSize, leftEdge, center.y+barSize);
+      //right bar
+      rect(rightEdge, center.y-barSize, barSize+center.x, center.y+barSize);
+      rectMode(CORNER);
+    }
 
     popMatrix(); //start working at screen scale
   }
-  
-  void step(){
+
+  void step() {
     player.step(platforms, events, this);
-    screenMovement();
+    if (camera.getGame()) {
+      screenMovement();
+    }
   }
 
   void screenMovement() {
@@ -132,5 +142,4 @@ class Game {
       bottomEdge = lerp(bottomEdge, newBottomEdge, exp(-boarderZoomSpeed));
     }
   }
-
 }
