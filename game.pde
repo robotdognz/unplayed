@@ -8,9 +8,9 @@ class Game {
   Camera camera;
 
   //variables for camera
-  private float scale;
+  //private float scale;
   public float newScale;
-  private PVector center;
+  //private PVector center;
   public PVector newCenter;
   public float zoomSpeed = 0.1; //0.1 is the default
 
@@ -39,18 +39,18 @@ class Game {
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, vibe);
 
     //camera
-    scale = level.getStartScale();
+    camera.setScale(level.getStartScale());
     newScale = level.getStartScale();
-    center = level.getStartCenter();
-    newCenter = new PVector(center.x, center.y);
+    camera.setCenter(level.getStartCenter());
+    newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 
     topEdge = level.getTopBar();
     newTopEdge = topEdge;
     bottomEdge = level.getBottomBar();
     newBottomEdge = bottomEdge;
-    leftEdge = center.x-newScale/2;
+    leftEdge = camera.getCenter().x-newScale/2;
     newLeftEdge = leftEdge;
-    rightEdge = center.x+newScale/2;
+    rightEdge = camera.getCenter().x+newScale/2;
     newRightEdge = rightEdge;
 
     platforms = level.getPlatforms();
@@ -63,9 +63,9 @@ class Game {
     translate(width/2, height/2); //set x=0 and y=0 to the middle of the screen
 
     //camera
-    scale((float)width/(float)scale); //width/screen fits the level scale to the screen
+    scale((float)width/(float)camera.getScale()); //width/screen fits the level scale to the screen
     scale(subScale); //apply offset for tall screen spaces
-    translate(-center.x, -center.y); //moves the view around the level
+    translate(-camera.getCenter().x, -camera.getCenter().y); //moves the view around the level
 
     //draw player and environment
     background(140);
@@ -85,13 +85,13 @@ class Game {
       int barSize = 1000000;
       rectMode(CORNERS);
       //top bar
-      rect(-barSize+center.x, center.y-barSize, barSize+center.x, topEdge);
+      rect(-barSize+camera.getCenter().x, camera.getCenter().y-barSize, barSize+camera.getCenter().x, topEdge);
       //bottom bar
-      rect(-barSize+center.x, bottomEdge, barSize+center.x, center.y+barSize);
+      rect(-barSize+camera.getCenter().x, bottomEdge, barSize+camera.getCenter().x, camera.getCenter().y+barSize);
       //left bar
-      rect(-barSize+center.x, center.y-barSize, leftEdge, center.y+barSize);
+      rect(-barSize+camera.getCenter().x, camera.getCenter().y-barSize, leftEdge, camera.getCenter().y+barSize);
       //right bar
-      rect(rightEdge, center.y-barSize, barSize+center.x, center.y+barSize);
+      rect(rightEdge, camera.getCenter().y-barSize, barSize+camera.getCenter().x, camera.getCenter().y+barSize);
       rectMode(CORNER);
     }
 
@@ -109,7 +109,7 @@ class Game {
     //tall screen space scaling
     //uses the new... versions of edge variables so that
     //scaling happens immediately
-    if (scale != newScale || topEdge != newTopEdge || bottomEdge != newBottomEdge) {
+    if (camera.getScale() != newScale || topEdge != newTopEdge || bottomEdge != newBottomEdge) {
       //if there might be a difference in tall screen scale
       if ((newBottomEdge-newTopEdge)/(newRightEdge-newLeftEdge) > (float)height/(float)width) {
         newSubScale = ((float)height/((float)width/(float)(newRightEdge-newLeftEdge)))/(newBottomEdge-newTopEdge);
@@ -121,12 +121,12 @@ class Game {
       subScale = lerp(subScale, newSubScale, exp(-zoomSpeed));
     }
     //main scale
-    if (scale != newScale) {
-      scale = lerp(scale, newScale, exp(-zoomSpeed));
+    if (camera.getScale() != newScale) {
+      camera.setScale(lerp(camera.getScale(), newScale, exp(-zoomSpeed)));
     }
     //translate
-    if (center != newCenter) {
-      center = PVector.lerp(center, newCenter, exp(-zoomSpeed));
+    if (camera.getCenter() != newCenter) {
+      camera.setCenter(PVector.lerp(camera.getCenter(), newCenter, exp(-zoomSpeed)));
     }
     //black border movement
     if (leftEdge != newLeftEdge) {
@@ -142,4 +142,43 @@ class Game {
       bottomEdge = lerp(bottomEdge, newBottomEdge, exp(-boarderZoomSpeed));
     }
   }
+  
+  //backup of screen movement logic
+  //void screenMovementOld() {
+  //  //tall screen space scaling
+  //  //uses the new... versions of edge variables so that
+  //  //scaling happens immediately
+  //  if (scale != newScale || topEdge != newTopEdge || bottomEdge != newBottomEdge) {
+  //    //if there might be a difference in tall screen scale
+  //    if ((newBottomEdge-newTopEdge)/(newRightEdge-newLeftEdge) > (float)height/(float)width) {
+  //      newSubScale = ((float)height/((float)width/(float)(newRightEdge-newLeftEdge)))/(newBottomEdge-newTopEdge);
+  //    } else {
+  //      newSubScale = 1;
+  //    }
+  //  }
+  //  if (subScale != newSubScale) {
+  //    subScale = lerp(subScale, newSubScale, exp(-zoomSpeed));
+  //  }
+  //  //main scale
+  //  if (scale != newScale) {
+  //    scale = lerp(scale, newScale, exp(-zoomSpeed));
+  //  }
+  //  //translate
+  //  if (center != newCenter) {
+  //    center = PVector.lerp(center, newCenter, exp(-zoomSpeed));
+  //  }
+  //  //black border movement
+  //  if (leftEdge != newLeftEdge) {
+  //    leftEdge = lerp(leftEdge, newLeftEdge, exp(-boarderZoomSpeed));
+  //  }
+  //  if (rightEdge != newRightEdge) {
+  //    rightEdge = lerp(rightEdge, newRightEdge, exp(-boarderZoomSpeed));
+  //  }
+  //  if (topEdge != newTopEdge) {
+  //    topEdge = lerp(topEdge, newTopEdge, exp(-boarderZoomSpeed));
+  //  }
+  //  if (bottomEdge != newBottomEdge) {
+  //    bottomEdge = lerp(bottomEdge, newBottomEdge, exp(-boarderZoomSpeed));
+  //  }
+  //}
 }

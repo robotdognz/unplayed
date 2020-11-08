@@ -48,13 +48,16 @@ class CameraChange implements Event{
   }
   
   public void activate(Game g){
+    //these values should continue to be stored in game, they get pushed to the camera by game on the next step
+    //that way camera changes will take effect when moving back to game camera from editor camera
+    
     //change center
-    if(g.newCenter != newCent){
+    if(g.newCenter != this.newCent){
       g.newCenter = new PVector(newCent.x,newCent.y);
     }
     //change scale
-    if(newScale != g.newScale){
-      g.newScale = newScale;
+    if(g.newScale != this.newScale){
+      g.newScale = this.newScale;
     }
     g.zoomSpeed = cameraZoom;
     g.boarderZoomSpeed = edgeZoom;
