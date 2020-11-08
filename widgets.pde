@@ -29,7 +29,7 @@ class Pause extends Widget{
   }
   
   public void draw(){
-    if(!gPaused){ //if not paused, draw the widget
+    if(menu == null || !(menu instanceof PauseMenu)){ //if pause menu is closed, draw the widget
       fill(150);
       ellipseMode(CENTER);
       ellipse(position.x, position.y, pWidth, pHeight);

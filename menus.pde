@@ -36,6 +36,7 @@ class PauseMenu extends Menu{
   String resume = "Resume";
   String sCamera = "Standard Camera";
   String eCamera = "Editor Camera";
+  String close = "Close Menu";
   
   public PauseMenu() {
     menuCenterX = width/2;
@@ -48,6 +49,8 @@ class PauseMenu extends Menu{
     buttons.add(s);
     Button e = new Button(width/2, 500, buttonHeight, eCamera);
     buttons.add(e);
+    Button c = new Button(width/2, 500, buttonHeight, close);
+    buttons.add(c);
     height();
     menuTopY = height/2-menuHeight/2;
   }
@@ -59,9 +62,11 @@ class PauseMenu extends Menu{
         menu = null; //remove pause menu
       }else if(b.click().equals(sCamera)){
         c = new GameCamera();
-        menu = null; //remove pause menu
+        //menu = null; //remove pause menu
       }else if(b.click().equals(eCamera)){
         c = new FreeCamera();
+        //menu = null; //remove pause menu
+      }else if(b.click().equals(close)){
         menu = null; //remove pause menu
       }
     }
