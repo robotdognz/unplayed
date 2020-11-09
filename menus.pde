@@ -37,20 +37,23 @@ class PauseMenu extends Menu{
   String sCamera = "Standard Camera";
   String eCamera = "Editor Camera";
   String close = "Close Menu";
+  String block = "Place Block";
   
   public PauseMenu() {
     menuCenterX = width/2;
     menuWidth = 660;
     buttonHeight = 200;
     buttonDistance = 80;
-    Button r = new Button(width/2, 500, buttonHeight, resume);
-    buttons.add(r);
-    Button s = new Button(width/2, 500, buttonHeight, sCamera);
-    buttons.add(s);
-    Button e = new Button(width/2, 500, buttonHeight, eCamera);
-    buttons.add(e);
-    Button c = new Button(width/2, 500, buttonHeight, close);
-    buttons.add(c);
+    Button resu = new Button(width/2, 500, buttonHeight, resume);
+    buttons.add(resu);
+    Button sCam = new Button(width/2, 500, buttonHeight, sCamera);
+    buttons.add(sCam);
+    Button eCam = new Button(width/2, 500, buttonHeight, eCamera);
+    buttons.add(eCam);
+    Button clo = new Button(width/2, 500, buttonHeight, close);
+    buttons.add(clo);
+    Button blo = new Button(width/2, 500, buttonHeight, block);
+    buttons.add(blo);
     height();
     menuTopY = height/2-menuHeight/2;
   }
@@ -70,6 +73,9 @@ class PauseMenu extends Menu{
       }else if(b.click().equals(close)){
         menu = null; //remove pause menu
         con = new CameraControl();
+      }else if(b.click().equals(block)){
+        menu = null; //remove pause menu
+        con = new BlockControl();
       }
     }
   }

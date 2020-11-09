@@ -67,6 +67,9 @@ class BlockControl implements Controller {
   public void touchEnded() {
   }
   public void touchMoved() {
+    float blockX = mouseX;
+    float blockY = mouseY;
+    g.point = new PVector(blockX, blockY);
   }
   public void onPinch(float x, float y, float d) {
   }
