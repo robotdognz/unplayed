@@ -60,6 +60,7 @@ class PauseMenu extends Menu{
       if (b.click().equals(resume)) { //resume the game if resume button pressed
         gPaused = false; //unpause
         menu = null; //remove pause menu
+        con = new GameControl();
       }else if(b.click().equals(sCamera)){
         c = new GameCamera();
         //menu = null; //remove pause menu
@@ -68,6 +69,7 @@ class PauseMenu extends Menu{
         //menu = null; //remove pause menu
       }else if(b.click().equals(close)){
         menu = null; //remove pause menu
+        con = new CameraControl();
       }
     }
   }

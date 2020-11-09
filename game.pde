@@ -6,6 +6,8 @@ class Game {
   private boolean eventVis;
 
   Camera camera;
+  
+  public PVector point = new PVector(0,0);
 
   //local variables for camera
   public float newScale;
@@ -89,6 +91,13 @@ class Game {
       rect(-barSize+camera.getCenter().x, camera.getCenter().y-barSize, leftEdge, camera.getCenter().y+barSize);
       //right bar
       rect(rightEdge, camera.getCenter().y-barSize, barSize+camera.getCenter().x, camera.getCenter().y+barSize);
+      rectMode(CORNER);
+    }
+    
+    //testing - draw block placement
+    if(point.x != 0 && point.y != 0){
+      rectMode(CENTER);
+      rect(point.x, point.y, 100, 100);
       rectMode(CORNER);
     }
 

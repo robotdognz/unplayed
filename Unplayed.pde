@@ -8,6 +8,7 @@ KetaiGesture k;
 
 Game g; //holds the game class
 Camera c; //holds the camera
+Controller con; //holds the current controller
 float minZoom = 200;
 float maxZoom = 20000;
 boolean gPaused = false; //is the game class paused
@@ -27,6 +28,7 @@ void setup() {
   //make game and widgets
   c = new GameCamera();
   g = new Game(c);
+  con = new GameControl();
   Pause p = new Pause();
   widgets.add(p);
   
@@ -35,7 +37,8 @@ void setup() {
 
 void draw() {
   if (!gPaused) { //step the game if it is not paused
-    playerDirection(); //update player left right controls
+    //playerDirection(); //update player left right controls
+    con.draw();
     g.step(); //step game
   }
   g.draw(); //draw the game
@@ -83,15 +86,16 @@ void touchStarted() {
     lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
   }
 
+  con.touchStarted();
   //player jumping
-  if (!gPaused) {
-    //jump if the last true touch was in the middle of the screen
-    if (lastTouch.y >= height/3 && 
-    lastTouch.x > width/4 && 
-    lastTouch.x < (width/4)*3) {
-      g.player.jump();
-    }
-  }
+  //if (!gPaused) {
+  //  //jump if the last true touch was in the middle of the screen
+  //  if (lastTouch.y >= height/3 && 
+  //  lastTouch.x > width/4 && 
+  //  lastTouch.x < (width/4)*3) {
+  //    g.player.jump();
+  //  }
+  //}
 }
 
 void touchEnded() {
@@ -106,25 +110,27 @@ void touchEnded() {
 }
 
 void touchMoved(){
-  if(gPaused && c instanceof FreeCamera && menu == null && touches.length == 1){
-    float moveX = pmouseX - mouseX;
-    float moveY = pmouseY - mouseY;
-    PVector diff = new PVector(moveX,moveY);
-    c.setCenter(c.getCenter().add(diff));
-  }
+  con.touchMoved();
+  //if(gPaused && c instanceof FreeCamera && menu == null && touches.length == 1){
+  //  float moveX = pmouseX - mouseX;
+  //  float moveY = pmouseY - mouseY;
+  //  PVector diff = new PVector(moveX,moveY);
+  //  c.setCenter(c.getCenter().add(diff));
+  //}
 }
 
 void onPinch(float x, float y, float d){
-  if(gPaused && c instanceof FreeCamera && menu == null && touches.length == 2){
-    float newScale = c.getScale()-d;
-    if(newScale < minZoom){
-      newScale = minZoom;
-    }
-    if(newScale > maxZoom){
-      newScale = maxZoom;
-    }
-    c.setScale(newScale);
-  }
+  con.onPinch(x,y,d);
+  //if(gPaused && c instanceof FreeCamera && menu == null && touches.length == 2){
+  //  float newScale = c.getScale()-d;
+  //  if(newScale < minZoom){
+  //    newScale = minZoom;
+  //  }
+  //  if(newScale > maxZoom){
+  //    newScale = maxZoom;
+  //  }
+  //  c.setScale(newScale);
+  //}
 }
 
 void playerDirection() {

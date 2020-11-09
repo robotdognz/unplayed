@@ -41,6 +41,7 @@ class Pause extends Widget{
     if(hover){
       gPaused = true; //switch pause state
       menu = new PauseMenu();
+      con = new BlankControl();
     }
   }
 }
