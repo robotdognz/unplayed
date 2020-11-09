@@ -14,9 +14,6 @@ private Menu menu;
 private ArrayList<PVector> touch = new ArrayList<PVector>();
 private PVector lastTouch = new PVector(0, 0);
 
-//camera movement
-private PVector dragStart = new PVector(0, 0);
-
 void setup() {
   //setup graphics
   fullScreen(OPENGL);
@@ -36,8 +33,7 @@ void draw() {
   }
   g.draw(); //draw the game
 
-  //draw touch events
-  //testing.draw();
+  //testing.draw(); //draw touch events
   //reset stored touch events
   touch.clear();
   for (TouchEvent.Pointer t : touches) {
@@ -57,6 +53,7 @@ void draw() {
     menu.draw();
     menu.hover(lastTouch);
   }
+  
 }
 
 void touchStarted() {
@@ -77,11 +74,6 @@ void touchStarted() {
     }
   } else if (touches.length == 1) {
     lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
-  }
-  
-  //move camera
-  if(gPaused  && menu == null){ //if the game is paused and there is no active menu
-    dragStart = new PVector(lastTouch.x, lastTouch.y);
   }
 
   //player jumping
@@ -104,11 +96,14 @@ void touchEnded() {
   if (menu != null) {
     menu.click();
   }
-  
-  //move camera
-  if(gPaused  && menu == null && dragStart.x != 0 && dragStart.y != 0){ //if the game is paused and there is no active menu
-    PVector diff = dragStart.sub(lastTouch);
-    println(diff);
+}
+
+void touchMoved(){
+  if(gPaused && c instanceof FreeCamera && menu == null && touches.length == 1){
+    float moveX = pmouseX - mouseX;
+    float moveY = pmouseY - mouseY;
+    PVector diff = new PVector(moveX,moveY);
+    c.setCenter(c.getCenter().add(diff));
   }
 }
 
