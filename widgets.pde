@@ -2,6 +2,8 @@
 abstract class Widget{
   protected PVector position;
   protected float pWidth, pHeight;
+  protected PImage off;
+  protected PImage on;
   protected boolean hover = false;
   
   public void hover(PVector lastTouch){
@@ -20,12 +22,14 @@ abstract class Widget{
 }
 
 //------------------Pause---------------------
-class Pause extends Widget{
+class PauseWidget extends Widget{
   
-  public Pause(){
+  public PauseWidget(){
     position = new PVector(120,120);
     pWidth = 60;
     pHeight = 60;
+    //on = loadImage("ui/PauseClick.png");
+    //off = loadImage("ui/Pause.png");
   }
   
   public void draw(){
@@ -44,4 +48,19 @@ class Pause extends Widget{
       con = new BlankControl();
     }
   }
+}
+
+//------------------Player---------------------
+class PlayerWidget extends Widget{
+  
+}
+
+//------------------Camera---------------------
+class CameraWidget extends Widget{
+  
+}
+
+//------------------Block---------------------
+class BlockWidget extends Widget{
+  
 }

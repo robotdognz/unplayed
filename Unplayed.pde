@@ -29,7 +29,7 @@ void setup() {
   c = new GameCamera();
   g = new Game(c);
   con = new GameControl();
-  Pause p = new Pause();
+  PauseWidget p = new PauseWidget();
   widgets.add(p);
   
   k = new KetaiGesture(this);

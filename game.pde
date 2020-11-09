@@ -96,9 +96,15 @@ class Game {
     
     //testing - draw block placement
     if(point.x != 0 && point.y != 0){
+      fill(0,0,0,150);
       rectMode(CENTER);
       rect(point.x, point.y, 100, 100);
       rectMode(CORNER);
+      fill(0);
+      textSize(30);
+      textAlign(LEFT, CENTER);
+      String s = "[ " + point.x + ", " + point.y + " ]";
+      text(s, point.x+55, point.y);
     }
 
     popMatrix(); //start working at screen scale

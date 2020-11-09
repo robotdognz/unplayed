@@ -20,22 +20,16 @@ class GameControl implements Controller {
       g.player.jump();
     }
   }
-  public void touchEnded() {
-  }
-  public void touchMoved() {
-  }
-  public void onPinch(float x, float y, float d) {
-  }
+  public void touchEnded() {}
+  public void touchMoved() {}
+  public void onPinch(float x, float y, float d) {}
 }
 
 //------------------CameraController---------------------
 class CameraControl implements Controller {
-  public void draw() {
-  }
-  public void touchStarted() {
-  }
-  public void touchEnded() {
-  }
+  public void draw() {}
+  public void touchStarted() {}
+  public void touchEnded() {}
   public void touchMoved() {
     if (touches.length == 1) {
       float moveX = pmouseX - mouseX;
@@ -60,31 +54,27 @@ class CameraControl implements Controller {
 
 //------------------BlockPlacementController---------------------
 class BlockControl implements Controller {
-  public void draw() {
-  }
-  public void touchStarted() {
-  }
-  public void touchEnded() {
-  }
+  public void draw() {}
+  public void touchStarted() {}
+  public void touchEnded() {}
   public void touchMoved() {
-    float blockX = mouseX;
+    float blockX = mouseX-width/2;
+    //float blockX = Math.round((mouseX-width/2)/10.0)*10;
     float blockY = mouseY;
-    g.point = new PVector(blockX, blockY);
+    //float blockY = Math.round(mouseY/10.0)*10;
+    
+    float finalX = Math.round(blockX/10.0)*10;
+    float finalY = Math.round(blockY/10.0)*10;
+    g.point = new PVector(finalX, finalY);
   }
-  public void onPinch(float x, float y, float d) {
-  }
+  public void onPinch(float x, float y, float d) {}
 }
 
 //------------------BlankController---------------------
 class BlankControl implements Controller {
-  public void draw() {
-  }
-  public void touchStarted() {
-  }
-  public void touchEnded() {
-  }
-  public void touchMoved() {
-  }
-  public void onPinch(float x, float y, float d) {
-  }
+  public void draw() {}
+  public void touchStarted() {}
+  public void touchEnded() {}
+  public void touchMoved() {}
+  public void onPinch(float x, float y, float d) {}
 }
