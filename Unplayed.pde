@@ -2,9 +2,14 @@ import android.os.Vibrator;
 import android.os.VibrationEffect;
 import android.content.Context;
 import android.app.Activity;
+import ketai.ui.KetaiGesture;
+
+KetaiGesture k;
 
 Game g; //holds the game class
 Camera c; //holds the camera
+float minZoom = 200;
+float maxZoom = 20000;
 boolean gPaused = false; //is the game class paused
 private ArrayList<Widget> widgets = new ArrayList<Widget>();
 private Menu menu;
@@ -24,6 +29,8 @@ void setup() {
   g = new Game(c);
   Pause p = new Pause();
   widgets.add(p);
+  
+  k = new KetaiGesture(this);
 }
 
 void draw() {
@@ -104,6 +111,19 @@ void touchMoved(){
     float moveY = pmouseY - mouseY;
     PVector diff = new PVector(moveX,moveY);
     c.setCenter(c.getCenter().add(diff));
+  }
+}
+
+void onPinch(float x, float y, float d){
+  if(gPaused && c instanceof FreeCamera && menu == null && touches.length == 2){
+    float newScale = c.getScale()-d;
+    if(newScale < minZoom){
+      newScale = minZoom;
+    }
+    if(newScale > maxZoom){
+      newScale = maxZoom;
+    }
+    c.setScale(newScale);
   }
 }
 

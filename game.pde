@@ -13,7 +13,7 @@ class Game {
   public float zoomSpeed = 0.1; //0.1 is the default
 
   //local variables for camera tall screen space
-  private float newSubScale = camera.getSubScale();
+  private float newSubScale = 1;
 
   //variables for black border
   private float topEdge;
