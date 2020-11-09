@@ -4,6 +4,7 @@ static abstract class Camera{
   
   //variables for camera
   static protected float scale;
+  static protected float subScale = 1; //defaults to 1
   static protected PVector center;
   
   public boolean getGame(){
@@ -16,6 +17,14 @@ static abstract class Camera{
   
   public void setScale(float newScale){
     scale = newScale;
+  }
+  
+  public float getSubScale(){
+    return subScale;
+  }
+  
+  public void setSubScale(float newSubScale){
+    subScale = newSubScale;
   }
   
   public PVector getCenter(){
