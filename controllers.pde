@@ -69,12 +69,3 @@ class BlockControl implements Controller {
   }
   public void onPinch(float x, float y, float d) {}
 }
-
-//------------------BlankController---------------------
-class BlankControl implements Controller {
-  public void draw() {}
-  public void touchStarted() {}
-  public void touchEnded() {}
-  public void touchMoved() {}
-  public void onPinch(float x, float y, float d) {}
-}

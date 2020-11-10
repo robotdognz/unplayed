@@ -33,27 +33,29 @@ abstract class Menu {
 
 //------------------PauseMenu---------------------
 class PauseMenu extends Menu{
+  PauseWidget p;
   String resume = "Resume";
   String sCamera = "Standard Camera";
   String eCamera = "Editor Camera";
   String close = "Close Menu";
   String block = "Place Block";
   
-  public PauseMenu() {
+  public PauseMenu(PauseWidget p) {
+    this.p = p;
     menuCenterX = width/2;
     menuWidth = 660;
     buttonHeight = 200;
     buttonDistance = 80;
     Button resu = new Button(width/2, 500, buttonHeight, resume);
     buttons.add(resu);
-    Button sCam = new Button(width/2, 500, buttonHeight, sCamera);
-    buttons.add(sCam);
-    Button eCam = new Button(width/2, 500, buttonHeight, eCamera);
-    buttons.add(eCam);
-    Button clo = new Button(width/2, 500, buttonHeight, close);
-    buttons.add(clo);
-    Button blo = new Button(width/2, 500, buttonHeight, block);
-    buttons.add(blo);
+    //Button sCam = new Button(width/2, 500, buttonHeight, sCamera);
+    //buttons.add(sCam);
+    //Button eCam = new Button(width/2, 500, buttonHeight, eCamera);
+    //buttons.add(eCam);
+    //Button clo = new Button(width/2, 500, buttonHeight, close);
+    //buttons.add(clo);
+    //Button blo = new Button(width/2, 500, buttonHeight, block);
+    //buttons.add(blo);
     height();
     menuTopY = height/2-menuHeight/2;
   }
@@ -61,21 +63,23 @@ class PauseMenu extends Menu{
   public void click() {
     for (Button b : buttons) {
       if (b.click().equals(resume)) { //resume the game if resume button pressed
-        gPaused = false; //unpause
+        p.active = false; //change status of pause widget
+        //gPaused = false; //unpause
+        gPaused = p.previousStatus;
         menu = null; //remove pause menu
-        con = new GameControl();
+        //con = new GameControl();
       }else if(b.click().equals(sCamera)){
-        c = new GameCamera();
-        //menu = null; //remove pause menu
+        //c = new GameCamera();
       }else if(b.click().equals(eCamera)){
-        c = new FreeCamera();
-        //menu = null; //remove pause menu
+        //c = new FreeCamera();
       }else if(b.click().equals(close)){
-        menu = null; //remove pause menu
-        con = new CameraControl();
+        //p.active = false;
+        //menu = null; //remove pause menu
+        //con = new CameraControl();
       }else if(b.click().equals(block)){
-        menu = null; //remove pause menu
-        con = new BlockControl();
+        //p.active = false;
+        //menu = null; //remove pause menu
+        //con = new BlockControl();
       }
     }
   }

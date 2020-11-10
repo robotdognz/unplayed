@@ -1,7 +1,9 @@
 //------------------AbstractWidget---------------------
 abstract class Widget{
-  protected PVector position;
-  protected float pWidth, pHeight;
+  protected PVector position = new PVector(120,120);
+  protected float pWidth = 60;
+  protected float pHeight = 60;
+  String folder = dataPath("ui")+'/';
   protected PImage off;
   protected PImage on;
   protected boolean hover = false;
@@ -18,42 +20,41 @@ abstract class Widget{
     }
   }
   
-  public void draw(){}
+  public void draw(float wX, float wY){
+    position.x = wX;
+    position.y = wY;
+    imageMode(CENTER);
+    if(active){
+      image(on, position.x, position.y, pWidth, pHeight);
+    }else{
+      image(off, position.x, position.y, pWidth, pHeight);
+    }
+    imageMode(CORNER);
+  }
+  
   public void click(){}
+  
+  public void active(){}
 }
 
 //------------------Pause---------------------
 class PauseWidget extends Widget{
+  boolean previousStatus = false;
   
   public PauseWidget(){
-    position = new PVector(120,120);
-    pWidth = 60;
-    pHeight = 60;
-    on = loadImage("ui/PauseClick.png");
-    off = loadImage("ui/Pause.png");
-  }
-  
-  public void draw(){
-    if(menu == null || !(menu instanceof PauseMenu)){ //if pause menu is closed, draw the widget
-      fill(150);
-      //ellipseMode(CENTER);
-      //ellipse(position.x, position.y, pWidth, pHeight);
-      //ellipseMode(CORNER);
-      imageMode(CENTER);
-      if(active){
-        image(on, position.x, position.y, pWidth, pHeight);
-      }else{
-        image(off, position.x, position.y, pWidth, pHeight);
-      }
-      imageMode(CORNER);
-    }
+    on = loadImage(folder+"PauseClick.png");
+    off = loadImage(folder+"Pause.png");
   }
   
   public void click(){
     if(hover){
-      gPaused = true; //switch pause state
-      menu = new PauseMenu();
-      con = new BlankControl();
+      if(!active){
+        active = true;
+        previousStatus = gPaused;
+        gPaused = true; //switch pause state
+        menu = new PauseMenu(this);
+        //con = new BlankControl();
+      }
     }
   }
 }
@@ -61,23 +62,61 @@ class PauseWidget extends Widget{
 //------------------Player---------------------
 class PlayerWidget extends Widget{
   public PlayerWidget(){
-    on = loadImage("ui/playerControlsClick.png");
-    off = loadImage("ui/playerControls.png");
+    on = loadImage(folder+"playerControlsClick.png");
+    off = loadImage(folder+"playerControls.png");
+  }
+  
+  public void click(){
+    if(hover){
+      if(!active){
+        active = true;
+        gPaused = true;
+        con = new CameraControl();
+      }else{
+        active = false;
+        gPaused = false;
+        con = new GameControl();
+      }
+    }
   }
 }
 
 //------------------Camera---------------------
 class CameraWidget extends Widget{
   public CameraWidget(){
-    on = loadImage("ui/CameraControlsClick.png");
-    off = loadImage("ui/CameraControls.png");
+    on = loadImage(folder+"CameraControlsClick.png");
+    off = loadImage(folder+"CameraControls.png");
+  }
+  
+  public void click(){
+    if(hover){
+      if(!active){
+        active = true;
+        c = new FreeCamera();
+      }else{
+        active = false;
+        c = new GameCamera();
+      }
+    }
   }
 }
 
 //------------------Block---------------------
 class BlockWidget extends Widget{
   public BlockWidget(){
-    on = loadImage("ui/PlaceBlockClick.png");
-    off = loadImage("ui/PlaceBlock.png");
+    on = loadImage(folder+"PlaceBlockClick.png");
+    off = loadImage(folder+"PlaceBlock.png");
+  }
+  
+  public void click(){
+    if(hover){
+      if(!active){
+        active = true;
+        con = new BlockControl();
+      }else{
+        active = false;
+        con = new GameControl();
+      }
+    }
   }
 }

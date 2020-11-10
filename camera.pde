@@ -50,7 +50,7 @@ class GameCamera extends Camera{
 class FreeCamera extends Camera{
   FreeCamera(){
    game = false; 
-   subScale = 1;
+   //subScale = 1;
   }
   
   
