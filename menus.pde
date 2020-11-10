@@ -35,6 +35,7 @@ abstract class Menu {
 class PauseMenu extends Menu{
   MenuWidget m;
   String resume = "Resume";
+  String editor = "Toggle Editor";
   
   public PauseMenu(MenuWidget m) {
     this.m = m;
@@ -42,8 +43,10 @@ class PauseMenu extends Menu{
     menuWidth = 660;
     buttonHeight = 200;
     buttonDistance = 80;
-    Button resu = new Button(width/2, 500, buttonHeight, resume);
-    buttons.add(resu);
+    Button resumeB = new Button(width/2, 500, buttonHeight, resume);
+    buttons.add(resumeB);
+    Button editorB = new Button(width/2, 500, buttonHeight, editor);
+    buttons.add(editorB);
     height();
     menuTopY = height/2-menuHeight/2;
   }
@@ -54,6 +57,15 @@ class PauseMenu extends Menu{
         m.active = false; //change status of pause widget
         gPaused = m.previousStatus;
         menu = null; //remove pause menu
+      }else if(b.click().equals(editor)){
+        editorToggle = !editorToggle;
+        m.active = false; //change status of pause widget
+        gPaused = m.previousStatus;
+        menu = null; //remove pause menu
+        if(!editorToggle){
+          c = new GameCamera();
+          con = new GameControl();
+        }
       }
     }
   }
