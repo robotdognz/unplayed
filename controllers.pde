@@ -32,6 +32,9 @@ class CameraControl implements Controller {
   public void touchEnded() {}
   public void touchMoved() {
     if (touches.length == 1) {
+      if(mouseY < 180){ //don't respond to clicks at the top
+        return;
+      }
       float moveX = pmouseX - mouseX;
       float moveY = pmouseY - mouseY;
       PVector diff = new PVector(moveX, moveY);
@@ -58,6 +61,20 @@ class BlockControl implements Controller {
   public void touchStarted() {}
   public void touchEnded() {}
   public void touchMoved() {
+    if(mouseY < 180){ //don't respond to clicks at the top
+      return;
+    }
+    
+    //draw pointer
+    fill(0,0,0,150);
+    rectMode(CENTER);
+    rect(mouseX, mouseY, 100, 100);
+    rectMode(CORNER);
+    textSize(30);
+      textAlign(LEFT, CENTER);
+      String s = "[ " + mouseX + ", " + mouseY + " ]";
+      text(s, mouseX+55, mouseY);
+    
     float blockX = mouseX-width/2;
     //float blockX = Math.round((mouseX-width/2)/10.0)*10;
     float blockY = mouseY;

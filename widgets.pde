@@ -23,6 +23,10 @@ abstract class Widget{
   public void draw(float wX, float wY){
     position.x = wX;
     position.y = wY;
+    ellipseMode(CENTER);
+    fill(70);
+    ellipse(position.x, position.y, pWidth*1.5, pHeight*1.5);
+    ellipseMode(CORNER);
     imageMode(CENTER);
     if(active){
       image(on, position.x, position.y, pWidth, pHeight);
