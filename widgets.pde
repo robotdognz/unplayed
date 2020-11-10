@@ -148,6 +148,13 @@ class BlockWidget extends Widget{
     if(hover){
       if(!active){
         con = new BlockControl();
+      }else{
+        //finalise block
+        if(g.point != null){
+          Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
+          g.platforms.add(p);
+          g.point = null;
+        }
       }
     }
   }

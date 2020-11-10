@@ -7,7 +7,7 @@ class Game {
 
   Camera camera;
   
-  public PVector point = new PVector(0,0);
+  public PVector point;
 
   //local variables for camera
   public float newScale;
@@ -94,8 +94,8 @@ class Game {
       rectMode(CORNER);
     }
     
-    //testing - draw block placement
-    if(point.x != 0 && point.y != 0){
+    //draw block placement if one exists
+    if(point != null){
       fill(0,0,0,150);
       rectMode(CENTER);
       rect(point.x, point.y, 100, 100);

@@ -65,23 +65,14 @@ class BlockControl implements Controller {
       return;
     }
     
-    //draw pointer
-    fill(0,0,0,150);
-    rectMode(CENTER);
-    rect(mouseX, mouseY, 100, 100);
-    rectMode(CORNER);
-    textSize(30);
-      textAlign(LEFT, CENTER);
-      String s = "[ " + mouseX + ", " + mouseY + " ]";
-      text(s, mouseX+55, mouseY);
+    //calculate position in level
+    float blockX = ((mouseX-width/2)/((float)width/(float)c.getScale())/c.getSubScale())+c.getCenter().x;
+    float blockY = ((mouseY-height/2)/((float)width/(float)c.getScale())/c.getSubScale())+c.getCenter().y;
+  
+    //round so blocks snap to grid
+    float finalX = Math.round(blockX/10)*10;
+    float finalY = Math.round(blockY/10)*10;
     
-    float blockX = mouseX-width/2;
-    //float blockX = Math.round((mouseX-width/2)/10.0)*10;
-    float blockY = mouseY;
-    //float blockY = Math.round(mouseY/10.0)*10;
-    
-    float finalX = Math.round(blockX/10.0)*10;
-    float finalY = Math.round(blockY/10.0)*10;
     g.point = new PVector(finalX, finalY);
   }
   public void onPinch(float x, float y, float d) {}
