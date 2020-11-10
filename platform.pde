@@ -13,7 +13,7 @@ class Platform{
     color c = color(30);
     fill(c);
     noStroke();
-    rect(x, y, 100, 100);
+    //rect(x, y, 100, 100);
 
     for(int i = 0; i < platformH; i+=100){
       for(int j = 0; j < platformW; j+=100){
