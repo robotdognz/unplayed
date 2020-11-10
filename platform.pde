@@ -7,7 +7,6 @@ class Platform{
     this.platformW = platformW;
     this.platformH = platformH;
     sprite = loadImage("test_sprite2.png");
-    tint(140,188,150);
   }
   void draw(){
     color c = color(30);
