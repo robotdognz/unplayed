@@ -30,6 +30,8 @@ void setup() {
   c = new GameCamera();
   g = new Game(c);
   con = new GameControl();
+  MenuWidget menuW = new MenuWidget();
+  widgets.add(menuW);
   PauseWidget pauseW = new PauseWidget();
   widgets.add(pauseW);
   PlayerWidget playW = new PlayerWidget();
@@ -44,10 +46,6 @@ void setup() {
 }
 
 void draw() {
-  //if(menu == null){
-    //con.draw();
-  //}
-  
   if (!gPaused) { //step the game if it is not paused
     //playerDirection(); //update player left right controls
     con.draw();
@@ -103,15 +101,6 @@ void touchStarted() {
   if(menu == null){
     con.touchStarted();
   }
-  //player jumping
-  //if (!gPaused) {
-  //  //jump if the last true touch was in the middle of the screen
-  //  if (lastTouch.y >= height/3 && 
-  //  lastTouch.x > width/4 && 
-  //  lastTouch.x < (width/4)*3) {
-  //    g.player.jump();
-  //  }
-  //}
 }
 
 void touchEnded() {
@@ -129,28 +118,12 @@ void touchMoved(){
   if(menu == null){
     con.touchMoved();
   }
-  //if(gPaused && c instanceof FreeCamera && menu == null && touches.length == 1){
-  //  float moveX = pmouseX - mouseX;
-  //  float moveY = pmouseY - mouseY;
-  //  PVector diff = new PVector(moveX,moveY);
-  //  c.setCenter(c.getCenter().add(diff));
-  //}
 }
 
 void onPinch(float x, float y, float d){
   if(menu == null){
     con.onPinch(x,y,d);
   }
-  //if(gPaused && c instanceof FreeCamera && menu == null && touches.length == 2){
-  //  float newScale = c.getScale()-d;
-  //  if(newScale < minZoom){
-  //    newScale = minZoom;
-  //  }
-  //  if(newScale > maxZoom){
-  //    newScale = maxZoom;
-  //  }
-  //  c.setScale(newScale);
-  //}
 }
 
 void playerDirection() {

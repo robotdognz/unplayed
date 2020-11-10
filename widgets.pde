@@ -37,13 +37,12 @@ abstract class Widget{
   public void active(){}
 }
 
-//------------------Pause---------------------
-class PauseWidget extends Widget{
+class MenuWidget extends Widget{
   boolean previousStatus = false;
   
-  public PauseWidget(){
-    on = loadImage(folder+"PauseClick.png");
-    off = loadImage(folder+"Pause.png");
+  public MenuWidget(){
+    off = loadImage(folder+"menuClick.png");
+    on = loadImage(folder+"menu.png");
   }
   
   public void click(){
@@ -53,50 +52,83 @@ class PauseWidget extends Widget{
         previousStatus = gPaused;
         gPaused = true; //switch pause state
         menu = new PauseMenu(this);
-        //con = new BlankControl();
       }
     }
   }
 }
 
-//------------------Player---------------------
-class PlayerWidget extends Widget{
-  public PlayerWidget(){
-    on = loadImage(folder+"playerControlsClick.png");
-    off = loadImage(folder+"playerControls.png");
+//------------------Pause---------------------
+class PauseWidget extends Widget{
+  boolean previousStatus = false;
+  
+  public PauseWidget(){
+    off = loadImage(folder+"PauseClick.png");
+    on = loadImage(folder+"Pause.png");
   }
   
   public void click(){
     if(hover){
       if(!active){
-        active = true;
-        gPaused = true;
-        con = new CameraControl();
+        c = new FreeCamera();
       }else{
-        active = false;
-        gPaused = false;
+        c = new GameCamera();
+      }
+    }
+  }
+  
+  public void active(){
+    if(c instanceof FreeCamera){
+      active = true;
+    }else{
+      active = false;
+    }
+  }
+}
+
+//------------------PlayerControls---------------------
+class PlayerWidget extends Widget{
+  public PlayerWidget(){
+    off = loadImage(folder+"playerControlsClick.png");
+    on = loadImage(folder+"playerControls.png");
+  }
+  
+  public void click(){
+    if(hover){
+      if(!active){
         con = new GameControl();
       }
     }
   }
+  
+  public void active(){
+    if(con instanceof GameControl){
+      active = true;
+    }else{
+      active = false;
+    }
+  }
 }
 
-//------------------Camera---------------------
+//------------------CameraControls---------------------
 class CameraWidget extends Widget{
   public CameraWidget(){
-    on = loadImage(folder+"CameraControlsClick.png");
-    off = loadImage(folder+"CameraControls.png");
+    off = loadImage(folder+"CameraControlsClick.png");
+    on = loadImage(folder+"CameraControls.png");
   }
   
   public void click(){
     if(hover){
       if(!active){
-        active = true;
-        c = new FreeCamera();
-      }else{
-        active = false;
-        c = new GameCamera();
+        con = new CameraControl();
       }
+    }
+  }
+  
+  public void active(){
+    if(con instanceof CameraControl){
+      active = true;
+    }else{
+      active = false;
     }
   }
 }
@@ -104,19 +136,23 @@ class CameraWidget extends Widget{
 //------------------Block---------------------
 class BlockWidget extends Widget{
   public BlockWidget(){
-    on = loadImage(folder+"PlaceBlockClick.png");
-    off = loadImage(folder+"PlaceBlock.png");
+    off = loadImage(folder+"PlaceBlockClick.png");
+    on = loadImage(folder+"PlaceBlock.png");
   }
   
   public void click(){
     if(hover){
       if(!active){
-        active = true;
         con = new BlockControl();
-      }else{
-        active = false;
-        con = new GameControl();
       }
+    }
+  }
+  
+  public void active(){
+    if(con instanceof BlockControl){
+      active = true;
+    }else{
+      active = false;
     }
   }
 }
