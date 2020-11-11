@@ -22,6 +22,10 @@ private Menu menu;
 private ArrayList<PVector> touch = new ArrayList<PVector>();
 private PVector lastTouch = new PVector(0, 0);
 
+//frame count delay
+int frameDelay = 100;
+float frame;
+
 void setup() {
   //setup graphics
   fullScreen(P2D);
@@ -81,6 +85,18 @@ void draw() {
     menu.draw();
     menu.hover(lastTouch);
   }
+  
+  //draw frame counter
+  if(frameDelay > 30){
+    frame = frameRate;
+    frameDelay = 0;
+  }else{
+    frameDelay++;
+  }
+  fill(255);
+  textSize(50);
+  textAlign(CENTER, CENTER);
+  text(nf(frame, 2, 2), width/2, height-50);
 }
 
 void touchStarted() {
