@@ -24,7 +24,8 @@ private PVector lastTouch = new PVector(0, 0);
 
 void setup() {
   //setup graphics
-  fullScreen(OPENGL);
+  fullScreen(P2D);
+  //fullScreen(OPENGL);
   frameRate(60);
 
   //make game and widgets

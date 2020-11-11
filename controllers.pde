@@ -64,14 +64,14 @@ class BlockControl implements Controller {
     if(mouseY < 180){ //don't respond to clicks at the top
       return;
     }
-    
+    float snapNo = 100;
     //calculate position in level
     float blockX = ((mouseX-width/2)/((float)width/(float)c.getScale())/c.getSubScale())+c.getCenter().x;
     float blockY = ((mouseY-height/2)/((float)width/(float)c.getScale())/c.getSubScale())+c.getCenter().y;
   
     //round so blocks snap to grid
-    float finalX = Math.round(blockX/10)*10;
-    float finalY = Math.round(blockY/10)*10;
+    float finalX = Math.round(blockX/snapNo)*snapNo;
+    float finalY = Math.round(blockY/snapNo)*snapNo;
     
     g.point = new PVector(finalX, finalY);
   }
