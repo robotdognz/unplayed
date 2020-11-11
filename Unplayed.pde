@@ -9,6 +9,8 @@ KetaiGesture k;
 Game g; //holds the game class
 Camera c; //holds the camera
 Controller con; //holds the current controller
+Editor edit; //holds the editor
+
 float minZoom = 200;
 float maxZoom = 20000;
 boolean gPaused = false; //is the game class paused
@@ -34,7 +36,7 @@ void setup() {
   //setup game
   c = new GameCamera();
   g = new Game(c);
-  con = new GameControl();
+  con = new PlayerControl();
   
   //setup widgets
   MenuWidget menuW = new MenuWidget();
@@ -47,6 +49,8 @@ void setup() {
   widgets.add(cameraW);
   BlockWidget blockW = new BlockWidget();
   widgets.add(blockW);
+  SubMenuWidget testW = new SubMenuWidget();
+  widgets.add(testW);
   widgetSpacing = width/(widgets.size()+1);
   
   k = new KetaiGesture(this);

@@ -64,7 +64,7 @@ class PauseMenu extends Menu{
         menu = null; //remove pause menu
         if(!editorToggle){
           c = new GameCamera();
-          con = new GameControl();
+          con = new PlayerControl();
         }
       }
     }

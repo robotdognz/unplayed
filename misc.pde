@@ -1,3 +1,13 @@
+//------------------Editor---------------------
+class Editor{
+  Camera eCamera; //holds the camera
+  Controller eController; //holds the current controller
+  
+  
+  //when looping through widgets, find out if a widget menu is open by calling isMenu() on each widget and then calling isActive()
+  
+}
+
 //------------------Vibe---------------------
 class Vibe{
   Vibrator vibe;
