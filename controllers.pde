@@ -10,7 +10,25 @@ interface Controller {
 //------------------GameController---------------------
 class GameControl implements Controller {
   public void draw() {
-    playerDirection(); //update player left right controls
+    int left = 0;
+  int right = 0;
+  for (TouchEvent.Pointer t : touches) {
+    if (t.y >=  height/3) {
+      if (t.x < width/4) {
+        left++;
+      }
+      if (t.x > (width/4)*3) {
+        right++;
+      }
+    }
+  }
+  if (left > right) {
+    g.player.left();
+  } else if (left < right) {
+    g.player.right();
+  } else {
+    g.player.still();
+  }
   }
   public void touchStarted() {
     //jump if the last true touch was in the middle of the screen

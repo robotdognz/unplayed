@@ -29,13 +29,14 @@ float frame;
 void setup() {
   //setup graphics
   fullScreen(P2D);
-  //fullScreen(OPENGL);
   frameRate(60);
 
-  //make game and widgets
+  //setup game
   c = new GameCamera();
   g = new Game(c);
   con = new GameControl();
+  
+  //setup widgets
   MenuWidget menuW = new MenuWidget();
   widgets.add(menuW);
   PauseWidget pauseW = new PauseWidget();
@@ -53,8 +54,7 @@ void setup() {
 
 void draw() {
   if (!gPaused) { //step the game if it is not paused
-    //playerDirection(); //update player left right controls
-    con.draw();
+    con.draw(); //controls for draw event
     g.step(); //step game
   }
   g.draw(); //draw the game
@@ -79,7 +79,8 @@ void draw() {
     widgets.get(i).draw(widgetSpacing*(i+1), 120);
     widgets.get(i).active();
     widgets.get(i).hover(lastTouch);
-  } 
+  }
+  
   //draw the menu
   if (menu != null) { 
     menu.draw();
@@ -120,7 +121,7 @@ void touchStarted() {
   }
   
   if(menu == null){
-    con.touchStarted();
+    con.touchStarted(); //controlls for touch started event 
   }
 }
 
@@ -140,35 +141,13 @@ void touchEnded() {
 
 void touchMoved(){
   if(menu == null){
-    con.touchMoved();
+    con.touchMoved(); //controlls for touch moved event
   }
 }
 
 void onPinch(float x, float y, float d){
   if(menu == null){
-    con.onPinch(x,y,d);
-  }
-}
-
-void playerDirection() {
-  int left = 0;
-  int right = 0;
-  for (TouchEvent.Pointer t : touches) {
-    if (t.y >=  height/3) {
-      if (t.x < width/4) {
-        left++;
-      }
-      if (t.x > (width/4)*3) {
-        right++;
-      }
-    }
-  }
-  if (left > right) {
-    g.player.left();
-  } else if (left < right) {
-    g.player.right();
-  } else {
-    g.player.still();
+    con.onPinch(x,y,d); //controlls for on pinch event
   }
 }
 
