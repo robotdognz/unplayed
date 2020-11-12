@@ -41,8 +41,10 @@ class Vibe {
 
   public void vibrate(long amount) {
     //amount = duration
-    if (vibe.hasAmplitudeControl()) {
+    if (android.os.Build.VERSION.SDK_INT > 26 && vibe.hasVibrator()) {
       vibe.vibrate(VibrationEffect.createOneShot(amount, 255));
+    }else{
+      
     }
     
   }
@@ -50,7 +52,7 @@ class Vibe {
   public void vibrate(long amount, int level) {
     //amount = duration
     //level = intensity
-    if (vibe.hasAmplitudeControl()) {
+    if (android.os.Build.VERSION.SDK_INT > 26 && vibe.hasVibrator()) {
       vibe.vibrate(VibrationEffect.createOneShot(amount, level));
     }
     
