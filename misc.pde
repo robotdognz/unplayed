@@ -44,6 +44,7 @@ class Vibe {
     if (vibe.hasAmplitudeControl()) {
       vibe.vibrate(VibrationEffect.createOneShot(amount, 255));
     }
+    
   }
 
   public void vibrate(long amount, int level) {
@@ -52,6 +53,7 @@ class Vibe {
     if (vibe.hasAmplitudeControl()) {
       vibe.vibrate(VibrationEffect.createOneShot(amount, level));
     }
+    
   }
 }
 
