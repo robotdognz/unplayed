@@ -6,7 +6,7 @@ class Platform{
     this.y = y;
     this.platformW = platformW;
     this.platformH = platformH;
-    sprite = loadImage("test_sprite2.png");
+    sprite = loadImage("player_main.png");
   }
   void draw(){
     //color c = color(30);

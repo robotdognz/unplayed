@@ -203,11 +203,17 @@ class MenuWidget extends Widget{
   }
 }
 
-//------------------Pause---------------------
-class PauseWidget extends Widget{
+//------------------Settings---------------------
+class SettingsWidget extends Widget{
+  public SettingsWidget(){
+    Widget w1 = new SuspendWidget();
+    subWidgets.add(w1);
+  }
+}
+class SuspendWidget extends Widget{
   boolean previousStatus = false;
   
-  public PauseWidget(){
+  public SuspendWidget(){
     off = loadImage(folder+"PauseClick.png");
     on = loadImage(folder+"Pause.png");
   }
@@ -229,9 +235,19 @@ class PauseWidget extends Widget{
   }
 }
 
-//------------------PlayerControls---------------------
-class PlayerWidget extends Widget{
-  public PlayerWidget(){
+//------------------ControlMode---------------------
+class ControlWidget extends Widget{
+  public ControlWidget(){
+    Widget w1 = new PlayerControlWidget();
+    Widget w2 = new CameraControlWidget();
+    Widget w3 = new EditorControlWidget();
+    subWidgets.add(w1);
+    subWidgets.add(w2);
+    subWidgets.add(w3); 
+  }
+}
+class PlayerControlWidget extends Widget{
+  public PlayerControlWidget(){
     off = loadImage(folder+"playerControlsClick.png");
     on = loadImage(folder+"playerControls.png");
   }
@@ -250,10 +266,8 @@ class PlayerWidget extends Widget{
     }
   }
 }
-
-//------------------CameraControls---------------------
-class CameraWidget extends Widget{
-  public CameraWidget(){
+class CameraControlWidget extends Widget{
+  public CameraControlWidget(){
     off = loadImage(folder+"CameraControlsClick.png");
     on = loadImage(folder+"CameraControls.png");
   }
@@ -272,10 +286,8 @@ class CameraWidget extends Widget{
     }
   }
 }
-
-//------------------Block---------------------
-class BlockWidget extends Widget{
-  public BlockWidget(){
+class EditorControlWidget extends Widget{
+  public EditorControlWidget(){
     off = loadImage(folder+"PlaceBlockClick.png");
     on = loadImage(folder+"PlaceBlock.png");
   }

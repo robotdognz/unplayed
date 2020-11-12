@@ -29,7 +29,7 @@ class Player {
     position = new PVector(x-playerW/2, y); //y-playerH/2
     velocity = new PVector(0, 0);
     playerColor = color(255, 94, 22);
-    player = loadImage("test_sprite2.png");
+    player = loadImage("player_main.png");
   }
 
   void jump() {

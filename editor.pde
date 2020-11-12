@@ -1,20 +1,20 @@
 //------------------Editor---------------------
 class Editor {
   //camera
-  private Camera eCamera; 
+  Camera eCamera; 
   float minZoom = 200;
   float maxZoom = 20000;
 
   //controller
-  private Controller eController; //holds the current controller
-  private boolean controllerActive = true; //is the current controller active
+  Controller eController; //holds the current controller
+  boolean controllerActive = true; //is the current controller active
   
   //editor settings
-  private boolean snap = true; //things placed in the level will snap to grid
+  boolean snap = true; //things placed in the level will snap to grid
 
   //widgets
-  private ArrayList<Widget> widgets;
-  private float widgetSpacing; //size of gap between widgets
+  ArrayList<Widget> widgets;
+  float widgetSpacing; //size of gap between widgets
 
   //frame count
   int frameDelay = 100;

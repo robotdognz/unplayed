@@ -40,17 +40,17 @@ void setup() {
   con = new PlayerControl();
 
   //setup widgets
-  MenuWidget menuW = new MenuWidget();
+  Widget menuW = new MenuWidget();
+  Widget settingsW = new SettingsWidget();
+  Widget controlW = new ControlWidget();
+  Widget editTypeW = new BlankWidget(); //edit type
+  Widget editModeW = new BlankWidget(); //edit mode
+  Widget testW = new SubMenuWidget(); //extra
   widgets.add(menuW);
-  PauseWidget pauseW = new PauseWidget();
-  widgets.add(pauseW);
-  PlayerWidget playW = new PlayerWidget();
-  widgets.add(playW);
-  CameraWidget cameraW = new CameraWidget();
-  widgets.add(cameraW);
-  BlockWidget blockW = new BlockWidget();
-  widgets.add(blockW);
-  SubMenuWidget testW = new SubMenuWidget();
+  widgets.add(settingsW);
+  widgets.add(controlW);
+  widgets.add(editTypeW);
+  widgets.add(editModeW);
   widgets.add(testW);
   widgetSpacing = width/(widgets.size()+1);
 

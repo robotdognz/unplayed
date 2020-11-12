@@ -31,7 +31,7 @@ class Game {
   Game(Camera c) {
     camera = c;
     level = new Level1();
-    eventVis = true;
+    //eventVis = true;
 
     Vibe vibe = new Vibe();
 
