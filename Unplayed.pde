@@ -45,13 +45,13 @@ void setup() {
   Widget controlW = new ControlWidget();
   Widget editTypeW = new BlankWidget(); //edit type
   Widget editModeW = new BlankWidget(); //edit mode
-  Widget testW = new SubMenuWidget(); //extra
+  Widget extraW = new ExtraWidget(); //extra
   widgets.add(menuW);
   widgets.add(settingsW);
   widgets.add(controlW);
   widgets.add(editTypeW);
   widgets.add(editModeW);
-  widgets.add(testW);
+  widgets.add(extraW);
   widgetSpacing = width/(widgets.size()+1);
 
   k = new KetaiGesture(this);
