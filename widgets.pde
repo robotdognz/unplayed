@@ -196,6 +196,8 @@ class MenuWidget extends Widget {
 //------------------Settings---------------------
 class SettingsWidget extends Widget {
   public SettingsWidget() {
+    off = loadImage(folder+"settingsClick.png");
+    on = loadImage(folder+"settings.png");
     Widget w1 = new SuspendWidget();
     subWidgets.add(w1);
   }
@@ -307,11 +309,18 @@ class EditorControlWidget extends Widget {
 //------------------ExtraTools---------------------
 class ExtraWidget extends Widget {
   public ExtraWidget() {
+    off = loadImage(folder+"extraActionsClick.png");
+    on = loadImage(folder+"extraActions.png");
     Widget w1 = new ConfirmWidget();
     subWidgets.add(w1);
   }
 }
 class ConfirmWidget extends Widget {
+  public ConfirmWidget(){
+    off = loadImage(folder+"confirmTickClick.png");
+    on = loadImage(folder+"confirmTick.png");
+    closeAfterSubWidget = true;
+  }
   public void clicked() {
     //finalise block
     if (g.point != null) {
