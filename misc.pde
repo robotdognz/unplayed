@@ -5,7 +5,7 @@ class Editor{
   
   
   //when looping through widgets, find out if a widget menu is open by calling isMenu() on each widget and then calling isActive()
-  
+  //if one is an active menu, turn off eController
 }
 
 //------------------Vibe---------------------

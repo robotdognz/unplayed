@@ -81,7 +81,7 @@ void draw() {
       continue;
     }
     widgets.get(i).draw(widgetSpacing*(i+1), 120);
-    widgets.get(i).active();
+    widgets.get(i).updateActive();
     widgets.get(i).hover(lastTouch);
   }
   
