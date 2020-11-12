@@ -44,9 +44,10 @@ class Vibe {
     if (android.os.Build.VERSION.SDK_INT > 26 && vibe.hasVibrator()) {
       vibe.vibrate(VibrationEffect.createOneShot(amount, 255));
     }else{
-      
+      //this is for older versions of anroid
+      //need to make a second version of vibration tuned for older systems
+      vibe.vibrate(amount);
     }
-    
   }
 
   public void vibrate(long amount, int level) {
@@ -54,8 +55,11 @@ class Vibe {
     //level = intensity
     if (android.os.Build.VERSION.SDK_INT > 26 && vibe.hasVibrator()) {
       vibe.vibrate(VibrationEffect.createOneShot(amount, level));
+    }else{
+      //this is for older versions of anroid
+      //need to make a second version of vibration tuned for older systems
+      vibe.vibrate(amount);
     }
-    
   }
 }
 
