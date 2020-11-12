@@ -24,7 +24,7 @@ private Menu menu;
 private ArrayList<PVector> touch = new ArrayList<PVector>();
 private PVector lastTouch = new PVector(0, 0);
 
-//frame count delay
+//frame count
 int frameDelay = 100;
 float frame;
 
@@ -58,7 +58,7 @@ void setup() {
 
 void draw() {
   if (!gPaused) { //step the game if it is not paused
-    con.draw(); //controls for draw event
+    con.draw(); //draw event for controls
     g.step(); //step game
   }
   g.draw(); //draw the game
@@ -171,4 +171,52 @@ interface Event {
   public String getType();
   public void activate(Game g);
   public void draw();
+}
+
+//------------------Vibe---------------------
+class Vibe {
+  Vibrator vibe;
+
+  public Vibe() {
+    vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE); 
+    //this class needs to be updated to calculate fine grained vibration strength using a combination of amount and level
+  }
+
+  public void vibrate(long amount) {
+    //amount = duration
+    if (android.os.Build.VERSION.SDK_INT > 26 && vibe.hasVibrator()) {
+      vibe.vibrate(VibrationEffect.createOneShot(amount, 255));
+    }else{
+      //this is for older versions of anroid
+      //need to make a second version of vibration tuned for older systems
+      vibe.vibrate(amount);
+    }
+  }
+
+  public void vibrate(long amount, int level) {
+    //amount = duration
+    //level = intensity
+    if (android.os.Build.VERSION.SDK_INT > 26 && vibe.hasVibrator()) {
+      vibe.vibrate(VibrationEffect.createOneShot(amount, level));
+    }else{
+      //this is for older versions of anroid
+      //need to make a second version of vibration tuned for older systems
+      vibe.vibrate(amount);
+    }
+  }
+}
+
+//------------------TouchTesting---------------------
+class TouchTesting {
+  void draw() {
+    //go through the list of touches and draw them
+    for (int i = 0; i < touches.length; i++) {
+      ellipseMode(RADIUS); // Set ellipseMode to RADIUS fill(255); // Set fill to white ellipse(50, 50, 30, 30); // Draw white ellipse using RADIUS mode ellipseMode(CENTER); // Set ellipseMode to CENTER 
+      fill(255); // Set fill to gray 
+      ellipse(touches[i].x, touches[i].y, 70+2000*touches[i].area, 70+2000*touches[i].area); // Draw gray ellipse using CENTER
+      fill(0);
+      textSize(40);
+      text(i, touches[i].x, touches[i].y-150);
+    }
+  }
 }
