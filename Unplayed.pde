@@ -58,8 +58,10 @@ void setup() {
 }
 
 void draw() {
-  if (!gPaused && controllerActive) { //step the game if it is not paused
-    con.draw(); //draw event for controls
+  if (!gPaused) { //step the game if it is not paused
+    if(controllerActive){
+      con.draw(); //draw event for controls
+    }
     g.step(); //step game
   }
   g.draw(); //draw the game
@@ -131,7 +133,9 @@ void touchStarted() {
   }
 
   if (menu == null) {
-    con.touchStarted(); //controlls for touch started event
+    if(controllerActive){
+      con.touchStarted(); //controlls for touch started event
+    }
   }
 }
 
@@ -151,13 +155,17 @@ void touchEnded() {
 
 void touchMoved() {
   if (menu == null) {
-    con.touchMoved(); //controlls for touch moved event
+    if(controllerActive){
+      con.touchMoved(); //controlls for touch moved event
+    }
   }
 }
 
 void onPinch(float x, float y, float d) {
   if (menu == null) {
-    con.onPinch(x, y, d); //controlls for on pinch event
+    if(controllerActive){
+      con.onPinch(x, y, d); //controlls for on pinch event
+    }
   }
 }
 
