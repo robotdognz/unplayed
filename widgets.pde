@@ -9,9 +9,9 @@ abstract class Widget{
   protected boolean active = false; //is the widget active
   
   //subWidget fields
-  protected float animationSpeed = 0.8; //0.4 //speed of subWidget animation
+  protected float animationSpeed = 0.8; //speed of subWidget animation
   protected widgetDirection wd = widgetDirection.DOWN; //subWidget direction, defaults to down
-  protected ArrayList<Widget> subWidgets; //if this is not null then this widget is a menu
+  protected ArrayList<Widget> subWidgets = new ArrayList<Widget>(); //if this is not null then this widget is a menu
   protected float subWidgetSpacing = 180; //how far apart to draw subWidgets
   
   public Widget(){
@@ -29,7 +29,7 @@ abstract class Widget{
     }
     
     //subWidget hover
-    if(subWidgets != null && subWidgets.size() > 0 && active){ //if this widget is a menu and it has been opened
+    if(subWidgets.size() > 0 && active){ //if this widget is a menu and it has been opened
       for(Widget w : subWidgets){
         w.hover(lastTouch);
       }
@@ -47,7 +47,7 @@ abstract class Widget{
     }
     
     //subWidget draw - comes before current widget so the sub widgets slide out from behind
-    if(subWidgets != null && subWidgets.size() > 0){ //if this widget is a menu and it has been opened
+    if(subWidgets.size() > 0){ //if this widget is a menu and it has been opened
       for(int i = 0; i < subWidgets.size(); i++){
         float widgetOffset = 0;
         if(active){
@@ -93,7 +93,7 @@ abstract class Widget{
   }
   
   public boolean isMenu(){
-    if(subWidgets != null && subWidgets.size() > 0){
+    if(subWidgets.size() > 0){
       return true;
     }else{
       return false;
@@ -112,7 +112,7 @@ abstract class Widget{
     if(hover){
       clicked();
     }
-    if(subWidgets != null && subWidgets.size() > 0){
+    if(subWidgets.size() > 0){
       for(Widget w : subWidgets){
         w.click();
       }
@@ -147,7 +147,6 @@ abstract class Widget{
 //------------------TestSubMenuWidgets---------------------
 class SubMenuWidget extends Widget{
   public SubMenuWidget(){
-    subWidgets = new ArrayList<Widget>();
     Widget w1 = new BlankWidget();
     Widget w2 = new BlankWidget();
     Widget w3 = new SubMenuWidget2();
@@ -159,18 +158,23 @@ class SubMenuWidget extends Widget{
 class SubMenuWidget2 extends Widget{
   public SubMenuWidget2(){
     wd = widgetDirection.LEFT;
-    subWidgets = new ArrayList<Widget>();
     Widget w1 = new BlankWidget();
-    Widget w2 = new BlankWidget();
+    Widget w2 = new SubMenuWidget2Up();
     Widget w3 = new SubMenuWidget3();
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
   }
 }
+class SubMenuWidget2Up extends Widget{
+  public SubMenuWidget2Up(){
+    wd = widgetDirection.UP;
+    Widget w1 = new BlankWidget();
+    subWidgets.add(w1);
+  }
+}
 class SubMenuWidget3 extends Widget{
   public SubMenuWidget3(){
-    subWidgets = new ArrayList<Widget>();
     Widget w1 = new BlankWidget();
     Widget w2 = new BlankWidget();
     Widget w3 = new BlankWidget();
