@@ -316,18 +316,30 @@ class ExtraWidget extends Widget {
   }
 }
 class ConfirmWidget extends Widget {
-  public ConfirmWidget(){
+  public ConfirmWidget() {
     off = loadImage(folder+"confirmTickClick.png");
     on = loadImage(folder+"confirmTick.png");
     closeAfterSubWidget = true;
   }
+
+  public boolean click() {
+    if (hover) {
+      if (g.point != null) {
+        Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
+        g.platforms.add(p);
+        g.point = null;
+      }
+      return true;
+    }
+    return false;
+  }
   public void clicked() {
     //finalise block
-    if (g.point != null) {
-      Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
-      g.platforms.add(p);
-      g.point = null;
-    }
+    //if (g.point != null) {
+    //  Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
+    //  g.platforms.add(p);
+    //  g.point = null;
+    //}
   }
 }
 
