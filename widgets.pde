@@ -13,6 +13,7 @@ abstract class Widget{
   protected widgetDirection wd = widgetDirection.DOWN; //subWidget direction, defaults to down
   protected ArrayList<Widget> subWidgets = new ArrayList<Widget>(); //if this is not null then this widget is a menu
   protected float subWidgetSpacing = 180; //how far apart to draw subWidgets
+  protected boolean iconIsCurrentSubWidget = false; //does this widget icon change depending on its subwigets?
   
   public Widget(){
     defaultIcon();
@@ -132,6 +133,13 @@ abstract class Widget{
     return position;
   }
   
+  public PImage getOn(){
+    return on;
+  }
+  public PImage getOff(){
+    return off;
+  }
+  
   public void setPosition(PVector position){
     if(this.position == null){
       this.position = new PVector(position.x, position.y);
@@ -145,6 +153,10 @@ abstract class Widget{
     if(subWidgets.size() > 0){
       for(Widget w : subWidgets){
         w.updateActive();
+        if(iconIsCurrentSubWidget && w.isActive()){
+          this.on = w.getOn();
+          this.off = w.getOff();
+        }
       }
     }
   }
@@ -244,6 +256,7 @@ class SuspendWidget extends Widget{
 //------------------ControlMode---------------------
 class ControlWidget extends Widget{
   public ControlWidget(){
+    iconIsCurrentSubWidget = true;
     Widget w1 = new PlayerControlWidget();
     Widget w2 = new CameraControlWidget();
     Widget w3 = new EditorControlWidget();
