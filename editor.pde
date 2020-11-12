@@ -8,6 +8,9 @@ class Editor {
   //controller
   private Controller eController; //holds the current controller
   private boolean controllerActive = true; //is the current controller active
+  
+  //editor settings
+  private boolean snap = true; //things placed in the level will snap to grid
 
   //widgets
   private ArrayList<Widget> widgets;
@@ -24,13 +27,15 @@ class Editor {
     this.widgets = new ArrayList<Widget>();
     this.widgetSpacing = width/(this.widgets.size()+1);
   }
-
-  public void draw() {
+  
+  public void step(){
     //step the controller is there are no widget menus open
     if(controllerActive){
       eController.draw(); //draw event for controls
     }
+  }
 
+  public void draw() {
     //draw the widgets and check if eController should be active
     boolean widgetMenuOpen = false;
     for (int i = 0; i < this.widgets.size(); i++) {
