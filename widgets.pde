@@ -141,7 +141,13 @@ abstract class Widget{
     }
   }
   
-  public void updateActive(){}
+  public void updateActive(){
+    if(subWidgets.size() > 0){
+      for(Widget w : subWidgets){
+        w.updateActive();
+      }
+    }
+  }
 }
 
 //------------------TestSubMenuWidgets---------------------
