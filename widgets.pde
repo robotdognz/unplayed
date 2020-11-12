@@ -13,7 +13,8 @@ abstract class Widget{
   protected widgetDirection wd = widgetDirection.DOWN; //subWidget direction, defaults to down
   protected ArrayList<Widget> subWidgets = new ArrayList<Widget>(); //if this is not null then this widget is a menu
   protected float subWidgetSpacing = 180; //how far apart to draw subWidgets
-  protected boolean iconIsCurrentSubWidget = false; //does this widget icon change depending on its subwigets?
+  protected boolean iconIsCurrentSubWidget = false; //does this widget icon change depending on its sub wigets?
+  protected boolean closeAfterSubWidget = false; //does the sub widget menu close after clicking on a sub widget
   
   public Widget(){
     defaultIcon();
@@ -109,15 +110,20 @@ abstract class Widget{
     active = false;
   }
   
-  public void click(){
+  public boolean click(){
     if(hover){
       clicked();
+      return true;
     }
+   
     if(subWidgets.size() > 0){
       for(Widget w : subWidgets){
-        w.click();
+        if(w.click() && closeAfterSubWidget){
+          active = false;
+        }
       }
     }
+     return false;
   }
   
   public void clicked(){
@@ -257,6 +263,9 @@ class SuspendWidget extends Widget{
 class ControlWidget extends Widget{
   public ControlWidget(){
     iconIsCurrentSubWidget = true;
+    closeAfterSubWidget = true;
+    off = loadImage(folder+"playerControlsClick.png");
+    on = loadImage(folder+"playerControls.png");
     Widget w1 = new PlayerControlWidget();
     Widget w2 = new CameraControlWidget();
     Widget w3 = new EditorControlWidget();
