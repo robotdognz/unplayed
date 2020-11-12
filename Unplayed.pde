@@ -9,6 +9,7 @@ KetaiGesture k;
 Game g; //holds the game class
 Camera c; //holds the camera
 Controller con; //holds the current controller
+boolean controllerActive = true; //is the current controller active
 Editor edit; //holds the editor
 
 float minZoom = 200;
@@ -37,7 +38,7 @@ void setup() {
   c = new GameCamera();
   g = new Game(c);
   con = new PlayerControl();
-  
+
   //setup widgets
   MenuWidget menuW = new MenuWidget();
   widgets.add(menuW);
@@ -52,12 +53,12 @@ void setup() {
   SubMenuWidget testW = new SubMenuWidget();
   widgets.add(testW);
   widgetSpacing = width/(widgets.size()+1);
-  
+
   k = new KetaiGesture(this);
 }
 
 void draw() {
-  if (!gPaused) { //step the game if it is not paused
+  if (!gPaused && controllerActive) { //step the game if it is not paused
     con.draw(); //draw event for controls
     g.step(); //step game
   }
@@ -76,26 +77,31 @@ void draw() {
   }
 
   //draw the widgets
-  for(int i = 0; i < widgets.size(); i++){
-    if(i > 0 && !editorToggle){ //don't draw editor widgets if in game mide
+  boolean widgetMenuOpen = false;
+  for (int i = 0; i < widgets.size(); i++) {
+    if (i > 0 && !editorToggle) { //don't draw editor widgets if in game mide
       continue;
     }
     widgets.get(i).draw(widgetSpacing*(i+1), 120);
     widgets.get(i).updateActive();
     widgets.get(i).hover(lastTouch);
+    if (this.widgets.get(i).isMenu() && this.widgets.get(i).isActive()) {
+      widgetMenuOpen = true;
+    }
   }
-  
+  controllerActive = !widgetMenuOpen;
+
   //draw the menu
   if (menu != null) { 
     menu.draw();
     menu.hover(lastTouch);
   }
-  
+
   //draw frame counter
-  if(frameDelay > 30){
+  if (frameDelay > 30) {
     frame = frameRate;
     frameDelay = 0;
-  }else{
+  } else {
     frameDelay++;
   }
   fill(255);
@@ -107,7 +113,7 @@ void draw() {
 void touchStarted() {
   //find true last touch
   if (touches.length >= touch.size() && 
-  touches.length > 1) {
+    touches.length > 1) {
     for (int i = 0; i < touches.length; i++) {
       boolean match = false;
       for (PVector t : touch) {
@@ -123,16 +129,16 @@ void touchStarted() {
   } else if (touches.length == 1) {
     lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
   }
-  
-  if(menu == null){
-    con.touchStarted(); //controlls for touch started event 
+
+  if (menu == null) {
+    con.touchStarted(); //controlls for touch started event
   }
 }
 
 void touchEnded() {
   //check for clicking on widgets
-  for(int i = 0; i < widgets.size(); i++){
-    if(i > 0 && !editorToggle){ //don't click editor widgets if in game mide
+  for (int i = 0; i < widgets.size(); i++) {
+    if (i > 0 && !editorToggle) { //don't click editor widgets if in game mide
       continue;
     }
     widgets.get(i).click();
@@ -143,15 +149,15 @@ void touchEnded() {
   }
 }
 
-void touchMoved(){
-  if(menu == null){
+void touchMoved() {
+  if (menu == null) {
     con.touchMoved(); //controlls for touch moved event
   }
 }
 
-void onPinch(float x, float y, float d){
-  if(menu == null){
-    con.onPinch(x,y,d); //controlls for on pinch event
+void onPinch(float x, float y, float d) {
+  if (menu == null) {
+    con.onPinch(x, y, d); //controlls for on pinch event
   }
 }
 
@@ -186,7 +192,7 @@ class Vibe {
     //amount = duration
     if (android.os.Build.VERSION.SDK_INT > 26 && vibe.hasVibrator()) {
       vibe.vibrate(VibrationEffect.createOneShot(amount, 255));
-    }else{
+    } else {
       //this is for older versions of anroid
       //need to make a second version of vibration tuned for older systems
       vibe.vibrate(amount);
@@ -198,7 +204,7 @@ class Vibe {
     //level = intensity
     if (android.os.Build.VERSION.SDK_INT > 26 && vibe.hasVibrator()) {
       vibe.vibrate(VibrationEffect.createOneShot(amount, level));
-    }else{
+    } else {
       //this is for older versions of anroid
       //need to make a second version of vibration tuned for older systems
       vibe.vibrate(amount);
