@@ -9,7 +9,7 @@ abstract class Widget{
   protected boolean active = false; //is the widget active
   
   //subWidget fields
-  protected float animationSpeed = 0.4; //speed of subWidget animation
+  protected float animationSpeed = 0.8; //0.4 //speed of subWidget animation
   protected widgetDirection wd = widgetDirection.DOWN; //subWidget direction, defaults to down
   protected ArrayList<Widget> subWidgets; //if this is not null then this widget is a menu
   protected float subWidgetSpacing = 180; //how far apart to draw subWidgets
@@ -60,7 +60,10 @@ abstract class Widget{
         }
         switch(wd){
           case DOWN:
-            subWidgets.get(i).draw(wX, this.position.y+widgetOffset);
+            subWidgets.get(i).draw(wX, wY+widgetOffset);
+            break;
+          case UP:
+            subWidgets.get(i).draw(wX, wY-widgetOffset);
             break;
           case LEFT:
             subWidgets.get(i).draw(wX-widgetOffset, wY);
@@ -297,6 +300,7 @@ class BlockWidget extends Widget{
 //------------------WidgetDirectionEnum---------------------
 enum widgetDirection{
     DOWN,
+    UP,
     LEFT,
     RIGHT
 }
