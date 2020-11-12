@@ -140,14 +140,7 @@ abstract class Widget{
   public void updateActive(){}
 }
 
-//------------------WidgetDirectionEnum---------------------
-enum widgetDirection{
-    DOWN,
-    LEFT,
-    RIGHT
-}
-
-//------------------TestSubMenuWidget---------------------
+//------------------TestSubMenuWidgets---------------------
 class SubMenuWidget extends Widget{
   public SubMenuWidget(){
     subWidgets = new ArrayList<Widget>();
@@ -159,7 +152,6 @@ class SubMenuWidget extends Widget{
     subWidgets.add(w3);
   }
 }
-
 class SubMenuWidget2 extends Widget{
   public SubMenuWidget2(){
     wd = widgetDirection.LEFT;
@@ -172,7 +164,6 @@ class SubMenuWidget2 extends Widget{
     subWidgets.add(w3);
   }
 }
-
 class SubMenuWidget3 extends Widget{
   public SubMenuWidget3(){
     subWidgets = new ArrayList<Widget>();
@@ -183,10 +174,6 @@ class SubMenuWidget3 extends Widget{
     subWidgets.add(w2);
     subWidgets.add(w3);
   }
-}
-//------------------BlankWidget---------------------
-class BlankWidget extends Widget{
-  
 }
 
 //------------------Menu---------------------
@@ -305,4 +292,16 @@ class BlockWidget extends Widget{
       active = false;
     }
   }
+}
+
+//------------------WidgetDirectionEnum---------------------
+enum widgetDirection{
+    DOWN,
+    LEFT,
+    RIGHT
+}
+
+//------------------BlankWidget---------------------
+class BlankWidget extends Widget{
+  
 }
