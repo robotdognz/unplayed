@@ -43,8 +43,8 @@ void setup() {
   Widget menuW = new MenuWidget();
   Widget settingsW = new SettingsWidget();
   Widget controlW = new ControlWidget();
-  Widget editTypeW = new BlankWidget(); //edit type
-  Widget editModeW = new BlankWidget(); //edit mode
+  Widget editTypeW = new EditorTypeWidget(); //edit type
+  Widget editModeW = new EditorModeWidget(); //edit mode
   Widget extraW = new ExtraWidget(); //extra
   widgets.add(menuW);
   widgets.add(settingsW);

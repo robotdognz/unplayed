@@ -202,13 +202,16 @@ class SettingsWidget extends Widget {
     off = loadImage(folder+"settingsClick.png");
     on = loadImage(folder+"settings.png");
     Widget w1 = new SuspendWidget();
+    Widget w2 = new SnapWidget();
     subWidgets.add(w1);
+    subWidgets.add(w2);
   }
 }
 class SuspendWidget extends Widget {
   boolean previousStatus = false;
 
   public SuspendWidget() {
+    closeAfterSubWidget = true;
     off = loadImage(folder+"PauseClick.png");
     on = loadImage(folder+"Pause.png");
   }
@@ -227,6 +230,13 @@ class SuspendWidget extends Widget {
     } else {
       active = false;
     }
+  }
+}
+class SnapWidget extends Widget {
+  public SnapWidget(){
+    closeAfterSubWidget = true;
+    off = loadImage(folder+"snaptoGridClick.png");
+    on = loadImage(folder+"snaptoGrid.png");
   }
 }
 
@@ -306,6 +316,20 @@ class EditorControlWidget extends Widget {
     } else {
       active = false;
     }
+  }
+}
+
+//------------------EditorType---------------------
+class EditorTypeWidget extends Widget {
+  public EditorTypeWidget() {
+    iconIsCurrentSubWidget = true;
+  }
+}
+
+//------------------EditorMode---------------------
+class EditorModeWidget extends Widget {
+  public EditorModeWidget() {
+    iconIsCurrentSubWidget = true;
   }
 }
 
