@@ -1,7 +1,8 @@
 //------------------AbstractWidget---------------------
 abstract class Widget {
   protected PVector position; //position of the widget
-  protected float wSize = 60; //size of the widget
+  protected float wSize = 75; //60 //size of the widget
+  protected float touchScale = 1.2; //1.5
   protected String folder = dataPath("ui")+'/'; //data path of widget icons
   protected PImage off; //inactive image
   protected PImage on; //activated image
@@ -21,10 +22,10 @@ abstract class Widget {
   }
 
   public void hover(PVector lastTouch) {
-    if (lastTouch.x >= position.x-wSize*1.5 && 
-      lastTouch.y >= position.y-wSize*1.5 && 
-      lastTouch.x <= position.x+wSize*1.5 && 
-      lastTouch.y <= position.y+wSize*1.5) {
+    if (lastTouch.x >= position.x-wSize*touchScale && 
+      lastTouch.y >= position.y-wSize*touchScale && 
+      lastTouch.x <= position.x+wSize*touchScale && 
+      lastTouch.y <= position.y+wSize*touchScale) {
       hover = true;
     }
     
