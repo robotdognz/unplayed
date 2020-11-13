@@ -4,8 +4,8 @@ abstract class Widget {
   protected float wSize = 75; //60 //size of the widget
   protected float touchScale = 1.2; //1.5
   protected String folder = dataPath("ui")+'/'; //data path of widget icons
-  protected PImage off; //inactive image
-  protected PImage on; //activated image
+  //protected PImage off; //inactive image
+  protected PImage icon;
   protected boolean hover = false; //is the mouse over the widget
   protected boolean active = false; //is the widget active
   
@@ -86,15 +86,14 @@ abstract class Widget {
     ellipseMode(CORNER);
 
     //draw widget icon
+    if (!active){
+      tint(150,150,150);
+    }
     if(!implemented){
       tint(50,50,50);
     }
     imageMode(CENTER);
-    if (active) {
-      image(on, position.x, position.y, wSize, wSize);
-    } else {
-      image(off, position.x, position.y, wSize, wSize);
-    }
+    image(icon, position.x, position.y, wSize, wSize);
     noTint();
     imageMode(CORNER);
   }
@@ -139,8 +138,7 @@ abstract class Widget {
   }
 
   protected void defaultIcon() {
-    off = loadImage(folder+"diamondClick.png");
-    on = loadImage(folder+"diamond.png");
+    icon = loadImage(folder+"diamond.png");
   }
 
   public PVector getPosition() {
@@ -151,11 +149,8 @@ abstract class Widget {
     return closeAfterSubWidget;
   }
 
-  public PImage getOn() {
-    return on;
-  }
-  public PImage getOff() {
-    return off;
+  public PImage getIcon() {
+    return icon;
   }
   
   public float getSize(){
@@ -180,8 +175,7 @@ abstract class Widget {
       for (Widget w : subWidgets) {
         w.updateActive();
         if (iconIsCurrentSubWidget && w.isActive()) {
-          this.on = w.getOn();
-          this.off = w.getOff();
+          this.icon = w.getIcon();
         }
       }
     }
@@ -195,8 +189,7 @@ class MenuWidget extends Widget {
   boolean previousStatus = false;
 
   public MenuWidget() {
-    off = loadImage(folder+"menuClick.png");
-    on = loadImage(folder+"menu.png");
+    icon = loadImage(folder+"menu.png");
   }
 
   public void clicked() {
@@ -212,8 +205,7 @@ class MenuWidget extends Widget {
 //------------------Settings---------------------
 class SettingsWidget extends Widget {
   public SettingsWidget() {
-    off = loadImage(folder+"settingsClick.png");
-    on = loadImage(folder+"settings.png");
+    icon = loadImage(folder+"settings.png");
     Widget w1 = new SuspendWidget();
     Widget w2 = new SnapWidget();
     Widget w3 = new PickImageWidget();
@@ -231,8 +223,7 @@ class SuspendWidget extends Widget {
 
   public SuspendWidget() {
     closeAfterSubWidget = true;
-    off = loadImage(folder+"PauseClick.png");
-    on = loadImage(folder+"Pause.png");
+    icon = loadImage(folder+"Pause.png");
   }
 
   public void clicked() {
@@ -255,32 +246,28 @@ class SnapWidget extends Widget {
   public SnapWidget(){
     implemented = false;
     closeAfterSubWidget = true;
-    off = loadImage(folder+"snaptoGridClick.png");
-    on = loadImage(folder+"snaptoGrid.png");
+    icon = loadImage(folder+"snaptoGrid.png");
   }
 }
 class PickImageWidget extends Widget {
   public PickImageWidget(){
     implemented = false;
     closeAfterSubWidget = true;
-    off = loadImage(folder+"pickImageClick.png");
-    on = loadImage(folder+"pickImage.png");
+    icon = loadImage(folder+"pickImage.png");
   }
 }
 class PickEventWidget extends Widget {
   public PickEventWidget(){
     implemented = false;
     closeAfterSubWidget = true;
-    off = loadImage(folder+"pickEventClick.png");
-    on = loadImage(folder+"pickEvent.png");
+    icon = loadImage(folder+"pickEvent.png");
   }
 }
 class PickBlockWidget extends Widget {
   public PickBlockWidget(){
     implemented = false;
     closeAfterSubWidget = true;
-    off = loadImage(folder+"pickBlockClick.png");
-    on = loadImage(folder+"pickBlock.png");
+    icon = loadImage(folder+"pickBlock.png");
   }
 }
 
@@ -288,8 +275,7 @@ class PickBlockWidget extends Widget {
 class ControlWidget extends Widget {
   public ControlWidget() {
     iconIsCurrentSubWidget = true;
-    off = loadImage(folder+"playerControlsClick.png");
-    on = loadImage(folder+"playerControls.png");
+    icon = loadImage(folder+"playerControls.png");
     Widget w1 = new PlayerControlWidget();
     Widget w2 = new CameraControlWidget();
     Widget w3 = new EditorControlWidget();
@@ -301,8 +287,7 @@ class ControlWidget extends Widget {
 class PlayerControlWidget extends Widget {
   public PlayerControlWidget() {
     closeAfterSubWidget = true;
-    off = loadImage(folder+"playerControlsClick.png");
-    on = loadImage(folder+"playerControls.png");
+    icon = loadImage(folder+"playerControls.png");
   }
 
   public void clicked() {
@@ -322,8 +307,7 @@ class PlayerControlWidget extends Widget {
 class CameraControlWidget extends Widget {
   public CameraControlWidget() {
     closeAfterSubWidget = true;
-    off = loadImage(folder+"CameraControlsClick.png");
-    on = loadImage(folder+"CameraControls.png");
+    icon = loadImage(folder+"CameraControls.png");
   }
 
   public void clicked() {
@@ -343,8 +327,7 @@ class CameraControlWidget extends Widget {
 class EditorControlWidget extends Widget {
   public EditorControlWidget() {
     closeAfterSubWidget = true;
-    off = loadImage(folder+"PlaceBlockClick.png");
-    on = loadImage(folder+"PlaceBlock.png");
+    icon = loadImage(folder+"PlaceBlock.png");
   }
 
   public void clicked() {
@@ -366,8 +349,7 @@ class EditorControlWidget extends Widget {
 //------------------EditorType---------------------
 class EditorTypeWidget extends Widget {
   public EditorTypeWidget() {
-    off = loadImage(folder+"coliderClick.png"); 
-    on = loadImage(folder+"colider.png");
+    icon = loadImage(folder+"colider.png");
     iconIsCurrentSubWidget = true;
     Widget w1 = new BlockModeWidget();
     Widget w2 = new ImageModeWidget();
@@ -381,32 +363,28 @@ class BlockModeWidget extends Widget {
   public BlockModeWidget(){
     implemented = false;
     closeAfterSubWidget = true;
-    off = loadImage(folder+"coliderClick.png"); 
-    on = loadImage(folder+"colider.png");
+    icon = loadImage(folder+"colider.png");
   }
 }
 class ImageModeWidget extends Widget {
   public ImageModeWidget(){
     implemented = false;
     closeAfterSubWidget = true;
-    off = loadImage(folder+"imageClick.png"); 
-    on = loadImage(folder+"image.png");
+    icon = loadImage(folder+"image.png");
   }
 }
 class EventModeWidget extends Widget {
   public EventModeWidget(){
     implemented = false;
     closeAfterSubWidget = true;
-    off = loadImage(folder+"eventClick.png"); 
-    on = loadImage(folder+"event.png");
+    icon = loadImage(folder+"event.png");
   }
 }
 
 //------------------EditorMode---------------------
 class EditorModeWidget extends Widget {
   public EditorModeWidget() {
-    off = loadImage(folder+"AddClick.png"); 
-    on = loadImage(folder+"Add.png");
+    icon = loadImage(folder+"Add.png");
     iconIsCurrentSubWidget = true;
     Widget w1 = new AddWidget();
     Widget w2 = new EraseWidget();
@@ -420,32 +398,28 @@ class AddWidget extends Widget {
   public AddWidget(){
     implemented = false;
     closeAfterSubWidget = true;
-    off = loadImage(folder+"AddClick.png"); 
-    on = loadImage(folder+"Add.png");
+    icon = loadImage(folder+"Add.png");
   }
 }
 class EraseWidget extends Widget {
   public EraseWidget(){
     implemented = false;
     closeAfterSubWidget = true;
-    off = loadImage(folder+"eraserClick.png"); 
-    on = loadImage(folder+"eraser.png");
+    icon = loadImage(folder+"eraser.png");
   }
 }
 class SelectWidget extends Widget {
   public SelectWidget(){
     implemented = false;
-    closeAfterSubWidget = true;
-    off = loadImage(folder+"marqueClick.png"); 
-    on = loadImage(folder+"marque.png");
+    closeAfterSubWidget = true; 
+    icon = loadImage(folder+"marque.png");
   }
 }
 
 //------------------ExtraTools---------------------
 class ExtraWidget extends Widget {
   public ExtraWidget() {
-    off = loadImage(folder+"extraActionsClick.png");
-    on = loadImage(folder+"extraActions.png");
+    icon = loadImage(folder+"extraActions.png");
     Widget w1 = new ConfirmWidget();
     Widget w2 = new EditSelectedWidget();
     Widget w3 = new LayerForwardWidget();
@@ -462,8 +436,7 @@ class ExtraWidget extends Widget {
 }
 class ConfirmWidget extends Widget {
   public ConfirmWidget() {
-    off = loadImage(folder+"confirmTickClick.png");
-    on = loadImage(folder+"confirmTick.png");
+    icon = loadImage(folder+"confirmTick.png");
     closeAfterSubWidget = true;
   }
 
@@ -479,37 +452,32 @@ class ConfirmWidget extends Widget {
 class EditSelectedWidget extends Widget {
   public EditSelectedWidget() {
     implemented = false;
-    off = loadImage(folder+"EditSelectedClick.png");
-    on = loadImage(folder+"EditSelected.png");
+    icon = loadImage(folder+"EditSelected.png");
     closeAfterSubWidget = true;
   }
 }
 class LayerForwardWidget extends Widget {
   public LayerForwardWidget() {
     implemented = false;
-    off = loadImage(folder+"MoveLayerForwardClick.png");
-    on = loadImage(folder+"MoveLayerForward.png");
+    icon = loadImage(folder+"MoveLayerForward.png");
   }
 }
 class LayerBackwardWidget extends Widget {
   public LayerBackwardWidget() {
     implemented = false;
-    off = loadImage(folder+"MoveLayerBackwardClick.png");
-    on = loadImage(folder+"MoveLayerBackward.png");
+    icon = loadImage(folder+"MoveLayerBackward.png");
   }
 }
 class SaveWidget extends Widget {
   public SaveWidget() {
     implemented = false;
-    off = loadImage(folder+"saveClick.png");
-    on = loadImage(folder+"save.png");
+    icon = loadImage(folder+"save.png");
   }
 }
 class LoadWidget extends Widget {
   public LoadWidget() {
     implemented = false;
-    off = loadImage(folder+"loadClick.png");
-    on = loadImage(folder+"load.png");
+    icon = loadImage(folder+"load.png");
   }
 }
 
