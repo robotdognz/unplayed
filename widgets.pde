@@ -469,8 +469,12 @@ class LayerBackwardWidget extends Widget {
 }
 class SaveWidget extends Widget {
   public SaveWidget() {
-    implemented = false;
     icon = loadImage(folder+"save.png");
+    wd = widgetDirection.LEFT;
+    Widget w1 = new BlankWidget();
+    Widget w2 = new BlankWidget();
+    subWidgets.add(w1);
+    subWidgets.add(w2);
   }
 }
 class LoadWidget extends Widget {
