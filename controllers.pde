@@ -79,7 +79,7 @@ class CameraControl implements Controller {
   }
 }
 
-//------------------BlockPlacementController---------------------
+//------------------EditorController---------------------
 class EditorControl implements Controller {
   public void draw() {
   }

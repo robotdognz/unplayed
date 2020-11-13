@@ -25,7 +25,8 @@ abstract class Widget {
     if (lastTouch.x >= position.x-wSize*touchScale && 
       lastTouch.y >= position.y-wSize*touchScale && 
       lastTouch.x <= position.x+wSize*touchScale && 
-      lastTouch.y <= position.y+wSize*touchScale) {
+      lastTouch.y <= position.y+wSize*touchScale &&
+      implemented) {
       hover = true;
     }
     
@@ -113,7 +114,7 @@ abstract class Widget {
   }
 
   public boolean click() {
-    if (hover && implemented) {
+    if (hover) {
       hover = false;
       clicked();
       return true;
@@ -320,10 +321,18 @@ class CameraControlWidget extends Widget {
   }
 
   public void updateActive() {
-    if (con instanceof CameraControl) {
+    if (implemented == true && con instanceof CameraControl) {
       active = true;
     } else {
       active = false;
+    }
+    if(c instanceof GameCamera){
+      implemented = false;
+      if(con instanceof CameraControl){
+        con = new PlayerControl();
+      }
+    }else{
+      implemented = true;
     }
   }
 }
@@ -336,7 +345,6 @@ class EditorControlWidget extends Widget {
   public void clicked() {
     if (!active) {
       con = new EditorControl();
-    } else {
     }
   }
 
@@ -345,6 +353,7 @@ class EditorControlWidget extends Widget {
       active = true;
     } else {
       active = false;
+      g.point = null;
     }
   }
 }
@@ -478,6 +487,11 @@ class ConfirmWidget extends Widget {
   
   public void updateActive(){
     //TODO: Update implemented field based on if something can be confirmed
+    if(con instanceof EditorControl && g.point != null){
+      implemented = true;
+    }else{
+      implemented = false;
+    }
   }
 }
 class EditSelectedWidget extends Widget {
