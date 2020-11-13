@@ -26,10 +26,8 @@ abstract class Widget {
       lastTouch.x <= position.x+wSize*1.5 && 
       lastTouch.y <= position.y+wSize*1.5) {
       hover = true;
-    } else {
-      hover = false;
     }
-
+    
     //subWidget hover
     if (subWidgets.size() > 0 && active) { //if this widget is a menu and it has been opened
       for (Widget w : subWidgets) {
@@ -112,8 +110,8 @@ abstract class Widget {
 
   public boolean click() {
     if (hover) {
-      clicked();
       hover = false;
+      clicked();
       return true;
     }
 
@@ -329,7 +327,36 @@ class EditorTypeWidget extends Widget {
 //------------------EditorMode---------------------
 class EditorModeWidget extends Widget {
   public EditorModeWidget() {
+    off = loadImage(folder+"AddClick.png"); 
+    on = loadImage(folder+"Add.png");
     iconIsCurrentSubWidget = true;
+    Widget w1 = new AddWidget();
+    Widget w2 = new EraseWidget();
+    Widget w3 = new SelectWidget();
+    subWidgets.add(w1);
+    subWidgets.add(w2);
+    subWidgets.add(w3);
+  }
+}
+class AddWidget extends Widget {
+  public AddWidget(){
+    closeAfterSubWidget = true;
+    off = loadImage(folder+"AddClick.png"); 
+    on = loadImage(folder+"Add.png");
+  }
+}
+class EraseWidget extends Widget {
+  public EraseWidget(){
+    closeAfterSubWidget = true;
+    off = loadImage(folder+"eraserClick.png"); 
+    on = loadImage(folder+"eraser.png");
+  }
+}
+class SelectWidget extends Widget {
+  public SelectWidget(){
+    closeAfterSubWidget = true;
+    off = loadImage(folder+"marqueClick.png"); 
+    on = loadImage(folder+"marque.png");
   }
 }
 
