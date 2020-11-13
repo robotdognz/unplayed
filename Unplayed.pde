@@ -79,8 +79,8 @@ void draw() {
   }
   
   //widget menus - draw them and close them is lastTouch is below longest open widget menu
-  float currentWidgetHeight = 0;
-  boolean wMenuOpen = false;
+  float currentWidgetHeight = 0;  
+  boolean wMenuOpen = false; //TODO: needs a field that stores this so that touchEnded etc can check if they should run or not when you're clicking the bottom of the screen to close a widget menu
   for(int i = 0; i < widgets.size(); i++){
     if(widgets.get(i).isActive()){
       ArrayList<Widget> children = widgets.get(i).getChildren();
@@ -104,7 +104,9 @@ void draw() {
   currentWidgetHeight += widgets.get(0).getSize()*1.5; //add a little on to the bottom
   if(wMenuOpen && lastTouch.y > currentWidgetHeight || menu != null){
     for(Widget w: widgets){
-      w.deactivate();
+      if(w.isMenu()){
+        w.deactivate();
+      }
     }
   }
   controllerActive = !wMenuOpen; //is a menu is open, deactivate controls

@@ -7,8 +7,7 @@ abstract class Widget {
   protected PImage icon;
   protected boolean hover = false; //is the mouse over the widget
   protected boolean active = false; //is the widget active
-  
-  protected boolean implemented = true; //is this a fully working widget?
+  protected boolean implemented = true; //is this a fully working widget? Could be used to disable widgets that don't work with the current tool/mode to make menus easier to navigate
   
   //subWidget fields
   protected float animationSpeed = 0.8; //speed of subWidget animation
@@ -114,7 +113,7 @@ abstract class Widget {
   }
 
   public boolean click() {
-    if (hover) {
+    if (hover && implemented) {
       hover = false;
       clicked();
       return true;
@@ -170,6 +169,7 @@ abstract class Widget {
   }
 
   public void updateActive() {
+    //this method should also be used to update 'implemented'
     if (subWidgets.size() > 0) {
       for (Widget w : subWidgets) {
         w.updateActive();
@@ -199,6 +199,12 @@ class MenuWidget extends Widget {
       menu = new PauseMenu(this);
     }
   }
+  
+  public void updateActive() {
+    if(menu != null){
+      active = true;
+    }
+  }
 }
 
 //------------------Settings---------------------
@@ -221,7 +227,6 @@ class SuspendWidget extends Widget {
   boolean previousStatus = false;
 
   public SuspendWidget() {
-    closeAfterSubWidget = true;
     icon = loadImage(folder+"Pause.png");
   }
 
@@ -244,7 +249,6 @@ class SuspendWidget extends Widget {
 class SnapWidget extends Widget {
   public SnapWidget(){
     implemented = false;
-    closeAfterSubWidget = true;
     icon = loadImage(folder+"snaptoGrid.png");
   }
 }
@@ -364,6 +368,10 @@ class BlockModeWidget extends Widget {
     closeAfterSubWidget = true;
     icon = loadImage(folder+"colider.png");
   }
+  
+  public void clicked() {
+    
+  }
 }
 class ImageModeWidget extends Widget {
   public ImageModeWidget(){
@@ -371,12 +379,20 @@ class ImageModeWidget extends Widget {
     closeAfterSubWidget = true;
     icon = loadImage(folder+"image.png");
   }
+  
+  public void clicked() {
+    
+  }
 }
 class EventModeWidget extends Widget {
   public EventModeWidget(){
     implemented = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"event.png");
+  }
+  
+  public void clicked() {
+    
   }
 }
 
@@ -399,6 +415,10 @@ class AddWidget extends Widget {
     closeAfterSubWidget = true;
     icon = loadImage(folder+"Add.png");
   }
+  
+  public void clicked() {
+    
+  }
 }
 class EraseWidget extends Widget {
   public EraseWidget(){
@@ -406,12 +426,20 @@ class EraseWidget extends Widget {
     closeAfterSubWidget = true;
     icon = loadImage(folder+"eraser.png");
   }
+  
+  public void clicked() {
+    
+  }
 }
 class SelectWidget extends Widget {
   public SelectWidget(){
     implemented = false;
     closeAfterSubWidget = true; 
     icon = loadImage(folder+"marque.png");
+  }
+  
+  public void clicked() {
+    
   }
 }
 
@@ -446,6 +474,10 @@ class ConfirmWidget extends Widget {
       g.platforms.add(p);
       g.point = null;
     }
+  }
+  
+  public void updateActive(){
+    //TODO: Update implemented field based on if something can be confirmed
   }
 }
 class EditSelectedWidget extends Widget {
