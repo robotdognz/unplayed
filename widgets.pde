@@ -113,13 +113,16 @@ abstract class Widget {
   public boolean click() {
     if (hover) {
       clicked();
+      hover = false;
       return true;
     }
 
     if (subWidgets.size() > 0) {
       for (Widget w : subWidgets) {
-        if (w.click() && w.getCloseAfter()) {
-          active = false;
+        if (w.click()) { //both does the click and returns true if the click happened
+          if (w.getCloseAfter()) { //if the widget that was clicked should close the widget menu, close it
+            active = false;
+          }
         }
       }
     }
@@ -322,24 +325,13 @@ class ConfirmWidget extends Widget {
     closeAfterSubWidget = true;
   }
 
-  public boolean click() {
-    if (hover) {
-      if (g.point != null) {
-        Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
-        g.platforms.add(p);
-        g.point = null;
-      }
-      return true;
-    }
-    return false;
-  }
   public void clicked() {
     //finalise block
-    //if (g.point != null) {
-    //  Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
-    //  g.platforms.add(p);
-    //  g.point = null;
-    //}
+    if (g.point != null) {
+      Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
+      g.platforms.add(p);
+      g.point = null;
+    }
   }
 }
 
