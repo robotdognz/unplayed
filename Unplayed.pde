@@ -80,7 +80,7 @@ void draw() {
   
   //widget menus - draw them and close them is lastTouch is below longest open widget menu
   float currentWidgetHeight = 0;  
-  boolean wMenuOpen = false; //TODO: needs a field that stores this so that touchEnded etc can check if they should run or not when you're clicking the bottom of the screen to close a widget menu
+  boolean wMenuOpen = false; 
   for(int i = 0; i < widgets.size(); i++){
     if(widgets.get(i).isActive()){
       ArrayList<Widget> children = widgets.get(i).getChildren();

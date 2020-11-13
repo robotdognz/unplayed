@@ -486,7 +486,6 @@ class ConfirmWidget extends Widget {
   }
   
   public void updateActive(){
-    //TODO: Update implemented field based on if something can be confirmed
     if(con instanceof EditorControl && g.point != null){
       implemented = true;
     }else{
