@@ -8,6 +8,8 @@ abstract class Widget {
   protected PImage on; //activated image
   protected boolean hover = false; //is the mouse over the widget
   protected boolean active = false; //is the widget active
+  
+  protected boolean implemented = true; //is this a fully working widget?
 
   //subWidget fields
   protected float animationSpeed = 0.8; //speed of subWidget animation
@@ -84,12 +86,16 @@ abstract class Widget {
     ellipseMode(CORNER);
 
     //draw widget icon
+    if(!implemented){
+      tint(100,0,0);
+    }
     imageMode(CENTER);
     if (active) {
       image(on, position.x, position.y, wSize, wSize);
     } else {
       image(off, position.x, position.y, wSize, wSize);
     }
+    noTint();
     imageMode(CORNER);
   }
 
@@ -247,6 +253,7 @@ class SuspendWidget extends Widget {
 }
 class SnapWidget extends Widget {
   public SnapWidget(){
+    implemented = false;
     closeAfterSubWidget = true;
     off = loadImage(folder+"snaptoGridClick.png");
     on = loadImage(folder+"snaptoGrid.png");
