@@ -201,8 +201,14 @@ class SettingsWidget extends Widget {
     on = loadImage(folder+"settings.png");
     Widget w1 = new SuspendWidget();
     Widget w2 = new SnapWidget();
+    Widget w3 = new PickImageWidget();
+    Widget w4 = new PickEventWidget();
+    Widget w5 = new PickBlockWidget();
     subWidgets.add(w1);
     subWidgets.add(w2);
+    subWidgets.add(w3);
+    subWidgets.add(w4);
+    subWidgets.add(w5);
   }
 }
 class SuspendWidget extends Widget {
@@ -235,6 +241,27 @@ class SnapWidget extends Widget {
     closeAfterSubWidget = true;
     off = loadImage(folder+"snaptoGridClick.png");
     on = loadImage(folder+"snaptoGrid.png");
+  }
+}
+class PickImageWidget extends Widget {
+  public PickImageWidget(){
+    closeAfterSubWidget = true;
+    off = loadImage(folder+"pickImageClick.png");
+    on = loadImage(folder+"pickImage.png");
+  }
+}
+class PickEventWidget extends Widget {
+  public PickEventWidget(){
+    closeAfterSubWidget = true;
+    off = loadImage(folder+"pickEventClick.png");
+    on = loadImage(folder+"pickEvent.png");
+  }
+}
+class PickBlockWidget extends Widget {
+  public PickBlockWidget(){
+    closeAfterSubWidget = true;
+    off = loadImage(folder+"pickBlockClick.png");
+    on = loadImage(folder+"pickBlock.png");
   }
 }
 
@@ -321,6 +348,33 @@ class EditorControlWidget extends Widget {
 class EditorTypeWidget extends Widget {
   public EditorTypeWidget() {
     iconIsCurrentSubWidget = true;
+    Widget w1 = new BlockModeWidget();
+    Widget w2 = new ImageModeWidget();
+    Widget w3 = new EventModeWidget();
+    subWidgets.add(w1);
+    subWidgets.add(w2);
+    subWidgets.add(w3);
+  }
+}
+class BlockModeWidget extends Widget {
+  public BlockModeWidget(){
+    closeAfterSubWidget = true;
+    off = loadImage(folder+"coliderClick.png"); 
+    on = loadImage(folder+"colider.png");
+  }
+}
+class ImageModeWidget extends Widget {
+  public ImageModeWidget(){
+    closeAfterSubWidget = true;
+    off = loadImage(folder+"imageClick.png"); 
+    on = loadImage(folder+"image.png");
+  }
+}
+class EventModeWidget extends Widget {
+  public EventModeWidget(){
+    closeAfterSubWidget = true;
+    off = loadImage(folder+"eventClick.png"); 
+    on = loadImage(folder+"event.png");
   }
 }
 
@@ -366,7 +420,17 @@ class ExtraWidget extends Widget {
     off = loadImage(folder+"extraActionsClick.png");
     on = loadImage(folder+"extraActions.png");
     Widget w1 = new ConfirmWidget();
+    Widget w2 = new EditSelectedWidget();
+    Widget w3 = new LayerForwardWidget();
+    Widget w4 = new LayerBackwardWidget();
+    Widget w5 = new SaveWidget();
+    Widget w6 = new LoadWidget();
     subWidgets.add(w1);
+    subWidgets.add(w2);
+    subWidgets.add(w3);
+    subWidgets.add(w4);
+    subWidgets.add(w5);
+    subWidgets.add(w6);
   }
 }
 class ConfirmWidget extends Widget {
@@ -383,6 +447,37 @@ class ConfirmWidget extends Widget {
       g.platforms.add(p);
       g.point = null;
     }
+  }
+}
+class EditSelectedWidget extends Widget {
+  public EditSelectedWidget() {
+    off = loadImage(folder+"EditSelectedClick.png");
+    on = loadImage(folder+"EditSelected.png");
+    closeAfterSubWidget = true;
+  }
+}
+class LayerForwardWidget extends Widget {
+  public LayerForwardWidget() {
+    off = loadImage(folder+"MoveLayerForwardClick.png");
+    on = loadImage(folder+"MoveLayerForward.png");
+  }
+}
+class LayerBackwardWidget extends Widget {
+  public LayerBackwardWidget() {
+    off = loadImage(folder+"MoveLayerBackwardClick.png");
+    on = loadImage(folder+"MoveLayerBackward.png");
+  }
+}
+class SaveWidget extends Widget {
+  public SaveWidget() {
+    off = loadImage(folder+"saveClick.png");
+    on = loadImage(folder+"save.png");
+  }
+}
+class LoadWidget extends Widget {
+  public LoadWidget() {
+    off = loadImage(folder+"loadClick.png");
+    on = loadImage(folder+"load.png");
   }
 }
 
