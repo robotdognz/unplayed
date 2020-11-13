@@ -67,7 +67,7 @@ class Game {
     translate(-camera.getCenter().x, -camera.getCenter().y); //moves the view around the level
 
     //draw player and environment
-    background(255); //140
+    background(240); //140
     for (Platform p : platforms) {
       p.draw();
     }

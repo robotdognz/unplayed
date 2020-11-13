@@ -78,44 +78,34 @@ void draw() {
     lastTouch = new PVector(0, 0);
   }
   
-  //close widget menus
+  //widget menus - draw them and close them is lastTouch is below longest open widget menu
   float currentWidgetHeight = 0;
   boolean wMenuOpen = false;
-  for(Widget w: widgets){
-    if(w.isActive()){
-      ArrayList<Widget> children = w.getChildren();
+  for(int i = 0; i < widgets.size(); i++){
+    if(widgets.get(i).isActive()){
+      ArrayList<Widget> children = widgets.get(i).getChildren();
       if(children.size() > 0){
         wMenuOpen = true;
-        currentWidgetHeight = children.get(children.size()-1).getPosition().y;
-        currentWidgetHeight += w.getSize()*1.5;
+        float current = children.get(children.size()-1).getPosition().y;
+        if(current > currentWidgetHeight){
+          currentWidgetHeight = current;
+        }
       }
     }
-  }
-  
-  if(wMenuOpen && lastTouch.y > currentWidgetHeight){
-    for(Widget w: widgets){
-      w.deactivate();
-    }
-  }
-  
-  //!!!!!!!!!!!!11 need to combine these ^ v
-
-  //draw the widgets
-  boolean widgetMenuOpen = false;
-  for (int i = 0; i < widgets.size(); i++) {
-    if (i > 0 && !editorToggle) { //don't draw editor widgets if in game mide
+    if (i > 0 && !editorToggle) { //don't draw editor widgets if in game mode - only needed until editor class is implemented with its own menu widget
       continue;
     }
     widgets.get(i).draw(widgetSpacing*(i+1), 120);
     widgets.get(i).updateActive();
     widgets.get(i).hover(lastTouch);
-    if (this.widgets.get(i).isMenu() && this.widgets.get(i).isActive()) {
-      widgetMenuOpen = true;
+  }
+  currentWidgetHeight += widgets.get(0).getSize()*1.5; //add a little on to the bottom
+  if(wMenuOpen && lastTouch.y > currentWidgetHeight){
+    for(Widget w: widgets){
+      w.deactivate();
     }
   }
-  controllerActive = !widgetMenuOpen;
-  
-  
+  controllerActive = !wMenuOpen; //is a menu is open, deactivate controls
 
   //draw the menu
   if (menu != null) { 
