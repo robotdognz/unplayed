@@ -150,6 +150,14 @@ abstract class Widget {
   public PImage getOff() {
     return off;
   }
+  
+  public float getSize(){
+   return wSize; 
+  }
+  
+  public ArrayList<Widget> getChildren(){
+    return subWidgets;
+  }
 
   public void setPosition(PVector position) {
     if (this.position == null) {

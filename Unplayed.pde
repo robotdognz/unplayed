@@ -77,6 +77,28 @@ void draw() {
   } else {
     lastTouch = new PVector(0, 0);
   }
+  
+  //close widget menus
+  float currentWidgetHeight = 0;
+  boolean wMenuOpen = false;
+  for(Widget w: widgets){
+    if(w.isActive()){
+      ArrayList<Widget> children = w.getChildren();
+      if(children.size() > 0){
+        wMenuOpen = true;
+        currentWidgetHeight = children.get(children.size()-1).getPosition().y;
+        currentWidgetHeight += w.getSize()*1.5;
+      }
+    }
+  }
+  
+  if(wMenuOpen && lastTouch.y > currentWidgetHeight){
+    for(Widget w: widgets){
+      w.deactivate();
+    }
+  }
+  
+  //!!!!!!!!!!!!11 need to combine these ^ v
 
   //draw the widgets
   boolean widgetMenuOpen = false;
@@ -92,6 +114,8 @@ void draw() {
     }
   }
   controllerActive = !widgetMenuOpen;
+  
+  
 
   //draw the menu
   if (menu != null) { 
