@@ -87,7 +87,7 @@ abstract class Widget {
 
     //draw widget icon
     if(!implemented){
-      tint(100,0,0);
+      tint(50,50,50);
     }
     imageMode(CENTER);
     if (active) {
@@ -261,6 +261,7 @@ class SnapWidget extends Widget {
 }
 class PickImageWidget extends Widget {
   public PickImageWidget(){
+    implemented = false;
     closeAfterSubWidget = true;
     off = loadImage(folder+"pickImageClick.png");
     on = loadImage(folder+"pickImage.png");
@@ -268,6 +269,7 @@ class PickImageWidget extends Widget {
 }
 class PickEventWidget extends Widget {
   public PickEventWidget(){
+    implemented = false;
     closeAfterSubWidget = true;
     off = loadImage(folder+"pickEventClick.png");
     on = loadImage(folder+"pickEvent.png");
@@ -275,6 +277,7 @@ class PickEventWidget extends Widget {
 }
 class PickBlockWidget extends Widget {
   public PickBlockWidget(){
+    implemented = false;
     closeAfterSubWidget = true;
     off = loadImage(folder+"pickBlockClick.png");
     on = loadImage(folder+"pickBlock.png");
@@ -363,6 +366,8 @@ class EditorControlWidget extends Widget {
 //------------------EditorType---------------------
 class EditorTypeWidget extends Widget {
   public EditorTypeWidget() {
+    off = loadImage(folder+"coliderClick.png"); 
+    on = loadImage(folder+"colider.png");
     iconIsCurrentSubWidget = true;
     Widget w1 = new BlockModeWidget();
     Widget w2 = new ImageModeWidget();
@@ -374,6 +379,7 @@ class EditorTypeWidget extends Widget {
 }
 class BlockModeWidget extends Widget {
   public BlockModeWidget(){
+    implemented = false;
     closeAfterSubWidget = true;
     off = loadImage(folder+"coliderClick.png"); 
     on = loadImage(folder+"colider.png");
@@ -381,6 +387,7 @@ class BlockModeWidget extends Widget {
 }
 class ImageModeWidget extends Widget {
   public ImageModeWidget(){
+    implemented = false;
     closeAfterSubWidget = true;
     off = loadImage(folder+"imageClick.png"); 
     on = loadImage(folder+"image.png");
@@ -388,6 +395,7 @@ class ImageModeWidget extends Widget {
 }
 class EventModeWidget extends Widget {
   public EventModeWidget(){
+    implemented = false;
     closeAfterSubWidget = true;
     off = loadImage(folder+"eventClick.png"); 
     on = loadImage(folder+"event.png");
@@ -410,6 +418,7 @@ class EditorModeWidget extends Widget {
 }
 class AddWidget extends Widget {
   public AddWidget(){
+    implemented = false;
     closeAfterSubWidget = true;
     off = loadImage(folder+"AddClick.png"); 
     on = loadImage(folder+"Add.png");
@@ -417,6 +426,7 @@ class AddWidget extends Widget {
 }
 class EraseWidget extends Widget {
   public EraseWidget(){
+    implemented = false;
     closeAfterSubWidget = true;
     off = loadImage(folder+"eraserClick.png"); 
     on = loadImage(folder+"eraser.png");
@@ -424,6 +434,7 @@ class EraseWidget extends Widget {
 }
 class SelectWidget extends Widget {
   public SelectWidget(){
+    implemented = false;
     closeAfterSubWidget = true;
     off = loadImage(folder+"marqueClick.png"); 
     on = loadImage(folder+"marque.png");
@@ -467,6 +478,7 @@ class ConfirmWidget extends Widget {
 }
 class EditSelectedWidget extends Widget {
   public EditSelectedWidget() {
+    implemented = false;
     off = loadImage(folder+"EditSelectedClick.png");
     on = loadImage(folder+"EditSelected.png");
     closeAfterSubWidget = true;
@@ -474,24 +486,28 @@ class EditSelectedWidget extends Widget {
 }
 class LayerForwardWidget extends Widget {
   public LayerForwardWidget() {
+    implemented = false;
     off = loadImage(folder+"MoveLayerForwardClick.png");
     on = loadImage(folder+"MoveLayerForward.png");
   }
 }
 class LayerBackwardWidget extends Widget {
   public LayerBackwardWidget() {
+    implemented = false;
     off = loadImage(folder+"MoveLayerBackwardClick.png");
     on = loadImage(folder+"MoveLayerBackward.png");
   }
 }
 class SaveWidget extends Widget {
   public SaveWidget() {
+    implemented = false;
     off = loadImage(folder+"saveClick.png");
     on = loadImage(folder+"save.png");
   }
 }
 class LoadWidget extends Widget {
   public LoadWidget() {
+    implemented = false;
     off = loadImage(folder+"loadClick.png");
     on = loadImage(folder+"load.png");
   }
