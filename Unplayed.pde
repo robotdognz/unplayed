@@ -17,7 +17,7 @@ float maxZoom = 20000;
 boolean gPaused = false; //is the game class paused
 private ArrayList<Widget> widgets = new ArrayList<Widget>();
 private float widgetSpacing; //size of gap between widgets
-private boolean editorToggle = false; //is the game in editor mode
+private boolean editorToggle = true; //is the game in editor mode
 private Menu menu;
 
 //touch screen stuff
@@ -97,10 +97,12 @@ void draw() {
     }
     widgets.get(i).draw(widgetSpacing*(i+1), 120);
     widgets.get(i).updateActive();
-    widgets.get(i).hover(lastTouch);
+    if(menu == null){
+      widgets.get(i).hover(lastTouch);
+    }
   }
   currentWidgetHeight += widgets.get(0).getSize()*1.5; //add a little on to the bottom
-  if(wMenuOpen && lastTouch.y > currentWidgetHeight){
+  if(wMenuOpen && lastTouch.y > currentWidgetHeight || menu != null){
     for(Widget w: widgets){
       w.deactivate();
     }

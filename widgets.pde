@@ -4,13 +4,12 @@ abstract class Widget {
   protected float wSize = 75; //60 //size of the widget
   protected float touchScale = 1.2; //1.5
   protected String folder = dataPath("ui")+'/'; //data path of widget icons
-  //protected PImage off; //inactive image
   protected PImage icon;
   protected boolean hover = false; //is the mouse over the widget
   protected boolean active = false; //is the widget active
   
   protected boolean implemented = true; //is this a fully working widget?
-
+  
   //subWidget fields
   protected float animationSpeed = 0.8; //speed of subWidget animation
   protected widgetDirection wd = widgetDirection.DOWN; //subWidget direction, defaults to down
@@ -87,10 +86,10 @@ abstract class Widget {
 
     //draw widget icon
     if (!active){
-      tint(150,150,150);
+      tint(155,155,155);
     }
     if(!implemented){
-      tint(50,50,50);
+      tint(30,30,30);
     }
     imageMode(CENTER);
     image(icon, position.x, position.y, wSize, wSize);
