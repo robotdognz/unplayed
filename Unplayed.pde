@@ -188,36 +188,20 @@ void onPinch(float x, float y, float d) {
   }
 }
 
-//interfaces
-//interface Level {
-//  public PVector getPlayerStart();
-//  public ArrayList<Platform> getPlatforms();
-//  public ArrayList<Event> getEvents();
-//  public int getStartScale();
-//  public PVector getStartCenter();
-//  public int getTopBar();
-//  public int getBottomBar();
-//}
-interface Event {
-  public PVector getTopLeft();
-  public PVector getBottomRight();
-  public String getType();
-  public void activate(Game g);
-  public void draw();
-}
-
 //------------------Vibe---------------------
 class Vibe {
-  Vibrator vibe;
+  private Vibrator vibe;
+  private boolean deprecated;
 
   public Vibe() {
     vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE); 
+    deprecated = android.os.Build.VERSION.SDK_INT > 26 && vibe.hasVibrator();
     //this class needs to be updated to calculate fine grained vibration strength using a combination of amount and level
   }
 
   public void vibrate(long amount) {
     //amount = duration
-    if (android.os.Build.VERSION.SDK_INT > 26 && vibe.hasVibrator()) {
+    if (!deprecated) {
       vibe.vibrate(VibrationEffect.createOneShot(amount, 255));
     } else {
       //this is for older versions of anroid
@@ -229,7 +213,7 @@ class Vibe {
   public void vibrate(long amount, int level) {
     //amount = duration
     //level = intensity
-    if (android.os.Build.VERSION.SDK_INT > 26 && vibe.hasVibrator()) {
+    if (!deprecated) {
       vibe.vibrate(VibrationEffect.createOneShot(amount, level));
     } else {
       //this is for older versions of anroid

@@ -1,3 +1,11 @@
+interface Event {
+  public PVector getTopLeft();
+  public PVector getBottomRight();
+  public String getType();
+  public void activate(Game g);
+  public void draw();
+}
+
 //------------------CameraChange---------------------
 class CameraChange implements Event {
   private PVector position;
