@@ -2,8 +2,7 @@
 class Editor {
   Game eGame; //reference to game, same instance of game used everywhere else
 
-  //camera
-  //Camera eCamera = new FreeCamera(); 
+  //camera variables
   float minZoom = 200;
   float maxZoom = 20000;
 
@@ -24,7 +23,6 @@ class Editor {
 
   public Editor(Game game) {
     this.eGame = game;
-    //this.eCamera = new GameCamera();
     this.eController = new PlayerControl();
     this.eWidgets = new ArrayList<Widget>();
 
@@ -67,9 +65,6 @@ class Editor {
           }
         }
       }
-      //if (i > 0 && !editorToggle) { //don't draw editor widgets if in game mode - only needed until editor class is implemented with its own menu widget
-        //continue;
-      //}
       eWidgets.get(i).draw(eWidgetSpacing*(i+1), 120);
       eWidgets.get(i).updateActive();
       if (menu == null) {
@@ -108,9 +103,6 @@ class Editor {
   public void touchEnded() {
     //check for clicking on widgets
     for (int i = 0; i < eWidgets.size(); i++) {
-      //if (i > 0 && !editorToggle) { //don't click editor widgets if in game mode
-        //continue;
-      //}
       eWidgets.get(i).click();
     }
   }
@@ -127,9 +119,6 @@ class Editor {
     }
   }
 
-  //public Camera getCamera() {
-  //  return eCamera;
-  //}
   public Controller getController() {
     return eController;
   }

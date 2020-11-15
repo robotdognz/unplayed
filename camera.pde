@@ -42,8 +42,6 @@ class GameCamera extends Camera{
   GameCamera(){
     game = true;
   }
-  
-  
 }
 
 //------------------FreeCamera---------------------
@@ -51,6 +49,4 @@ class FreeCamera extends Camera{
   FreeCamera(){
    game = false;
   }
-  
-  
 }

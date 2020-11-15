@@ -40,19 +40,9 @@ void setup() {
   gController = new PlayerControl();
   edit = new Editor(g);
 
-  ////setup widgets
+  ////setup non editor widgets
   Widget menuW = new MenuWidget(edit);
-  //Widget settingsW = new SettingsWidget(edit);
-  //Widget controlW = new ControlWidget(edit);
-  //Widget editTypeW = new EditorTypeWidget(edit); 
-  //Widget editModeW = new EditorModeWidget(edit); 
-  //Widget extraW = new ExtraWidget(edit); 
   gWidgets.add(menuW);
-  //widgets.add(settingsW);
-  //widgets.add(controlW);
-  //widgets.add(editTypeW);
-  //widgets.add(editModeW);
-  //widgets.add(extraW);
   gWidgetSpacing = width/(gWidgets.size()+1);
 
   k = new KetaiGesture(this);
@@ -60,17 +50,12 @@ void setup() {
 
 void draw() {
   if (!gPaused) { //step the game if it is not paused
-    //if(controllerActive){
-    //  con.draw(); //draw event for controls
-    //}
-
     //step editor or game controller depending on editor toggle
     if (editorToggle) {
       edit.step();
     } else {
       gController.draw();
     }
-
     g.step(); //step game
   }
   g.draw(); //draw the game
@@ -99,58 +84,11 @@ void draw() {
     }
   }
 
-
-
-  ////widget menus - draw them and close them is lastTouch is below longest open widget menu
-  //float currentWidgetHeight = 0;  
-  //boolean wMenuOpen = false; 
-  //for(int i = 0; i < widgets.size(); i++){
-  //  if(widgets.get(i).isActive()){
-  //    ArrayList<Widget> children = widgets.get(i).getChildren();
-  //    if(children.size() > 0){
-  //      wMenuOpen = true;
-  //      float current = children.get(children.size()-1).getPosition().y;
-  //      if(current > currentWidgetHeight){
-  //        currentWidgetHeight = current;
-  //      }
-  //    }
-  //  }
-  //  if (i > 0 && !editorToggle) { //don't draw editor widgets if in game mode - only needed until editor class is implemented with its own menu widget
-  //    continue;
-  //  }
-  //  widgets.get(i).draw(widgetSpacing*(i+1), 120);
-  //  widgets.get(i).updateActive();
-  //  if(menu == null){
-  //    widgets.get(i).hover(lastTouch);
-  //  }
-  //}
-  //currentWidgetHeight += widgets.get(0).getSize()*1.5; //add a little on to the bottom
-  //if(wMenuOpen && lastTouch.y > currentWidgetHeight || menu != null){
-  //  for(Widget w: widgets){
-  //    if(w.isMenu()){
-  //      w.deactivate();
-  //    }
-  //  }
-  //}
-  //controllerActive = !wMenuOpen; //is a menu is open, deactivate controls
-
   //draw the menu
   if (menu != null) { 
     menu.draw();
     menu.hover(lastTouch);
   }
-
-  ////draw frame counter
-  //if (frameDelay > 30) {
-  //  frame = frameRate;
-  //  frameDelay = 0;
-  //} else {
-  //  frameDelay++;
-  //}
-  //fill(255);
-  //textSize(50);
-  //textAlign(CENTER, CENTER);
-  //text(nf(frame, 2, 2), width/2, height-50);
 }
 
 void touchStarted() {
@@ -179,11 +117,6 @@ void touchStarted() {
     } else {
       gController.touchStarted();
     }
-
-
-    //if(controllerActive){
-    //  con.touchStarted(); //controlls for touch started event
-    //}
   }
 }
 
@@ -196,16 +129,6 @@ void touchEnded() {
     }
   }
 
-  ////check for clicking on widgets
-  //for (int i = 0; i < widgets.size(); i++) {
-  //  if (i > 0 && !editorToggle) { //don't click editor widgets if in game mide
-  //    continue;
-  //  }
-  //  widgets.get(i).click();
-  //}
-  //check for clicking on menu
-
-
   if (menu != null) {
     menu.click();
   }
@@ -213,17 +136,11 @@ void touchEnded() {
 
 void touchMoved() {
   if (menu == null) {
-
     if (editorToggle) {
       edit.touchMoved();
     } else {
       gController.touchMoved();
     }
-
-
-    //if(controllerActive){
-    //  con.touchMoved(); //controlls for touch moved event
-    //}
   }
 }
 
@@ -234,10 +151,6 @@ void onPinch(float x, float y, float d) {
     } else {
       gController.onPinch(x, y, d);
     }
-
-    //if(controllerActive){
-    //  con.onPinch(x, y, d); //controlls for on pinch event
-    //}
   }
 }
 
