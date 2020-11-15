@@ -358,7 +358,7 @@ class EditorControlWidget extends Widget {
 
   public void clicked() {
     if (!active) {
-      editor.eController = new EditorControl();
+      editor.eController = new EditorControl(editor);
     }
   }
 

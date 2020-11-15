@@ -68,25 +68,31 @@ class CameraControl implements Controller {
       float moveX = pmouseX - mouseX;
       float moveY = pmouseY - mouseY;
       PVector diff = new PVector(moveX, moveY);
-      c.setCenter(c.getCenter().add(diff));
+      editor.eCamera.setCenter(editor.eCamera.getCenter().add(diff));
     }
   }
   public void onPinch(float x, float y, float d) {
     if (touches.length == 2) {
-      float newScale = c.getScale()-d;
+      float newScale = editor.eCamera.getScale()-d;
       if (newScale < editor.minZoom) {
         newScale = editor.minZoom;
       }
       if (newScale > editor.maxZoom) {
         newScale = editor.maxZoom;
       }
-      c.setScale(newScale);
+      editor.eCamera.setScale(newScale);
     }
   }
 }
 
 //------------------EditorController---------------------
 class EditorControl implements Controller {
+  Editor editor;
+  
+  public EditorControl(Editor editor){
+    this.editor = editor;
+  }
+  
   public void draw() {
   }
   public void touchStarted() {
@@ -98,9 +104,13 @@ class EditorControl implements Controller {
       return;
     }
     float snapNo = 100;
+    
     //calculate position in level
-    float levelX = ((mouseX-width/2)/((float)width/(float)c.getScale())/c.getSubScale())+c.getCenter().x;
-    float levelY = ((mouseY-height/2)/((float)width/(float)c.getScale())/c.getSubScale())+c.getCenter().y;
+    float currentScale = editor.eCamera.getScale();
+    float currentSubScale = editor.eCamera.getSubScale();
+    PVector currentCenter = editor.eCamera.getCenter();
+    float levelX = ((mouseX-width/2)/((float)width/currentScale)/currentSubScale) + currentCenter.x;
+    float levelY = ((mouseY-height/2)/((float)width/currentScale)/currentSubScale) + currentCenter.y;
 
     //round so blocks snap to grid
     float finalX = Math.round(levelX/snapNo)*snapNo;

@@ -7,8 +7,8 @@ import ketai.ui.KetaiGesture;
 KetaiGesture k;
 
 Game g; //holds the game class
-Camera c; //holds the camera
-Controller con; //holds the current controller
+Camera gCamera; //holds the game camera
+Controller gController; //holds the current controller
 //boolean controllerActive = true; //is the current controller active
 Editor edit; //holds the editor
 
@@ -35,9 +35,9 @@ void setup() {
   frameRate(60);
 
   //setup game
-  //c = new GameCamera();
-  g = new Game(c);
-  //con = new PlayerControl();
+  gCamera = new GameCamera();
+  g = new Game(gCamera);            //currently game does not have access to editor camera, this is bad
+  gController = new PlayerControl();
   edit = new Editor(g);
 
   ////setup widgets
