@@ -54,14 +54,17 @@ class PauseMenu extends Menu{
   public void click() {
     for (Button b : buttons) {
       if (b.click().equals(resume)) { //resume the game if resume button pressed
-        m.active = false; //change status of menu widget
+        m.active = false; //change status of pause widget
         gPaused = m.previousStatus;
         menu = null; //remove pause menu
-      }else if(b.click().equals(editor)){ //toggle the editor when pressed
-        editorToggle = !editorToggle;    
-        m.active = false; //change status of menu widget
+      }else if(b.click().equals(editor)){
+        editorToggle = !editorToggle;                        //TODO: disable editor when this variable is changed
+        m.active = false; //change status of  widget
         gPaused = m.previousStatus;
         menu = null; //remove pause menu
+        if(!editorToggle){
+          gCamera = new GameCamera();
+        }
       }
     }
   }

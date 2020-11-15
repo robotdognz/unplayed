@@ -3,7 +3,7 @@ class Editor {
   Game eGame; //reference to game, same instance of game used everywhere else
 
   //camera
-  Camera eCamera = new FreeCamera(); 
+  //Camera eCamera = new FreeCamera(); 
   float minZoom = 200;
   float maxZoom = 20000;
 
@@ -24,7 +24,7 @@ class Editor {
 
   public Editor(Game game) {
     this.eGame = game;
-    this.eCamera = new GameCamera();
+    //this.eCamera = new GameCamera();
     this.eController = new PlayerControl();
     this.eWidgets = new ArrayList<Widget>();
 
@@ -127,9 +127,9 @@ class Editor {
     }
   }
 
-  public Camera getCamera() {
-    return eCamera;
-  }
+  //public Camera getCamera() {
+  //  return eCamera;
+  //}
   public Controller getController() {
     return eController;
   }

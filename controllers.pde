@@ -68,19 +68,19 @@ class CameraControl implements Controller {
       float moveX = pmouseX - mouseX;
       float moveY = pmouseY - mouseY;
       PVector diff = new PVector(moveX, moveY);
-      editor.eCamera.setCenter(editor.eCamera.getCenter().add(diff));
+      gCamera.setCenter(gCamera.getCenter().add(diff));
     }
   }
   public void onPinch(float x, float y, float d) {
     if (touches.length == 2) {
-      float newScale = editor.eCamera.getScale()-d;
+      float newScale = gCamera.getScale()-d;
       if (newScale < editor.minZoom) {
         newScale = editor.minZoom;
       }
       if (newScale > editor.maxZoom) {
         newScale = editor.maxZoom;
       }
-      editor.eCamera.setScale(newScale);
+      gCamera.setScale(newScale);
     }
   }
 }
@@ -106,9 +106,9 @@ class EditorControl implements Controller {
     float snapNo = 100;
     
     //calculate position in level
-    float currentScale = editor.eCamera.getScale();
-    float currentSubScale = editor.eCamera.getSubScale();
-    PVector currentCenter = editor.eCamera.getCenter();
+    float currentScale = gCamera.getScale();
+    float currentSubScale = gCamera.getSubScale();
+    PVector currentCenter = gCamera.getCenter();
     float levelX = ((mouseX-width/2)/((float)width/currentScale)/currentSubScale) + currentCenter.x;
     float levelY = ((mouseY-height/2)/((float)width/currentScale)/currentSubScale) + currentCenter.y;
 

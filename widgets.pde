@@ -239,14 +239,14 @@ class SuspendWidget extends Widget {
 
   public void clicked() {
     if (!active) {
-      editor.eCamera = new FreeCamera();
+      gCamera = new FreeCamera();
     } else {
-      editor.eCamera = new GameCamera();
+      gCamera = new GameCamera();
     }
   }
 
   public void updateActive() {
-    if (editor.eCamera instanceof FreeCamera) {
+    if (gCamera instanceof FreeCamera) {
       active = true;
     } else {
       active = false;
@@ -339,7 +339,7 @@ class CameraControlWidget extends Widget {
     } else {
       active = false;
     }
-    if(editor.eCamera instanceof GameCamera){
+    if(gCamera instanceof GameCamera){
       implemented = false;
       if(editor.eController instanceof CameraControl){
         editor.eController = new PlayerControl();
