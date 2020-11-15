@@ -188,15 +188,15 @@ void onPinch(float x, float y, float d) {
 }
 
 //interfaces
-interface Level {
-  public PVector getPlayerStart();
-  public ArrayList<Platform> getPlatforms();
-  public ArrayList<Event> getEvents();
-  public int getStartScale();
-  public PVector getStartCenter();
-  public int getTopBar();
-  public int getBottomBar();
-}
+//interface Level {
+//  public PVector getPlayerStart();
+//  public ArrayList<Platform> getPlatforms();
+//  public ArrayList<Event> getEvents();
+//  public int getStartScale();
+//  public PVector getStartCenter();
+//  public int getTopBar();
+//  public int getBottomBar();
+//}
 interface Event {
   public PVector getTopLeft();
   public PVector getBottomRight();

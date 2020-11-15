@@ -1,18 +1,57 @@
+abstract class Level {
+  protected ArrayList<Platform> platforms;
+  protected ArrayList<Event> events;
+  protected PVector playerStart;
+  protected int startScale;
+  protected PVector startCenter;
+  protected int bottomOfTopBar;
+  protected int topOfBottomBar;
+  
+  public Level(){
+    platforms = new ArrayList<Platform>();
+    events = new ArrayList<Event>();
+    playerStart = new PVector(0, 0);
+    
+    buildLevel();
+  }
+  
+  private void buildLevel(){}
+  
+  public PVector getPlayerStart() {
+    return playerStart;
+  }
+  public ArrayList<Platform> getPlatforms() {
+    return platforms;
+  }
+  public ArrayList<Event> getEvents() {
+    return events;
+  }
+  public int getStartScale() {
+    return startScale;
+  }
+  public PVector getStartCenter() {
+    return startCenter;
+  }
+  public int getTopBar() {
+    return this.bottomOfTopBar;
+  }
+  public int getBottomBar() {
+    return this.topOfBottomBar;
+  }
+}
+
 //------------------Level1---------------------
-class Level1 implements Level {
-  private ArrayList<Platform> platforms;
-  private ArrayList<Event> events;
-  private PVector playerStart;
-  private int startScale;
-  private PVector startCenter;
-  private int bottomOfTopBar;
-  private int topOfBottomBar;
+class Level1 extends Level {
 
   Level1() {
     platforms = new ArrayList<Platform>();
     events = new ArrayList<Event>();
+  
+    buildLevel();
+  }
+
+  private void buildLevel() {
     playerStart = new PVector(-200, 1000);
-    
     PVector cameraTopLeft = new PVector(-600, 800);
     PVector cameraBottomRight = new PVector(0, 1300);
     int centerX = (int)((cameraBottomRight.x-cameraTopLeft.x)/2+cameraTopLeft.x);
@@ -23,10 +62,6 @@ class Level1 implements Level {
     this.bottomOfTopBar = (int)cameraTopLeft.y;
     this.topOfBottomBar = (int)cameraBottomRight.y;
     
-    buildLevel();
-  }
-
-  private void buildLevel() {
     platforms.add(new Platform(-150, 1000, 200, 100));
     platforms.add(new Platform(-1400, 1300, 1400*3, 100)); //100
     platforms.add(new Platform(-350, 1100, 200, 100));
@@ -52,39 +87,10 @@ class Level1 implements Level {
     events.add(new CameraChange(600, 500, 100, 100, new PVector(-700, -8000), new PVector(700, 10000), 3, 3)); //0.03, 0.023
     
   }
-  
-  public PVector getPlayerStart() {
-    return playerStart;
-  }
-  public ArrayList<Platform> getPlatforms() {
-    return platforms;
-  }
-  public ArrayList<Event> getEvents() {
-    return events;
-  }
-  public int getStartScale() {
-    return startScale;
-  }
-  public PVector getStartCenter() {
-    return startCenter;
-  }
-  public int getTopBar() {
-    return this.bottomOfTopBar;
-  }
-  public int getBottomBar() {
-    return this.topOfBottomBar;
-  }
 }
 
 //------------------Level2---------------------
-class Level2 implements Level {
-  private ArrayList<Platform> platforms;
-  private ArrayList<Event> events;
-  private PVector playerStart;
-  private int startScale;
-  private PVector startCenter;
-  private int bottomOfTopBar = 0;
-  private int topOfBottomBar = 0;
+class Level2 extends Level {
 
   Level2() {
     platforms = new ArrayList<Platform>();
@@ -144,27 +150,5 @@ class Level2 implements Level {
     
     events.add(new CameraChange(-500, 600, 100, 100, new PVector(-1800, 300), new PVector(1800, 2300), 2.5, 2.5)); //0.04, 0.05
     
-  }
-  
-  public PVector getPlayerStart() {
-    return playerStart;
-  }
-  public ArrayList<Platform> getPlatforms() {
-    return platforms;
-  }
-  public ArrayList<Event> getEvents() {
-    return events;
-  }
-  public int getStartScale() {
-    return startScale;
-  }
-  public PVector getStartCenter() {
-    return startCenter;
-  }
-  public int getTopBar() {
-    return bottomOfTopBar;
-  }
-  public int getBottomBar() {
-    return topOfBottomBar;
   }
 }

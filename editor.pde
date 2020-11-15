@@ -1,12 +1,12 @@
 //------------------Editor---------------------
 class Editor {
   //camera
-  Camera eCamera; 
+  Camera eCamera = new FreeCamera(); 
   float minZoom = 200;
   float maxZoom = 20000;
 
   //controller
-  Controller eController; //holds the current controller
+  Controller eController = new CameraControl(); //holds the current controller
   boolean controllerActive = true; //is the current controller active
   
   //editor settings
