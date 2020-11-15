@@ -38,14 +38,15 @@ void setup() {
   c = new GameCamera();
   g = new Game(c);
   con = new PlayerControl();
+  edit = new Editor(g);
 
   //setup widgets
-  Widget menuW = new MenuWidget();
-  Widget settingsW = new SettingsWidget();
-  Widget controlW = new ControlWidget();
-  Widget editTypeW = new EditorTypeWidget(); //edit type
-  Widget editModeW = new EditorModeWidget(); //edit mode
-  Widget extraW = new ExtraWidget(); //extra
+  Widget menuW = new MenuWidget(edit);
+  Widget settingsW = new SettingsWidget(edit);
+  Widget controlW = new ControlWidget(edit);
+  Widget editTypeW = new EditorTypeWidget(edit); //edit type
+  Widget editModeW = new EditorModeWidget(edit); //edit mode
+  Widget extraW = new ExtraWidget(edit); //extra
   widgets.add(menuW);
   widgets.add(settingsW);
   widgets.add(controlW);

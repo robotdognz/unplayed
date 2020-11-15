@@ -1,5 +1,7 @@
 //------------------Editor---------------------
 class Editor {
+  Game eGame; //reference to game, same instance of game used everywhere else
+  
   //camera
   Camera eCamera = new FreeCamera(); 
   float minZoom = 200;
@@ -20,7 +22,8 @@ class Editor {
   int frameDelay = 100;
   float frame;
 
-  public Editor() {
+  public Editor(Game game) {
+    this.eGame = game;
     this.eCamera = new GameCamera();
     this.eController = new PlayerControl();
 
