@@ -48,6 +48,12 @@ class PlayerControl implements Controller {
 
 //------------------CameraController---------------------
 class CameraControl implements Controller {
+  Editor editor;
+  
+  public CameraControl(Editor editor){
+    this.editor = editor;
+  }
+  
   public void draw() {
   }
   public void touchStarted() {
@@ -68,11 +74,11 @@ class CameraControl implements Controller {
   public void onPinch(float x, float y, float d) {
     if (touches.length == 2) {
       float newScale = c.getScale()-d;
-      if (newScale < minZoom) {
-        newScale = minZoom;
+      if (newScale < editor.minZoom) {
+        newScale = editor.minZoom;
       }
-      if (newScale > maxZoom) {
-        newScale = maxZoom;
+      if (newScale > editor.maxZoom) {
+        newScale = editor.maxZoom;
       }
       c.setScale(newScale);
     }

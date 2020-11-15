@@ -1,22 +1,22 @@
 //------------------Editor---------------------
 class Editor {
   Game eGame; //reference to game, same instance of game used everywhere else
-  
+
   //camera
   Camera eCamera = new FreeCamera(); 
   float minZoom = 200;
   float maxZoom = 20000;
 
   //controller
-  Controller eController = new CameraControl(); //holds the current controller
-  boolean controllerActive = true; //is the current controller active
-  
+  Controller eController = new CameraControl(this); //holds the current controller
+  boolean eControllerActive = true; //is the current controller active
+
   //editor settings
   boolean snap = true; //things placed in the level will snap to grid
 
   //widgets
-  ArrayList<Widget> widgets;
-  float widgetSpacing; //size of gap between widgets
+  ArrayList<Widget> eWidgets;
+  float eWidgetSpacing; //size of gap between widgets
 
   //frame count
   int frameDelay = 100;
@@ -26,30 +26,65 @@ class Editor {
     this.eGame = game;
     this.eCamera = new GameCamera();
     this.eController = new PlayerControl();
+    this.eWidgets = new ArrayList<Widget>();
 
-    this.widgets = new ArrayList<Widget>();
-    this.widgetSpacing = width/(this.widgets.size()+1);
+    //setup widgets
+    Widget menuW = new MenuWidget(edit);
+    Widget settingsW = new SettingsWidget(edit);
+    Widget controlW = new ControlWidget(edit);
+    Widget editTypeW = new EditorTypeWidget(edit); 
+    Widget editModeW = new EditorModeWidget(edit); 
+    Widget extraW = new ExtraWidget(edit); 
+    eWidgets.add(menuW);
+    eWidgets.add(settingsW);
+    eWidgets.add(controlW);
+    eWidgets.add(editTypeW);
+    eWidgets.add(editModeW);
+    eWidgets.add(extraW);
+    
+    this.eWidgetSpacing = width/(this.eWidgets.size()+1);
   }
-  
-  public void step(){
-    //step the controller is there are no widget menus open
-    if(controllerActive){
+
+  public void step() {
+    //step the controller if there are no widget menus open
+    if (eControllerActive) {
       eController.draw(); //draw event for controls
     }
   }
 
   public void draw() {
-    //draw the widgets and check if eController should be active
-    boolean widgetMenuOpen = false;
-    for (int i = 0; i < this.widgets.size(); i++) {
-      this.widgets.get(i).draw(this.widgetSpacing*(i+1), 120);
-      this.widgets.get(i).updateActive();
-      this.widgets.get(i).hover(lastTouch);
-      if(this.widgets.get(i).isMenu() && this.widgets.get(i).isActive()){
-        widgetMenuOpen = true;
+    //widget menus - draw them and close them is lastTouch is below longest open widget menu
+    float currentWidgetHeight = 0;  
+    boolean wMenuOpen = false; 
+    for (int i = 0; i < eWidgets.size(); i++) {
+      if (eWidgets.get(i).isActive()) {
+        ArrayList<Widget> children = eWidgets.get(i).getChildren();
+        if (children.size() > 0) {
+          wMenuOpen = true;
+          float current = children.get(children.size()-1).getPosition().y;
+          if (current > currentWidgetHeight) {
+            currentWidgetHeight = current;
+          }
+        }
+      }
+      if (i > 0 && !editorToggle) { //don't draw editor widgets if in game mode - only needed until editor class is implemented with its own menu widget
+        continue;
+      }
+      eWidgets.get(i).draw(eWidgetSpacing*(i+1), 120);
+      eWidgets.get(i).updateActive();
+      if (menu == null) {
+        eWidgets.get(i).hover(lastTouch);
       }
     }
-    controllerActive = !widgetMenuOpen;
+    currentWidgetHeight += eWidgets.get(0).getSize()*1.5; //add a little on to the bottom
+    if (wMenuOpen && lastTouch.y > currentWidgetHeight || menu != null) {
+      for (Widget w : eWidgets) {
+        if (w.isMenu()) {
+          w.deactivate();
+        }
+      }
+    }
+    eControllerActive = !wMenuOpen; //is a menu is open, deactivate controls
 
     //draw frame counter
     if (frameDelay > 30) {
@@ -65,17 +100,33 @@ class Editor {
   }
 
   public void touchStarted() {
+    if (eControllerActive) {
+      eController.touchStarted(); //controlls for touch started event
+    }
   }
 
   public void touchEnded() {
+    //check for clicking on widgets
+    for (int i = 0; i < eWidgets.size(); i++) {
+      if (i > 0 && !editorToggle) { //don't click editor widgets if in game mode
+        continue;
+      }
+      eWidgets.get(i).click();
+    }
   }
 
   public void touchMoved() {
+    if (eControllerActive) {
+      eController.touchMoved(); //controlls for touch moved event
+    }
   }
 
   public void onPinch(float x, float y, float d) {
+    if (eControllerActive) {
+      eController.onPinch(x, y, d); //controlls for on pinch event
+    }
   }
-  
+
   public Camera getCamera() {
     return eCamera;
   }

@@ -41,7 +41,7 @@ abstract class Widget {
   }
 
   public void draw(float wX, float wY) {
-    subWidgetSpacing = widgetSpacing;
+    subWidgetSpacing = editor.eWidgetSpacing;
     //update position
     if (position == null) {
       position = new PVector(wX, wY);
@@ -329,7 +329,7 @@ class CameraControlWidget extends Widget {
 
   public void clicked() {
     if (!active) {
-      con = new CameraControl();
+      con = new CameraControl(editor);
     }
   }
 

@@ -9,14 +9,14 @@ KetaiGesture k;
 Game g; //holds the game class
 Camera c; //holds the camera
 Controller con; //holds the current controller
-boolean controllerActive = true; //is the current controller active
+//boolean controllerActive = true; //is the current controller active
 Editor edit; //holds the editor
 
-float minZoom = 200;
-float maxZoom = 20000;
+//float minZoom = 200;
+//float maxZoom = 20000;
 boolean gPaused = false; //is the game class paused
-private ArrayList<Widget> widgets = new ArrayList<Widget>();
-private float widgetSpacing; //size of gap between widgets
+//private ArrayList<Widget> widgets = new ArrayList<Widget>();
+//private float widgetSpacing; //size of gap between widgets
 private boolean editorToggle = true; //is the game in editor mode
 private Menu menu;
 
@@ -40,29 +40,30 @@ void setup() {
   con = new PlayerControl();
   edit = new Editor(g);
 
-  //setup widgets
-  Widget menuW = new MenuWidget(edit);
-  Widget settingsW = new SettingsWidget(edit);
-  Widget controlW = new ControlWidget(edit);
-  Widget editTypeW = new EditorTypeWidget(edit); //edit type
-  Widget editModeW = new EditorModeWidget(edit); //edit mode
-  Widget extraW = new ExtraWidget(edit); //extra
-  widgets.add(menuW);
-  widgets.add(settingsW);
-  widgets.add(controlW);
-  widgets.add(editTypeW);
-  widgets.add(editModeW);
-  widgets.add(extraW);
-  widgetSpacing = width/(widgets.size()+1);
+  ////setup widgets
+  //Widget menuW = new MenuWidget(edit);
+  //Widget settingsW = new SettingsWidget(edit);
+  //Widget controlW = new ControlWidget(edit);
+  //Widget editTypeW = new EditorTypeWidget(edit); 
+  //Widget editModeW = new EditorModeWidget(edit); 
+  //Widget extraW = new ExtraWidget(edit); 
+  //widgets.add(menuW);
+  //widgets.add(settingsW);
+  //widgets.add(controlW);
+  //widgets.add(editTypeW);
+  //widgets.add(editModeW);
+  //widgets.add(extraW);
+  //widgetSpacing = width/(widgets.size()+1);
 
   k = new KetaiGesture(this);
 }
 
 void draw() {
   if (!gPaused) { //step the game if it is not paused
-    if(controllerActive){
-      con.draw(); //draw event for controls
-    }
+    //if(controllerActive){
+    //  con.draw(); //draw event for controls
+    //}
+    edit.step();
     g.step(); //step game
   }
   g.draw(); //draw the game
@@ -79,38 +80,39 @@ void draw() {
     lastTouch = new PVector(0, 0);
   }
   
-  //widget menus - draw them and close them is lastTouch is below longest open widget menu
-  float currentWidgetHeight = 0;  
-  boolean wMenuOpen = false; 
-  for(int i = 0; i < widgets.size(); i++){
-    if(widgets.get(i).isActive()){
-      ArrayList<Widget> children = widgets.get(i).getChildren();
-      if(children.size() > 0){
-        wMenuOpen = true;
-        float current = children.get(children.size()-1).getPosition().y;
-        if(current > currentWidgetHeight){
-          currentWidgetHeight = current;
-        }
-      }
-    }
-    if (i > 0 && !editorToggle) { //don't draw editor widgets if in game mode - only needed until editor class is implemented with its own menu widget
-      continue;
-    }
-    widgets.get(i).draw(widgetSpacing*(i+1), 120);
-    widgets.get(i).updateActive();
-    if(menu == null){
-      widgets.get(i).hover(lastTouch);
-    }
-  }
-  currentWidgetHeight += widgets.get(0).getSize()*1.5; //add a little on to the bottom
-  if(wMenuOpen && lastTouch.y > currentWidgetHeight || menu != null){
-    for(Widget w: widgets){
-      if(w.isMenu()){
-        w.deactivate();
-      }
-    }
-  }
-  controllerActive = !wMenuOpen; //is a menu is open, deactivate controls
+  edit.draw();
+  ////widget menus - draw them and close them is lastTouch is below longest open widget menu
+  //float currentWidgetHeight = 0;  
+  //boolean wMenuOpen = false; 
+  //for(int i = 0; i < widgets.size(); i++){
+  //  if(widgets.get(i).isActive()){
+  //    ArrayList<Widget> children = widgets.get(i).getChildren();
+  //    if(children.size() > 0){
+  //      wMenuOpen = true;
+  //      float current = children.get(children.size()-1).getPosition().y;
+  //      if(current > currentWidgetHeight){
+  //        currentWidgetHeight = current;
+  //      }
+  //    }
+  //  }
+  //  if (i > 0 && !editorToggle) { //don't draw editor widgets if in game mode - only needed until editor class is implemented with its own menu widget
+  //    continue;
+  //  }
+  //  widgets.get(i).draw(widgetSpacing*(i+1), 120);
+  //  widgets.get(i).updateActive();
+  //  if(menu == null){
+  //    widgets.get(i).hover(lastTouch);
+  //  }
+  //}
+  //currentWidgetHeight += widgets.get(0).getSize()*1.5; //add a little on to the bottom
+  //if(wMenuOpen && lastTouch.y > currentWidgetHeight || menu != null){
+  //  for(Widget w: widgets){
+  //    if(w.isMenu()){
+  //      w.deactivate();
+  //    }
+  //  }
+  //}
+  //controllerActive = !wMenuOpen; //is a menu is open, deactivate controls
 
   //draw the menu
   if (menu != null) { 
@@ -118,17 +120,17 @@ void draw() {
     menu.hover(lastTouch);
   }
 
-  //draw frame counter
-  if (frameDelay > 30) {
-    frame = frameRate;
-    frameDelay = 0;
-  } else {
-    frameDelay++;
-  }
-  fill(255);
-  textSize(50);
-  textAlign(CENTER, CENTER);
-  text(nf(frame, 2, 2), width/2, height-50);
+  ////draw frame counter
+  //if (frameDelay > 30) {
+  //  frame = frameRate;
+  //  frameDelay = 0;
+  //} else {
+  //  frameDelay++;
+  //}
+  //fill(255);
+  //textSize(50);
+  //textAlign(CENTER, CENTER);
+  //text(nf(frame, 2, 2), width/2, height-50);
 }
 
 void touchStarted() {
@@ -152,20 +154,22 @@ void touchStarted() {
   }
 
   if (menu == null) {
-    if(controllerActive){
-      con.touchStarted(); //controlls for touch started event
-    }
+    edit.touchStarted();
+    //if(controllerActive){
+    //  con.touchStarted(); //controlls for touch started event
+    //}
   }
 }
 
 void touchEnded() {
-  //check for clicking on widgets
-  for (int i = 0; i < widgets.size(); i++) {
-    if (i > 0 && !editorToggle) { //don't click editor widgets if in game mide
-      continue;
-    }
-    widgets.get(i).click();
-  }
+  edit.touchEnded();
+  ////check for clicking on widgets
+  //for (int i = 0; i < widgets.size(); i++) {
+  //  if (i > 0 && !editorToggle) { //don't click editor widgets if in game mide
+  //    continue;
+  //  }
+  //  widgets.get(i).click();
+  //}
   //check for clicking on menu
   if (menu != null) {
     menu.click();
@@ -174,17 +178,19 @@ void touchEnded() {
 
 void touchMoved() {
   if (menu == null) {
-    if(controllerActive){
-      con.touchMoved(); //controlls for touch moved event
-    }
+    edit.touchMoved();
+    //if(controllerActive){
+    //  con.touchMoved(); //controlls for touch moved event
+    //}
   }
 }
 
 void onPinch(float x, float y, float d) {
   if (menu == null) {
-    if(controllerActive){
-      con.onPinch(x, y, d); //controlls for on pinch event
-    }
+    edit.onPinch(x, y, d);
+    //if(controllerActive){
+    //  con.onPinch(x, y, d); //controlls for on pinch event
+    //}
   }
 }
 
