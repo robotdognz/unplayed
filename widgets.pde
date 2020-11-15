@@ -239,14 +239,14 @@ class SuspendWidget extends Widget {
 
   public void clicked() {
     if (!active) {
-      c = new FreeCamera();
+      editor.eCamera = new FreeCamera();
     } else {
-      c = new GameCamera();
+      editor.eCamera = new GameCamera();
     }
   }
 
   public void updateActive() {
-    if (c instanceof FreeCamera) {
+    if (editor.eCamera instanceof FreeCamera) {
       active = true;
     } else {
       active = false;
@@ -308,12 +308,12 @@ class PlayerControlWidget extends Widget {
 
   public void clicked() {
     if (!active) {
-      con = new PlayerControl();
+      editor.eController = new PlayerControl();
     }
   }
 
   public void updateActive() {
-    if (con instanceof PlayerControl) {
+    if (editor.eController instanceof PlayerControl) {
       active = true;
     } else {
       active = false;
@@ -329,20 +329,20 @@ class CameraControlWidget extends Widget {
 
   public void clicked() {
     if (!active) {
-      con = new CameraControl(editor);
+      editor.eController = new CameraControl(editor);
     }
   }
 
   public void updateActive() {
-    if (implemented == true && con instanceof CameraControl) {
+    if (implemented == true && editor.eController instanceof CameraControl) {
       active = true;
     } else {
       active = false;
     }
-    if(c instanceof GameCamera){
+    if(editor.eCamera instanceof GameCamera){
       implemented = false;
-      if(con instanceof CameraControl){
-        con = new PlayerControl();
+      if(editor.eController instanceof CameraControl){
+        editor.eController = new PlayerControl();
       }
     }else{
       implemented = true;
@@ -358,12 +358,12 @@ class EditorControlWidget extends Widget {
 
   public void clicked() {
     if (!active) {
-      con = new EditorControl();
+      editor.eController = new EditorControl();
     }
   }
 
   public void updateActive() {
-    if (con instanceof EditorControl) {
+    if (editor.eController instanceof EditorControl) {
       active = true;
     } else {
       active = false;
@@ -510,7 +510,7 @@ class ConfirmWidget extends Widget {
   }
   
   public void updateActive(){
-    if(con instanceof EditorControl && g.point != null){
+    if(editor.eController instanceof EditorControl && g.point != null){
       implemented = true;
     }else{
       implemented = false;

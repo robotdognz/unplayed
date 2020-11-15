@@ -29,12 +29,12 @@ class Editor {
     this.eWidgets = new ArrayList<Widget>();
 
     //setup widgets
-    Widget menuW = new MenuWidget(edit);
-    Widget settingsW = new SettingsWidget(edit);
-    Widget controlW = new ControlWidget(edit);
-    Widget editTypeW = new EditorTypeWidget(edit); 
-    Widget editModeW = new EditorModeWidget(edit); 
-    Widget extraW = new ExtraWidget(edit); 
+    Widget menuW = new MenuWidget(this);
+    Widget settingsW = new SettingsWidget(this);
+    Widget controlW = new ControlWidget(this);
+    Widget editTypeW = new EditorTypeWidget(this); 
+    Widget editModeW = new EditorModeWidget(this); 
+    Widget extraW = new ExtraWidget(this); 
     eWidgets.add(menuW);
     eWidgets.add(settingsW);
     eWidgets.add(controlW);

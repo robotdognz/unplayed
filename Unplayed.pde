@@ -35,9 +35,9 @@ void setup() {
   frameRate(60);
 
   //setup game
-  c = new GameCamera();
+  //c = new GameCamera();
   g = new Game(c);
-  con = new PlayerControl();
+  //con = new PlayerControl();
   edit = new Editor(g);
 
   ////setup widgets
