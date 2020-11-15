@@ -67,9 +67,9 @@ class Editor {
           }
         }
       }
-      if (i > 0 && !editorToggle) { //don't draw editor widgets if in game mode - only needed until editor class is implemented with its own menu widget
-        continue;
-      }
+      //if (i > 0 && !editorToggle) { //don't draw editor widgets if in game mode - only needed until editor class is implemented with its own menu widget
+        //continue;
+      //}
       eWidgets.get(i).draw(eWidgetSpacing*(i+1), 120);
       eWidgets.get(i).updateActive();
       if (menu == null) {
@@ -108,9 +108,9 @@ class Editor {
   public void touchEnded() {
     //check for clicking on widgets
     for (int i = 0; i < eWidgets.size(); i++) {
-      if (i > 0 && !editorToggle) { //don't click editor widgets if in game mode
-        continue;
-      }
+      //if (i > 0 && !editorToggle) { //don't click editor widgets if in game mode
+        //continue;
+      //}
       eWidgets.get(i).click();
     }
   }

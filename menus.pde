@@ -57,15 +57,11 @@ class PauseMenu extends Menu{
         m.active = false; //change status of menu widget
         gPaused = m.previousStatus;
         menu = null; //remove pause menu
-      }else if(b.click().equals(editor)){
-        editorToggle = !editorToggle;                        //TODO: disable editor when this variable is changed
+      }else if(b.click().equals(editor)){ //toggle the editor when pressed
+        editorToggle = !editorToggle;    
         m.active = false; //change status of menu widget
         gPaused = m.previousStatus;
         menu = null; //remove pause menu
-        //if(!editorToggle){
-          //c = new GameCamera();
-          //con = new PlayerControl();
-        //}
       }
     }
   }
