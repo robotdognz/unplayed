@@ -103,7 +103,11 @@ class EditorControl implements Controller {
     if (mouseY < 180) { //don't respond to clicks at the top
       return;
     }
-    float snapNo = 100;
+    
+    float snapNo = 10;
+    if(editor.snap){
+      snapNo = 100;
+    }
     
     //calculate position in level
     float currentScale = gCamera.getScale();

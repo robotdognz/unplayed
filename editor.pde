@@ -39,7 +39,7 @@ class Editor {
     eWidgets.add(editTypeW);
     eWidgets.add(editModeW);
     eWidgets.add(extraW);
-    
+
     this.eWidgetSpacing = width/(this.eWidgets.size()+1);
   }
 
@@ -122,4 +122,17 @@ class Editor {
   public Controller getController() {
     return eController;
   }
+}
+
+//------------------EditorSettingsEnums---------------------
+enum editorType {
+  BLOCK,
+  IMAGE,
+  EVENT
+}
+
+enum editorMode {
+  ADD, 
+  ERASE,
+  SELECT
 }

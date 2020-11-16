@@ -9,7 +9,7 @@ abstract class Widget {
   protected boolean hover = false; //is the mouse over the widget
   protected boolean active = false; //is the widget active
   protected boolean implemented = true; //is this a fully working widget? Could be used to disable widgets that don't work with the current tool/mode to make menus easier to navigate
-  
+
   //subWidget fields
   protected float animationSpeed = 0.8; //speed of subWidget animation
   protected widgetDirection wd = widgetDirection.DOWN; //subWidget direction, defaults to down
@@ -31,7 +31,7 @@ abstract class Widget {
       implemented) {
       hover = true;
     }
-    
+
     //subWidget hover
     if (subWidgets.size() > 0 && active) { //if this widget is a menu and it has been opened
       for (Widget w : subWidgets) {
@@ -87,11 +87,11 @@ abstract class Widget {
     ellipseMode(CORNER);
 
     //draw widget icon
-    if (!active){
-      tint(155,155,155);
+    if (!active) {
+      tint(155, 155, 155);
     }
-    if(!implemented){
-      tint(30,30,30);
+    if (!implemented) {
+      tint(30, 30, 30);
     }
     imageMode(CENTER);
     image(icon, position.x, position.y, wSize, wSize);
@@ -153,12 +153,12 @@ abstract class Widget {
   public PImage getIcon() {
     return icon;
   }
-  
-  public float getSize(){
-   return wSize; 
+
+  public float getSize() {
+    return wSize;
   }
-  
-  public ArrayList<Widget> getChildren(){
+
+  public ArrayList<Widget> getChildren() {
     return subWidgets;
   }
 
@@ -204,9 +204,9 @@ class MenuWidget extends Widget {
       menu = new PauseMenu(this);
     }
   }
-  
+
   public void updateActive() {
-    if(menu != null){
+    if (menu != null) {
       active = true;
     }
   }
@@ -256,8 +256,24 @@ class SuspendWidget extends Widget {
 class SnapWidget extends Widget {
   public SnapWidget(Editor editor) {
     super(editor);
-    implemented = false;
     icon = loadImage(folder+"snaptoGrid.png");
+  }
+  
+  public void clicked() {
+    editor.snap = !editor.snap;
+  }
+  
+  public void updateActive() {
+    if (editor.snap) {
+      active = true;
+    } else {
+      active = false;
+    }
+    if(editor.eController instanceof EditorControl){
+      implemented = true;
+    }else{
+      implemented = false;
+    }
   }
 }
 class PickImageWidget extends Widget {
@@ -339,12 +355,12 @@ class CameraControlWidget extends Widget {
     } else {
       active = false;
     }
-    if(gCamera instanceof GameCamera){
+    if (gCamera instanceof GameCamera) {
       implemented = false;
-      if(editor.eController instanceof CameraControl){
+      if (editor.eController instanceof CameraControl) {
         editor.eController = new PlayerControl();
       }
-    }else{
+    } else {
       implemented = true;
     }
   }
@@ -393,9 +409,8 @@ class BlockModeWidget extends Widget {
     closeAfterSubWidget = true;
     icon = loadImage(folder+"colider.png");
   }
-  
+
   public void clicked() {
-    
   }
 }
 class ImageModeWidget extends Widget {
@@ -405,9 +420,8 @@ class ImageModeWidget extends Widget {
     closeAfterSubWidget = true;
     icon = loadImage(folder+"image.png");
   }
-  
+
   public void clicked() {
-    
   }
 }
 class EventModeWidget extends Widget {
@@ -417,9 +431,8 @@ class EventModeWidget extends Widget {
     closeAfterSubWidget = true;
     icon = loadImage(folder+"event.png");
   }
-  
+
   public void clicked() {
-    
   }
 }
 
@@ -444,9 +457,8 @@ class AddWidget extends Widget {
     closeAfterSubWidget = true;
     icon = loadImage(folder+"Add.png");
   }
-  
+
   public void clicked() {
-    
   }
 }
 class EraseWidget extends Widget {
@@ -456,9 +468,8 @@ class EraseWidget extends Widget {
     closeAfterSubWidget = true;
     icon = loadImage(folder+"eraser.png");
   }
-  
+
   public void clicked() {
-    
   }
 }
 class SelectWidget extends Widget {
@@ -468,9 +479,8 @@ class SelectWidget extends Widget {
     closeAfterSubWidget = true; 
     icon = loadImage(folder+"marque.png");
   }
-  
+
   public void clicked() {
-    
   }
 }
 
@@ -508,11 +518,11 @@ class ConfirmWidget extends Widget {
       g.point = null;
     }
   }
-  
-  public void updateActive(){
-    if(editor.eController instanceof EditorControl && g.point != null){
+
+  public void updateActive() {
+    if (editor.eController instanceof EditorControl && g.point != null) {
       implemented = true;
-    }else{
+    } else {
       implemented = false;
     }
   }
@@ -605,9 +615,9 @@ class SubMenuWidget3 extends Widget {
 //------------------WidgetDirectionEnum---------------------
 enum widgetDirection {
   DOWN, 
-    UP, 
-    LEFT, 
-    RIGHT
+  UP, 
+  LEFT, 
+  RIGHT
 }
 
 //------------------BlankWidget---------------------
