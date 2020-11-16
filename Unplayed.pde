@@ -35,8 +35,8 @@ void setup() {
   vibe = new Vibe();
 
   //setup game
-  gCamera = new GameCamera();
-  g = new Game(gCamera, vibe);            //currently game does not have access to editor camera, this is bad
+  gCamera = new FreeCamera(); //new GameCamera();
+  g = new Game(gCamera, vibe); 
   gController = new PlayerControl();
   edit = new Editor(g);
 
