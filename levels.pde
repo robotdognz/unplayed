@@ -40,6 +40,31 @@ abstract class Level {
   }
 }
 
+//------------------BlankLevel---------------------
+class BlankLevel extends Level {
+  
+  BlankLevel() {
+    platforms = new ArrayList<Platform>();
+    events = new ArrayList<Event>();
+  
+    buildLevel();
+  }
+  
+  private void buildLevel() {
+    playerStart = new PVector(0, 0);
+    PVector cameraTopLeft = new PVector(-400, -400);
+    PVector cameraBottomRight = new PVector(400, 400);
+    int centerX = (int)((cameraBottomRight.x-cameraTopLeft.x)/2+cameraTopLeft.x);
+    int centerY = (int)((cameraTopLeft.y-cameraBottomRight.y)/2+cameraBottomRight.y);
+    this.startCenter = new PVector(centerX, centerY);
+    this.startScale = (int)Math.abs(cameraBottomRight.x-cameraTopLeft.x);
+    this.bottomOfTopBar = (int)cameraTopLeft.y;
+    this.topOfBottomBar = (int)cameraBottomRight.y;
+    
+    platforms.add(new Platform(0, 100, 100, 100));
+  }
+}
+
 //------------------Level1---------------------
 class Level1 extends Level {
 

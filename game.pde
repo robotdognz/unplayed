@@ -30,7 +30,7 @@ class Game {
 
   Game(Camera c, Vibe v) {
     camera = c;
-    level = new Level1();
+    level = new BlankLevel();
     eventVis = true;
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
