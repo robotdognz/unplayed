@@ -31,15 +31,21 @@ class Editor {
     //setup widgets
     Widget menuW = new MenuWidget(this);
     Widget settingsW = new SettingsWidget(this);
-    Widget controlW = new ControlWidget(this);
-    Widget editTypeW = new EditorTypeWidget(this); 
+    //Widget controlW = new ControlWidget(this);
+    
+    Widget playerW = new PlayerControlWidget(this);
+    Widget cameraW = new CameraControlWidget(this);
+    
     Widget editModeW = new EditorModeWidget(this); 
+    Widget editTypeW = new EditorTypeWidget(this); 
+    
     Widget extraW = new ExtraWidget(this); 
     eWidgets.add(menuW);
     eWidgets.add(settingsW);
-    eWidgets.add(controlW);
-    eWidgets.add(editTypeW);
+    eWidgets.add(playerW);
+    eWidgets.add(cameraW);
     eWidgets.add(editModeW);
+    eWidgets.add(editTypeW);
     eWidgets.add(extraW);
 
     this.eWidgetSpacing = width/(this.eWidgets.size()+1);
@@ -148,7 +154,7 @@ class Editor {
       }
       g.point = null;
     }
-    println(g.platforms.size());
+    //println(g.platforms.size());
   }
 
   public Controller getController() {

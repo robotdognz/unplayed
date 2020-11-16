@@ -8,6 +8,8 @@ abstract class Widget {
   protected PImage icon;
   protected boolean hover = false; //is the mouse over the widget
   protected boolean active = false; //is the widget active
+  protected boolean secondaryActive = false; //should active be used decoupled from widget menu opening
+  protected boolean sActive = false; //secondary active that replaces original for highlighting icon
   protected boolean implemented = true; //is this a fully working widget? Could be used to disable widgets that don't work with the current tool/mode to make menus easier to navigate
 
   //subWidget fields
@@ -87,7 +89,7 @@ abstract class Widget {
     ellipseMode(CORNER);
 
     //draw widget icon
-    if (!active) {
+    if ((!secondaryActive && !active) || (secondaryActive && !sActive)) {
       tint(155, 155, 155);
     }
     if (!implemented) {
@@ -181,7 +183,10 @@ abstract class Widget {
         }
       }
     }
+    updateSecondaryActive();
   }
+  
+  public void updateSecondaryActive(){}
 }
 
 
@@ -235,6 +240,7 @@ class SuspendWidget extends Widget {
   public SuspendWidget(Editor editor) {
     super(editor);
     icon = loadImage(folder+"Pause.png");
+    closeAfterSubWidget = true;
   }
 
   public void clicked() {
@@ -352,14 +358,6 @@ class CameraControlWidget extends Widget {
     } else {
       active = false;
     }
-    //if (gCamera instanceof GameCamera) {
-    //  implemented = false;
-    //  if (editor.eController instanceof CameraControl) {
-    //    editor.eController = new PlayerControl();
-    //  }
-    //} else {
-    //  implemented = true;
-    //}
   }
 }
 class EditorControlWidget extends Widget {
@@ -472,13 +470,23 @@ class EditorModeWidget extends Widget {
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
+    
+    secondaryActive = true;
+  }
+  
+  public void updateSecondaryActive(){
+    if(editor.eController instanceof EditorControl){
+      sActive = true;
+    }else{
+      sActive = false;
+    }
   }
 }
 class AddWidget extends Widget {
   public AddWidget(Editor editor) {
     super(editor);
     closeAfterSubWidget = true;
-    icon = loadImage(folder+"Add.png");
+    icon = loadImage(folder+"PlaceBlock.png");
   }
 
   public void clicked() {
