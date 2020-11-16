@@ -1,3 +1,7 @@
+//so far none of this makes use of being an absract class, would be more efficent to use a single static class
+//that has methods for changing the 'game' variable. Also change the 'game' variable name to something more 
+//logical and easy to understand when reading the code
+
 //------------------AbstractCamera---------------------
 static abstract class Camera{
   static protected boolean game = true; //is the game class allowed to make changes to the camera
