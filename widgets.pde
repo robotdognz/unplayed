@@ -304,19 +304,19 @@ class PickBlockWidget extends Widget {
 }
 
 //------------------ControlMode---------------------
-class ControlWidget extends Widget {
-  public ControlWidget(Editor editor) {
-    super(editor);
-    iconIsCurrentSubWidget = true;
-    icon = loadImage(folder+"playerControls.png");
-    Widget w1 = new PlayerControlWidget(editor);
-    Widget w2 = new CameraControlWidget(editor);
-    Widget w3 = new EditorControlWidget(editor);
-    subWidgets.add(w1);
-    subWidgets.add(w2);
-    subWidgets.add(w3);
-  }
-}
+//class ControlWidget extends Widget {
+//  public ControlWidget(Editor editor) {
+//    super(editor);
+//    iconIsCurrentSubWidget = true;
+//    icon = loadImage(folder+"playerControls.png");
+//    Widget w1 = new PlayerControlWidget(editor);
+//    Widget w2 = new CameraControlWidget(editor);
+//    Widget w3 = new EditorControlWidget(editor);
+//    subWidgets.add(w1);
+//    subWidgets.add(w2);
+//    subWidgets.add(w3);
+//  }
+//}
 class PlayerControlWidget extends Widget {
   public PlayerControlWidget(Editor editor) {
     super(editor);
@@ -360,103 +360,28 @@ class CameraControlWidget extends Widget {
     }
   }
 }
-class EditorControlWidget extends Widget {
-  public EditorControlWidget(Editor editor) {
-    super(editor);
-    closeAfterSubWidget = true;
-    icon = loadImage(folder+"PlaceBlock.png");
-  }
+//class EditorControlWidget extends Widget {
+//  public EditorControlWidget(Editor editor) {
+//    super(editor);
+//    closeAfterSubWidget = true;
+//    icon = loadImage(folder+"PlaceBlock.png");
+//  }
 
-  public void clicked() {
-    if (!active) {
-      editor.eController = new EditorControl(editor);
-    }
-  }
+//  public void clicked() {
+//    if (!active) {
+//      editor.eController = new EditorControl(editor);
+//    }
+//  }
 
-  public void updateActive() {
-    if (editor.eController instanceof EditorControl) {
-      active = true;
-    } else {
-      active = false;
-      g.point = null;
-    }
-  }
-}
-
-//------------------EditorType---------------------
-class EditorTypeWidget extends Widget {
-  public EditorTypeWidget(Editor editor) {
-    super(editor);
-    icon = loadImage(folder+"colider.png");
-    iconIsCurrentSubWidget = true;
-    Widget w1 = new BlockModeWidget(editor);
-    Widget w2 = new ImageModeWidget(editor);
-    Widget w3 = new EventModeWidget(editor);
-    subWidgets.add(w1);
-    subWidgets.add(w2);
-    subWidgets.add(w3);
-  }
-}
-class BlockModeWidget extends Widget {
-  public BlockModeWidget(Editor editor) {
-    super(editor);
-    closeAfterSubWidget = true;
-    icon = loadImage(folder+"colider.png");
-  }
-
-  public void clicked() {
-    editor.eType = editorType.BLOCK;
-    editor.eController = new EditorControl(editor);
-  }
-  
-  public void updateActive() {
-    if(editor.eType == editorType.BLOCK){
-      active = true;
-    }else{
-      active = false;
-    }
-  }
-}
-class ImageModeWidget extends Widget {
-  public ImageModeWidget(Editor editor) {
-    super(editor);
-    closeAfterSubWidget = true;
-    icon = loadImage(folder+"image.png");
-  }
-
-  public void clicked() {
-    editor.eType = editorType.IMAGE;
-    editor.eController = new EditorControl(editor);
-  }
-  
-  public void updateActive() {
-    if(editor.eType == editorType.IMAGE){
-      active = true;
-    }else{
-      active = false;
-    }
-  }
-}
-class EventModeWidget extends Widget {
-  public EventModeWidget(Editor editor) {
-    super(editor);
-    closeAfterSubWidget = true;
-    icon = loadImage(folder+"event.png");
-  }
-
-  public void clicked() {
-    editor.eType = editorType.EVENT;
-    editor.eController = new EditorControl(editor);
-  }
-  
-  public void updateActive() {
-    if(editor.eType == editorType.EVENT){
-      active = true;
-    }else{
-      active = false;
-    }
-  }
-}
+//  public void updateActive() {
+//    if (editor.eController instanceof EditorControl) {
+//      active = true;
+//    } else {
+//      active = false;
+//      g.point = null;
+//    }
+//  }
+//}
 
 //------------------EditorMode---------------------
 class EditorModeWidget extends Widget {
@@ -536,6 +461,81 @@ class SelectWidget extends Widget {
   
   public void updateActive() {
     if(editor.eMode == editorMode.SELECT){
+      active = true;
+    }else{
+      active = false;
+    }
+  }
+}
+
+//------------------EditorType---------------------
+class EditorTypeWidget extends Widget {
+  public EditorTypeWidget(Editor editor) {
+    super(editor);
+    icon = loadImage(folder+"colider.png");
+    iconIsCurrentSubWidget = true;
+    Widget w1 = new BlockModeWidget(editor);
+    Widget w2 = new ImageModeWidget(editor);
+    Widget w3 = new EventModeWidget(editor);
+    subWidgets.add(w1);
+    subWidgets.add(w2);
+    subWidgets.add(w3);
+  }
+}
+class BlockModeWidget extends Widget {
+  public BlockModeWidget(Editor editor) {
+    super(editor);
+    closeAfterSubWidget = true;
+    icon = loadImage(folder+"colider.png");
+  }
+
+  public void clicked() {
+    editor.eType = editorType.BLOCK;
+    editor.eController = new EditorControl(editor);
+  }
+  
+  public void updateActive() {
+    if(editor.eType == editorType.BLOCK){
+      active = true;
+    }else{
+      active = false;
+    }
+  }
+}
+class ImageModeWidget extends Widget {
+  public ImageModeWidget(Editor editor) {
+    super(editor);
+    closeAfterSubWidget = true;
+    icon = loadImage(folder+"image.png");
+  }
+
+  public void clicked() {
+    editor.eType = editorType.IMAGE;
+    editor.eController = new EditorControl(editor);
+  }
+  
+  public void updateActive() {
+    if(editor.eType == editorType.IMAGE){
+      active = true;
+    }else{
+      active = false;
+    }
+  }
+}
+class EventModeWidget extends Widget {
+  public EventModeWidget(Editor editor) {
+    super(editor);
+    closeAfterSubWidget = true;
+    icon = loadImage(folder+"event.png");
+  }
+
+  public void clicked() {
+    editor.eType = editorType.EVENT;
+    editor.eController = new EditorControl(editor);
+  }
+  
+  public void updateActive() {
+    if(editor.eType == editorType.EVENT){
       active = true;
     }else{
       active = false;
@@ -624,48 +624,48 @@ class LoadWidget extends Widget {
 }
 
 //------------------TestSubMenuWidgets---------------------
-class SubMenuWidget extends Widget {
-  public SubMenuWidget(Editor editor) {
-    super(editor);
-    Widget w1 = new BlankWidget(editor);
-    Widget w2 = new BlankWidget(editor);
-    Widget w3 = new SubMenuWidget2(editor);
-    subWidgets.add(w1);
-    subWidgets.add(w2);
-    subWidgets.add(w3);
-  }
-}
-class SubMenuWidget2 extends Widget {
-  public SubMenuWidget2(Editor editor) {
-    super(editor);
-    wd = widgetDirection.LEFT;
-    Widget w1 = new BlankWidget(editor);
-    Widget w2 = new SubMenuWidget2Up(editor);
-    Widget w3 = new SubMenuWidget3(editor);
-    subWidgets.add(w1);
-    subWidgets.add(w2);
-    subWidgets.add(w3);
-  }
-}
-class SubMenuWidget2Up extends Widget {
-  public SubMenuWidget2Up(Editor editor) {
-    super(editor);
-    wd = widgetDirection.UP;
-    Widget w1 = new BlankWidget(editor);
-    subWidgets.add(w1);
-  }
-}
-class SubMenuWidget3 extends Widget {
-  public SubMenuWidget3(Editor editor) {
-    super(editor);
-    Widget w1 = new BlankWidget(editor);
-    Widget w2 = new BlankWidget(editor);
-    Widget w3 = new BlankWidget(editor);
-    subWidgets.add(w1);
-    subWidgets.add(w2);
-    subWidgets.add(w3);
-  }
-}
+//class SubMenuWidget extends Widget {
+//  public SubMenuWidget(Editor editor) {
+//    super(editor);
+//    Widget w1 = new BlankWidget(editor);
+//    Widget w2 = new BlankWidget(editor);
+//    Widget w3 = new SubMenuWidget2(editor);
+//    subWidgets.add(w1);
+//    subWidgets.add(w2);
+//    subWidgets.add(w3);
+//  }
+//}
+//class SubMenuWidget2 extends Widget {
+//  public SubMenuWidget2(Editor editor) {
+//    super(editor);
+//    wd = widgetDirection.LEFT;
+//    Widget w1 = new BlankWidget(editor);
+//    Widget w2 = new SubMenuWidget2Up(editor);
+//    Widget w3 = new SubMenuWidget3(editor);
+//    subWidgets.add(w1);
+//    subWidgets.add(w2);
+//    subWidgets.add(w3);
+//  }
+//}
+//class SubMenuWidget2Up extends Widget {
+//  public SubMenuWidget2Up(Editor editor) {
+//    super(editor);
+//    wd = widgetDirection.UP;
+//    Widget w1 = new BlankWidget(editor);
+//    subWidgets.add(w1);
+//  }
+//}
+//class SubMenuWidget3 extends Widget {
+//  public SubMenuWidget3(Editor editor) {
+//    super(editor);
+//    Widget w1 = new BlankWidget(editor);
+//    Widget w2 = new BlankWidget(editor);
+//    Widget w3 = new BlankWidget(editor);
+//    subWidgets.add(w1);
+//    subWidgets.add(w2);
+//    subWidgets.add(w3);
+//  }
+//}
 
 //------------------WidgetDirectionEnum---------------------
 enum widgetDirection {

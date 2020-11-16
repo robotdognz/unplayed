@@ -31,14 +31,10 @@ class Editor {
     //setup widgets
     Widget menuW = new MenuWidget(this);
     Widget settingsW = new SettingsWidget(this);
-    //Widget controlW = new ControlWidget(this);
-    
     Widget playerW = new PlayerControlWidget(this);
     Widget cameraW = new CameraControlWidget(this);
-    
     Widget editModeW = new EditorModeWidget(this); 
     Widget editTypeW = new EditorTypeWidget(this); 
-    
     Widget extraW = new ExtraWidget(this); 
     eWidgets.add(menuW);
     eWidgets.add(settingsW);
