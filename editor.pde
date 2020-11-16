@@ -119,6 +119,34 @@ class Editor {
     }
   }
 
+  public void placeBlock() {
+    if (g.point != null) {
+      if (snap) {
+
+        int platformX = (int) g.point.x-50;
+        int platformY = (int) g.point.y-50;
+
+        boolean spaceFree = true;
+        for (Platform p : g.platforms) {
+          if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY) {
+            spaceFree = false;
+          }
+        }
+
+        if (spaceFree) { //if there isn't something already there
+          Platform newPlatform = new Platform(platformX, platformY, 100, 100);
+          g.platforms.add(newPlatform);
+        }
+        g.point = null;
+      } else {
+
+        Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
+        g.platforms.add(p);
+        g.point = null;
+      }
+    }
+  }
+
   public Controller getController() {
     return eController;
   }
@@ -126,13 +154,13 @@ class Editor {
 
 //------------------EditorSettingsEnums---------------------
 enum editorType {
-  BLOCK,
-  IMAGE,
-  EVENT
+  BLOCK, 
+    IMAGE, 
+    EVENT
 }
 
 enum editorMode {
   ADD, 
-  ERASE,
-  SELECT
+    ERASE, 
+    SELECT
 }

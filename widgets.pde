@@ -512,15 +512,17 @@ class ConfirmWidget extends Widget {
 
   public void clicked() {
     //finalise block
-    if (g.point != null) {
-      Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
-      g.platforms.add(p);
-      g.point = null;
-    }
+    editor.placeBlock();
+    
+    //if (g.point != null) {
+    //  Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
+    //  g.platforms.add(p);
+    //  g.point = null;
+    //}
   }
 
   public void updateActive() {
-    if (editor.eController instanceof EditorControl && g.point != null) {
+    if (editor.eController instanceof EditorControl && !editor.snap && g.point != null) {
       implemented = true;
     } else {
       implemented = false;
