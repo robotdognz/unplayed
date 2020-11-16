@@ -124,8 +124,8 @@ class Editor {
   public void placeBlock() {
     if (g.point != null) {
 
-      int platformX = (int) g.point.x-50;
-      int platformY = (int) g.point.y-50;
+      int platformX = (int) g.point.x; //-50
+      int platformY = (int) g.point.y; //-50
 
       boolean spaceFree = true;
       Platform foundAtPoint = null;
