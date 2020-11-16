@@ -14,6 +14,7 @@ class Editor {
   boolean snap = true; //things placed in the level will snap to grid
   editorType eType = editorType.BLOCK;
   editorMode eMode = editorMode.ADD;
+  imagePlane eImagePlane = imagePlane.LEVEL;
 
   //widgets
   ArrayList<Widget> eWidgets;
@@ -169,4 +170,10 @@ enum editorMode {
   ADD, 
     ERASE, 
     SELECT
+}
+
+enum imagePlane {
+  BACK,
+  LEVEL,
+  FRONT
 }
