@@ -2,7 +2,7 @@ import android.os.Vibrator;
 import android.os.VibrationEffect;
 import android.content.Context;
 import android.app.Activity;
-import ketai.ui.KetaiGesture;
+//import ketai.ui.KetaiGesture;
 
 KetaiGesture k;
 
