@@ -258,20 +258,20 @@ class SnapWidget extends Widget {
     super(editor);
     icon = loadImage(folder+"snaptoGrid.png");
   }
-  
+
   public void clicked() {
     editor.snap = !editor.snap;
   }
-  
+
   public void updateActive() {
     if (editor.snap) {
       active = true;
     } else {
       active = false;
     }
-    if(editor.eController instanceof EditorControl){
+    if (editor.eController instanceof EditorControl) {
       implemented = true;
-    }else{
+    } else {
       implemented = false;
     }
   }
@@ -405,34 +405,61 @@ class EditorTypeWidget extends Widget {
 class BlockModeWidget extends Widget {
   public BlockModeWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    //implemented = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"colider.png");
   }
 
   public void clicked() {
+    editor.eType = editorType.BLOCK;
+  }
+  
+  public void updateActive() {
+    if(editor.eType == editorType.BLOCK){
+      active = true;
+    }else{
+      active = false;
+    }
   }
 }
 class ImageModeWidget extends Widget {
   public ImageModeWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    //implemented = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"image.png");
   }
 
   public void clicked() {
+    editor.eType = editorType.IMAGE;
+  }
+  
+  public void updateActive() {
+    if(editor.eType == editorType.IMAGE){
+      active = true;
+    }else{
+      active = false;
+    }
   }
 }
 class EventModeWidget extends Widget {
   public EventModeWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    //implemented = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"event.png");
   }
 
   public void clicked() {
+    editor.eType = editorType.EVENT;
+  }
+  
+  public void updateActive() {
+    if(editor.eType == editorType.EVENT){
+      active = true;
+    }else{
+      active = false;
+    }
   }
 }
 
@@ -453,34 +480,61 @@ class EditorModeWidget extends Widget {
 class AddWidget extends Widget {
   public AddWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    //implemented = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"Add.png");
   }
 
   public void clicked() {
+    editor.eMode = editorMode.ADD;
+  }
+  
+  public void updateActive() {
+    if(editor.eMode == editorMode.ADD){
+      active = true;
+    }else{
+      active = false;
+    }
   }
 }
 class EraseWidget extends Widget {
   public EraseWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    //implemented = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"eraser.png");
   }
 
   public void clicked() {
+    editor.eMode = editorMode.ERASE;
+  }
+  
+  public void updateActive() {
+    if(editor.eMode == editorMode.ERASE){
+      active = true;
+    }else{
+      active = false;
+    }
   }
 }
 class SelectWidget extends Widget {
   public SelectWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    //implemented = false;
     closeAfterSubWidget = true; 
     icon = loadImage(folder+"marque.png");
   }
 
   public void clicked() {
+    editor.eMode = editorMode.SELECT;
+  }
+  
+  public void updateActive() {
+    if(editor.eMode == editorMode.SELECT){
+      active = true;
+    }else{
+      active = false;
+    }
   }
 }
 
@@ -513,12 +567,6 @@ class ConfirmWidget extends Widget {
   public void clicked() {
     //finalise block
     editor.placeBlock();
-    
-    //if (g.point != null) {
-    //  Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
-    //  g.platforms.add(p);
-    //  g.point = null;
-    //}
   }
 
   public void updateActive() {
@@ -617,9 +665,9 @@ class SubMenuWidget3 extends Widget {
 //------------------WidgetDirectionEnum---------------------
 enum widgetDirection {
   DOWN, 
-  UP, 
-  LEFT, 
-  RIGHT
+    UP, 
+    LEFT, 
+    RIGHT
 }
 
 //------------------BlankWidget---------------------

@@ -121,32 +121,11 @@ class EditorControl implements Controller {
     float finalY = Math.round(levelY/snapNo)*snapNo;
 
     g.point = new PVector(finalX, finalY);
-    if(editor.snap){
+    if (editor.snap) {
       editor.placeBlock();
     }
-    
-    //if (editor.snap) {
-    //  if (g.point != null) {
-
-    //    int platformX = (int) g.point.x-50;
-    //    int platformY = (int) g.point.y-50;
-        
-    //    boolean spaceFree = true;
-    //    for(Platform p : g.platforms){
-    //      if(p.getTopLeft().x == platformX && p.getTopLeft().y == platformY){
-    //        spaceFree = false;
-    //      }
-    //    }
-    //    if(spaceFree){ //if there isn't something already there
-    //      Platform newPlatform = new Platform(platformX, platformY, 100, 100);
-    //      g.platforms.add(newPlatform);
-    //    }
-    //    g.point = null;
-    //  }
-    //}
-    
   }
-  
+
   public void onPinch(float x, float y, float d) {
   }
 }
