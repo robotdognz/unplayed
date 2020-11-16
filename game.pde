@@ -28,14 +28,12 @@ class Game {
   public float newRightEdge;
   public float boarderZoomSpeed = 0.1; //0.1 is default
 
-  Game(Camera c) {
+  Game(Camera c, Vibe v) {
     camera = c;
     level = new Level1();
     eventVis = true;
 
-    Vibe vibe = new Vibe();
-
-    player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, vibe);
+    player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
 
     //camera
     camera.setScale(level.getStartScale());

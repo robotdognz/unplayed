@@ -2,22 +2,19 @@ import android.os.Vibrator;
 import android.os.VibrationEffect;
 import android.content.Context;
 import android.app.Activity;
-//import ketai.ui.KetaiGesture;
 
-KetaiGesture k;
+KetaiGesture gesture;
+Vibe vibe;
 
 Game g; //holds the game class
 Camera gCamera; //holds the game camera
 Controller gController; //holds the current controller
-//boolean controllerActive = true; //is the current controller active
 Editor edit; //holds the editor
 
-//float minZoom = 200;
-//float maxZoom = 20000;
 boolean gPaused = false; //is the game class paused
 private ArrayList<Widget> gWidgets = new ArrayList<Widget>();
 private float gWidgetSpacing; //size of gap between widgets
-private boolean editorToggle = true; //is the game in editor mode            //TODO: implement this
+private boolean editorToggle = true; //is the game in editor mode
 private Menu menu;
 
 //touch screen stuff
@@ -33,19 +30,20 @@ void setup() {
   //setup graphics
   fullScreen(P2D);
   frameRate(60);
+  
+  gesture = new KetaiGesture(this);
+  vibe = new Vibe();
 
   //setup game
   gCamera = new GameCamera();
-  g = new Game(gCamera);            //currently game does not have access to editor camera, this is bad
+  g = new Game(gCamera, vibe);            //currently game does not have access to editor camera, this is bad
   gController = new PlayerControl();
   edit = new Editor(g);
 
-  ////setup non editor widgets
+  ////setup non editor widget(s)
   Widget menuW = new MenuWidget(edit);
   gWidgets.add(menuW);
   gWidgetSpacing = width/(gWidgets.size()+1);
-
-  k = new KetaiGesture(this);
 }
 
 void draw() {
