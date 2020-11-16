@@ -121,7 +121,7 @@ class Editor {
 
   public void placeBlock() {
     if (g.point != null) {
-      if (snap) {
+      //if (snap) {
 
         int platformX = (int) g.point.x-50;
         int platformY = (int) g.point.y-50;
@@ -138,13 +138,14 @@ class Editor {
           g.platforms.add(newPlatform);
         }
         g.point = null;
-      } else {
+      //} else {
 
-        Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
-        g.platforms.add(p);
-        g.point = null;
+        //Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
+        //g.platforms.add(p);
+        //g.point = null;
       }
     }
+    println(g.platforms.size());
   }
 
   public Controller getController() {
