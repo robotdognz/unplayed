@@ -242,6 +242,7 @@ class SuspendWidget extends Widget {
       gCamera = new FreeCamera();
     } else {
       gCamera = new GameCamera();
+      editor.eController = new PlayerControl();
     }
   }
 
