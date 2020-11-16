@@ -121,7 +121,10 @@ class EditorControl implements Controller {
     float finalY = Math.round(levelY/snapNo)*snapNo;
 
     g.point = new PVector(finalX, finalY);
-    editor.placeBlock();
+    if(editor.snap){
+      editor.placeBlock();
+    }
+    
     //if (editor.snap) {
     //  if (g.point != null) {
 
