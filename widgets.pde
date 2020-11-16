@@ -269,11 +269,11 @@ class SnapWidget extends Widget {
     } else {
       active = false;
     }
-    if (editor.eController instanceof EditorControl) {
-      implemented = true;
-    } else {
-      implemented = false;
-    }
+    //if (editor.eController instanceof EditorControl) {
+    //  implemented = true;
+    //} else {
+    //  implemented = false;
+    //}
   }
 }
 class PickImageWidget extends Widget {
