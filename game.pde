@@ -95,14 +95,16 @@ class Game {
     //draw block placement if one exists
     if(point != null){
       fill(0,0,0,150);
-      rectMode(CENTER);
+      //rectMode(CENTER);
       rect(point.x, point.y, 100, 100);
-      rectMode(CORNER);
+      //rectMode(CORNER);
       fill(0);
       textSize(30);
       textAlign(LEFT, CENTER);
-      int xCoord = (int) point.x-50;
-      int yCoord = (int) point.y-50;
+      //int xCoord = (int) point.x-50;
+      //int yCoord = (int) point.y-50;
+      int xCoord = (int) point.x;
+      int yCoord = (int) point.y;
       String s = "[ " + xCoord + ", " + yCoord + " ]";
       text(s, point.x+55, point.y);
     }

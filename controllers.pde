@@ -117,8 +117,8 @@ class EditorControl implements Controller {
     float levelY = ((mouseY-height/2)/((float)width/currentScale)/currentSubScale) + currentCenter.y;
 
     //round so blocks snap to grid
-    float finalX = Math.round(levelX/snapNo)*snapNo;
-    float finalY = Math.round(levelY/snapNo)*snapNo;
+    float finalX = Math.round(levelX/snapNo)*snapNo-50;
+    float finalY = Math.round(levelY/snapNo)*snapNo-50;
 
     g.point = new PVector(finalX, finalY);
     if (editor.snap) {

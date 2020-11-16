@@ -51,7 +51,7 @@ class BlankLevel extends Level {
   }
   
   private void buildLevel() {
-    playerStart = new PVector(0, 0);
+    playerStart = new PVector(50, 0);
     PVector cameraTopLeft = new PVector(-400, -400);
     PVector cameraBottomRight = new PVector(400, 400);
     int centerX = (int)((cameraBottomRight.x-cameraTopLeft.x)/2+cameraTopLeft.x);
