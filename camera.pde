@@ -36,7 +36,8 @@ static abstract class Camera{
   }
   
   public void setCenter(PVector newCenter){
-     center = newCenter; 
+     center.x = newCenter.x; 
+     center.y = newCenter.y;
   }
   
 }
