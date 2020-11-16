@@ -90,7 +90,7 @@ abstract class Widget {
 
     //draw widget icon
     if ((!secondaryActive && !active) || (secondaryActive && !sActive)) {
-      tint(155, 155, 155);
+      tint(165, 165, 165); //155
     }
     if (!implemented) {
       tint(30, 30, 30);
@@ -238,6 +238,7 @@ class RestartWidget extends Widget {
   public RestartWidget(Editor editor) {
     super(editor);
     icon = loadImage(folder+"ResetGame.png");
+    closeAfterSubWidget = true;
   }
   
   public void clicked() {
@@ -320,7 +321,6 @@ class PickBlockWidget extends Widget {
 class PlayerControlWidget extends Widget {
   public PlayerControlWidget(Editor editor) {
     super(editor);
-    closeAfterSubWidget = true;
     icon = loadImage(folder+"playerControls.png");
   }
 
@@ -341,7 +341,6 @@ class PlayerControlWidget extends Widget {
 class CameraControlWidget extends Widget {
   public CameraControlWidget(Editor editor) {
     super(editor);
-    closeAfterSubWidget = true;
     icon = loadImage(folder+"CameraControls.png");
   }
 
