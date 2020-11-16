@@ -143,7 +143,7 @@ class Editor {
         //Platform p = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
         //g.platforms.add(p);
         //g.point = null;
-      }
+      //}
     }
     println(g.platforms.size());
   }
