@@ -128,19 +128,27 @@ class Editor {
       int platformY = (int) g.point.y-50;
 
       boolean spaceFree = true;
+      Platform foundAtPoint = null;
       for (Platform p : g.platforms) {
         if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY) {
           spaceFree = false;
+          foundAtPoint = p;
         }
       }
 
       if (spaceFree) { //if there isn't something already there
-        Platform newPlatform = new Platform(platformX, platformY, 100, 100);
-        g.platforms.add(newPlatform);
+        if (eMode == editorMode.ADD) {
+          Platform newPlatform = new Platform(platformX, platformY, 100, 100);
+          g.platforms.add(newPlatform);
+        }
+      }else{
+        if(eMode == editorMode.ERASE && foundAtPoint != null){
+          g.platforms.remove(foundAtPoint);
+        }
       }
       g.point = null;
     }
-    //println(g.platforms.size());
+    println(g.platforms.size());
   }
 
   public Controller getController() {
