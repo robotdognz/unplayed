@@ -269,11 +269,6 @@ class SnapWidget extends Widget {
     } else {
       active = false;
     }
-    //if (editor.eController instanceof EditorControl) {
-    //  implemented = true;
-    //} else {
-    //  implemented = false;
-    //}
   }
 }
 class PickImageWidget extends Widget {
@@ -346,6 +341,7 @@ class CameraControlWidget extends Widget {
   public void clicked() {
     if (!active) {
       editor.eController = new CameraControl(editor);
+      gCamera = new FreeCamera();
     }
   }
 
@@ -355,14 +351,14 @@ class CameraControlWidget extends Widget {
     } else {
       active = false;
     }
-    if (gCamera instanceof GameCamera) {
-      implemented = false;
-      if (editor.eController instanceof CameraControl) {
-        editor.eController = new PlayerControl();
-      }
-    } else {
-      implemented = true;
-    }
+    //if (gCamera instanceof GameCamera) {
+    //  implemented = false;
+    //  if (editor.eController instanceof CameraControl) {
+    //    editor.eController = new PlayerControl();
+    //  }
+    //} else {
+    //  implemented = true;
+    //}
   }
 }
 class EditorControlWidget extends Widget {
@@ -405,13 +401,13 @@ class EditorTypeWidget extends Widget {
 class BlockModeWidget extends Widget {
   public BlockModeWidget(Editor editor) {
     super(editor);
-    //implemented = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"colider.png");
   }
 
   public void clicked() {
     editor.eType = editorType.BLOCK;
+    editor.eController = new EditorControl(editor);
   }
   
   public void updateActive() {
@@ -425,13 +421,13 @@ class BlockModeWidget extends Widget {
 class ImageModeWidget extends Widget {
   public ImageModeWidget(Editor editor) {
     super(editor);
-    //implemented = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"image.png");
   }
 
   public void clicked() {
     editor.eType = editorType.IMAGE;
+    editor.eController = new EditorControl(editor);
   }
   
   public void updateActive() {
@@ -445,13 +441,13 @@ class ImageModeWidget extends Widget {
 class EventModeWidget extends Widget {
   public EventModeWidget(Editor editor) {
     super(editor);
-    //implemented = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"event.png");
   }
 
   public void clicked() {
     editor.eType = editorType.EVENT;
+    editor.eController = new EditorControl(editor);
   }
   
   public void updateActive() {
@@ -480,13 +476,13 @@ class EditorModeWidget extends Widget {
 class AddWidget extends Widget {
   public AddWidget(Editor editor) {
     super(editor);
-    //implemented = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"Add.png");
   }
 
   public void clicked() {
     editor.eMode = editorMode.ADD;
+    editor.eController = new EditorControl(editor);
   }
   
   public void updateActive() {
@@ -500,13 +496,13 @@ class AddWidget extends Widget {
 class EraseWidget extends Widget {
   public EraseWidget(Editor editor) {
     super(editor);
-    //implemented = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"eraser.png");
   }
 
   public void clicked() {
     editor.eMode = editorMode.ERASE;
+    editor.eController = new EditorControl(editor);
   }
   
   public void updateActive() {
@@ -520,13 +516,13 @@ class EraseWidget extends Widget {
 class SelectWidget extends Widget {
   public SelectWidget(Editor editor) {
     super(editor);
-    //implemented = false;
     closeAfterSubWidget = true; 
     icon = loadImage(folder+"marque.png");
   }
 
   public void clicked() {
     editor.eMode = editorMode.SELECT;
+    editor.eController = new EditorControl(editor);
   }
   
   public void updateActive() {
