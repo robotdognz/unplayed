@@ -158,13 +158,14 @@ void onPinch(float x, float y, float d) {
 class Vibe {
   private Vibrator vibe;
   private boolean deprecated;
-
+  
   public Vibe() {
     vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE); 
-    deprecated = android.os.Build.VERSION.SDK_INT > 26 && vibe.hasVibrator();
+    deprecated = android.os.Build.VERSION.SDK_INT >= 26 && vibe.hasVibrator();
     //this class needs to be updated to calculate fine grained vibration strength using a combination of amount and level
   }
 
+  @SuppressWarnings("deprecation")
   public void vibrate(long amount) {
     //amount = duration
     if (!deprecated) {
@@ -176,6 +177,7 @@ class Vibe {
     }
   }
 
+  @SuppressWarnings("deprecation")
   public void vibrate(long amount, int level) {
     //amount = duration
     //level = intensity
