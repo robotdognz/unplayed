@@ -49,11 +49,11 @@ class PlayerControl implements Controller {
 //------------------CameraController---------------------
 class CameraControl implements Controller {
   Editor editor;
-  
-  public CameraControl(Editor editor){
+
+  public CameraControl(Editor editor) {
     this.editor = editor;
   }
-  
+
   public void draw() {
   }
   public void touchStarted() {
@@ -88,11 +88,11 @@ class CameraControl implements Controller {
 //------------------EditorController---------------------
 class EditorControl implements Controller {
   Editor editor;
-  
-  public EditorControl(Editor editor){
+
+  public EditorControl(Editor editor) {
     this.editor = editor;
   }
-  
+
   public void draw() {
   }
   public void touchStarted() {
@@ -103,12 +103,12 @@ class EditorControl implements Controller {
     if (mouseY < 180) { //don't respond to clicks at the top
       return;
     }
-    
+
     float snapNo = 10;
-    if(editor.snap){
+    if (editor.snap) {
       snapNo = 100;
     }
-    
+
     //calculate position in level
     float currentScale = gCamera.getScale();
     float currentSubScale = gCamera.getSubScale();
@@ -121,7 +121,25 @@ class EditorControl implements Controller {
     float finalY = Math.round(levelY/snapNo)*snapNo;
 
     g.point = new PVector(finalX, finalY);
+    if (editor.snap) {
+      if (g.point != null) {
+        //this is inneficent because it makes the platform before knowing if it needs to
+        Platform newPlatform = new Platform((int)g.point.x-50, (int)g.point.y-50, 100, 100);
+        boolean spaceFree = true;
+        for(Platform p : g.platforms){
+          if(p.getTopLeft().equals(newPlatform.getTopLeft())){
+            spaceFree = false;
+          }
+        }
+        if(spaceFree){
+          g.platforms.add(newPlatform);
+        }
+        g.point = null;
+      }
+    }
+    
   }
+  
   public void onPinch(float x, float y, float d) {
   }
 }
