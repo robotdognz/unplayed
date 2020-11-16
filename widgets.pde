@@ -220,7 +220,7 @@ class SettingsWidget extends Widget {
   public SettingsWidget(Editor editor) {
     super(editor);
     icon = loadImage(folder+"settings.png");
-    Widget w1 = new SuspendWidget(editor);
+    Widget w1 = new PlayModeWidget(editor);
     Widget w2 = new SnapWidget(editor);
     Widget w3 = new PickImageWidget(editor);
     Widget w4 = new PickEventWidget(editor);
@@ -232,17 +232,17 @@ class SettingsWidget extends Widget {
     subWidgets.add(w5);
   }
 }
-class SuspendWidget extends Widget {
+class PlayModeWidget extends Widget {
   boolean previousStatus = false;
 
-  public SuspendWidget(Editor editor) {
+  public PlayModeWidget(Editor editor) {
     super(editor);
     icon = loadImage(folder+"Pause.png");
     closeAfterSubWidget = true;
   }
 
   public void clicked() {
-    if (!active) {
+    if (active) {
       gCamera = new FreeCamera();
     } else {
       gCamera = new GameCamera();
@@ -252,9 +252,9 @@ class SuspendWidget extends Widget {
 
   public void updateActive() {
     if (gCamera instanceof FreeCamera) {
-      active = true;
-    } else {
       active = false;
+    } else {
+      active = true;
     }
   }
 }
@@ -608,9 +608,9 @@ class PlaneMenuWidget extends Widget {
     icon = loadImage(folder+"save.png");
     iconIsCurrentSubWidget = true;
     wd = widgetDirection.LEFT;
-    Widget w1 = new ForegroundWidget(editor);
+    Widget w1 = new BackgroundWidget(editor);
     Widget w2 = new LevelWidget(editor);
-    Widget w3 = new BackgroundWidget(editor);
+    Widget w3 = new ForegroundWidget(editor);
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
