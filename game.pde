@@ -100,10 +100,11 @@ class Game {
         e.draw();
       }
     }
-    player.draw(this);
+    player.draw();
 
     //draw black bars
     if (camera.getGame()) {
+      player.drawArrows(this);
       fill(20, 255); //10, 255
       int barSize = 1000000;
       rectMode(CORNERS);

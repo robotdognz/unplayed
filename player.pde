@@ -135,15 +135,16 @@ class Player {
     lastXPos = position.x;
   }
 
-  void draw(Game g) {
+  void draw() {
     //draw player
     fill(playerColor);
     noStroke();
     //rect(position.x, position.y, playerW, playerH);
     image(player, position.x, position.y, playerW, playerH);
-    
+  }
+  
+  public void drawArrows(Game g){
     //draw player-off-screen arrows
-    
     if (position.x+playerW-10 <= g.leftEdge) {
       //left edge
       triangle(g.leftEdge+20, position.y+playerH/2, g.leftEdge+60, position.y+playerH/2-40, g.leftEdge+60, position.y+playerH/2+40);
