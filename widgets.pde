@@ -190,14 +190,12 @@ abstract class Widget {
 }
 
 
-
 //------------------Menu---------------------
 class MenuWidget extends Widget {
   boolean previousStatus = false;
 
   public MenuWidget(Editor editor) {
     super(editor);
-    //this.editor = editor; //is this needed?
     icon = loadImage(folder+"menu.png");
   }
 
@@ -303,20 +301,7 @@ class PickBlockWidget extends Widget {
   }
 }
 
-//------------------ControlMode---------------------
-//class ControlWidget extends Widget {
-//  public ControlWidget(Editor editor) {
-//    super(editor);
-//    iconIsCurrentSubWidget = true;
-//    icon = loadImage(folder+"playerControls.png");
-//    Widget w1 = new PlayerControlWidget(editor);
-//    Widget w2 = new CameraControlWidget(editor);
-//    Widget w3 = new EditorControlWidget(editor);
-//    subWidgets.add(w1);
-//    subWidgets.add(w2);
-//    subWidgets.add(w3);
-//  }
-//}
+//------------------EditorControls---------------------
 class PlayerControlWidget extends Widget {
   public PlayerControlWidget(Editor editor) {
     super(editor);
@@ -360,28 +345,6 @@ class CameraControlWidget extends Widget {
     }
   }
 }
-//class EditorControlWidget extends Widget {
-//  public EditorControlWidget(Editor editor) {
-//    super(editor);
-//    closeAfterSubWidget = true;
-//    icon = loadImage(folder+"PlaceBlock.png");
-//  }
-
-//  public void clicked() {
-//    if (!active) {
-//      editor.eController = new EditorControl(editor);
-//    }
-//  }
-
-//  public void updateActive() {
-//    if (editor.eController instanceof EditorControl) {
-//      active = true;
-//    } else {
-//      active = false;
-//      g.point = null;
-//    }
-//  }
-//}
 
 //------------------EditorMode---------------------
 class EditorModeWidget extends Widget {
@@ -451,7 +414,7 @@ class SelectWidget extends Widget {
   public SelectWidget(Editor editor) {
     super(editor);
     closeAfterSubWidget = true; 
-    icon = loadImage(folder+"marque.png");
+    icon = loadImage(folder+"select.png");
   }
 
   public void clicked() {
@@ -622,50 +585,6 @@ class LoadWidget extends Widget {
     icon = loadImage(folder+"load.png");
   }
 }
-
-//------------------TestSubMenuWidgets---------------------
-//class SubMenuWidget extends Widget {
-//  public SubMenuWidget(Editor editor) {
-//    super(editor);
-//    Widget w1 = new BlankWidget(editor);
-//    Widget w2 = new BlankWidget(editor);
-//    Widget w3 = new SubMenuWidget2(editor);
-//    subWidgets.add(w1);
-//    subWidgets.add(w2);
-//    subWidgets.add(w3);
-//  }
-//}
-//class SubMenuWidget2 extends Widget {
-//  public SubMenuWidget2(Editor editor) {
-//    super(editor);
-//    wd = widgetDirection.LEFT;
-//    Widget w1 = new BlankWidget(editor);
-//    Widget w2 = new SubMenuWidget2Up(editor);
-//    Widget w3 = new SubMenuWidget3(editor);
-//    subWidgets.add(w1);
-//    subWidgets.add(w2);
-//    subWidgets.add(w3);
-//  }
-//}
-//class SubMenuWidget2Up extends Widget {
-//  public SubMenuWidget2Up(Editor editor) {
-//    super(editor);
-//    wd = widgetDirection.UP;
-//    Widget w1 = new BlankWidget(editor);
-//    subWidgets.add(w1);
-//  }
-//}
-//class SubMenuWidget3 extends Widget {
-//  public SubMenuWidget3(Editor editor) {
-//    super(editor);
-//    Widget w1 = new BlankWidget(editor);
-//    Widget w2 = new BlankWidget(editor);
-//    Widget w3 = new BlankWidget(editor);
-//    subWidgets.add(w1);
-//    subWidgets.add(w2);
-//    subWidgets.add(w3);
-//  }
-//}
 
 //------------------WidgetDirectionEnum---------------------
 enum widgetDirection {
