@@ -36,8 +36,12 @@ static abstract class Camera{
   }
   
   public void setCenter(PVector newCenter){
+    if(center == null){
+      center = new PVector(newCenter.x, newCenter.y);
+    }else{
      center.x = newCenter.x; 
      center.y = newCenter.y;
+    }
   }
   
 }
