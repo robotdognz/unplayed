@@ -220,11 +220,13 @@ class SettingsWidget extends Widget {
   public SettingsWidget(Editor editor) {
     super(editor);
     icon = loadImage(folder+"settings.png");
+    Widget w1 = new RestartWidget(editor);
     Widget w2 = new PlayModeWidget(editor);
     Widget w3 = new SnapWidget(editor);
     Widget w4 = new PickImageWidget(editor);
     Widget w5 = new PickEventWidget(editor);
     Widget w6 = new PickBlockWidget(editor);
+    subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
     subWidgets.add(w4);
