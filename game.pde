@@ -58,19 +58,19 @@ class Game {
   public void restart(){
     player.setPosition(level.getPlayerStart());
     
-    camera.setScale(level.getStartScale());
+    //camera.setScale(level.getStartScale());
     newScale = level.getStartScale();
-    camera.setCenter(level.getStartCenter());
-    newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
+    //camera.setCenter(level.getStartCenter());
+    newCenter = new PVector(level.getStartCenter().x, level.getStartCenter().y);
 
-    topEdge = level.getTopBar();
-    newTopEdge = topEdge;
-    bottomEdge = level.getBottomBar();
-    newBottomEdge = bottomEdge;
-    leftEdge = camera.getCenter().x-newScale/2;
-    newLeftEdge = leftEdge;
-    rightEdge = camera.getCenter().x+newScale/2;
-    newRightEdge = rightEdge;
+    //topEdge = level.getTopBar();
+    newTopEdge = level.getTopBar();
+    //bottomEdge = level.getBottomBar();
+    newBottomEdge = level.getBottomBar();
+    //leftEdge = camera.getCenter().x-newScale/2;
+    newLeftEdge = newCenter.x-newScale/2;
+    //rightEdge = camera.getCenter().x+newScale/2;
+    newRightEdge = newCenter.x+newScale/2;
   }
 
   void draw() {

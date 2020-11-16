@@ -164,7 +164,7 @@ class Player {
   }
   
   public void setPosition(PVector newPosition){
-    position.x = newPosition.x;
+    position.x = newPosition.x-playerW/2;
     position.y = newPosition.y;
   }
 
