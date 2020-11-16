@@ -54,6 +54,24 @@ class Game {
     events = level.getEvents();
     //everything needs to be a multiple of 20 (multiple of 10 so you can always fall down holes, and 20 so you don't clip through things 90 apart because of speed 10)
   }
+  
+  public void restart(){
+    player.setPosition(level.getPlayerStart());
+    
+    camera.setScale(level.getStartScale());
+    newScale = level.getStartScale();
+    camera.setCenter(level.getStartCenter());
+    newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
+
+    topEdge = level.getTopBar();
+    newTopEdge = topEdge;
+    bottomEdge = level.getBottomBar();
+    newBottomEdge = bottomEdge;
+    leftEdge = camera.getCenter().x-newScale/2;
+    newLeftEdge = leftEdge;
+    rightEdge = camera.getCenter().x+newScale/2;
+    newRightEdge = rightEdge;
+  }
 
   void draw() {
     pushMatrix(); //start working at game scale

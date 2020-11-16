@@ -162,6 +162,11 @@ class Player {
     }
     //need to add corner arrows
   }
+  
+  public void setPosition(PVector newPosition){
+    position.x = newPosition.x;
+    position.y = newPosition.y;
+  }
 
   void left() {
     left = true;

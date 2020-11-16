@@ -220,17 +220,30 @@ class SettingsWidget extends Widget {
   public SettingsWidget(Editor editor) {
     super(editor);
     icon = loadImage(folder+"settings.png");
-    Widget w1 = new PlayModeWidget(editor);
-    Widget w2 = new SnapWidget(editor);
-    Widget w3 = new PickImageWidget(editor);
-    Widget w4 = new PickEventWidget(editor);
-    Widget w5 = new PickBlockWidget(editor);
-    subWidgets.add(w1);
+    Widget w2 = new PlayModeWidget(editor);
+    Widget w3 = new SnapWidget(editor);
+    Widget w4 = new PickImageWidget(editor);
+    Widget w5 = new PickEventWidget(editor);
+    Widget w6 = new PickBlockWidget(editor);
     subWidgets.add(w2);
     subWidgets.add(w3);
     subWidgets.add(w4);
     subWidgets.add(w5);
+    subWidgets.add(w6);
   }
+}
+class RestartWidget extends Widget {
+  public RestartWidget(Editor editor) {
+    super(editor);
+    icon = loadImage(folder+"ResetGame.png");
+  }
+  
+  public void clicked() {
+    g.restart();
+  }
+
+  public void updateActive() {}
+  
 }
 class PlayModeWidget extends Widget {
   boolean previousStatus = false;
