@@ -3,8 +3,10 @@ import android.os.VibrationEffect;
 import android.content.Context;
 import android.app.Activity;
 
-KetaiGesture gesture;
-Vibe vibe;
+public KetaiGesture gesture;
+public Vibe vibe;
+public TextureCache texture;
+public PerfTest perf;
 
 Game g; //holds the game class
 Camera gCamera; //holds the game camera
@@ -27,7 +29,7 @@ int frameDelay;
 float frame;
 
 //textures
-public TextureCache texture;
+
 
 void setup() {
   //setup graphics
@@ -50,6 +52,7 @@ void init(){
   texture = new TextureCache();
   gesture = new KetaiGesture(this);
   vibe = new Vibe();
+  perf = new PerfTest();
 
   //setup game
   gCamera = new FreeCamera(); //new GameCamera();
@@ -64,6 +67,8 @@ void init(){
 }
 
 void draw() {
+  perf.start();
+  
   if (!gPaused) { //step the game if it is not paused
     //step editor or game controller depending on editor toggle
     if (editorToggle) {
@@ -104,6 +109,8 @@ void draw() {
     menu.draw();
     menu.hover(lastTouch);
   }
+  
+  perf.end();
 }
 
 void touchStarted() {
@@ -214,6 +221,49 @@ class Vibe {
     }
   }
 }
+
+//------------------PerformanceOverheadCalculator---------------------
+class PerfTest {
+  ArrayList<Long> store;
+  int counter = 0;
+  int framesToAverage = 10;
+  long currentAverage = 0;
+  long start = -1;
+  long end = -1;
+  
+  public PerfTest(){
+    store = new ArrayList<Long>();
+  }
+  
+  public void start(){
+    start = System.nanoTime();
+    if(counter > framesToAverage){
+      counter = 0;
+      store.clear();
+    }else if(counter == framesToAverage){
+      currentAverage = 0;
+      for(Long l : store){
+        currentAverage += l;
+      }
+      currentAverage = currentAverage/framesToAverage;
+    }else{
+      counter++;
+      if(end != -1){
+        store.add(end-start);
+      }
+    }
+  }
+  
+  public void end(){
+    end = System.nanoTime();
+    
+  }
+  
+  public long getAverage(){
+    return currentAverage;
+  }
+}
+
 
 //------------------TouchTesting---------------------
 class TouchTesting {

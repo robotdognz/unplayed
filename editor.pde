@@ -96,6 +96,7 @@ class Editor {
     fill(255);
     textSize(50);
     textAlign(CENTER, CENTER);
+    text(nf(perf.getAverage(), 2, 2), width/2, height-100);
     text(nf(this.frame, 2, 2), width/2, height-50);
   }
 
