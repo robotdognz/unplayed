@@ -90,26 +90,22 @@ abstract class Widget {
 
     imageMode(CENTER);
 
-    //fill(10); //active (background)
     if ((!hasSActive && !active) || (hasSActive && !sActive)) {
+      //not active
       image(imageInactive, position.x, position.y, wSize*1.5, wSize*1.5);
-      tint(75); //not active (icon)
-      //fill(245); //not active (background)
-    }else if (!available) {                      //  didn't use to have an else
+      tint(75); 
+    }
+    if (!available) {                      //  didn't use to have an else
+      //unavailable
       image(imageUnavailable, position.x, position.y, wSize*1.5, wSize*1.5);
-      tint(180); //unavailable (icon)
-      //fill(159); //unavailable (background)
-    }else{
+      tint(180);
+    }
+    if ((available && active) || (hasSActive && sActive)){
+      //active
       image(imageActive, position.x, position.y, wSize*1.5, wSize*1.5);
     }
     
-    //draw widget ellipse
-    //ellipseMode(CENTER);
-    //ellipse(position.x, position.y, wSize*1.5, wSize*1.5);
-    //ellipseMode(CORNER);
-    
     //draw widget icon
-    //imageMode(CENTER);
     image(icon, position.x, position.y, wSize, wSize);
     noTint();
     imageMode(CORNER);
