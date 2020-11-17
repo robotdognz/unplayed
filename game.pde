@@ -59,13 +59,6 @@ class Game {
     player.setPosition(level.getPlayerStart());
 
     if(camera.getGame()){
-      newScale = level.getStartScale();
-      newCenter = new PVector(level.getStartCenter().x, level.getStartCenter().y);
-      newTopEdge = level.getTopBar();
-      newBottomEdge = level.getBottomBar();
-      newLeftEdge = newCenter.x-newScale/2;
-      newRightEdge = newCenter.x+newScale/2;
-    }else{
       camera.setScale(level.getStartScale());
       newScale = level.getStartScale();
       camera.setCenter(level.getStartCenter());

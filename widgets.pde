@@ -399,7 +399,7 @@ class CameraControlWidget extends Widget {
 class EditorModeWidget extends Widget {
   public EditorModeWidget(Editor editor) {
     super(editor);
-    icon = loadImage(folder+"Add.png");
+    icon = loadImage(folder+"PlaceBlock.png");
     iconIsCurrentSubWidget = true;
     Widget w1 = new AddWidget(editor);
     Widget w2 = new EraseWidget(editor);
@@ -681,6 +681,7 @@ class ForegroundWidget extends Widget {
   }
   public void clicked() {
     editor.eImagePlane = imagePlane.FRONT;
+    editor.eType = editorType.IMAGE;
   }
   public void updateActive() {
     if (editor.eImagePlane == imagePlane.FRONT) {
@@ -697,6 +698,7 @@ class LevelWidget extends Widget {
   }
   public void clicked() {
     editor.eImagePlane = imagePlane.LEVEL;
+    editor.eType = editorType.IMAGE;
   }
   public void updateActive() {
     if (editor.eImagePlane == imagePlane.LEVEL) {
@@ -713,6 +715,7 @@ class BackgroundWidget extends Widget {
   }
   public void clicked() {
     editor.eImagePlane = imagePlane.BACK;
+    editor.eType = editorType.IMAGE;
   }
   public void updateActive() {
     if (editor.eImagePlane == imagePlane.BACK) {
