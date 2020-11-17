@@ -26,6 +26,9 @@ private PVector lastTouch = new PVector(0, 0);
 int frameDelay = 100;
 float frame;
 
+//textures
+public PImage defaultBlock = loadImage("player_main.png");
+
 void setup() {
   //setup graphics
   fullScreen(P2D);
