@@ -10,7 +10,7 @@ class Platform{
     this.platformH = platformH;
     this.topLeft = new PVector(x, y);
     this.bottomRight = new PVector(x+platformW, y+platformH);
-    sprite = defaultBlock;
+    sprite = textures.defaultBlock;
   }
   
   void draw(){

@@ -27,8 +27,6 @@ class Game {
   private float rightEdge;
   public float newRightEdge;
   public float boarderZoomSpeed = 0.1; //0.1 is default
-  
-  
 
   Game(Camera c, Vibe v) {
     camera = c;

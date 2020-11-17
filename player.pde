@@ -29,7 +29,7 @@ class Player {
     position = new PVector(x, y); //x-playerW/2   y-playerH/2
     velocity = new PVector(0, 0);
     playerColor = color(255, 94, 22);
-    sprite = defaultBlock;
+    sprite = textures.defaultBlock;
   }
 
   void jump() {

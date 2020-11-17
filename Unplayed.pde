@@ -27,12 +27,14 @@ int frameDelay = 100;
 float frame;
 
 //textures
-public PImage defaultBlock = loadImage("player_main.png");
+public TextureCache textures;
 
 void setup() {
   //setup graphics
   fullScreen(P2D);
   frameRate(60);
+  
+  textures = new TextureCache();
   
   gesture = new KetaiGesture(this);
   vibe = new Vibe();
@@ -152,6 +154,15 @@ void onPinch(float x, float y, float d) {
     } else {
       gController.onPinch(x, y, d);
     }
+  }
+}
+
+//------------------TextureStore---------------------
+class TextureCache {
+  public PImage defaultBlock;
+  
+  public TextureCache(){
+    defaultBlock = loadImage("player_main.png");
   }
 }
 
