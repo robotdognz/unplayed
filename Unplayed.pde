@@ -225,7 +225,7 @@ class Vibe {
 //------------------PerformanceOverheadCalculator---------------------
 class PerfTest {
   ArrayList<Long> store;
-  int framesToAverage = 10;
+  int framesToAverage = 30;
   long currentAverage = 0;
   long start = -1;
   long end = -1;
