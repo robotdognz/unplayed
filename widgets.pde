@@ -87,8 +87,9 @@ abstract class Widget {
         }
       }
     }
-
+    
     imageMode(CENTER);
+    drawExtra();
     if (available) {
       if (active) {
         //active
@@ -109,6 +110,8 @@ abstract class Widget {
     noTint();
     imageMode(CORNER);
   }
+  
+  public void drawExtra(){}
 
   public boolean isMenu() {
     if (subWidgets.size() > 0) {
@@ -365,6 +368,7 @@ class PlayerControlWidget extends Widget {
   }
 }
 class CameraControlWidget extends Widget {
+  PImage uiExtra = loadImage(folder+"UI_element01.png");
   public CameraControlWidget(Editor editor) {
     super(editor);
     icon = loadImage(folder+"CameraControls.png");
@@ -383,6 +387,11 @@ class CameraControlWidget extends Widget {
     } else {
       active = false;
     }
+  }
+  
+  public void drawExtra(){
+    float widgetScale = wSize*1.5;
+    image(uiExtra, position.x, position.y, widgetScale*1.253, widgetScale*4.426); //1.25333333  //4.426666
   }
 }
 
