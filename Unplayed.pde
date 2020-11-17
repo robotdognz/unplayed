@@ -249,7 +249,7 @@ class PerfTest {
     }else{
       counter++;
       if(end != -1){
-        store.add(end-start);
+        store.add(start-end); //start of this fram - end of last frame
       }
     }
   }
