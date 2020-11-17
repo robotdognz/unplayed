@@ -101,8 +101,10 @@ abstract class Widget {
     ellipse(position.x, position.y, wSize*1.5, wSize*1.5);
     if(notActive){
        noFill();
-       stroke(1);
+       stroke(75);
+       strokeWeight(2);
        ellipse(position.x, position.y, wSize*1.5, wSize*1.5); 
+       noStroke();
     }
     ellipseMode(CORNER);
     
