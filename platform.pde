@@ -1,20 +1,19 @@
 class Platform{
   private int x, y, platformW, platformH;
   private PImage sprite;
+  private PVector topLeft, bottomRight;
+  
   Platform(int x, int y, int platformW, int platformH){
     this.x = x;
     this.y = y;
     this.platformW = platformW;
     this.platformH = platformH;
-    sprite = loadImage("player_main.png");
+    this.topLeft = new PVector(x, y);
+    this.bottomRight = new PVector(x+platformW, y+platformH);
+    sprite = g.defaultBlock;
   }
+  
   void draw(){
-    //color c = color(30);
-    //fill(c);
-    //noStroke();
-    //rect(x, y, 100, 100);
-    
-    
 
     for(int i = 0; i < platformH; i+=100){
       for(int j = 0; j < platformW; j+=100){
@@ -36,9 +35,9 @@ class Platform{
     
   }
   PVector getTopLeft(){
-    return new PVector(x,y);
+    return topLeft;
   }
   PVector getBottomRight(){
-    return new PVector(x+platformW,y+platformH);
+    return bottomRight;
   }
 }

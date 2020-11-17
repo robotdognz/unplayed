@@ -5,7 +5,7 @@ class Game {
   public ArrayList<Event> events;
   private boolean eventVis;
 
-  Camera camera;
+  public Camera camera;
   
   public PVector point;
 
@@ -27,6 +27,9 @@ class Game {
   private float rightEdge;
   public float newRightEdge;
   public float boarderZoomSpeed = 0.1; //0.1 is default
+  
+  //textures
+  public PImage defaultBlock = loadImage("player_main.png");
 
   Game(Camera c, Vibe v) {
     camera = c;
