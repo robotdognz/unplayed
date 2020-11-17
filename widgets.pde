@@ -89,21 +89,20 @@ abstract class Widget {
     }
 
     imageMode(CENTER);
-
-    
-    //not active
-    //image(imageInactive, position.x, position.y, wSize*1.5, wSize*1.5);
-    //tint(75); 
-    
-    
-    //unavailable
-    //image(imageUnavailable, position.x, position.y, wSize*1.5, wSize*1.5);
-    //tint(180);
-    
-    
-    //active
-    image(imageActive, position.x, position.y, wSize*1.5, wSize*1.5);
-    
+    if (available) {
+      if (active) {
+        //active
+        image(imageActive, position.x, position.y, wSize*1.5, wSize*1.5);
+      } else {
+        //not active
+        image(imageInactive, position.x, position.y, wSize*1.5, wSize*1.5);
+        tint(75);
+      }
+    } else {
+      //unavailable
+      image(imageUnavailable, position.x, position.y, wSize*1.5, wSize*1.5);
+      tint(180);
+    }
 
     //draw widget icon
     image(icon, position.x, position.y, wSize, wSize);
@@ -128,7 +127,6 @@ abstract class Widget {
   }
 
   public void deactivate() {
-    //active = false;
     if (hasSActive) {
       sActive = false;
     } else {
@@ -152,7 +150,6 @@ abstract class Widget {
             } else {
               active = false;
             }
-            //active = false;
           }
         }
       }
@@ -166,7 +163,6 @@ abstract class Widget {
     } else {
       active = !active;
     }
-    //active = !active;
   }
 
   protected void defaultIcon() {
@@ -203,7 +199,7 @@ abstract class Widget {
   }
 
   public void updateActive() {
-    //this method should also be used to update 'implemented'
+    //this method should also be used to update 'available'
     if (subWidgets.size() > 0) {
       for (Widget w : subWidgets) {
         w.updateActive();
@@ -212,10 +208,10 @@ abstract class Widget {
         }
       }
     }
-    updateSecondaryActive();
+    updateActiveUser();
   }
 
-  public void updateSecondaryActive() {
+  public void updateActiveUser() {
   }
 }
 
@@ -407,19 +403,19 @@ class EditorModeWidget extends Widget {
   }
 
   public void clicked() {
-    if (sActive == false) {
-      sActive = true;
+    if (active == false) {
+      active = true;
       editor.eController = new EditorControl(editor);
     } else {
-      active = !active;
+      sActive = !sActive;
     }
   }
 
-  public void updateSecondaryActive() {
+  public void updateActiveUser() {
     if (editor.eController instanceof EditorControl) {
-      sActive = true;
+      active = true;
     } else {
-      sActive = false;
+      active = false;
     }
   }
 }
