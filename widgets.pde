@@ -376,6 +376,14 @@ class EditorModeWidget extends Widget {
     secondaryActive = true;
   }
   
+  public void clicked(){
+    if(sActive == false){
+      sActive = true;
+    }else{
+      active = true;
+    }
+  }
+  
   public void updateSecondaryActive(){
     if(editor.eController instanceof EditorControl){
       sActive = true;
