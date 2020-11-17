@@ -6,6 +6,9 @@ abstract class Widget {
   protected float touchScale = 1.2; //1.5
   protected String folder = dataPath("ui")+'/'; //data path of widget icons
   protected PImage icon;
+  protected PImage imageActive;
+  protected PImage imageInactive;
+  protected PImage imageUnavailable;
   protected boolean hover = false; //is the mouse over the widget
   protected boolean active = false; //is the widget active
   protected boolean hasSActive = false; //should active be used decoupled from widget menu opening
@@ -21,6 +24,9 @@ abstract class Widget {
   protected boolean closeAfterSubWidget = false; //does this sub widget close the sub widget menu after being clicked
 
   public Widget(Editor editor) {
+    imageActive = loadImage(folder+"active.png");
+    imageInactive = loadImage(folder+"inactive.png");
+    imageUnavailable = loadImage(folder+"unavailable.png");
     this.editor = editor;
     defaultIcon();
   }
@@ -82,25 +88,28 @@ abstract class Widget {
       }
     }
 
-    
+    imageMode(CENTER);
 
-    fill(10); //active (background)
+    //fill(10); //active (background)
     if ((!hasSActive && !active) || (hasSActive && !sActive)) {
+      image(imageInactive, position.x, position.y, wSize*1.5, wSize*1.5);
       tint(75); //not active (icon)
-      fill(245); //not active (background)
-    }
-    if (!available) {
+      //fill(245); //not active (background)
+    }else if (!available) {                      //  didn't use to have an else
+      image(imageUnavailable, position.x, position.y, wSize*1.5, wSize*1.5);
       tint(180); //unavailable (icon)
-      fill(159); //unavailable (background)
+      //fill(159); //unavailable (background)
+    }else{
+      image(imageActive, position.x, position.y, wSize*1.5, wSize*1.5);
     }
     
     //draw widget ellipse
-    ellipseMode(CENTER);
-    ellipse(position.x, position.y, wSize*1.5, wSize*1.5);
-    ellipseMode(CORNER);
+    //ellipseMode(CENTER);
+    //ellipse(position.x, position.y, wSize*1.5, wSize*1.5);
+    //ellipseMode(CORNER);
     
     //draw widget icon
-    imageMode(CENTER);
+    //imageMode(CENTER);
     image(icon, position.x, position.y, wSize, wSize);
     noTint();
     imageMode(CORNER);
