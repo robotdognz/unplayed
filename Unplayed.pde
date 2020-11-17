@@ -236,6 +236,10 @@ class PerfTest {
 
   public void start() {
     start = System.nanoTime();
+  }
+
+  public void end() {
+    end = System.nanoTime();
     if (store.size() > framesToAverage) {
       store.clear();
     } else if (store.size() == framesToAverage) {
@@ -248,10 +252,6 @@ class PerfTest {
     if (end != -1) {
       store.add(start-end); //start of this frame - end of last frame
     }
-  }
-
-  public void end() {
-    end = System.nanoTime();
   }
 
   public long getAverage() {
