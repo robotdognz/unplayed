@@ -41,6 +41,7 @@ void init(){
   gPaused = false;
   gWidgets = new ArrayList<Widget>();
   editorToggle = true;
+  menu = null;
   touch = new ArrayList<PVector>();
   lastTouch = new PVector(0, 0);
   frameDelay = 100;
