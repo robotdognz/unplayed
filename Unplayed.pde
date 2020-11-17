@@ -11,19 +11,19 @@ Camera gCamera; //holds the game camera
 Controller gController; //holds the current controller
 Editor edit; //holds the editor
 
-boolean gPaused = false; //is the game class paused
-private ArrayList<Widget> gWidgets = new ArrayList<Widget>();
+boolean gPaused; //is the game class paused
+private ArrayList<Widget> gWidgets;
 private float gWidgetSpacing; //size of gap between widgets
-private boolean editorToggle = true; //is the game in editor mode
+private boolean editorToggle; //is the game in editor mode
 private Menu menu;
 
 //touch screen stuff
 //private TouchTesting testing = new TouchTesting();
-private ArrayList<PVector> touch = new ArrayList<PVector>();
-private PVector lastTouch = new PVector(0, 0);
+private ArrayList<PVector> touch;
+private PVector lastTouch;
 
 //frame count
-int frameDelay = 100;
+int frameDelay;
 float frame;
 
 //textures
@@ -37,6 +37,14 @@ void setup() {
 }
 
 void init(){
+  //setup fields
+  gPaused = false;
+  gWidgets = new ArrayList<Widget>();
+  editorToggle = true;
+  touch = new ArrayList<PVector>();
+  lastTouch = new PVector(0, 0);
+  frameDelay = 100;
+  
   //setup special classes
   texture = new TextureCache();
   gesture = new KetaiGesture(this);
