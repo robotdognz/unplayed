@@ -8,9 +8,9 @@ abstract class Widget {
   protected PImage icon;
   protected boolean hover = false; //is the mouse over the widget
   protected boolean active = false; //is the widget active
-  protected boolean secondaryActive = false; //should active be used decoupled from widget menu opening
-  protected boolean sActive = false; //secondary active that replaces original for highlighting icon
-  protected boolean implemented = true; //is this a fully working widget? Could be used to disable widgets that don't work with the current tool/mode to make menus easier to navigate
+  protected boolean hasSActive = false; //should active be used decoupled from widget menu opening
+  protected boolean sActive = false; //secondary active that overwites the original for highlighting icon
+  protected boolean available = true; //is this a fully working widget? Could be used to disable widgets that don't work with the current tool/mode to make menus easier to navigate
 
   //subWidget fields
   protected float animationSpeed = 0.8; //speed of subWidget animation
@@ -30,7 +30,7 @@ abstract class Widget {
       lastTouch.y >= position.y-wSize*touchScale && 
       lastTouch.x <= position.x+wSize*touchScale && 
       lastTouch.y <= position.y+wSize*touchScale &&
-      implemented) {
+      available) {
       hover = true;
     }
 
@@ -89,7 +89,7 @@ abstract class Widget {
     ellipseMode(CORNER);
 
     //draw widget icon
-    if ((!secondaryActive && !active) || (secondaryActive && !sActive)) {
+    if ((!hasSActive && !active) || (hasSActive && !sActive)) {
       tint(165, 165, 165); //155
     }
     if (!implemented) {
@@ -295,7 +295,7 @@ class SnapWidget extends Widget {
 class PickImageWidget extends Widget {
   public PickImageWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    available = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"pickImage.png");
   }
@@ -303,7 +303,7 @@ class PickImageWidget extends Widget {
 class PickEventWidget extends Widget {
   public PickEventWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    available = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"pickEvent.png");
   }
@@ -311,7 +311,7 @@ class PickEventWidget extends Widget {
 class PickBlockWidget extends Widget {
   public PickBlockWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    available = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"pickBlock.png");
   }
@@ -352,7 +352,7 @@ class CameraControlWidget extends Widget {
   }
 
   public void updateActive() {
-    if (implemented == true && editor.eController instanceof CameraControl) {
+    if (available == true && editor.eController instanceof CameraControl) {
       active = true;
     } else {
       active = false;
@@ -373,7 +373,7 @@ class EditorModeWidget extends Widget {
     subWidgets.add(w2);
     subWidgets.add(w3);
     
-    secondaryActive = true;
+    hasSActive = true;
   }
   
   public void clicked(){
@@ -562,16 +562,16 @@ class ConfirmWidget extends Widget {
 
   public void updateActive() {
     if (editor.eController instanceof EditorControl && !editor.snap && g.point != null) {
-      implemented = true;
+      available = true;
     } else {
-      implemented = false;
+      available = false;
     }
   }
 }
 class EditSelectedWidget extends Widget {
   public EditSelectedWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    available = false;
     icon = loadImage(folder+"EditSelected.png");
     closeAfterSubWidget = true;
   }
@@ -579,14 +579,14 @@ class EditSelectedWidget extends Widget {
 class LayerForwardWidget extends Widget {
   public LayerForwardWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    available = false;
     icon = loadImage(folder+"MoveLayerForward.png");
   }
 }
 class LayerBackwardWidget extends Widget {
   public LayerBackwardWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    available = false;
     icon = loadImage(folder+"MoveLayerBackward.png");
   }
 }
@@ -606,21 +606,21 @@ class SaveMenuWidget extends Widget {
 class SaveWidget extends Widget {
   public SaveWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    available = false;
     icon = loadImage(folder+"save.png");
   }
 }
 class SaveAsWidget extends Widget {
   public SaveAsWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    available = false;
     icon = loadImage(folder+"saveAs.png");
   }
 }
 class LoadWidget extends Widget {
   public LoadWidget(Editor editor) {
     super(editor);
-    implemented = false;
+    available = false;
     icon = loadImage(folder+"load.png");
   }
 }
