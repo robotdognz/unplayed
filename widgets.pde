@@ -92,8 +92,8 @@ abstract class Widget {
       fill(245); //not active (background)
     }
     if (!available) {
-      tint(30, 30, 30); //unavailable (icon)
-      fill(180); //unavailable (background)
+      tint(180); //unavailable (icon)
+      fill(159); //unavailable (background)
     }
     
     //draw widget ellipse
@@ -101,7 +101,7 @@ abstract class Widget {
     ellipse(position.x, position.y, wSize*1.5, wSize*1.5);
     if(notActive){
        noFill();
-       //stroke(2);
+       stroke(1);
        ellipse(position.x, position.y, wSize*1.5, wSize*1.5); 
     }
     ellipseMode(CORNER);
