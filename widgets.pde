@@ -54,7 +54,7 @@ abstract class Widget {
 
     //subWidget draw - comes before current widget so the sub widgets slide out from behind
     if (subWidgets.size() > 0) { //if this widget is a menu and it has been opened
-      for (int i = subWidgets.size()-1; i >= 0; i++) { //int i = 0; i < subWidgets.size(); i++
+      for (int i = subWidgets.size()-1; i >= 0; i--) { //go through them backwards so that they are drawn bottom to top
         float widgetOffset = 0;
         if (active) {
           //if this widget is active, open the subWidgets
