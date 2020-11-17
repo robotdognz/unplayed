@@ -82,19 +82,31 @@ abstract class Widget {
       }
     }
 
-    //draw widget ellipse
-    ellipseMode(CENTER);
-    fill(70);
-    ellipse(position.x, position.y, wSize*1.5, wSize*1.5); 
-    ellipseMode(CORNER);
+    
 
-    //draw widget icon
+    fill(10); //active (background)
+    boolean notActive = false;
     if ((!hasSActive && !active) || (hasSActive && !sActive)) {
-      tint(165, 165, 165); //155
+      notActive = true;
+      tint(75); //not active (icon)
+      fill(245); //not active (background)
     }
     if (!available) {
-      tint(30, 30, 30);
+      tint(30, 30, 30); //unavailable (icon)
+      fill(180); //unavailable (background)
     }
+    
+    //draw widget ellipse
+    ellipseMode(CENTER);
+    ellipse(position.x, position.y, wSize*1.5, wSize*1.5);
+    if(notActive){
+       noFill();
+       //stroke(2);
+       ellipse(position.x, position.y, wSize*1.5, wSize*1.5); 
+    }
+    ellipseMode(CORNER);
+    
+    //draw widget icon
     imageMode(CENTER);
     image(icon, position.x, position.y, wSize, wSize);
     noTint();
