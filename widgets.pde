@@ -391,7 +391,7 @@ class CameraControlWidget extends Widget {
   
   public void drawExtra(){
     float widgetScale = wSize*1.5;
-    image(uiExtra, position.x, position.y, widgetScale*1.253, widgetScale*4.426); //1.25333333  //4.426666
+    image(uiExtra, position.x, position.y, widgetScale*4.4, widgetScale*1.2); //1.25333333  //4.426666
   }
 }
 
