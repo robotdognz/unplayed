@@ -38,7 +38,7 @@ void setup() {
   init();
 }
 
-void init(){
+void init() {
   //setup fields
   gPaused = false;
   gWidgets = new ArrayList<Widget>();
@@ -47,7 +47,7 @@ void init(){
   touch = new ArrayList<PVector>();
   lastTouch = new PVector(0, 0);
   frameDelay = 100;
-  
+
   //setup special classes
   texture = new TextureCache();
   gesture = new KetaiGesture(this);
@@ -68,7 +68,7 @@ void init(){
 
 void draw() {
   perf.start();
-  
+
   if (!gPaused) { //step the game if it is not paused
     //step editor or game controller depending on editor toggle
     if (editorToggle) {
@@ -109,7 +109,7 @@ void draw() {
     menu.draw();
     menu.hover(lastTouch);
   }
-  
+
   perf.end();
 }
 
@@ -179,8 +179,8 @@ void onPinch(float x, float y, float d) {
 //------------------TextureStore---------------------
 class TextureCache {
   public PImage defaultBlock;
-  
-  public TextureCache(){
+
+  public TextureCache() {
     defaultBlock = loadImage("player_main.png");
   }
 }
@@ -189,7 +189,7 @@ class TextureCache {
 class Vibe {
   private Vibrator vibe;
   private boolean deprecated;
-  
+
   public Vibe() {
     vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE); 
     deprecated = android.os.Build.VERSION.SDK_INT > 23 && vibe.hasVibrator();
@@ -197,7 +197,7 @@ class Vibe {
   }
 
   @SuppressWarnings("deprecation")
-  public void vibrate(long amount) {
+    public void vibrate(long amount) {
     //amount = duration
     if (!deprecated) {
       vibe.vibrate(VibrationEffect.createOneShot(amount, 255));
@@ -209,7 +209,7 @@ class Vibe {
   }
 
   @SuppressWarnings("deprecation")
-  public void vibrate(long amount, int level) {
+    public void vibrate(long amount, int level) {
     //amount = duration
     //level = intensity
     if (!deprecated) {
@@ -225,42 +225,37 @@ class Vibe {
 //------------------PerformanceOverheadCalculator---------------------
 class PerfTest {
   ArrayList<Long> store;
-  int counter = 0;
   int framesToAverage = 10;
   long currentAverage = 0;
   long start = -1;
   long end = -1;
-  
-  public PerfTest(){
+
+  public PerfTest() {
     store = new ArrayList<Long>();
   }
-  
-  public void start(){
+
+  public void start() {
     start = System.nanoTime();
-    if(counter > framesToAverage){
-      counter = 0;
+    if (store.size() > framesToAverage) {
       store.clear();
-    }else if(counter == framesToAverage){
+    } else if (store.size() == framesToAverage) {
       currentAverage = 0;
-      for(Long l : store){
+      for (Long l : store) {
         currentAverage += l;
       }
       currentAverage = currentAverage/framesToAverage;
-    }else{
-      counter++;
-      if(end != -1){
-        store.add(start-end); //start of this frame - end of last frame
-      }
+    }
+    if (end != -1) {
+      store.add(start-end); //start of this frame - end of last frame
     }
   }
-  
-  public void end(){
+
+  public void end() {
     end = System.nanoTime();
-    
   }
-  
-  public long getAverage(){
-    return start-end; //currentAverage;
+
+  public long getAverage() {
+    return currentAverage; //start-end;
   }
 }
 
