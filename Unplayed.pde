@@ -27,15 +27,18 @@ int frameDelay = 100;
 float frame;
 
 //textures
-public TextureCache textures;
+public TextureCache texture;
 
 void setup() {
   //setup graphics
   fullScreen(P2D);
   frameRate(60);
-  
-  textures = new TextureCache();
-  
+  init();
+}
+
+void init(){
+  //setup special classes
+  texture = new TextureCache();
   gesture = new KetaiGesture(this);
   vibe = new Vibe();
 

@@ -36,6 +36,7 @@ class PauseMenu extends Menu{
   MenuWidget m;
   String resume = "Resume";
   String editor = "Toggle Editor";
+  String restart = "Restart";
   
   public PauseMenu(MenuWidget m) {
     this.m = m;
@@ -44,9 +45,11 @@ class PauseMenu extends Menu{
     buttonHeight = 200;
     buttonDistance = 80;
     Button resumeB = new Button(width/2, 500, buttonHeight, resume);
-    buttons.add(resumeB);
     Button editorB = new Button(width/2, 500, buttonHeight, editor);
+    Button restartB = new Button(width/2, 500, buttonHeight, restart);
+    buttons.add(resumeB);
     buttons.add(editorB);
+    buttons.add(restartB);
     height();
     menuTopY = height/2-menuHeight/2;
   }
@@ -67,6 +70,8 @@ class PauseMenu extends Menu{
         }else{
           gCamera = new FreeCamera();
         }
+      }else if(b.click().equals(restart)){
+        init(); //rebuild the game
       }
     }
   }
