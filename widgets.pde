@@ -92,7 +92,7 @@ abstract class Widget {
     if ((!hasSActive && !active) || (hasSActive && !sActive)) {
       tint(165, 165, 165); //155
     }
-    if (!implemented) {
+    if (!available) {
       tint(30, 30, 30);
     }
     imageMode(CENTER);
