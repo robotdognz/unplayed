@@ -12,7 +12,7 @@ abstract class Widget {
   protected boolean hover = false; //is the mouse over the widget
   protected boolean active = false; //is the widget active
   protected boolean hasSActive = false; //should active be used decoupled from widget menu opening
-  protected boolean sActive = false; //secondary active that overwites the original for highlighting icon
+  protected boolean sActive = false; //secondary active that replaces the origonal for opening menus etc allowing the user to do whatever with 'active'
   protected boolean available = true; //is this a fully working widget? Could be used to disable widgets that don't work with the current tool/mode to make menus easier to navigate
 
   //subWidget fields
@@ -41,7 +41,7 @@ abstract class Widget {
     }
 
     //subWidget hover
-    if (subWidgets.size() > 0 && active) { //if this widget is a menu and it has been opened
+    if (subWidgets.size() > 0 && ((!hasSActive && active) || (hasSActive && sActive))) { //if this widget is a menu and it has been opened
       for (Widget w : subWidgets) {
         w.hover(lastTouch);
       }
@@ -62,7 +62,7 @@ abstract class Widget {
     if (subWidgets.size() > 0) { //if this widget is a menu and it has been opened
       for (int i = subWidgets.size()-1; i >= 0; i--) { //go through them backwards so that they are drawn bottom to top
         float widgetOffset = 0;
-        if (active) {
+        if ((!hasSActive && active) || (hasSActive && sActive)) {
           //if this widget is active, open the subWidgets
           widgetOffset = subWidgetSpacing+i*subWidgetSpacing;
         } else {
@@ -90,21 +90,21 @@ abstract class Widget {
 
     imageMode(CENTER);
 
-    if ((!hasSActive && !active) || (hasSActive && !sActive)) {
-      //not active
-      image(imageInactive, position.x, position.y, wSize*1.5, wSize*1.5);
-      tint(75); 
-    }
-    if (!available) {
-      //unavailable
-      image(imageUnavailable, position.x, position.y, wSize*1.5, wSize*1.5);
-      tint(180);
-    }
-    if ((available && active) || (hasSActive && sActive)){
-      //active
-      image(imageActive, position.x, position.y, wSize*1.5, wSize*1.5);
-    }
     
+    //not active
+    //image(imageInactive, position.x, position.y, wSize*1.5, wSize*1.5);
+    //tint(75); 
+    
+    
+    //unavailable
+    //image(imageUnavailable, position.x, position.y, wSize*1.5, wSize*1.5);
+    //tint(180);
+    
+    
+    //active
+    image(imageActive, position.x, position.y, wSize*1.5, wSize*1.5);
+    
+
     //draw widget icon
     image(icon, position.x, position.y, wSize, wSize);
     noTint();
@@ -120,11 +120,20 @@ abstract class Widget {
   }
 
   public boolean isActive() {
-    return active;
+    if (hasSActive) {
+      return sActive;
+    } else {
+      return active;
+    }
   }
 
   public void deactivate() {
-    active = false;
+    //active = false;
+    if (hasSActive) {
+      sActive = false;
+    } else {
+      active = false;
+    }
   }
 
   public boolean click() {
@@ -138,7 +147,12 @@ abstract class Widget {
       for (Widget w : subWidgets) {
         if (w.click()) { //both does the click and returns true if the click happened
           if (w.getCloseAfter()) { //if the widget that was clicked should close the widget menu, close it
-            active = false;
+            if (hasSActive) {
+              sActive = false;
+            } else {
+              active = false;
+            }
+            //active = false;
           }
         }
       }
@@ -147,7 +161,12 @@ abstract class Widget {
   }
 
   public void clicked() {
-    active = !active;
+    if (hasSActive) {
+      sActive = !sActive;
+    } else {
+      active = !active;
+    }
+    //active = !active;
   }
 
   protected void defaultIcon() {
@@ -195,8 +214,9 @@ abstract class Widget {
     }
     updateSecondaryActive();
   }
-  
-  public void updateSecondaryActive(){}
+
+  public void updateSecondaryActive() {
+  }
 }
 
 
@@ -250,13 +270,13 @@ class RestartWidget extends Widget {
     icon = loadImage(folder+"ResetGame.png");
     closeAfterSubWidget = true;
   }
-  
+
   public void clicked() {
     g.restart();
   }
 
-  public void updateActive() {}
-  
+  public void updateActive() {
+  }
 }
 class PlayModeWidget extends Widget {
   boolean previousStatus = false;
@@ -382,23 +402,23 @@ class EditorModeWidget extends Widget {
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
-    
+
     hasSActive = true;
   }
-  
-  public void clicked(){
-    if(sActive == false){
+
+  public void clicked() {
+    if (sActive == false) {
       sActive = true;
       editor.eController = new EditorControl(editor);
-    }else{
+    } else {
       active = !active;
     }
   }
-  
-  public void updateSecondaryActive(){
-    if(editor.eController instanceof EditorControl){
+
+  public void updateSecondaryActive() {
+    if (editor.eController instanceof EditorControl) {
       sActive = true;
-    }else{
+    } else {
       sActive = false;
     }
   }
@@ -414,11 +434,11 @@ class AddWidget extends Widget {
     editor.eMode = editorMode.ADD;
     editor.eController = new EditorControl(editor);
   }
-  
+
   public void updateActive() {
-    if(editor.eMode == editorMode.ADD){
+    if (editor.eMode == editorMode.ADD) {
       active = true;
-    }else{
+    } else {
       active = false;
     }
   }
@@ -434,11 +454,11 @@ class EraseWidget extends Widget {
     editor.eMode = editorMode.ERASE;
     editor.eController = new EditorControl(editor);
   }
-  
+
   public void updateActive() {
-    if(editor.eMode == editorMode.ERASE){
+    if (editor.eMode == editorMode.ERASE) {
       active = true;
-    }else{
+    } else {
       active = false;
     }
   }
@@ -454,11 +474,11 @@ class SelectWidget extends Widget {
     editor.eMode = editorMode.SELECT;
     editor.eController = new EditorControl(editor);
   }
-  
+
   public void updateActive() {
-    if(editor.eMode == editorMode.SELECT){
+    if (editor.eMode == editorMode.SELECT) {
       active = true;
-    }else{
+    } else {
       active = false;
     }
   }
@@ -489,11 +509,11 @@ class BlockModeWidget extends Widget {
     editor.eType = editorType.BLOCK;
     editor.eController = new EditorControl(editor);
   }
-  
+
   public void updateActive() {
-    if(editor.eType == editorType.BLOCK){
+    if (editor.eType == editorType.BLOCK) {
       active = true;
-    }else{
+    } else {
       active = false;
     }
   }
@@ -509,11 +529,11 @@ class ImageModeWidget extends Widget {
     editor.eType = editorType.IMAGE;
     editor.eController = new EditorControl(editor);
   }
-  
+
   public void updateActive() {
-    if(editor.eType == editorType.IMAGE){
+    if (editor.eType == editorType.IMAGE) {
       active = true;
-    }else{
+    } else {
       active = false;
     }
   }
@@ -529,11 +549,11 @@ class EventModeWidget extends Widget {
     editor.eType = editorType.EVENT;
     editor.eController = new EditorControl(editor);
   }
-  
+
   public void updateActive() {
-    if(editor.eType == editorType.EVENT){
+    if (editor.eType == editorType.EVENT) {
       active = true;
-    }else{
+    } else {
       active = false;
     }
   }
@@ -654,13 +674,13 @@ class ForegroundWidget extends Widget {
     super(editor);
     icon = loadImage(folder+"WorkFront.png");
   }
-  public void clicked(){
+  public void clicked() {
     editor.eImagePlane = imagePlane.FRONT;
   }
-  public void updateActive(){
-    if(editor.eImagePlane == imagePlane.FRONT){
+  public void updateActive() {
+    if (editor.eImagePlane == imagePlane.FRONT) {
       active = true;
-    }else{
+    } else {
       active = false;
     }
   }
@@ -670,13 +690,13 @@ class LevelWidget extends Widget {
     super(editor);
     icon = loadImage(folder+"WorkMid.png");
   }
-  public void clicked(){
+  public void clicked() {
     editor.eImagePlane = imagePlane.LEVEL;
   }
-  public void updateActive(){
-    if(editor.eImagePlane == imagePlane.LEVEL){
+  public void updateActive() {
+    if (editor.eImagePlane == imagePlane.LEVEL) {
       active = true;
-    }else{
+    } else {
       active = false;
     }
   }
@@ -686,13 +706,13 @@ class BackgroundWidget extends Widget {
     super(editor);
     icon = loadImage(folder+"WorkBack.png");
   }
-  public void clicked(){
+  public void clicked() {
     editor.eImagePlane = imagePlane.BACK;
   }
-  public void updateActive(){
-    if(editor.eImagePlane == imagePlane.BACK){
+  public void updateActive() {
+    if (editor.eImagePlane == imagePlane.BACK) {
       active = true;
-    }else{
+    } else {
       active = false;
     }
   }
