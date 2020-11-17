@@ -85,9 +85,7 @@ abstract class Widget {
     
 
     fill(10); //active (background)
-    boolean notActive = false;
     if ((!hasSActive && !active) || (hasSActive && !sActive)) {
-      notActive = true;
       tint(75); //not active (icon)
       fill(245); //not active (background)
     }
@@ -99,13 +97,6 @@ abstract class Widget {
     //draw widget ellipse
     ellipseMode(CENTER);
     ellipse(position.x, position.y, wSize*1.5, wSize*1.5);
-    if(notActive){
-       noFill();
-       stroke(75);
-       strokeWeight(2);
-       ellipse(position.x, position.y, wSize*1.5, wSize*1.5); 
-       noStroke();
-    }
     ellipseMode(CORNER);
     
     //draw widget icon
