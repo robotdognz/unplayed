@@ -249,7 +249,7 @@ class PerfTest {
     }else{
       counter++;
       if(end != -1){
-        store.add(start-end); //start of this fram - end of last frame
+        store.add(start-end); //start of this frame - end of last frame
       }
     }
   }
@@ -260,7 +260,7 @@ class PerfTest {
   }
   
   public long getAverage(){
-    return currentAverage;
+    return start-end; //currentAverage;
   }
 }
 
