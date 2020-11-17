@@ -379,8 +379,9 @@ class EditorModeWidget extends Widget {
   public void clicked(){
     if(sActive == false){
       sActive = true;
+      editor.eController = new EditorControl(editor);
     }else{
-      active = true;
+      active = !active;
     }
   }
   
