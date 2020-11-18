@@ -41,6 +41,7 @@ class Game {
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
 
     quad = new Quadtree(0, new Rectangle(player.getX()-400, player.getY()-400, player.getX()+400, player.getY()+400));
+    returnObjects = new ArrayList<Rectangle>();
 
     //camera
     camera.setScale(level.getStartScale());
