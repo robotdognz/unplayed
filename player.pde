@@ -1,8 +1,8 @@
 class Player extends Rectangle {
   //fields to remove --------
   //private PVector position;
-  private int playerW = 100;
-  private int playerH = 100;
+  //private int playerW = 100;
+  //private int playerH = 100;
 
   //player fields
   private PVector velocity;
@@ -46,32 +46,32 @@ class Player extends Rectangle {
 
   void collision(PVector platformTopLeft, PVector platformBottomRight) {
     //if a collision is happening
-    if (platformTopLeft.y < getTopLeft().y+playerH+Math.max(velocity.y, 0) && 
+    if (platformTopLeft.y < getTopLeft().y+getHeight()+Math.max(velocity.y, 0) && 
       platformBottomRight.y > getTopLeft().y+Math.min(velocity.y, 0) &&
-      platformTopLeft.x < getTopLeft().x+playerW+velocity.x && 
+      platformTopLeft.x < getTopLeft().x+getWidth()+velocity.x && 
       platformBottomRight.x > getTopLeft().x+velocity.x) {
-      if (platformBottomRight.y < getTopLeft().y+playerH/100-Math.min(velocity.y, 0) //position.y+playerH/100-Math.min(velocity.y,0)
-        && platformTopLeft.x < getTopLeft().x+playerW && platformBottomRight.x > getTopLeft().x) {
+      if (platformBottomRight.y < getTopLeft().y+getHeight()/100-Math.min(velocity.y, 0) //position.y+playerH/100-Math.min(velocity.y,0)
+        && platformTopLeft.x < getTopLeft().x+getWidth() && platformBottomRight.x > getTopLeft().x) {
         //player is under
         if (velocity.y < 0) {
           vibration = (int) Math.max((Math.exp(Math.abs(velocity.y/13))/5), 1); //8
         }
         setY(platformBottomRight.y);
         velocity.y = 0;
-      } else if (platformTopLeft.y > getTopLeft().y+(playerH/20)*19-Math.min(velocity.y, 0)) { //+(playerH/20)*19
+      } else if (platformTopLeft.y > getTopLeft().y+(getHeight()/20)*19-Math.min(velocity.y, 0)) { //+(playerH/20)*19
         //player is above
         if (velocity.y > 0) { 
           vibration = (int) Math.max((Math.exp((velocity.y+vibeVelocity)/15)/1.7), 1); //(Math.exp((velocity.y+vibeVelocity)/15)/1.7))
         }
-        setY(platformTopLeft.y-playerH);
+        setY(platformTopLeft.y-getHeight());
         velocity.y = 0;
         jumpCount = 2;
-      } else if (platformTopLeft.x > getTopLeft().x+(playerW/3)*2) { //+(playerW/3)*2
+      } else if (platformTopLeft.x > getTopLeft().x+(getWidth()/3)*2) { //+(playerW/3)*2
         //player is to the left
-        setX(platformTopLeft.x-playerW);
+        setX(platformTopLeft.x-getWidth());
         velocity.x = 0;
         wall = true;
-      } else if (platformBottomRight.x < getTopLeft().x+playerW/3) { //+playerW/3
+      } else if (platformBottomRight.x < getTopLeft().x+getWidth()/3) { //+playerW/3
         //player is to the right
         setX(platformBottomRight.x);
         velocity.x = 0;
@@ -79,7 +79,7 @@ class Player extends Rectangle {
       } else {
         //fringe case where the player would fall through
         //aka player is in a weird place
-        setY(platformTopLeft.y-playerH);
+        setY(platformTopLeft.y-getHeight());
         velocity.y = 0;
       }
     }
@@ -129,8 +129,8 @@ class Player extends Rectangle {
       PVector eventTopLeft = e.getTopLeft();
       PVector eventBottomRight = e.getBottomRight();
       //if colliding with the event
-      if (eventTopLeft.y < getTopLeft().y+playerH+velocity.y && eventBottomRight.y > getTopLeft().y+velocity.y &&
-        eventTopLeft.x < getTopLeft().x+playerW && eventBottomRight.x > getTopLeft().x) {
+      if (eventTopLeft.y < getTopLeft().y+getHeight()+velocity.y && eventBottomRight.y > getTopLeft().y+velocity.y &&
+        eventTopLeft.x < getTopLeft().x+getWidth() && eventBottomRight.x > getTopLeft().x) {
         e.activate(g);
       }
     }
@@ -145,26 +145,26 @@ class Player extends Rectangle {
     fill(playerColor);
     noStroke();
     //rect(position.x, position.y, playerW, playerH);
-    image(sprite, getTopLeft().x, getTopLeft().y, playerW, playerH);
+    image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
   }
 
   public void drawArrows(Game g) {
     //draw player-off-screen arrows
-    if (getTopLeft().x+playerW-10 <= g.leftEdge) {
+    if (getTopLeft().x+getWidth()-10 <= g.leftEdge) {
       //left edge
-      triangle(g.leftEdge+20, getTopLeft().y+playerH/2, g.leftEdge+60, getTopLeft().y+playerH/2-40, g.leftEdge+60, getTopLeft().y+playerH/2+40);
+      triangle(g.leftEdge+20, getTopLeft().y+getHeight()/2, g.leftEdge+60, getTopLeft().y+getHeight()/2-40, g.leftEdge+60, getTopLeft().y+getHeight()/2+40);
     }
     if (getTopLeft().x+10 >= g.rightEdge) {
       //right edge
-      triangle(g.rightEdge-20, getTopLeft().y+playerH/2, g.rightEdge-60, getTopLeft().y+playerH/2-40, g.rightEdge-60, getTopLeft().y+playerH/2+40);
+      triangle(g.rightEdge-20, getTopLeft().y+getHeight()/2, g.rightEdge-60, getTopLeft().y+getHeight()/2-40, g.rightEdge-60, getTopLeft().y+getHeight()/2+40);
     }
-    if (getTopLeft().y+playerH-10 <= g.topEdge) {
+    if (getTopLeft().y+getHeight()-10 <= g.topEdge) {
       //top edge
-      triangle(getTopLeft().x+playerW/2, g.topEdge+20, getTopLeft().x+40+playerW/2, g.topEdge+60, getTopLeft().x-40+playerW/2, g.topEdge+60);
+      triangle(getTopLeft().x+getWidth()/2, g.topEdge+20, getTopLeft().x+40+getWidth()/2, g.topEdge+60, getTopLeft().x-40+getWidth()/2, g.topEdge+60);
     }
     if (getTopLeft().y+10 >= g.bottomEdge) {
       //top edge
-      triangle(getTopLeft().x+playerW/2, g.bottomEdge-20, getTopLeft().x+40+playerW/2, g.bottomEdge-60, getTopLeft().x-40+playerW/2, g.bottomEdge-60);
+      triangle(getTopLeft().x+getWidth()/2, g.bottomEdge-20, getTopLeft().x+40+getWidth()/2, g.bottomEdge-60, getTopLeft().x-40+getWidth()/2, g.bottomEdge-60);
     }
     //need to add corner arrows
   }
