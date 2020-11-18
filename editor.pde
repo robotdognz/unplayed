@@ -133,8 +133,8 @@ class Editor {
       int platformY = (int) g.point.y; //-50
 
       boolean spaceFree = true;
-      Platform foundAtPoint = null;
-      for (Platform p : g.platforms) {
+      Rectangle foundAtPoint = null;
+      for (Rectangle p : g.platforms) {
         if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY) {
           spaceFree = false;
           foundAtPoint = p;
