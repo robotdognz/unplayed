@@ -30,7 +30,7 @@ class Player extends Rectangle {
     lastXPos = x; //x-playerW/2;
     lastLastXPos = lastXPos;
 
-    position = new PVector(x, y); //x-playerW/2   y-playerH/2
+    //position = new PVector(x, y); //x-playerW/2   y-playerH/2
     velocity = new PVector(0, 0);
     playerColor = color(255, 94, 22);
     sprite = texture.defaultBlock;
