@@ -1,7 +1,7 @@
 public class Quadtree {
 
   private int MAX_OBJECTS = 10;
-  private int MAX_LEVELS = 2; //5
+  private int MAX_LEVELS = 5; //I tried 2
 
   private int level;
   private List<Rectangle> objects;
@@ -132,12 +132,7 @@ public class Quadtree {
  * Return all objects that could collide with the given object
    */
   public ArrayList<Rectangle> retrieve(ArrayList<Rectangle> returnObjects, Rectangle pRect) {
-    //int index = getIndex(pRect);
-    //if (index != -1 && nodes[0] != null) {
-    //  nodes[index].retrieve(returnObjects, pRect);
-    //}
-
-    int index2 = getIndex2(pRect);
+    int index2 = getIndexRetrieve(pRect);
     if (index2 != -1 && nodes[0] != null) {
       nodes[index2].retrieve(returnObjects, pRect);
     }
@@ -147,7 +142,8 @@ public class Quadtree {
     return returnObjects;
   }
 
-  private int getIndex2(Rectangle pRect) {
+  //my custom version of retrieve that uses the center point of the rectangle being checked
+  private int getIndexRetrieve(Rectangle pRect) {
     int index = -1;
     double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
     double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
