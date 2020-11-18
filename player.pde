@@ -1,6 +1,6 @@
 class Player extends Rectangle {
   //fields to remove --------
-  private PVector position;
+  //private PVector position;
   private int playerW = 100;
   private int playerH = 100;
 
@@ -44,101 +44,101 @@ class Player extends Rectangle {
   }
 
 
-  //void collision(PVector platformTopLeft, PVector platformBottomRight) {
-  //  //if a collision is happening
-  //  if (platformTopLeft.y < getTopLeft().y+playerH+Math.max(velocity.y, 0) && 
-  //    platformBottomRight.y > getTopLeft().y+Math.min(velocity.y, 0) &&
-  //    platformTopLeft.x < getTopLeft().x+playerW+velocity.x && 
-  //    platformBottomRight.x > getTopLeft().x+velocity.x) {
-  //    if (platformBottomRight.y < getTopLeft().y+playerH/100-Math.min(velocity.y, 0) //position.y+playerH/100-Math.min(velocity.y,0)
-  //      && platformTopLeft.x < getTopLeft().x+playerW && platformBottomRight.x > getTopLeft().x) {
-  //      //player is under
-  //      if (velocity.y < 0) {
-  //        vibration = (int) Math.max((Math.exp(Math.abs(velocity.y/13))/5), 1); //8
-  //      }
-  //      setY(platformBottomRight.y);
-  //      velocity.y = 0;
-  //    } else if (platformTopLeft.y > getTopLeft().y+(playerH/20)*19-Math.min(velocity.y, 0)) { //+(playerH/20)*19
-  //      //player is above
-  //      if (velocity.y > 0) { 
-  //        vibration = (int) Math.max((Math.exp((velocity.y+vibeVelocity)/15)/1.7), 1); //(Math.exp((velocity.y+vibeVelocity)/15)/1.7))
-  //      }
-  //      setY(platformTopLeft.y-playerH);
-  //      velocity.y = 0;
-  //      jumpCount = 2;
-  //    } else if (platformTopLeft.x > getTopLeft().x+(playerW/3)*2) { //+(playerW/3)*2
-  //      //player is to the left
-  //      setX(platformTopLeft.x-playerW);
-  //      velocity.x = 0;
-  //      wall = true;
-  //    } else if (platformBottomRight.x < getTopLeft().x+playerW/3) { //+playerW/3
-  //      //player is to the right
-  //      setX(platformBottomRight.x);
-  //      velocity.x = 0;
-  //      wall = true;
-  //    } else {
-  //      //fringe case where the player would fall through
-  //      //aka player is in a weird place
-  //      setY(platformTopLeft.y-playerH);
-  //      velocity.y = 0;
-  //    }
-  //  }
-  //}
+  void collision(PVector platformTopLeft, PVector platformBottomRight) {
+    //if a collision is happening
+    if (platformTopLeft.y < getTopLeft().y+playerH+Math.max(velocity.y, 0) && 
+      platformBottomRight.y > getTopLeft().y+Math.min(velocity.y, 0) &&
+      platformTopLeft.x < getTopLeft().x+playerW+velocity.x && 
+      platformBottomRight.x > getTopLeft().x+velocity.x) {
+      if (platformBottomRight.y < getTopLeft().y+playerH/100-Math.min(velocity.y, 0) //position.y+playerH/100-Math.min(velocity.y,0)
+        && platformTopLeft.x < getTopLeft().x+playerW && platformBottomRight.x > getTopLeft().x) {
+        //player is under
+        if (velocity.y < 0) {
+          vibration = (int) Math.max((Math.exp(Math.abs(velocity.y/13))/5), 1); //8
+        }
+        setY(platformBottomRight.y);
+        velocity.y = 0;
+      } else if (platformTopLeft.y > getTopLeft().y+(playerH/20)*19-Math.min(velocity.y, 0)) { //+(playerH/20)*19
+        //player is above
+        if (velocity.y > 0) { 
+          vibration = (int) Math.max((Math.exp((velocity.y+vibeVelocity)/15)/1.7), 1); //(Math.exp((velocity.y+vibeVelocity)/15)/1.7))
+        }
+        setY(platformTopLeft.y-playerH);
+        velocity.y = 0;
+        jumpCount = 2;
+      } else if (platformTopLeft.x > getTopLeft().x+(playerW/3)*2) { //+(playerW/3)*2
+        //player is to the left
+        setX(platformTopLeft.x-playerW);
+        velocity.x = 0;
+        wall = true;
+      } else if (platformBottomRight.x < getTopLeft().x+playerW/3) { //+playerW/3
+        //player is to the right
+        setX(platformBottomRight.x);
+        velocity.x = 0;
+        wall = true;
+      } else {
+        //fringe case where the player would fall through
+        //aka player is in a weird place
+        setY(platformTopLeft.y-playerH);
+        velocity.y = 0;
+      }
+    }
+  }
 
-  //void step(ArrayList<Platform> platforms, ArrayList<Event> events, Game g) {
-  //  float previousY = getTopLeft().y;
-  //  vibration = 0;
-  //  if (velocity.y < terminalVelocity) {
-  //    //limit fall speed by terminalVelocity
-  //    velocity.y += playerGravity;
-  //    vibeVelocity = 0;
-  //  } else if (velocity.y+playerGravity > terminalVelocity) {
-  //    //fall speed exactyly terminalVelocity
-  //    velocity.y = terminalVelocity;
-  //    vibeVelocity += playerGravity/2;
-  //  }
-  //  setY(getY()+velocity.y); //this comes before collision so that falling through perfect holes works
-  //  velocity.x = 0;
+  void step(ArrayList<Platform> platforms, ArrayList<Event> events, Game g) {
+    float previousY = getTopLeft().y;
+    vibration = 0;
+    if (velocity.y < terminalVelocity) {
+      //limit fall speed by terminalVelocity
+      velocity.y += playerGravity;
+      vibeVelocity = 0;
+    } else if (velocity.y+playerGravity > terminalVelocity) {
+      //fall speed exactyly terminalVelocity
+      velocity.y = terminalVelocity;
+      vibeVelocity += playerGravity/2;
+    }
+    setY(getY()+velocity.y); //this comes before collision so that falling through perfect holes works
+    velocity.x = 0;
 
-  //  if (left) {
-  //    velocity.x = -playerSpeed;
-  //  }
-  //  if (right) {
-  //    velocity.x = playerSpeed;
-  //  }
+    if (left) {
+      velocity.x = -playerSpeed;
+    }
+    if (right) {
+      velocity.x = playerSpeed;
+    }
 
-  //  //do collision
-  //  wall = false;
-  //  for (Platform p : platforms) {
-  //    collision(p.getTopLeft(), p.getBottomRight());
-  //  }
+    //do collision
+    wall = false;
+    for (Platform p : platforms) {
+      collision(p.getTopLeft(), p.getBottomRight());
+    }
 
-  //  setX(getX()+velocity.x);
+    setX(getX()+velocity.x);
 
-  //  //ground and roof vibration
-  //  if (getTopLeft().y != previousY && vibration > 0) {
-  //    vibe.vibrate(vibration);
-  //  }
-  //  //wall vibration
-  //  if (wall && lastLastXPos != getTopLeft().x) {
-  //    vibe.vibrate(1, 160);
-  //  }
+    //ground and roof vibration
+    if (getTopLeft().y != previousY && vibration > 0) {
+      vibe.vibrate(vibration);
+    }
+    //wall vibration
+    if (wall && lastLastXPos != getTopLeft().x) {
+      vibe.vibrate(1, 160);
+    }
 
-  //  //event collision
-  //  for (Event e : events) {
-  //    PVector eventTopLeft = e.getTopLeft();
-  //    PVector eventBottomRight = e.getBottomRight();
-  //    //if colliding with the event
-  //    if (eventTopLeft.y < getTopLeft().y+playerH+velocity.y && eventBottomRight.y > getTopLeft().y+velocity.y &&
-  //      eventTopLeft.x < getTopLeft().x+playerW && eventBottomRight.x > getTopLeft().x) {
-  //      e.activate(g);
-  //    }
-  //  }
+    //event collision
+    for (Event e : events) {
+      PVector eventTopLeft = e.getTopLeft();
+      PVector eventBottomRight = e.getBottomRight();
+      //if colliding with the event
+      if (eventTopLeft.y < getTopLeft().y+playerH+velocity.y && eventBottomRight.y > getTopLeft().y+velocity.y &&
+        eventTopLeft.x < getTopLeft().x+playerW && eventBottomRight.x > getTopLeft().x) {
+        e.activate(g);
+      }
+    }
 
-  //  //stores previous positions for wall vibration
-  //  lastLastXPos = lastXPos;
-  //  lastXPos = getTopLeft().x;
-  //}
+    //stores previous positions for wall vibration
+    lastLastXPos = lastXPos;
+    lastXPos = getTopLeft().x;
+  }
 
   void draw() {
     //draw player
@@ -183,103 +183,103 @@ class Player extends Rectangle {
   }
 
 
-void collision(PVector platformTopLeft, PVector platformBottomRight) {
-  //if a collision is happening
-  if (platformTopLeft.y < position.y+playerH+Math.max(velocity.y, 0) && 
-    platformBottomRight.y > position.y+Math.min(velocity.y, 0) &&
-    platformTopLeft.x < position.x+playerW+velocity.x && 
-    platformBottomRight.x > position.x+velocity.x) {
-    if (platformBottomRight.y < position.y+playerH/100-Math.min(velocity.y, 0) //position.y+playerH/100-Math.min(velocity.y,0)
-      && platformTopLeft.x < position.x+playerW && platformBottomRight.x > position.x) {
-      //player is under
-      if (velocity.y < 0) {
-        vibration = (int) Math.max((Math.exp(Math.abs(velocity.y/13))/5), 1); //8
-      }
-      position.y = platformBottomRight.y;
-      velocity.y = 0;
-    } else if (platformTopLeft.y > position.y+(playerH/20)*19-Math.min(velocity.y, 0)) { //+(playerH/20)*19
-      //player is above
-      if (velocity.y > 0) { 
-        vibration = (int) Math.max((Math.exp((velocity.y+vibeVelocity)/15)/1.7), 1); //(Math.exp((velocity.y+vibeVelocity)/15)/1.7))
-      }
-      position.y = platformTopLeft.y-playerH;
-      velocity.y = 0;
-      jumpCount = 2;
-    } else if (platformTopLeft.x > position.x+(playerW/3)*2) { //+(playerW/3)*2
-      //player is to the left
-      position.x = platformTopLeft.x-playerW;
-      velocity.x = 0;
-      wall = true;
-    } else if (platformBottomRight.x < position.x+playerW/3) { //+playerW/3
-      //player is to the right
-      position.x = platformBottomRight.x;
-      velocity.x = 0;
-      wall = true;
-    } else {
-      //fringe case where the player would fall through
-      //aka player is in a weird place
-      position.y = platformTopLeft.y-playerH;
-      velocity.y = 0;
-    }
-  }
-}
+//void collision(PVector platformTopLeft, PVector platformBottomRight) {
+//  //if a collision is happening
+//  if (platformTopLeft.y < position.y+playerH+Math.max(velocity.y, 0) && 
+//    platformBottomRight.y > position.y+Math.min(velocity.y, 0) &&
+//    platformTopLeft.x < position.x+playerW+velocity.x && 
+//    platformBottomRight.x > position.x+velocity.x) {
+//    if (platformBottomRight.y < position.y+playerH/100-Math.min(velocity.y, 0) //position.y+playerH/100-Math.min(velocity.y,0)
+//      && platformTopLeft.x < position.x+playerW && platformBottomRight.x > position.x) {
+//      //player is under
+//      if (velocity.y < 0) {
+//        vibration = (int) Math.max((Math.exp(Math.abs(velocity.y/13))/5), 1); //8
+//      }
+//      position.y = platformBottomRight.y;
+//      velocity.y = 0;
+//    } else if (platformTopLeft.y > position.y+(playerH/20)*19-Math.min(velocity.y, 0)) { //+(playerH/20)*19
+//      //player is above
+//      if (velocity.y > 0) { 
+//        vibration = (int) Math.max((Math.exp((velocity.y+vibeVelocity)/15)/1.7), 1); //(Math.exp((velocity.y+vibeVelocity)/15)/1.7))
+//      }
+//      position.y = platformTopLeft.y-playerH;
+//      velocity.y = 0;
+//      jumpCount = 2;
+//    } else if (platformTopLeft.x > position.x+(playerW/3)*2) { //+(playerW/3)*2
+//      //player is to the left
+//      position.x = platformTopLeft.x-playerW;
+//      velocity.x = 0;
+//      wall = true;
+//    } else if (platformBottomRight.x < position.x+playerW/3) { //+playerW/3
+//      //player is to the right
+//      position.x = platformBottomRight.x;
+//      velocity.x = 0;
+//      wall = true;
+//    } else {
+//      //fringe case where the player would fall through
+//      //aka player is in a weird place
+//      position.y = platformTopLeft.y-playerH;
+//      velocity.y = 0;
+//    }
+//  }
+//}
 
-void step(ArrayList<Platform> platforms, ArrayList<Event> events, Game g) {
-  float previousY = position.y;
-  vibration = 0;
-  if (velocity.y < terminalVelocity) {
-    //limit fall speed by terminalVelocity
-    velocity.y += playerGravity;
-    vibeVelocity = 0;
-  } else if (velocity.y+playerGravity > terminalVelocity) {
-    //fall speed exactyly terminalVelocity
-    velocity.y = terminalVelocity;
-    vibeVelocity += playerGravity/2;
-  }
-  position.y += velocity.y; //this comes before collision so that falling through perfect holes works
-  velocity.x = 0;
+//void step(ArrayList<Platform> platforms, ArrayList<Event> events, Game g) {
+//  float previousY = position.y;
+//  vibration = 0;
+//  if (velocity.y < terminalVelocity) {
+//    //limit fall speed by terminalVelocity
+//    velocity.y += playerGravity;
+//    vibeVelocity = 0;
+//  } else if (velocity.y+playerGravity > terminalVelocity) {
+//    //fall speed exactyly terminalVelocity
+//    velocity.y = terminalVelocity;
+//    vibeVelocity += playerGravity/2;
+//  }
+//  position.y += velocity.y; //this comes before collision so that falling through perfect holes works
+//  velocity.x = 0;
 
-  if (left) {
-    velocity.x = -playerSpeed;
-  }
-  if (right) {
-    velocity.x = playerSpeed;
-  }
+//  if (left) {
+//    velocity.x = -playerSpeed;
+//  }
+//  if (right) {
+//    velocity.x = playerSpeed;
+//  }
 
-  //do collision
-  wall = false;
-  for (Platform p : platforms) {
-    collision(p.getTopLeft(), p.getBottomRight());
-  }
+//  //do collision
+//  wall = false;
+//  for (Platform p : platforms) {
+//    collision(p.getTopLeft(), p.getBottomRight());
+//  }
 
-  position.x += velocity.x;
+//  position.x += velocity.x;
 
-  //ground and roof vibration
-  if (position.y != previousY && vibration > 0) {
-    //vibe.vibrate(VibrationEffect.createOneShot(vibration, 255));
-    vibe.vibrate(vibration);
-  }
-  //wall vibration
-  if (wall && lastLastXPos != position.x) {
-    //vibe.vibrate(VibrationEffect.createOneShot(1, 160));
-    vibe.vibrate(1, 160);
-  }
+//  //ground and roof vibration
+//  if (position.y != previousY && vibration > 0) {
+//    //vibe.vibrate(VibrationEffect.createOneShot(vibration, 255));
+//    vibe.vibrate(vibration);
+//  }
+//  //wall vibration
+//  if (wall && lastLastXPos != position.x) {
+//    //vibe.vibrate(VibrationEffect.createOneShot(1, 160));
+//    vibe.vibrate(1, 160);
+//  }
 
-  //event collision
-  for (Event e : events) {
-    PVector eventTopLeft = e.getTopLeft();
-    PVector eventBottomRight = e.getBottomRight();
-    //if colliding with the event
-    if (eventTopLeft.y < position.y+playerH+velocity.y && eventBottomRight.y > position.y+velocity.y &&
-      eventTopLeft.x < position.x+playerW && eventBottomRight.x > position.x) {
-      e.activate(g);
-    }
-  }
+//  //event collision
+//  for (Event e : events) {
+//    PVector eventTopLeft = e.getTopLeft();
+//    PVector eventBottomRight = e.getBottomRight();
+//    //if colliding with the event
+//    if (eventTopLeft.y < position.y+playerH+velocity.y && eventBottomRight.y > position.y+velocity.y &&
+//      eventTopLeft.x < position.x+playerW && eventBottomRight.x > position.x) {
+//      e.activate(g);
+//    }
+//  }
 
-  //stores previous positions for wall vibration
-  lastLastXPos = lastXPos;
-  lastXPos = position.x;
-}
+//  //stores previous positions for wall vibration
+//  lastLastXPos = lastXPos;
+//  lastXPos = position.x;
+//}
 
 //void draw() {
 //  //draw player
