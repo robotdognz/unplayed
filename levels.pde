@@ -1,5 +1,5 @@
 abstract class Level {
-  protected ArrayList<Platform> platforms;
+  protected ArrayList<Rectangle> platforms;
   protected ArrayList<Event> events;
   protected PVector playerStart;
   protected int startScale;
@@ -8,7 +8,7 @@ abstract class Level {
   protected int topOfBottomBar;
   
   public Level(){
-    platforms = new ArrayList<Platform>();
+    platforms = new ArrayList<Rectangle>();
     events = new ArrayList<Event>();
     playerStart = new PVector(0, 0);
     
@@ -20,7 +20,7 @@ abstract class Level {
   public PVector getPlayerStart() {
     return playerStart;
   }
-  public ArrayList<Platform> getPlatforms() {
+  public ArrayList<Rectangle> getPlatforms() {
     return platforms;
   }
   public ArrayList<Event> getEvents() {
@@ -44,7 +44,7 @@ abstract class Level {
 class BlankLevel extends Level {
   
   BlankLevel() {
-    platforms = new ArrayList<Platform>();
+    platforms = new ArrayList<Rectangle>();
     events = new ArrayList<Event>();
   
     buildLevel();
@@ -69,7 +69,7 @@ class BlankLevel extends Level {
 class Level1 extends Level {
 
   Level1() {
-    platforms = new ArrayList<Platform>();
+    platforms = new ArrayList<Rectangle>();
     events = new ArrayList<Event>();
   
     buildLevel();
@@ -118,7 +118,7 @@ class Level1 extends Level {
 class Level2 extends Level {
 
   Level2() {
-    platforms = new ArrayList<Platform>();
+    platforms = new ArrayList<Rectangle>();
     events = new ArrayList<Event>();
     playerStart = new PVector(-650, 1600);
 

@@ -2,7 +2,7 @@ class Game {
   public Player player;
   private Level level;
   
-  public ArrayList<Platform> platforms;
+  public ArrayList<Rectangle> platforms;
   public Quadtree quad;
   public ArrayList<Rectangle> returnObjects;
   public int scanSize = 0;
@@ -39,6 +39,7 @@ class Game {
     eventVis = true;
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
+    platforms.add(player);
 
     quad = new Quadtree(0, new Rectangle(level.getPlayerStart().x-1000, level.getPlayerStart().y-1000, 2000, 2000));
     returnObjects = new ArrayList<Rectangle>();
@@ -94,8 +95,11 @@ class Game {
 
     //draw player and environment
     background(240); //140
-    for (Platform p : platforms) {
-      p.draw();
+    for (Rectangle p : platforms) {
+      if(p instanceof Platform){
+        ((Platform) p).draw();
+      }
+      
     }
     if (eventVis) {
       for (Event e : events) {
