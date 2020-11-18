@@ -127,6 +127,7 @@ class Game {
     }
     
     fill(0, 0, 0, 150);
+    rect(scanArea.getX(), scanArea.getY(), scanArea.getWidth(), scanArea.getHeight());
     for (Rectangle p : returnObjects) {
       rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
     }
@@ -164,6 +165,7 @@ class Game {
     
 
     player.step(returnObjects, events, this);
+    scanArea = new Rectangle(player.getX()-100, player.getY()-100, 300, 300);
     //player.step(platforms, events, this);
     if (camera.getGame()) {
       screenMovement();
