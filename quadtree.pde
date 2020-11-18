@@ -128,7 +128,7 @@ public class Quadtree {
   /*
  * Return all objects that could collide with the given object
    */
-  public List<Rectangle> retrieve(List<Rectangle> returnObjects, Rectangle pRect) {
+  public ArrayList<Rectangle> retrieve(ArrayList<Rectangle> returnObjects, Rectangle pRect) {
     int index = getIndex(pRect);
     if (index != -1 && nodes[0] != null) {
       nodes[index].retrieve(returnObjects, pRect);

@@ -84,7 +84,7 @@ class Player extends Rectangle {
     }
   }
 
-  void step(ArrayList<Platform> platforms, ArrayList<Event> events, Game g) {
+  void step(ArrayList<Rectangle> platforms, ArrayList<Event> events, Game g) {
     float previousY = getTopLeft().y;
     vibration = 0;
     if (velocity.y < terminalVelocity) {
@@ -108,7 +108,7 @@ class Player extends Rectangle {
 
     //do collision
     wall = false;
-    for (Platform p : platforms) {
+    for (Rectangle p : platforms) {
       collision(p.getTopLeft(), p.getBottomRight());
     }
 

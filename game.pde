@@ -2,11 +2,12 @@ class Game {
   public Player player;
   private Level level;
   public ArrayList<Platform> platforms;
+  public Quadtree quad;
   public ArrayList<Event> events;
   private boolean eventVis;
 
   public Camera camera;
-  
+
   public PVector point;
 
   //local variables for camera
@@ -35,6 +36,8 @@ class Game {
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
 
+    quad = new Quadtree(0, new Rectangle(player.getX()-400, player.getY()-400, player.getX()+400, player.getY()+400));
+
     //camera
     camera.setScale(level.getStartScale());
     newScale = level.getStartScale();
@@ -54,12 +57,12 @@ class Game {
     events = level.getEvents();
     //everything needs to be a multiple of 20 (multiple of 10 so you can always fall down holes, and 20 so you don't clip through things 90 apart because of speed 10)
   }
-  
-  public void restart(){
+
+  public void restart() {
     player.resetVelocity();
     player.setPosition(level.getPlayerStart());
 
-    if(camera.getGame()){
+    if (camera.getGame()) {
       camera.setScale(level.getStartScale());
       newScale = level.getStartScale();
       camera.setCenter(level.getStartCenter());
@@ -112,10 +115,10 @@ class Game {
       rect(rightEdge, camera.getCenter().y-barSize, barSize+camera.getCenter().x, camera.getCenter().y+barSize);
       rectMode(CORNER);
     }
-    
+
     //draw block placement if one exists
-    if(point != null){
-      fill(0,0,0,150);
+    if (point != null) {
+      fill(0, 0, 0, 150);
       //rectMode(CENTER);
       rect(point.x, point.y, 100, 100);
       //rectMode(CORNER);
@@ -134,7 +137,18 @@ class Game {
   }
 
   void step() {
-    player.step(platforms, events, this);
+    //new stff
+    quad.clear();
+    for (int i = 0; i < platforms.size(); i++) {
+      quad.insert(platforms.get(i));
+    }
+
+    ArrayList<Rectangle> returnObjects = new ArrayList<Rectangle>();
+    quad.retrieve(returnObjects, player);
+
+
+    player.step(returnObjects, events, this);
+    //player.step(platforms, events, this);
     if (camera.getGame()) {
       screenMovement();
     }
@@ -177,5 +191,4 @@ class Game {
       bottomEdge = lerp(bottomEdge, newBottomEdge, exp(-boarderZoomSpeed));
     }
   }
-  
 }
