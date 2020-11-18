@@ -3,7 +3,7 @@ class Game {
   private Level level;
   
   public ArrayList<Rectangle> platforms;
-  //public Quadtree quad;
+  public Quadtree2 quad;
   public Rectangle playerArea;
   public ArrayList<Rectangle> playerObjects;
   public int scanSize = 0;
@@ -42,7 +42,7 @@ class Game {
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
     playerArea = new Rectangle(player.getX()-100, player.getY()-100, 300, 300);
 
-    //quad = new Quadtree(0, new Rectangle(level.getPlayerStart().x-1000, level.getPlayerStart().y-1000, 2100, 2100));
+    quad = new Quadtree2(new Rectangle(level.getPlayerStart().x-1000, level.getPlayerStart().y-1000, 2100, 2100));
     playerObjects = new ArrayList<Rectangle>();
 
     //camera
@@ -60,7 +60,10 @@ class Game {
     rightEdge = camera.getCenter().x+newScale/2;
     newRightEdge = rightEdge;
 
-    platforms = level.getPlatforms();
+    //platforms = level.getPlatforms();
+    for(Rectangle p : level.getPlatforms()){
+      quad.insert(p);
+    }
     events = level.getEvents();
     //everything needs to be a multiple of 20 (multiple of 10 so you can always fall down holes, and 20 so you don't clip through things 90 apart because of speed 10)
   }
@@ -127,6 +130,7 @@ class Game {
     }
     
     fill(0, 0, 0, 150);
+    quad.draw();
     //rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
     for (Rectangle p : playerObjects) {
       rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
@@ -159,21 +163,21 @@ class Game {
       //quad.insert(platforms.get(i));
     //}
     //returnObjects.clear();
-    //quad.retrieve(playerObjects, player);
+    quad.retrieve(playerObjects, player);
     
-    //screenObjects.clear();
-    playerObjects.clear();
-    for(Rectangle p : platforms){
-      //if inside screenArea{
-        //screenObjects.add(p);
-        if(p.getBottomRight().x >= playerArea.getTopLeft().x && 
-        p.getTopLeft().x <= playerArea.getBottomRight().x && 
-        p.getBottomRight().y >= playerArea.getTopLeft().y &&
-        p.getTopLeft().y <= playerArea.getBottomRight().y){
-          playerObjects.add(p);
-        }
-      //}
-    }
+    ////screenObjects.clear();
+    //playerObjects.clear();
+    //for(Rectangle p : platforms){
+    //  //if inside screenArea{
+    //    //screenObjects.add(p);
+    //    if(p.getBottomRight().x >= playerArea.getTopLeft().x && 
+    //    p.getTopLeft().x <= playerArea.getBottomRight().x && 
+    //    p.getBottomRight().y >= playerArea.getTopLeft().y &&
+    //    p.getTopLeft().y <= playerArea.getBottomRight().y){
+    //      playerObjects.add(p);
+    //    }
+    //  //}
+    //}
     scanSize = playerObjects.size();
     player.step(playerObjects, events, this);
     playerArea.setX(player.getX()-100);

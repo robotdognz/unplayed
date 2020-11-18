@@ -134,7 +134,10 @@ class Editor {
 
       boolean spaceFree = true;
       Rectangle foundAtPoint = null;
-      for (Rectangle p : g.platforms) {
+      //for (Rectangle p : g.platforms) {
+      ArrayList<Rectangle> getPlatforms = new ArrayList<Rectangle>();
+      
+      for (Rectangle p : g.quad.retrieve(getPlatforms, new Rectangle(platformX, platformY, 100, 100))) {
         if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY) {
           spaceFree = false;
           foundAtPoint = p;
@@ -144,11 +147,13 @@ class Editor {
       if (spaceFree) { //if there isn't something already there
         if (eMode == editorMode.ADD) {
           Platform newPlatform = new Platform(platformX, platformY, 100, 100);
-          g.platforms.add(newPlatform);
+          //g.platforms.add(newPlatform);
+          g.quad.insert(newPlatform);
         }
       }else{
         if(eMode == editorMode.ERASE && foundAtPoint != null){
-          g.platforms.remove(foundAtPoint);
+          //g.platforms.remove(foundAtPoint);
+          g.quad.remove(foundAtPoint);
         }
       }
       g.point = null;
