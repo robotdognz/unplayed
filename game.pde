@@ -3,8 +3,9 @@ class Game {
   private Level level;
   
   public ArrayList<Rectangle> platforms;
-  public Quadtree quad;
-  public ArrayList<Rectangle> returnObjects;
+  //public Quadtree quad;
+  public Rectangle playerArea;
+  public ArrayList<Rectangle> playerObjects;
   public int scanSize = 0;
   
   public ArrayList<Event> events;
@@ -39,9 +40,10 @@ class Game {
     eventVis = true;
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
+    playerArea = new Rectangle(player.getX()-100, player.getY()-100, 300, 300);
 
-    quad = new Quadtree(0, new Rectangle(level.getPlayerStart().x-1000, level.getPlayerStart().y-1000, 2100, 2100));
-    returnObjects = new ArrayList<Rectangle>();
+    //quad = new Quadtree(0, new Rectangle(level.getPlayerStart().x-1000, level.getPlayerStart().y-1000, 2100, 2100));
+    playerObjects = new ArrayList<Rectangle>();
 
     //camera
     camera.setScale(level.getStartScale());
@@ -125,7 +127,8 @@ class Game {
     }
     
     fill(0, 0, 0, 150);
-    for (Rectangle p : returnObjects) {
+    //rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
+    for (Rectangle p : playerObjects) {
       rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
     }
 
@@ -150,18 +153,32 @@ class Game {
   }
 
   void step() {
-    //new stff
-    quad.clear();
-    for (int i = 0; i < platforms.size(); i++) {
-      quad.insert(platforms.get(i));
+    //new stuff
+    //quad.clear();
+    //for (int i = 0; i < platforms.size(); i++) {
+      //quad.insert(platforms.get(i));
+    //}
+    //returnObjects.clear();
+    //quad.retrieve(playerObjects, player);
+    
+    //screenObjects.clear();
+    playerObjects.clear();
+    for(Rectangle p : platforms){
+      //if inside screenArea{
+        //screenObjects.add(p);
+        if(p.getBottomRight().x >= playerArea.getTopLeft().x && 
+        p.getTopLeft().x <= playerArea.getBottomRight().x && 
+        p.getBottomRight().y >= playerArea.getTopLeft().y &&
+        p.getTopLeft().y <= playerArea.getBottomRight().y){
+          playerObjects.add(p);
+        }
+      //}
     }
-    returnObjects.clear();
-    quad.retrieve(returnObjects, player);
-    scanSize = returnObjects.size();
+    scanSize = playerObjects.size();
+    player.step(playerObjects, events, this);
+    playerArea.setX(player.getX()-100);
+    playerArea.setY(player.getY()-100);
     
-    
-
-    player.step(returnObjects, events, this);
     //player.step(platforms, events, this);
     if (camera.getGame()) {
       screenMovement();
