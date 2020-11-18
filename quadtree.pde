@@ -19,6 +19,14 @@ public class Quadtree {
   }
 
   /*
+ * Clears the quadtree and redefines is boundary
+   */
+  public void clearReset(Rectangle newBounds) {
+    clear();
+    bounds = newBounds;
+  }
+
+  /*
  * Clears the quadtree
    */
   public void clear() {
@@ -132,6 +140,7 @@ public class Quadtree {
   }
 }
 
+//------------------Rectangle---------------------
 public class Rectangle {
   private float rWidth, rHeight;
   private PVector topLeft, bottomRight;
@@ -157,10 +166,10 @@ public class Rectangle {
   public float getHeight() {
     return rHeight;
   }
-  public PVector getTopLeft(){
+  public PVector getTopLeft() {
     return topLeft;
   }
-  public PVector getBottomRight(){
+  public PVector getBottomRight() {
     return bottomRight;
   }
   public Object getParent() {
@@ -183,6 +192,10 @@ public class Rectangle {
   public void setHeight(float rHeight) {
     this.rHeight = rHeight;
     this.bottomRight.y = this.topLeft.y+rHeight;
+  }
+  public void setPosition(PVector newPosition) {
+    setX(newPosition.x);
+    setY(newPosition.y);
   }
   public void setParent(Object parent) {
     this.parent = parent;
