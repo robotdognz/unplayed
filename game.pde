@@ -163,6 +163,7 @@ class Game {
       //quad.insert(platforms.get(i));
     //}
     //returnObjects.clear();
+    playerObjects.clear();
     quad.retrieve(playerObjects, player);
     
     ////screenObjects.clear();
