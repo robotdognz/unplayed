@@ -150,7 +150,7 @@ class Game {
     //new stff
     quad.clear();
     scanArea.setX(player.getTopLeft().x-200);
-    scanArea.setX(player.getTopLeft().y-200);
+    scanArea.setY(player.getTopLeft().y-200);
     for (int i = 0; i < platforms.size(); i++) {
       quad.insert(platforms.get(i));
     }
