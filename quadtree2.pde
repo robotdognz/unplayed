@@ -108,7 +108,20 @@ public class QuadNode {
   }
   
   public void remove(Rectangle current){
-    
+    if (insideBounds(current)) { //if it is inside the current node bounds
+      if (topLeft != null) {
+        topLeft.remove(current);
+        topRight.remove(current);
+        bottomLeft.remove(current);
+        bottomRight.remove(current);
+      }else{
+        for(Rectangle r : objects){
+          if (current.equals(r) || r.getX() == current.getX() && r.getY() == current.getY()) {
+            objects.remove(r);
+          }
+        }
+      }
+    }
   }
 
   private void split() {
@@ -174,7 +187,7 @@ public class QuadNode {
       bottomRight.draw();
     } else {
       noFill();
-      stroke(4);
+      stroke(8);
       rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
       noStroke();
     }
