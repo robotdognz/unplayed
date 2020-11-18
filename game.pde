@@ -4,6 +4,7 @@ class Game {
   
   public ArrayList<Platform> platforms;
   public Quadtree quad;
+  public Rectangle scanArea;
   public ArrayList<Rectangle> returnObjects;
   public int scanSize = 0;
   
@@ -40,7 +41,8 @@ class Game {
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
 
-    quad = new Quadtree(0, new Rectangle(player.getX()-400, player.getY()-400, player.getX()+400, player.getY()+400));
+    scanArea = new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, level.getPlayerStart().x+400, level.getPlayerStart().y+400);
+    quad = new Quadtree(0, scanArea);
     returnObjects = new ArrayList<Rectangle>();
 
     //camera
@@ -120,6 +122,9 @@ class Game {
       rect(rightEdge, camera.getCenter().y-barSize, barSize+camera.getCenter().x, camera.getCenter().y+barSize);
       rectMode(CORNER);
     }
+    
+    fill(0, 0, 0, 150);
+    rect(scanArea.getX(), scanArea.getY(), scanArea.getWidth(), scanArea.getHeight());
 
     //draw block placement if one exists
     if (point != null) {
@@ -143,7 +148,8 @@ class Game {
 
   void step() {
     //new stff
-    quad.clearReset(new Rectangle(player.getX()-400, player.getY()-400, player.getX()+400, player.getY()+400));
+    quad.clear();
+    //scanArea.setPosition(PVector newPosition)
     for (int i = 0; i < platforms.size(); i++) {
       quad.insert(platforms.get(i));
     }
