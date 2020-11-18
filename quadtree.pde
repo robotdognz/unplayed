@@ -66,12 +66,12 @@ public class Quadtree {
     double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
 
     // Object can completely fit within the top quadrants
-    boolean topQuadrant = (pRect.getY() < horizontalMidpoint);
+    boolean topQuadrant = (pRect.getY() < horizontalMidpoint && pRect.getY() + pRect.getHeight() < horizontalMidpoint);
     // Object can completely fit within the bottom quadrants
-    boolean bottomQuadrant = (pRect.getY()+pRect.getHeight() > horizontalMidpoint);
+    boolean bottomQuadrant = (pRect.getY() > horizontalMidpoint);
 
     // Object can completely fit within the left quadrants
-    if (pRect.getX() < verticalMidpoint) {
+    if (pRect.getX() < verticalMidpoint && pRect.getX() + pRect.getWidth() < verticalMidpoint) {
       if (topQuadrant) {
         index = 1;
       } else if (bottomQuadrant) {
@@ -79,7 +79,7 @@ public class Quadtree {
       }
     }
     // Object can completely fit within the right quadrants
-    else if (pRect.getX()+pRect.getWidth() > verticalMidpoint) {
+    else if (pRect.getX() > verticalMidpoint) {
       if (topQuadrant) {
         index = 0;
       } else if (bottomQuadrant) {
@@ -89,36 +89,6 @@ public class Quadtree {
 
     return index;
   }
-  
-  //private int getIndex(Rectangle pRect) {
-  //  int index = -1;
-  //  double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
-  //  double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
-
-  //  // Object can completely fit within the top quadrants
-  //  boolean topQuadrant = (pRect.getY() < horizontalMidpoint && pRect.getY() + pRect.getHeight() < horizontalMidpoint);
-  //  // Object can completely fit within the bottom quadrants
-  //  boolean bottomQuadrant = (pRect.getY() > horizontalMidpoint);
-
-  //  // Object can completely fit within the left quadrants
-  //  if (pRect.getX() < verticalMidpoint && pRect.getX() + pRect.getWidth() < verticalMidpoint) {
-  //    if (topQuadrant) {
-  //      index = 1;
-  //    } else if (bottomQuadrant) {
-  //      index = 2;
-  //    }
-  //  }
-  //  // Object can completely fit within the right quadrants
-  //  else if (pRect.getX() > verticalMidpoint) {
-  //    if (topQuadrant) {
-  //      index = 0;
-  //    } else if (bottomQuadrant) {
-  //      index = 3;
-  //    }
-  //  }
-
-  //  return index;
-  //}
 
   /*
  * Insert the object into the quadtree. If the node
