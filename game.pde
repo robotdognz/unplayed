@@ -56,6 +56,7 @@ class Game {
   }
   
   public void restart(){
+    player.resetVelocity();
     player.setPosition(level.getPlayerStart());
 
     if(camera.getGame()){
