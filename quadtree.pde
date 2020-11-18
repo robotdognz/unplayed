@@ -7,6 +7,8 @@ public class Quadtree {
   private List<Rectangle> objects;
   private Rectangle bounds;
   private Quadtree[] nodes;
+  
+  private ArrayList<Integer> indices = new ArrayList<Integer>();
 
   /*
   * Constructor
@@ -62,9 +64,9 @@ public class Quadtree {
    */
   private int getIndex(Rectangle pRect) {
     //offset blocks should stay in the root of the tree
-    //if(pRect.getX()%100 != 0 || pRect.getY()%100 != 0){
-    //  return -1;
-    //}
+    if(pRect.getX()%100 != 0 || pRect.getY()%100 != 0){
+      return -1;
+    }
 
     int index = -1;
     double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
@@ -132,7 +134,7 @@ public class Quadtree {
   }
 
   private ArrayList<Integer> getIndices(Rectangle pRect) {
-    ArrayList<Integer> indices = new ArrayList<Integer>();
+    indices.clear();
     //int index = -1;
     double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
     double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
