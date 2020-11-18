@@ -152,7 +152,7 @@ public class Quadtree {
       }
     }
     // Object can completely fit within the right quadrants
-    if (pRect.getX()+pRect.getX() > verticalMidpoint) {
+    if (pRect.getX()+pRect.getWidth() > verticalMidpoint) {
       if (topQuadrant) {
         indices.add(0);
       }
