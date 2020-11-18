@@ -39,7 +39,7 @@ class Game {
     eventVis = true;
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
-    platforms.add(player);
+    
 
     quad = new Quadtree(0, new Rectangle(level.getPlayerStart().x-1000, level.getPlayerStart().y-1000, 2000, 2000));
     returnObjects = new ArrayList<Rectangle>();
@@ -62,6 +62,8 @@ class Game {
     platforms = level.getPlatforms();
     events = level.getEvents();
     //everything needs to be a multiple of 20 (multiple of 10 so you can always fall down holes, and 20 so you don't clip through things 90 apart because of speed 10)
+    
+    platforms.add(player);
   }
 
   public void restart() {
