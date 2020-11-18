@@ -109,7 +109,9 @@ class Player extends Rectangle {
     //do collision
     wall = false;
     for (Rectangle p : platforms) {
-      collision(p.getTopLeft(), p.getBottomRight());
+      if(p instanceof Platform){
+        collision(p.getTopLeft(), p.getBottomRight());
+      }
     }
 
     setX(getX()+velocity.x);
