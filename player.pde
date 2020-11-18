@@ -1,8 +1,8 @@
-class Player {
+class Player extends Rectangle{
   private PVector position;
   private PVector velocity;
-  private final int playerW = 100;
-  private final int playerH = 100;
+  private int playerW = 100;
+  private int playerH = 100;
   private color playerColor;
   private int jumpCount = 0;
   private final int playerSpeed = 10;
@@ -22,6 +22,7 @@ class Player {
   private float lastLastXPos; //x position two steps back
 
   Player(int x, int y, Vibe v) {
+    super(x, y, 100, 100);
     vibe = v;
     lastXPos = x; //x-playerW/2;
     lastLastXPos = lastXPos;

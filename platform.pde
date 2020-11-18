@@ -1,23 +1,27 @@
-class Platform{
-  private int x, y, platformW, platformH;
+class Platform extends Rectangle{
+  //private int x, y, platformW, platformH;
+  //private PVector topLeft, bottomRight;
   private PImage sprite;
-  private PVector topLeft, bottomRight;
+  //private Rectangle rectangle;
   
   Platform(int x, int y, int platformW, int platformH){
-    this.x = x;
-    this.y = y;
-    this.platformW = platformW;
-    this.platformH = platformH;
-    this.topLeft = new PVector(x, y);
-    this.bottomRight = new PVector(x+platformW, y+platformH);
+    super(x, y, platformW, platformH);
+    //rectangle = new Rectangle(x, y, platformW, platformH);
     sprite = texture.defaultBlock;
+    
+    //this.x = x;
+    //this.y = y;
+    //this.platformW = platformW;
+    //this.platformH = platformH;
+    //this.topLeft = new PVector(x, y);
+    //this.bottomRight = new PVector(x+platformW, y+platformH);
   }
   
   void draw(){
 
-    for(int i = 0; i < platformH; i+=100){
-      for(int j = 0; j < platformW; j+=100){
-        image(sprite, x+j, y+i, 100, 100);
+    for(int i = 0; i < getHeight(); i+=100){
+      for(int j = 0; j < getWidth(); j+=100){
+        image(sprite, getX()+j, getY()+i, 100, 100);
       }
     } 
     
@@ -34,10 +38,10 @@ class Platform{
     //endShape();
     
   }
-  PVector getTopLeft(){
-    return topLeft;
-  }
-  PVector getBottomRight(){
-    return bottomRight;
-  }
+  //PVector getTopLeft(){
+  //  return rectangle.getTopLeft();
+  //}
+  //PVector getBottomRight(){
+  //  return rectangle.getBottomRight();
+  //}
 }
