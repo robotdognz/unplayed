@@ -107,7 +107,7 @@ public class QuadNode {
     }
   }
   
-  public void remove(){
+  public void remove(Rectangle current){
     
   }
 
