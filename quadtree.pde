@@ -61,6 +61,11 @@ public class Quadtree {
    * of the parent node
    */
   private int getIndex(Rectangle pRect) {
+    //offset blocks should stay in the root of the tree
+    if(pRect.getX()%100 != 0 || pRect.getY()%100 != 0){
+      return -1;
+    }
+    
     int index = -1;
     double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
     double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
