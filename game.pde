@@ -125,6 +125,10 @@ class Game {
     
     fill(0, 0, 0, 150);
     rect(scanArea.getX(), scanArea.getY(), scanArea.getWidth(), scanArea.getHeight());
+    for (Rectangle p : returnObjects) {
+      fill(0, 0, 0, 150);
+      rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
+    }
 
     //draw block placement if one exists
     if (point != null) {
@@ -158,10 +162,7 @@ class Game {
     quad.retrieve(returnObjects, scanArea);
     scanSize = returnObjects.size();
     
-    for (Rectangle p : returnObjects) {
-      fill(0, 0, 0, 150);
-      rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
-    }
+    
 
     player.step(returnObjects, events, this);
     //player.step(platforms, events, this);
