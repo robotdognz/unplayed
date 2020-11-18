@@ -85,12 +85,15 @@ public class QuadNode {
   }
 
   public void insert(Rectangle current) {
+    //if(objects.contains(current)){
+      
+    //}
     if (insideBounds(current)) { //if it is inside the current node bounds
       if (topLeft != null) {
         topLeft.insert(current);
         topRight.insert(current);
         bottomLeft.insert(current);
-        bottomLeft.insert(current);
+        bottomRight.insert(current);
       } else {
         objects.add(current);
         if (objects.size() < MAX_OBJECTS) { //if this node can take it without splitting
