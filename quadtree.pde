@@ -1,7 +1,7 @@
 public class Quadtree {
 
   private int MAX_OBJECTS = 10;
-  private int MAX_LEVELS = 5;
+  private int MAX_LEVELS = 2; //5
 
   private int level;
   private List<Rectangle> objects;
