@@ -160,10 +160,10 @@ public class Quadtree {
  * Return all objects that could collide with the given object
    */
   public ArrayList<Rectangle> retrieve(ArrayList<Rectangle> returnObjects, Rectangle pRect) {
-    int index = getIndex(pRect);
-    if (index != -1 && nodes[0] != null) {
-      nodes[index].retrieve(returnObjects, pRect);
-    }
+    //int index = getIndex(pRect);
+    //if (index != -1 && nodes[0] != null) {
+    //  nodes[index].retrieve(returnObjects, pRect);
+    //}
     
     int index2 = getIndex2(pRect);
     if (index2 != -1 && nodes[0] != null) {
