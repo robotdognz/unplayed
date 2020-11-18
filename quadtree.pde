@@ -89,37 +89,9 @@ public class Quadtree {
 
     return index;
   }
-  
 
-  private int getIndex2(Rectangle pRect) {
-    int index = -1;
-    double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
-    double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
 
-    // Object can completely fit within the top quadrants
-    boolean topQuadrant = (pRect.getY() < horizontalMidpoint);
-    // Object can completely fit within the bottom quadrants
-    boolean bottomQuadrant = (pRect.getY()+pRect.getHeight() > horizontalMidpoint);
 
-    // Object can completely fit within the left quadrants
-    if (pRect.getX() < verticalMidpoint) {
-      if (topQuadrant) {
-        index = 1;
-      } else if (bottomQuadrant) {
-        index = 2;
-      }
-    }
-    // Object can completely fit within the right quadrants
-    else if (pRect.getX()+pRect.getWidth() > verticalMidpoint) {
-      if (topQuadrant) {
-        index = 0;
-      } else if (bottomQuadrant) {
-        index = 3;
-      }
-    }
-
-    return index;
-  }
 
   /*
  * Insert the object into the quadtree. If the node
@@ -164,15 +136,45 @@ public class Quadtree {
     //if (index != -1 && nodes[0] != null) {
     //  nodes[index].retrieve(returnObjects, pRect);
     //}
-    
+
     int index2 = getIndex2(pRect);
     if (index2 != -1 && nodes[0] != null) {
       nodes[index2].retrieve(returnObjects, pRect);
     }
-    
+
     returnObjects.addAll(objects);
 
     return returnObjects;
+  }
+
+  private int getIndex2(Rectangle pRect) {
+    int index = -1;
+    double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
+    double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
+
+    // Object midpoint is in the top quadrants
+    boolean topQuadrant = (pRect.getY()+pRect.getHeight()/2 < horizontalMidpoint);
+    // Object midpoint is in the bottom quadrants
+    boolean bottomQuadrant = (pRect.getY()+pRect.getHeight()/2 > horizontalMidpoint);
+
+    // Object midpoint is in the left quadrants
+    if (pRect.getX()+pRect.getWidth()/2 < verticalMidpoint) {
+      if (topQuadrant) {
+        index = 1;
+      } else if (bottomQuadrant) {
+        index = 2;
+      }
+    }
+    // Object midpoint is in the right quadrants
+    else if (pRect.getX()+pRect.getWidth()/2 > verticalMidpoint) {
+      if (topQuadrant) {
+        index = 0;
+      } else if (bottomQuadrant) {
+        index = 3;
+      }
+    }
+
+    return index;
   }
 }
 
