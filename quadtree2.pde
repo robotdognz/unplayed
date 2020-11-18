@@ -76,7 +76,7 @@ public class QuadNode {
         topLeft.retrieve(returnObjects, player);
         topRight.retrieve(returnObjects, player);
         bottomLeft.retrieve(returnObjects, player);
-        bottomLeft.retrieve(returnObjects, player);
+        bottomRight.retrieve(returnObjects, player);
       } else { //else return the objects from this node
         returnObjects.addAll(objects);
       }
@@ -174,7 +174,7 @@ public class QuadNode {
       bottomRight.draw();
     } else {
       noFill();
-      stroke(2);
+      stroke(4);
       rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
       noStroke();
     }
