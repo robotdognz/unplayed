@@ -5,6 +5,7 @@ class Game {
   public ArrayList<Rectangle> platforms;
   public Quadtree quad;
   public ArrayList<Rectangle> returnObjects;
+  public Rectangle scanArea;
   public int scanSize = 0;
   
   public ArrayList<Event> events;
@@ -39,7 +40,7 @@ class Game {
     eventVis = true;
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
-    
+    scanArea = new Rectangle(level.getPlayerStart().x-100, level.getPlayerStart().y-100, 300, 300);
 
     quad = new Quadtree(0, new Rectangle(level.getPlayerStart().x-1000, level.getPlayerStart().y-1000, 2000, 2000));
     returnObjects = new ArrayList<Rectangle>();
@@ -157,7 +158,7 @@ class Game {
       quad.insert(platforms.get(i));
     }
     returnObjects.clear();
-    quad.retrieve(returnObjects, player);
+    quad.retrieve(returnObjects, scanArea);
     scanSize = returnObjects.size();
     
     
