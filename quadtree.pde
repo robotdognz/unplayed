@@ -62,10 +62,10 @@ public class Quadtree {
    */
   private int getIndex(Rectangle pRect) {
     //offset blocks should stay in the root of the tree
-    if(pRect.getX()%100 != 0 || pRect.getY()%100 != 0){
-      return -1;
-    }
-    
+    //if(pRect.getX()%100 != 0 || pRect.getY()%100 != 0){
+    //  return -1;
+    //}
+
     int index = -1;
     double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
     double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
@@ -94,8 +94,6 @@ public class Quadtree {
 
     return index;
   }
-
-
 
 
   /*
@@ -133,18 +131,61 @@ public class Quadtree {
     }
   }
 
+  private ArrayList<Integer> getIndices(Rectangle pRect) {
+    ArrayList<Integer> indices = new ArrayList<Integer>();
+    //int index = -1;
+    double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
+    double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
+
+    // Object can completely fit within the top quadrants
+    boolean topQuadrant = (pRect.getY() < horizontalMidpoint);
+    // Object can completely fit within the bottom quadrants
+    boolean bottomQuadrant = (pRect.getY()+pRect.getHeight() > horizontalMidpoint);
+
+    // Object can completely fit within the left quadrants
+    if (pRect.getX() < verticalMidpoint) {
+      if (topQuadrant) {
+        indices.add(1);
+      }
+      if (bottomQuadrant) {
+        indices.add(2);
+      }
+    }
+    // Object can completely fit within the right quadrants
+    if (pRect.getX()+pRect.getX() > verticalMidpoint) {
+      if (topQuadrant) {
+        indices.add(0);
+      }
+      if (bottomQuadrant) {
+        indices.add(3);
+      }
+    }
+
+    return indices;
+  }
+
   /*
  * Return all objects that could collide with the given object
    */
   public ArrayList<Rectangle> retrieve(ArrayList<Rectangle> returnObjects, Rectangle pRect) {
-    int index2 = getIndexRetrieve(pRect);
-    if (index2 != -1 && nodes[0] != null) {
-      nodes[index2].retrieve(returnObjects, pRect);
+    ArrayList<Integer> indices = getIndices(pRect);
+    if (nodes[0] != null) {
+      for(Integer i : indices){
+         nodes[i].retrieve(returnObjects, pRect);
+      }
     }
 
     returnObjects.addAll(objects);
 
     return returnObjects;
+    //int index2 = getIndexRetrieve(pRect);
+    //if (index2 != -1 && nodes[0] != null) {
+    //  nodes[index2].retrieve(returnObjects, pRect);
+    //}
+
+    //returnObjects.addAll(objects);
+
+    //return returnObjects;
   }
 
   //my custom version of retrieve that uses the center point of the rectangle being checked
