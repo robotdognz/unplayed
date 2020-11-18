@@ -1,8 +1,11 @@
 class Game {
   public Player player;
   private Level level;
+  
   public ArrayList<Platform> platforms;
   public Quadtree quad;
+  public ArrayList<Rectangle> returnObjects;
+  
   public ArrayList<Event> events;
   private boolean eventVis;
 
@@ -138,12 +141,11 @@ class Game {
 
   void step() {
     //new stff
-    quad.clear();
+    quad.clearReset(new Rectangle(player.getX()-400, player.getY()-400, player.getX()+400, player.getY()+400));
     for (int i = 0; i < platforms.size(); i++) {
       quad.insert(platforms.get(i));
     }
-
-    ArrayList<Rectangle> returnObjects = new ArrayList<Rectangle>();
+    returnObjects.clear();
     quad.retrieve(returnObjects, player);
 
 
