@@ -41,7 +41,7 @@ class Game {
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
 
-    scanArea = new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, level.getPlayerStart().x+400, level.getPlayerStart().y+400);
+    scanArea = new Rectangle(level.getPlayerStart().x-200, level.getPlayerStart().y-200, 500, 500);
     quad = new Quadtree(0, scanArea);
     returnObjects = new ArrayList<Rectangle>();
 
@@ -149,13 +149,15 @@ class Game {
   void step() {
     //new stff
     quad.clear();
-    //scanArea.setPosition(PVector newPosition)
+    scanArea.setX(player.getTopLeft().x-200);
+    scanArea.setX(player.getTopLeft().y-200);
     for (int i = 0; i < platforms.size(); i++) {
       quad.insert(platforms.get(i));
     }
     returnObjects.clear();
     quad.retrieve(returnObjects, player);
     scanSize = returnObjects.size();
+    
 
     player.step(returnObjects, events, this);
     //player.step(platforms, events, this);
