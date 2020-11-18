@@ -5,6 +5,7 @@ class Game {
   public ArrayList<Platform> platforms;
   public Quadtree quad;
   public ArrayList<Rectangle> returnObjects;
+  public int scanSize = 0;
   
   public ArrayList<Event> events;
   private boolean eventVis;
@@ -147,7 +148,7 @@ class Game {
     }
     returnObjects.clear();
     quad.retrieve(returnObjects, player);
-
+    scanSize = returnObjects.size();
 
     player.step(returnObjects, events, this);
     //player.step(platforms, events, this);
