@@ -85,9 +85,6 @@ public class QuadNode {
   }
 
   public void insert(Rectangle current) {
-    //if(objects.contains(current)){
-      
-    //}
     if (insideBounds(current)) { //if it is inside the current node bounds
       if (topLeft != null) {
         topLeft.insert(current);
