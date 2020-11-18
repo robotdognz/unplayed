@@ -62,8 +62,6 @@ class Game {
     platforms = level.getPlatforms();
     events = level.getEvents();
     //everything needs to be a multiple of 20 (multiple of 10 so you can always fall down holes, and 20 so you don't clip through things 90 apart because of speed 10)
-    
-    platforms.add(player);
   }
 
   public void restart() {
