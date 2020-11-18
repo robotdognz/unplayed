@@ -56,30 +56,35 @@ class Player extends Rectangle {
         if (velocity.y < 0) {
           vibration = (int) Math.max((Math.exp(Math.abs(velocity.y/13))/5), 1); //8
         }
-        getTopLeft().y = platformBottomRight.y;
+        //getTopLeft().y = platformBottomRight.y;
+        setY(platformBottomRight.y);
         velocity.y = 0;
       } else if (platformTopLeft.y > getTopLeft().y+(playerH/20)*19-Math.min(velocity.y, 0)) { //+(playerH/20)*19
         //player is above
         if (velocity.y > 0) { 
           vibration = (int) Math.max((Math.exp((velocity.y+vibeVelocity)/15)/1.7), 1); //(Math.exp((velocity.y+vibeVelocity)/15)/1.7))
         }
-        getTopLeft().y = platformTopLeft.y-playerH;
+        //getTopLeft().y = platformTopLeft.y-playerH;
+        setY(platformTopLeft.y-playerH);
         velocity.y = 0;
         jumpCount = 2;
       } else if (platformTopLeft.x > getTopLeft().x+(playerW/3)*2) { //+(playerW/3)*2
         //player is to the left
-        getTopLeft().x = platformTopLeft.x-playerW;
+        //getTopLeft().x = platformTopLeft.x-playerW;
+        setX(platformTopLeft.x-playerW);
         velocity.x = 0;
         wall = true;
       } else if (platformBottomRight.x < getTopLeft().x+playerW/3) { //+playerW/3
         //player is to the right
-        getTopLeft().x = platformBottomRight.x;
+        //getTopLeft().x = platformBottomRight.x;
+        setX(platformBottomRight.x);
         velocity.x = 0;
         wall = true;
       } else {
         //fringe case where the player would fall through
         //aka player is in a weird place
-        getTopLeft().y = platformTopLeft.y-playerH;
+        //getTopLeft().y = platformTopLeft.y-playerH;
+        setY(platformTopLeft.y-playerH);
         velocity.y = 0;
       }
     }
@@ -97,7 +102,8 @@ class Player extends Rectangle {
       velocity.y = terminalVelocity;
       vibeVelocity += playerGravity/2;
     }
-    getTopLeft().y += velocity.y; //this comes before collision so that falling through perfect holes works
+    //getTopLeft().y += velocity.y; //this comes before collision so that falling through perfect holes works
+    setY(getY()+velocity.y);
     velocity.x = 0;
 
     if (left) {
@@ -113,7 +119,8 @@ class Player extends Rectangle {
       collision(p.getTopLeft(), p.getBottomRight());
     }
 
-    getTopLeft().x += velocity.x;
+    //getTopLeft().x += velocity.x;
+    setX(getX()+velocity.x);
 
     //ground and roof vibration
     if (getTopLeft().y != previousY && vibration > 0) {
