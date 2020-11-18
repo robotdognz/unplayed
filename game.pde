@@ -159,7 +159,7 @@ class Game {
       quad.insert(platforms.get(i));
     }
     returnObjects.clear();
-    quad.retrieve(returnObjects, scanArea);
+    quad.retrieve(returnObjects, player);
     scanSize = returnObjects.size();
     
     
