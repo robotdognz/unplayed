@@ -60,7 +60,7 @@ class Game {
     rightEdge = camera.getCenter().x+newScale/2;
     newRightEdge = rightEdge;
 
-    //platforms = level.getPlatforms();
+    platforms = level.getPlatforms();
     for(Rectangle p : level.getPlatforms()){
       quad.insert(p);
     }
