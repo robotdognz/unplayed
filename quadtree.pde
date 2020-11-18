@@ -144,7 +144,6 @@ public class Quadtree {
 public class Rectangle {
   private float rWidth, rHeight;
   private PVector topLeft, bottomRight;
-  private Object parent;
 
   public Rectangle(float x, float y, float rWidth, float rHeight) {
     this.rWidth = rWidth;
@@ -172,9 +171,6 @@ public class Rectangle {
   public PVector getBottomRight() {
     return bottomRight;
   }
-  public Object getParent() {
-    return parent;
-  }
 
   //setters
   public void setX(float x) {
@@ -196,8 +192,5 @@ public class Rectangle {
   public void setPosition(PVector newPosition) {
     setX(newPosition.x);
     setY(newPosition.y);
-  }
-  public void setParent(Object parent) {
-    this.parent = parent;
   }
 }
