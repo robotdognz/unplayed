@@ -250,7 +250,7 @@ class PerfTest {
       currentAverage = currentAverage/framesToAverage;
     }
     if (end != -1) {
-      store.add(start-end); //start of this frame - end of last frame
+      store.add(end-start); //start of this frame - end of last frame
     }
   }
 
