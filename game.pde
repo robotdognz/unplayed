@@ -42,7 +42,7 @@ class Game {
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
 
     scanArea = new Rectangle(level.getPlayerStart().x-200, level.getPlayerStart().y-200, 500, 500);
-    quad = new Quadtree(0, scanArea);
+    quad = new Quadtree(0, new Rectangle(level.getPlayerStart().x-1000, level.getPlayerStart().y-1000, 2000, 2000));
     returnObjects = new ArrayList<Rectangle>();
 
     //camera
@@ -155,7 +155,7 @@ class Game {
       quad.insert(platforms.get(i));
     }
     returnObjects.clear();
-    quad.retrieve(returnObjects, player);
+    quad.retrieve(returnObjects, scanArea);
     scanSize = returnObjects.size();
     
 
