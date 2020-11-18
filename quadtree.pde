@@ -191,35 +191,35 @@ public class Quadtree {
   }
 
   //my custom version of retrieve that uses the center point of the rectangle being checked
-  private int getIndexRetrieve(Rectangle pRect) {
-    int index = -1;
-    double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
-    double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
+  //private int getIndexRetrieve(Rectangle pRect) {
+  //  int index = -1;
+  //  double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
+  //  double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
 
-    // Object midpoint is in the top quadrants
-    boolean topQuadrant = (pRect.getY()+pRect.getHeight()/2 < horizontalMidpoint);
-    // Object midpoint is in the bottom quadrants
-    boolean bottomQuadrant = (pRect.getY()+pRect.getHeight()/2 > horizontalMidpoint);
+  //  // Object midpoint is in the top quadrants
+  //  boolean topQuadrant = (pRect.getY()+pRect.getHeight()/2 < horizontalMidpoint);
+  //  // Object midpoint is in the bottom quadrants
+  //  boolean bottomQuadrant = (pRect.getY()+pRect.getHeight()/2 > horizontalMidpoint);
 
-    // Object midpoint is in the left quadrants
-    if (pRect.getX()+pRect.getWidth()/2 < verticalMidpoint) {
-      if (topQuadrant) {
-        index = 1;
-      } else if (bottomQuadrant) {
-        index = 2;
-      }
-    }
-    // Object midpoint is in the right quadrants
-    else if (pRect.getX()+pRect.getWidth()/2 > verticalMidpoint) {
-      if (topQuadrant) {
-        index = 0;
-      } else if (bottomQuadrant) {
-        index = 3;
-      }
-    }
+  //  // Object midpoint is in the left quadrants
+  //  if (pRect.getX()+pRect.getWidth()/2 < verticalMidpoint) {
+  //    if (topQuadrant) {
+  //      index = 1;
+  //    } else if (bottomQuadrant) {
+  //      index = 2;
+  //    }
+  //  }
+  //  // Object midpoint is in the right quadrants
+  //  else if (pRect.getX()+pRect.getWidth()/2 > verticalMidpoint) {
+  //    if (topQuadrant) {
+  //      index = 0;
+  //    } else if (bottomQuadrant) {
+  //      index = 3;
+  //    }
+  //  }
 
-    return index;
-  }
+  //  return index;
+  //}
 }
 
 //------------------Rectangle---------------------
