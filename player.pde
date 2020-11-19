@@ -1,9 +1,4 @@
 class Player extends Rectangle {
-  //fields to remove --------
-  //private PVector position;
-  //private int playerW = 100;
-  //private int playerH = 100;
-
   //player fields
   private PVector velocity;
   private color playerColor;
@@ -30,7 +25,6 @@ class Player extends Rectangle {
     lastXPos = x; //x-playerW/2;
     lastLastXPos = lastXPos;
 
-    //position = new PVector(x, y); //x-playerW/2   y-playerH/2
     velocity = new PVector(0, 0);
     playerColor = color(255, 94, 22);
     sprite = texture.defaultBlock;
