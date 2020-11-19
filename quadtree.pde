@@ -132,11 +132,6 @@ public class QuadNode {
           objects.remove(r);
         }
         matches.clear();
-        //for (int i = 0; i < objects.size(); i++) {
-        //  if (current.equals(objects.get(i)) || objects.get(i).getX() == current.getX() && objects.get(i).getY() == current.getY()) {
-        //    objects.remove(i);
-        //  }
-        //}
       }
     }
   }
@@ -223,9 +218,14 @@ public class QuadNode {
     retrieve(toAdd, topLeft);
     retrieve(toAdd, topRight);
     retrieve(toAdd, bottomLeft);
-
+    
     //insert the new rectangle
     newTopLeft.insert(current);
+    
+    //add overlaping rectangles
+    for(Rectangle r : toAdd){
+      tree.insert(r);
+    }
   }
   private void growTopRight(Rectangle current) {
     float bWidth = bounds.getWidth();
@@ -260,6 +260,11 @@ public class QuadNode {
 
     //insert the new rectangle
     newTopLeft.insert(current);
+    
+    //add overlaping rectangles
+    for(Rectangle r : toAdd){
+      tree.insert(r);
+    }
   }
   private void growBottomLeft(Rectangle current) {
     float bWidth = bounds.getWidth();
@@ -294,6 +299,11 @@ public class QuadNode {
 
     //insert the new rectangle
     newTopLeft.insert(current);
+    
+    //add overlaping rectangles
+    for(Rectangle r : toAdd){
+      tree.insert(r);
+    }
   }
   private void growBottomRight(Rectangle current) {
     float bWidth = bounds.getWidth();
@@ -328,6 +338,11 @@ public class QuadNode {
 
     //insert the new rectangle
     newTopLeft.insert(current);
+    
+    //add overlaping rectangles
+    for(Rectangle r : toAdd){
+      tree.insert(r);
+    }
   }
 
   private boolean insideBounds(Rectangle current) {
