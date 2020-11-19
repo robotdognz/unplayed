@@ -76,7 +76,7 @@ class Level1 extends Level {
   }
 
   private void buildLevel() {
-    playerStart = new PVector(-200, 1000);
+    playerStart = new PVector(-250, 1000);
     PVector cameraTopLeft = new PVector(-600, 800);
     PVector cameraBottomRight = new PVector(0, 1300);
     int centerX = (int)((cameraBottomRight.x-cameraTopLeft.x)/2+cameraTopLeft.x);
