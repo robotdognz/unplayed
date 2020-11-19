@@ -96,8 +96,7 @@ class Editor {
     fill(80);
     textSize(50);
     textAlign(CENTER, CENTER);
-    text(g.scanSize + " : " + g.platforms.size(), width/2, height-150);
-    text("ms: " + nf((perf.getAverage()/1000000.f), 2, 2), width/2, height-100);
+    text(g.scanSize + " : " + g.platforms.size(), width/2, height-100);
     text("fps: " + nf(this.frame, 2, 2), width/2, height-50);
   }
 
@@ -135,7 +134,6 @@ class Editor {
       boolean spaceFree = true;
       Rectangle foundAtPoint = null;
       
-      //for (Rectangle p : g.platforms) {
       HashSet<Rectangle> getPlatforms = new HashSet<Rectangle>();
       for (Rectangle p : g.quad.retrieve(getPlatforms, new Rectangle(platformX, platformY, 100, 100))) {
         

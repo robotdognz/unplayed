@@ -8,7 +8,6 @@ import java.util.HashSet;
 public KetaiGesture gesture;
 public Vibe vibe;
 public TextureCache texture;
-public PerfTest perf;
 
 Game g; //holds the game class
 Camera gCamera; //holds the game camera
@@ -29,8 +28,6 @@ private PVector lastTouch;
 //frame count
 int frameDelay;
 float frame;
-
-//textures
 
 
 void setup() {
@@ -54,7 +51,6 @@ void init() {
   texture = new TextureCache();
   gesture = new KetaiGesture(this);
   vibe = new Vibe();
-  perf = new PerfTest();
 
   //setup game
   gCamera = new FreeCamera(); //new GameCamera();
@@ -69,8 +65,6 @@ void init() {
 }
 
 void draw() {
-  perf.start();
-
   if (!gPaused) { //step the game if it is not paused
     //step editor or game controller depending on editor toggle
     if (editorToggle) {
@@ -111,8 +105,6 @@ void draw() {
     menu.draw();
     menu.hover(lastTouch);
   }
-
-  perf.end();
 }
 
 void touchStarted() {
@@ -223,44 +215,6 @@ class Vibe {
     }
   }
 }
-
-//------------------PerformanceOverheadCalculator---------------------
-class PerfTest {
-  ArrayList<Long> store;
-  int framesToAverage = 30;
-  long currentAverage = 0;
-  long start = -1;
-  long end = -1;
-
-  public PerfTest() {
-    store = new ArrayList<Long>();
-  }
-
-  public void start() {
-    start = System.nanoTime();
-  }
-
-  public void end() {
-    end = System.nanoTime();
-    if (store.size() > framesToAverage) {
-      store.clear();
-    } else if (store.size() == framesToAverage) {
-      currentAverage = 0;
-      for (Long l : store) {
-        currentAverage += l;
-      }
-      currentAverage = currentAverage/framesToAverage;
-    }
-    if (end != -1) {
-      store.add(end-start); //start of this frame - end of last frame
-    }
-  }
-
-  public long getAverage() {
-    return currentAverage; //start-end;
-  }
-}
-
 
 //------------------TouchTesting---------------------
 class TouchTesting {
