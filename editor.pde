@@ -97,8 +97,8 @@ class Editor {
     textSize(50);
     textAlign(CENTER, CENTER);
     text(g.scanSize + " : " + g.platforms.size(), width/2, height-150);
-    text(nf((perf.getAverage()/1000000.f), 2, 2), width/2, height-100);
-    text(nf(this.frame, 2, 2), width/2, height-50);
+    text("ms: " + nf((perf.getAverage()/1000000.f), 2, 2), width/2, height-100);
+    text("fps: " + nf(this.frame, 2, 2), width/2, height-50);
   }
 
   public void touchStarted() {

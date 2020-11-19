@@ -132,7 +132,7 @@ class Game {
     }
     
     
-    quad.draw();
+    //quad.draw();
     fill(0, 0, 0, 150);
     rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
     for (Rectangle p : playerObjects) {
