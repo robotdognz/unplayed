@@ -2,7 +2,7 @@ class Game {
   public Player player;
   private Level level;
   
-  public ArrayList<Rectangle> platforms;
+  public HashSet<Rectangle> platforms;
   public Quadtree quad;
   public Rectangle playerArea;
   public HashSet<Rectangle> playerObjects;
@@ -60,7 +60,7 @@ class Game {
     rightEdge = camera.getCenter().x+newScale/2;
     newRightEdge = rightEdge;
 
-    platforms = level.getPlatforms();
+    //platforms = level.getPlatforms();
     for(Rectangle p : level.getPlatforms()){
       quad.insert(p);
     }
@@ -99,6 +99,8 @@ class Game {
 
     //draw player and environment
     background(240); //140
+    platforms.clear();
+    quad.getAll(platforms);
     for (Rectangle p : platforms) {
       if(p instanceof Platform){
         ((Platform) p).draw();

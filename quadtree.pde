@@ -26,6 +26,11 @@ public class Quadtree {
     root.draw();
   }
 
+  public HashSet<Rectangle> getAll(HashSet<Rectangle> returnSet) {
+    root.getAll(returnSet);
+    return returnSet;
+  }
+
   public int size() { //todo
     //root.size();
     return 0;
@@ -74,6 +79,18 @@ public class QuadNode {
     return returnObjects;
   }
 
+  public HashSet<Rectangle> getAll(HashSet<Rectangle> returnSet) {
+    if (topLeft != null) {
+      topLeft.getAll(returnSet);
+      topRight.getAll(returnSet);
+      bottomLeft.getAll(returnSet);
+      bottomRight.getAll(returnSet);
+    } else {
+      returnSet.addAll(objects);
+    }
+    return returnSet;
+  }
+
   public void insert(Rectangle current) {
     if (insideBounds(current)) { //if it is inside the current node bounds
       if (topLeft != null) {
@@ -106,12 +123,12 @@ public class QuadNode {
         bottomRight.remove(current);
       } else {
         ArrayList<Rectangle> matches = new ArrayList<Rectangle>();
-        for(Rectangle r : objects){
+        for (Rectangle r : objects) {
           if (current.equals(r) || r.getX() == current.getX() && r.getY() == current.getY()) {
             matches.add(r);
           }
         }
-        for(Rectangle r : matches){
+        for (Rectangle r : matches) {
           objects.remove(r);
         }
         matches.clear();

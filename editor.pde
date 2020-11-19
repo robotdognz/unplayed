@@ -148,18 +148,17 @@ class Editor {
       if (spaceFree) { //if there isn't something already there
         if (eMode == editorMode.ADD) {
           Platform newPlatform = new Platform(platformX, platformY, 100, 100);
-          g.platforms.add(newPlatform);
+          //g.platforms.add(newPlatform);
           g.quad.insert(newPlatform);
         }
       }else{
         if(eMode == editorMode.ERASE && foundAtPoint != null){
-          g.platforms.remove(foundAtPoint);
+          //g.platforms.remove(foundAtPoint);
           g.quad.remove(foundAtPoint);
         }
       }
       g.point = null;
     }
-    //println(g.platforms.size());
   }
 
   public Controller getController() {
