@@ -110,9 +110,9 @@ class Player extends Rectangle {
     //do collision
     wall = false;
     for (Rectangle p : platforms) {
-      if (p instanceof Platform) {
+      if (p instanceof Platform) {  //platform collison
         collision(p.getTopLeft(), p.getBottomRight());
-      } else if (p instanceof Event) {
+      } else if (p instanceof Event) { //event collision
         PVector eventTopLeft = p.getTopLeft();
         PVector eventBottomRight = p.getBottomRight();
         //if colliding with the event
@@ -133,17 +133,6 @@ class Player extends Rectangle {
     if (wall && lastLastXPos != getTopLeft().x) {
       vibe.vibrate(1, 160);
     }
-
-    //event collision
-    //for (Event e : events) {
-    //  PVector eventTopLeft = e.getTopLeft();
-    //  PVector eventBottomRight = e.getBottomRight();
-    //  //if colliding with the event
-    //  if (eventTopLeft.y < getTopLeft().y+getHeight()+velocity.y && eventBottomRight.y > getTopLeft().y+velocity.y &&
-    //    eventTopLeft.x < getTopLeft().x+getWidth() && eventBottomRight.x > getTopLeft().x) {
-    //    e.activate(g);
-    //  }
-    //}
 
     //stores previous positions for wall vibration
     lastLastXPos = lastXPos;

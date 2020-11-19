@@ -1,13 +1,14 @@
 class Game {
   public Player player;
   private Level level;
-  
+
   public HashSet<Rectangle> platforms;
   public Quadtree quad;
   public HashSet<Rectangle> playerObjects;
   public int scanSize = 0;
-  
+
   private boolean eventVis;
+  private boolean quadVis;
 
   public Camera camera;
 
@@ -34,11 +35,13 @@ class Game {
 
   Game(Camera c, Vibe v) {
     camera = c;
-    level = new Level1(); //BlankLevel();
+    level = new BlankLevel();
     eventVis = true;
+    quadVis = true;
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
 
+    platforms = new HashSet<Rectangle>(); //TODO: remove this
     quad = new Quadtree(new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, 900, 900));
     playerObjects = new HashSet<Rectangle>();
 
@@ -57,11 +60,11 @@ class Game {
     rightEdge = camera.getCenter().x+newScale/2;
     newRightEdge = rightEdge;
 
-    platforms = new HashSet<Rectangle>();
-    for(Rectangle p : level.getPlatforms()){
+    //import level
+    for (Rectangle p : level.getPlatforms()) {
       quad.insert(p);
     }
-    for(Rectangle e : level.getEvents()){
+    for (Rectangle e : level.getEvents()) {
       quad.insert(e);
     }
     //everything needs to be a multiple of 20 (multiple of 10 so you can always fall down holes, and 20 so you don't clip through things 90 apart because of speed 10)
@@ -101,10 +104,10 @@ class Game {
     platforms.clear();
     quad.getAll(platforms);
     for (Rectangle p : platforms) {
-      if(p instanceof Platform){
+      if (p instanceof Platform) {
         ((Platform) p).draw();
       }
-      if(p instanceof Event && eventVis){
+      if (p instanceof Event && eventVis) {
         ((Event) p).draw();
       }
     }
@@ -126,15 +129,17 @@ class Game {
       rect(rightEdge, camera.getCenter().y-barSize, barSize+camera.getCenter().x, camera.getCenter().y+barSize);
       rectMode(CORNER);
     }
-    
-    //draw quad tree logic for testing
-    //quad.draw();
-    //fill(0, 0, 0, 150);
-    //for (Rectangle p : playerObjects) {
-    //  rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
-    //}
 
-    //draw block placement if one exists
+    //draw quad tree logic for testing
+    if (quadVis) {
+      quad.draw();
+      fill(0, 0, 0, 150);
+      for (Rectangle p : playerObjects) {
+        rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
+      }
+    }
+
+    //draw block placement selection if one exists
     if (point != null) {
       fill(0, 0, 0, 150);
       rect(point.x, point.y, 100, 100);
@@ -156,7 +161,7 @@ class Game {
     quad.retrieve(playerObjects, player.getPlayerArea());
     scanSize = playerObjects.size();
     player.step(playerObjects, this);
-    
+
     if (camera.getGame()) {
       screenMovement();
     }
