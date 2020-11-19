@@ -220,24 +220,6 @@ public class QuadNode {
       // Grow towards bottom right (bottom left is just as valid though)
     }
 
-    //boolean left = false;
-    //boolean right = false;
-    //boolean top = false;
-    //boolean bottom = false;
-    //if (current.getBottomRight().x < bounds.getTopLeft().x) { //if current is to the left
-    //  left = true;
-    //} else if (current.getTopLeft().x > bounds.getBottomRight().x) { //if current is to the right
-    //  right = true;
-    //}
-    //if (current.getBottomRight().y < bounds.getTopLeft().y) { //if current is above
-    //  top = true;
-    //} else if (current.getTopLeft().y > bounds.getBottomRight().y) { //if current is below
-    //  bottom = true;
-    //}
-
-    //if(left && top){
-
-    //}
   }
 
   private boolean insideBounds(Rectangle current) {
@@ -258,7 +240,7 @@ public class QuadNode {
       bottomRight.draw();
     } else {
       noFill();
-      stroke(8);
+      stroke(20);
       rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
       noStroke();
     }
