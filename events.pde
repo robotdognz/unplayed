@@ -6,7 +6,6 @@ abstract class Event extends Rectangle {
     return "";
   }
   
-  @SuppressWarnings("unused")
   public void activate(Game g){}
   
   public void draw(){}
