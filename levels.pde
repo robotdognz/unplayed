@@ -120,7 +120,7 @@ class Level2 extends Level {
   Level2() {
     platforms = new ArrayList<Rectangle>();
     events = new ArrayList<Event>();
-    playerStart = new PVector(-600, 1600);
+    playerStart = new PVector(-700, 1600);
 
     PVector cameraTopLeft = new PVector(-700, 1500);
     PVector cameraBottomRight = new PVector(-100, 2100);
