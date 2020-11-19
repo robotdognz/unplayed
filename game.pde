@@ -98,7 +98,7 @@ class Game {
     translate(-camera.getCenter().x, -camera.getCenter().y); //moves the view around the level
 
     //draw player and environment
-    background(240); //140
+    background(240);
     platforms.clear();
     quad.getAll(platforms);
     for (Rectangle p : platforms) {
@@ -142,14 +142,10 @@ class Game {
     //draw block placement if one exists
     if (point != null) {
       fill(0, 0, 0, 150);
-      //rectMode(CENTER);
       rect(point.x, point.y, 100, 100);
-      //rectMode(CORNER);
       fill(0);
       textSize(30);
       textAlign(LEFT, CENTER);
-      //int xCoord = (int) point.x-50;
-      //int yCoord = (int) point.y-50;
       int xCoord = (int) point.x;
       int yCoord = (int) point.y;
       String s = "[ " + xCoord + ", " + yCoord + " ]";
@@ -160,34 +156,14 @@ class Game {
   }
 
   void step() {
-    //new stuff
-    //quad.clear();
-    //for (int i = 0; i < platforms.size(); i++) {
-      //quad.insert(platforms.get(i));
-    //}
-    //returnObjects.clear();
+    //find platforms near the player
     playerObjects.clear();
     quad.retrieve(playerObjects, playerArea);
-    
-    ////screenObjects.clear();
-    //playerObjects.clear();
-    //for(Rectangle p : platforms){
-    //  //if inside screenArea{
-    //    //screenObjects.add(p);
-    //    if(p.getBottomRight().x >= playerArea.getTopLeft().x && 
-    //    p.getTopLeft().x <= playerArea.getBottomRight().x && 
-    //    p.getBottomRight().y >= playerArea.getTopLeft().y &&
-    //    p.getTopLeft().y <= playerArea.getBottomRight().y){
-    //      playerObjects.add(p);
-    //    }
-    //  //}
-    //}
     scanSize = playerObjects.size();
     player.step(playerObjects, events, this);
     playerArea.setX(player.getX()-100);
     playerArea.setY(player.getY()-100);
     
-    //player.step(platforms, events, this);
     if (camera.getGame()) {
       screenMovement();
     }
