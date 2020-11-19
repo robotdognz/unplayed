@@ -40,7 +40,7 @@ class Game {
     eventVis = true;
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
-    playerArea = new Rectangle(player.getX()-100, player.getY()-100, 300, 300);
+    playerArea = new Rectangle(player.getX()-200, player.getY()-200, 500, 500);
 
     quad = new Quadtree(new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, 900, 900));
     playerObjects = new HashSet<Rectangle>();
@@ -132,9 +132,9 @@ class Game {
     }
     
     
-    //quad.draw();
+    quad.draw();
     fill(0, 0, 0, 150);
-    //rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
+    rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
     for (Rectangle p : playerObjects) {
       rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
     }
@@ -161,8 +161,8 @@ class Game {
     quad.retrieve(playerObjects, playerArea);
     scanSize = playerObjects.size();
     player.step(playerObjects, events, this);
-    playerArea.setX(player.getX()-100);
-    playerArea.setY(player.getY()-100);
+    playerArea.setX(player.getX()-200);
+    playerArea.setY(player.getY()-200);
     
     if (camera.getGame()) {
       screenMovement();

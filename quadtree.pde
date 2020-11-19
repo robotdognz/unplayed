@@ -1,5 +1,6 @@
 public class Quadtree {
   private QuadNode root;
+  private int size = 0;
 
   public Quadtree(Rectangle bounds) {
     root = new QuadNode(bounds, null, this); //top level node has null for parent
@@ -12,6 +13,7 @@ public class Quadtree {
 
   public void insert(Rectangle current) {
     root.insert(current);
+    size++;
   }
 
   public void remove(Rectangle current) {
@@ -31,9 +33,8 @@ public class Quadtree {
     return returnSet;
   }
 
-  public int size() { //todo
-    //root.size();
-    return 0;
+  public int size() {
+    return size;
   }
 }
 
@@ -88,7 +89,7 @@ public class QuadNode {
     } else {
       returnSet.addAll(objects);
     }
-    return returnSet;
+    return returnSet; //return the set with all the rectangles in the tree
   }
 
   public void insert(Rectangle current) {
@@ -99,7 +100,7 @@ public class QuadNode {
         bottomLeft.insert(current);
         bottomRight.insert(current);
       } else {
-        objects.add(current);
+        objects.add(current); //add the new rectangle
         if (objects.size() < MAX_OBJECTS) { //if this node can take it without splitting
           return;
         } else { //else split
@@ -108,7 +109,7 @@ public class QuadNode {
       }
     } else { //if it is outside the current node bounds
       //check if this is the root
-      if (parent == null) { //if it is grow
+      if (parent == null) { //if it is the root, grow
         grow(current);
       }
     }
@@ -116,22 +117,21 @@ public class QuadNode {
 
   public void remove(Rectangle current) {
     if (insideBounds(current)) { //if it is inside the current node bounds
-      if (topLeft != null) {
+      if (topLeft != null) { //if this node has children
         topLeft.remove(current);
         topRight.remove(current);
         bottomLeft.remove(current);
         bottomRight.remove(current);
-      } else {
+      } else { //if this node doesn't have children
         ArrayList<Rectangle> matches = new ArrayList<Rectangle>();
-        for (Rectangle r : objects) {
+        for (Rectangle r : objects) { //find all matching rectangles
           if (current.equals(r) || r.getX() == current.getX() && r.getY() == current.getY()) {
             matches.add(r);
           }
         }
-        for (Rectangle r : matches) {
+        for (Rectangle r : matches) { //remove them
           objects.remove(r);
         }
-        matches.clear();
       }
     }
   }
@@ -350,12 +350,13 @@ public class QuadNode {
       current.getTopLeft().x <= bounds.getBottomRight().x && 
       current.getBottomRight().y >= bounds.getTopLeft().y &&
       current.getTopLeft().y <= bounds.getBottomRight().y) {
-      return true;
+      return true; //the rectangle is inside the bounds of this node
     }
-    return false;
+    return false; //it is outside
   }
 
   public void draw() {
+    //draw the bounds of all the nodes in the tree
     if (topLeft != null) {
       topLeft.draw();
       topRight.draw();
