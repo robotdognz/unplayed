@@ -240,7 +240,8 @@ public class QuadNode {
       bottomRight.draw();
     } else {
       noFill();
-      stroke(20);
+      stroke(0);
+      strokeWeight(10);
       rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
       noStroke();
     }
