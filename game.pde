@@ -42,7 +42,7 @@ class Game {
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
     playerArea = new Rectangle(player.getX()-100, player.getY()-100, 300, 300);
 
-    quad = new Quadtree(new Rectangle(level.getPlayerStart().x-1000, level.getPlayerStart().y-1000, 2100, 2100));
+    quad = new Quadtree(new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, 900, 900));
     playerObjects = new HashSet<Rectangle>();
 
     //camera
