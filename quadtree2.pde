@@ -202,10 +202,7 @@ public class QuadNode {
 
     Rectangle topLeft = new Rectangle(newBounds.getX(), newBounds.getY(), bWidth, bHeight);
     Rectangle topRight = new Rectangle(newBounds.getX()+bWidth, newBounds.getY(), bWidth, bHeight);
-    Rectangle bottomLeft = new Rectangle(newBounds.getX(), bounds.getY()+bHeight, bWidth, bHeight);
-    //Rectangle topLeft = new Rectangle(bounds.getX()-bWidth, bounds.getY()-bHeight, bWidth, bHeight);
-    //Rectangle topRight = new Rectangle(bounds.getX(), bounds.getY()-bHeight, bWidth, bHeight);
-    //Rectangle bottomLeft = new Rectangle(bounds.getX()-bWidth, bounds.getY(), bWidth, bHeight);
+    Rectangle bottomLeft = new Rectangle(newBounds.getX(), newBounds.getY()+bHeight, bWidth, bHeight);
 
     newTopLeft = new QuadNode(topLeft, newRoot, tree);
     newTopRight = new QuadNode(topRight, newRoot, tree);
@@ -274,9 +271,6 @@ public class QuadNode {
     Rectangle topLeft = new Rectangle(newBounds.getX(), newBounds.getY(), bWidth, bHeight);
     Rectangle bottomLeft = new Rectangle(newBounds.getX(), newBounds.getY()+bHeight, bWidth, bHeight);
     Rectangle bottomRight = new Rectangle(newBounds.getX()+bWidth, newBounds.getY()+bHeight, bWidth, bHeight);
-    //Rectangle topLeft = new Rectangle(bounds.getX()-bWidth, bounds.getY(), bWidth, bHeight);
-    //Rectangle bottomLeft = new Rectangle(bounds.getX()-bWidth, bounds.getY()+bHeight, bWidth, bHeight);
-    //Rectangle bottomRight = new Rectangle(bounds.getX(), bounds.getY()+bHeight, bWidth, bHeight);
 
     newTopLeft = new QuadNode(topLeft, newRoot, tree);
     newTopRight = this;
