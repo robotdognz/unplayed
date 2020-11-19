@@ -208,7 +208,6 @@ public class QuadNode {
     newTopRight = new QuadNode(topRight, newRoot, tree);
     newBottomLeft = this;
     newBottomRight = new QuadNode(bottomRight, newRoot, tree);
-
     newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
     
     //add existing overlapping rectangles to the new leavs
@@ -222,6 +221,38 @@ public class QuadNode {
   }
 
   private void growBottomRight(Rectangle current) {
+    float bWidth = bounds.getWidth();
+    float bHeight = bounds.getHeight();
+
+    Rectangle newBounds;
+    QuadNode newTopLeft;
+    QuadNode newTopRight;
+    QuadNode newBottomLeft;
+    QuadNode newBottomRight;
+
+    newBounds = new Rectangle(bounds.getX(), bounds.getY(), bWidth*2, bHeight*2);
+    QuadNode newRoot = new QuadNode(newBounds, null, tree);
+    this.parent = newRoot;
+    tree.setRoot(newRoot);
+    
+    Rectangle topRight = new Rectangle(newBounds.getX()+bWidth, newBounds.getY(), bWidth, bHeight);
+    Rectangle bottomLeft = new Rectangle(newBounds.getX(), newBounds.getY()+bHeight, bWidth, bHeight);
+    Rectangle bottomRight = new Rectangle(newBounds.getX()+bWidth, newBounds.getY()+bHeight, bWidth, bHeight);
+
+    newTopLeft = this;
+    newTopRight = new QuadNode(topRight, newRoot, tree);
+    newBottomLeft = new QuadNode(bottomLeft, newRoot, tree);
+    newBottomRight = new QuadNode(bottomRight, newRoot, tree);
+    newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
+    
+    //add existing overlapping rectangles to the new leavs
+    ArrayList<Rectangle> toAdd = new ArrayList<Rectangle>();
+    retrieve(toAdd, topRight);
+    retrieve(toAdd, bottomLeft);
+    retrieve(toAdd, bottomLeft);
+
+    //insert the new rectangle
+    newTopLeft.insert(current);
   }
 
   private void growBottomLeft(Rectangle current) {
@@ -247,7 +278,6 @@ public class QuadNode {
     newTopRight = this;
     newBottomLeft = new QuadNode(bottomLeft, newRoot, tree);
     newBottomRight = new QuadNode(bottomRight, newRoot, tree);
-
     newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
 
     //add existing overlapping rectangles to the new leavs
@@ -283,7 +313,6 @@ public class QuadNode {
     newTopRight = new QuadNode(topRight, newRoot, tree);
     newBottomLeft = new QuadNode(bottomLeft, newRoot, tree);
     newBottomRight = this;
-
     newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
 
     //add existing overlapping rectangles to the new leavs
