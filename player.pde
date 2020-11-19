@@ -1,5 +1,8 @@
 class Player extends Rectangle {
   //player fields
+  private Rectangle playerArea; //rectangle used for searching the level quad tree
+  private int areaSize;
+  private boolean drawArea = true;
   private PVector velocity;
   private color playerColor;
   private int jumpCount = 0;
@@ -21,8 +24,12 @@ class Player extends Rectangle {
 
   Player(float x, float y, Vibe v) {
     super(x, y, 100, 100);
+    areaSize = 500;
+    
+    playerArea = new Rectangle(getX()-((areaSize-100)/2), getY()-((areaSize-100)/2), areaSize, areaSize);
+    
     vibe = v;
-    lastXPos = x; //x-playerW/2;
+    lastXPos = x;
     lastLastXPos = lastXPos;
 
     velocity = new PVector(0, 0);
@@ -141,6 +148,9 @@ class Player extends Rectangle {
     noStroke();
     //rect(position.x, position.y, playerW, playerH);
     image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
+    if(drawArea){
+      rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(),playerArea.getHeight());
+    }
   }
 
   public void drawArrows(Game g) {
@@ -162,6 +172,12 @@ class Player extends Rectangle {
       triangle(getTopLeft().x+getWidth()/2, g.bottomEdge-20, getTopLeft().x+40+getWidth()/2, g.bottomEdge-60, getTopLeft().x-40+getWidth()/2, g.bottomEdge-60);
     }
     //need to add corner arrows
+  }
+  
+  public Rectangle getPlayerArea(){
+    playerArea.setX(getX()-(areaSize-100)/2);
+    playerArea.setY(getY()-(areaSize-100)/2);
+    return playerArea;
   }
   
   public void resetVelocity(){

@@ -4,7 +4,7 @@ class Game {
   
   public HashSet<Rectangle> platforms;
   public Quadtree quad;
-  public Rectangle playerArea; //TODO: should be stored in player
+  //public Rectangle playerArea; //TODO: should be stored in player
   public HashSet<Rectangle> playerObjects;
   public int scanSize = 0;
   
@@ -40,7 +40,7 @@ class Game {
     eventVis = true;
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
-    playerArea = new Rectangle(player.getX()-200, player.getY()-200, 500, 500);
+    //playerArea = new Rectangle(player.getX()-200, player.getY()-200, 500, 500);
 
     quad = new Quadtree(new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, 900, 900));
     playerObjects = new HashSet<Rectangle>();
@@ -134,7 +134,7 @@ class Game {
     
     quad.draw();
     fill(0, 0, 0, 150);
-    rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
+    //rect(player.getPlayerArea().getX(), player.getPlayerArea().getY(), player.getPlayerArea().getWidth(), player.getPlayerArea().getHeight());
     for (Rectangle p : playerObjects) {
       rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
     }
@@ -158,11 +158,11 @@ class Game {
   void step() {
     //find platforms near the player
     playerObjects.clear();
-    quad.retrieve(playerObjects, playerArea);
+    quad.retrieve(playerObjects, player.getPlayerArea());
     scanSize = playerObjects.size();
     player.step(playerObjects, events, this);
-    playerArea.setX(player.getX()-200);
-    playerArea.setY(player.getY()-200);
+    //playerArea.setX(player.getX()-200);
+    //playerArea.setY(player.getY()-200);
     
     if (camera.getGame()) {
       screenMovement();
