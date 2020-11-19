@@ -1,224 +1,334 @@
 public class Quadtree {
+  private QuadNode root;
 
-  private int MAX_OBJECTS = 10;
-  private int MAX_LEVELS = 5; //I tried 2
-
-  private int level;
-  private List<Rectangle> objects;
-  private Rectangle bounds;
-  private Quadtree[] nodes;
-
-  private ArrayList<Integer> indices = new ArrayList<Integer>();
-
-  /*
-  * Constructor
-   */
-  public Quadtree(int pLevel, Rectangle pBounds) {
-    level = pLevel;
-    objects = new ArrayList<Rectangle>();
-    bounds = pBounds;
-    nodes = new Quadtree[4];
+  public Quadtree(Rectangle bounds) {
+    root = new QuadNode(bounds, null, this); //top level node has null for parent
   }
 
-  /*
- * Clears the quadtree and redefines is boundary
-   */
-  public void clearReset(Rectangle newBounds) {
-    clear();
-    bounds = newBounds;
+  public ArrayList<Rectangle> retrieve(ArrayList<Rectangle> returnObjects, Rectangle player) {
+    root.retrieve(returnObjects, player);
+    return returnObjects;
   }
 
-  /*
- * Clears the quadtree
-   */
-  public void clear() {
-    objects.clear();
+  public void insert(Rectangle current) {
+    root.insert(current);
+  }
 
-    for (int i = 0; i < nodes.length; i++) {
-      if (nodes[i] != null) {
-        nodes[i].clear();
-        nodes[i] = null;
+  public void remove(Rectangle current) {
+    root.remove(current);
+  }
+
+  public void setRoot(QuadNode newRoot) {
+    this.root = newRoot;
+  }
+
+  public void draw() {
+    root.draw();
+  }
+
+  public int size() {
+    //root.size();
+    return 0;
+  }
+}
+
+public class QuadNode {
+  private int MAX_OBJECTS = 20;
+
+  QuadNode parent;
+  Quadtree tree;
+
+  Rectangle bounds;
+  ArrayList<Rectangle> objects;
+
+  QuadNode topLeft = null; //null so we can check if this node has been split
+  QuadNode topRight;
+  QuadNode bottomLeft;
+  QuadNode bottomRight;
+
+  public QuadNode(Rectangle bounds, QuadNode parent, Quadtree tree) { 
+    this.parent = parent;
+    this.bounds = bounds;
+    this.objects = new ArrayList<Rectangle>();
+    this.tree = tree;
+  }
+
+  public void addNodes(QuadNode topLeft, QuadNode topRight, QuadNode bottomLeft, QuadNode bottomRight) {
+    this.topLeft = topLeft;
+    this.topRight = topRight;
+    this.bottomLeft = bottomLeft;
+    this.bottomRight = bottomRight;
+  }
+
+  public ArrayList<Rectangle> retrieve(ArrayList<Rectangle> returnObjects, Rectangle player) {
+    if (insideBounds(player)) { //if the player is inside the bounds of this quadnode
+      if (topLeft != null) { //if this node has branches
+        topLeft.retrieve(returnObjects, player);
+        topRight.retrieve(returnObjects, player);
+        bottomLeft.retrieve(returnObjects, player);
+        bottomRight.retrieve(returnObjects, player);
+      } else { //else return the objects from this node
+        returnObjects.addAll(objects);
+      }
+    }
+    return returnObjects;
+  }
+
+  public void insert(Rectangle current) {
+    if (insideBounds(current)) { //if it is inside the current node bounds
+      if (topLeft != null) {
+        topLeft.insert(current);
+        topRight.insert(current);
+        bottomLeft.insert(current);
+        bottomRight.insert(current);
+      } else {
+        objects.add(current);
+        if (objects.size() < MAX_OBJECTS) { //if this node can take it without splitting
+          return;
+        } else { //else split
+          split();
+        }
+      }
+    } else { //if it is outside the current node bounds
+      //check if this is the root
+      if (parent == null) { //if it is grow
+        grow(current);
       }
     }
   }
 
-  /*
- * Splits the node into 4 subnodes
-   */
-  private void split() {
-    int subWidth = (int)(bounds.getWidth() / 2);
-    int subHeight = (int)(bounds.getHeight() / 2);
-    int x = (int)bounds.getX();
-    int y = (int)bounds.getY();
-
-    nodes[0] = new Quadtree(level+1, new Rectangle(x + subWidth, y, subWidth, subHeight));
-    nodes[1] = new Quadtree(level+1, new Rectangle(x, y, subWidth, subHeight));
-    nodes[2] = new Quadtree(level+1, new Rectangle(x, y + subHeight, subWidth, subHeight));
-    nodes[3] = new Quadtree(level+1, new Rectangle(x + subWidth, y + subHeight, subWidth, subHeight));
-  }
-
-  /*
- * Determine which node the object belongs to. -1 means
-   * object cannot completely fit within a child node and is part
-   * of the parent node
-   */
-  private int getIndex(Rectangle pRect) {
-    //offset blocks should stay in the root of the tree
-    if (pRect.getX()%100 != 0 || pRect.getY()%100 != 0) {
-      return -1;
-    }
-
-    int index = -1;
-    double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
-    double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
-
-    // Object can completely fit within the top quadrants
-    boolean topQuadrant = (pRect.getY() < horizontalMidpoint && pRect.getY() + pRect.getHeight() < horizontalMidpoint);
-    // Object can completely fit within the bottom quadrants
-    boolean bottomQuadrant = (pRect.getY() > horizontalMidpoint);
-
-    // Object can completely fit within the left quadrants
-    if (pRect.getX() < verticalMidpoint && pRect.getX() + pRect.getWidth() < verticalMidpoint) {
-      if (topQuadrant) {
-        index = 1;
-      } else if (bottomQuadrant) {
-        index = 2;
-      }
-    }
-    // Object can completely fit within the right quadrants
-    else if (pRect.getX() > verticalMidpoint) {
-      if (topQuadrant) {
-        index = 0;
-      } else if (bottomQuadrant) {
-        index = 3;
-      }
-    }
-
-    return index;
-  }
-
-
-  /*
- * Insert the object into the quadtree. If the node
-   * exceeds the capacity, it will split and add all
-   * objects to their corresponding nodes.
-   */
-  public void insert(Rectangle pRect) {
-    if (nodes[0] != null) {
-      int index = getIndex(pRect);
-
-      if (index != -1) {
-        nodes[index].insert(pRect);
-
-        return;
-      }
-    }
-
-    objects.add(pRect);
-
-    if (objects.size() > MAX_OBJECTS && level < MAX_LEVELS) {
-      if (nodes[0] == null) { 
-        split();
-      }
-
-      int i = 0;
-      while (i < objects.size()) {
-        int index = getIndex(objects.get(i));
-        if (index != -1) {
-          nodes[index].insert(objects.remove(i));
-        } else {
-          i++;
+  public void remove(Rectangle current) {
+    if (insideBounds(current)) { //if it is inside the current node bounds
+      if (topLeft != null) {
+        topLeft.remove(current);
+        topRight.remove(current);
+        bottomLeft.remove(current);
+        bottomRight.remove(current);
+      } else {
+        for (int i = 0; i < objects.size(); i++) {
+          if (current.equals(objects.get(i)) || objects.get(i).getX() == current.getX() && objects.get(i).getY() == current.getY()) {
+            objects.remove(i);
+          }
         }
       }
     }
   }
 
-  private void getIndices(Rectangle pRect) {
-    indices.clear();
-    //int index = -1;
-    double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
-    double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
-
-    // Object can completely fit within the top quadrants
-    boolean topQuadrant = (pRect.getY() < horizontalMidpoint);
-    // Object can completely fit within the bottom quadrants
-    boolean bottomQuadrant = (pRect.getY()+pRect.getHeight() > horizontalMidpoint);
-
-    // Object can completely fit within the left quadrants
-    if (pRect.getX() < verticalMidpoint) {
-      if (topQuadrant) {
-        indices.add(1);
-      }
-      if (bottomQuadrant) {
-        indices.add(2);
-      }
+  private void split() {
+    float subWidth = bounds.getWidth() / 2;
+    float subHeight = bounds.getHeight() / 2;
+    float x = bounds.getX();
+    float y = bounds.getY();
+    topLeft = new QuadNode(new Rectangle(x, y, subWidth, subHeight), this, tree);
+    topRight = new QuadNode(new Rectangle(x+subWidth, y, subWidth, subHeight), this, tree);
+    bottomLeft = new QuadNode(new Rectangle(x, y+subHeight, subWidth, subHeight), this, tree);
+    bottomRight = new QuadNode(new Rectangle(x+subWidth, y+subHeight, subWidth, subHeight), this, tree);
+    for (Rectangle r : objects) {
+      topLeft.insert(r);
+      topRight.insert(r);
+      bottomLeft.insert(r);
+      bottomRight.insert(r);
     }
-    // Object can completely fit within the right quadrants
-    if (pRect.getX()+pRect.getWidth() > verticalMidpoint) {
-      if (topQuadrant) {
-        indices.add(0);
+    objects.clear();
+  }
+
+  private void grow(Rectangle current) {
+    // If object is left of this node
+    if (current.getX() < bounds.getX()) {
+      // If object is to the top of this node
+      if (current.getY() < bounds.getY()) {
+        // Grow towards top left
+        growTopLeft(current);
+      } else {
+        // Grow towards bottom left
+        growBottomLeft(current);
       }
-      if (bottomQuadrant) {
-        indices.add(3);
+      // If object is right of this node
+    } else if (current.getX() > (bounds.getX() + bounds.getWidth())) {
+      // If object is to the top of this node
+      if (current.getY() < bounds.getY()) {
+        // Grow towards top right
+        growTopRight(current);
+      } else {
+        // Grow towards bottom right
+        growBottomRight(current);
       }
+
+      // If object is within x-axis but top of node
+    } else if (current.getY() < bounds.getY()) {
+      // Grow towards top right (top left is just as valid though)
+      growTopRight(current);
+
+      // If object is within x-axis but bottom of node
+    } else if (current.getY() + current.getHeight() > bounds.getY() + bounds.getHeight()) {
+      // Grow towards bottom right (bottom left is just as valid though)
+      growBottomRight(current);
     }
   }
 
-  /*
- * Return all objects that could collide with the given object
-   */
-  public ArrayList<Rectangle> retrieve(ArrayList<Rectangle> returnObjects, Rectangle pRect) {
-    getIndices(pRect);
-    if (nodes[0] != null) {
-      for (Integer i : indices) {
-        nodes[i].retrieve(returnObjects, pRect);
-      }
-    }
+  private void growTopLeft(Rectangle current) {
+    float bWidth = bounds.getWidth();
+    float bHeight = bounds.getHeight();
 
-    returnObjects.addAll(objects);
+    Rectangle newBounds;
+    QuadNode newTopLeft;
+    QuadNode newTopRight;
+    QuadNode newBottomLeft;
+    QuadNode newBottomRight;
 
-    return returnObjects;
-    //int index2 = getIndexRetrieve(pRect);
-    //if (index2 != -1 && nodes[0] != null) {
-    //  nodes[index2].retrieve(returnObjects, pRect);
-    //}
+    newBounds = new Rectangle(bounds.getX()-bWidth, bounds.getY()-bHeight, bWidth*2, bHeight*2);
+    QuadNode newRoot = new QuadNode(newBounds, null, tree);
+    this.parent = newRoot;
+    tree.setRoot(newRoot);
 
-    //returnObjects.addAll(objects);
+    Rectangle topLeft = new Rectangle(newBounds.getX(), newBounds.getY(), bWidth, bHeight);
+    Rectangle topRight = new Rectangle(newBounds.getX()+bWidth, newBounds.getY(), bWidth, bHeight);
+    Rectangle bottomLeft = new Rectangle(newBounds.getX(), newBounds.getY()+bHeight, bWidth, bHeight);
 
-    //return returnObjects;
+    newTopLeft = new QuadNode(topLeft, newRoot, tree);
+    newTopRight = new QuadNode(topRight, newRoot, tree);
+    newBottomLeft = new QuadNode(bottomLeft, newRoot, tree);
+    newBottomRight = this;
+    newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
+
+    //add existing overlapping rectangles to the new leavs
+    ArrayList<Rectangle> toAdd = new ArrayList<Rectangle>();
+    retrieve(toAdd, topLeft);
+    retrieve(toAdd, topRight);
+    retrieve(toAdd, bottomLeft);
+
+    //insert the new rectangle
+    newTopLeft.insert(current);
+  }
+  private void growTopRight(Rectangle current) {
+    float bWidth = bounds.getWidth();
+    float bHeight = bounds.getHeight();
+
+    Rectangle newBounds;
+    QuadNode newTopLeft;
+    QuadNode newTopRight;
+    QuadNode newBottomLeft;
+    QuadNode newBottomRight;
+
+    newBounds = new Rectangle(bounds.getX(), bounds.getY()-bHeight, bWidth*2, bHeight*2);
+    QuadNode newRoot = new QuadNode(newBounds, null, tree);
+    this.parent = newRoot;
+    tree.setRoot(newRoot);
+
+    Rectangle topLeft = new Rectangle(newBounds.getX(), newBounds.getY(), bWidth, bHeight);
+    Rectangle topRight = new Rectangle(newBounds.getX()+bWidth, newBounds.getY(), bWidth, bHeight);
+    Rectangle bottomRight = new Rectangle(newBounds.getX()+bWidth, newBounds.getY()+bHeight, bWidth, bHeight);
+
+    newTopLeft = new QuadNode(topLeft, newRoot, tree);
+    newTopRight = new QuadNode(topRight, newRoot, tree);
+    newBottomLeft = this;
+    newBottomRight = new QuadNode(bottomRight, newRoot, tree);
+    newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
+
+    //add existing overlapping rectangles to the new leavs
+    ArrayList<Rectangle> toAdd = new ArrayList<Rectangle>();
+    retrieve(toAdd, topLeft);
+    retrieve(toAdd, topRight);
+    retrieve(toAdd, bottomRight);
+
+    //insert the new rectangle
+    newTopLeft.insert(current);
+  }
+  private void growBottomLeft(Rectangle current) {
+    float bWidth = bounds.getWidth();
+    float bHeight = bounds.getHeight();
+
+    Rectangle newBounds;
+    QuadNode newTopLeft;
+    QuadNode newTopRight;
+    QuadNode newBottomLeft;
+    QuadNode newBottomRight;
+
+    newBounds = new Rectangle(bounds.getX()-bWidth, bounds.getY(), bWidth*2, bHeight*2);
+    QuadNode newRoot = new QuadNode(newBounds, null, tree);
+    this.parent = newRoot;
+    tree.setRoot(newRoot);
+
+    Rectangle topLeft = new Rectangle(newBounds.getX(), newBounds.getY(), bWidth, bHeight);
+    Rectangle bottomLeft = new Rectangle(newBounds.getX(), newBounds.getY()+bHeight, bWidth, bHeight);
+    Rectangle bottomRight = new Rectangle(newBounds.getX()+bWidth, newBounds.getY()+bHeight, bWidth, bHeight);
+
+    newTopLeft = new QuadNode(topLeft, newRoot, tree);
+    newTopRight = this;
+    newBottomLeft = new QuadNode(bottomLeft, newRoot, tree);
+    newBottomRight = new QuadNode(bottomRight, newRoot, tree);
+    newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
+
+    //add existing overlapping rectangles to the new leavs
+    ArrayList<Rectangle> toAdd = new ArrayList<Rectangle>();
+    retrieve(toAdd, topLeft);
+    retrieve(toAdd, bottomLeft);
+    retrieve(toAdd, bottomLeft);
+
+    //insert the new rectangle
+    newTopLeft.insert(current);
+  }
+  private void growBottomRight(Rectangle current) {
+    float bWidth = bounds.getWidth();
+    float bHeight = bounds.getHeight();
+
+    Rectangle newBounds;
+    QuadNode newTopLeft;
+    QuadNode newTopRight;
+    QuadNode newBottomLeft;
+    QuadNode newBottomRight;
+
+    newBounds = new Rectangle(bounds.getX(), bounds.getY(), bWidth*2, bHeight*2);
+    QuadNode newRoot = new QuadNode(newBounds, null, tree);
+    this.parent = newRoot;
+    tree.setRoot(newRoot);
+
+    Rectangle topRight = new Rectangle(newBounds.getX()+bWidth, newBounds.getY(), bWidth, bHeight);
+    Rectangle bottomLeft = new Rectangle(newBounds.getX(), newBounds.getY()+bHeight, bWidth, bHeight);
+    Rectangle bottomRight = new Rectangle(newBounds.getX()+bWidth, newBounds.getY()+bHeight, bWidth, bHeight);
+
+    newTopLeft = this;
+    newTopRight = new QuadNode(topRight, newRoot, tree);
+    newBottomLeft = new QuadNode(bottomLeft, newRoot, tree);
+    newBottomRight = new QuadNode(bottomRight, newRoot, tree);
+    newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
+
+    //add existing overlapping rectangles to the new leavs
+    ArrayList<Rectangle> toAdd = new ArrayList<Rectangle>();
+    retrieve(toAdd, topRight);
+    retrieve(toAdd, bottomLeft);
+    retrieve(toAdd, bottomLeft);
+
+    //insert the new rectangle
+    newTopLeft.insert(current);
   }
 
-  //my custom version of retrieve that uses the center point of the rectangle being checked
-  //private int getIndexRetrieve(Rectangle pRect) {
-  //  int index = -1;
-  //  double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
-  //  double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
+  private boolean insideBounds(Rectangle current) {
+    if (current.getBottomRight().x >= bounds.getTopLeft().x && 
+      current.getTopLeft().x <= bounds.getBottomRight().x && 
+      current.getBottomRight().y >= bounds.getTopLeft().y &&
+      current.getTopLeft().y <= bounds.getBottomRight().y) {
+      return true;
+    }
+    return false;
+  }
 
-  //  // Object midpoint is in the top quadrants
-  //  boolean topQuadrant = (pRect.getY()+pRect.getHeight()/2 < horizontalMidpoint);
-  //  // Object midpoint is in the bottom quadrants
-  //  boolean bottomQuadrant = (pRect.getY()+pRect.getHeight()/2 > horizontalMidpoint);
-
-  //  // Object midpoint is in the left quadrants
-  //  if (pRect.getX()+pRect.getWidth()/2 < verticalMidpoint) {
-  //    if (topQuadrant) {
-  //      index = 1;
-  //    } else if (bottomQuadrant) {
-  //      index = 2;
-  //    }
-  //  }
-  //  // Object midpoint is in the right quadrants
-  //  else if (pRect.getX()+pRect.getWidth()/2 > verticalMidpoint) {
-  //    if (topQuadrant) {
-  //      index = 0;
-  //    } else if (bottomQuadrant) {
-  //      index = 3;
-  //    }
-  //  }
-
-  //  return index;
-  //}
+  public void draw() {
+    if (topLeft != null) {
+      topLeft.draw();
+      topRight.draw();
+      bottomLeft.draw();
+      bottomRight.draw();
+    } else {
+      noFill();
+      stroke(0);
+      strokeWeight(10);
+      rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+      noStroke();
+    }
+  }
 }
+
 
 //------------------Rectangle---------------------
 public class Rectangle {

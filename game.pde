@@ -3,7 +3,7 @@ class Game {
   private Level level;
   
   public ArrayList<Rectangle> platforms;
-  public Quadtree2 quad;
+  public Quadtree quad;
   public Rectangle playerArea;
   public ArrayList<Rectangle> playerObjects;
   public int scanSize = 0;
@@ -42,7 +42,7 @@ class Game {
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
     playerArea = new Rectangle(player.getX()-100, player.getY()-100, 300, 300);
 
-    quad = new Quadtree2(new Rectangle(level.getPlayerStart().x-1000, level.getPlayerStart().y-1000, 2100, 2100));
+    quad = new Quadtree(new Rectangle(level.getPlayerStart().x-1000, level.getPlayerStart().y-1000, 2100, 2100));
     playerObjects = new ArrayList<Rectangle>();
 
     //camera
