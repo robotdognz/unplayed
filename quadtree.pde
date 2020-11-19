@@ -5,7 +5,7 @@ public class Quadtree {
     root = new QuadNode(bounds, null, this); //top level node has null for parent
   }
 
-  public ArrayList<Rectangle> retrieve(ArrayList<Rectangle> returnObjects, Rectangle player) {
+  public HashSet<Rectangle> retrieve(HashSet<Rectangle> returnObjects, Rectangle player) {
     root.retrieve(returnObjects, player);
     return returnObjects;
   }
@@ -26,7 +26,7 @@ public class Quadtree {
     root.draw();
   }
 
-  public int size() {
+  public int size() { //todo
     //root.size();
     return 0;
   }
@@ -39,7 +39,7 @@ public class QuadNode {
   Quadtree tree;
 
   Rectangle bounds;
-  ArrayList<Rectangle> objects;
+  HashSet<Rectangle> objects;
 
   QuadNode topLeft = null; //null so we can check if this node has been split
   QuadNode topRight;
@@ -49,7 +49,7 @@ public class QuadNode {
   public QuadNode(Rectangle bounds, QuadNode parent, Quadtree tree) { 
     this.parent = parent;
     this.bounds = bounds;
-    this.objects = new ArrayList<Rectangle>();
+    this.objects = new HashSet<Rectangle>();
     this.tree = tree;
   }
 
@@ -60,7 +60,7 @@ public class QuadNode {
     this.bottomRight = bottomRight;
   }
 
-  public ArrayList<Rectangle> retrieve(ArrayList<Rectangle> returnObjects, Rectangle player) {
+  public HashSet<Rectangle> retrieve(HashSet<Rectangle> returnObjects, Rectangle player) {
     if (insideBounds(player)) { //if the player is inside the bounds of this quadnode
       if (topLeft != null) { //if this node has branches
         topLeft.retrieve(returnObjects, player);
@@ -105,11 +105,21 @@ public class QuadNode {
         bottomLeft.remove(current);
         bottomRight.remove(current);
       } else {
-        for (int i = 0; i < objects.size(); i++) {
-          if (current.equals(objects.get(i)) || objects.get(i).getX() == current.getX() && objects.get(i).getY() == current.getY()) {
-            objects.remove(i);
+        ArrayList<Rectangle> matches = new ArrayList<Rectangle>();
+        for(Rectangle r : objects){
+          if (current.equals(r) || r.getX() == current.getX() && r.getY() == current.getY()) {
+            matches.add(r);
           }
         }
+        for(Rectangle r : matches){
+          objects.remove(r);
+        }
+        matches.clear();
+        //for (int i = 0; i < objects.size(); i++) {
+        //  if (current.equals(objects.get(i)) || objects.get(i).getX() == current.getX() && objects.get(i).getY() == current.getY()) {
+        //    objects.remove(i);
+        //  }
+        //}
       }
     }
   }
@@ -192,7 +202,7 @@ public class QuadNode {
     newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
 
     //add existing overlapping rectangles to the new leavs
-    ArrayList<Rectangle> toAdd = new ArrayList<Rectangle>();
+    HashSet<Rectangle> toAdd = new HashSet<Rectangle>();
     retrieve(toAdd, topLeft);
     retrieve(toAdd, topRight);
     retrieve(toAdd, bottomLeft);
@@ -226,7 +236,7 @@ public class QuadNode {
     newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
 
     //add existing overlapping rectangles to the new leavs
-    ArrayList<Rectangle> toAdd = new ArrayList<Rectangle>();
+    HashSet<Rectangle> toAdd = new HashSet<Rectangle>();
     retrieve(toAdd, topLeft);
     retrieve(toAdd, topRight);
     retrieve(toAdd, bottomRight);
@@ -260,7 +270,7 @@ public class QuadNode {
     newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
 
     //add existing overlapping rectangles to the new leavs
-    ArrayList<Rectangle> toAdd = new ArrayList<Rectangle>();
+    HashSet<Rectangle> toAdd = new HashSet<Rectangle>();
     retrieve(toAdd, topLeft);
     retrieve(toAdd, bottomLeft);
     retrieve(toAdd, bottomLeft);
@@ -294,7 +304,7 @@ public class QuadNode {
     newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
 
     //add existing overlapping rectangles to the new leavs
-    ArrayList<Rectangle> toAdd = new ArrayList<Rectangle>();
+    HashSet<Rectangle> toAdd = new HashSet<Rectangle>();
     retrieve(toAdd, topRight);
     retrieve(toAdd, bottomLeft);
     retrieve(toAdd, bottomLeft);

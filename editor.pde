@@ -136,7 +136,7 @@ class Editor {
       Rectangle foundAtPoint = null;
       
       //for (Rectangle p : g.platforms) {
-      ArrayList<Rectangle> getPlatforms = new ArrayList<Rectangle>();
+      HashSet<Rectangle> getPlatforms = new HashSet<Rectangle>();
       for (Rectangle p : g.quad.retrieve(getPlatforms, new Rectangle(platformX, platformY, 100, 100))) {
         
         if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY) {

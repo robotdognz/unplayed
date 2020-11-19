@@ -84,7 +84,7 @@ class Player extends Rectangle {
     }
   }
 
-  void step(ArrayList<Rectangle> platforms, ArrayList<Event> events, Game g) {
+  void step(HashSet<Rectangle> platforms, ArrayList<Event> events, Game g) {
     float previousY = getTopLeft().y;
     vibration = 0;
     if (velocity.y < terminalVelocity) {

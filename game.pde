@@ -5,7 +5,7 @@ class Game {
   public ArrayList<Rectangle> platforms;
   public Quadtree quad;
   public Rectangle playerArea;
-  public ArrayList<Rectangle> playerObjects;
+  public HashSet<Rectangle> playerObjects;
   public int scanSize = 0;
   
   public ArrayList<Event> events;
@@ -43,7 +43,7 @@ class Game {
     playerArea = new Rectangle(player.getX()-100, player.getY()-100, 300, 300);
 
     quad = new Quadtree(new Rectangle(level.getPlayerStart().x-1000, level.getPlayerStart().y-1000, 2100, 2100));
-    playerObjects = new ArrayList<Rectangle>();
+    playerObjects = new HashSet<Rectangle>();
 
     //camera
     camera.setScale(level.getStartScale());

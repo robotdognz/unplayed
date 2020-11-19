@@ -3,6 +3,7 @@ import android.os.VibrationEffect;
 import android.content.Context;
 import android.app.Activity;
 import java.util.List;
+import java.util.HashSet;
 
 public KetaiGesture gesture;
 public Vibe vibe;
