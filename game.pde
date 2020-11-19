@@ -4,7 +4,7 @@ class Game {
   
   public HashSet<Rectangle> platforms;
   public Quadtree quad;
-  public Rectangle playerArea;
+  public Rectangle playerArea; //TODO: should be stored in player
   public HashSet<Rectangle> playerObjects;
   public int scanSize = 0;
   

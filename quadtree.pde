@@ -115,6 +115,7 @@ public class QuadNode {
     }
   }
 
+  //TODO: this method needs to remove branches as necessary
   public void remove(Rectangle current) {
     if (insideBounds(current)) { //if it is inside the current node bounds
       if (topLeft != null) { //if this node has children
