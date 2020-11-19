@@ -115,9 +115,9 @@ public class QuadNode {
         bottomLeft.remove(current);
         bottomRight.remove(current);
       }else{
-        for(Rectangle r : objects){
-          if (current.equals(r) || r.getX() == current.getX() && r.getY() == current.getY()) {
-            objects.remove(r);
+        for(int i = 0; i < objects.size(); i++){
+          if (current.equals(objects.get(i)) || objects.get(i).getX() == current.getX() && objects.get(i).getY() == current.getY()) {
+            objects.remove(i);
           }
         }
       }
