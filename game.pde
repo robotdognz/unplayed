@@ -8,7 +8,7 @@ class Game {
   public HashSet<Rectangle> playerObjects;
   public int scanSize = 0;
   
-  public ArrayList<Event> events;
+  //public ArrayList<Event> events;
   private boolean eventVis;
 
   public Camera camera;
@@ -36,7 +36,7 @@ class Game {
 
   Game(Camera c, Vibe v) {
     camera = c;
-    level = new BlankLevel();
+    level = new Level2();
     eventVis = true;
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
@@ -64,7 +64,10 @@ class Game {
     for(Rectangle p : level.getPlatforms()){
       quad.insert(p);
     }
-    events = level.getEvents();
+    for(Rectangle e : level.getEvents()){
+      quad.insert(e);
+    }
+    //events = level.getEvents();
     //everything needs to be a multiple of 20 (multiple of 10 so you can always fall down holes, and 20 so you don't clip through things 90 apart because of speed 10)
   }
 
@@ -105,13 +108,16 @@ class Game {
       if(p instanceof Platform){
         ((Platform) p).draw();
       }
+      if(p instanceof Event && eventVis){
+        ((Platform) p).draw();
+      }
       
     }
-    if (eventVis) {
-      for (Event e : events) {
-        e.draw();
-      }
-    }
+    //if (eventVis) {
+    //  for (Event e : events) {
+    //    e.draw();
+    //  }
+    //}
     player.draw();
 
     //draw black bars
@@ -160,7 +166,7 @@ class Game {
     playerObjects.clear();
     quad.retrieve(playerObjects, player.getPlayerArea());
     scanSize = playerObjects.size();
-    player.step(playerObjects, events, this);
+    player.step(playerObjects, this);
     //playerArea.setX(player.getX()-200);
     //playerArea.setY(player.getY()-200);
     

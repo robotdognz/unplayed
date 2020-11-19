@@ -1,17 +1,20 @@
-interface Event {
-  public PVector getTopLeft();
-  public PVector getBottomRight();
-  public String getType();
-  public void activate(Game g);
-  public void draw();
+abstract class Event extends Rectangle {
+  public Event(float x, float y, float rWidth, float rHeight){
+    super(x, y, rWidth, rHeight);
+  }
+  public String getType(){
+    return "";
+  }
+  
+  @SuppressWarnings("unused")
+  public void activate(Game g){}
+  
+  public void draw(){}
 }
 
 //------------------CameraChange---------------------
-class CameraChange implements Event {
-  private PVector position;
+class CameraChange extends Event {
   private PImage sprite;
-  private int eventW;
-  private int eventH;
 
   private PVector cameraTopLeft;
   private PVector cameraBottomRight;
@@ -23,14 +26,12 @@ class CameraChange implements Event {
   private String type; //Strings: "Static", "Full", "Horizontal", "Vertical"
 
   CameraChange(int x, int y, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) { 
+    super(x, y, eventW, eventH);
     //considering separating edgeZoom into in speed and out speed
     int centerX = (int)((cameraBottomRight.x-cameraTopLeft.x)/2+cameraTopLeft.x);
     int centerY = (int)((cameraTopLeft.y-cameraBottomRight.y)/2+cameraBottomRight.y);
     this.newCent = new PVector(centerX, centerY);
     this.newScale = (int)Math.abs(cameraBottomRight.x-cameraTopLeft.x);
-    this.position = new PVector(x, y);
-    this.eventW = eventW;
-    this.eventH = eventH;
     this.cameraTopLeft = cameraTopLeft;
     this.cameraBottomRight = cameraBottomRight;
     this.cameraZoom = cameraZoom;
@@ -46,12 +47,6 @@ class CameraChange implements Event {
   //the overloaded constructors will send this method different 
   //versions of the required arguments
 
-  public PVector getTopLeft() {
-    return position;
-  }
-  public PVector getBottomRight() {
-    return new PVector(position.x+eventW, position.y+eventH);
-  }
   public String getType() {
     return type;
   }
@@ -77,12 +72,12 @@ class CameraChange implements Event {
   }
 
   public void draw() {
-    if (eventW != 100 && eventH != 100) {
+    if (getWidth() != 100 && getHeight() != 100) {
       fill(255, 0, 0, 100);
       noStroke();
-      rect(position.x, position.y, eventW, eventH);
+      rect(getX(), getY(), getWidth(), getHeight());
     }else{
-      image(sprite, position.x, position.y, 100, 100);
+      image(sprite, getX(), getY(), 100, 100);
     }
   }
 }

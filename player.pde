@@ -25,9 +25,9 @@ class Player extends Rectangle {
   Player(float x, float y, Vibe v) {
     super(x, y, 100, 100);
     areaSize = 500;
-    
+
     playerArea = new Rectangle(getX()-((areaSize-100)/2), getY()-((areaSize-100)/2), areaSize, areaSize);
-    
+
     vibe = v;
     lastXPos = x;
     lastLastXPos = lastXPos;
@@ -85,7 +85,7 @@ class Player extends Rectangle {
     }
   }
 
-  void step(HashSet<Rectangle> platforms, ArrayList<Event> events, Game g) {
+  void step(HashSet<Rectangle> platforms, Game g) {
     float previousY = getTopLeft().y;
     vibration = 0;
     if (velocity.y < terminalVelocity) {
@@ -110,8 +110,16 @@ class Player extends Rectangle {
     //do collision
     wall = false;
     for (Rectangle p : platforms) {
-      if(p instanceof Platform){
+      if (p instanceof Platform) {
         collision(p.getTopLeft(), p.getBottomRight());
+      } else if (p instanceof Event) {
+        PVector eventTopLeft = p.getTopLeft();
+        PVector eventBottomRight = p.getBottomRight();
+        //if colliding with the event
+        if (eventTopLeft.y < getTopLeft().y+getHeight()+velocity.y && eventBottomRight.y > getTopLeft().y+velocity.y &&
+          eventTopLeft.x < getTopLeft().x+getWidth() && eventBottomRight.x > getTopLeft().x) {
+          ((Event) p).activate(g);
+        }
       }
     }
 
@@ -127,15 +135,15 @@ class Player extends Rectangle {
     }
 
     //event collision
-    for (Event e : events) {
-      PVector eventTopLeft = e.getTopLeft();
-      PVector eventBottomRight = e.getBottomRight();
-      //if colliding with the event
-      if (eventTopLeft.y < getTopLeft().y+getHeight()+velocity.y && eventBottomRight.y > getTopLeft().y+velocity.y &&
-        eventTopLeft.x < getTopLeft().x+getWidth() && eventBottomRight.x > getTopLeft().x) {
-        e.activate(g);
-      }
-    }
+    //for (Event e : events) {
+    //  PVector eventTopLeft = e.getTopLeft();
+    //  PVector eventBottomRight = e.getBottomRight();
+    //  //if colliding with the event
+    //  if (eventTopLeft.y < getTopLeft().y+getHeight()+velocity.y && eventBottomRight.y > getTopLeft().y+velocity.y &&
+    //    eventTopLeft.x < getTopLeft().x+getWidth() && eventBottomRight.x > getTopLeft().x) {
+    //    e.activate(g);
+    //  }
+    //}
 
     //stores previous positions for wall vibration
     lastLastXPos = lastXPos;
@@ -148,9 +156,9 @@ class Player extends Rectangle {
     noStroke();
     //rect(position.x, position.y, playerW, playerH);
     image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
-    if(drawArea){
+    if (drawArea) {
       fill(0, 0, 0, 150);
-      rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(),playerArea.getHeight());
+      rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
     }
   }
 
@@ -174,14 +182,14 @@ class Player extends Rectangle {
     }
     //need to add corner arrows
   }
-  
-  public Rectangle getPlayerArea(){
+
+  public Rectangle getPlayerArea() {
     playerArea.setX(getX()-(areaSize-100)/2);
     playerArea.setY(getY()-(areaSize-100)/2);
     return playerArea;
   }
-  
-  public void resetVelocity(){
+
+  public void resetVelocity() {
     velocity.x = 0;
     velocity.y = 0;
   }
