@@ -158,46 +158,17 @@ public class QuadNode {
     //insert current into the parent - this is the recursive step
 
 
-    float bWidth = bounds.getWidth();
-    float bHeight = bounds.getHeight();
 
-    Rectangle newBounds;
-    QuadNode newTopLeft;
-    QuadNode newTopRight;
-    QuadNode newBottomLeft;
-    QuadNode newBottomRight;
 
     // If object is left of this node
     if (current.getX() < bounds.getX()) {
       // If object is to the top of this node
       if (current.getY() < bounds.getY()) {
         // Grow towards top left
-        newBounds = new Rectangle(bounds.getX()-bWidth, bounds.getY()-bHeight, bWidth*2, bHeight*2);
-        QuadNode newRoot = new QuadNode(newBounds, null, tree);
-        this.parent = newRoot;
-        tree.setRoot(newRoot);
-        
-        Rectangle topLeft = new Rectangle(bounds.getX()-bWidth, bounds.getY()-bHeight, bWidth, bHeight);
-        Rectangle topRight = new Rectangle(bounds.getX(), bounds.getY()-bHeight, bWidth, bHeight);
-        Rectangle bottomLeft = new Rectangle(bounds.getX()-bWidth, bounds.getY(), bWidth, bHeight);
-        
-        newTopLeft = new QuadNode(topLeft, newRoot, tree);
-        newTopRight = new QuadNode(topRight, newRoot, tree);
-        newBottomLeft = new QuadNode(bottomLeft, newRoot, tree);
-        newBottomRight = this;
-        
-        newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
-        
-        //add existing overlapping rectangles to the new leavs
-        ArrayList<Rectangle> toAdd = new ArrayList<Rectangle>();
-        retrieve(toAdd, topLeft);
-        retrieve(toAdd, topRight);
-        retrieve(toAdd, bottomLeft);
-        
-        newTopLeft.insert(current);
+        growTopLeft(current);
       } else {
         // Grow towards bottom left
-        
+        growBottomLeft(current);
       }
       // If object is right of this node
     } else if (current.getX() > (bounds.getX() + bounds.getWidth())) {
@@ -210,16 +181,88 @@ public class QuadNode {
         
       }
 
-
       // If object is within x-axis but top of node
     } else if (current.getY() < bounds.getY()) {
       // Grow towards top right (top left is just as valid though)
+      growTopLeft(current);
 
       // If object is within x-axis but bottom of node
     } else if (current.getY() + current.getHeight() > bounds.getY() + bounds.getHeight()) {
       // Grow towards bottom right (bottom left is just as valid though)
+      growBottomLeft(current);
     }
+  }
 
+  private void growBottomLeft(Rectangle current) {
+    float bWidth = bounds.getWidth();
+    float bHeight = bounds.getHeight();
+
+    Rectangle newBounds;
+    QuadNode newTopLeft;
+    QuadNode newTopRight;
+    QuadNode newBottomLeft;
+    QuadNode newBottomRight;
+
+    newBounds = new Rectangle(bounds.getX()-bWidth, bounds.getY(), bWidth*2, bHeight*2);
+    QuadNode newRoot = new QuadNode(newBounds, null, tree);
+    this.parent = newRoot;
+    tree.setRoot(newRoot);
+    
+    Rectangle topLeft = new Rectangle(bounds.getX()-bWidth, bounds.getY(), bWidth, bHeight);
+    Rectangle bottomLeft = new Rectangle(bounds.getX()-bWidth, bounds.getY()+bHeight, bWidth, bHeight);
+    Rectangle bottomRight = new Rectangle(bounds.getX(), bounds.getY()+bHeight, bWidth, bHeight);
+
+    newTopLeft = new QuadNode(topLeft, newRoot, tree);
+    newTopRight = this;
+    newBottomLeft = new QuadNode(bottomLeft, newRoot, tree);
+    newBottomRight = new QuadNode(bottomRight, newRoot, tree);
+    
+    newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
+    
+    //add existing overlapping rectangles to the new leavs
+    ArrayList<Rectangle> toAdd = new ArrayList<Rectangle>();
+    retrieve(toAdd, topLeft);
+    retrieve(toAdd, bottomLeft);
+    retrieve(toAdd, bottomLeft);
+
+    //insert the new rectangle
+    newTopLeft.insert(current);
+  }
+
+  private void growTopLeft(Rectangle current) {
+    float bWidth = bounds.getWidth();
+    float bHeight = bounds.getHeight();
+
+    Rectangle newBounds;
+    QuadNode newTopLeft;
+    QuadNode newTopRight;
+    QuadNode newBottomLeft;
+    QuadNode newBottomRight;
+
+    newBounds = new Rectangle(bounds.getX()-bWidth, bounds.getY()-bHeight, bWidth*2, bHeight*2);
+    QuadNode newRoot = new QuadNode(newBounds, null, tree);
+    this.parent = newRoot;
+    tree.setRoot(newRoot);
+
+    Rectangle topLeft = new Rectangle(bounds.getX()-bWidth, bounds.getY()-bHeight, bWidth, bHeight);
+    Rectangle topRight = new Rectangle(bounds.getX(), bounds.getY()-bHeight, bWidth, bHeight);
+    Rectangle bottomLeft = new Rectangle(bounds.getX()-bWidth, bounds.getY(), bWidth, bHeight);
+
+    newTopLeft = new QuadNode(topLeft, newRoot, tree);
+    newTopRight = new QuadNode(topRight, newRoot, tree);
+    newBottomLeft = new QuadNode(bottomLeft, newRoot, tree);
+    newBottomRight = this;
+
+    newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
+
+    //add existing overlapping rectangles to the new leavs
+    ArrayList<Rectangle> toAdd = new ArrayList<Rectangle>();
+    retrieve(toAdd, topLeft);
+    retrieve(toAdd, topRight);
+    retrieve(toAdd, bottomLeft);
+
+    //insert the new rectangle
+    newTopLeft.insert(current);
   }
 
   private boolean insideBounds(Rectangle current) {
