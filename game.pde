@@ -109,7 +109,7 @@ class Game {
         ((Platform) p).draw();
       }
       if(p instanceof Event && eventVis){
-        ((Platform) p).draw();
+        ((Event) p).draw();
       }
       
     }
