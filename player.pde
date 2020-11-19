@@ -149,6 +149,7 @@ class Player extends Rectangle {
     //rect(position.x, position.y, playerW, playerH);
     image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
     if(drawArea){
+      fill(0, 0, 0, 150);
       rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(),playerArea.getHeight());
     }
   }
