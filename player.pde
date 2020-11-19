@@ -2,7 +2,7 @@ class Player extends Rectangle {
   //player fields
   private Rectangle playerArea; //rectangle used for searching the level quad tree
   private int areaSize;
-  private boolean drawArea = true;
+  private boolean drawArea = false;
   private PVector velocity;
   private color playerColor;
   private int jumpCount = 0;

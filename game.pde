@@ -4,11 +4,9 @@ class Game {
   
   public HashSet<Rectangle> platforms;
   public Quadtree quad;
-  //public Rectangle playerArea; //TODO: should be stored in player
   public HashSet<Rectangle> playerObjects;
   public int scanSize = 0;
   
-  //public ArrayList<Event> events;
   private boolean eventVis;
 
   public Camera camera;
@@ -40,7 +38,6 @@ class Game {
     eventVis = true;
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
-    //playerArea = new Rectangle(player.getX()-200, player.getY()-200, 500, 500);
 
     quad = new Quadtree(new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, 900, 900));
     playerObjects = new HashSet<Rectangle>();
@@ -67,7 +64,6 @@ class Game {
     for(Rectangle e : level.getEvents()){
       quad.insert(e);
     }
-    //events = level.getEvents();
     //everything needs to be a multiple of 20 (multiple of 10 so you can always fall down holes, and 20 so you don't clip through things 90 apart because of speed 10)
   }
 
@@ -111,13 +107,7 @@ class Game {
       if(p instanceof Event && eventVis){
         ((Event) p).draw();
       }
-      
     }
-    //if (eventVis) {
-    //  for (Event e : events) {
-    //    e.draw();
-    //  }
-    //}
     player.draw();
 
     //draw black bars
@@ -137,13 +127,12 @@ class Game {
       rectMode(CORNER);
     }
     
-    
-    quad.draw();
-    fill(0, 0, 0, 150);
-    //rect(player.getPlayerArea().getX(), player.getPlayerArea().getY(), player.getPlayerArea().getWidth(), player.getPlayerArea().getHeight());
-    for (Rectangle p : playerObjects) {
-      rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
-    }
+    //draw quad tree logic for testing
+    //quad.draw();
+    //fill(0, 0, 0, 150);
+    //for (Rectangle p : playerObjects) {
+    //  rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
+    //}
 
     //draw block placement if one exists
     if (point != null) {
@@ -167,8 +156,6 @@ class Game {
     quad.retrieve(playerObjects, player.getPlayerArea());
     scanSize = playerObjects.size();
     player.step(playerObjects, this);
-    //playerArea.setX(player.getX()-200);
-    //playerArea.setY(player.getY()-200);
     
     if (camera.getGame()) {
       screenMovement();

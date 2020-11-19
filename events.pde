@@ -72,7 +72,7 @@ class CameraChange extends Event {
   }
 
   public void draw() {
-    if (getWidth() != 100 && getHeight() != 100) {
+    if (getWidth() != 100 || getHeight() != 100) {
       fill(255, 0, 0, 100);
       noStroke();
       rect(getX(), getY(), getWidth(), getHeight());
