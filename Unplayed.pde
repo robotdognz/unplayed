@@ -206,7 +206,7 @@ class Converter {
     currentScale = gCamera.getScale();
     currentSubScale = gCamera.getSubScale();
     currentCenter = gCamera.getCenter();
-    float result = ((size)/((float)width/currentScale)/currentSubScale) + currentCenter.x;
+    float result = ((size)/((float)width/currentScale)/currentSubScale);
     return result;
   }
   
