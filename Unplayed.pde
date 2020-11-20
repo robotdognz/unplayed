@@ -202,6 +202,14 @@ class Converter {
     return lastCalc;
   }
   
+  public float screenToLevel(float size){
+    currentScale = gCamera.getScale();
+    currentSubScale = gCamera.getSubScale();
+    currentCenter = gCamera.getCenter();
+    float result = ((size)/((float)width/currentScale)/currentSubScale) + currentCenter.x;
+    return result;
+  }
+  
   //public PVector levelToScreen(float levelX, levelY){
     
   //}

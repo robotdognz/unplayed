@@ -174,7 +174,8 @@ class Game {
       screenMovement();
     }
     PVector topCorner = convert.screenToLevel(100, 100);
-    screenSpace = new Rectangle(topCorner.x, topCorner.y, 100, 100);
+    float screenSpaceWidth = convert.screenToLevel(100);
+    screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceWidth);
   }
 
   void screenMovement() {
