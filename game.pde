@@ -2,7 +2,7 @@ class Game {
   public Player player;
   private Level level;
 
-  public HashSet<Rectangle> platforms;
+  //public HashSet<Rectangle> platforms;
   public Quadtree quad;
   public HashSet<Rectangle> playerObjects;
   public int scanSize = 0;
@@ -12,6 +12,7 @@ class Game {
 
   public Camera camera;
   public Rectangle screenSpace;
+  public HashSet<Rectangle> screenObjects;
 
   public PVector point;
 
@@ -42,7 +43,7 @@ class Game {
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
 
-    platforms = new HashSet<Rectangle>(); //TODO: remove this
+    //platforms = new HashSet<Rectangle>(); //TODO: remove this
     quad = new Quadtree(new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, 900, 900));
     playerObjects = new HashSet<Rectangle>();
 
@@ -57,7 +58,7 @@ class Game {
     float screenSpaceWidth = convert.screenToLevel(width-200);
     float screenSpaceHeight = convert.screenToLevel(height-200);
     screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
-
+    screenObjects = new HashSet<Rectangle>();
 
     topEdge = level.getTopBar();
     newTopEdge = topEdge;
@@ -109,9 +110,10 @@ class Game {
 
     //draw player and environment
     background(240);
-    platforms.clear();
-    quad.getAll(platforms);
-    for (Rectangle p : platforms) {
+    //platforms.clear();
+    screenObjects.clear();
+    quad.retrieve(screenObjects, screenSpace);
+    for (Rectangle p : screenObjects) {
       if (p instanceof Platform) {
         ((Platform) p).draw();
       }
