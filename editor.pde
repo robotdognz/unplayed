@@ -96,6 +96,7 @@ class Editor {
     fill(80);
     textSize(50);
     textAlign(CENTER, CENTER);
+    text(convert.getScale(), width/2, height-100);
     text(g.scanSize + " : " + g.screenObjects.size(), width/2, height-100);
     text("FPS: " + nf(this.frame, 2, 2), width/2, height-50);
   }
