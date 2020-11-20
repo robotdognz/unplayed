@@ -11,6 +11,7 @@ class Game {
   private boolean quadVis;
 
   public Camera camera;
+  public Rectangle screenSpace;
 
   public PVector point;
 
@@ -50,6 +51,18 @@ class Game {
     newScale = level.getStartScale();
     camera.setCenter(level.getStartCenter());
     newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
+
+    //calculate screen space
+    float desiredX = 100;
+    float desiredY = 100;
+    
+    float currentScale = gCamera.getScale();
+    float currentSubScale = gCamera.getSubScale();
+    PVector currentCenter = gCamera.getCenter();
+    float levelX = ((desiredX-width/2)/((float)width/currentScale)/currentSubScale) + currentCenter.x;
+    float levelY = ((desiredY-height/2)/((float)width/currentScale)/currentSubScale) + currentCenter.y;
+    screenSpace = new Rectangle(desiredX, desiredY, 100, 100);
+
 
     topEdge = level.getTopBar();
     newTopEdge = topEdge;
@@ -138,6 +151,8 @@ class Game {
         rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
       }
     }
+    fill(0, 0, 0, 150);
+    rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(), screenSpace.getHeight());
 
     //draw block placement selection if one exists
     if (point != null) {
