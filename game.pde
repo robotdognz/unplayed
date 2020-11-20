@@ -1,6 +1,7 @@
 class Game {
   public Player player;
   private Level level;
+  private Paper paper;
 
   public Quadtree world;
   public HashSet<Rectangle> playerObjects;
@@ -38,12 +39,14 @@ class Game {
     camera = c;
     level = new BlankLevel();
     eventVis = true;
-    quadVis = true;
+    quadVis = false;
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
 
     world = new Quadtree(new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, 900, 900));
     playerObjects = new HashSet<Rectangle>();
+    
+    paper = new Paper();
 
     //camera
     camera.setScale(level.getStartScale());
@@ -120,6 +123,8 @@ class Game {
       }
     }
     player.draw();
+    
+    paper.draw(screenSpace);
 
     //draw black bars
     if (camera.getGame()) {
@@ -147,7 +152,7 @@ class Game {
       }
       //rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(), screenSpace.getHeight());
     }
-    
+
 
     //draw block placement selection if one exists
     if (point != null) {
@@ -216,6 +221,39 @@ class Game {
     }
     if (bottomEdge != newBottomEdge) {
       bottomEdge = lerp(bottomEdge, newBottomEdge, exp(-boarderZoomSpeed));
+    }
+  }
+}
+
+//------------------PaperTilerClass---------------------
+class Paper {
+  private PImage paper;
+  private PImage grid;
+  int gridSize;
+
+  public Paper() {
+    paper = texture.paper;
+    grid = texture.paper;
+    gridSize = 400;
+  }
+
+  public void draw(Rectangle screen) {
+    //find x start position
+    int startX = (int) Math.round((screen.getTopLeft().x-200)/gridSize)*gridSize;
+    //find y start position
+    int startY = (int) Math.round((screen.getTopLeft().y-200)/gridSize)*gridSize;
+
+    //find x end position
+    int endX = (int) Math.round((screen.getBottomRight().x+200)/gridSize)*gridSize;
+    //find y end position
+    int endY = (int) Math.round((screen.getBottomRight().y+200)/gridSize)*gridSize;
+
+    //nested for loops to tile the images
+    for (int y = startY; y < endY; y += gridSize) {
+      for (int x = startX; x < endX; x += gridSize) {
+        image(paper, x, y, gridSize, gridSize);
+        image(grid, x, y, gridSize, gridSize);
+      }
     }
   }
 }

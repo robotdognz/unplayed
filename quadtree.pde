@@ -128,7 +128,7 @@ public class QuadNode {
           bottomLeft = null;
           bottomRight = null;
         }
-        
+         
       } else { //if this node doesn't have children
         ArrayList<Rectangle> matches = new ArrayList<Rectangle>();
         for (Rectangle r : objects) { //find all matching rectangles

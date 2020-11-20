@@ -174,10 +174,19 @@ void onPinch(float x, float y, float d) {
 
 //------------------TextureStore---------------------
 class TextureCache {
+  //paper textures
+  public PImage grid;
+  public PImage paper;
+  
   public PImage defaultBlock;
+  
 
   public TextureCache() {
+    grid = loadImage("grid.png");
+    paper = loadImage("paper.png");
+    
     defaultBlock = loadImage("player_main.png");
+    
   }
 }
 
