@@ -233,7 +233,7 @@ class Paper {
 
   public Paper() {
     paper = texture.paper;
-    grid = texture.paper;
+    grid = texture.grid;
     gridSize = 400;
   }
 
