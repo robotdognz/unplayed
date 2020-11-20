@@ -49,9 +49,11 @@ class PlayerControl implements Controller {
 //------------------CameraController---------------------
 class CameraControl implements Controller {
   Editor editor;
+  int maxZoomSpeed;
 
   public CameraControl(Editor editor) {
     this.editor = editor;
+    maxZoomSpeed = 200;
   }
 
   public void draw() {
@@ -72,6 +74,13 @@ class CameraControl implements Controller {
     }
   }
   public void onPinch(float x, float y, float d) {
+    if(d > maxZoomSpeed){
+      d = maxZoomSpeed;
+    }
+    if(d < -maxZoomSpeed){
+      d = -maxZoomSpeed;
+    }
+    
     if (touches.length == 2) {
       float newScale = gCamera.getScale()-convert.screenToLevel(d);
       float newTotalScale = convert.getTotalFromScale(newScale);

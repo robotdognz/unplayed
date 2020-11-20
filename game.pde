@@ -152,7 +152,7 @@ class Game {
       for (Rectangle p : playerObjects) {
         rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
       }
-      //rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(), screenSpace.getHeight());
+      rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(), screenSpace.getHeight());
     }
 
     //draw block placement selection if one exists

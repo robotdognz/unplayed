@@ -4,7 +4,7 @@ class Editor {
 
   //camera variables
   float minZoom = 3;
-  float maxZoom = 50;
+  float maxZoom = 100;
 
   //controller
   Controller eController = new CameraControl(this); //holds the current controller
