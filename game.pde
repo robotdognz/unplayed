@@ -39,7 +39,7 @@ class Game {
     camera = c;
     level = new BlankLevel();
     eventVis = true;
-    quadVis = true;
+    quadVis = false;
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
 
@@ -54,9 +54,9 @@ class Game {
     newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 
     //calculate screen space
-    PVector topCorner = convert.screenToLevel(100, 100);
-    float screenSpaceWidth = convert.screenToLevel(width-200);
-    float screenSpaceHeight = convert.screenToLevel(height-200);
+    PVector topCorner = convert.screenToLevel(0, 0);
+    float screenSpaceWidth = convert.screenToLevel(width);
+    float screenSpaceHeight = convert.screenToLevel(height);
     screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
     screenObjects = new HashSet<Rectangle>();
 
@@ -147,7 +147,7 @@ class Game {
       for (Rectangle p : playerObjects) {
         rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
       }
-      rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(), screenSpace.getHeight());
+      //rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(), screenSpace.getHeight());
     }
     
 
@@ -177,9 +177,9 @@ class Game {
     if (camera.getGame()) {
       screenMovement();
     }
-    PVector topCorner = convert.screenToLevel(100, 100);
-    float screenSpaceWidth = convert.screenToLevel(width-200);
-    float screenSpaceHeight = convert.screenToLevel(height-200);
+    PVector topCorner = convert.screenToLevel(0, 0);
+    float screenSpaceWidth = convert.screenToLevel(width);
+    float screenSpaceHeight = convert.screenToLevel(height);
     screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
   }
 
