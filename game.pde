@@ -239,7 +239,7 @@ class Paper {
 
   public void draw(Rectangle screen) {
     if(convert.getScale() < 0.5){
-      
+      return;
     }
     //find x start position
     int startX = (int) Math.round((screen.getTopLeft().x-200)/gridSize)*gridSize;
