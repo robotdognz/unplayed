@@ -61,7 +61,7 @@ class Game {
     PVector currentCenter = gCamera.getCenter();
     float levelX = ((desiredX-width/2)/((float)width/currentScale)/currentSubScale) + currentCenter.x;
     float levelY = ((desiredY-height/2)/((float)width/currentScale)/currentSubScale) + currentCenter.y;
-    screenSpace = new Rectangle(desiredX, desiredY, 100, 100);
+    screenSpace = new Rectangle(levelX, levelY, 100, 100);
 
 
     topEdge = level.getTopBar();
