@@ -123,12 +123,12 @@ public class QuadNode {
         if (allBelow.size() < MAX_OBJECTS) {
           objects.clear();
           objects = allBelow;
-          //getAll(objects);
           topLeft = null;
           topRight = null;
           bottomLeft = null;
           bottomRight = null;
         }
+        
       } else { //if this node doesn't have children
         ArrayList<Rectangle> matches = new ArrayList<Rectangle>();
         for (Rectangle r : objects) { //find all matching rectangles
@@ -142,16 +142,6 @@ public class QuadNode {
       }
     }
   }
-
-  //private int getCount() {
-  //  if (topLeft != null) { //if this node has children
-  //    HashSet<Rectangle> allBelow = new HashSet<Rectangle>();
-  //    getAll(allBelow);
-  //    return allBelow.size();
-  //  } else { //if this node doesn't have children
-  //    return objects.size();
-  //  }
-  //}
 
   private void split() {
     float subWidth = bounds.getWidth() / 2;
