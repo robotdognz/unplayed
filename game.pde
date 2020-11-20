@@ -54,7 +54,9 @@ class Game {
 
     //calculate screen space
     PVector topCorner = convert.screenToLevel(100, 100);
-    screenSpace = new Rectangle(topCorner.x, topCorner.y, 100, 100);
+    float screenSpaceWidth = convert.screenToLevel(width-200);
+    float screenSpaceHeight = convert.screenToLevel(height-200);
+    screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
 
 
     topEdge = level.getTopBar();
@@ -175,7 +177,8 @@ class Game {
     }
     PVector topCorner = convert.screenToLevel(100, 100);
     float screenSpaceWidth = convert.screenToLevel(width-200);
-    screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceWidth);
+    float screenSpaceHeight = convert.screenToLevel(height-200);
+    screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
   }
 
   void screenMovement() {
