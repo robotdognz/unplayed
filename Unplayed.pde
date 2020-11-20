@@ -219,7 +219,8 @@ class Converter {
   }
   
   public float getScale(){
-    return (((float)width/currentScale)/currentSubScale);
+    //return (((float)width/currentScale)/currentSubScale);
+    return (currentScale/currentSubScale/100); //how many square is the width of the screen
   }
   
   //public PVector levelToScreen(float levelX, levelY){

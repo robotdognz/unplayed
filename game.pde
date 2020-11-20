@@ -37,7 +37,7 @@ class Game {
 
   Game(Camera c, Vibe v) {
     camera = c;
-    level = new BlankLevel();
+    level = new Level1();//BlankLevel();
     eventVis = true;
     quadVis = false;
 
@@ -238,7 +238,7 @@ class Paper {
   }
 
   public void draw(Rectangle screen) {
-    if(convert.getScale() < 0.5){
+    if(convert.getScale() > 30){ //< 0.5
       return;
     }
     //find x start position
