@@ -7,6 +7,7 @@ import java.util.HashSet;
 
 public KetaiGesture gesture;
 public Vibe vibe;
+public Converter convert;
 public TextureCache texture;
 
 Game g; //holds the game class
@@ -51,6 +52,7 @@ void init() {
   texture = new TextureCache();
   gesture = new KetaiGesture(this);
   vibe = new Vibe();
+  convert = new Converter();
 
   //setup game
   gCamera = new FreeCamera(); //new GameCamera();
@@ -177,6 +179,32 @@ class TextureCache {
   public TextureCache() {
     defaultBlock = loadImage("player_main.png");
   }
+}
+
+//------------------LevelToScreenConverter---------------------
+class Converter {
+  private float currentScale;
+  private float currentSubScale;
+  private PVector currentCenter;
+
+  private PVector lastCalc;
+
+  public Converter() {
+    lastCalc = new PVector(0, 0);
+  }
+
+  public PVector screenToLevel(float screenX, float screenY) {
+    currentScale = gCamera.getScale();
+    currentSubScale = gCamera.getSubScale();
+    currentCenter = gCamera.getCenter();
+    lastCalc.x = ((screenX-width/2)/((float)width/currentScale)/currentSubScale) + currentCenter.x;
+    lastCalc.y = ((screenY-height/2)/((float)width/currentScale)/currentSubScale) + currentCenter.y;
+    return lastCalc;
+  }
+  
+  //public PVector levelToScreen(float levelX, levelY){
+    
+  //}
 }
 
 //------------------Vibe---------------------

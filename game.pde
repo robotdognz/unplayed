@@ -53,15 +53,8 @@ class Game {
     newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 
     //calculate screen space
-    float desiredX = 100;
-    float desiredY = 100;
-    
-    float currentScale = gCamera.getScale();
-    float currentSubScale = gCamera.getSubScale();
-    PVector currentCenter = gCamera.getCenter();
-    float levelX = ((desiredX-width/2)/((float)width/currentScale)/currentSubScale) + currentCenter.x;
-    float levelY = ((desiredY-height/2)/((float)width/currentScale)/currentSubScale) + currentCenter.y;
-    screenSpace = new Rectangle(levelX, levelY, 100, 100);
+    PVector topCorner = convert.screenToLevel(100, 100);
+    screenSpace = new Rectangle(topCorner.x, topCorner.y, 100, 100);
 
 
     topEdge = level.getTopBar();
@@ -180,6 +173,8 @@ class Game {
     if (camera.getGame()) {
       screenMovement();
     }
+    PVector topCorner = convert.screenToLevel(100, 100);
+    screenSpace = new Rectangle(topCorner.x, topCorner.y, 100, 100);
   }
 
   void screenMovement() {
