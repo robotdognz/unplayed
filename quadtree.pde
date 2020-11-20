@@ -118,9 +118,12 @@ public class QuadNode {
         bottomRight.remove(current);
 
         //This only removes inner nodes, it doesn't remove outer nodes, but that's probably fine
-        if (getCount() < MAX_OBJECTS) {
+        HashSet<Rectangle> allBelow = new HashSet<Rectangle>();
+        getAll(allBelow);
+        if (allBelow.size() < MAX_OBJECTS) {
           objects.clear();
-          getAll(objects);
+          objects = allBelow;
+          //getAll(objects);
           topLeft = null;
           topRight = null;
           bottomLeft = null;
@@ -140,15 +143,15 @@ public class QuadNode {
     }
   }
 
-  private int getCount() {
-    if (topLeft != null) { //if this node has children
-      HashSet<Rectangle> allBelow = new HashSet<Rectangle>();
-      getAll(allBelow);
-      return allBelow.size();
-    } else { //if this node doesn't have children
-      return objects.size();
-    }
-  }
+  //private int getCount() {
+  //  if (topLeft != null) { //if this node has children
+  //    HashSet<Rectangle> allBelow = new HashSet<Rectangle>();
+  //    getAll(allBelow);
+  //    return allBelow.size();
+  //  } else { //if this node doesn't have children
+  //    return objects.size();
+  //  }
+  //}
 
   private void split() {
     float subWidth = bounds.getWidth() / 2;
