@@ -218,6 +218,10 @@ class Converter {
     return result;
   }
   
+  public float getScale(){
+    return (((float)width/currentScale)/currentSubScale);
+  }
+  
   //public PVector levelToScreen(float levelX, levelY){
     
   //}
