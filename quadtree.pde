@@ -109,7 +109,6 @@ public class QuadNode {
     }
   }
 
-  //TODO: this method needs to remove branches as necessary
   public void remove(Rectangle current) {
     if (insideBounds(current)) { //if it is inside the current node bounds
       if (topLeft != null) { //if this node has children
@@ -118,7 +117,7 @@ public class QuadNode {
         bottomLeft.remove(current);
         bottomRight.remove(current);
 
-        //-----new code-----
+        //This only removes inner nodes, it doesn't remove outer nodes, but that's probably fine
         if (getCount() < MAX_OBJECTS) {
           objects.clear();
           getAll(objects);
@@ -127,7 +126,6 @@ public class QuadNode {
           bottomLeft = null;
           bottomRight = null;
         }
-        
       } else { //if this node doesn't have children
         ArrayList<Rectangle> matches = new ArrayList<Rectangle>();
         for (Rectangle r : objects) { //find all matching rectangles
@@ -142,13 +140,12 @@ public class QuadNode {
     }
   }
 
-  //-----new code-----
   private int getCount() {
     if (topLeft != null) { //if this node has children
       HashSet<Rectangle> allBelow = new HashSet<Rectangle>();
       getAll(allBelow);
       return allBelow.size();
-    } else {
+    } else { //if this node doesn't have children
       return objects.size();
     }
   }
