@@ -238,7 +238,7 @@ class Paper {
   }
 
   public void draw(Rectangle screen) {
-    if(convert.getScale() < 100){
+    if(convert.getScale() < 0.5){
       
     }
     //find x start position
