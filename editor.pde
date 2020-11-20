@@ -3,8 +3,8 @@ class Editor {
   Game eGame; //reference to game, same instance of game used everywhere else
 
   //camera variables
-  float minZoom = 200;
-  float maxZoom = 20000;
+  float minZoom = 4;
+  float maxZoom = 40;
 
   //controller
   Controller eController = new CameraControl(this); //holds the current controller

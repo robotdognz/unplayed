@@ -74,11 +74,14 @@ class CameraControl implements Controller {
   public void onPinch(float x, float y, float d) {
     if (touches.length == 2) {
       float newScale = gCamera.getScale()-d;
-      if (newScale < editor.minZoom) {
-        newScale = editor.minZoom;
+      float newTotalScale = convert.getTotalFromScale(newScale);
+     // if (newScale < editor.minZoom) {
+      if (newTotalScale < editor.minZoom) {
+        newScale = convert.getScaleFromTotal(editor.minZoom);//editor.minZoom;
       }
-      if (newScale > editor.maxZoom) {
-        newScale = editor.maxZoom;
+      //if (newScale > editor.maxZoom) {
+      if (newTotalScale > editor.maxZoom) { 
+        newScale = convert.getScaleFromTotal(editor.maxZoom);//editor.maxZoom;
       }
       gCamera.setScale(newScale);
     }
