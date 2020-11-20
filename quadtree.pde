@@ -1,6 +1,6 @@
 public class Quadtree {
   private QuadNode root;
-  private int size = 0;
+  //private int size = 0;
 
   public Quadtree(Rectangle bounds) {
     root = new QuadNode(bounds, null, this); //top level node has null for parent
@@ -13,7 +13,7 @@ public class Quadtree {
 
   public void insert(Rectangle current) {
     root.insert(current);
-    size++;
+  //  size++;
   }
 
   public void remove(Rectangle current) {
@@ -33,9 +33,9 @@ public class Quadtree {
     return returnSet;
   }
 
-  public int size() {
-    return size;
-  }
+  //public int size() {
+  //  return size;
+  //}
 }
 
 public class QuadNode {

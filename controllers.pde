@@ -110,15 +110,19 @@ class EditorControl implements Controller {
     }
 
     //calculate position in level
-    float currentScale = gCamera.getScale();
-    float currentSubScale = gCamera.getSubScale();
-    PVector currentCenter = gCamera.getCenter();
-    float levelX = ((mouseX-width/2)/((float)width/currentScale)/currentSubScale) + currentCenter.x;
-    float levelY = ((mouseY-height/2)/((float)width/currentScale)/currentSubScale) + currentCenter.y;
+    //float currentScale = gCamera.getScale();
+    //float currentSubScale = gCamera.getSubScale();
+    //PVector currentCenter = gCamera.getCenter();
+    //float levelX = ((mouseX-width/2)/((float)width/currentScale)/currentSubScale) + currentCenter.x;
+    //float levelY = ((mouseY-height/2)/((float)width/currentScale)/currentSubScale) + currentCenter.y;
 
-    //round so blocks snap to grid
-    float finalX = Math.round((levelX-50)/snapNo)*snapNo;
-    float finalY = Math.round((levelY-50)/snapNo)*snapNo;
+
+    PVector placement = convert.screenToLevel(mouseX, mouseY);
+    ////round so blocks snap to grid
+    float finalX = Math.round((placement.x-50)/snapNo)*snapNo;
+    float finalY = Math.round((placement.y-50)/snapNo)*snapNo;
+
+
 
     g.point = new PVector(finalX, finalY);
     if (editor.snap) {

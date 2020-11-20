@@ -2,8 +2,7 @@ class Game {
   public Player player;
   private Level level;
 
-  //public HashSet<Rectangle> platforms;
-  public Quadtree quad;
+  public Quadtree world;
   public HashSet<Rectangle> playerObjects;
   public int scanSize = 0;
 
@@ -43,8 +42,7 @@ class Game {
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
 
-    //platforms = new HashSet<Rectangle>(); //TODO: remove this
-    quad = new Quadtree(new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, 900, 900));
+    world = new Quadtree(new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, 900, 900));
     playerObjects = new HashSet<Rectangle>();
 
     //camera
@@ -71,10 +69,10 @@ class Game {
 
     //import level
     for (Rectangle p : level.getPlatforms()) {
-      quad.insert(p);
+      world.insert(p);
     }
     for (Rectangle e : level.getEvents()) {
-      quad.insert(e);
+      world.insert(e);
     }
     //everything needs to be a multiple of 20 (multiple of 10 so you can always fall down holes, and 20 so you don't clip through things 90 apart because of speed 10)
   }
@@ -112,7 +110,7 @@ class Game {
     background(240);
     //platforms.clear();
     screenObjects.clear();
-    quad.retrieve(screenObjects, screenSpace);
+    world.retrieve(screenObjects, screenSpace);
     for (Rectangle p : screenObjects) {
       if (p instanceof Platform) {
         ((Platform) p).draw();
@@ -142,7 +140,7 @@ class Game {
 
     //draw quad tree logic for testing
     if (quadVis) {
-      quad.draw();
+      world.draw();
       fill(0, 0, 0, 150);
       for (Rectangle p : playerObjects) {
         rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
@@ -170,7 +168,7 @@ class Game {
   void step() {
     //find platforms near the player
     playerObjects.clear();
-    quad.retrieve(playerObjects, player.getPlayerArea());
+    world.retrieve(playerObjects, player.getPlayerArea());
     scanSize = playerObjects.size();
     player.step(playerObjects, this);
 

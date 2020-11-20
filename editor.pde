@@ -96,7 +96,7 @@ class Editor {
     fill(80);
     textSize(50);
     textAlign(CENTER, CENTER);
-    text(g.scanSize + " : " + g.screenObjects.size() + " : " + g.quad.size(), width/2, height-100);
+    text(g.scanSize + " : " + g.screenObjects.size(), width/2, height-100);
     text("FPS: " + nf(this.frame, 2, 2), width/2, height-50);
   }
 
@@ -128,14 +128,14 @@ class Editor {
   public void placeBlock() {
     if (g.point != null) {
 
-      int platformX = (int) g.point.x; //-50
-      int platformY = (int) g.point.y; //-50
+      int platformX = (int) g.point.x;
+      int platformY = (int) g.point.y;
 
       boolean spaceFree = true;
       Rectangle foundAtPoint = null;
       
       HashSet<Rectangle> getPlatforms = new HashSet<Rectangle>();
-      for (Rectangle p : g.quad.retrieve(getPlatforms, new Rectangle(platformX, platformY, 100, 100))) {
+      for (Rectangle p : g.world.retrieve(getPlatforms, new Rectangle(platformX, platformY, 100, 100))) {
         
         if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY) {
           spaceFree = false;
@@ -146,13 +146,11 @@ class Editor {
       if (spaceFree) { //if there isn't something already there
         if (eMode == editorMode.ADD) {
           Platform newPlatform = new Platform(platformX, platformY, 100, 100);
-          //g.platforms.add(newPlatform);
-          g.quad.insert(newPlatform);
+          g.world.insert(newPlatform);
         }
       }else{
         if(eMode == editorMode.ERASE && foundAtPoint != null){
-          //g.platforms.remove(foundAtPoint);
-          g.quad.remove(foundAtPoint);
+          g.world.remove(foundAtPoint);
         }
       }
       g.point = null;
