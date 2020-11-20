@@ -62,24 +62,22 @@ class CameraControl implements Controller {
   }
   public void touchMoved() {
     if (touches.length == 1) {
-      if (mouseY < 180) { //don't respond to clicks at the top
+      if (mouseY < 200) { //don't respond to clicks at the top
         return;
       }
-      float moveX = pmouseX - mouseX;
-      float moveY = pmouseY - mouseY;
-      PVector diff = new PVector(moveX, moveY);
+      float moveX = (pmouseX - mouseX)/3;
+      float moveY = (pmouseY - mouseY)/3;
+      PVector diff = new PVector(convert.screenToLevel(moveX), convert.screenToLevel(moveY));
       gCamera.setCenter(gCamera.getCenter().add(diff));
     }
   }
   public void onPinch(float x, float y, float d) {
     if (touches.length == 2) {
-      float newScale = gCamera.getScale()-d;
+      float newScale = gCamera.getScale()-convert.screenToLevel(d);
       float newTotalScale = convert.getTotalFromScale(newScale);
-     // if (newScale < editor.minZoom) {
       if (newTotalScale < editor.minZoom) {
         newScale = convert.getScaleFromTotal(editor.minZoom);//editor.minZoom;
       }
-      //if (newScale > editor.maxZoom) {
       if (newTotalScale > editor.maxZoom) { 
         newScale = convert.getScaleFromTotal(editor.maxZoom);//editor.maxZoom;
       }

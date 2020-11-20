@@ -211,10 +211,10 @@ class Converter {
     return lastCalc;
   }
   
-  public float screenToLevel(float size){
+  public float screenToLevel(float distance){
     currentScale = gCamera.getScale();
     currentSubScale = gCamera.getSubScale();
-    float result = size/((float)width/currentScale)/currentSubScale;
+    float result = distance/((float)width/currentScale)/currentSubScale;
     return result;
   }
   

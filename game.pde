@@ -12,6 +12,7 @@ class Game {
 
   public Camera camera;
   public Rectangle screenSpace;
+  public int screenSpaceOffset;
   public HashSet<Rectangle> screenObjects;
 
   public PVector point;
@@ -55,9 +56,10 @@ class Game {
     newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 
     //calculate screen space
-    PVector topCorner = convert.screenToLevel(0, 0);
-    float screenSpaceWidth = convert.screenToLevel(width);
-    float screenSpaceHeight = convert.screenToLevel(height);
+    screenSpaceOffset = 0; //positive makes it larger, negative makes it smaller
+    PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
+    float screenSpaceWidth = convert.screenToLevel(width+screenSpaceOffset*2);
+    float screenSpaceHeight = convert.screenToLevel(height+screenSpaceOffset*2);
     screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
     screenObjects = new HashSet<Rectangle>();
 
@@ -153,7 +155,6 @@ class Game {
       //rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(), screenSpace.getHeight());
     }
 
-
     //draw block placement selection if one exists
     if (point != null) {
       fill(0, 0, 0, 150);
@@ -180,9 +181,9 @@ class Game {
     if (camera.getGame()) {
       screenMovement();
     }
-    PVector topCorner = convert.screenToLevel(0, 0);
-    float screenSpaceWidth = convert.screenToLevel(width);
-    float screenSpaceHeight = convert.screenToLevel(height);
+    PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
+    float screenSpaceWidth = convert.screenToLevel(width+screenSpaceOffset*2);
+    float screenSpaceHeight = convert.screenToLevel(height+screenSpaceOffset*2);
     screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
   }
 
@@ -238,19 +239,17 @@ class Paper {
   }
 
   public void draw(Rectangle screen) {
-    if(convert.getScale() > 30){ //< 0.5
+    if(convert.getScale() > 30){ // stop drawing paper/tiles at this size
       return;
     }
     //find x start position
-    int startX = (int) Math.round((screen.getTopLeft().x-200)/gridSize)*gridSize;
+    int startX = (int) Math.round((screen.getTopLeft().x-(gridSize/2))/gridSize)*gridSize;
     //find y start position
-    int startY = (int) Math.round((screen.getTopLeft().y-200)/gridSize)*gridSize;
-
+    int startY = (int) Math.round((screen.getTopLeft().y-(gridSize/2))/gridSize)*gridSize;
     //find x end position
-    int endX = (int) Math.round((screen.getBottomRight().x+200)/gridSize)*gridSize;
+    int endX = (int) Math.round((screen.getBottomRight().x+(gridSize/2))/gridSize)*gridSize;
     //find y end position
-    int endY = (int) Math.round((screen.getBottomRight().y+200)/gridSize)*gridSize;
-
+    int endY = (int) Math.round((screen.getBottomRight().y+(gridSize/2))/gridSize)*gridSize;
     //nested for loops to tile the images
     for (int y = startY; y < endY; y += gridSize) {
       for (int x = startX; x < endX; x += gridSize) {
