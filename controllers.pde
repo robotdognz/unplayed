@@ -100,7 +100,7 @@ class EditorControl implements Controller {
   public void touchEnded() {
   }
   public void touchMoved() {
-    if (mouseY < 180) { //don't respond to clicks at the top
+    if (mouseY < 200) { //don't respond to clicks at the top
       return;
     }
 
@@ -110,19 +110,10 @@ class EditorControl implements Controller {
     }
 
     //calculate position in level
-    //float currentScale = gCamera.getScale();
-    //float currentSubScale = gCamera.getSubScale();
-    //PVector currentCenter = gCamera.getCenter();
-    //float levelX = ((mouseX-width/2)/((float)width/currentScale)/currentSubScale) + currentCenter.x;
-    //float levelY = ((mouseY-height/2)/((float)width/currentScale)/currentSubScale) + currentCenter.y;
-
-
     PVector placement = convert.screenToLevel(mouseX, mouseY);
     ////round so blocks snap to grid
     float finalX = Math.round((placement.x-50)/snapNo)*snapNo;
     float finalY = Math.round((placement.y-50)/snapNo)*snapNo;
-
-
 
     g.point = new PVector(finalX, finalY);
     if (editor.snap) {
