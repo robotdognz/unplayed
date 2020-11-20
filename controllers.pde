@@ -53,7 +53,7 @@ class CameraControl implements Controller {
 
   public CameraControl(Editor editor) {
     this.editor = editor;
-    maxZoomSpeed = 200;
+    maxZoomSpeed = 150;
   }
 
   public void draw() {
@@ -74,6 +74,7 @@ class CameraControl implements Controller {
     }
   }
   public void onPinch(float x, float y, float d) {
+    //TODO make this zoom from the center of the gesture, not the center of the screen
     if(d > maxZoomSpeed){
       d = maxZoomSpeed;
     }

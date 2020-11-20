@@ -38,7 +38,7 @@ class Game {
 
   Game(Camera c, Vibe v) {
     camera = c;
-    level = new Level1();//BlankLevel();
+    level = new BlankLevel();
     eventVis = true;
     quadVis = false;
 
