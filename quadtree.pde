@@ -86,8 +86,6 @@ public class QuadNode {
     return returnSet; //return the set with all the rectangles in the tree
   }
   
-  //TODO: This algorithm doesn't take into account rectangles larger than the node
-  //look for a better overlap algorithm
   private boolean insideBounds(Rectangle current) {
     if (current.getBottomRight().x >= bounds.getTopLeft().x && 
       current.getTopLeft().x <= bounds.getBottomRight().x && 
