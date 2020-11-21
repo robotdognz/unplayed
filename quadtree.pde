@@ -85,6 +85,18 @@ public class QuadNode {
     }
     return returnSet; //return the set with all the rectangles in the tree
   }
+  
+  //TODO: This algorithm doesn't take into account rectangles larger than the node
+  //look for a better overlap algorithm
+  private boolean insideBounds(Rectangle current) {
+    if (current.getBottomRight().x >= bounds.getTopLeft().x && 
+      current.getTopLeft().x <= bounds.getBottomRight().x && 
+      current.getBottomRight().y >= bounds.getTopLeft().y &&
+      current.getTopLeft().y <= bounds.getBottomRight().y) {
+      return true; //the rectangle is inside the bounds of this node
+    }
+    return false; //it is outside
+  }
 
   public void insert(Rectangle current) {
     if (insideBounds(current)) { //if it is inside the current node bounds
@@ -350,16 +362,6 @@ public class QuadNode {
     for (Rectangle r : toAdd) {
       tree.insert(r);
     }
-  }
-
-  private boolean insideBounds(Rectangle current) {
-    if (current.getBottomRight().x >= bounds.getTopLeft().x && 
-      current.getTopLeft().x <= bounds.getBottomRight().x && 
-      current.getBottomRight().y >= bounds.getTopLeft().y &&
-      current.getTopLeft().y <= bounds.getBottomRight().y) {
-      return true; //the rectangle is inside the bounds of this node
-    }
-    return false; //it is outside
   }
 
   public void draw() {
