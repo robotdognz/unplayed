@@ -4,6 +4,7 @@ import android.content.Context;
 import android.app.Activity;
 import java.util.List;
 import java.util.HashSet;
+import java.util.regex.*;
 
 public KetaiGesture gesture;
 public Vibe vibe;
@@ -217,7 +218,7 @@ class TextureCache {
     for (File f : piecePaths) {
       //check file ends with number "x" number ".png"
       String path = f.getAbsolutePath();
-      println(path);
+      //println(path);
       if (path.matches(".+([0-9]+)x([0-9]+).png$")) { //use regex to define end of file name
         pieces.add(new PieceHandler(f));
       }
@@ -245,6 +246,12 @@ class PieceHandler {
 
     //load in image from datapath
     sprite = loadImage(path);
+
+    Pattern p = Pattern.compile(".+d+");  //".+([0-9]+)x([0-9]+).png$"
+    Matcher m = p.matcher(path);
+    if (m.find()) {
+      println(m.group());
+    }
 
     //calculate width and height from file name
   }
