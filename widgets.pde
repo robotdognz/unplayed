@@ -163,16 +163,12 @@ abstract class Widget {
   }
   
   public void longPress() {
-    //if (hover) {
-      //hover = false;
+    if (hover) {
+      hover = false;
       //clicked();
-      //sActive = !sActive;
+      sActive = !sActive;
       //return true;
-    //}
-  }
-  
-  public void tap() {
-  
+    }
   }
 
   public void clicked() {
