@@ -141,8 +141,8 @@ class Player extends Rectangle {
 
   void draw() {
     //draw player
-    //image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
-    image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight(), 0, 0, 128, 128);
+    image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
+    //image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight(), 0, 0, 128, 128); //sprite sheet test
     if (drawArea) {
       fill(0, 0, 0, 150);
       rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
