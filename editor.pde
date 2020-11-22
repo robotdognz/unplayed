@@ -58,6 +58,10 @@ class Editor {
     }
     
     frameCounter();
+    
+    if(!(eController instanceof EditorControl)){
+      g.point = null;
+    }
   }
 
   //a bunch of this probably needs to be moved to step, for logical consistency only drawing should be in draw
