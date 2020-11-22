@@ -149,7 +149,7 @@ class Game {
         rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
       }
       rect(player.getPlayerArea().getX(), player.getPlayerArea().getY(), player.getPlayerArea().getWidth(), player.getPlayerArea().getHeight());
-      rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(), screenSpace.getHeight());
+      //rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(), screenSpace.getHeight());
     }
 
     //draw block placement selection if one exists
@@ -162,7 +162,7 @@ class Game {
       int xCoord = (int) point.x;
       int yCoord = (int) point.y;
       String s = "[ " + xCoord + ", " + yCoord + " ]";
-      text(s, point.x+55, point.y);
+      text(s, point.x+105, point.y+50);
     }
 
     popMatrix(); //start working at screen scale
