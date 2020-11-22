@@ -1,6 +1,7 @@
 //------------------Editor---------------------
 class Editor {
   public final int TOP_DEADZONE = 200;
+  public final int BOTTOM_DEADZONE = height-200;
   
   Game eGame; //reference to game, same instance of game used everywhere else
 
@@ -53,10 +54,13 @@ class Editor {
   public void step() {
     //step the controller if there are no widget menus open
     if (eControllerActive) {
-      eController.draw(); //draw event for controls
+      eController.step(); //draw event for controls
     }
+    
+    frameCounter();
   }
 
+  //a bunch of this probably needs to be moved to step, for logical consistency only drawing should be in draw
   public void draw() {
     //widget menus - draw them and close them if lastTouch is below longest open widget menu
     float currentWidgetHeight = 0; //used to find the bottom of the longest open widget menu
@@ -90,7 +94,6 @@ class Editor {
     eControllerActive = !wMenuOpen; //if a widget menu is open, deactivate controls
 
     //draw frame counter and other readouts
-    frameCounter();
     fill(80);
     textSize(50);
     textAlign(CENTER, CENTER);

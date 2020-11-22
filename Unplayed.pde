@@ -66,13 +66,14 @@ void init() {
   gWidgetSpacing = width/(gWidgets.size()+1);
 }
 
+//this is the only draw method that should have step logic in it
 void draw() {
   if (!gPaused) { //step the game if it is not paused
     //step editor or game controller depending on editor toggle
     if (editorToggle) {
       edit.step();
     } else {
-      gController.draw();
+      gController.step();
     }
     g.step(); //step game
   }

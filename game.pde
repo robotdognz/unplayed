@@ -113,9 +113,6 @@ class Game {
 
     //draw player and environment
     background(240);
-    //platforms.clear();
-    screenObjects.clear();
-    world.retrieve(screenObjects, screenSpace);
     for (Rectangle p : screenObjects) {
       if (p instanceof Platform) {
         ((Platform) p).draw();
@@ -125,7 +122,6 @@ class Game {
       }
     }
     player.draw();
-    
     paper.draw(screenSpace);
 
     //draw black bars
@@ -172,6 +168,9 @@ class Game {
   }
 
   void step() {
+    screenObjects.clear();
+    world.retrieve(screenObjects, screenSpace);
+    
     //find platforms near the player
     playerObjects.clear();
     world.retrieve(playerObjects, player.getPlayerArea());

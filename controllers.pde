@@ -1,6 +1,6 @@
 //------------------ControllerInterface---------------------
 interface Controller {
-  public void draw();
+  public void step();
   public void touchStarted();
   public void touchEnded();
   public void touchMoved();
@@ -10,7 +10,7 @@ interface Controller {
 
 //------------------GameController---------------------
 class PlayerControl implements Controller {
-  public void draw() {
+  public void step() {
     int left = 0;
     int right = 0;
     for (TouchEvent.Pointer t : touches) {
@@ -58,7 +58,7 @@ class CameraControl implements Controller {
     maxZoomSpeed = 150;
   }
 
-  public void draw() {}
+  public void step() {}
   
   public void touchStarted() {}
   
@@ -109,7 +109,7 @@ class EditorControl implements Controller {
     this.editor = editor;
   }
 
-  public void draw() {
+  public void step() {
   }
   public void touchStarted() {
   }

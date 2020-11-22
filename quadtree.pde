@@ -85,15 +85,26 @@ public class QuadNode {
     }
     return returnSet; //return the set with all the rectangles in the tree
   }
-  
+
   private boolean insideBounds(Rectangle current) {
-    if (current.getBottomRight().x >= bounds.getTopLeft().x && 
-      current.getTopLeft().x <= bounds.getBottomRight().x && 
-      current.getBottomRight().y >= bounds.getTopLeft().y &&
-      current.getTopLeft().y <= bounds.getBottomRight().y) {
-      return true; //the rectangle is inside the bounds of this node
-    }
-    return false; //it is outside
+    //if (current.getBottomRight().x >= bounds.getTopLeft().x && 
+    //  current.getTopLeft().x <= bounds.getBottomRight().x && 
+    //  current.getBottomRight().y >= bounds.getTopLeft().y &&
+    //  current.getTopLeft().y <= bounds.getBottomRight().y) {
+    //  return true; //the rectangle is inside the bounds of this node
+    //}
+    //return false; //it is outside
+
+    if (current.getTopLeft().x > bounds.getBottomRight().x)
+      return false;
+    if (current.getBottomRight().x < bounds.getTopLeft().x)
+      return false;
+    if (current.getTopLeft().y > bounds.getBottomRight().y)
+      return false;
+    if (current.getBottomRight().y < bounds.getTopLeft().y)
+      return false;
+
+    return true;
   }
 
   public void insert(Rectangle current) {
@@ -138,7 +149,6 @@ public class QuadNode {
           bottomLeft = null;
           bottomRight = null;
         }
-         
       } else { //if this node doesn't have children
         ArrayList<Rectangle> matches = new ArrayList<Rectangle>();
         for (Rectangle r : objects) { //find all matching rectangles
