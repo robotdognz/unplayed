@@ -50,6 +50,8 @@ void init() {
 
   //setup special classes
   texture = new TextureCache();
+  println(texture.getLevelPieces());
+  
   gesture = new KetaiGesture(this);
   vibe = new Vibe();
   convert = new Converter();
@@ -196,6 +198,14 @@ class TextureCache {
   public PImage grid;
   public PImage paper;
   
+  //level pieces
+  private File piecePath;
+  private File[] pieces;
+  
+  //widgets
+  private String widgets = dataPath("ui")+'/'; //data path of widget icons
+  
+  //blocks
   public PImage defaultBlock;
   
 
@@ -203,8 +213,15 @@ class TextureCache {
     grid = loadImage("grid.png");
     paper = loadImage("paper.png");
     
+    piecePath = new File(dataPath("pieces")+'/');
+    pieces = piecePath.listFiles();
+    
     defaultBlock = loadImage("player_main.png");
     
+  }
+  
+  public File[] getLevelPieces(){
+    return pieces;
   }
 }
 
