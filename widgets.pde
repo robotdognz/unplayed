@@ -38,6 +38,8 @@ abstract class Widget {
       lastTouch.y <= position.y+wSize*touchScale &&
       available) {
       hover = true;
+    }else{
+      hover = false;
     }
 
     //subWidget hover

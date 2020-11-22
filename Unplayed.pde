@@ -172,6 +172,16 @@ void onPinch(float x, float y, float d) {
   }
 }
 
+void onLongPress(float x, float y) {
+  if (menu == null) {
+    if (editorToggle) {
+      edit.onLongPress(x, y);
+    } else {
+      gController.onLongPress(x, y);
+    }
+  }
+}
+
 //------------------TextureStore---------------------
 class TextureCache {
   //paper textures

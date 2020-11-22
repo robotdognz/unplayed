@@ -1,5 +1,7 @@
 //------------------Editor---------------------
 class Editor {
+  public final int TOP_DEADZONE = 200;
+  
   Game eGame; //reference to game, same instance of game used everywhere else
 
   //camera variables
@@ -123,6 +125,12 @@ class Editor {
   public void onPinch(float x, float y, float d) {
     if (eControllerActive) {
       eController.onPinch(x, y, d); //controlls for on pinch event
+    }
+  }
+  
+  void onLongPress(float x, float y) {
+    if (eControllerActive) {
+      eController.onLongPress(x, y);
     }
   }
 

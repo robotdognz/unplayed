@@ -5,6 +5,7 @@ interface Controller {
   public void touchEnded();
   public void touchMoved();
   public void onPinch(float x, float y, float d);
+  void onLongPress(float x, float y);
 }
 
 //------------------GameController---------------------
@@ -38,12 +39,13 @@ class PlayerControl implements Controller {
       g.player.jump();
     }
   }
-  public void touchEnded() {
-  }
-  public void touchMoved() {
-  }
-  public void onPinch(float x, float y, float d) {
-  }
+  public void touchEnded() {}
+  
+  public void touchMoved() {}
+  
+  public void onPinch(float x, float y, float d) {}
+  
+  void onLongPress(float x, float y) {}
 }
 
 //------------------CameraController---------------------
@@ -56,15 +58,15 @@ class CameraControl implements Controller {
     maxZoomSpeed = 150;
   }
 
-  public void draw() {
-  }
-  public void touchStarted() {
-  }
-  public void touchEnded() {
-  }
+  public void draw() {}
+  
+  public void touchStarted() {}
+  
+  public void touchEnded() {}
+  
   public void touchMoved() {
     if (touches.length == 1) {
-      if (mouseY < 200) { //don't respond to clicks at the top
+      if (mouseY < editor.TOP_DEADZONE) { //don't respond to clicks at the top
         return;
       }
       float moveX = (pmouseX - mouseX)/3;
@@ -73,6 +75,7 @@ class CameraControl implements Controller {
       gCamera.setCenter(gCamera.getCenter().add(diff));
     }
   }
+  
   public void onPinch(float x, float y, float d) {
     //TODO make this zoom from the center of the gesture, not the center of the screen
     if(d > maxZoomSpeed){
@@ -94,6 +97,8 @@ class CameraControl implements Controller {
       gCamera.setScale(newScale);
     }
   }
+  
+  void onLongPress(float x, float y) {}
 }
 
 //------------------EditorController---------------------
@@ -111,7 +116,7 @@ class EditorControl implements Controller {
   public void touchEnded() {
   }
   public void touchMoved() {
-    if (mouseY < 200) { //don't respond to clicks at the top
+    if (mouseY < editor.TOP_DEADZONE) { //don't respond to clicks at the top
       return;
     }
 
@@ -132,6 +137,7 @@ class EditorControl implements Controller {
     }
   }
 
-  public void onPinch(float x, float y, float d) {
-  }
+  public void onPinch(float x, float y, float d) {}
+  
+  void onLongPress(float x, float y) {}
 }
