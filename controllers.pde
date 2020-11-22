@@ -5,7 +5,6 @@ interface Controller {
   public void touchEnded();
   public void touchMoved();
   public void onPinch(float x, float y, float d);
-  public void onLongPress(float x, float y);
   public void onTap(float x, float y);
 }
 
@@ -45,8 +44,6 @@ class PlayerControl implements Controller {
   public void touchMoved() {}
   
   public void onPinch(float x, float y, float d) {}
-  
-  public void onLongPress(float x, float y) {}
   
   public void onTap(float x, float y) {}
 }
@@ -98,8 +95,6 @@ class CameraControl implements Controller {
     }
   }
   
-  public void onLongPress(float x, float y) {}
-  
   public void onTap(float x, float y) {}
 }
 
@@ -136,8 +131,6 @@ class EditorControl implements Controller {
   }
 
   public void onPinch(float x, float y, float d) {}
-  
-  public void onLongPress(float x, float y) {}
   
   public void onTap(float x, float y) {}
 }

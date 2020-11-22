@@ -87,23 +87,18 @@ public class QuadNode {
   }
 
   private boolean insideBounds(Rectangle current) {
-    //if (current.getBottomRight().x >= bounds.getTopLeft().x && 
-    //  current.getTopLeft().x <= bounds.getBottomRight().x && 
-    //  current.getBottomRight().y >= bounds.getTopLeft().y &&
-    //  current.getTopLeft().y <= bounds.getBottomRight().y) {
-    //  return true; //the rectangle is inside the bounds of this node
-    //}
-    //return false; //it is outside
-
-    if (current.getTopLeft().x > bounds.getBottomRight().x)
+    if (current.getTopLeft().x > bounds.getBottomRight().x) {
       return false;
-    if (current.getBottomRight().x < bounds.getTopLeft().x)
+    }
+    if (current.getBottomRight().x < bounds.getTopLeft().x) {
       return false;
-    if (current.getTopLeft().y > bounds.getBottomRight().y)
+    }
+    if (current.getTopLeft().y > bounds.getBottomRight().y) {
       return false;
-    if (current.getBottomRight().y < bounds.getTopLeft().y)
+    }
+    if (current.getBottomRight().y < bounds.getTopLeft().y) {
       return false;
-
+    }
     return true;
   }
 
