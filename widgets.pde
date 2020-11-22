@@ -163,12 +163,12 @@ abstract class Widget {
   }
   
   public void longPress() {
-    if (hover) {
-      hover = false;
-      //clicked();
-      sActive = !sActive;
-      //return true;
-    }
+    //if (hover) {
+    //  hover = false;
+    //  //clicked();
+    //  sActive = !sActive;
+    //  //return true;
+    //}
   }
 
   public void clicked() {
@@ -437,6 +437,11 @@ class EditorModeWidget extends Widget {
     } else {
       active = false;
     }
+  }
+  
+  public void longPress(){
+    active = true;
+    sActive = true;
   }
 }
 class AddWidget extends Widget {

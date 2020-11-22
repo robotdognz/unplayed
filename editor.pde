@@ -157,15 +157,15 @@ class Editor {
   }
 
   public void onLongPress(float x, float y) {
+    for (int i = 0; i < eWidgets.size(); i++) {
+      eWidgets.get(i).longPress();
+    }
     if (nextTouchInactive) {
       return;
     }
     if (eControllerActive) {
       eController.onLongPress(x, y);
     }
-    //for (int i = 0; i < eWidgets.size(); i++) {
-    //  eWidgets.get(i).longPress();
-    //}
   }
 
   public void onTap(float x, float y) {
