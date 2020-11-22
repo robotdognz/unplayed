@@ -217,6 +217,7 @@ class TextureCache {
     for (File f : piecePaths) {
       //check file ends with number "x" number ".png"
       String path = f.getAbsolutePath();
+      println(path);
       if (path.matches(".+([0-9]+)x([0-9]+).png$")) { //use regex to define end of file name
         pieces.add(new PieceHandler(f));
       }
