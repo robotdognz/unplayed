@@ -141,10 +141,8 @@ class Player extends Rectangle {
 
   void draw() {
     //draw player
-    fill(playerColor);
-    noStroke();
-    //rect(position.x, position.y, playerW, playerH);
-    image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
+    //image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
+    image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight(), 0, 0, 128, 128);
     if (drawArea) {
       fill(0, 0, 0, 150);
       rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
@@ -152,6 +150,7 @@ class Player extends Rectangle {
   }
 
   public void drawArrows(Game g) {
+    fill(playerColor);
     //draw player-off-screen arrows
     if (getTopLeft().x+getWidth()-10 <= g.leftEdge) {
       //left edge

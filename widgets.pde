@@ -170,6 +170,10 @@ abstract class Widget {
       //return true;
     //}
   }
+  
+  public void tap() {
+  
+  }
 
   public void clicked() {
     if (hasSActive) {

@@ -183,6 +183,16 @@ void onLongPress(float x, float y) {
   }
 }
 
+void onTap(float x, float y) {
+  if (menu == null) {
+    if (editorToggle) {
+      edit.onTap(x, y);
+    } else {
+      gController.onTap(x, y);
+    }
+  }
+}
+
 //------------------TextureStore---------------------
 class TextureCache {
   //paper textures

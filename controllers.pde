@@ -6,6 +6,7 @@ interface Controller {
   public void touchMoved();
   public void onPinch(float x, float y, float d);
   public void onLongPress(float x, float y);
+  public void onTap(float x, float y);
 }
 
 //------------------GameController---------------------
@@ -46,6 +47,8 @@ class PlayerControl implements Controller {
   public void onPinch(float x, float y, float d) {}
   
   public void onLongPress(float x, float y) {}
+  
+  public void onTap(float x, float y) {}
 }
 
 //------------------CameraController---------------------
@@ -66,9 +69,6 @@ class CameraControl implements Controller {
   
   public void touchMoved() {
     if (touches.length == 1) {
-      //if (mouseY < editor.TOP_DEADZONE) { //don't respond to clicks at the top
-      //  return;
-      //}
       float moveX = (pmouseX - mouseX)/3;
       float moveY = (pmouseY - mouseY)/3;
       PVector diff = new PVector(convert.screenToLevel(moveX), convert.screenToLevel(moveY));
@@ -99,6 +99,8 @@ class CameraControl implements Controller {
   }
   
   public void onLongPress(float x, float y) {}
+  
+  public void onTap(float x, float y) {}
 }
 
 //------------------EditorController---------------------
@@ -116,10 +118,6 @@ class EditorControl implements Controller {
   public void touchEnded() {
   }
   public void touchMoved() {
-    //if (mouseY < editor.TOP_DEADZONE) { //don't respond to clicks at the top
-    //  return;
-    //}
-
     float snapNo = 10;
     if (editor.snap) {
       snapNo = 100;
@@ -140,4 +138,6 @@ class EditorControl implements Controller {
   public void onPinch(float x, float y, float d) {}
   
   public void onLongPress(float x, float y) {}
+  
+  public void onTap(float x, float y) {}
 }

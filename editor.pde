@@ -167,6 +167,8 @@ class Editor {
     //  eWidgets.get(i).longPress();
     //}
   }
+  
+  public void onTap(float x, float y) {}
 
   public void placeBlock() {
     if (g.point != null) {
