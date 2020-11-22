@@ -247,7 +247,7 @@ class PieceHandler {
     //load in image from datapath
     sprite = loadImage(path);
 
-    Pattern p = Pattern.compile(".+d+");  //".+([0-9]+)x([0-9]+).png$"
+    Pattern p = Pattern.compile("\\d+");  //".+([0-9]+)x([0-9]+).png$"
     Matcher m = p.matcher(path);
     if (m.find()) {
       println(m.group());
