@@ -66,9 +66,9 @@ class CameraControl implements Controller {
   
   public void touchMoved() {
     if (touches.length == 1) {
-      if (mouseY < editor.TOP_DEADZONE) { //don't respond to clicks at the top
-        return;
-      }
+      //if (mouseY < editor.TOP_DEADZONE) { //don't respond to clicks at the top
+      //  return;
+      //}
       float moveX = (pmouseX - mouseX)/3;
       float moveY = (pmouseY - mouseY)/3;
       PVector diff = new PVector(convert.screenToLevel(moveX), convert.screenToLevel(moveY));
@@ -116,9 +116,9 @@ class EditorControl implements Controller {
   public void touchEnded() {
   }
   public void touchMoved() {
-    if (mouseY < editor.TOP_DEADZONE) { //don't respond to clicks at the top
-      return;
-    }
+    //if (mouseY < editor.TOP_DEADZONE) { //don't respond to clicks at the top
+    //  return;
+    //}
 
     float snapNo = 10;
     if (editor.snap) {

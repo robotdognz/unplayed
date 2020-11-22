@@ -161,7 +161,7 @@ class Game {
       textAlign(LEFT, CENTER);
       int xCoord = (int) point.x;
       int yCoord = (int) point.y;
-      String s = "[ " + xCoord + ", " + yCoord + " ]";
+      String s = "[" + xCoord + ", " + yCoord + "]";
       text(s, point.x+105, point.y+50);
     }
 

@@ -126,7 +126,7 @@ class Editor {
   }
 
   public void touchMoved() {
-    if (eControllerActive) {
+    if (eControllerActive && mouseY > TOP_DEADZONE) {
       eController.touchMoved(); //controlls for touch moved event
     }
   }
