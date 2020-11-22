@@ -54,8 +54,8 @@ class Editor {
   }
 
   public void step() {
-    //step the controller if there are no widget menus open
-    if (eControllerActive) {
+    //step the controller if there are no widget menus open and touch has been reenabled
+    if (eControllerActive && !nextTouchInactive) {
       eController.step(); //draw event for controls
     }
     
@@ -131,7 +131,6 @@ class Editor {
   public void touchEnded() {
     if(nextTouchInactive){
       nextTouchInactive = false;
-      //return;
     }
     //check for clicking on widgets
     for (int i = 0; i < eWidgets.size(); i++) {
