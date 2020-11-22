@@ -50,8 +50,7 @@ void init() {
 
   //setup special classes
   texture = new TextureCache();
-  println(texture.getLevelPieces());
-  
+  println(texture.getLevelPieces().size());
   gesture = new KetaiGesture(this);
   vibe = new Vibe();
   convert = new Converter();
@@ -185,43 +184,80 @@ void onTap(float x, float y) {
   }
 }
 
-void onFlick(float x, float y, float px, float py, float v) {
-  //x/y start of flick
-  //px/yx end of flick
-  //v velocity of flick
-}
-void onRotate(float x, float y, float angle) {}
+//void onFlick(float x, float y, float px, float py, float v) {
+//  //x/y start of flick
+//  //px/yx end of flick
+//  //v velocity of flick
+//}
+//void onRotate(float x, float y, float angle) {}
 
 //------------------TextureStore---------------------
 class TextureCache {
   //paper textures
   public PImage grid;
   public PImage paper;
-  
+
   //level pieces
-  private File piecePath;
-  private File[] pieces;
-  
-  //widgets
-  private String widgets = dataPath("ui")+'/'; //data path of widget icons
-  
+  private File pieceDir;
+  private File[] piecePaths;
+  private ArrayList<PieceHandler> pieces;
+
   //blocks
   public PImage defaultBlock;
-  
 
   public TextureCache() {
+    //paper textures
     grid = loadImage("grid.png");
     paper = loadImage("paper.png");
-    
-    piecePath = new File(dataPath("pieces")+'/');
-    pieces = piecePath.listFiles();
-    
+
+    //level pieces
+    pieceDir = new File(dataPath("pieces")+'/');
+    piecePaths = pieceDir.listFiles();
+    pieces = new ArrayList<PieceHandler>();
+    for (File f : piecePaths) {
+      //check file ends with number "x" number ".png"
+      String path = f.getAbsolutePath();
+      if (path.toLowerCase().endsWith("([0-9]+)x([0-9]+).png")) { //use regex to define end of file name
+        pieces.add(new PieceHandler(f));
+      }
+    }
+
+    //blocks
     defaultBlock = loadImage("player_main.png");
-    
   }
-  
-  public File[] getLevelPieces(){
+
+  public ArrayList<PieceHandler> getLevelPieces() {
     return pieces;
+  }
+}
+
+class PieceHandler {
+  File datapath;
+  PImage sprite;
+  int pWidth;
+  int pHeight;
+
+  public PieceHandler(File file) {
+    datapath = file;
+
+    String path = file.getAbsolutePath();
+
+    //load in image from datapath
+    sprite = loadImage(path);
+
+    //calculate width and height from file name
+  }
+
+  public int getWidth() {
+    return pWidth;
+  }
+
+  public int getHeight() {
+    return pWidth;
+  }
+
+  public PImage getSprite() {
+    return sprite;
   }
 }
 
@@ -245,28 +281,28 @@ class Converter {
     lastCalc.y = ((screenY-height/2)/((float)width/currentScale)/currentSubScale) + currentCenter.y;
     return lastCalc;
   }
-  
-  public float screenToLevel(float distance){
+
+  public float screenToLevel(float distance) {
     currentScale = gCamera.getScale();
     currentSubScale = gCamera.getSubScale();
     float result = distance/((float)width/currentScale)/currentSubScale;
     return result;
   }
-  
-  public float getScale(){
+
+  public float getScale() {
     //return (((float)width/currentScale)/currentSubScale);
     return currentScale/currentSubScale/100; //how many square is the width of the screen
   }
-  
-  public float getTotalFromScale(float scale){ //calculate total scale from potential scale
+
+  public float getTotalFromScale(float scale) { //calculate total scale from potential scale
     return scale/currentSubScale/100;
   }
-  
-  public float getScaleFromTotal(float totalScale){
+
+  public float getScaleFromTotal(float totalScale) {
     return totalScale*currentSubScale*100;
   }
   //public PVector levelToScreen(float levelX, levelY){
-    
+
   //}
 }
 
