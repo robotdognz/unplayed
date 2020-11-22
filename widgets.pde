@@ -161,6 +161,15 @@ abstract class Widget {
     }
     return false;
   }
+  
+  public void longPress() {
+    //if (hover) {
+      //hover = false;
+      //clicked();
+      //sActive = !sActive;
+      //return true;
+    //}
+  }
 
   public void clicked() {
     if (hasSActive) {

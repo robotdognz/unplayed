@@ -5,7 +5,7 @@ interface Controller {
   public void touchEnded();
   public void touchMoved();
   public void onPinch(float x, float y, float d);
-  void onLongPress(float x, float y);
+  public void onLongPress(float x, float y);
 }
 
 //------------------GameController---------------------
@@ -45,7 +45,7 @@ class PlayerControl implements Controller {
   
   public void onPinch(float x, float y, float d) {}
   
-  void onLongPress(float x, float y) {}
+  public void onLongPress(float x, float y) {}
 }
 
 //------------------CameraController---------------------
@@ -98,7 +98,7 @@ class CameraControl implements Controller {
     }
   }
   
-  void onLongPress(float x, float y) {}
+  public void onLongPress(float x, float y) {}
 }
 
 //------------------EditorController---------------------
@@ -139,5 +139,5 @@ class EditorControl implements Controller {
 
   public void onPinch(float x, float y, float d) {}
   
-  void onLongPress(float x, float y) {}
+  public void onLongPress(float x, float y) {}
 }

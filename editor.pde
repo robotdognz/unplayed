@@ -128,9 +128,12 @@ class Editor {
     }
   }
   
-  void onLongPress(float x, float y) {
+  public void onLongPress(float x, float y) {
     if (eControllerActive) {
       eController.onLongPress(x, y);
+    }
+    for (int i = 0; i < eWidgets.size(); i++) {
+      eWidgets.get(i).longPress();
     }
   }
 
