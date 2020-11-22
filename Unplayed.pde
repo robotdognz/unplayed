@@ -183,6 +183,13 @@ void onTap(float x, float y) {
   }
 }
 
+void onFlick(float x, float y, float px, float py, float v) {
+  //x/y start of flick
+  //px/yx end of flick
+  //v velocity of flick
+}
+void onRotate(float x, float y, float angle) {}
+
 //------------------TextureStore---------------------
 class TextureCache {
   //paper textures
