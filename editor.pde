@@ -58,8 +58,8 @@ class Editor {
   }
 
   public void draw() {
-    //widget menus - draw them and close them is lastTouch is below longest open widget menu
-    float currentWidgetHeight = 0;  
+    //widget menus - draw them and close them if lastTouch is below longest open widget menu
+    float currentWidgetHeight = 0; //used to find the bottom of the longest open widget menu
     boolean wMenuOpen = false; 
     for (int i = 0; i < eWidgets.size(); i++) {
       if (eWidgets.get(i).isActive()) {
@@ -78,7 +78,8 @@ class Editor {
         eWidgets.get(i).hover(lastTouch);
       }
     }
-    currentWidgetHeight += eWidgets.get(0).getSize()*1.5; //add a little on to the bottom
+    currentWidgetHeight += eWidgets.get(0).getSize()*1.5; //add a little padding onto the bottom
+    //if the last touch was below the longest open widget menu, close all widget menus
     if (wMenuOpen && lastTouch.y > currentWidgetHeight || menu != null) {
       for (Widget w : eWidgets) {
         if (w.isMenu()) {
@@ -86,21 +87,26 @@ class Editor {
         }
       }
     }
-    eControllerActive = !wMenuOpen; //is a menu is open, deactivate controls
+    eControllerActive = !wMenuOpen; //if a widget menu is open, deactivate controls
 
-    //draw frame counter
-    if (frameDelay > 30) {
-      this.frame = frameRate;
-      this.frameDelay = 0;
-    } else {
-      this.frameDelay++;
-    }
+    //draw frame counter and other readouts
+    frameCounter();
     fill(80);
     textSize(50);
     textAlign(CENTER, CENTER);
     text(nf(convert.getScale(), 1, 2), width/2, height-150);
     text(g.scanSize + " : " + g.screenObjects.size(), width/2, height-100);
     text("FPS: " + nf(this.frame, 1, 2), width/2, height-50);
+  }
+  
+  private void frameCounter(){
+    //update frame rate average
+    if (frameDelay > 30) {
+      this.frame = frameRate;
+      this.frameDelay = 0;
+    } else {
+      this.frameDelay++;
+    }
   }
 
   public void touchStarted() {
@@ -132,9 +138,9 @@ class Editor {
     if (eControllerActive) {
       eController.onLongPress(x, y);
     }
-    for (int i = 0; i < eWidgets.size(); i++) {
-      eWidgets.get(i).longPress();
-    }
+    //for (int i = 0; i < eWidgets.size(); i++) {
+    //  eWidgets.get(i).longPress();
+    //}
   }
 
   public void placeBlock() {
