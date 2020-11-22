@@ -148,6 +148,7 @@ class Game {
       for (Rectangle p : playerObjects) {
         rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
       }
+      rect(player.getPlayerArea().getX(), player.getPlayerArea().getY(), player.getPlayerArea().getWidth(), player.getPlayerArea().getHeight());
       rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(), screenSpace.getHeight());
     }
 
