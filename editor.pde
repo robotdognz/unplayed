@@ -4,7 +4,7 @@ class Editor {
   public final int TOP_DEADZONE = 200;
   public final int BOTTOM_DEADZONE = height-200;
   public boolean nextTouchInactive = false;
-  
+
   Game eGame; //reference to game, same instance of game used everywhere else
 
   //camera variables
@@ -58,10 +58,10 @@ class Editor {
     if (eControllerActive && !nextTouchInactive) {
       eController.step(); //draw event for controls
     }
-    
+
     frameCounter();
-    
-    if(!(eController instanceof EditorControl)){
+
+    if (!(eController instanceof EditorControl)) {
       g.point = null;
     }
   }
@@ -108,8 +108,8 @@ class Editor {
     text(g.scanSize + " : " + g.screenObjects.size(), width/2, height-100);
     text("FPS: " + nf(this.frame, 1, 2), width/2, height-50);
   }
-  
-  private void frameCounter(){
+
+  private void frameCounter() {
     //update frame rate average
     if (frameDelay > 30) {
       this.frame = frameRate;
@@ -120,7 +120,7 @@ class Editor {
   }
 
   public void touchStarted() {
-    if(nextTouchInactive){
+    if (nextTouchInactive) {
       return;
     }
     if (eControllerActive) {
@@ -129,17 +129,17 @@ class Editor {
   }
 
   public void touchEnded() {
-    if(nextTouchInactive){
+    if (nextTouchInactive) {
       nextTouchInactive = false;
     }
-    //check for clicking on widgets
-    for (int i = 0; i < eWidgets.size(); i++) {
-      eWidgets.get(i).click();
-    }
+    ////check for clicking on widgets
+    //for (int i = 0; i < eWidgets.size(); i++) {
+    //  eWidgets.get(i).click();
+    //}
   }
 
   public void touchMoved() {
-    if(nextTouchInactive){
+    if (nextTouchInactive) {
       return;
     }
     if (eControllerActive && mouseY > TOP_DEADZONE) {
@@ -148,16 +148,16 @@ class Editor {
   }
 
   public void onPinch(float x, float y, float d) {
-    if(nextTouchInactive){
+    if (nextTouchInactive) {
       return;
     }
     if (eControllerActive) {
       eController.onPinch(x, y, d); //controlls for on pinch event
     }
   }
-  
+
   public void onLongPress(float x, float y) {
-    if(nextTouchInactive){
+    if (nextTouchInactive) {
       return;
     }
     if (eControllerActive) {
@@ -167,8 +167,13 @@ class Editor {
     //  eWidgets.get(i).longPress();
     //}
   }
-  
-  public void onTap(float x, float y) {}
+
+  public void onTap(float x, float y) {
+    //check for clicking on widgets
+    for (int i = 0; i < eWidgets.size(); i++) {
+      eWidgets.get(i).click();
+    }
+  }
 
   public void placeBlock() {
     if (g.point != null) {
@@ -178,10 +183,10 @@ class Editor {
 
       boolean spaceFree = true;
       Rectangle foundAtPoint = null;
-      
+
       HashSet<Rectangle> getPlatforms = new HashSet<Rectangle>();
       for (Rectangle p : g.world.retrieve(getPlatforms, new Rectangle(platformX, platformY, 100, 100))) {
-        
+
         if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY) {
           spaceFree = false;
           foundAtPoint = p;
@@ -193,8 +198,8 @@ class Editor {
           Platform newPlatform = new Platform(platformX, platformY, 100, 100);
           g.world.insert(newPlatform);
         }
-      }else{
-        if(eMode == editorMode.ERASE && foundAtPoint != null){
+      } else {
+        if (eMode == editorMode.ERASE && foundAtPoint != null) {
           g.world.remove(foundAtPoint);
         }
       }
@@ -221,7 +226,7 @@ enum editorMode {
 }
 
 enum imagePlane {
-  BACK,
-  LEVEL,
-  FRONT
+  BACK, 
+    LEVEL, 
+    FRONT
 }
