@@ -1,7 +1,9 @@
 //------------------Editor---------------------
 class Editor {
+  //touch constraint variables
   public final int TOP_DEADZONE = 200;
   public final int BOTTOM_DEADZONE = height-200;
+  public boolean nextTouchInactive = false;
   
   Game eGame; //reference to game, same instance of game used everywhere else
 
@@ -74,6 +76,7 @@ class Editor {
         ArrayList<Widget> children = eWidgets.get(i).getChildren();
         if (children.size() > 0) {
           wMenuOpen = true;
+          nextTouchInactive = true; //controls won't work until the touch after widget menus are closed
           float current = children.get(children.size()-1).getPosition().y;
           if (current > currentWidgetHeight) {
             currentWidgetHeight = current;
@@ -117,12 +120,19 @@ class Editor {
   }
 
   public void touchStarted() {
+    if(nextTouchInactive){
+      return;
+    }
     if (eControllerActive) {
       eController.touchStarted(); //controlls for touch started event
     }
   }
 
   public void touchEnded() {
+    if(nextTouchInactive){
+      nextTouchInactive = false;
+      //return;
+    }
     //check for clicking on widgets
     for (int i = 0; i < eWidgets.size(); i++) {
       eWidgets.get(i).click();
@@ -130,18 +140,27 @@ class Editor {
   }
 
   public void touchMoved() {
+    if(nextTouchInactive){
+      return;
+    }
     if (eControllerActive && mouseY > TOP_DEADZONE) {
       eController.touchMoved(); //controlls for touch moved event
     }
   }
 
   public void onPinch(float x, float y, float d) {
+    if(nextTouchInactive){
+      return;
+    }
     if (eControllerActive) {
       eController.onPinch(x, y, d); //controlls for on pinch event
     }
   }
   
   public void onLongPress(float x, float y) {
+    if(nextTouchInactive){
+      return;
+    }
     if (eControllerActive) {
       eController.onLongPress(x, y);
     }
