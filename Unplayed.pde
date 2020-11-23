@@ -250,7 +250,7 @@ class PieceHandler {
 
     Pattern p = Pattern.compile("\\d+");  //".+([0-9]+)x([0-9]+).png$"
     Matcher m = p.matcher(path);
-    if (m.find()) {
+    while(m.find()) {
       println(m.group());
     }
 
