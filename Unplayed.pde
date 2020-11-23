@@ -72,26 +72,30 @@ void init() {
 
 //this is the only draw method that should have step logic in it
 void draw() {
+
   //splash screen
-  //if (splash == 0) {  //draw black screen
-  //  
-  //  splash = 1;
-  //  return;
-  //} else 
-  if (splash == 0) { //draw loading image
+  if (splash == 0) {  //draw black screen
+    background(40, 40, 40);
+    splash = 1;
+    return;
+  } else if (splash == 1) { //draw loading image
     background(40, 40, 40);
     splashScreen = loadImage("SplashScreen.png");
     imageMode(CENTER);
     image(splashScreen, width/2, height/2, 720, 1280);
-    imageMode(CORNER);
-    splash = 1;
-    return;
-  } else if (splash == 1) { //load textures
-    init();
+    //imageMode(CORNER);
     splash = 2;
+    return;
+  } else if (splash == 2) { //load textures
+    background(40, 40, 40);
+    image(splashScreen, width/2, height/2, 720, 1280);
+    imageMode(CORNER);
+    init();
+    splash = 3;
     return;
   }
 
+  //game
   if (!gPaused) { //step the game if it is not paused
     //step editor or game controller depending on editor toggle
     if (editorToggle) {
@@ -229,6 +233,10 @@ class TextureCache {
   public PImage defaultBlock;
 
   public TextureCache() {
+    //sprite = requestImage("image.png") // this loads the image on a sperate thread
+    //you can check if it has loaded by querrying its dimentions, they will be 0 if loading, -1 if failed to load
+    //and > 0 if it has loaded 
+
     //paper textures
     grid = loadImage("grid.png");
     paper = loadImage("paper.png");
