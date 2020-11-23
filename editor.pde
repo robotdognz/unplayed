@@ -214,6 +214,7 @@ class Editor {
 
 //------------------Toolbar---------------------
 abstract class Toolbar {
+  public ArrayList<Widget> eWidgets;
   public float eWidgetSpacing; //size of gap between widgets
   
   public Editor editor;
@@ -240,9 +241,6 @@ abstract class Toolbar {
 }
 
 class EditorTop extends Toolbar {
-  //widgets
-  public ArrayList<Widget> eWidgets;
-  public float eWidgetSpacing; //size of gap between widgets
   
   public EditorTop(Editor editor){
     super(editor);
