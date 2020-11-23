@@ -11,7 +11,7 @@ public Vibe vibe;
 public Converter convert;
 public TextureCache texture;
 
-private boolean splash; //true if the game hasn't started looping and a splash screen should be drawn
+private int splash; //true if the game hasn't started looping and a splash screen should be drawn
 private PImage splashScreen;
 Game g; //holds the game class
 Camera gCamera; //holds the game camera
@@ -38,14 +38,9 @@ void setup() {
   //setup graphics
   fullScreen(P2D);
   frameRate(60);
-  splash = true;
-  splashScreen = loadImage("cameraChange.png");
-  //init();
+  splash = 0;
 
-  background(40, 40, 40);
-  imageMode(CENTER);
-  image(splashScreen, width/2, height/2, 720, 1280);
-  imageMode(CORNER);
+  //init();
 }
 
 void init() {
@@ -79,10 +74,20 @@ void init() {
 //this is the only draw method that should have step logic in it
 void draw() {
   //splassh screen
-  if (splash) {
-
+  if (splash == 0) {  //draw black screen
+    background(40, 40, 40);
+    splash = 1;
+    return;
+  } else if (splash == 1) { //draw loading image
+    splashScreen = loadImage("SplashScreen.png");
+    imageMode(CENTER);
+    image(splashScreen, width/2, height/2, 720, 1280);
+    imageMode(CORNER);
+    splash = 2;
+    return;
+  } else if (splash == 2) { //load textures
     init();
-    splash = false;
+    splash = 3;
     return;
   }
 
