@@ -37,10 +37,9 @@ float frame;
 void setup() {
   //setup graphics
   fullScreen(P2D);
+  background(40, 40, 40);
   frameRate(60);
   splash = 0;
-
-  //init();
 }
 
 void init() {
@@ -73,7 +72,7 @@ void init() {
 
 //this is the only draw method that should have step logic in it
 void draw() {
-  //splassh screen
+  //splash screen
   if (splash == 0) {  //draw black screen
     background(40, 40, 40);
     splash = 1;
