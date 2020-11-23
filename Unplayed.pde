@@ -249,8 +249,8 @@ class PieceHandler {
 
   public PieceHandler(File file, int pWidth, int pHeight) {
     datapath = file;
-    this.pWidth = pWidth;
-    this.pHeight = pHeight;
+    this.pWidth = pWidth*100;  //these are turned from grid amound to draw units for the level
+    this.pHeight = pHeight*100;
     String path = file.getAbsolutePath();
     sprite = loadImage(path);
     //println(path + " " + this.pWidth + " " + this.pHeight);
