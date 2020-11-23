@@ -24,6 +24,9 @@ class Editor {
   //widgets
   ArrayList<Widget> eWidgets;
   float eWidgetSpacing; //size of gap between widgets
+  
+  //toolbars
+  ArrayList<Toolbar> toolbars;
 
   //frame count
   int frameDelay = 100;
@@ -33,6 +36,9 @@ class Editor {
     this.eGame = game;
     this.eController = new PlayerControl();
     this.eWidgets = new ArrayList<Widget>();
+    
+    this.toolbars = new ArrayList<Toolbar>();
+    toolbars.add(new EditorBottom());
 
     //setup widgets
     Widget menuW = new MenuWidget(this);
@@ -99,6 +105,10 @@ class Editor {
       }
     }
     eControllerActive = !wMenuOpen; //if a widget menu is open, deactivate controls
+    
+    for(Toolbar t : toolbars){
+      t.draw();
+    }
 
     //draw frame counter and other readouts
     fill(80);
@@ -197,6 +207,32 @@ class Editor {
 
   public Controller getController() {
     return eController;
+  }
+}
+
+//------------------Toolbar---------------------
+abstract class Toolbar {
+  public Toolbar(){}
+  
+  public void step(){}
+  
+  public void draw(){}
+}
+
+class EditorTop extends Toolbar {
+  
+}
+
+class EditorBottom extends Toolbar {
+  int tHeight;
+  
+  public EditorBottom(){
+    tHeight = 200;
+  }
+  
+  public void draw(){
+    fill(100);
+    rect(0, height-tHeight, width, tHeight);
   }
 }
 
