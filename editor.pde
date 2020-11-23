@@ -95,7 +95,7 @@ class Editor {
 
   public void touchMoved() {
     for (Toolbar t : toolbars) {
-      t.touchMoved();
+      t.touchMoved(); 
     }
     if (nextTouchInactive) { //don't do controller if next touch inactive
       return;

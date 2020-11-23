@@ -11,6 +11,8 @@ public Vibe vibe;
 public Converter convert;
 public TextureCache texture;
 
+private boolean splash; //true if the game hasn't started looping and a splash screen should be drawn
+private PImage splashScreen;
 Game g; //holds the game class
 Camera gCamera; //holds the game camera
 Controller gController; //holds the current controller
@@ -36,7 +38,9 @@ void setup() {
   //setup graphics
   fullScreen(P2D);
   frameRate(60);
-  init();
+  splash = true;
+  splashScreen = loadImage("cameraChange.png");
+  //init();
 }
 
 void init() {
@@ -69,6 +73,16 @@ void init() {
 
 //this is the only draw method that should have step logic in it
 void draw() {
+  //splassh screen
+  if(splash){
+    background(40, 40, 40);
+    imageMode(CENTER);
+    image(splashScreen, width/2, height/2, 720, 1280);
+    imageMode(CORNER);
+    init();
+    splash = false;
+  }
+  
   if (!gPaused) { //step the game if it is not paused
     //step editor or game controller depending on editor toggle
     if (editorToggle) {
