@@ -21,10 +21,6 @@ class Editor {
   editorMode eMode = editorMode.ADD;
   imagePlane eImagePlane = imagePlane.LEVEL;
 
-  ////widgets
-  //ArrayList<Widget> eWidgets;
-  //float eWidgetSpacing; //size of gap between widgets
-
   //toolbars
   ArrayList<Toolbar> toolbars;
 
@@ -35,30 +31,9 @@ class Editor {
   public Editor(Game game) {
     this.eGame = game;
     this.eController = new PlayerControl();
-    //this.eWidgets = new ArrayList<Widget>();
-
     this.toolbars = new ArrayList<Toolbar>();
     toolbars.add(new EditorTop(this));
     toolbars.add(new EditorBottom(this));
-
-    ////setup widgets
-    //Widget menuW = new MenuWidget(this);
-    //Widget settingsW = new SettingsWidget(this);
-    //Widget playerW = new PlayerControlWidget(this);
-    //Widget cameraW = new CameraControlWidget(this);
-    //Widget editModeW = new EditorModeWidget(this); 
-    //Widget editTypeW = new EditorTypeWidget(this); 
-    //Widget extraW = new ExtraWidget(this); 
-    //eWidgets.add(menuW);
-    //eWidgets.add(settingsW);
-    //eWidgets.add(playerW);
-    //eWidgets.add(cameraW);
-    //eWidgets.add(editModeW);
-    //eWidgets.add(editTypeW);
-    //eWidgets.add(extraW);
-
-    //this.eWidgetSpacing = width/(this.eWidgets.size()+1);
-    //this.eWidgetSpacing = width/(7+1);
   }
 
   public void step() {
@@ -79,38 +54,7 @@ class Editor {
 
   //a bunch of this probably needs to be moved to step, for logical consistency only drawing should be in draw
   public void draw() {
-    ////widget menus - draw them and close them if lastTouch is below longest open widget menu
-    //float currentWidgetHeight = 0; //used to find the bottom of the longest open widget menu
-    //boolean wMenuOpen = false; 
-    //for (int i = 0; i < eWidgets.size(); i++) {
-    //  if (eWidgets.get(i).isActive()) {
-    //    ArrayList<Widget> children = eWidgets.get(i).getChildren();
-    //    if (children.size() > 0) {
-    //      wMenuOpen = true;
-    //      nextTouchInactive = true; //controls won't work until the touch after widget menus are closed
-    //      float current = children.get(children.size()-1).getPosition().y;
-    //      if (current > currentWidgetHeight) {
-    //        currentWidgetHeight = current;
-    //      }
-    //    }
-    //  }
-    //  eWidgets.get(i).draw(eWidgetSpacing*(i+1), 120);
-    //  eWidgets.get(i).updateActive();
-    //  if (menu == null) {
-    //    eWidgets.get(i).hover(lastTouch);
-    //  }
-    //}
-    //currentWidgetHeight += eWidgets.get(0).getSize()*1.5; //add a little padding onto the bottom
-    ////if the last touch was below the longest open widget menu, close all widget menus
-    //if (wMenuOpen && lastTouch.y > currentWidgetHeight || menu != null) {
-    //  for (Widget w : eWidgets) {
-    //    if (w.isMenu()) {
-    //      w.deactivate();
-    //    }
-    //  }
-    //}
-    //eControllerActive = !wMenuOpen; //if a widget menu is open, deactivate controls
-
+    //draw toolbars
     for (Toolbar t : toolbars) {
       t.draw();
     }
@@ -150,7 +94,10 @@ class Editor {
   }
 
   public void touchMoved() {
-    if (nextTouchInactive) {
+    for (Toolbar t : toolbars) {
+      t.touchMoved();
+    }
+    if (nextTouchInactive) { //don't do controller if next touch inactive
       return;
     }
     if (eControllerActive && mouseY > TOP_DEADZONE) {
@@ -168,11 +115,6 @@ class Editor {
   }
 
   public void onTap(float x, float y) {
-    ////check for clicking on widgets
-    //for (int i = 0; i < eWidgets.size(); i++) {
-    //  eWidgets.get(i).click();
-    //}
-    
     for (Toolbar t : toolbars) {
       t.onTap(x, y);
     }
@@ -219,9 +161,9 @@ class Editor {
 abstract class Toolbar {
   public ArrayList<Widget> eWidgets;
   public float eWidgetSpacing; //size of gap between widgets
-  
+
   public Editor editor;
-  
+
   public Toolbar(Editor editor) {
     this.editor = editor;
   }
@@ -244,12 +186,12 @@ abstract class Toolbar {
 }
 
 class EditorTop extends Toolbar {
-  
-  public EditorTop(Editor editor){
+
+  public EditorTop(Editor editor) {
     super(editor);
-    this.eWidgets = new ArrayList<Widget>();
+
     //setup widgets
-    
+    this.eWidgets = new ArrayList<Widget>();
     Widget menuW = new MenuWidget(editor, this);
     Widget settingsW = new SettingsWidget(editor, this);
     Widget playerW = new PlayerControlWidget(editor, this);
@@ -267,8 +209,8 @@ class EditorTop extends Toolbar {
 
     this.eWidgetSpacing = width/(this.eWidgets.size()+1);
   }
-  
-  public void draw(){
+
+  public void draw() {
     //widget menus - draw them and close them if lastTouch is below longest open widget menu
     float currentWidgetHeight = 0; //used to find the bottom of the longest open widget menu
     boolean wMenuOpen = false; 
@@ -301,7 +243,7 @@ class EditorTop extends Toolbar {
     }
     editor.eControllerActive = !wMenuOpen; //if a widget menu is open, deactivate controls
   }
-  
+
   public void onTap(float x, float y) {
     //check for clicking on widgets
     for (int i = 0; i < eWidgets.size(); i++) {
@@ -313,7 +255,7 @@ class EditorTop extends Toolbar {
 class EditorBottom extends Toolbar {
   int tHeight;
 
-  public EditorBottom(Editor editor){
+  public EditorBottom(Editor editor) {
     super(editor);
     tHeight = 200;
   }
