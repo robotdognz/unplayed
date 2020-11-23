@@ -215,13 +215,10 @@ class TextureCache {
     pieceDir = new File(dataPath("pieces")+'/');
     piecePaths = pieceDir.listFiles();
     pieces = new ArrayList<PieceHandler>();
-
-    ArrayList<Integer> temp = new ArrayList<Integer>();
+    ArrayList<Integer> temp = new ArrayList<Integer>(); //holds the numbers found in the file name
     for (File f : piecePaths) {
-      //check file ends with number "x" number ".png"
       String path = f.getAbsolutePath();
-      //println(path);
-      if (path.matches(".+([0-9]+)x([0-9]+).png$")) { //use regex to define end of file name
+      if (path.matches(".+([0-9]+)x([0-9]+).png$")) { //check file ends with number "x" number ".png"
         Pattern p = Pattern.compile("\\d+");
         Matcher m = p.matcher(path);
         while (m.find()) {
@@ -231,10 +228,10 @@ class TextureCache {
         if(temp.size() >= 2){
           pieces.add(new PieceHandler(f, temp.get(temp.size()-2), temp.get(temp.size()-1)));
         }
-
-        
       }
+      temp.clear();
     }
+    pieces.toString(); //print out all the pieces that were loaded in
 
     //blocks
     defaultBlock = loadImage("player_main.png");
@@ -257,18 +254,7 @@ class PieceHandler {
     this.pHeight = pHeight;
     String path = file.getAbsolutePath();
     sprite = loadImage(path);
-    
-    
-    println(path + " " + this.pWidth + " " + this.pHeight);
-
-    //Pattern p = Pattern.compile("\\d+");
-    //Matcher m = p.matcher(path);
-    //while (m.find()) {
-    //  int i = Integer.parseInt(m.group());  
-    //  println(m.group());
-    //}
-
-    //calculate width and height from file name
+    //println(path + " " + this.pWidth + " " + this.pHeight);
   }
 
   public int getWidth() {
@@ -281,6 +267,10 @@ class PieceHandler {
 
   public PImage getSprite() {
     return sprite;
+  }
+  
+  public String toString(){
+    return datapath.toString() + "[" + pWidth + ", " + pHeight + "]";
   }
 }
 
