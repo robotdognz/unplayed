@@ -73,18 +73,20 @@ void init() {
 //this is the only draw method that should have step logic in it
 void draw() {
   //splash screen
-  if (splash == 0) {  //draw black screen
+  //if (splash == 0) {  //draw black screen
+  //  
+  //  splash = 1;
+  //  return;
+  //} else 
+  if (splash == 0) { //draw loading image
     background(40, 40, 40);
-    splash = 1;
-    return;
-  } else if (splash == 1) { //draw loading image
     splashScreen = loadImage("SplashScreen.png");
     imageMode(CENTER);
     image(splashScreen, width/2, height/2, 720, 1280);
     imageMode(CORNER);
     splash = 2;
     return;
-  } else if (splash == 2) { //load textures
+  } else if (splash == 1) { //load textures
     init();
     splash = 3;
     return;
