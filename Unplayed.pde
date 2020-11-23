@@ -79,17 +79,13 @@ void draw() {
     splash = 1;
     return;
   } else if (splash == 1) { //draw loading image
-    background(40, 40, 40);
     splashScreen = loadImage("SplashScreen.png");
     imageMode(CENTER);
     image(splashScreen, width/2, height/2, 720, 1280);
-    //imageMode(CORNER);
+    imageMode(CORNER);
     splash = 2;
     return;
   } else if (splash == 2) { //load textures
-    background(40, 40, 40);
-    image(splashScreen, width/2, height/2, 720, 1280);
-    imageMode(CORNER);
     init();
     splash = 3;
     return;
