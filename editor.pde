@@ -183,6 +183,10 @@ abstract class Toolbar {
   }
   public void onTap(float x, float y) {
   }
+  
+  public float getHeight(){
+    return 0;
+  }
 }
 
 class EditorTop extends Toolbar {
@@ -264,6 +268,10 @@ class EditorBottom extends Toolbar {
   public void draw() {
     fill(100);
     rect(pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
+  }
+  
+  public float getHeight(){
+    return pieceArea.getHeight();
   }
 }
 
