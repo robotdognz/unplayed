@@ -38,6 +38,7 @@ class Editor {
     //this.eWidgets = new ArrayList<Widget>();
 
     this.toolbars = new ArrayList<Toolbar>();
+    toolbars.add(new EditorTop(this));
     toolbars.add(new EditorBottom(this));
 
     ////setup widgets
