@@ -41,6 +41,11 @@ void setup() {
   splash = true;
   splashScreen = loadImage("cameraChange.png");
   //init();
+
+  background(40, 40, 40);
+  imageMode(CENTER);
+  image(splashScreen, width/2, height/2, 720, 1280);
+  imageMode(CORNER);
 }
 
 void init() {
@@ -74,15 +79,12 @@ void init() {
 //this is the only draw method that should have step logic in it
 void draw() {
   //splassh screen
-  if(splash){
-    background(40, 40, 40);
-    imageMode(CENTER);
-    image(splashScreen, width/2, height/2, 720, 1280);
-    imageMode(CORNER);
+  if (splash) {
+
     init();
     splash = false;
   }
-  
+
   if (!gPaused) { //step the game if it is not paused
     //step editor or game controller depending on editor toggle
     if (editorToggle) {
@@ -238,7 +240,7 @@ class TextureCache {
           int i = Integer.parseInt(m.group());  
           temp.add(i);
         }
-        if(temp.size() >= 2){
+        if (temp.size() >= 2) {
           pieces.add(new PieceHandler(f, temp.get(temp.size()-2), temp.get(temp.size()-1)));
         }
       }
@@ -281,8 +283,8 @@ class PieceHandler {
   public PImage getSprite() {
     return sprite;
   }
-  
-  public String toString(){
+
+  public String toString() {
     return "[" + pWidth + ", " + pHeight + "]";
   }
 }
