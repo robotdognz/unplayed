@@ -53,7 +53,9 @@ abstract class Widget {
   }
 
   public void draw(float wX, float wY) {
-    subWidgetSpacing = parent.eWidgetSpacing;
+    if(parent != null){
+      subWidgetSpacing = parent.eWidgetSpacing;
+    }
     //update position
     if (position == null) {
       position = new PVector(wX, wY);
