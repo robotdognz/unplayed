@@ -62,7 +62,7 @@ void init() {
   edit = new Editor(g);
 
   ////setup non editor widget(s)
-  Widget menuW = new MenuWidget(edit);
+  Widget menuW = new MenuWidget(edit, null);
   gWidgets.add(menuW);
   gWidgetSpacing = width/(gWidgets.size()+1);
 }
