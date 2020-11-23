@@ -269,7 +269,7 @@ class PieceHandler {
   }
   
   public String toString(){
-    return datapath.toString() + "[" + pWidth + ", " + pHeight + "]";
+    return "[" + pWidth + ", " + pHeight + "]";
   }
 }
 
