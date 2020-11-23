@@ -212,6 +212,8 @@ class Editor {
 
 //------------------Toolbar---------------------
 abstract class Toolbar {
+  public float eWidgetSpacing; //size of gap between widgets
+  
   public Editor editor;
   
   public Toolbar(Editor editor) {
@@ -237,21 +239,21 @@ abstract class Toolbar {
 
 class EditorTop extends Toolbar {
   //widgets
-  ArrayList<Widget> eWidgets;
-  float eWidgetSpacing; //size of gap between widgets
+  public ArrayList<Widget> eWidgets;
+  public float eWidgetSpacing; //size of gap between widgets
   
   public EditorTop(Editor editor){
     super(editor);
     this.eWidgets = new ArrayList<Widget>();
     //setup widgets
     
-    Widget menuW = new MenuWidget(editor);
-    Widget settingsW = new SettingsWidget(editor);
-    Widget playerW = new PlayerControlWidget(editor);
-    Widget cameraW = new CameraControlWidget(editor);
-    Widget editModeW = new EditorModeWidget(editor); 
-    Widget editTypeW = new EditorTypeWidget(editor); 
-    Widget extraW = new ExtraWidget(editor); 
+    Widget menuW = new MenuWidget(editor, this);
+    Widget settingsW = new SettingsWidget(editor, this);
+    Widget playerW = new PlayerControlWidget(editor, this);
+    Widget cameraW = new CameraControlWidget(editor, this);
+    Widget editModeW = new EditorModeWidget(editor, this); 
+    Widget editTypeW = new EditorTypeWidget(editor, this); 
+    Widget extraW = new ExtraWidget(editor, this); 
     eWidgets.add(menuW);
     eWidgets.add(settingsW);
     eWidgets.add(playerW);

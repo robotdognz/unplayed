@@ -1,6 +1,7 @@
 //------------------AbstractWidget---------------------
 abstract class Widget {
   Editor editor;
+  Toolbar parent;
   protected PVector position; //position of the widget
   protected float wSize = 75; //60 //size of the widget
   protected float touchScale = 1.2; //1.5
@@ -23,11 +24,12 @@ abstract class Widget {
   protected boolean iconIsCurrentSubWidget = false; //does this widget icon change depending on its sub wigets?
   protected boolean closeAfterSubWidget = false; //does this sub widget close the sub widget menu after being clicked
 
-  public Widget(Editor editor) {
+  public Widget(Editor editor, Toolbar parent) {
     imageActive = loadImage(folder+"active.png");
     imageInactive = loadImage(folder+"inactive.png");
     imageUnavailable = loadImage(folder+"unavailable.png");
     this.editor = editor;
+    this.parent = parent;
     defaultIcon();
   }
 
@@ -51,7 +53,7 @@ abstract class Widget {
   }
 
   public void draw(float wX, float wY) {
-    subWidgetSpacing = editor.eWidgetSpacing;
+    subWidgetSpacing = parent.eWidgetSpacing;
     //update position
     if (position == null) {
       position = new PVector(wX, wY);
@@ -225,8 +227,8 @@ abstract class Widget {
 class MenuWidget extends Widget {
   boolean previousStatus = false;
 
-  public MenuWidget(Editor editor) {
-    super(editor);
+  public MenuWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"menu.png");
   }
 
@@ -248,15 +250,15 @@ class MenuWidget extends Widget {
 
 //------------------Settings---------------------
 class SettingsWidget extends Widget {
-  public SettingsWidget(Editor editor) {
-    super(editor);
+  public SettingsWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"settings.png");
-    Widget w1 = new RestartWidget(editor);
-    Widget w2 = new PlayModeWidget(editor);
-    Widget w3 = new SnapWidget(editor);
-    Widget w4 = new PickImageWidget(editor);
-    Widget w5 = new PickEventWidget(editor);
-    Widget w6 = new PickBlockWidget(editor);
+    Widget w1 = new RestartWidget(editor, parent);
+    Widget w2 = new PlayModeWidget(editor, parent);
+    Widget w3 = new SnapWidget(editor, parent);
+    Widget w4 = new PickImageWidget(editor, parent);
+    Widget w5 = new PickEventWidget(editor, parent);
+    Widget w6 = new PickBlockWidget(editor, parent);
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
@@ -266,8 +268,8 @@ class SettingsWidget extends Widget {
   }
 }
 class RestartWidget extends Widget {
-  public RestartWidget(Editor editor) {
-    super(editor);
+  public RestartWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"ResetGame.png");
     closeAfterSubWidget = true;
   }
@@ -282,8 +284,8 @@ class RestartWidget extends Widget {
 class PlayModeWidget extends Widget {
   boolean previousStatus = false;
 
-  public PlayModeWidget(Editor editor) {
-    super(editor);
+  public PlayModeWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"Pause.png");
     closeAfterSubWidget = true;
   }
@@ -306,8 +308,8 @@ class PlayModeWidget extends Widget {
   }
 }
 class SnapWidget extends Widget {
-  public SnapWidget(Editor editor) {
-    super(editor);
+  public SnapWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"snaptoGrid.png");
   }
 
@@ -324,24 +326,24 @@ class SnapWidget extends Widget {
   }
 }
 class PickImageWidget extends Widget {
-  public PickImageWidget(Editor editor) {
-    super(editor);
+  public PickImageWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     available = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"pickImage.png");
   }
 }
 class PickEventWidget extends Widget {
-  public PickEventWidget(Editor editor) {
-    super(editor);
+  public PickEventWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     available = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"pickEvent.png");
   }
 }
 class PickBlockWidget extends Widget {
-  public PickBlockWidget(Editor editor) {
-    super(editor);
+  public PickBlockWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     available = false;
     closeAfterSubWidget = true;
     icon = loadImage(folder+"pickBlock.png");
@@ -350,8 +352,8 @@ class PickBlockWidget extends Widget {
 
 //------------------EditorControls---------------------
 class PlayerControlWidget extends Widget {
-  public PlayerControlWidget(Editor editor) {
-    super(editor);
+  public PlayerControlWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"playerControls.png");
   }
 
@@ -371,8 +373,8 @@ class PlayerControlWidget extends Widget {
 }
 class CameraControlWidget extends Widget {
   PImage uiExtra = loadImage(folder+"UI_element01.png");
-  public CameraControlWidget(Editor editor) {
-    super(editor);
+  public CameraControlWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"CameraControls.png");
   }
 
@@ -399,13 +401,13 @@ class CameraControlWidget extends Widget {
 
 //------------------EditorMode---------------------
 class EditorModeWidget extends Widget {
-  public EditorModeWidget(Editor editor) {
-    super(editor);
+  public EditorModeWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"PlaceBlock.png");
     iconIsCurrentSubWidget = true;
-    Widget w1 = new AddWidget(editor);
-    Widget w2 = new EraseWidget(editor);
-    Widget w3 = new SelectWidget(editor);
+    Widget w1 = new AddWidget(editor, parent);
+    Widget w2 = new EraseWidget(editor, parent);
+    Widget w3 = new SelectWidget(editor, parent);
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
@@ -431,8 +433,8 @@ class EditorModeWidget extends Widget {
   }
 }
 class AddWidget extends Widget {
-  public AddWidget(Editor editor) {
-    super(editor);
+  public AddWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     closeAfterSubWidget = true;
     icon = loadImage(folder+"PlaceBlock.png");
   }
@@ -451,8 +453,8 @@ class AddWidget extends Widget {
   }
 }
 class EraseWidget extends Widget {
-  public EraseWidget(Editor editor) {
-    super(editor);
+  public EraseWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     closeAfterSubWidget = true;
     icon = loadImage(folder+"eraser.png");
   }
@@ -471,8 +473,8 @@ class EraseWidget extends Widget {
   }
 }
 class SelectWidget extends Widget {
-  public SelectWidget(Editor editor) {
-    super(editor);
+  public SelectWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     closeAfterSubWidget = true; 
     icon = loadImage(folder+"select.png");
   }
@@ -493,21 +495,21 @@ class SelectWidget extends Widget {
 
 //------------------EditorType---------------------
 class EditorTypeWidget extends Widget {
-  public EditorTypeWidget(Editor editor) {
-    super(editor);
+  public EditorTypeWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"colider.png");
     iconIsCurrentSubWidget = true;
-    Widget w1 = new BlockModeWidget(editor);
-    Widget w2 = new ImageModeWidget(editor);
-    Widget w3 = new EventModeWidget(editor);
+    Widget w1 = new BlockModeWidget(editor, parent);
+    Widget w2 = new ImageModeWidget(editor, parent);
+    Widget w3 = new EventModeWidget(editor, parent);
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
   }
 }
 class BlockModeWidget extends Widget {
-  public BlockModeWidget(Editor editor) {
-    super(editor);
+  public BlockModeWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     closeAfterSubWidget = true;
     icon = loadImage(folder+"colider.png");
   }
@@ -526,8 +528,8 @@ class BlockModeWidget extends Widget {
   }
 }
 class ImageModeWidget extends Widget {
-  public ImageModeWidget(Editor editor) {
-    super(editor);
+  public ImageModeWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     closeAfterSubWidget = true;
     icon = loadImage(folder+"image.png");
   }
@@ -546,8 +548,8 @@ class ImageModeWidget extends Widget {
   }
 }
 class EventModeWidget extends Widget {
-  public EventModeWidget(Editor editor) {
-    super(editor);
+  public EventModeWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     closeAfterSubWidget = true;
     icon = loadImage(folder+"event.png");
   }
@@ -568,15 +570,15 @@ class EventModeWidget extends Widget {
 
 //------------------ExtraTools---------------------
 class ExtraWidget extends Widget {
-  public ExtraWidget(Editor editor) {
-    super(editor);
+  public ExtraWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"extraActions.png");
-    Widget w1 = new ConfirmWidget(editor);
-    Widget w2 = new EditSelectedWidget(editor);
-    Widget w3 = new LayerForwardWidget(editor);
-    Widget w4 = new LayerBackwardWidget(editor);
-    Widget w5 = new SaveMenuWidget(editor);
-    Widget w6 = new PlaneMenuWidget(editor);
+    Widget w1 = new ConfirmWidget(editor, parent);
+    Widget w2 = new EditSelectedWidget(editor, parent);
+    Widget w3 = new LayerForwardWidget(editor, parent);
+    Widget w4 = new LayerBackwardWidget(editor, parent);
+    Widget w5 = new SaveMenuWidget(editor, parent);
+    Widget w6 = new PlaneMenuWidget(editor, parent);
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
@@ -586,8 +588,8 @@ class ExtraWidget extends Widget {
   }
 }
 class ConfirmWidget extends Widget {
-  public ConfirmWidget(Editor editor) {
-    super(editor);
+  public ConfirmWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"confirmTick.png");
     closeAfterSubWidget = true;
   }
@@ -606,79 +608,79 @@ class ConfirmWidget extends Widget {
   }
 }
 class EditSelectedWidget extends Widget {
-  public EditSelectedWidget(Editor editor) {
-    super(editor);
+  public EditSelectedWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     available = false;
     icon = loadImage(folder+"EditSelected.png");
     closeAfterSubWidget = true;
   }
 }
 class LayerForwardWidget extends Widget {
-  public LayerForwardWidget(Editor editor) {
-    super(editor);
+  public LayerForwardWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     available = false;
     icon = loadImage(folder+"MoveLayerForward.png");
   }
 }
 class LayerBackwardWidget extends Widget {
-  public LayerBackwardWidget(Editor editor) {
-    super(editor);
+  public LayerBackwardWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     available = false;
     icon = loadImage(folder+"MoveLayerBackward.png");
   }
 }
 class SaveMenuWidget extends Widget {
-  public SaveMenuWidget(Editor editor) {
-    super(editor);
+  public SaveMenuWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"save.png");
     wd = widgetDirection.LEFT;
-    Widget w1 = new SaveWidget(editor);
-    Widget w2 = new SaveAsWidget(editor);
-    Widget w3 = new LoadWidget(editor);
+    Widget w1 = new SaveWidget(editor, parent);
+    Widget w2 = new SaveAsWidget(editor, parent);
+    Widget w3 = new LoadWidget(editor, parent);
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
   }
 }
 class SaveWidget extends Widget {
-  public SaveWidget(Editor editor) {
-    super(editor);
+  public SaveWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     available = false;
     icon = loadImage(folder+"save.png");
   }
 }
 class SaveAsWidget extends Widget {
-  public SaveAsWidget(Editor editor) {
-    super(editor);
+  public SaveAsWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     available = false;
     icon = loadImage(folder+"saveAs.png");
   }
 }
 class LoadWidget extends Widget {
-  public LoadWidget(Editor editor) {
-    super(editor);
+  public LoadWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     available = false;
     icon = loadImage(folder+"load.png");
   }
 }
 
 class PlaneMenuWidget extends Widget {
-  public PlaneMenuWidget(Editor editor) {
-    super(editor);
+  public PlaneMenuWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"save.png");
     iconIsCurrentSubWidget = true;
     wd = widgetDirection.LEFT;
-    Widget w1 = new BackgroundWidget(editor);
-    Widget w2 = new LevelWidget(editor);
-    Widget w3 = new ForegroundWidget(editor);
+    Widget w1 = new BackgroundWidget(editor, parent);
+    Widget w2 = new LevelWidget(editor, parent);
+    Widget w3 = new ForegroundWidget(editor, parent);
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
   }
 }
 class ForegroundWidget extends Widget {
-  public ForegroundWidget(Editor editor) {
-    super(editor);
+  public ForegroundWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"WorkFront.png");
   }
   public void clicked() {
@@ -694,8 +696,8 @@ class ForegroundWidget extends Widget {
   }
 }
 class LevelWidget extends Widget {
-  public LevelWidget(Editor editor) {
-    super(editor);
+  public LevelWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"WorkMid.png");
   }
   public void clicked() {
@@ -711,8 +713,8 @@ class LevelWidget extends Widget {
   }
 }
 class BackgroundWidget extends Widget {
-  public BackgroundWidget(Editor editor) {
-    super(editor);
+  public BackgroundWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
     icon = loadImage(folder+"WorkBack.png");
   }
   public void clicked() {
@@ -738,7 +740,7 @@ enum widgetDirection {
 
 //------------------BlankWidget---------------------
 class BlankWidget extends Widget {
-  BlankWidget(Editor editor) {
-    super(editor);
+  BlankWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
   }
 }
