@@ -51,7 +51,6 @@ void init() {
 
   //setup special classes
   texture = new TextureCache();
-  println(texture.getLevelPieces().size());
   gesture = new KetaiGesture(this);
   vibe = new Vibe();
   convert = new Converter();
@@ -231,7 +230,7 @@ class TextureCache {
       }
       temp.clear();
     }
-    pieces.toString(); //print out all the pieces that were loaded in
+    println(pieces.toString()); //print out all the pieces that were loaded in
 
     //blocks
     defaultBlock = loadImage("player_main.png");
