@@ -215,12 +215,24 @@ class TextureCache {
     pieceDir = new File(dataPath("pieces")+'/');
     piecePaths = pieceDir.listFiles();
     pieces = new ArrayList<PieceHandler>();
+
+    ArrayList<Integer> temp = new ArrayList<Integer>();
     for (File f : piecePaths) {
       //check file ends with number "x" number ".png"
       String path = f.getAbsolutePath();
       //println(path);
       if (path.matches(".+([0-9]+)x([0-9]+).png$")) { //use regex to define end of file name
-        pieces.add(new PieceHandler(f));
+        Pattern p = Pattern.compile("\\d+");
+        Matcher m = p.matcher(path);
+        while (m.find()) {
+          int i = Integer.parseInt(m.group());  
+          temp.add(i);
+        }
+        if(temp.size() >= 2){
+          pieces.add(new PieceHandler(f, temp.get(temp.size()-2), temp.get(temp.size()-1)));
+        }
+
+        
       }
     }
 
@@ -239,20 +251,22 @@ class PieceHandler {
   int pWidth;
   int pHeight;
 
-  public PieceHandler(File file) {
+  public PieceHandler(File file, int pWidth, int pHeight) {
     datapath = file;
-
+    this.pWidth = pWidth;
+    this.pHeight = pHeight;
     String path = file.getAbsolutePath();
-
-    //load in image from datapath
     sprite = loadImage(path);
-    println(path);
+    
+    
+    println(path + " " + this.pWidth + " " + this.pHeight);
 
-    Pattern p = Pattern.compile("\\d+");  //".+([0-9]+)x([0-9]+).png$"
-    Matcher m = p.matcher(path);
-    while(m.find()) {
-      println(m.group());
-    }
+    //Pattern p = Pattern.compile("\\d+");
+    //Matcher m = p.matcher(path);
+    //while (m.find()) {
+    //  int i = Integer.parseInt(m.group());  
+    //  println(m.group());
+    //}
 
     //calculate width and height from file name
   }
