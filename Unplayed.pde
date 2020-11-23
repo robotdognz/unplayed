@@ -79,7 +79,7 @@ void draw() {
     splash = 1;
     return;
   } else if (splash == 1) { //draw loading image
-    splashScreen = loadImage("SplashScreen.png");
+    splashScreen = requestImage("SplashScreen.png");
     imageMode(CENTER);
     image(splashScreen, width/2, height/2, 720, 1280);
     imageMode(CORNER);
