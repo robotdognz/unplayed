@@ -1,5 +1,6 @@
 //------------------AbstractWidget---------------------
 abstract class Widget {
+  //TODO: currently does not scale based on screen size
   Editor editor;
   Toolbar parent;
   protected PVector position; //position of the widget

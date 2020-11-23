@@ -253,16 +253,17 @@ class EditorTop extends Toolbar {
 }
 
 class EditorBottom extends Toolbar {
-  int tHeight;
+  private Rectangle pieceArea;
 
   public EditorBottom(Editor editor) {
     super(editor);
-    tHeight = 200;
+    int pieceAreaHeight = 200;
+    pieceArea = new Rectangle(0, height-pieceAreaHeight, width, pieceAreaHeight);
   }
 
   public void draw() {
     fill(100);
-    rect(0, height-tHeight, width, tHeight);
+    rect(pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
   }
 }
 
