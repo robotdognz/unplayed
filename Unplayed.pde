@@ -83,6 +83,7 @@ void draw() {
 
     init();
     splash = false;
+    return;
   }
 
   if (!gPaused) { //step the game if it is not paused
