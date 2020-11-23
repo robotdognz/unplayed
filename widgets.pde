@@ -54,7 +54,8 @@ abstract class Widget {
 
   public void draw(float wX, float wY) {
     //if(parent != null){
-      subWidgetSpacing = parent.eWidgetSpacing;
+      float fu = 0;
+      subWidgetSpacing = editor.eWidgetSpacing;
     //}
     //update position
     if (position == null) {

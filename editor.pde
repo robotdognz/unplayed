@@ -23,7 +23,7 @@ class Editor {
 
   ////widgets
   //ArrayList<Widget> eWidgets;
-  //float eWidgetSpacing; //size of gap between widgets
+  float eWidgetSpacing; //size of gap between widgets
 
   //toolbars
   ArrayList<Toolbar> toolbars;
@@ -58,6 +58,7 @@ class Editor {
     //eWidgets.add(extraW);
 
     //this.eWidgetSpacing = width/(this.eWidgets.size()+1);
+    this.eWidgetSpacing = width/(7+1);
   }
 
   public void step() {
