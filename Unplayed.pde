@@ -223,7 +223,7 @@ class TextureCache {
   //level pieces
   private File pieceDir;
   private File[] piecePaths;
-  private ArrayList<PieceHandler> pieces;
+  private ArrayList<PieceHandler> pieces;  //use a hash map for this so that piece handlers can be accessed by the level loading system using the file name of the texture
 
   //blocks
   public PImage defaultBlock;
