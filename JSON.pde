@@ -55,10 +55,10 @@ class EditorJSON {
       output = new BufferedWriter(new FileWriter(file));
       output.write(values.toString());
       output.close();
-      Toast.makeText(context, "Composition saved", Toast.LENGTH_LONG).show(); //getApplicationContext()
+      //Toast.makeText(context, "Composition saved", Toast.LENGTH_LONG).show(); //getApplicationContext()
     } 
     catch (Exception e) {
-      Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show(); //getBaseContext()
+      //Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show(); //getBaseContext()
     }
 
     //saveJSONArray(values, file.getAbsolutePath()); //path + "level.json"
