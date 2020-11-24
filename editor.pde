@@ -209,7 +209,7 @@ class EditorTop extends Toolbar {
 
     //this.eWidgetSpacing = width/(this.eWidgets.size()+1);
     this.eWidgetSpacing = width/8;
-    this.widgetSideOffset = width-(eWidgetSpacing*5)/2;
+    this.widgetSideOffset = (width-eWidgetSpacing*5)/2;
     
   }
 
