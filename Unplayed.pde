@@ -61,6 +61,15 @@ void setup() {
   context = activity.getApplicationContext();
 }
 
+void showToast(final String message) { 
+  activity.runOnUiThread(new Runnable() { 
+    public void run() { 
+      android.widget.Toast.makeText(activity.getApplicationContext(), message, android.widget.Toast.LENGTH_SHORT).show();
+    }
+  }
+  );
+}
+
 void init() {
   //setup fields
   gPaused = false;
