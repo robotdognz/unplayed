@@ -253,8 +253,8 @@ class Paper {
     //nested for loops to tile the images
     for (int y = startY; y < endY; y += gridSize) {
       for (int x = startX; x < endX; x += gridSize) {
-        image(paper, x, y, gridSize, gridSize);
         image(grid, x, y, gridSize, gridSize);
+        image(paper, x, y, gridSize, gridSize);
       }
     }
   }
