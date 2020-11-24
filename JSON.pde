@@ -56,9 +56,11 @@ class EditorJSON {
       output.write(values.toString());
       output.close();
       //Toast.makeText(context, "Composition saved", Toast.LENGTH_LONG).show(); //getApplicationContext()
+      showToast("Composition saved");
     } 
     catch (Exception e) {
       //Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show(); //getBaseContext()
+      showToast(e.getMessage());
     }
 
     //saveJSONArray(values, file.getAbsolutePath()); //path + "level.json"
