@@ -2,7 +2,7 @@
 class Editor {
   //touch constraint variables
   public final int TOP_DEADZONE = 200;
-  public final int BOTTOM_DEADZONE = height-250;
+  public final int BOTTOM_DEADZONE = height-300;
   public boolean nextTouchInactive = false;
 
   Game eGame; //reference to game, same instance of game used everywhere else
