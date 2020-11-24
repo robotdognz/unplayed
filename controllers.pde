@@ -13,14 +13,14 @@ class PlayerControl implements Controller {
     int left = 0;
     int right = 0;
     for (TouchEvent.Pointer t : touches) {
-      if (t.y >=  height/3) {
+      //if (t.y >=  height/3) {
         if (t.x < width/4) {
           left++;
         }
         if (t.x > (width/4)*3) {
           right++;
         }
-      }
+      //}
     }
     if (left > right) {
       g.player.left();
@@ -32,7 +32,8 @@ class PlayerControl implements Controller {
   }
   public void touchStarted() {
     //jump if the last true touch was in the middle of the screen
-    if (lastTouch.y >= height/3 && 
+    if (
+    //lastTouch.y >= height/3 && 
       lastTouch.x > width/4 && 
       lastTouch.x < (width/4)*3) {
       g.player.jump();

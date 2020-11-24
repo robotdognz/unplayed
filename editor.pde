@@ -41,7 +41,7 @@ class Editor {
     editorBottom.step();
 
     //step the controller if there are no widget menus open and touch has been reenabled
-    if (eControllerActive && !nextTouchInactive) {
+    if (eControllerActive && !nextTouchInactive && mouseY > TOP_DEADZONE && mouseY < BOTTOM_DEADZONE) {
       eController.step(); //draw event for controls
     }
 
@@ -283,7 +283,7 @@ class EditorBottom extends Toolbar {
     pieceArea = new Rectangle(0, height-pieceAreaHeight, width, pieceAreaHeight);
     toolbar = loadImage(folder+"icn_toolbar_bg.png");
     
-    widgetHeight = pieceArea.getY()-50; //TODO: get the height right
+    widgetHeight = pieceArea.getY()-54; //TODO: get the height right
   }
 
   public void draw() {
