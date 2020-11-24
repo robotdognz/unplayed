@@ -185,6 +185,7 @@ abstract class Toolbar {
 }
 
 class EditorTop extends Toolbar {
+  private float widgetSideOffset;
 
   public EditorTop(Editor editor) {
     super(editor);
@@ -208,6 +209,8 @@ class EditorTop extends Toolbar {
 
     //this.eWidgetSpacing = width/(this.eWidgets.size()+1);
     this.eWidgetSpacing = width/8;
+    this.widgetSideOffset = width-(eWidgetSpacing*5)/2;
+    
   }
 
   public void draw() {
@@ -226,7 +229,8 @@ class EditorTop extends Toolbar {
           }
         }
       }
-      eWidgets.get(i).draw(eWidgetSpacing*(i+1), 120);
+      //eWidgets.get(i).draw(eWidgetSpacing*(i+1), 120);
+      eWidgets.get(i).draw(widgetSideOffset+eWidgetSpacing*i, 120);
       eWidgets.get(i).updateActive();
       if (menu == null) {
         eWidgets.get(i).hover(lastTouch);
