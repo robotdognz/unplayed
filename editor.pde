@@ -287,13 +287,21 @@ class EditorBottom extends Toolbar {
   }
 
   public void draw() {
-    fill(100);
+    for (int i = 0; i < eWidgets.size(); i++) {
+      //draw the three nehind tabs
+      //eWidgetOffset+eWidgetSpacing*i, widgetHeight
+    }
+    
     image(toolbar, pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
     
     //widgets
     for (int i = 0; i < eWidgets.size(); i++) {
+      //if current widget is active, draw tab at the current x position
+      
       eWidgets.get(i).draw(eWidgetOffset+eWidgetSpacing*i, widgetHeight);  
       eWidgets.get(i).updateActive();
+      
+
       if (menu == null) {
         eWidgets.get(i).hover(lastTouch);
       }
