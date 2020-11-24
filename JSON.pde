@@ -22,8 +22,9 @@ class EditorJSON {
       values.setJSONObject(values.size(), platform); //add it on to the end
     }
     //String location = dataPath("") + '/';
-    File saveDir = new File(dataPath("")+'/');
-    saveJSONArray(values, saveDir.getAbsolutePath() + "level.json");
+    String path = "/storage/emulated/0/";
+    //File saveDir = new File(dataPath("")+'/');
+    saveJSONArray(values, path + "level.json");
   }
 
   public void load() {
