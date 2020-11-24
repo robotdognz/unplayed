@@ -221,7 +221,7 @@ abstract class Widget {
     updateActiveUser();
   }
 
-  public void updateActiveUser() {
+  public void updateActiveUser() {  //a method for doing a custom update active without overriding the default code in update active
   }
 }
 

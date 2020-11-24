@@ -117,12 +117,6 @@ class Editor {
     }
   }
 
-  public void onTap(float x, float y) {
-    for (Toolbar t : toolbars) {
-      t.onTap(x, y);
-    }
-  }
-
   public void placeBlock() {
     if (g.point != null) {
 
@@ -183,8 +177,6 @@ abstract class Toolbar {
   public void touchMoved() {
   }
   public void onPinch(float x, float y, float d) {
-  }
-  public void onTap(float x, float y) {
   }
   
   public float getHeight(){
