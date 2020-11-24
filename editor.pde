@@ -2,7 +2,7 @@
 class Editor {
   //touch constraint variables
   public final int TOP_DEADZONE = 200;
-  public final int BOTTOM_DEADZONE = height-200;
+  public final int BOTTOM_DEADZONE = height-250;
   public boolean nextTouchInactive = false;
 
   Game eGame; //reference to game, same instance of game used everywhere else
@@ -81,7 +81,7 @@ class Editor {
     if (nextTouchInactive) {
       return;
     }
-    if (eControllerActive) {
+    if (eControllerActive && mouseY > TOP_DEADZONE && mouseY < BOTTOM_DEADZONE) {
       eController.touchStarted(); //controlls for touch started event
     }
   }
@@ -102,7 +102,7 @@ class Editor {
     if (nextTouchInactive) { //don't do controller if next touch inactive
       return;
     }
-    if (eControllerActive && mouseY > TOP_DEADZONE) {
+    if (eControllerActive && mouseY > TOP_DEADZONE && mouseY < BOTTOM_DEADZONE) {
       eController.touchMoved(); //controlls for touch moved event
     }
   }
@@ -111,7 +111,7 @@ class Editor {
     if (nextTouchInactive) {
       return;
     }
-    if (eControllerActive) {
+    if (eControllerActive && mouseY > TOP_DEADZONE && mouseY < BOTTOM_DEADZONE) {
       eController.onPinch(x, y, d); //controlls for on pinch event
     }
   }
@@ -249,7 +249,7 @@ class EditorTop extends Toolbar {
     editor.eControllerActive = !wMenuOpen; //if a widget menu is open, deactivate controls
   }
 
-  public void touchEnded() {//public void onTap(float x, float y) {
+  public void touchEnded() {
     //check for clicking on widgets
     for (int i = 0; i < eWidgets.size(); i++) {
       eWidgets.get(i).click();
@@ -275,7 +275,7 @@ class EditorBottom extends Toolbar {
     eWidgets.add(eventW);
     
     eWidgetOffset = width*0.7;
-    eWidgetSpacing = 200;    //TODO: change this
+    eWidgetSpacing = 160;    //TODO: change this
     
     //setup toolbar
     int pieceAreaHeight = 200;
@@ -294,6 +294,13 @@ class EditorBottom extends Toolbar {
       if (menu == null) {
         eWidgets.get(i).hover(lastTouch);
       }
+    }
+  }
+  
+  public void touchEnded() {
+    //check for clicking on widgets
+    for (int i = 0; i < eWidgets.size(); i++) {
+      eWidgets.get(i).click();
     }
   }
 
