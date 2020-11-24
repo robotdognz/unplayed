@@ -161,6 +161,7 @@ abstract class Toolbar {
   public Editor editor;
 
   public Toolbar(Editor editor) {
+    eWidgetSpacing = 0;
     this.editor = editor;
   }
 
@@ -195,14 +196,14 @@ class EditorTop extends Toolbar {
     Widget playerW = new PlayerControlWidget(editor, this);
     Widget cameraW = new CameraControlWidget(editor, this);
     Widget editModeW = new EditorModeWidget(editor, this); 
-    Widget editTypeW = new EditorTypeWidget(editor, this); 
+    //Widget editTypeW = new EditorTypeWidget(editor, this); 
     Widget extraW = new ExtraWidget(editor, this); 
     eWidgets.add(menuW);
     eWidgets.add(settingsW);
     eWidgets.add(playerW);
     eWidgets.add(cameraW);
     eWidgets.add(editModeW);
-    eWidgets.add(editTypeW);
+    //eWidgets.add(editTypeW);
     eWidgets.add(extraW);
 
     this.eWidgetSpacing = width/(this.eWidgets.size()+1);
@@ -257,6 +258,17 @@ class EditorBottom extends Toolbar {
 
   public EditorBottom(Editor editor) {
     super(editor);
+    
+    //setup widgets
+    this.eWidgets = new ArrayList<Widget>();
+    Widget blockW = new BlockModeWidget(editor, this);
+    Widget imageW = new ImageModeWidget(editor, this);
+    Widget eventW = new EventModeWidget(editor, this);
+    eWidgets.add(blockW);
+    eWidgets.add(imageW);
+    eWidgets.add(eventW);
+    
+    //setup toolbar
     int pieceAreaHeight = 200;
     pieceArea = new Rectangle(0, height-pieceAreaHeight, width, pieceAreaHeight);
     toolbar = loadImage(folder+"icn_toolbar_bg.png");
