@@ -81,7 +81,8 @@ void draw() {
   } else if (splash == 1) { //draw loading image
     splashScreen = loadImage("SplashScreen.png");
     imageMode(CENTER);
-    image(splashScreen, width/2, height/2, 720, 1280);
+    int size = (int) (width*0.8);
+    image(splashScreen, width/2, height/2, size, size*1.125);
     imageMode(CORNER);
     splash = 2;
     return;
