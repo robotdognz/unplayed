@@ -2,6 +2,7 @@ import android.os.Vibrator;
 import android.os.VibrationEffect;
 import android.content.Context;
 import android.app.Activity;
+import android.os.Environment;
 import java.util.List;
 import java.util.HashSet;
 import java.util.regex.*;
@@ -10,6 +11,9 @@ public KetaiGesture gesture;
 public Vibe vibe;
 public Converter convert;
 public TextureCache texture;
+
+public Activity activity;
+public Context context;
 
 private int splash; //true if the game hasn't started looping and a splash screen should be drawn
 private PImage splashScreen;
@@ -40,6 +44,9 @@ void setup() {
   background(40, 40, 40);
   frameRate(60);
   splash = 0;
+
+  activity = this.getActivity();
+  context = activity.getApplicationContext();
 }
 
 void init() {
