@@ -87,6 +87,7 @@ void draw() {
     splash = 2;
     return;
   } else if (splash == 2) { //load textures
+    delay(1000);
     init();
     splash = 3;
     return;
