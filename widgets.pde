@@ -6,7 +6,7 @@ abstract class Widget {
   protected PVector position; //position of the widget
   protected float wSize = 75; //60 //size of the widget
   protected float touchScale = 1.2; //1.5
-  protected String folder = dataPath("") + "ui" + '/' + "widgets" + '/'; // dataPath("ui") + '/' + "widgets" + '/'; //data path of widget icons
+  protected String folder = dataPath("ui") + '/' + "widgets" + '/'; //data path of widget icons
   protected PImage icon;
   protected PImage imageActive;
   protected PImage imageInactive;
