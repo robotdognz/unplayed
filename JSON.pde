@@ -29,8 +29,10 @@ class EditorJSON {
     //File saveDir = new File(dataPath("")+'/');
     
     //File path = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-    File path = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
-    saveJSONArray(values, path + "level.json");
+    //File path = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+    File file = new File(context.getFilesDir(), "level.json");
+
+    saveJSONArray(values, file.getAbsolutePath()); //path + "level.json"
   }
 
   public void load() {
