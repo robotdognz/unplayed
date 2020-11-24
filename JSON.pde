@@ -34,7 +34,20 @@ class EditorJSON {
     //File path = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
     //File file = new File("level.json"); //context.getFilesDir(), 
 
-    writer.writeObject(values.toString(), "level.json");
+    // writer.writeObject(values.toString(), "level.json");
+
+    // Convert JsonObject to String Format
+    try {
+      String userString = values.toString();// Define the File Path and its Name
+      File file = new File(context.getFilesDir(), "level.json");
+      FileWriter fileWriter = new FileWriter(file);
+      BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+      bufferedWriter.write(userString);
+      bufferedWriter.close();
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
 
     //saveJSONArray(values, file.getAbsolutePath()); //path + "level.json"
 
