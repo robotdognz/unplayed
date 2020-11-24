@@ -206,7 +206,8 @@ class EditorTop extends Toolbar {
     //eWidgets.add(editTypeW);
     eWidgets.add(extraW);
 
-    this.eWidgetSpacing = width/(this.eWidgets.size()+1);
+    //this.eWidgetSpacing = width/(this.eWidgets.size()+1);
+    this.eWidgetSpacing = width/8;
   }
 
   public void draw() {
