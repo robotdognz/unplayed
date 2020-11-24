@@ -52,7 +52,7 @@ class EditorJSON {
     try {
       Writer output = null;
       //File dir = context.getFilesDir();
-      File dir = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+      File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
       //File file = new File("storage/emulated/0/" + "level" + ".json");
       File file = new File(dir + "level" + ".json");
       output = new BufferedWriter(new FileWriter(file));
