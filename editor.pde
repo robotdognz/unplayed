@@ -88,6 +88,9 @@ class Editor {
   }
 
   public void touchEnded() {
+    for (Toolbar t : toolbars) {
+      t.touchEnded();
+    }
     if (nextTouchInactive) {
       nextTouchInactive = false;
     }
@@ -248,7 +251,7 @@ class EditorTop extends Toolbar {
     editor.eControllerActive = !wMenuOpen; //if a widget menu is open, deactivate controls
   }
 
-  public void onTap(float x, float y) {
+  public void touchEnded() {//public void onTap(float x, float y) {
     //check for clicking on widgets
     for (int i = 0; i < eWidgets.size(); i++) {
       eWidgets.get(i).click();
