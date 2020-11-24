@@ -497,29 +497,29 @@ class SelectWidget extends Widget {
 }
 
 //------------------EditorType---------------------
-class EditorTypeWidget extends Widget {
-  public EditorTypeWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    icon = loadImage(folder+"colider.png");
-    iconIsCurrentSubWidget = true;
-    Widget w1 = new BlockModeWidget(editor, parent);
-    Widget w2 = new ImageModeWidget(editor, parent);
-    Widget w3 = new EventModeWidget(editor, parent);
-    subWidgets.add(w1);
-    subWidgets.add(w2);
-    subWidgets.add(w3);
-  }
-}
+//class EditorTypeWidget extends Widget {
+//  public EditorTypeWidget(Editor editor, Toolbar parent) {
+//    super(editor, parent);
+//    icon = loadImage(folder+"colider.png");
+//    iconIsCurrentSubWidget = true;
+//    Widget w1 = new BlockModeWidget(editor, parent);
+//    Widget w2 = new ImageModeWidget(editor, parent);
+//    Widget w3 = new EventModeWidget(editor, parent);
+//    subWidgets.add(w1);
+//    subWidgets.add(w2);
+//    subWidgets.add(w3);
+//  }
+//}
 class BlockModeWidget extends Widget {
   public BlockModeWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
-    closeAfterSubWidget = true;
+    //closeAfterSubWidget = true;
     icon = loadImage(folder+"colider.png");
   }
 
   public void clicked() {
     editor.eType = editorType.BLOCK;
-    editor.eController = new EditorControl(editor);
+    //editor.eController = new EditorControl(editor);
   }
 
   public void updateActive() {
@@ -533,13 +533,13 @@ class BlockModeWidget extends Widget {
 class ImageModeWidget extends Widget {
   public ImageModeWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
-    closeAfterSubWidget = true;
+    //closeAfterSubWidget = true;
     icon = loadImage(folder+"image.png");
   }
 
   public void clicked() {
     editor.eType = editorType.IMAGE;
-    editor.eController = new EditorControl(editor);
+    //editor.eController = new EditorControl(editor);
   }
 
   public void updateActive() {
@@ -553,13 +553,13 @@ class ImageModeWidget extends Widget {
 class EventModeWidget extends Widget {
   public EventModeWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
-    closeAfterSubWidget = true;
+    //closeAfterSubWidget = true;
     icon = loadImage(folder+"event.png");
   }
 
   public void clicked() {
     editor.eType = editorType.EVENT;
-    editor.eController = new EditorControl(editor);
+    //editor.eController = new EditorControl(editor);
   }
 
   public void updateActive() {
