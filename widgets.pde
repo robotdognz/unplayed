@@ -650,11 +650,12 @@ class SaveMenuWidget extends Widget {
 class SaveWidget extends Widget {
   public SaveWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
-    //available = false;
+    closeAfterSubWidget = true;
     icon = loadImage(folder+"save.png");
   }
 
   public void clicked() {
+    //save the level
     editor.eJSON.save(editor.eGame);
   }
 }
