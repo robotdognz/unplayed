@@ -22,7 +22,8 @@ class Editor {
   imagePlane eImagePlane = imagePlane.LEVEL;
 
   //toolbars
-  ArrayList<Toolbar> toolbars;
+  Toolbar editorTop;
+  Toolbar editorBottom;
 
   //frame count
   int frameDelay = 100;
@@ -31,15 +32,14 @@ class Editor {
   public Editor(Game game) {
     this.eGame = game;
     this.eController = new PlayerControl();
-    this.toolbars = new ArrayList<Toolbar>();
-    toolbars.add(new EditorTop(this));
-    toolbars.add(new EditorBottom(this));
+    this.editorTop = new EditorTop(this);
+    this.editorBottom = new EditorBottom(this);
   }
 
   public void step() {
-    for (Toolbar t : toolbars) {
-      t.step();
-    }
+    editorTop.step();
+    editorBottom.step();
+
     //step the controller if there are no widget menus open and touch has been reenabled
     if (eControllerActive && !nextTouchInactive) {
       eController.step(); //draw event for controls
@@ -55,17 +55,16 @@ class Editor {
   //a bunch of this probably needs to be moved to step, for logical consistency only drawing should be in draw
   public void draw() {
     //draw toolbars
-    for (Toolbar t : toolbars) {
-      t.draw();
-    }
+    editorTop.draw();
+    editorBottom.draw();
 
     //draw frame counter and other readouts
     fill(80);
     textSize(50);
     textAlign(CENTER, CENTER);
-    text(nf(convert.getScale(), 1, 2), width/2, height-150);
-    text(g.scanSize + " : " + g.screenObjects.size(), width/2, height-100);
-    text("FPS: " + nf(this.frame, 1, 2), width/2, height-50);
+    text(nf(convert.getScale(), 1, 2), width/2, height-editorBottom.getHeight()-150);
+    text(g.scanSize + " : " + g.screenObjects.size(), width/2, height-editorBottom.getHeight()-100);
+    text("FPS: " + nf(this.frame, 1, 2), width/2, height-editorBottom.getHeight()-50);
   }
 
   private void frameCounter() {
@@ -88,18 +87,18 @@ class Editor {
   }
 
   public void touchEnded() {
-    for (Toolbar t : toolbars) {
-      t.touchEnded();
-    }
+    editorTop.touchEnded();
+    editorBottom.touchEnded();
+
     if (nextTouchInactive) {
       nextTouchInactive = false;
     }
   }
 
   public void touchMoved() {
-    for (Toolbar t : toolbars) {
-      t.touchMoved(); 
-    }
+    editorTop.touchMoved();
+    editorBottom.touchMoved();
+
     if (nextTouchInactive) { //don't do controller if next touch inactive
       return;
     }
@@ -178,8 +177,8 @@ abstract class Toolbar {
   }
   public void onPinch(float x, float y, float d) {
   }
-  
-  public float getHeight(){
+
+  public float getHeight() {
     return 0;
   }
 }
@@ -267,8 +266,8 @@ class EditorBottom extends Toolbar {
     fill(100);
     image(toolbar, pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
   }
-  
-  public float getHeight(){
+
+  public float getHeight() {
     return pieceArea.getHeight();
   }
 }
