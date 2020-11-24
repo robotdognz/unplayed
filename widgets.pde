@@ -515,6 +515,7 @@ class BlockModeWidget extends Widget {
     super(editor, parent);
     //closeAfterSubWidget = true;
     icon = loadImage(folder+"colider.png");
+    active = true;
   }
 
   public void clicked() {
