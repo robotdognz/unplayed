@@ -275,8 +275,8 @@ class EditorBottom extends Toolbar {
     eWidgets.add(imageW);
     eWidgets.add(eventW);
     
-    eWidgetOffset = width*0.7;
-    eWidgetSpacing = 130;    //TODO: change this
+    eWidgetOffset = width*0.75;
+    eWidgetSpacing = 140;    //TODO: change this
     
     //setup toolbar
     int pieceAreaHeight = 200;
