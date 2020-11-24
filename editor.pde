@@ -157,11 +157,13 @@ class Editor {
 abstract class Toolbar {
   public ArrayList<Widget> eWidgets;
   public float eWidgetSpacing; //size of gap between widgets
+  public float eWidgetOffset; //amount to offset widget drawing by
 
   public Editor editor;
 
   public Toolbar(Editor editor) {
     eWidgetSpacing = 0;
+    eWidgetOffset = 0;
     this.editor = editor;
   }
 
@@ -185,7 +187,6 @@ abstract class Toolbar {
 }
 
 class EditorTop extends Toolbar {
-  private float widgetSideOffset;
 
   public EditorTop(Editor editor) {
     super(editor);
@@ -209,7 +210,7 @@ class EditorTop extends Toolbar {
 
     //this.eWidgetSpacing = width/(this.eWidgets.size()+1);
     this.eWidgetSpacing = width/8;
-    this.widgetSideOffset = (width-eWidgetSpacing*5)/2;
+    this.eWidgetOffset = (width-eWidgetSpacing*5)/2;
     
   }
 
@@ -230,7 +231,7 @@ class EditorTop extends Toolbar {
         }
       }
       //eWidgets.get(i).draw(eWidgetSpacing*(i+1), 120);
-      eWidgets.get(i).draw(widgetSideOffset+eWidgetSpacing*i, 120);
+      eWidgets.get(i).draw(eWidgetOffset+eWidgetSpacing*i, 120);
       eWidgets.get(i).updateActive();
       if (menu == null) {
         eWidgets.get(i).hover(lastTouch);
@@ -273,6 +274,9 @@ class EditorBottom extends Toolbar {
     eWidgets.add(imageW);
     eWidgets.add(eventW);
     
+    eWidgetOffset = width*0.7;
+    eWidgetSpacing = 200;    //TODO: change this
+    
     //setup toolbar
     int pieceAreaHeight = 200;
     pieceArea = new Rectangle(0, height-pieceAreaHeight, width, pieceAreaHeight);
@@ -282,6 +286,15 @@ class EditorBottom extends Toolbar {
   public void draw() {
     fill(100);
     image(toolbar, pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
+    
+    //widgets
+    for (int i = 0; i < eWidgets.size(); i++) {
+      eWidgets.get(i).draw(eWidgetOffset+eWidgetSpacing*i, pieceArea.getY());  //TODO: get the height right
+      eWidgets.get(i).updateActive();
+      if (menu == null) {
+        eWidgets.get(i).hover(lastTouch);
+      }
+    }
   }
 
   public float getHeight() {
