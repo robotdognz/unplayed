@@ -37,16 +37,28 @@ class EditorJSON {
     // writer.writeObject(values.toString(), "level.json");
 
     // Convert JsonObject to String Format
+    //try {
+    //  String userString = values.toString();// Define the File Path and its Name
+    //  File file = new File(context.getFilesDir(), "level.json");
+    //  FileWriter fileWriter = new FileWriter(file);
+    //  BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+    //  bufferedWriter.write(userString);
+    //  bufferedWriter.close();
+    //}
+    //catch (IOException e) {
+    //  e.printStackTrace();
+    //}
+
     try {
-      String userString = values.toString();// Define the File Path and its Name
-      File file = new File(context.getFilesDir(), "level.json");
-      FileWriter fileWriter = new FileWriter(file);
-      BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-      bufferedWriter.write(userString);
-      bufferedWriter.close();
-    }
-    catch (IOException e) {
-      e.printStackTrace();
+      Writer output = null;
+      File file = new File("storage/emulated/0/" + "level" + ".json");
+      output = new BufferedWriter(new FileWriter(file));
+      output.write(values.toString());
+      output.close();
+      Toast.makeText(context, "Composition saved", Toast.LENGTH_LONG).show(); //getApplicationContext()
+    } 
+    catch (Exception e) {
+      Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show(); //getBaseContext()
     }
 
     //saveJSONArray(values, file.getAbsolutePath()); //path + "level.json"
