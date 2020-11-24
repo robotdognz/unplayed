@@ -7,6 +7,13 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.regex.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public KetaiGesture gesture;
 public Vibe vibe;
 public Converter convert;
