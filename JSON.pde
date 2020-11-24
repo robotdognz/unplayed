@@ -49,9 +49,29 @@ class EditorJSON {
     //  e.printStackTrace();
     //}
 
+    //if (ContextCompat.checkSelfPermission(
+    //  CONTEXT, Manifest.permission.REQUESTED_PERMISSION) ==
+    //  PackageManager.PERMISSION_GRANTED) {
+    //  // You can use the API that requires the permission.
+    //  performAction(...);
+    //} else if (shouldShowRequestPermissionRationale(...)) {
+    //  // In an educational UI, explain to the user why your app requires this
+    //  // permission for a specific feature to behave as expected. In this UI,
+    //  // include a "cancel" or "no thanks" button that allows the user to
+    //  // continue using your app without granting the permission.
+    //  showInContextUI(...);
+    //} else {
+    //  // You can directly ask for the permission.
+    //  requestPermissions(CONTEXT, 
+    //    new String[] { Manifest.permission.REQUESTED_PERMISSION }, 
+    //    REQUEST_CODE);
+    //}
+
     try {
       Writer output = null;
-      File file = new File("storage/emulated/0/" + "level" + ".json");
+      File dir = context.getFilesDir();
+      //File file = new File("storage/emulated/0/" + "level" + ".json");
+      File file = new File(dir + "level" + ".json");
       output = new BufferedWriter(new FileWriter(file));
       output.write(values.toString());
       output.close();
