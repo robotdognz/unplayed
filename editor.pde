@@ -24,6 +24,9 @@ class Editor {
   //toolbars
   Toolbar editorTop;
   Toolbar editorBottom;
+  
+  //save/load
+  EditorJSON eJSON;
 
   //frame count
   int frameDelay = 100;
@@ -34,6 +37,7 @@ class Editor {
     this.eController = new PlayerControl();
     this.editorTop = new EditorTop(this);
     this.editorBottom = new EditorBottom(this);
+    this.eJSON = new EditorJSON();
   }
 
   public void step() {

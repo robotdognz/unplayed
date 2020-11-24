@@ -41,7 +41,7 @@ abstract class Widget {
       lastTouch.y <= position.y+wSize*touchScale &&
       available) {
       hover = true;
-    }else{
+    } else {
       hover = false;
     }
 
@@ -54,7 +54,7 @@ abstract class Widget {
   }
 
   public void draw(float wX, float wY) {
-    if(parent != null){
+    if (parent != null) {
       subWidgetSpacing = parent.eWidgetSpacing;
     }
     //update position
@@ -94,7 +94,7 @@ abstract class Widget {
         }
       }
     }
-    
+
     imageMode(CENTER);
     drawExtra();
     if (available) {
@@ -117,8 +117,9 @@ abstract class Widget {
     noTint();
     imageMode(CORNER);
   }
-  
-  public void drawExtra(){}
+
+  public void drawExtra() {
+  }
 
   public boolean isMenu() {
     if (subWidgets.size() > 0) {
@@ -395,8 +396,8 @@ class CameraControlWidget extends Widget {
       active = false;
     }
   }
-  
-  public void drawExtra(){
+
+  public void drawExtra() {
     float widgetScale = wSize*1.5;
     image(uiExtra, position.x, position.y, widgetScale*4.4, widgetScale*1.2); //1.25333333  //4.426666
   }
@@ -649,8 +650,12 @@ class SaveMenuWidget extends Widget {
 class SaveWidget extends Widget {
   public SaveWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
-    available = false;
+    //available = false;
     icon = loadImage(folder+"save.png");
+  }
+
+  public void clicked() {
+    editor.eJSON.save(editor.eGame);
   }
 }
 class SaveAsWidget extends Widget {
