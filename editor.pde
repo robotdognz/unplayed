@@ -253,16 +253,19 @@ class EditorTop extends Toolbar {
 
 class EditorBottom extends Toolbar {
   private Rectangle pieceArea;
+  private String folder = dataPath("ui") + '/';
+  private PImage toolbar;
 
   public EditorBottom(Editor editor) {
     super(editor);
     int pieceAreaHeight = 200;
     pieceArea = new Rectangle(0, height-pieceAreaHeight, width, pieceAreaHeight);
+    toolbar = loadImage(folder+"icn_toolbar_bg.png");
   }
 
   public void draw() {
     fill(100);
-    rect(pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
+    image(toolbar, pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
   }
   
   public float getHeight(){
