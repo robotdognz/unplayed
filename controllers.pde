@@ -38,11 +38,14 @@ class PlayerControl implements Controller {
       g.player.jump();
     }
   }
-  public void touchEnded() {}
-  
-  public void touchMoved() {}
-  
-  public void onPinch(float x, float y, float d) {}
+  public void touchEnded() {
+  }
+
+  public void touchMoved() {
+  }
+
+  public void onPinch(float x, float y, float d) {
+  }
 }
 
 //------------------CameraController---------------------
@@ -55,12 +58,16 @@ class CameraControl implements Controller {
     maxZoomSpeed = 150;
   }
 
-  public void step() {}
-  
-  public void touchStarted() {}
-  
-  public void touchEnded() {}
-  
+  public void step() {
+    g.player.still();
+  }
+
+  public void touchStarted() {
+  }
+
+  public void touchEnded() {
+  }
+
   public void touchMoved() {
     if (touches.length == 1) {
       float moveX = (pmouseX - mouseX)/3;
@@ -69,16 +76,16 @@ class CameraControl implements Controller {
       gCamera.setCenter(gCamera.getCenter().add(diff));
     }
   }
-  
+
   public void onPinch(float x, float y, float d) {
     //TODO make this zoom from the center of the gesture, not the center of the screen
-    if(d > maxZoomSpeed){
+    if (d > maxZoomSpeed) {
       d = maxZoomSpeed;
     }
-    if(d < -maxZoomSpeed){
+    if (d < -maxZoomSpeed) {
       d = -maxZoomSpeed;
     }
-    
+
     if (touches.length == 2) {
       float newScale = gCamera.getScale()-convert.screenToLevel(d);
       float newTotalScale = convert.getTotalFromScale(newScale);
@@ -102,6 +109,7 @@ class EditorControl implements Controller {
   }
 
   public void step() {
+    g.player.still();
   }
   public void touchStarted() {
   }
@@ -125,5 +133,6 @@ class EditorControl implements Controller {
     }
   }
 
-  public void onPinch(float x, float y, float d) {}
+  public void onPinch(float x, float y, float d) {
+  }
 }
