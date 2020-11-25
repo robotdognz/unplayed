@@ -52,14 +52,19 @@ class EditorJSON {
     try {
       Writer output = null;
       //File dir = context.getFilesDir();
-      File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-      //File file = new File("storage/emulated/0/" + "level" + ".json");
-      File file = new File(dir + "level" + ".json");
-      output = new BufferedWriter(new FileWriter(file));
-      output.write(values.toString());
-      output.close();
-      //Toast.makeText(context, "Composition saved", Toast.LENGTH_LONG).show(); //getApplicationContext()
-      showToast("Composition saved");
+      //File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+
+      if (hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
+        File file = new File("storage/emulated/0/levels" + "level" + ".json");
+        //File file = new File(dir + "level" + ".json");
+        output = new BufferedWriter(new FileWriter(file));
+        output.write(values.toString());
+        output.close();
+        //Toast.makeText(context, "Composition saved", Toast.LENGTH_LONG).show(); //getApplicationContext()
+        showToast("Composition saved");
+      } else {
+        requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+      }
     } 
     catch (Exception e) {
       //Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show(); //getBaseContext()
