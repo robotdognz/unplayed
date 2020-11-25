@@ -50,10 +50,15 @@ void setup() {
   frameRate(60);
   splash = 0;
 
+  //setup feilds for Toast
   activity = this.getActivity();
   context = activity.getApplicationContext();
   
-  //requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+  //check and get permissions
+  if (!hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
+    requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+  }
+  
 }
 
 void init() {

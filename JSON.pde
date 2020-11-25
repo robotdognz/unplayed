@@ -27,17 +27,17 @@ class EditorJSON {
     try {
       //Writer output = null;
 
-      if (hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
+      //if (hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
         File file = new File("storage/emulated/0/levels/" + "level" + ".json");
         saveJSONArray(values, file.getAbsolutePath());
         //output = new BufferedWriter(new FileWriter(file));
         //output.write(values.toString());
         //output.close();
         showToast("Composition saved");
-      } else {
-        showToast("Please enable file writing permissions");
-        requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-      }
+      //} else {
+      //  showToast("Please enable file writing permissions");
+      //  requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+      //}
     } 
     catch (Exception e) {
       showToast(e.getMessage());
@@ -50,13 +50,13 @@ class EditorJSON {
 
     try {
 
-      if (hasPermission("android.permission.READ_EXTERNAL_STORAGE")) {
+      //if (hasPermission("android.permission.READ_EXTERNAL_STORAGE")) {
         File file = new File("storage/emulated/0/levels/" + "level" + ".json");
         values = loadJSONArray(file);
-      } else {
-        showToast("Please enable file reading permissions");
-        requestPermission("android.permission.READ_EXTERNAL_STORAGE");
-      }
+      //} else {
+      //  showToast("Please enable file reading permissions");
+      //  requestPermission("android.permission.READ_EXTERNAL_STORAGE");
+      //}
 
       for (int i = 0; i < values.size(); i++) {
         JSONObject platform = values.getJSONObject(i); 
