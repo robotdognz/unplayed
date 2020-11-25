@@ -3,6 +3,7 @@ import android.os.VibrationEffect;
 import android.content.Context;
 import android.app.Activity;
 import android.os.Environment;
+import java.util.Collections;
 import java.util.List;
 import java.util.HashSet;
 import java.util.regex.*;
@@ -53,12 +54,11 @@ void setup() {
   //setup feilds for Toast
   activity = this.getActivity();
   context = activity.getApplicationContext();
-  
+
   //check and get permissions
   if (!hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
     requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
   }
-  
 }
 
 void init() {
@@ -235,6 +235,18 @@ void showToast(final String message) {
   );
 }
 
+@ Override
+  public void onStop() { //This should be called when the app closes
+  //Save stuff
+  super.onStop();
+}
+
+@ Override
+  public void onDestroy() { //This might be called when the app is killed
+  //Save stuff
+  super.onDestroy();
+}
+
 //------------------TextureStore---------------------
 class TextureCache {
   //paper textures
@@ -244,7 +256,8 @@ class TextureCache {
   //level pieces
   private File pieceDir;
   private File[] piecePaths;
-  private ArrayList<PieceHandler> pieces;  //use a hash map for this so that piece handlers can be accessed by the level loading system using the file name of the texture
+  private HashMap<File, PieceHandler> pieceMap;
+  private ArrayList<PieceHandler> pieceList;
 
   //blocks
   public PImage defaultBlock;
@@ -261,10 +274,10 @@ class TextureCache {
     //level pieces
     pieceDir = new File(dataPath("pieces")+'/');
     piecePaths = pieceDir.listFiles();
-    pieces = new ArrayList<PieceHandler>();
+    pieceMap = new HashMap<File, PieceHandler>();
     ArrayList<Integer> temp = new ArrayList<Integer>(); //holds the numbers found in the file name
-    for (File f : piecePaths) {
-      String path = f.getAbsolutePath();
+    for (File file : piecePaths) {
+      String path = file.getAbsolutePath();
       if (path.matches(".+([0-9]+)x([0-9]+).png$")) { //check file ends with number "x" number ".png"
         Pattern p = Pattern.compile("\\d+");
         Matcher m = p.matcher(path);
@@ -273,23 +286,29 @@ class TextureCache {
           temp.add(i);
         }
         if (temp.size() >= 2) {
-          pieces.add(new PieceHandler(f, temp.get(temp.size()-2), temp.get(temp.size()-1)));
+          pieceMap.put(file, new PieceHandler(file, temp.get(temp.size()-2), temp.get(temp.size()-1)));
         }
       }
       temp.clear();
     }
-    println(pieces.toString()); //print out all the pieces that were loaded in
+    pieceList = new ArrayList<PieceHandler>(pieceMap.values());
+    Collections.sort(pieceList);
+    println(pieceMap.toString()); //print out all the pieces that were loaded in
 
     //blocks
     defaultBlock = loadImage("player_main.png");
   }
 
-  public ArrayList<PieceHandler> getLevelPieces() {
-    return pieces;
+  public HashMap<File, PieceHandler> getPieceMap() {
+    return pieceMap;
+  }
+
+  public ArrayList<PieceHandler> getPieceList() {
+    return pieceList;
   }
 }
 
-class PieceHandler {
+class PieceHandler implements Comparable<PieceHandler> {
   File datapath;
   PImage sprite;
   int pWidth;
@@ -300,8 +319,13 @@ class PieceHandler {
     this.pWidth = pWidth*100;  //these are turned from grid amound to draw units for the level
     this.pHeight = pHeight*100;
     String path = file.getAbsolutePath();
-    sprite = loadImage(path);
-    //println(path + " " + this.pWidth + " " + this.pHeight);
+
+    try {
+      sprite = loadImage(path);
+    }
+    catch(Exception e) {
+      //set sprite to file not found image
+    }
   }
 
   public int getWidth() {
@@ -316,8 +340,37 @@ class PieceHandler {
     return sprite;
   }
 
+  public File getFile() {
+    return datapath;
+  }
+
   public String toString() {
     return "[" + pWidth + ", " + pHeight + "]";
+  }
+
+  public void draw(float pX, float pY, float size) {
+    //calculate how to scale the image so it appears in the scroll bar correctly
+    float scaleFactor;
+    if (getWidth() >= getHeight()) {
+      scaleFactor = size/getWidth();
+    } else {
+      scaleFactor = size/getHeight();
+    }
+    //draw the scaled image
+    image(sprite, pX, pY, getWidth()*scaleFactor, getHeight()*scaleFactor);
+  }
+
+  @Override
+    public int compareTo(PieceHandler otherPieceHandler) {
+    float otherArea = otherPieceHandler.getWidth()*otherPieceHandler.getHeight();
+    float area = getWidth()*getHeight();
+    if (otherArea > area) {
+      return -1;
+    } else if (otherArea < area) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
 }
 

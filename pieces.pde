@@ -1,14 +1,27 @@
 //------------------LevelPiece---------------------
 class Piece extends Rectangle {
+  private PieceHandler pieceTexture;
   private PImage sprite;
-  
-  Piece(PImage sprite, int x, int y, int pieceW, int pieceH) {
+
+  Piece(File file, int x, int y, int pieceW, int pieceH) {
     super(x, y, pieceW, pieceH);
-    this.sprite = sprite;
+
+    if (texture.getPieceMap().containsKey(file)) {
+      this.pieceTexture = texture.getPieceMap().get(file);
+      this.sprite = pieceTexture.getSprite();
+      setWidth(pieceTexture.getWidth());
+      setHeight(pieceTexture.getHeight());
+    } else {
+      //set sprite to file not found image
+    }
   }
-  
+
   public void draw() {
     image(sprite, getX(), getY(), getWidth(), getHeight());
+  }
+
+  public File getFile() {
+    return pieceTexture.getFile();
   }
 }
 

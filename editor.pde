@@ -266,6 +266,7 @@ class EditorBottom extends Toolbar {
   private String folder = dataPath("ui") + '/';
   private PImage toolbar;
   private float widgetHeight;
+  private ArrayList<PieceHandler> pieces;
 
   public EditorBottom(Editor editor) {
     super(editor);
@@ -288,6 +289,8 @@ class EditorBottom extends Toolbar {
     toolbar = loadImage(folder+"icn_toolbar_bg.png");
     
     widgetHeight = pieceArea.getY()-54; //TODO: get the height right
+    
+    pieces = texture.getPieceList();
   }
 
   public void draw() {
@@ -309,6 +312,12 @@ class EditorBottom extends Toolbar {
       if (menu == null) {
         eWidgets.get(i).hover(lastTouch);
       }
+    }
+    
+    //draw pieces
+    for(int i = 0; i < pieces.size(); i++){
+      PieceHandler piece = pieces.get(i);
+      piece.draw(pieceArea.getX() + i*200, pieceArea.getY(), pieceArea.getHeight());
     }
   }
   
