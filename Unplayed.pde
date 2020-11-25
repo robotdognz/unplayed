@@ -357,7 +357,7 @@ class PieceHandler implements Comparable<PieceHandler> {
       scaleFactor = size/getHeight();
     }
     //draw the scaled image
-    image(sprite, pX, pY, getWidth()*scaleFactor, getHeight()*scaleFactor);
+    image(sprite, pX, pY, getWidth(), getHeight()); //getWidth()*scaleFactor, getHeight()*scaleFactor
   }
 
   @Override
