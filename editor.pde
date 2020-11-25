@@ -24,7 +24,7 @@ class Editor {
   //toolbars
   Toolbar editorTop;
   Toolbar editorBottom;
-  
+
   //save/load
   EditorJSON eJSON;
 
@@ -215,7 +215,6 @@ class EditorTop extends Toolbar {
     //this.eWidgetSpacing = width/(this.eWidgets.size()+1);
     this.eWidgetSpacing = width/8;
     this.eWidgetOffset = (width-eWidgetSpacing*5)/2;
-    
   }
 
   public void draw() {
@@ -270,7 +269,7 @@ class EditorBottom extends Toolbar {
 
   public EditorBottom(Editor editor) {
     super(editor);
-    
+
     //setup widgets
     this.eWidgets = new ArrayList<Widget>();
     Widget blockW = new BlockModeWidget(editor, this);
@@ -279,17 +278,17 @@ class EditorBottom extends Toolbar {
     eWidgets.add(blockW);
     eWidgets.add(imageW);
     eWidgets.add(eventW);
-    
+
     eWidgetOffset = width*0.7;
     eWidgetSpacing = 140;    //TODO: change this
-    
+
     //setup toolbar
     int pieceAreaHeight = 200;
     pieceArea = new Rectangle(0, height-pieceAreaHeight, width, pieceAreaHeight);
     toolbar = loadImage(folder+"icn_toolbar_bg.png");
-    
+
     widgetHeight = pieceArea.getY()-54; //TODO: get the height right
-    
+
     pieces = texture.getPieceList();
   }
 
@@ -298,29 +297,34 @@ class EditorBottom extends Toolbar {
       //draw the three nehind tabs
       //eWidgetOffset+eWidgetSpacing*i, widgetHeight
     }
-    
+
     image(toolbar, pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
-    
+
     //widgets
     for (int i = 0; i < eWidgets.size(); i++) {
       //if current widget is active, draw tab at the current x position
-      
+
       eWidgets.get(i).draw(eWidgetOffset+eWidgetSpacing*i, widgetHeight);  
       eWidgets.get(i).updateActive();
-      
+
 
       if (menu == null) {
         eWidgets.get(i).hover(lastTouch);
       }
     }
-    
+
     //draw pieces
-    for(int i = 0; i < pieces.size(); i++){
-      PieceHandler piece = pieces.get(i);
-      piece.draw(pieceArea.getX() + i*200, pieceArea.getY(), pieceArea.getHeight());
+    float size = 150;
+    imageMode(CENTER);
+    if (editor.eType == editorType.IMAGE) {
+      for (int i = 0; i < pieces.size(); i++) {
+        PieceHandler piece = pieces.get(i);
+        piece.draw(pieceArea.getX()+pieceArea.getHeight()/2 + i*pieceArea.getHeight(), pieceArea.getY()+pieceArea.getHeight()/2, size);
+      }
     }
+    imageMode(CORNER);
   }
-  
+
   public void touchEnded() {
     //check for clicking on widgets
     for (int i = 0; i < eWidgets.size(); i++) {
