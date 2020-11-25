@@ -12,14 +12,16 @@ class EditorJSON {
 
     //logic for saving
     for (Rectangle r : objects) {
-      JSONObject platform = new JSONObject();
+      JSONObject object = new JSONObject();
+      object.setInt("pX", (int) r.getX());
+      object.setInt("pY", (int) r.getY());
+      object.setInt("pWidth", (int) r.getWidth());
+      object.setInt("pHeight", (int) r.getHeight());
+      if(r instanceof Platform){
+        object.setString("type", "platform");
+      }
 
-      platform.setInt("pX", (int) r.getX());
-      platform.setInt("pY", (int) r.getY());
-      platform.setInt("pWidth", (int) r.getWidth());
-      platform.setInt("pHeight", (int) r.getHeight());
-
-      values.setJSONObject(values.size(), platform); //add it on to the end
+      values.setJSONObject(values.size(), object); //add it on to the end
     }
 
     //remember that you can save files to the invisible private directory for the game
@@ -28,7 +30,7 @@ class EditorJSON {
     try {
       File file = new File("storage/emulated/0/levels/" + "level" + ".json");
       saveJSONArray(values, file.getAbsolutePath());
-      showToast("Composition saved");
+      showToast("Level Saved");
     }
     catch (Exception e) {
       showToast(e.getMessage());
@@ -47,21 +49,24 @@ class EditorJSON {
       
       //logic for loading
       for (int i = 0; i < values.size(); i++) {
-        JSONObject platform = values.getJSONObject(i); 
+        JSONObject object = values.getJSONObject(i); 
 
-        int pX = platform.getInt("pX");
-        int pY = platform.getInt("pY");
-        int pWidth = platform.getInt("pWidth");
-        int pHeight = platform.getInt("pHeight");
-
-        Platform p = new Platform(pX, pY, pWidth, pHeight);
-        objects.add(p);
+        int pX = object.getInt("pX");
+        int pY = object.getInt("pY");
+        int pWidth = object.getInt("pWidth");
+        int pHeight = object.getInt("pHeight");
+        String type = object.getString("type");
+        if(type.equals("platform")) {
+          Platform p = new Platform(pX, pY, pWidth, pHeight);
+          objects.add(p);
+        }
       }
 
       game.world.clear();
       for (Rectangle r : objects) {
         game.world.insert(r);
       }
+      showToast("Level Loaded");
     }
     catch(Exception e) {
       showToast(e.getMessage());
