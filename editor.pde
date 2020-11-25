@@ -265,7 +265,15 @@ class EditorBottom extends Toolbar {
   private String folder = dataPath("ui") + '/';
   private PImage toolbar;
   private float widgetHeight;
-  private ArrayList<PieceHandler> pieces;
+  
+  //scroll bars
+  private int size; //used for drawing all types
+  private ArrayList<PieceHandler> pieces; //pieces
+  private float pieceOffset;
+  //blocks
+  //blockOffset
+  //events
+  //eventOffset
 
   public EditorBottom(Editor editor) {
     super(editor);
@@ -289,6 +297,8 @@ class EditorBottom extends Toolbar {
 
     widgetHeight = pieceArea.getY()-54; //TODO: get the height right
 
+    //scroll bars
+    size = 150;
     pieces = texture.getPieceList();
   }
 
@@ -314,7 +324,6 @@ class EditorBottom extends Toolbar {
     }
 
     //draw pieces
-    float size = 150;
     imageMode(CENTER);
     if (editor.eType == editorType.IMAGE) {
       for (int i = 0; i < pieces.size(); i++) {
@@ -323,6 +332,12 @@ class EditorBottom extends Toolbar {
       }
     }
     imageMode(CORNER);
+  }
+  
+  public void touchMoved() {
+    if (touches.length == 1 && mouseY >= pieceArea.getY()) {
+      pieceOffset += (pmouseX - mouseX)/3;
+    }
   }
 
   public void touchEnded() {
