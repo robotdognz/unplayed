@@ -120,6 +120,9 @@ class Game {
       if (p instanceof Event && eventVis) {
         ((Event) p).draw();
       }
+      if (p instanceof Piece) {
+        ((Piece) p).draw();
+      }
     }
     player.draw();
     paper.draw(screenSpace);
