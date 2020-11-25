@@ -360,10 +360,11 @@ class EditorBottom extends Toolbar {
   }
 
   public void onTap(float x, float y) {
+    showToast("Tap Test");
     //select piece 
     if (touches.length == 1 && y >= pieceArea.getY()) {
       editor.currentPiece = pieces.get(0);
-      showToast("Tap Test");
+      //showToast("Tap Test");
     }
   }
 
