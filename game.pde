@@ -113,15 +113,17 @@ class Game {
 
     //draw player and environment
     background(240);
-    for (Rectangle p : screenObjects) {
+    for (Rectangle p : screenObjects) { //draw pieces
+      if (p instanceof Piece) {
+        ((Piece) p).draw();
+      }
+    }
+    for (Rectangle p : screenObjects) { //draw tiles and events
       if (p instanceof Platform) {
         ((Platform) p).draw();
       }
       if (p instanceof Event && eventVis) {
         ((Event) p).draw();
-      }
-      if (p instanceof Piece) {
-        ((Piece) p).draw();
       }
     }
     player.draw();

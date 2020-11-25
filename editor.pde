@@ -154,8 +154,8 @@ class Editor {
         for (Rectangle p : getRectangles) {
 
           if (p.getTopLeft().x == platformX && 
-          p.getTopLeft().y == platformY &&
-          toInsert.getClass().equals(p.getClass())) {
+            p.getTopLeft().y == platformY &&
+            toInsert.getClass().equals(p.getClass())) {
             spaceFree = false;
             foundAtPoint = p;
           }
@@ -356,6 +356,11 @@ class EditorBottom extends Toolbar {
     if (editor.eType == editorType.IMAGE) {
       for (int i = 0; i < pieces.size(); i++) {
         PieceHandler piece = pieces.get(i);
+        if (piece.equals(editor.currentPiece)) { //if this is the selected piece
+          //draw highlight behind
+          fill(0, 0, 0, 150);
+          rect(pieceArea.getX()+pieceArea.getHeight()/2 + i*pieceArea.getHeight(), pieceArea.getY()+pieceArea.getHeight()/2, pieceArea.getHeight(), pieceArea.getHeight());
+        }
         piece.draw(pieceArea.getX()+pieceArea.getHeight()/2 + i*pieceArea.getHeight(), pieceArea.getY()+pieceArea.getHeight()/2, size);
       }
     }
