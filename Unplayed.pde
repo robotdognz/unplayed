@@ -7,17 +7,10 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.regex.*;
 
+import java.io.Writer;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
-import java.io.*;
 import android.widget.Toast;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public KetaiGesture gesture;
 public Vibe vibe;
@@ -61,15 +54,6 @@ void setup() {
   context = activity.getApplicationContext();
   
   //requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-}
-
-void showToast(final String message) { 
-  activity.runOnUiThread(new Runnable() { 
-    public void run() { 
-      android.widget.Toast.makeText(activity.getApplicationContext(), message, android.widget.Toast.LENGTH_SHORT).show();
-    }
-  }
-  );
 }
 
 void init() {
@@ -235,6 +219,16 @@ void onPinch(float x, float y, float d) {
 //  //v velocity of flick
 //}
 //void onRotate(float x, float y, float angle) {}
+
+//used for printing messages to the screen
+void showToast(final String message) { 
+  activity.runOnUiThread(new Runnable() { 
+    public void run() { 
+      android.widget.Toast.makeText(activity.getApplicationContext(), message, android.widget.Toast.LENGTH_SHORT).show();
+    }
+  }
+  );
+}
 
 //------------------TextureStore---------------------
 class TextureCache {

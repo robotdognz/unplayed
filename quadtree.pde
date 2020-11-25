@@ -1,7 +1,9 @@
 public class Quadtree {
+  private Rectangle bounds;
   private QuadNode root;
 
   public Quadtree(Rectangle bounds) {
+    this.bounds = bounds;
     root = new QuadNode(bounds, null, this); //top level node has null for parent
   }
 
@@ -24,6 +26,10 @@ public class Quadtree {
 
   public void draw() {
     root.draw();
+  }
+  
+  public void clear() {
+    root = new QuadNode(bounds, null, this);
   }
 
   public HashSet<Rectangle> getAll(HashSet<Rectangle> returnSet) {

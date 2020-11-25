@@ -672,6 +672,11 @@ class LoadWidget extends Widget {
     available = false;
     icon = loadImage(folder+"load.png");
   }
+  
+  public void clicked() {
+    //load the level
+    editor.eJSON.load(editor.eGame);
+  }
 }
 
 class PlaneMenuWidget extends Widget {
