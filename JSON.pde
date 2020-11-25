@@ -10,6 +10,7 @@ class EditorJSON {
 
     game.world.getAll(objects);
 
+    //logic for saving
     for (Rectangle r : objects) {
       JSONObject platform = new JSONObject();
 
@@ -25,20 +26,10 @@ class EditorJSON {
     //that would be a good way to stop people from using their level files if they haven't paid
 
     try {
-      //Writer output = null;
-
-      //if (hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
-        File file = new File("storage/emulated/0/levels/" + "level" + ".json");
-        saveJSONArray(values, file.getAbsolutePath());
-        //output = new BufferedWriter(new FileWriter(file));
-        //output.write(values.toString());
-        //output.close();
-        showToast("Composition saved");
-      //} else {
-      //  showToast("Please enable file writing permissions");
-      //  requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-      //}
-    } 
+      File file = new File("storage/emulated/0/levels/" + "level" + ".json");
+      saveJSONArray(values, file.getAbsolutePath());
+      showToast("Composition saved");
+    }
     catch (Exception e) {
       showToast(e.getMessage());
     }
@@ -46,18 +37,15 @@ class EditorJSON {
 
 
   public void load(Game game) {
-    HashSet<Rectangle> objects = new HashSet<Rectangle>();
+
 
     try {
+      File file = new File("storage/emulated/0/levels/" + "level" + ".json");
+      values = loadJSONArray(file);
 
-      //if (hasPermission("android.permission.READ_EXTERNAL_STORAGE")) {
-        File file = new File("storage/emulated/0/levels/" + "level" + ".json");
-        values = loadJSONArray(file);
-      //} else {
-      //  showToast("Please enable file reading permissions");
-      //  requestPermission("android.permission.READ_EXTERNAL_STORAGE");
-      //}
-
+      HashSet<Rectangle> objects = new HashSet<Rectangle>();
+      
+      //logic for loading
       for (int i = 0; i < values.size(); i++) {
         JSONObject platform = values.getJSONObject(i); 
 
@@ -65,19 +53,18 @@ class EditorJSON {
         int pY = platform.getInt("pY");
         int pWidth = platform.getInt("pWidth");
         int pHeight = platform.getInt("pHeight");
-        
+
         Platform p = new Platform(pX, pY, pWidth, pHeight);
         objects.add(p);
+      }
+
+      game.world.clear();
+      for (Rectangle r : objects) {
+        game.world.insert(r);
       }
     }
     catch(Exception e) {
       showToast(e.getMessage());
-    }
-
-    //return objects;
-    game.world.clear();
-    for(Rectangle r : objects){
-      game.world.insert(r);
     }
   }
 }
