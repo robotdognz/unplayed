@@ -293,7 +293,7 @@ class TextureCache {
     }
     pieceList = new ArrayList<PieceHandler>(pieceMap.values());
     Collections.sort(pieceList);
-    //println(pieceMap.toString()); //print out all the pieces that were loaded in
+    println(pieceList.toString()); //print out all the pieces that were loaded in
 
     //blocks
     defaultBlock = loadImage("player_main.png");
