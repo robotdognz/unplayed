@@ -669,7 +669,7 @@ class SaveAsWidget extends Widget {
 class LoadWidget extends Widget {
   public LoadWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
-    available = false;
+    closeAfterSubWidget = true;
     icon = loadImage(folder+"load.png");
   }
   
