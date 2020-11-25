@@ -218,6 +218,16 @@ void onPinch(float x, float y, float d) {
   }
 }
 
+void onTap (float x, float y){
+  if (menu == null) {
+    if (editorToggle) {
+      edit.onTap(x, y);
+    } else {
+      //gController.onTap(x, y);
+    }
+  }
+}
+
 //void onFlick(float x, float y, float px, float py, float v) {
 //  //x/y start of flick
 //  //px/yx end of flick

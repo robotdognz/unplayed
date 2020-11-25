@@ -21,6 +21,10 @@ class Editor {
   editorMode eMode = editorMode.ADD;
   imagePlane eImagePlane = imagePlane.LEVEL;
 
+  //current object to put into level
+  PieceHandler currentPiece = null;
+  Platform currentBlock = null; //TODO: should use BlockHandler when that is implemented
+
   //toolbars
   Toolbar editorTop;
   Toolbar editorBottom;
@@ -54,6 +58,8 @@ class Editor {
     if (!(eController instanceof EditorControl)) {
       g.point = null;
     }
+
+    //figure out what is being placed
   }
 
   //a bunch of this probably needs to be moved to step, for logical consistency only drawing should be in draw
@@ -120,7 +126,11 @@ class Editor {
     }
   }
 
-  public void placeBlock() {
+  public void onTap(float x, float y) {
+    editorBottom.onTap(x, y);
+  }
+
+  public void placeBlock() {  //place piece / place event
     if (g.point != null) {
 
       int platformX = (int) g.point.x;
@@ -129,26 +139,36 @@ class Editor {
       boolean spaceFree = true;
       Rectangle foundAtPoint = null;
 
-      HashSet<Rectangle> getPlatforms = new HashSet<Rectangle>();
-      for (Rectangle p : g.world.retrieve(getPlatforms, new Rectangle(platformX, platformY, 100, 100))) {
-
-        if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY) {
-          spaceFree = false;
-          foundAtPoint = p;
-        }
+      //create the new piece to put in
+      Rectangle toInsert = null;
+      if (eType == editorType.BLOCK) {
+        toInsert = new Platform(platformX, platformY, 100, 100);
+      } else if (eType == editorType.IMAGE && currentPiece != null) {
+        toInsert = new Piece(currentPiece.getFile(), platformX, platformY, currentPiece.getWidth(), currentPiece.getHeight());
       }
 
-      if (spaceFree) { //if there isn't something already there
-        if (eMode == editorMode.ADD) {
-          Platform newPlatform = new Platform(platformX, platformY, 100, 100);
-          g.world.insert(newPlatform);
+      if (toInsert != null) {
+        HashSet<Rectangle> getPlatforms = new HashSet<Rectangle>();
+        for (Rectangle p : g.world.retrieve(getPlatforms, toInsert)) {
+
+          if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY) {
+            spaceFree = false;
+            foundAtPoint = p;
+          }
         }
-      } else {
-        if (eMode == editorMode.ERASE && foundAtPoint != null) {
-          g.world.remove(foundAtPoint);
+
+        if (spaceFree) { //if there isn't something already there
+          if (eMode == editorMode.ADD) {
+            //Platform newPlatform = new Platform(platformX, platformY, 100, 100);
+            g.world.insert(toInsert);
+          }
+        } else {
+          if (eMode == editorMode.ERASE && foundAtPoint != null) {
+            g.world.remove(foundAtPoint);
+          }
         }
+        g.point = null;
       }
-      g.point = null;
     }
   }
 
@@ -181,6 +201,8 @@ abstract class Toolbar {
   public void touchEnded() {
   }
   public void touchMoved() {
+  }
+  public void onTap(float x, float y) {
   }
   public void onPinch(float x, float y, float d) {
   }
@@ -265,7 +287,7 @@ class EditorBottom extends Toolbar {
   private String folder = dataPath("ui") + '/';
   private PImage toolbar;
   private float widgetHeight;
-  
+
   //scroll bars
   private int size; //used for drawing all types
   private ArrayList<PieceHandler> pieces; //pieces
@@ -336,7 +358,15 @@ class EditorBottom extends Toolbar {
     imageMode(CORNER);
     popMatrix();
   }
-  
+
+  public void onTap(float x, float y) {
+    //select piece 
+    if (touches.length == 1 && y >= pieceArea.getY()) {
+      editor.currentPiece = pieces.get(0);
+      showToast("Tap Test");
+    }
+  }
+
   public void touchMoved() {
     if (touches.length == 1 && mouseY >= pieceArea.getY()) {
       pieceOffset += (pmouseX - mouseX)/3;
