@@ -352,6 +352,7 @@ class EditorBottom extends Toolbar {
     //draw pieces
     pushMatrix();
     imageMode(CENTER);
+    rectMode(CENTER);
     translate(-pieceOffset, 0);
     if (editor.eType == editorType.IMAGE) {
       for (int i = 0; i < pieces.size(); i++) {
@@ -365,6 +366,7 @@ class EditorBottom extends Toolbar {
       }
     }
     imageMode(CORNER);
+    rectMode(CORNER);
     popMatrix();
   }
 
