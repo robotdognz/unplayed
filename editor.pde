@@ -324,7 +324,9 @@ class EditorBottom extends Toolbar {
     }
 
     //draw pieces
+    pushMatrix();
     imageMode(CENTER);
+    translate(pieceOffset, 0);
     if (editor.eType == editorType.IMAGE) {
       for (int i = 0; i < pieces.size(); i++) {
         PieceHandler piece = pieces.get(i);
@@ -332,6 +334,7 @@ class EditorBottom extends Toolbar {
       }
     }
     imageMode(CORNER);
+    popMatrix();
   }
   
   public void touchMoved() {
