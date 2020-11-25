@@ -59,6 +59,8 @@ void setup() {
 
   activity = this.getActivity();
   context = activity.getApplicationContext();
+  
+  requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
 }
 
 void showToast(final String message) { 
