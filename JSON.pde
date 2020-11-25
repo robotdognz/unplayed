@@ -25,13 +25,14 @@ class EditorJSON {
     //that would be a good way to stop people from using their level files if they haven't paid
 
     try {
-      Writer output = null;
+      //Writer output = null;
 
       if (hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
         File file = new File("storage/emulated/0/levels/" + "level" + ".json");
-        output = new BufferedWriter(new FileWriter(file));
-        output.write(values.toString());
-        output.close();
+        saveJSONArray(values, file.getAbsolutePath());
+        //output = new BufferedWriter(new FileWriter(file));
+        //output.write(values.toString());
+        //output.close();
         showToast("Composition saved");
       } else {
         showToast("Please enable file writing permissions");
