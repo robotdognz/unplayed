@@ -147,11 +147,15 @@ class Editor {
         toInsert = new Piece(currentPiece.getFile(), platformX, platformY, currentPiece.getWidth(), currentPiece.getHeight());
       }
 
+      //insert it or remove
       if (toInsert != null) {
-        HashSet<Rectangle> getPlatforms = new HashSet<Rectangle>();
-        for (Rectangle p : g.world.retrieve(getPlatforms, toInsert)) {
+        HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
+        g.world.retrieve(getRectangles, toInsert);
+        for (Rectangle p : getRectangles) {
 
-          if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY) {
+          if (p.getTopLeft().x == platformX && 
+          p.getTopLeft().y == platformY &&
+          toInsert.getClass().equals(p.getClass())) {
             spaceFree = false;
             foundAtPoint = p;
           }
