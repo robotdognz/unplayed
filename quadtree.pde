@@ -153,7 +153,7 @@ public class QuadNode {
       } else { //if this node doesn't have children
         ArrayList<Rectangle> matches = new ArrayList<Rectangle>();
         for (Rectangle r : objects) { //find all matching rectangles
-          if (current.equals(r) || r.getX() == current.getX() && r.getY() == current.getY()) {
+          if (current.equals(r)) { // || r.getX() == current.getX() && r.getY() == current.getY()) { //TODO: this needs to be cleaned up, probably doesn't need to make a list and go throught it
             matches.add(r);
           }
         }
