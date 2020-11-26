@@ -260,7 +260,8 @@ public class QuadNode {
     retrieve(toAdd, bottomLeft);
 
     //insert the new rectangle
-    newTopLeft.nodeInsert(current);
+    //newTopLeft.nodeInsert(current);
+    tree.root.nodeInsert(current);
 
     //add overlaping rectangles
     for (Rectangle r : toAdd) {
@@ -299,7 +300,8 @@ public class QuadNode {
     retrieve(toAdd, bottomRight);
 
     //insert the new rectangle
-    newTopLeft.nodeInsert(current);
+    //newTopLeft.nodeInsert(current);
+    tree.root.nodeInsert(current);
 
     //add overlaping rectangles
     for (Rectangle r : toAdd) {
@@ -338,7 +340,8 @@ public class QuadNode {
     retrieve(toAdd, bottomLeft);
 
     //insert the new rectangle
-    newTopLeft.nodeInsert(current);
+    //newTopLeft.nodeInsert(current);
+    tree.root.nodeInsert(current);
 
     //add overlaping rectangles
     for (Rectangle r : toAdd) {
@@ -377,7 +380,8 @@ public class QuadNode {
     retrieve(toAdd, bottomLeft);
 
     //insert the new rectangle
-    newTopLeft.nodeInsert(current);
+    //newTopLeft.nodeInsert(current);
+    tree.root.nodeInsert(current);
 
     //add overlaping rectangles
     for (Rectangle r : toAdd) {
