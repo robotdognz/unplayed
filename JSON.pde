@@ -31,7 +31,7 @@ class EditorJSON {
 
       File file = new File("storage/emulated/0/levels/" + "level" + ".json");
       saveJSONArray(values, file.getAbsolutePath());
-      showToast("Level Saved");
+      showToast("Level Saved: " + objects.size());
     }
     catch (Exception e) {
       showToast(e.getMessage());
@@ -69,7 +69,7 @@ class EditorJSON {
       for (Rectangle r : objects) {
         game.world.insert(r);
       }
-      showToast("Level Loaded");
+      showToast("Level Loaded: " + objects.size());
     }
     catch(Exception e) {
       showToast(e.getMessage());
