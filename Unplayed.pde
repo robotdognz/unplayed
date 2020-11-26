@@ -261,7 +261,6 @@ void showToast(final String message) {
 class TextureCache {
   //paper textures
   public PImage grid;
-  //public PImage paper;
 
   //level pieces
   private File pieceDir;
@@ -279,8 +278,7 @@ class TextureCache {
 
     //paper textures
     grid = loadImage("PaperGrid_512x512.png");
-    //paper = loadImage("paper.png");
-
+    
     //level pieces
     pieceDir = new File(dataPath("pieces")+'/');
     piecePaths = pieceDir.listFiles();
