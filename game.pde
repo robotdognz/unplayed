@@ -41,7 +41,7 @@ class Game {
     camera = c;
     level = new BlankLevel();
     eventVis = true;
-    quadVis = true;
+    quadVis = false;
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
 

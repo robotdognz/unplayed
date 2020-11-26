@@ -32,6 +32,7 @@ public class Quadtree {
   }
   
   public void clear() {
+    insertCount = 0;
     root = new QuadNode(bounds, null, this);
   }
   
