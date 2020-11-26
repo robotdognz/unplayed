@@ -73,7 +73,7 @@ class Editor {
     textSize(50);
     textAlign(CENTER, CENTER);
     text(nf(convert.getScale(), 1, 2), width/2, height-editorBottom.getHeight()-150);
-    text(g.scanSize + " : " + g.screenObjects.size() + " : " + g.world.size(), width/2, height-editorBottom.getHeight()-100);
+    text(g.scanSize + " : " + g.screenObjects.size() + " Size: " + g.world.size() + " Inserted: " + g.world.insertCount(), width/2, height-editorBottom.getHeight()-100);
     text("FPS: " + nf(this.frame, 1, 2), width/2, height-editorBottom.getHeight()-50);
   }
 

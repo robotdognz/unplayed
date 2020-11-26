@@ -1,6 +1,7 @@
 public class Quadtree {
   private Rectangle bounds;
   private QuadNode root;
+  private int insertCount = 0;
 
   public Quadtree(Rectangle bounds) {
     this.bounds = bounds;
@@ -14,6 +15,7 @@ public class Quadtree {
 
   public void insert(Rectangle current) {
     root.insert(current);
+    insertCount++;
   }
 
   public void remove(Rectangle current) {
@@ -36,6 +38,10 @@ public class Quadtree {
     HashSet<Rectangle> count = new HashSet<Rectangle>();
     getAll(count);
     return count.size();
+  }
+  
+  public int insertCount(){
+    return insertCount;
   }
 
   public HashSet<Rectangle> getAll(HashSet<Rectangle> returnSet) {
