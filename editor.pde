@@ -373,7 +373,7 @@ class EditorBottom extends Toolbar {
   public void onTap(float x, float y) {
     //select piece 
     if ( y >= pieceArea.getY()) { //touches.length == 1 &&
-      showToast("Tap Test");
+      //showToast("Tap Test");
       editor.currentPiece = pieces.get(0);
       //showToast("Tap Test");
     }
