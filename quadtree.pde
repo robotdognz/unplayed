@@ -15,7 +15,7 @@ public class Quadtree {
 
   public void insert(Rectangle current) {
     insertCount++;
-    root.insert(current);
+    root.nodeInsert(current);
   }
 
   public void remove(Rectangle current) {
@@ -120,13 +120,13 @@ public class QuadNode {
     return true;
   }
 
-  public void insert(Rectangle current) {
+  public void nodeInsert(Rectangle current) {
     if (insideBounds(current)) { //if it is inside the current node bounds
       if (topLeft != null) {
-        topLeft.insert(current);
-        topRight.insert(current);
-        bottomLeft.insert(current);
-        bottomRight.insert(current);
+        topLeft.nodeInsert(current);
+        topRight.nodeInsert(current);
+        bottomLeft.nodeInsert(current);
+        bottomRight.nodeInsert(current);
       } else {
         objects.add(current); //add the new rectangle
         if (objects.size() < MAX_OBJECTS) { //if this node can take it without splitting
@@ -186,10 +186,10 @@ public class QuadNode {
     bottomLeft = new QuadNode(new Rectangle(x, y+subHeight, subWidth, subHeight), this, tree);
     bottomRight = new QuadNode(new Rectangle(x+subWidth, y+subHeight, subWidth, subHeight), this, tree);
     for (Rectangle r : objects) {
-      topLeft.insert(r);
-      topRight.insert(r);
-      bottomLeft.insert(r);
-      bottomRight.insert(r);
+      topLeft.nodeInsert(r);
+      topRight.nodeInsert(r);
+      bottomLeft.nodeInsert(r);
+      bottomRight.nodeInsert(r);
     }
     objects.clear();
   }
@@ -260,11 +260,11 @@ public class QuadNode {
     retrieve(toAdd, bottomLeft);
 
     //insert the new rectangle
-    newTopLeft.insert(current);
+    newTopLeft.nodeInsert(current);
 
     //add overlaping rectangles
     for (Rectangle r : toAdd) {
-      tree.root.insert(r);
+      tree.root.nodeInsert(r);
     }
   }
   private void growTopRight(Rectangle current) {
@@ -299,11 +299,11 @@ public class QuadNode {
     retrieve(toAdd, bottomRight);
 
     //insert the new rectangle
-    newTopLeft.insert(current);
+    newTopLeft.nodeInsert(current);
 
     //add overlaping rectangles
     for (Rectangle r : toAdd) {
-      tree.root.insert(r);
+      tree.root.nodeInsert(r);
     }
   }
   private void growBottomLeft(Rectangle current) {
@@ -338,11 +338,11 @@ public class QuadNode {
     retrieve(toAdd, bottomLeft);
 
     //insert the new rectangle
-    newTopLeft.insert(current);
+    newTopLeft.nodeInsert(current);
 
     //add overlaping rectangles
     for (Rectangle r : toAdd) {
-      tree.root.insert(r);
+      tree.root.nodeInsert(r);
     }
   }
   private void growBottomRight(Rectangle current) {
@@ -377,11 +377,11 @@ public class QuadNode {
     retrieve(toAdd, bottomLeft);
 
     //insert the new rectangle
-    newTopLeft.insert(current);
+    newTopLeft.nodeInsert(current);
 
     //add overlaping rectangles
     for (Rectangle r : toAdd) {
-      tree.root.insert(r);
+      tree.root.nodeInsert(r);
     }
   }
 
