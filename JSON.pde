@@ -21,6 +21,7 @@ class EditorJSON {
         object.setInt("pHeight", (int) r.getHeight());
         if (r instanceof Platform) {
           object.setString("type", "tile");
+          object.setString("file", (((Platform) r).getFile()).toString() );
         } else if (r instanceof Piece) {
           object.setString("type", "piece");
           object.setString("file", (((Piece) r).getFile()).toString() );
@@ -55,12 +56,13 @@ class EditorJSON {
         int pWidth = object.getInt("pWidth");
         int pHeight = object.getInt("pHeight");
         String type = object.getString("type");
+        File textureFile = new File(object.getString("file"));
         if (type.equals("tile")) {  //if it is a tile
-          Platform p = new Platform(pX, pY, pWidth, pHeight);
+          Platform p = new Platform(textureFile, pX, pY, pWidth, pHeight);
           objects.add(p);
         } else if (type.equals("piece")) {  //if it is a piece
-          File pieceFile = new File(object.getString("file"));
-          Piece p = new Piece(pieceFile, pX, pY, pWidth, pHeight);
+          //File pieceFile = new File(object.getString("file"));
+          Piece p = new Piece(textureFile, pX, pY, pWidth, pHeight);
           objects.add(p);
         }
       }

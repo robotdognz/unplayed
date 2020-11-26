@@ -61,7 +61,7 @@ class BlankLevel extends Level {
     this.bottomOfTopBar = (int)cameraTopLeft.y;
     this.topOfBottomBar = (int)cameraBottomRight.y;
     
-    platforms.add(new Platform(0, 100, 100, 100));
+    platforms.add(new Platform(null, 0, 100, 100, 100));
   }
 }
 
@@ -87,26 +87,26 @@ class Level1 extends Level {
     this.bottomOfTopBar = (int)cameraTopLeft.y;
     this.topOfBottomBar = (int)cameraBottomRight.y;
     
-    platforms.add(new Platform(-150, 1000, 200, 100));
-    platforms.add(new Platform(-1400, 1300, 1400*3, 100)); //100
-    platforms.add(new Platform(-350, 1100, 200, 100));
+    platforms.add(new Platform(null, -150, 1000, 200, 100));
+    platforms.add(new Platform(null, -1400, 1300, 1400*3, 100)); //100
+    platforms.add(new Platform(null, -350, 1100, 200, 100));
 
-    platforms.add(new Platform(50, 1150, 200, 100)); 
-    platforms.add(new Platform(330, 1090, 200, 100));
+    platforms.add(new Platform(null, 50, 1150, 200, 100)); 
+    platforms.add(new Platform(null, 330, 1090, 200, 100));
 
-    platforms.add(new Platform(-660, 1120, 200, 100));
-    platforms.add(new Platform(-50, 800, 100, 100));
-    platforms.add(new Platform(600, 600, 100, 100));
+    platforms.add(new Platform(null, -660, 1120, 200, 100));
+    platforms.add(new Platform(null, -50, 800, 100, 100));
+    platforms.add(new Platform(null, 600, 600, 100, 100));
 
-    platforms.add(new Platform(-600, 600, 100, 100));
-    platforms.add(new Platform(-400, 600, 100, 100));
-    platforms.add(new Platform(-600, 700, 300, 100));
+    platforms.add(new Platform(null, -600, 600, 100, 100));
+    platforms.add(new Platform(null, -400, 600, 100, 100));
+    platforms.add(new Platform(null, -600, 700, 300, 100));
     //solution to the puzzle: put player into this slot to complete the pattern
     //later puzzles will include pattern colours being different, maybe orientation, etc.
     
     //zoom testing
-    platforms.add(new Platform(-600, -8000, 100, 100));
-    platforms.add(new Platform(200, 9900, 100, 100));
+    platforms.add(new Platform(null, -600, -8000, 100, 100));
+    platforms.add(new Platform(null, 200, 9900, 100, 100));
 
     events.add(new CameraChange(-600, 800, 100, 100, new PVector(-700, 200), new PVector(700, 1900), 2, 2)); //0.05, 0.1
     events.add(new CameraChange(600, 500, 100, 100, new PVector(-700, -8000), new PVector(700, 10000), 3, 3)); //0.03, 0.023
@@ -142,26 +142,26 @@ class Level2 extends Level {
   
   private void buildLevel() {
     //platforms
-    platforms.add(new Platform(-1400, 2000, 1400*2, 100));
-    platforms.add(new Platform(-800, 500, 100, 1500));
-    platforms.add(new Platform(-700, 1700, 100, 300));
-    platforms.add(new Platform(600, 1300, 100, 700));
+    platforms.add(new Platform(null, -1400, 2000, 1400*2, 100));
+    platforms.add(new Platform(null, -800, 500, 100, 1500));
+    platforms.add(new Platform(null, -700, 1700, 100, 300));
+    platforms.add(new Platform(null, 600, 1300, 100, 700));
     
-    platforms.add(new Platform(-500, 1700, 1000, 200));
+    platforms.add(new Platform(null, -500, 1700, 1000, 200));
     
-    platforms.add(new Platform(-700, 1500, 600, 100));
-    platforms.add(new Platform(100, 1500, 400, 100));
+    platforms.add(new Platform(null, -700, 1500, 600, 100));
+    platforms.add(new Platform(null, 100, 1500, 400, 100));
 
-    platforms.add(new Platform(-700, 1100, 100, 400));
-    platforms.add(new Platform(-700, 700, 100, 300));
-    platforms.add(new Platform(-500, 1300, 1100, 100));
-    platforms.add(new Platform(-500, 700, 100, 500));
+    platforms.add(new Platform(null, -700, 1100, 100, 400));
+    platforms.add(new Platform(null, -700, 700, 100, 300));
+    platforms.add(new Platform(null, -500, 1300, 1100, 100));
+    platforms.add(new Platform(null, -500, 700, 100, 500));
    
-    platforms.add(new Platform(-1000, 500, 200, 1200));
+    platforms.add(new Platform(null, -1000, 500, 200, 1200));
     
-    platforms.add(new Platform(-400, 500, 100, 700));
-    platforms.add(new Platform(-300, 500, 100, 500));
-    platforms.add(new Platform(-200, 600, 100, 700));
+    platforms.add(new Platform(null, -400, 500, 100, 700));
+    platforms.add(new Platform(null, -300, 500, 100, 500));
+    platforms.add(new Platform(null, -200, 600, 100, 700));
 
 
     //events

@@ -43,6 +43,9 @@ class Editor {
     this.editorTop = new EditorTop(this);
     this.editorBottom = new EditorBottom(this);
     this.eJSON = new EditorJSON();
+    
+    this.currentPiece = texture.getPieceList().get(0);
+    this.currentTile = texture.getTileList().get(0);
   }
 
   public void step() {
@@ -143,7 +146,7 @@ class Editor {
       //create the new piece to put in
       Rectangle toInsert = null;
       if (eType == editorType.BLOCK) {
-        toInsert = new Platform(platformX, platformY, 100, 100);
+        toInsert = new Platform(currentTile.getFile(), platformX, platformY, 100, 100);
       } else if (eType == editorType.IMAGE && currentPiece != null) {
         toInsert = new Piece(currentPiece.getFile(), platformX, platformY, currentPiece.getWidth(), currentPiece.getHeight());
       } else {

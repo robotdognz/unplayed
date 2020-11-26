@@ -6,7 +6,7 @@ class Piece extends Rectangle {
   Piece(File file, int x, int y, int pieceW, int pieceH) {
     super(x, y, pieceW, pieceH);
 
-    if (texture.getPieceMap().containsKey(file)) {
+    if (file != null && texture.getPieceMap().containsKey(file)) {
       this.pieceTexture = texture.getPieceMap().get(file);
       this.sprite = pieceTexture.getSprite();
       setWidth(pieceTexture.getWidth());
@@ -27,11 +27,21 @@ class Piece extends Rectangle {
 
 //------------------Platform---------------------
 class Platform extends Rectangle {
+  private TileHandler tileTexture;
   private PImage sprite;
 
-  public Platform(int x, int y, int platformW, int platformH) {
+  public Platform(File file, int x, int y, int platformW, int platformH) {
     super(x, y, platformW, platformH);
-    sprite = texture.defaultBlock;
+
+    if (file != null && texture.getTileMap().containsKey(file)) {
+      this.tileTexture = texture.getTileMap().get(file);
+      this.sprite = tileTexture.getSprite();
+      setWidth(100);
+      setHeight(100);
+    } else {
+      //set sprite to file not found image
+      sprite = texture.defaultBlock;
+    }
   }
 
   public void draw() {
@@ -51,5 +61,9 @@ class Platform extends Rectangle {
     //vertex(x+platformW, y+platformH, rX, rY); //bottom right
     //vertex(x, y+platformH, 0, rY); //bottom left
     //endShape();
+  }
+
+  public File getFile() {
+    return tileTexture.getFile();
   }
 }
