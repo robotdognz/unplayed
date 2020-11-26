@@ -319,7 +319,7 @@ class EditorBottom extends Toolbar {
     eWidgetSpacing = 140;    //TODO: change this
 
     //setup toolbar
-    int pieceAreaHeight = 200;
+    int pieceAreaHeight = 230; //200
     pieceArea = new Rectangle(0, height-pieceAreaHeight, width, pieceAreaHeight);
     toolbar = loadImage(folder+"icn_toolbar_bg.png");
 
