@@ -260,15 +260,15 @@ class SettingsWidget extends Widget {
     Widget w1 = new RestartWidget(editor, parent);
     Widget w2 = new PlayModeWidget(editor, parent);
     Widget w3 = new SnapWidget(editor, parent);
-    Widget w4 = new PickImageWidget(editor, parent);
-    Widget w5 = new PickEventWidget(editor, parent);
-    Widget w6 = new PickBlockWidget(editor, parent);
+    //Widget w4 = new PickImageWidget(editor, parent);
+    //Widget w5 = new PickEventWidget(editor, parent);
+    //Widget w6 = new PickBlockWidget(editor, parent);
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
-    subWidgets.add(w4);
-    subWidgets.add(w5);
-    subWidgets.add(w6);
+    //subWidgets.add(w4);
+    //subWidgets.add(w5);
+    //subWidgets.add(w6);
   }
 }
 class RestartWidget extends Widget {
@@ -329,30 +329,30 @@ class SnapWidget extends Widget {
     }
   }
 }
-class PickImageWidget extends Widget {
-  public PickImageWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    available = false;
-    closeAfterSubWidget = true;
-    icon = loadImage(folder+"pickImage.png");
-  }
-}
-class PickEventWidget extends Widget {
-  public PickEventWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    available = false;
-    closeAfterSubWidget = true;
-    icon = loadImage(folder+"pickEvent.png");
-  }
-}
-class PickBlockWidget extends Widget {
-  public PickBlockWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    available = false;
-    closeAfterSubWidget = true;
-    icon = loadImage(folder+"pickBlock.png");
-  }
-}
+//class PickImageWidget extends Widget {
+//  public PickImageWidget(Editor editor, Toolbar parent) {
+//    super(editor, parent);
+//    available = false;
+//    closeAfterSubWidget = true;
+//    icon = loadImage(folder+"pickImage.png");
+//  }
+//}
+//class PickEventWidget extends Widget {
+//  public PickEventWidget(Editor editor, Toolbar parent) {
+//    super(editor, parent);
+//    available = false;
+//    closeAfterSubWidget = true;
+//    icon = loadImage(folder+"pickEvent.png");
+//  }
+//}
+//class PickBlockWidget extends Widget {
+//  public PickBlockWidget(Editor editor, Toolbar parent) {
+//    super(editor, parent);
+//    available = false;
+//    closeAfterSubWidget = true;
+//    icon = loadImage(folder+"pickBlock.png");
+//  }
+//}
 
 //------------------EditorControls---------------------
 class PlayerControlWidget extends Widget {
