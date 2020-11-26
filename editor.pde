@@ -381,8 +381,8 @@ class EditorBottom extends Toolbar {
       
       //figure out what piece is being clicked on
       for (int i = 0; i < pieces.size(); i++) {
-        float leftEdge = pieceArea.getX() + (i)*pieceArea.getHeight() + pieceOffset;
-        float rightEdge = pieceArea.getX() + (i+1)*pieceArea.getHeight() + pieceOffset;
+        float leftEdge = pieceArea.getX() + (i)*pieceArea.getHeight() - pieceOffset;
+        float rightEdge = pieceArea.getX() + (i+1)*pieceArea.getHeight() - pieceOffset;
         if(x > leftEdge && x < rightEdge){
           editor.currentPiece = pieces.get(i);
         }
