@@ -303,7 +303,7 @@ public class QuadNode {
 
     //add overlaping rectangles
     for (Rectangle r : toAdd) {
-      tree.insert(r);
+      tree.root.insert(r);
     }
   }
   private void growBottomLeft(Rectangle current) {
@@ -342,7 +342,7 @@ public class QuadNode {
 
     //add overlaping rectangles
     for (Rectangle r : toAdd) {
-      tree.insert(r);
+      tree.root.insert(r);
     }
   }
   private void growBottomRight(Rectangle current) {
@@ -381,7 +381,7 @@ public class QuadNode {
 
     //add overlaping rectangles
     for (Rectangle r : toAdd) {
-      tree.insert(r);
+      tree.root.insert(r);
     }
   }
 
