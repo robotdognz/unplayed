@@ -4,6 +4,7 @@ class Game {
   private Paper paper;
 
   public Quadtree world;
+  public Rectangle startingWorld;
   public HashSet<Rectangle> playerObjects;
   public int scanSize = 0;
 
@@ -44,7 +45,8 @@ class Game {
 
     player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
 
-    world = new Quadtree(new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, 900, 900));
+    startingWorld = new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, 900, 900);
+    world = new Quadtree(startingWorld);
     playerObjects = new HashSet<Rectangle>();
     
     paper = new Paper();

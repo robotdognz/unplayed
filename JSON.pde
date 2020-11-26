@@ -65,7 +65,7 @@ class EditorJSON {
         }
       }
 
-      game.world.clear();
+      game.world = new Quadtree(game.startingWorld);
       int count = 0;
       for (Rectangle r : objects) {
         game.world.insert(r);
