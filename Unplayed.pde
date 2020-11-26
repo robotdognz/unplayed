@@ -218,7 +218,7 @@ void onPinch(float x, float y, float d) {
   }
 }
 
-void onTap (float x, float y){
+void onTap (float x, float y) {
   if (menu == null) {
     if (editorToggle) {
       edit.onTap(x, y);
@@ -267,6 +267,11 @@ class TextureCache {
   private File[] piecePaths;
   private HashMap<File, PieceHandler> pieceMap;
   private ArrayList<PieceHandler> pieceList;
+  //tiles
+  private File tileDir;
+  private File[] tilePaths;
+  private HashMap<File, TileHandler> tileMap;
+  private ArrayList<TileHandler> tileList;
 
   //blocks
   public PImage defaultBlock;
@@ -278,7 +283,31 @@ class TextureCache {
 
     //paper textures
     grid = loadImage("PaperGrid_512x512.png");
-    
+
+    //level assets
+    loadLevelPieces();
+    loadTiles();
+
+    //blocks
+    defaultBlock = loadImage("player_main.png");
+  }
+
+  private void loadTiles() {
+    //tiles
+    tileDir = new File(dataPath("tiles")+'/');
+    tilePaths = tileDir.listFiles();
+    tileMap = new HashMap<File, TileHandler>();
+    for (File file : tilePaths) {
+      String path = file.getAbsolutePath();
+      if (path.matches(".+.png$")) { //only checks for .png
+        tileMap.put(file, new TileHandler(file));
+      }
+    }
+    tileList = new ArrayList<TileHandler>(tileMap.values());
+    Collections.sort(tileList);
+  }
+
+  private void loadLevelPieces() {
     //level pieces
     pieceDir = new File(dataPath("pieces")+'/');
     piecePaths = pieceDir.listFiles();
@@ -301,9 +330,14 @@ class TextureCache {
     }
     pieceList = new ArrayList<PieceHandler>(pieceMap.values());
     Collections.sort(pieceList);
+  }
 
-    //blocks
-    defaultBlock = loadImage("player_main.png");
+  public HashMap<File, TileHandler> getTileMap() {
+    return tileMap;
+  }
+
+  public ArrayList<TileHandler> getTileList() {
+    return tileList;
   }
 
   public HashMap<File, PieceHandler> getPieceMap() {
@@ -315,7 +349,60 @@ class TextureCache {
   }
 }
 
-class PieceHandler implements Comparable<PieceHandler> {
+interface Handler {
+  public PImage getSprite();
+  public File getFile();
+  public int getWidth();
+  public int getHeight();
+  public void draw(float pX, float pY, float size);
+}
+
+class TileHandler implements Comparable<TileHandler>, Handler {
+  File datapath;
+  PImage sprite;
+
+  public TileHandler(File file) {
+    datapath = file;
+    String path = file.getAbsolutePath();
+
+    try {
+      sprite = loadImage(path);
+    }
+    catch(Exception e) {
+      //set sprite to file not found image
+    }
+  }
+
+  @Override
+    public int compareTo(TileHandler otherTileHandler) {
+    String otherName = otherTileHandler.getFile().toString();
+    String name = datapath.toString();
+    return otherName.compareTo(name);
+  }
+
+  public PImage getSprite() {
+    return sprite;
+  }
+
+  public File getFile() {
+    return datapath;
+  }
+
+  public void draw(float pX, float pY, float size) {
+    //draw the scaled image
+    image(sprite, pX, pY, size, size);
+  }
+
+  public int getWidth() {
+    return 100;
+  }
+
+  public int getHeight() {
+    return 100;
+  }
+}
+
+class PieceHandler implements Comparable<PieceHandler>, Handler {
   File datapath;
   PImage sprite;
   int pWidth;

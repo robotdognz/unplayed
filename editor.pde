@@ -23,13 +23,14 @@ class Editor {
 
   //current object to put into level
   PieceHandler currentPiece = null;
-  Platform currentBlock = null; //TODO: should use BlockHandler when that is implemented
+  TileHandler currentTile = null;
+  //EventHandler currentEvent = null;
 
   //toolbars
   Toolbar editorTop;
   Toolbar editorBottom;
 
-  //save/load
+  //saver/loader class
   EditorJSON eJSON;
 
   //frame count
@@ -289,19 +290,19 @@ class EditorTop extends Toolbar {
 }
 
 class EditorBottom extends Toolbar {
-  private Rectangle pieceArea;
+  private Rectangle pieceArea;  //TODO: rename
   private String folder = dataPath("ui") + '/';
   private PImage toolbar;
   private float widgetHeight;
 
   //scroll bars
-  private int size; //used for drawing all types
+  private int size; //size to drawn object in the scroll bar
+  private ArrayList<TileHandler> tiles; //tiles
+  private float tileOffset;
   private ArrayList<PieceHandler> pieces; //pieces
   private float pieceOffset;
-  //blocks
-  //blockOffset
-  //events
-  //eventOffset
+  //private ArrayList<EventHandler> events; //events
+  //private float eventOffset;
 
   public EditorBottom(Editor editor) {
     super(editor);
@@ -316,7 +317,7 @@ class EditorBottom extends Toolbar {
     eWidgets.add(eventW);
 
     eWidgetOffset = width*0.71;
-    eWidgetSpacing = 140;    //TODO: change this
+    eWidgetSpacing = 140;    //TODO: get the spacing right
 
     //setup toolbar
     int pieceAreaHeight = 230; //200
@@ -327,6 +328,7 @@ class EditorBottom extends Toolbar {
 
     //scroll bars
     size = 150;
+    tiles = texture.getTileList();
     pieces = texture.getPieceList();
   }
 
@@ -351,25 +353,34 @@ class EditorBottom extends Toolbar {
       }
     }
 
-    //a better way to do this v would be to have it swap out the variables depending on the mode instead of having a different set of logic for each mode
-    //better code reuse etc.
+    //figure out what type to show
+    ArrayList<Handler> objects = new ArrayList<Handler>(); //current objects to draw in the scroll bar
+    Float offset = 0.0;
+    if (editor.eType == editorType.BLOCK) {
+      objects.addAll(tiles);
+      offset = tileOffset;
+    } else if (editor.eType == editorType.IMAGE) {
+      objects.addAll(pieces);
+      offset = pieceOffset;
+    } else if (editor.eType == editorType.EVENT) {
+      //objects.addAll(events);
+      //offset = eventOffset;
+    }
 
-    //draw pieces
+    //draw scroll bar for that type
     pushMatrix();
     imageMode(CENTER);
     rectMode(CENTER);
-    translate(-pieceOffset, 0);
-    if (editor.eType == editorType.IMAGE) {
-      for (int i = 0; i < pieces.size(); i++) {
-        PieceHandler piece = pieces.get(i);
-        if (piece.equals(editor.currentPiece)) { //if this is the selected piece
-          //draw highlight behind
-          noStroke();
-          fill(0, 0, 0, 120);
-          rect(pieceArea.getX()+pieceArea.getHeight()/2 + i*pieceArea.getHeight(), pieceArea.getY()+pieceArea.getHeight()/2, pieceArea.getHeight(), pieceArea.getHeight());
-        }
-        piece.draw(pieceArea.getX()+pieceArea.getHeight()/2 + i*pieceArea.getHeight(), pieceArea.getY()+pieceArea.getHeight()/2, size);
+    translate(-offset, 0);
+    for (int i = 0; i < objects.size(); i++) {
+      Handler object = objects.get(i);
+      if (object.equals(editor.currentPiece)) { //if this is the selected piece
+        //draw highlight behind
+        noStroke();
+        fill(0, 0, 0, 120);
+        rect(pieceArea.getX()+pieceArea.getHeight()/2 + i*pieceArea.getHeight(), pieceArea.getY()+pieceArea.getHeight()/2, pieceArea.getHeight(), pieceArea.getHeight());
       }
+      object.draw(pieceArea.getX()+pieceArea.getHeight()/2 + i*pieceArea.getHeight(), pieceArea.getY()+pieceArea.getHeight()/2, size);
     }
     imageMode(CORNER);
     rectMode(CORNER);
@@ -378,32 +389,50 @@ class EditorBottom extends Toolbar {
 
   public void onTap(float x, float y) {
     //select piece 
-    if ( y >= pieceArea.getY()) {
+    if (y >= pieceArea.getY()) {
       editor.eController = new EditorControl(editor);
       editor.eMode = editorMode.ADD;
 
-      //a better way to do this v would be to have it swap out the variables depending on the mode instead of having a different set of logic for each mode
-      //better code reuse etc.
+      //figure out what type is being clicked on
+      ArrayList<Handler> objects = new ArrayList<Handler>(); //current objects to draw in the scroll bar
+      Float offset = 0.0;
+      if (editor.eType == editorType.BLOCK) {
+        objects.addAll(tiles);
+        offset = tileOffset;
+      } else if (editor.eType == editorType.IMAGE) {
+        objects.addAll(pieces);
+        offset = pieceOffset;
+      } else if (editor.eType == editorType.EVENT) {
+        //objects.addAll(events);
+        //offset = eventOffset;
+      }
 
-      //figure out what piece is being clicked on
-      if (editor.eType == editorType.IMAGE) {
-        for (int i = 0; i < pieces.size(); i++) {
-          float leftEdge = pieceArea.getX() + (i)*pieceArea.getHeight() - pieceOffset;
-          float rightEdge = pieceArea.getX() + (i+1)*pieceArea.getHeight() - pieceOffset;
-          if (x > leftEdge && x < rightEdge) {
-            editor.currentPiece = pieces.get(i);
-            
+      //click on that piece
+      for (int i = 0; i < objects.size(); i++) {
+        float leftEdge = pieceArea.getX() + (i)*pieceArea.getHeight() - offset;
+        float rightEdge = pieceArea.getX() + (i+1)*pieceArea.getHeight() - offset;
+        if (x > leftEdge && x < rightEdge) {
+          if (editor.eType == editorType.BLOCK) {
+            editor.currentTile = (TileHandler) objects.get(i);
+          } else if (editor.eType == editorType.IMAGE) {
+            editor.currentPiece = (PieceHandler) objects.get(i);
+          } else if (editor.eType == editorType.EVENT) {
+            //editor.currentEvent = (EventHandler) objects.get(i);
           }
         }
-      } else if (editor.eType == editorType.BLOCK) {
-      } else if (editor.eType == editorType.EVENT) {
       }
     }
   }
 
   public void touchMoved() {
     if (touches.length == 1 && mouseY >= pieceArea.getY()) {
-      pieceOffset += (pmouseX - mouseX)/3;
+      if (editor.eType == editorType.BLOCK) {
+        tileOffset += (pmouseX - mouseX)/3;
+      } else if (editor.eType == editorType.IMAGE) {
+        pieceOffset += (pmouseX - mouseX)/3;
+      } else if (editor.eType == editorType.EVENT) {
+        //eventOffset += (pmouseX - mouseX)/3;
+      }
     }
   }
 
