@@ -145,7 +145,7 @@ class Editor {
         toInsert = new Platform(platformX, platformY, 100, 100);
       } else if (eType == editorType.IMAGE && currentPiece != null) {
         toInsert = new Piece(currentPiece.getFile(), platformX, platformY, currentPiece.getWidth(), currentPiece.getHeight());
-      }else{
+      } else {
         g.point = null; //if there is nothing to put in, remove the point
       }
 
@@ -376,17 +376,20 @@ class EditorBottom extends Toolbar {
   public void onTap(float x, float y) {
     //select piece 
     if ( y >= pieceArea.getY()) {
-      //showToast("Tap Test");
-      //editor.currentPiece = pieces.get(0);
-      
+
       //figure out what piece is being clicked on
-      for (int i = 0; i < pieces.size(); i++) {
-        float leftEdge = pieceArea.getX() + (i)*pieceArea.getHeight() - pieceOffset;
-        float rightEdge = pieceArea.getX() + (i+1)*pieceArea.getHeight() - pieceOffset;
-        if(x > leftEdge && x < rightEdge){
-          editor.currentPiece = pieces.get(i);
+      if (editor.eType == editorType.IMAGE) {
+        for (int i = 0; i < pieces.size(); i++) {
+          float leftEdge = pieceArea.getX() + (i)*pieceArea.getHeight() - pieceOffset;
+          float rightEdge = pieceArea.getX() + (i+1)*pieceArea.getHeight() - pieceOffset;
+          if (x > leftEdge && x < rightEdge) {
+            editor.currentPiece = pieces.get(i);
+          }
         }
-        //pieceOffset
+      } else if (editor.eType == editorType.BLOCK) {
+        
+      } else if (editor.eType == editorType.EVENT) {
+        
       }
     }
   }
