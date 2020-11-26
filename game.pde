@@ -235,12 +235,12 @@ class Game {
 
 //------------------PaperTilerClass---------------------
 class Paper {
-  private PImage paper;
+  //private PImage paper;
   private PImage grid;
   int gridSize;
 
   public Paper() {
-    paper = texture.paper;
+    //paper = texture.paper;
     grid = texture.grid;
     gridSize = 400;
   }
@@ -261,7 +261,7 @@ class Paper {
     for (int y = startY; y < endY; y += gridSize) {
       for (int x = startX; x < endX; x += gridSize) {
         image(grid, x, y, gridSize, gridSize);
-        image(paper, x, y, gridSize, gridSize);
+        //image(paper, x, y, gridSize, gridSize);
       }
     }
   }
