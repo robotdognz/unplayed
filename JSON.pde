@@ -2,6 +2,8 @@ class EditorJSON {
   JSONArray values;
 
   public EditorJSON() {
+    //remember that you can save files to the invisible private directory for the game
+    //that would be a good way to stop people from using their level files if they haven't paid
   }
 
   public void save(Game game) {
@@ -18,14 +20,14 @@ class EditorJSON {
       object.setInt("pWidth", (int) r.getWidth());
       object.setInt("pHeight", (int) r.getHeight());
       if(r instanceof Platform){
-        object.setString("type", "platform");
+        object.setString("type", "tile");
+      }else if(r instanceof Piece){
+        object.setString("type", "piece");
+        object.setString("file", (((Piece) r).getFile()).toString() );
       }
 
       values.setJSONObject(values.size(), object); //add it on to the end
     }
-
-    //remember that you can save files to the invisible private directory for the game
-    //that would be a good way to stop people from using their level files if they haven't paid
 
     try {
       File file = new File("storage/emulated/0/levels/" + "level" + ".json");
@@ -56,8 +58,12 @@ class EditorJSON {
         int pWidth = object.getInt("pWidth");
         int pHeight = object.getInt("pHeight");
         String type = object.getString("type");
-        if(type.equals("platform")) {
+        if(type.equals("tile")) {
           Platform p = new Platform(pX, pY, pWidth, pHeight);
+          objects.add(p);
+        }else if (type.equals("piece")){
+          File pieceFile = new File(object.getString("file"));
+          Piece p = new Piece(pieceFile, pX, pY, pWidth, pHeight);
           objects.add(p);
         }
       }
