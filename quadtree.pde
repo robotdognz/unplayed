@@ -19,6 +19,7 @@ public class Quadtree {
   }
 
   public void remove(Rectangle current) {
+    insertCount--;
     root.remove(current);
   }
 
@@ -260,7 +261,6 @@ public class QuadNode {
     retrieve(toAdd, bottomLeft);
 
     //insert the new rectangle
-    //newTopLeft.nodeInsert(current);
     tree.root.nodeInsert(current);
 
     //add overlaping rectangles
@@ -300,7 +300,6 @@ public class QuadNode {
     retrieve(toAdd, bottomRight);
 
     //insert the new rectangle
-    //newTopLeft.nodeInsert(current);
     tree.root.nodeInsert(current);
 
     //add overlaping rectangles
@@ -340,7 +339,6 @@ public class QuadNode {
     retrieve(toAdd, bottomLeft);
 
     //insert the new rectangle
-    //newTopLeft.nodeInsert(current);
     tree.root.nodeInsert(current);
 
     //add overlaping rectangles
@@ -380,7 +378,6 @@ public class QuadNode {
     retrieve(toAdd, bottomLeft);
 
     //insert the new rectangle
-    //newTopLeft.nodeInsert(current);
     tree.root.nodeInsert(current);
 
     //add overlaping rectangles

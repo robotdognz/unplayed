@@ -31,7 +31,7 @@ class EditorJSON {
 
       File file = new File("storage/emulated/0/levels/" + "level" + ".json");
       saveJSONArray(values, file.getAbsolutePath());
-      showToast("Level Saved: " + objects.size());
+      showToast("Level Saved");
     }
     catch (Exception e) {
       showToast(e.getMessage());
@@ -65,13 +65,12 @@ class EditorJSON {
         }
       }
 
-      game.world = new Quadtree(game.startingWorld);
-      int count = 0;
+      //game.world = new Quadtree(game.startingWorld);
+      game.world.clear();
       for (Rectangle r : objects) {
         game.world.insert(r);
-        count++;
       }
-      showToast("Level Loaded: " + count);
+      showToast("Level Loaded");
     }
     catch(Exception e) {
       showToast(e.getMessage());
