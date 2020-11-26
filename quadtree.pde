@@ -31,6 +31,12 @@ public class Quadtree {
   public void clear() {
     root = new QuadNode(bounds, null, this);
   }
+  
+  public int size(){
+    HashSet<Rectangle> count = new HashSet<Rectangle>();
+    getAll(count);
+    return count.size();
+  }
 
   public HashSet<Rectangle> getAll(HashSet<Rectangle> returnSet) {
     root.getAll(returnSet);
