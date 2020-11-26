@@ -14,8 +14,8 @@ public class Quadtree {
   }
 
   public void insert(Rectangle current) {
-    root.insert(current);
     insertCount++;
+    root.insert(current);
   }
 
   public void remove(Rectangle current) {
