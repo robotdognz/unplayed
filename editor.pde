@@ -379,6 +379,8 @@ class EditorBottom extends Toolbar {
   public void onTap(float x, float y) {
     //select piece 
     if ( y >= pieceArea.getY()) {
+      editor.eController = new EditorControl(editor);
+      editor.eMode = editorMode.ADD;
 
       //a better way to do this v would be to have it swap out the variables depending on the mode instead of having a different set of logic for each mode
       //better code reuse etc.
@@ -390,6 +392,7 @@ class EditorBottom extends Toolbar {
           float rightEdge = pieceArea.getX() + (i+1)*pieceArea.getHeight() - pieceOffset;
           if (x > leftEdge && x < rightEdge) {
             editor.currentPiece = pieces.get(i);
+            
           }
         }
       } else if (editor.eType == editorType.BLOCK) {
