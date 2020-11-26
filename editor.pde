@@ -351,6 +351,9 @@ class EditorBottom extends Toolbar {
       }
     }
 
+    //a better way to do this v would be to have it swap out the variables depending on the mode instead of having a different set of logic for each mode
+    //better code reuse etc.
+
     //draw pieces
     pushMatrix();
     imageMode(CENTER);
@@ -377,6 +380,9 @@ class EditorBottom extends Toolbar {
     //select piece 
     if ( y >= pieceArea.getY()) {
 
+      //a better way to do this v would be to have it swap out the variables depending on the mode instead of having a different set of logic for each mode
+      //better code reuse etc.
+
       //figure out what piece is being clicked on
       if (editor.eType == editorType.IMAGE) {
         for (int i = 0; i < pieces.size(); i++) {
@@ -387,9 +393,7 @@ class EditorBottom extends Toolbar {
           }
         }
       } else if (editor.eType == editorType.BLOCK) {
-        
       } else if (editor.eType == editorType.EVENT) {
-        
       }
     }
   }
