@@ -356,15 +356,19 @@ class EditorBottom extends Toolbar {
     //figure out what type to show
     ArrayList<Handler> objects = new ArrayList<Handler>(); //current objects to draw in the scroll bar
     Float offset = 0.0;
+    Handler currentHandler = null;
     if (editor.eType == editorType.BLOCK) {
       objects.addAll(tiles);
       offset = tileOffset;
+      currentHandler = editor.currentTile;
     } else if (editor.eType == editorType.IMAGE) {
       objects.addAll(pieces);
       offset = pieceOffset;
+      currentHandler = editor.currentPiece;
     } else if (editor.eType == editorType.EVENT) {
       //objects.addAll(events);
       //offset = eventOffset;
+      //currentHandler = editor.currentEvent;
     }
 
     //draw scroll bar for that type
@@ -374,7 +378,7 @@ class EditorBottom extends Toolbar {
     translate(-offset, 0);
     for (int i = 0; i < objects.size(); i++) {
       Handler object = objects.get(i);
-      if (object.equals(editor.currentPiece)) { //if this is the selected piece
+      if (object.equals(currentHandler)) { //if this is the selected piece
         //draw highlight behind
         noStroke();
         fill(0, 0, 0, 120);
