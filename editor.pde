@@ -315,7 +315,7 @@ class EditorBottom extends Toolbar {
     eWidgets.add(imageW);
     eWidgets.add(eventW);
 
-    eWidgetOffset = width*0.7;
+    eWidgetOffset = width*0.71;
     eWidgetSpacing = 140;    //TODO: change this
 
     //setup toolbar
@@ -361,7 +361,8 @@ class EditorBottom extends Toolbar {
         PieceHandler piece = pieces.get(i);
         if (piece.equals(editor.currentPiece)) { //if this is the selected piece
           //draw highlight behind
-          fill(0, 0, 0, 150);
+          noStroke();
+          fill(0, 0, 0, 120);
           rect(pieceArea.getX()+pieceArea.getHeight()/2 + i*pieceArea.getHeight(), pieceArea.getY()+pieceArea.getHeight()/2, pieceArea.getHeight(), pieceArea.getHeight());
         }
         piece.draw(pieceArea.getX()+pieceArea.getHeight()/2 + i*pieceArea.getHeight(), pieceArea.getY()+pieceArea.getHeight()/2, size);
@@ -374,10 +375,19 @@ class EditorBottom extends Toolbar {
 
   public void onTap(float x, float y) {
     //select piece 
-    if ( y >= pieceArea.getY()) { //touches.length == 1 &&
+    if ( y >= pieceArea.getY()) {
       //showToast("Tap Test");
-      editor.currentPiece = pieces.get(0);
-      //showToast("Tap Test");
+      //editor.currentPiece = pieces.get(0);
+      
+      //figure out what piece is being clicked on
+      for (int i = 0; i < pieces.size(); i++) {
+        float leftEdge = pieceArea.getX() + (i)*pieceArea.getHeight() + pieceOffset;
+        float rightEdge = pieceArea.getX() + (i+1)*pieceArea.getHeight() + pieceOffset;
+        if(x > leftEdge && x < rightEdge){
+          editor.currentPiece = pieces.get(i);
+        }
+        //pieceOffset
+      }
     }
   }
 
