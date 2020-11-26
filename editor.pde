@@ -145,10 +145,12 @@ class Editor {
         toInsert = new Platform(platformX, platformY, 100, 100);
       } else if (eType == editorType.IMAGE && currentPiece != null) {
         toInsert = new Piece(currentPiece.getFile(), platformX, platformY, currentPiece.getWidth(), currentPiece.getHeight());
+      }else{
+        g.point = null; //if there is nothing to put in, remove the point
       }
 
       //insert it or remove
-      if (toInsert != null) {
+      if (toInsert != null && g.point != null) {
         HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
         g.world.retrieve(getRectangles, toInsert);
         for (Rectangle p : getRectangles) {
