@@ -47,7 +47,7 @@ class EditorJSON {
       HashSet<Rectangle> objects = new HashSet<Rectangle>();
 
       //logic for loading
-      for (int i = 0; i < values.size(); i++) {
+      for (int i = 0; i < values.size()+1; i++) {
         JSONObject object = values.getJSONObject(i); 
 
         int pX = object.getInt("pX");
