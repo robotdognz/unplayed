@@ -66,10 +66,12 @@ class EditorJSON {
       }
 
       game.world.clear();
+      int count = 0;
       for (Rectangle r : objects) {
         game.world.insert(r);
+        count++;
       }
-      showToast("Level Loaded: " + objects.size());
+      showToast("Level Loaded: " + count);
     }
     catch(Exception e) {
       showToast(e.getMessage());
