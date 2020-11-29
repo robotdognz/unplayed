@@ -109,6 +109,14 @@ class TextureCache {
   public ArrayList<PieceHandler> getPieceList() {
     return pieceList;
   }
+  
+  public HashMap<File, EventHandler> getEventMap() {
+    return eventMap;
+  }
+
+  public ArrayList<EventHandler> getEventList() {
+    return eventList;
+  }
 }
 
 interface Handler {

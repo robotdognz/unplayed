@@ -332,6 +332,7 @@ class EditorBottom extends Toolbar {
     size = 150;
     tiles = texture.getTileList();
     pieces = texture.getPieceList();
+    events = texture.getEventList();
   }
 
   public void draw() {
