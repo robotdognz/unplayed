@@ -46,6 +46,7 @@ class Editor {
     
     this.currentPiece = texture.getPieceList().get(0);
     this.currentTile = texture.getTileList().get(0);
+    this.currentEvent = texture.getEventList().get(0);
   }
 
   public void step() {
@@ -134,7 +135,7 @@ class Editor {
     editorBottom.onTap(x, y);
   }
 
-  public void placeBlock() {  //place piece / place event
+  public void placeObject() {
     if (g.point != null) {
 
       int platformX = (int) g.point.x;
@@ -145,10 +146,12 @@ class Editor {
 
       //create the new piece to put in
       Rectangle toInsert = null;
-      if (eType == editorType.BLOCK) {
+      if (eType == editorType.BLOCK && currentTile != null) {
         toInsert = new Tile(currentTile.getFile(), platformX, platformY);
       } else if (eType == editorType.IMAGE && currentPiece != null) {
         toInsert = new Piece(currentPiece.getFile(), platformX, platformY, currentPiece.getWidth(), currentPiece.getHeight());
+      } else if (eType == editorType.EVENT && currentEvent != null) {
+        //toInsert = new Event(currentPiece.getFile(), platformX, platformY, currentPiece.getWidth(), currentPiece.getHeight());
       } else {
         g.point = null; //if there is nothing to put in, remove the point
       }

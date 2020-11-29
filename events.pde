@@ -11,6 +11,17 @@ abstract class Event extends Rectangle {
   public void draw(){}
 }
 
+//------------------PlayerDeath---------------------
+class PlayerDeath extends Event {
+  PlayerDeath (int x, int y){
+    super(x, y, 100, 100);
+  }
+  
+  public void activate(Game g) {
+    
+  }
+}
+
 //------------------CameraChange---------------------
 class CameraChange extends Event {
   private PImage sprite;

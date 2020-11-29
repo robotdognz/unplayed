@@ -601,7 +601,7 @@ class ConfirmWidget extends Widget {
 
   public void clicked() {
     //finalise block
-    editor.placeBlock();
+    editor.placeObject();
   }
 
   public void updateActive() {
