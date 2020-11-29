@@ -107,7 +107,7 @@ class TextureCache {
     eventMap.put(playerDeathFile, playerDeath);
 
     //camera change
-    File cameraChangeFile = new File(eventDir+"cameraChange.png");
+    File cameraChangeFile = new File(eventDir+"/cameraChange.png");
     EventHandler cameraChange = new EventHandler(cameraChangeFile) {
       public Event makeEvent(int x, int y) {//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
         return new CameraChange(datapath, x, y, 100, 100, new PVector(-700, 200), new PVector(700, 1900), 2, 2);
