@@ -38,6 +38,7 @@ class PlayerDeath extends Event {
   }
 
   public void activate(Game g) {
+    g.restart(); //TODO: this needs a custom method in game
   }
 }
 

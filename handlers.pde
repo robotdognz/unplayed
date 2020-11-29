@@ -110,7 +110,7 @@ class TextureCache {
     File cameraChangeFile = new File(eventDir+"/cameraChange.png");
     EventHandler cameraChange = new EventHandler(cameraChangeFile) {
       public Event makeEvent(int x, int y) {//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
-        return new CameraChange(datapath, x, y, 100, 100, new PVector(-700, 200), new PVector(700, 1900), 2, 2);
+        return new CameraChange(datapath, x, y, 100, 100, new PVector(-700, -200), new PVector(700, 1500), 2, 2);
       }
     };
     eventMap.put(cameraChangeFile, cameraChange);
