@@ -151,7 +151,7 @@ class Editor {
       } else if (eType == editorType.IMAGE && currentPiece != null) {
         toInsert = new Piece(currentPiece.getFile(), platformX, platformY, currentPiece.getWidth(), currentPiece.getHeight());
       } else if (eType == editorType.EVENT && currentEvent != null) {
-        //toInsert = new Event(currentPiece.getFile(), platformX, platformY, currentPiece.getWidth(), currentPiece.getHeight());
+        toInsert = currentEvent.makeEvent(platformX, platformY);
       } else {
         g.point = null; //if there is nothing to put in, remove the point
       }

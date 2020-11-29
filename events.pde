@@ -1,30 +1,49 @@
 abstract class Event extends Rectangle {
-  public Event(float x, float y, float rWidth, float rHeight){
+  private boolean hasTexture;
+  private EventHandler eventTexture;
+
+  public Event(File file, float x, float y, float rWidth, float rHeight) {
     super(x, y, rWidth, rHeight);
+
+    if (file != null && texture.getEventMap().containsKey(file)) {
+      this.eventTexture = texture.getEventMap().get(file);
+      setWidth(eventTexture.getWidth());
+      setHeight(eventTexture.getHeight());
+      hasTexture = true;
+    } else {
+      hasTexture = false;
+    }
   }
-  public String getType(){
+  
+  public String getType() {
     return "";
   }
-  
-  public void activate(Game g){}
-  
-  public void draw(){}
+
+  public void activate(Game g) {
+  }
+
+  public void draw() {
+    if (hasTexture) {
+      image(eventTexture.getSprite(), getX(), getY(), getWidth(), getHeight());
+    } else {
+      //display missing texture texture
+    }
+  }
 }
 
 //------------------PlayerDeath---------------------
 class PlayerDeath extends Event {
-  PlayerDeath (int x, int y){
-    super(x, y, 100, 100);
+  PlayerDeath (File file, int x, int y) {
+    super(file, x, y, 100, 100);
   }
-  
+
   public void activate(Game g) {
-    
   }
 }
 
 //------------------CameraChange---------------------
 class CameraChange extends Event {
-  private PImage sprite;
+  //private PImage sprite;
 
   private PVector cameraTopLeft;
   private PVector cameraBottomRight;
@@ -35,8 +54,8 @@ class CameraChange extends Event {
   private float edgeZoom;
   private String type; //Strings: "Static", "Full", "Horizontal", "Vertical"
 
-  CameraChange(int x, int y, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) { 
-    super(x, y, eventW, eventH);
+  CameraChange(File file, int x, int y, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) { 
+    super(file, x, y, eventW, eventH);
     //considering separating edgeZoom into in speed and out speed
     int centerX = (int)((cameraBottomRight.x-cameraTopLeft.x)/2+cameraTopLeft.x);
     int centerY = (int)((cameraTopLeft.y-cameraBottomRight.y)/2+cameraBottomRight.y);
@@ -47,7 +66,7 @@ class CameraChange extends Event {
     this.cameraZoom = cameraZoom;
     this.edgeZoom = edgeZoom;
     //this.type = type;
-    this.sprite = loadImage("cameraChange.png");
+    //this.sprite = loadImage("cameraChange.png");
   }
 
   //use constructor overloading
@@ -57,9 +76,9 @@ class CameraChange extends Event {
   //the overloaded constructors will send this method different 
   //versions of the required arguments
 
-  public String getType() {
-    return type;
-  }
+  //public String getType() {
+  //  return type;
+  //}
 
   public void activate(Game g) {
     //these values should continue to be stored in game, they get pushed to the camera by game on the next step
@@ -81,13 +100,13 @@ class CameraChange extends Event {
     g.newRightEdge = (int)cameraBottomRight.x;
   }
 
-  public void draw() {
-    if (getWidth() != 100 || getHeight() != 100) {
-      fill(255, 0, 0, 100);
-      noStroke();
-      rect(getX(), getY(), getWidth(), getHeight());
-    }else{
-      image(sprite, getX(), getY(), 100, 100);
-    }
-  }
+  //public void draw() {
+  //  if (getWidth() != 100 || getHeight() != 100) {
+  //    fill(255, 0, 0, 100);
+  //    noStroke();
+  //    rect(getX(), getY(), getWidth(), getHeight());
+  //  } else {
+  //    image(sprite, getX(), getY(), 100, 100);
+  //  }
+  //}
 }

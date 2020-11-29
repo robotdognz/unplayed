@@ -15,7 +15,7 @@ class TextureCache {
   private ArrayList<TileHandler> tileList;
   //events
   private File eventDir;
-  private File[] eventPaths;
+  //private File[] eventPaths;
   private HashMap<File, EventHandler> eventMap;
   private ArrayList<EventHandler> eventList;
 
@@ -78,18 +78,44 @@ class TextureCache {
     pieceList = new ArrayList<PieceHandler>(pieceMap.values());
     Collections.sort(pieceList);
   }
-  
+
   private void loadEvents() {
     //events
+    //eventDir = new File(dataPath("events")+'/');
+    //eventPaths = eventDir.listFiles();
+    //eventMap = new HashMap<File, EventHandler>();
+    //for (File file : eventPaths) {
+    //  String path = file.getAbsolutePath();
+    //  if (path.matches(".+.png$")) { //only checks for .png
+    //    eventMap.put(file, new EventHandler(file));
+    //  }
+    //}
+    //eventList = new ArrayList<EventHandler>(eventMap.values());
+    //Collections.sort(eventList);
+
+    //get directory and make map
     eventDir = new File(dataPath("events")+'/');
-    eventPaths = eventDir.listFiles();
     eventMap = new HashMap<File, EventHandler>();
-    for (File file : eventPaths) {
-      String path = file.getAbsolutePath();
-      if (path.matches(".+.png$")) { //only checks for .png
-        eventMap.put(file, new EventHandler(file));
+
+    //player death
+    File playerDeathFile = new File(eventDir+"spikes.png");
+    EventHandler playerDeath = new EventHandler(playerDeathFile) {
+      public Event makeEvent(int x, int y){//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
+        return new PlayerDeath(datapath, x, y);
       }
-    }
+    };
+    eventMap.put(playerDeathFile, playerDeath);
+    
+    //camera change
+    File cameraChangeFile = new File(eventDir+"cameraChange.png");
+    EventHandler cameraChange = new EventHandler(cameraChangeFile) {
+      public Event makeEvent(int x, int y){//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
+        return new CameraChange(datapath, x, y, 100, 100, new PVector(-700, 200), new PVector(700, 1900), 2, 2);
+      }
+    };
+    eventMap.put(cameraChangeFile, cameraChange);
+    
+    //make sorted list
     eventList = new ArrayList<EventHandler>(eventMap.values());
     Collections.sort(eventList);
   }
@@ -109,7 +135,7 @@ class TextureCache {
   public ArrayList<PieceHandler> getPieceList() {
     return pieceList;
   }
-  
+
   public HashMap<File, EventHandler> getEventMap() {
     return eventMap;
   }
@@ -263,6 +289,10 @@ class EventHandler implements Comparable<EventHandler>, Handler {
     catch(Exception e) {
       //set sprite to file not found image
     }
+  }
+
+  public Event makeEvent(int x, int y){//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
+    return null;
   }
 
   public int getWidth() {
