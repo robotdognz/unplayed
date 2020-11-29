@@ -98,7 +98,7 @@ class TextureCache {
     eventMap = new HashMap<File, EventHandler>();
 
     //player death
-    File playerDeathFile = new File(eventDir+"spikes.png");
+    File playerDeathFile = new File(eventDir+"/spikes.png");
     EventHandler playerDeath = new EventHandler(playerDeathFile) {
       public Event makeEvent(int x, int y) {//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
         return new PlayerDeath(datapath, x, y);
