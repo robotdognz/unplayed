@@ -100,21 +100,21 @@ class TextureCache {
     //player death
     File playerDeathFile = new File(eventDir+"spikes.png");
     EventHandler playerDeath = new EventHandler(playerDeathFile) {
-      public Event makeEvent(int x, int y){//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
+      public Event makeEvent(int x, int y) {//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
         return new PlayerDeath(datapath, x, y);
       }
     };
     eventMap.put(playerDeathFile, playerDeath);
-    
+
     //camera change
     File cameraChangeFile = new File(eventDir+"cameraChange.png");
     EventHandler cameraChange = new EventHandler(cameraChangeFile) {
-      public Event makeEvent(int x, int y){//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
+      public Event makeEvent(int x, int y) {//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
         return new CameraChange(datapath, x, y, 100, 100, new PVector(-700, 200), new PVector(700, 1900), 2, 2);
       }
     };
     eventMap.put(cameraChangeFile, cameraChange);
-    
+
     //make sorted list
     eventList = new ArrayList<EventHandler>(eventMap.values());
     Collections.sort(eventList);
@@ -291,7 +291,7 @@ class EventHandler implements Comparable<EventHandler>, Handler {
     }
   }
 
-  public Event makeEvent(int x, int y){//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
+  public Event makeEvent(int x, int y) {//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
     return null;
   }
 
@@ -313,14 +313,19 @@ class EventHandler implements Comparable<EventHandler>, Handler {
 
   public void draw(float pX, float pY, float size) {
     //calculate how to scale the image so it appears in the scroll bar correctly
-    float scaleFactor;
-    if (getWidth() >= getHeight()) {
-      scaleFactor = size/getWidth();
-    } else {
-      scaleFactor = size/getHeight();
+
+    if (sprite != null) {
+      float scaleFactor;
+      if (getWidth() >= getHeight()) {
+        scaleFactor = size/getWidth();
+      } else {
+        scaleFactor = size/getHeight();
+      }
+      //draw the scaled image
+      image(sprite, pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
+    }else{
+      showToast("Failed to load: " + datapath);
     }
-    //draw the scaled image
-    image(sprite, pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
   }
 
   @Override
