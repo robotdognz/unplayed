@@ -367,6 +367,8 @@ class TileHandler implements Comparable<TileHandler>, Handler {
 
     try {
       sprite = loadImage(path);
+      //check the resolution of the image
+      //calculate which lod level the starting image is, it is lod1 if its width is 256
     }
     catch(Exception e) {
       //set sprite to file not found image
@@ -382,6 +384,8 @@ class TileHandler implements Comparable<TileHandler>, Handler {
 
   public PImage getSprite() {
     return sprite;
+    //should return the relevant lod
+    //potentially should only load the image in when first called
   }
 
   public File getFile() {

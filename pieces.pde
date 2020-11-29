@@ -1,23 +1,30 @@
 //------------------LevelPiece---------------------
 class Piece extends Rectangle {
+  private boolean hasTexture;
   private PieceHandler pieceTexture;
-  private PImage sprite;
+  //private PImage sprite;
 
   Piece(File file, int x, int y, int pieceW, int pieceH) {
     super(x, y, pieceW, pieceH);
 
     if (file != null && texture.getPieceMap().containsKey(file)) {
       this.pieceTexture = texture.getPieceMap().get(file);
-      this.sprite = pieceTexture.getSprite();
+      //this.sprite = pieceTexture.getSprite();
       setWidth(pieceTexture.getWidth());
       setHeight(pieceTexture.getHeight());
+      hasTexture = true;
     } else {
       //set sprite to file not found image
+      hasTexture = false;
     }
   }
 
   public void draw() {
-    image(sprite, getX(), getY(), getWidth(), getHeight());
+    if (hasTexture) {
+      image(pieceTexture.getSprite(), getX(), getY(), getWidth(), getHeight());
+    } else {
+      //display missing texture texture
+    }
   }
 
   public File getFile() {
@@ -27,40 +34,36 @@ class Piece extends Rectangle {
 
 //------------------Platform---------------------
 class Platform extends Rectangle {
+  private boolean hasTexture;
   private TileHandler tileTexture;
-  private PImage sprite;
+  //private PImage sprite;
 
-  public Platform(File file, int x, int y, int platformW, int platformH) {
-    super(x, y, platformW, platformH);
+  public Platform(File file, int x, int y) { //, int platformW, int platformH
+    super(x, y, 100, 100);
 
     if (file != null && texture.getTileMap().containsKey(file)) {
       this.tileTexture = texture.getTileMap().get(file);
-      this.sprite = tileTexture.getSprite();
-      setWidth(100);
-      setHeight(100);
+      //this.sprite = tileTexture.getSprite();
+      //setWidth(100);
+      //setHeight(100);
+      hasTexture = true;
     } else {
       //set sprite to file not found image
-      sprite = texture.defaultBlock;
+      hasTexture = false;
+      //sprite = texture.defaultBlock;
     }
   }
 
   public void draw() {
-    for (int i = 0; i < getHeight(); i+=100) {
-      for (int j = 0; j < getWidth(); j+=100) {
-        image(sprite, getX()+j, getY()+i, 100, 100);
-      }
-    } 
-    //textureMode(NORMAL);
-    //textureWrap(REPEAT);
-    //int rX = (int)(platformW/100);
-    //int rY = (int)(platformH/100);
-    //beginShape();
-    //texture(sprite);
-    //vertex(x, y, 0, 0); //top left
-    //vertex(x+platformW, y, rX, 0); //top right
-    //vertex(x+platformW, y+platformH, rX, rY); //bottom right
-    //vertex(x, y+platformH, 0, rY); //bottom left
-    //endShape();
+    //for (int i = 0; i < getHeight(); i+=100) {
+    //for (int j = 0; j < getWidth(); j+=100) {
+    if (hasTexture) {
+      image(tileTexture.getSprite(), getX(), getY(), getWidth(), getHeight()); //image(tileTexture.getSprite(), getX()+j, getY()+i, 100, 100);
+    } else {
+      //display missing texture texture
+    }
+    //}
+    //}
   }
 
   public File getFile() {
