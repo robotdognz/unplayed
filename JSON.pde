@@ -18,9 +18,9 @@ class EditorJSON {
         object.setInt("pX", (int) r.getX());
         object.setInt("pY", (int) r.getY());
 
-        if (r instanceof Platform) {
+        if (r instanceof Tile) {
           object.setString("type", "tile");
-          object.setString("file", (((Platform) r).getFile()).toString() );
+          object.setString("file", (((Tile) r).getFile()).toString() );
         } else if (r instanceof Piece) {
           object.setString("type", "piece");
           object.setInt("pWidth", (int) r.getWidth());
@@ -58,8 +58,8 @@ class EditorJSON {
         File textureFile = new File(object.getString("file"));
 
         if (type.equals("tile")) {  //if it is a tile
-          Platform p = new Platform(textureFile, pX, pY);
-          objects.add(p);
+          Tile t = new Tile(textureFile, pX, pY);
+          objects.add(t);
         } else if (type.equals("piece")) {  //if it is a piece
           int pWidth = object.getInt("pWidth");
           int pHeight = object.getInt("pHeight");

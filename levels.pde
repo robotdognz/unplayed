@@ -61,7 +61,7 @@ class BlankLevel extends Level {
     this.bottomOfTopBar = (int)cameraTopLeft.y;
     this.topOfBottomBar = (int)cameraBottomRight.y;
     
-    platforms.add(new Platform(texture.getTileList().get(0).getFile(), 0, 100));  //TODO: this is dodgy as hell
+    platforms.add(new Tile(texture.getTileList().get(0).getFile(), 0, 100));  //TODO: this is dodgy as hell
   }
 }
 

@@ -85,7 +85,7 @@ class Player extends Rectangle {
     }
   }
 
-  void step(HashSet<Rectangle> platforms, Game g) {
+  void step(HashSet<Rectangle> objects, Game g) {
     float previousY = getTopLeft().y;
     vibration = 0;
     if (velocity.y < terminalVelocity) {
@@ -109,8 +109,8 @@ class Player extends Rectangle {
 
     //do collision
     wall = false;
-    for (Rectangle p : platforms) {
-      if (p instanceof Platform) {  //platform collison
+    for (Rectangle p : objects) {
+      if (p instanceof Tile) {  //platform collison
         collision(p.getTopLeft(), p.getBottomRight());
       } else if (p instanceof Event) { //event collision
         PVector eventTopLeft = p.getTopLeft();

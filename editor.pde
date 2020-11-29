@@ -24,7 +24,7 @@ class Editor {
   //current object to put into level
   PieceHandler currentPiece = null;
   TileHandler currentTile = null;
-  //EventHandler currentEvent = null;
+  EventHandler currentEvent = null;
 
   //toolbars
   Toolbar editorTop;
@@ -146,7 +146,7 @@ class Editor {
       //create the new piece to put in
       Rectangle toInsert = null;
       if (eType == editorType.BLOCK) {
-        toInsert = new Platform(currentTile.getFile(), platformX, platformY);
+        toInsert = new Tile(currentTile.getFile(), platformX, platformY);
       } else if (eType == editorType.IMAGE && currentPiece != null) {
         toInsert = new Piece(currentPiece.getFile(), platformX, platformY, currentPiece.getWidth(), currentPiece.getHeight());
       } else {
@@ -169,7 +169,6 @@ class Editor {
 
         if (spaceFree) { //if there isn't something already there
           if (eMode == editorMode.ADD) {
-            //Platform newPlatform = new Platform(platformX, platformY, 100, 100);
             g.world.insert(toInsert);
           }
         } else {
@@ -304,8 +303,8 @@ class EditorBottom extends Toolbar {
   private float tileOffset;
   private ArrayList<PieceHandler> pieces; //pieces
   private float pieceOffset;
-  //private ArrayList<EventHandler> events; //events
-  //private float eventOffset;
+  private ArrayList<EventHandler> events; //events
+  private float eventOffset;
 
   public EditorBottom(Editor editor) {
     super(editor);
@@ -369,9 +368,9 @@ class EditorBottom extends Toolbar {
       offset = pieceOffset;
       currentHandler = editor.currentPiece;
     } else if (editor.eType == editorType.EVENT) {
-      //objects.addAll(events);
-      //offset = eventOffset;
-      //currentHandler = editor.currentEvent;
+      objects.addAll(events);
+      offset = eventOffset;
+      currentHandler = editor.currentEvent;
     }
 
     //draw scroll bar for that type
@@ -410,8 +409,8 @@ class EditorBottom extends Toolbar {
         objects.addAll(pieces);
         offset = pieceOffset;
       } else if (editor.eType == editorType.EVENT) {
-        //objects.addAll(events);
-        //offset = eventOffset;
+        objects.addAll(events);
+        offset = eventOffset;
       }
 
       //click on that piece
@@ -424,7 +423,7 @@ class EditorBottom extends Toolbar {
           } else if (editor.eType == editorType.IMAGE) {
             editor.currentPiece = (PieceHandler) objects.get(i);
           } else if (editor.eType == editorType.EVENT) {
-            //editor.currentEvent = (EventHandler) objects.get(i);
+            editor.currentEvent = (EventHandler) objects.get(i);
           }
         }
       }
@@ -438,7 +437,7 @@ class EditorBottom extends Toolbar {
       } else if (editor.eType == editorType.IMAGE) {
         pieceOffset += (pmouseX - mouseX)/3;
       } else if (editor.eType == editorType.EVENT) {
-        //eventOffset += (pmouseX - mouseX)/3;
+        eventOffset += (pmouseX - mouseX)/3;
       }
     }
   }

@@ -121,8 +121,8 @@ class Game {
       }
     }
     for (Rectangle p : screenObjects) { //draw tiles and events
-      if (p instanceof Platform) {
-        ((Platform) p).draw();
+      if (p instanceof Tile) {
+        ((Tile) p).draw();
       }
       if (p instanceof Event && eventVis) {
         ((Event) p).draw();
