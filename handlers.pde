@@ -223,16 +223,16 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
 
     try {
       LOD0 = loadImage(path);  //256
-      LOD0.resize(256, 256);
+      LOD0.resize(256*pWidth, 256*pHeight);
 
       LOD1 = LOD0.get(0, 0, LOD0.width, LOD0.height);  //128
-      LOD1.resize(128, 128);
+      LOD1.resize(128*pWidth, 128*pHeight);
 
       LOD2 = LOD0.get(0, 0, LOD0.width, LOD0.height);  //64
-      LOD2.resize(64, 64);
+      LOD2.resize(64*pWidth, 64*pHeight);
 
       LOD3 = LOD0.get(0, 0, LOD0.width, LOD0.height);  //32
-      LOD3.resize(32, 32);
+      LOD3.resize(32*pWidth, 32*pHeight);
     }
     catch(Exception e) {
       //set sprite to file not found image
