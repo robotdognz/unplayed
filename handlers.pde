@@ -204,7 +204,7 @@ class TileHandler implements Comparable<TileHandler>, Handler {
       LOD256 = loadImage(path);  //256
       LOD256.resize(256, 256);
 
-      LOD128 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //128
+      LOD128 = LOD256.get();//(0, 0, LOD256.width, LOD256.height);  //128
       LOD128.resize(128, 128);
 
       LOD64 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //64
