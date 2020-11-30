@@ -193,7 +193,7 @@ class TileHandler implements Comparable<TileHandler>, Handler {
 
   public void draw(float pX, float pY, float size) {
     //draw the scaled image
-    image(LOD3, pX, pY, size, size);
+    image(LOD2, pX, pY, size, size);
   }
 
   public int getWidth() {
@@ -272,7 +272,7 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
       scaleFactor = size/getHeight();
     }
     //draw the scaled image
-    image(LOD3, pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
+    image(LOD2, pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
   }
 
   @Override
@@ -350,7 +350,7 @@ class EventHandler implements Comparable<EventHandler>, Handler {
   public void draw(float pX, float pY, float size) {
     //calculate how to scale the image so it appears in the scroll bar correctly
 
-    if (LOD3 != null) {
+    if (LOD2 != null) {
       float scaleFactor;
       if (getWidth() >= getHeight()) {
         scaleFactor = size/getWidth();
@@ -358,7 +358,7 @@ class EventHandler implements Comparable<EventHandler>, Handler {
         scaleFactor = size/getHeight();
       }
       //draw the scaled image
-      image(LOD3, pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
+      image(LOD2, pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
     } else {
       showToast("Failed to load: " + datapath);
     }
