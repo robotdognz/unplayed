@@ -122,7 +122,7 @@ class Game {
         ((Piece) p).draw(currentScale);
       }
     }
-    for (Rectangle p : screenObjects) { //draw tiles and events
+    for (Rectangle p : screenObjects) { //draw tiles and events on top of pieces
       if (p instanceof Tile) {
         ((Tile) p).draw(currentScale);
       }
@@ -246,9 +246,9 @@ class Paper {
   }
 
   public void draw(Rectangle screen, float scale) {
-    if(convert.getScale() > 30){ // stop drawing paper/tiles at this size
-      return;
-    }
+    //if(convert.getScale() > 30){ // stop drawing paper/tiles at this size
+    //  return;
+    //}
     //find x start position
     int startX = (int) Math.round((screen.getTopLeft().x-(gridSize/2))/gridSize)*gridSize;
     //find y start position
