@@ -53,7 +53,7 @@ class CameraChange extends Event {
   private PVector newCent;
   private float cameraZoom;
   private float edgeZoom;
-  private String type; //Strings: "Static", "Full", "Horizontal", "Vertical"
+  //private String type; //Strings: "Static", "Full", "Horizontal", "Vertical"
 
   CameraChange(File file, int x, int y, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) { 
     super(file, x, y, eventW, eventH);
