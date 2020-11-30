@@ -112,6 +112,7 @@ class Game {
     scale((float)width/(float)camera.getScale()); //width/screen fits the level scale to the screen
     scale(camera.getSubScale()); //apply offset for tall screen spaces
     translate(-camera.getCenter().x, -camera.getCenter().y); //moves the view around the level
+    
     float currentScale = convert.getScale();
 
     //draw player and environment
@@ -130,7 +131,7 @@ class Game {
       }
     }
     player.draw();
-    paper.draw(screenSpace);
+    paper.draw(screenSpace, currentScale);
 
     //draw black bars
     if (camera.getGame()) {
@@ -236,15 +237,15 @@ class Game {
 
 //------------------PaperTilerClass---------------------
 class Paper {
-  private PImage grid;
+  //private PImage grid;
   int gridSize;
 
   public Paper() {
-    grid = texture.grid;
+    //grid = texture.grid;
     gridSize = 400;
   }
 
-  public void draw(Rectangle screen) {
+  public void draw(Rectangle screen, float scale) {
     if(convert.getScale() > 30){ // stop drawing paper/tiles at this size
       return;
     }
@@ -259,7 +260,7 @@ class Paper {
     //nested for loops to tile the images
     for (int y = startY; y < endY; y += gridSize) {
       for (int x = startX; x < endX; x += gridSize) {
-        image(grid, x, y, gridSize, gridSize);
+        image(texture.getGrid(scale), x, y, gridSize, gridSize);
       }
     }
   }
