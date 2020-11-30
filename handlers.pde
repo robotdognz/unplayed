@@ -71,18 +71,32 @@ class TextureCache {
   }
 
   public PImage getGrid(float scale) {
-    if (scale <= 4) {
-      return gridLOD256;
-    } else if (scale <= 8) {
-      return gridLOD128;
-    } else if (scale <= 16) {
-      return gridLOD64;
-    } else if (scale <= 32) {
-      return gridLOD32;
-    } else if (scale <= 64) {
-      return gridLOD16;
-    } else {
-      return gridLOD8;
+    //if (scale <= 4) {
+    //  return gridLOD256;
+    //} else if (scale <= 8) {
+    //  return gridLOD128;
+    //} else if (scale <= 16) {
+    //  return gridLOD64;
+    //} else if (scale <= 32) {
+    //  return gridLOD32;
+    //} else if (scale <= 64) {
+    //  return gridLOD16;
+    //} else {
+    //  return gridLOD8;
+    //}
+    
+    if(scale > 64){
+      return gridLOD8; //larger than 64
+    }else if(scale > 32){
+      return gridLOD16; //between 32 and 64
+    }else if(scale > 16){
+      return gridLOD32; //between 16 and 32
+    }else if(scale > 8){
+      return gridLOD64; //between 8 and 16
+    }else if(scale > 4){
+      return gridLOD128; //between 4 and 8
+    }else{
+      return gridLOD256; //less than 4
     }
   }
 
