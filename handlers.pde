@@ -32,17 +32,17 @@ class TextureCache {
 
     //paper textures
     int gridCount = 4; //number of squares in the grid texture
-    gridLOD256 = loadImage("PaperGrid_1024x1024.png");
+    gridLOD256 = loadImage("PaperGrid_512x512.png");
     gridLOD256.resize(256*gridCount, 256*gridCount);
 
-    //gridLOD128 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //128
-    //gridLOD128.resize(128*gridCount, 128*gridCount);
+    gridLOD128 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //128
+    gridLOD128.resize(128*gridCount, 128*gridCount);
 
-    //gridLOD64 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //64
-    //gridLOD64.resize(64*gridCount, 64*gridCount);
+    gridLOD64 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //64
+    gridLOD64.resize(64*gridCount, 64*gridCount);
 
-    //gridLOD32 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //32
-    //gridLOD32.resize(32*gridCount, 32*gridCount);
+    gridLOD32 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //32
+    gridLOD32.resize(32*gridCount, 32*gridCount);
 
     //level assets
     loadLevelPieces();
@@ -54,15 +54,15 @@ class TextureCache {
   }
   
   public PImage getGrid(float scale) {
-    //if (scale <= 4) {
+    if (scale <= 4) {
       return gridLOD256;
-    //} else if (scale <= 8) {
-    //  return gridLOD128;
-    //} else if (scale <= 32) {
-    //  return gridLOD64;
-    //} else {
-    //  return gridLOD32;
-    //}
+    } else if (scale <= 8) {
+      return gridLOD128;
+    } else if (scale <= 32) {
+      return gridLOD64;
+    } else {
+      return gridLOD32;
+    }
   }
 
   private void loadTiles() {
@@ -189,6 +189,7 @@ class TileHandler implements Comparable<TileHandler>, Handler {
       LOD64.resize(64, 64);
 
       LOD32 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
+      LOD64.resize(32, 32);
     }
     catch(Exception e) {
       //set sprite to file not found image
@@ -337,8 +338,8 @@ class EventHandler implements Comparable<EventHandler>, Handler {
     String path = file.getAbsolutePath();
 
     try {
-      int pWidth = 100;  //these are temp, to be replaced when event constuction requires size
-      int pHeight = 100;
+      int pWidth = 1;  //these are temp, to be replaced when event constuction requires size
+      int pHeight = 1;
 
       LOD256 = loadImage(path);  //256
       LOD256.resize(256*pWidth, 256*pHeight);
