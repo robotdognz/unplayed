@@ -22,9 +22,9 @@ abstract class Event extends Rectangle {
   public void activate(Game g) {
   }
 
-  public void draw() {
+  public void draw(float scale) {
     if (hasTexture) {
-      image(eventTexture.getSprite(), getX(), getY(), getWidth(), getHeight());
+      image(eventTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
     } else {
       //display missing texture texture
     }

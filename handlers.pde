@@ -80,19 +80,6 @@ class TextureCache {
   }
 
   private void loadEvents() {
-    //events
-    //eventDir = new File(dataPath("events")+'/');
-    //eventPaths = eventDir.listFiles();
-    //eventMap = new HashMap<File, EventHandler>();
-    //for (File file : eventPaths) {
-    //  String path = file.getAbsolutePath();
-    //  if (path.matches(".+.png$")) { //only checks for .png
-    //    eventMap.put(file, new EventHandler(file));
-    //  }
-    //}
-    //eventList = new ArrayList<EventHandler>(eventMap.values());
-    //Collections.sort(eventList);
-
     //get directory and make map
     eventDir = new File(dataPath("events")+'/');
     eventMap = new HashMap<File, EventHandler>();
@@ -146,7 +133,7 @@ class TextureCache {
 }
 
 interface Handler {
-  public PImage getSprite();
+  public PImage getSprite(float scale);
   public File getFile();
   public int getWidth();
   public int getHeight();
@@ -156,16 +143,27 @@ interface Handler {
 //------------------TileHandler---------------------
 class TileHandler implements Comparable<TileHandler>, Handler {
   File datapath;
-  PImage sprite;
+  PImage LOD0; //256
+  PImage LOD1; //128
+  PImage LOD2; //64
+  PImage LOD3; //32
 
   public TileHandler(File file) {
     datapath = file;
     String path = file.getAbsolutePath();
 
     try {
-      sprite = loadImage(path);
-      //check the resolution of the image
-      //calculate which lod level the starting image is, it is lod1 if its width is 256
+      LOD0 = loadImage(path);  //256
+      LOD0.resize(256, 256);
+
+      LOD1 = LOD0.copy();  //128
+      LOD1.resize(128, 128);
+
+      LOD2 = LOD0.copy();  //64
+      LOD2.resize(64, 64);
+
+      LOD3 = LOD0.copy();  //32
+      LOD3.resize(32, 32);
     }
     catch(Exception e) {
       //set sprite to file not found image
@@ -179,8 +177,12 @@ class TileHandler implements Comparable<TileHandler>, Handler {
     return otherName.compareTo(name);
   }
 
-  public PImage getSprite() {
-    return sprite;
+  public PImage getSprite(float scale) {
+    if (scale < 5) {
+      return LOD0;
+    } else {
+      return LOD3;
+    }
     //should return the relevant lod
     //potentially should only load the image in when first called
   }
@@ -191,7 +193,7 @@ class TileHandler implements Comparable<TileHandler>, Handler {
 
   public void draw(float pX, float pY, float size) {
     //draw the scaled image
-    image(sprite, pX, pY, size, size);
+    image(LOD3, pX, pY, size, size);
   }
 
   public int getWidth() {
@@ -206,7 +208,10 @@ class TileHandler implements Comparable<TileHandler>, Handler {
 //------------------PieceHandler---------------------
 class PieceHandler implements Comparable<PieceHandler>, Handler {
   File datapath;
-  PImage sprite;
+  PImage LOD0; //256
+  PImage LOD1; //128
+  PImage LOD2; //64
+  PImage LOD3; //32
   int pWidth;
   int pHeight;
 
@@ -217,7 +222,17 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
     String path = file.getAbsolutePath();
 
     try {
-      sprite = loadImage(path);
+      LOD0 = loadImage(path);  //256
+      LOD0.resize(256, 256);
+
+      LOD1 = LOD0.copy();  //128
+      LOD1.resize(128, 128);
+
+      LOD2 = LOD0.copy();  //64
+      LOD2.resize(64, 64);
+
+      LOD3 = LOD0.copy();  //32
+      LOD3.resize(32, 32);
     }
     catch(Exception e) {
       //set sprite to file not found image
@@ -232,8 +247,12 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
     return pHeight;
   }
 
-  public PImage getSprite() {
-    return sprite;
+  public PImage getSprite(float scale) {
+    if (scale < 5) {
+      return LOD0;
+    } else {
+      return LOD3;
+    }
   }
 
   public File getFile() {
@@ -253,7 +272,7 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
       scaleFactor = size/getHeight();
     }
     //draw the scaled image
-    image(sprite, pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
+    image(LOD3, pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
   }
 
   @Override
@@ -273,7 +292,10 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
 //------------------EventHandler---------------------
 class EventHandler implements Comparable<EventHandler>, Handler {
   File datapath;
-  PImage sprite;
+  PImage LOD0; //256
+  PImage LOD1; //128
+  PImage LOD2; //64
+  PImage LOD3; //32
   int pWidth;
   int pHeight;
 
@@ -284,7 +306,17 @@ class EventHandler implements Comparable<EventHandler>, Handler {
     String path = file.getAbsolutePath();
 
     try {
-      sprite = loadImage(path);
+      LOD0 = loadImage(path);  //256
+      LOD0.resize(256, 256);
+
+      LOD1 = LOD0.copy();  //128
+      LOD1.resize(128, 128);
+
+      LOD2 = LOD0.copy();  //64
+      LOD2.resize(64, 64);
+
+      LOD3 = LOD0.copy();  //32
+      LOD3.resize(32, 32);
     }
     catch(Exception e) {
       //set sprite to file not found image
@@ -303,8 +335,12 @@ class EventHandler implements Comparable<EventHandler>, Handler {
     return pHeight;
   }
 
-  public PImage getSprite() {
-    return sprite;
+  public PImage getSprite(float scale) {
+    if (scale < 5) {
+      return LOD0;
+    } else {
+      return LOD3;
+    }
   }
 
   public File getFile() {
@@ -314,7 +350,7 @@ class EventHandler implements Comparable<EventHandler>, Handler {
   public void draw(float pX, float pY, float size) {
     //calculate how to scale the image so it appears in the scroll bar correctly
 
-    if (sprite != null) {
+    if (LOD3 != null) {
       float scaleFactor;
       if (getWidth() >= getHeight()) {
         scaleFactor = size/getWidth();
@@ -322,8 +358,8 @@ class EventHandler implements Comparable<EventHandler>, Handler {
         scaleFactor = size/getHeight();
       }
       //draw the scaled image
-      image(sprite, pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
-    }else{
+      image(LOD3, pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
+    } else {
       showToast("Failed to load: " + datapath);
     }
   }

@@ -112,20 +112,21 @@ class Game {
     scale((float)width/(float)camera.getScale()); //width/screen fits the level scale to the screen
     scale(camera.getSubScale()); //apply offset for tall screen spaces
     translate(-camera.getCenter().x, -camera.getCenter().y); //moves the view around the level
+    float currentScale = convert.getScale();
 
     //draw player and environment
     background(240);
     for (Rectangle p : screenObjects) { //draw pieces
       if (p instanceof Piece) {
-        ((Piece) p).draw();
+        ((Piece) p).draw(currentScale);
       }
     }
     for (Rectangle p : screenObjects) { //draw tiles and events
       if (p instanceof Tile) {
-        ((Tile) p).draw();
+        ((Tile) p).draw(currentScale);
       }
       if (p instanceof Event && eventVis) {
-        ((Event) p).draw();
+        ((Event) p).draw(currentScale);
       }
     }
     player.draw();

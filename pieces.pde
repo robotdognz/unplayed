@@ -19,9 +19,9 @@ class Piece extends Rectangle {
     }
   }
 
-  public void draw() {
+  public void draw(float scale) {
     if (hasTexture) {
-      image(pieceTexture.getSprite(), getX(), getY(), getWidth(), getHeight());
+      image(pieceTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
     } else {
       //display missing texture texture
     }
@@ -32,7 +32,7 @@ class Piece extends Rectangle {
   }
 }
 
-//------------------Platform---------------------
+//------------------Tile---------------------
 class Tile extends Rectangle {
   private boolean hasTexture;
   private TileHandler tileTexture;
@@ -51,9 +51,9 @@ class Tile extends Rectangle {
     }
   }
 
-  public void draw() {
+  public void draw(float scale) {
     if (hasTexture) {
-      image(tileTexture.getSprite(), getX(), getY(), getWidth(), getHeight()); //image(tileTexture.getSprite(), getX()+j, getY()+i, 100, 100);
+      image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
     } else {
       //display missing texture texture
     }
