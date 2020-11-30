@@ -201,19 +201,19 @@ class TileHandler implements Comparable<TileHandler>, Handler {
     String path = file.getAbsolutePath();
 
     try {
-      LOD256 = loadImage(path);  //256
+      LOD256 = requestImage(path);  //256
       LOD256.resize(256, 256);
 
-      LOD128 = LOD256.get();//(0, 0, LOD256.width, LOD256.height);  //128
+      LOD128 = LOD256.get(); //128
       LOD128.resize(128, 128);
 
-      LOD64 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //64
+      LOD64 = LOD256.get(); //64
       LOD64.resize(64, 64);
 
-      LOD32 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
+      LOD32 = LOD256.get(); //32
       LOD32.resize(32, 32);
 
-      LOD16 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //16
+      LOD16 = LOD256.get();  //16
       LOD16.resize(16, 16);
     }
     catch(Exception e) {
@@ -278,19 +278,19 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
     String path = file.getAbsolutePath();
 
     try {
-      LOD256 = loadImage(path);  //256
+      LOD256 = requestImage(path);  //256 //loadImage(path);
       LOD256.resize(256*pWidth, 256*pHeight);
 
-      LOD128 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //128
+      LOD128 = LOD256.get();  //128
       LOD128.resize(128*pWidth, 128*pHeight);
 
-      LOD64 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //64
+      LOD64 = LOD256.get();  //64
       LOD64.resize(64*pWidth, 64*pHeight);
 
-      LOD32 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
+      LOD32 = LOD256.get();  //32
       LOD32.resize(32*pWidth, 32*pHeight);
 
-      LOD16 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //16
+      LOD16 = LOD256.get();  //16
       LOD16.resize(16*pWidth, 16*pHeight);
     }
     catch(Exception e) {
@@ -371,19 +371,19 @@ class EventHandler implements Comparable<EventHandler>, Handler {
       int pWidth = 1;  //these are temp, to be replaced when event constuction requires size
       int pHeight = 1;
 
-      LOD256 = loadImage(path);  //256
+      LOD256 = requestImage(path);  //256
       LOD256.resize(256*pWidth, 256*pHeight);
 
-      LOD128 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //128
+      LOD128 = LOD256.get();  //128
       LOD128.resize(128*pWidth, 128*pHeight);
 
-      LOD64 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //64
+      LOD64 = LOD256.get();  //64
       LOD64.resize(64*pWidth, 64*pHeight);
 
-      LOD32 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
+      LOD32 = LOD256.get();  //32
       LOD32.resize(32*pWidth, 32*pHeight);
 
-      LOD16 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //16
+      LOD16 = LOD256.get();  //16
       LOD16.resize(16*pWidth, 16*pHeight);
     }
     catch(Exception e) {
