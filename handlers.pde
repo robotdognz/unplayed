@@ -178,13 +178,15 @@ class TileHandler implements Comparable<TileHandler>, Handler {
   }
 
   public PImage getSprite(float scale) {
-    if (scale < 5) {
-      return LOD0;
+    if (scale <= 4) {
+      return LOD0; //256
+    } else if (scale <= 8) {
+      return LOD1; //128
+    } else if (scale <= 32) {
+      return LOD2; //64
     } else {
-      return LOD3;
+      return LOD3; //32
     }
-    //should return the relevant lod
-    //potentially should only load the image in when first called
   }
 
   public File getFile() {
@@ -248,10 +250,14 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
   }
 
   public PImage getSprite(float scale) {
-    if (scale < 5) {
-      return LOD0;
+    if (scale <= 4) {
+      return LOD0; //256
+    } else if (scale <= 8) {
+      return LOD1; //128
+    } else if (scale <= 32) {
+      return LOD2; //64
     } else {
-      return LOD3;
+      return LOD3; //32
     }
   }
 
@@ -336,10 +342,14 @@ class EventHandler implements Comparable<EventHandler>, Handler {
   }
 
   public PImage getSprite(float scale) {
-    if (scale < 5) {
-      return LOD0;
+    if (scale <= 4) {
+      return LOD0; //256
+    } else if (scale <= 8) {
+      return LOD1; //128
+    } else if (scale <= 32) {
+      return LOD2; //64
     } else {
-      return LOD3;
+      return LOD3; //32
     }
   }
 
