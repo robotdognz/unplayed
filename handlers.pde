@@ -156,13 +156,13 @@ class TileHandler implements Comparable<TileHandler>, Handler {
       LOD0 = loadImage(path);  //256
       LOD0.resize(256, 256);
 
-      LOD1 = LOD0.copy();  //128
+      LOD1 = LOD0.get(0, 0, LOD0.width, LOD0.height);  //128
       LOD1.resize(128, 128);
 
-      LOD2 = LOD0.copy();  //64
+      LOD2 = LOD0.get(0, 0, LOD0.width, LOD0.height);  //64
       LOD2.resize(64, 64);
 
-      LOD3 = LOD0.copy();  //32
+      LOD3 = LOD0.get(0, 0, LOD0.width, LOD0.height);  //32
       LOD3.resize(32, 32);
     }
     catch(Exception e) {
@@ -225,13 +225,13 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
       LOD0 = loadImage(path);  //256
       LOD0.resize(256, 256);
 
-      LOD1 = LOD0.copy();  //128
+      LOD1 = LOD0.get(0, 0, LOD0.width, LOD0.height);  //128
       LOD1.resize(128, 128);
 
-      LOD2 = LOD0.copy();  //64
+      LOD2 = LOD0.get(0, 0, LOD0.width, LOD0.height);  //64
       LOD2.resize(64, 64);
 
-      LOD3 = LOD0.copy();  //32
+      LOD3 = LOD0.get(0, 0, LOD0.width, LOD0.height);  //32
       LOD3.resize(32, 32);
     }
     catch(Exception e) {
@@ -309,13 +309,13 @@ class EventHandler implements Comparable<EventHandler>, Handler {
       LOD0 = loadImage(path);  //256
       LOD0.resize(256, 256);
 
-      LOD1 = LOD0.copy();  //128
+      LOD1 = LOD0.get(0, 0, LOD0.width, LOD0.height);  //128
       LOD1.resize(128, 128);
 
-      LOD2 = LOD0.copy();  //64
+      LOD2 = LOD0.get(0, 0, LOD0.width, LOD0.height);  //64
       LOD2.resize(64, 64);
 
-      LOD3 = LOD0.copy();  //32
+      LOD3 = LOD0.get(0, 0, LOD0.width, LOD0.height);  //32
       LOD3.resize(32, 32);
     }
     catch(Exception e) {
