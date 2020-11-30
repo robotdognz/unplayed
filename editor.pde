@@ -43,10 +43,6 @@ class Editor {
     this.editorTop = new EditorTop(this);
     this.editorBottom = new EditorBottom(this);
     this.eJSON = new EditorJSON();
-    
-    //this.currentPiece = texture.getPieceList().get(0);
-    //this.currentTile = texture.getTileList().get(0);
-    //this.currentEvent = texture.getEventList().get(0);
   }
 
   public void step() {

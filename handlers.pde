@@ -71,20 +71,6 @@ class TextureCache {
   }
 
   public PImage getGrid(float scale) {
-    //if (scale <= 4) {
-    //  return gridLOD256;
-    //} else if (scale <= 8) {
-    //  return gridLOD128;
-    //} else if (scale <= 16) {
-    //  return gridLOD64;
-    //} else if (scale <= 32) {
-    //  return gridLOD32;
-    //} else if (scale <= 64) {
-    //  return gridLOD16;
-    //} else {
-    //  return gridLOD8;
-    //}
-
     if (scale > 64) {
       return gridLOD8; //larger than 64
     } else if (scale > 32) {
@@ -243,18 +229,6 @@ class TileHandler implements Comparable<TileHandler>, Handler {
   }
 
   public PImage getSprite(float scale) {
-    //if (scale <= texture.LOD256) {
-    //  return LOD256;
-    //} else if (scale <= texture.LOD128) {
-    //  return LOD128;
-    //} else if (scale <= texture.LOD64) {
-    //  return LOD64;
-    //} else if (scale <= texture.LOD32) {
-    //  return LOD32;
-    //} else {
-    //  return LOD16;
-    //}
-
     if (scale > texture.LOD32) {
       return LOD16;
     } else if (scale > texture.LOD64) {
@@ -333,18 +307,6 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
   }
 
   public PImage getSprite(float scale) {
-    //if (scale <= texture.LOD256) {
-    //  return LOD256;
-    //} else if (scale <= texture.LOD128) {
-    //  return LOD128;
-    //} else if (scale <= texture.LOD64) {
-    //  return LOD64;
-    //} else if (scale <= texture.LOD32) {
-    //  return LOD32;
-    //} else {
-    //  return LOD16;
-    //}
-    
     if (scale > texture.LOD32) {
       return LOD16;
     } else if (scale > texture.LOD64) {
@@ -360,10 +322,6 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
 
   public File getFile() {
     return datapath;
-  }
-
-  public String toString() {
-    return "[" + pWidth + ", " + pHeight + "]";
   }
 
   public void draw(float pX, float pY, float size) {
@@ -446,18 +404,6 @@ class EventHandler implements Comparable<EventHandler>, Handler {
   }
 
   public PImage getSprite(float scale) {
-    //if (scale <= texture.LOD256) {
-    //  return LOD256;
-    //} else if (scale <= texture.LOD128) {
-    //  return LOD128;
-    //} else if (scale <= texture.LOD64) {
-    //  return LOD64;
-    //} else if (scale <= texture.LOD32) {
-    //  return LOD32;
-    //} else {
-    //  return LOD16;
-    //}
-    
     if (scale > texture.LOD32) {
       return LOD16;
     } else if (scale > texture.LOD64) {
