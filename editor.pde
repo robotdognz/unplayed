@@ -1,8 +1,8 @@
 //------------------Editor---------------------
 class Editor {
   //touch constraint variables
-  public final int TOP_DEADZONE = 200;
-  public final int BOTTOM_DEADZONE = height-300;
+  public final int TOP_DEADZONE = 200; //TODO: needs to scale with screen
+  public final int BOTTOM_DEADZONE = height-300; //TODO: needs to scale with screen
   public boolean nextTouchInactive = false;
 
   Game eGame; //reference to game, same instance of game used everywhere else
@@ -12,7 +12,7 @@ class Editor {
   float maxZoom = 100;
 
   //controller
-  Controller eController = new CameraControl(this); //holds the current controller
+  Controller eController; //holds the current controller
   boolean eControllerActive = true; //is the current controller active
 
   //editor settings
@@ -39,7 +39,7 @@ class Editor {
 
   public Editor(Game game) {
     this.eGame = game;
-    this.eController = new PlayerControl();
+    this.eController = new CameraControl(this);
     this.editorTop = new EditorTop(this);
     this.editorBottom = new EditorBottom(this);
     this.eJSON = new EditorJSON();
