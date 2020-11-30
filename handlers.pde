@@ -189,7 +189,7 @@ class TileHandler implements Comparable<TileHandler>, Handler {
       LOD64.resize(64, 64);
 
       LOD32 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
-      LOD64.resize(32, 32);
+      LOD32.resize(32, 32);
     }
     catch(Exception e) {
       //set sprite to file not found image
