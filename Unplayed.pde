@@ -312,6 +312,7 @@ class Vibe {
   public Vibe() {
     vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE); 
     deprecated = android.os.Build.VERSION.SDK_INT > 26 && vibe.hasVibrator(); //23
+    showToast(Integer.toString(android.os.Build.VERSION.SDK_INT));
     //this class needs to be updated to calculate fine grained vibration strength using a combination of amount and level
   }
 
