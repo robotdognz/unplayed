@@ -5,6 +5,8 @@ class TextureCache {
   public PImage gridLOD128 = null;
   public PImage gridLOD64 = null;
   public PImage gridLOD32 = null;
+  public PImage gridLOD16 = null;
+  public PImage gridLOD8 = null;
 
   //level pieces
   private File pieceDir;
@@ -44,6 +46,12 @@ class TextureCache {
     gridLOD32 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //32
     gridLOD32.resize(32*gridCount, 32*gridCount);
 
+    gridLOD16 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //32
+    gridLOD16.resize(16*gridCount, 16*gridCount);
+
+    gridLOD8 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //32
+    gridLOD8.resize(8*gridCount, 8*gridCount);
+
     //level assets
     loadLevelPieces();
     loadTiles();
@@ -52,16 +60,20 @@ class TextureCache {
     //blocks
     defaultBlock = loadImage("player_main.png");
   }
-  
+
   public PImage getGrid(float scale) {
     if (scale <= 4) {
       return gridLOD256;
     } else if (scale <= 8) {
       return gridLOD128;
-    } else if (scale <= 32) {
+    } else if (scale <= 16) {
       return gridLOD64;
-    } else {
+    } else if (scale <= 32) {
       return gridLOD32;
+    } else  if (scale <= 64) {
+      return gridLOD16;
+    } else {
+      return gridLOD8;
     }
   }
 
@@ -173,6 +185,8 @@ class TileHandler implements Comparable<TileHandler>, Handler {
   PImage LOD128;
   PImage LOD64;
   PImage LOD32;
+  PImage LOD16;
+  PImage LOD8;
 
   public TileHandler(File file) {
     datapath = file;
@@ -190,6 +204,12 @@ class TileHandler implements Comparable<TileHandler>, Handler {
 
       LOD32 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
       LOD32.resize(32, 32);
+      
+      LOD16 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
+      LOD16.resize(16, 16);
+      
+      LOD8 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
+      LOD8.resize(8, 8);
     }
     catch(Exception e) {
       //set sprite to file not found image
@@ -208,10 +228,14 @@ class TileHandler implements Comparable<TileHandler>, Handler {
       return LOD256;
     } else if (scale <= 8) {
       return LOD128;
-    } else if (scale <= 32) {
+    } else if (scale <= 16) {
       return LOD64;
-    } else {
+    } else if (scale <= 32) {
       return LOD32;
+    } else  if (scale <= 64) {
+      return LOD16;
+    } else {
+      return LOD8;
     }
   }
 
@@ -240,6 +264,8 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
   PImage LOD128;
   PImage LOD64;
   PImage LOD32;
+  PImage LOD16;
+  PImage LOD8;
   int pWidth;
   int pHeight;
 
@@ -261,6 +287,12 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
 
       LOD32 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
       LOD32.resize(32*pWidth, 32*pHeight);
+      
+      LOD16 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
+      LOD16.resize(16*pWidth, 16*pHeight);
+      
+      LOD8 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
+      LOD8.resize(8*pWidth, 8*pHeight);
     }
     catch(Exception e) {
       //set sprite to file not found image
@@ -280,10 +312,14 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
       return LOD256;
     } else if (scale <= 8) {
       return LOD128;
-    } else if (scale <= 32) {
+    } else if (scale <= 16) {
       return LOD64;
-    } else {
+    } else if (scale <= 32) {
       return LOD32;
+    } else  if (scale <= 64) {
+      return LOD16;
+    } else {
+      return LOD8;
     }
   }
 
@@ -328,6 +364,8 @@ class EventHandler implements Comparable<EventHandler>, Handler {
   PImage LOD128;
   PImage LOD64;
   PImage LOD32;
+  PImage LOD16;
+  PImage LOD8;
   int pWidth;
   int pHeight;
 
@@ -352,6 +390,12 @@ class EventHandler implements Comparable<EventHandler>, Handler {
 
       LOD32 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
       LOD32.resize(32*pWidth, 32*pHeight);
+      
+      LOD16 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
+      LOD16.resize(16*pWidth, 16*pHeight);
+      
+      LOD8 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
+      LOD8.resize(8*pWidth, 8*pHeight);
     }
     catch(Exception e) {
       //set sprite to file not found image
@@ -375,10 +419,14 @@ class EventHandler implements Comparable<EventHandler>, Handler {
       return LOD256;
     } else if (scale <= 8) {
       return LOD128;
-    } else if (scale <= 32) {
+    } else if (scale <= 16) {
       return LOD64;
-    } else {
+    } else if (scale <= 32) {
       return LOD32;
+    } else  if (scale <= 64) {
+      return LOD16;
+    } else {
+      return LOD8;
     }
   }
 
