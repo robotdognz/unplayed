@@ -311,9 +311,7 @@ class Vibe {
 
   public Vibe() {
     vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE); 
-    deprecated = android.os.Build.VERSION.SDK_INT < 26;// && vibe.hasVibrator(); //23
-    //showToast(Integer.toString(android.os.Build.VERSION.SDK_INT));
-    //println(Integer.toString(android.os.Build.VERSION.SDK_INT));
+    deprecated = android.os.Build.VERSION.SDK_INT < 26;// && vibe.hasVibrator();
     //this class needs to be updated to calculate fine grained vibration strength using a combination of amount and level
   }
 
@@ -321,7 +319,6 @@ class Vibe {
     public void vibrate(long amount) {
     //amount = duration
     if (!deprecated) {
-      showToast("fancy");
       vibe.vibrate(VibrationEffect.createOneShot(amount, 255));
     } else {
       //this is for older versions of anroid
@@ -335,7 +332,6 @@ class Vibe {
     //amount = duration
     //level = intensity
     if (!deprecated) {
-      showToast("fancy");
       vibe.vibrate(VibrationEffect.createOneShot(amount, level));
     } else {
       //this is for older versions of anroid
