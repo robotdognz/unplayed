@@ -12,6 +12,7 @@ class TextureCache {
   private PImage gridLOD64 = null;
   private PImage gridLOD32 = null;
   private PImage gridLOD16 = null;
+  private PImage gridLOD8 = null;
 
   //level pieces
   private File pieceDir;
@@ -57,6 +58,8 @@ class TextureCache {
     gridLOD16 = loadImage("PaperGrid_64x64.png");
     //gridLOD16 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //16
     //gridLOD16.resize(16*gridCount, 16*gridCount);
+    
+    gridLOD8 = loadImage("PaperGrid_32x32.png");
 
     //level assets
     loadLevelPieces();
@@ -68,16 +71,18 @@ class TextureCache {
   }
 
   public PImage getGrid(float scale) {
-    if (scale <= LOD256) {
+    if (scale <= 4) {
       return gridLOD256;
-    } else if (scale <= LOD128) {
+    } else if (scale <= 8) {
       return gridLOD128;
-    } else if (scale <= LOD64) {
+    } else if (scale <= 16) {
       return gridLOD64;
-    } else if (scale <= LOD32) {
+    } else if (scale <= 32) {
       return gridLOD32;
-    } else {
+    } else if (scale <= 64) {
       return gridLOD16;
+    } else {
+      return gridLOD8;
     }
   }
 
