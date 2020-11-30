@@ -1,11 +1,17 @@
 //------------------TextureStore---------------------
 class TextureCache {
+  //LODs
+  public int LOD256 = 4;
+  public int LOD128 = 8;
+  public int LOD64 = 16;
+  public int LOD32 = 64;
+  
   //paper textures
-  public PImage gridLOD256 = null;
-  public PImage gridLOD128 = null;
-  public PImage gridLOD64 = null;
-  public PImage gridLOD32 = null;
-  public PImage gridLOD16 = null;
+  private PImage gridLOD256 = null;
+  private PImage gridLOD128 = null;
+  private PImage gridLOD64 = null;
+  private PImage gridLOD32 = null;
+  private PImage gridLOD16 = null;
 
   //level pieces
   private File pieceDir;
@@ -62,13 +68,13 @@ class TextureCache {
   }
 
   public PImage getGrid(float scale) {
-    if (scale <= 4) {
+    if (scale <= LOD256) {
       return gridLOD256;
-    } else if (scale <= 8) {
+    } else if (scale <= LOD128) {
       return gridLOD128;
-    } else if (scale <= 16) {
+    } else if (scale <= LOD64) {
       return gridLOD64;
-    } else if (scale <= 32) {
+    } else if (scale <= LOD32) {
       return gridLOD32;
     } else {
       return gridLOD16;
@@ -218,13 +224,13 @@ class TileHandler implements Comparable<TileHandler>, Handler {
   }
 
   public PImage getSprite(float scale) {
-    if (scale <= 4) {
+    if (scale <= texture.LOD256) {
       return LOD256;
-    } else if (scale <= 8) {
+    } else if (scale <= texture.LOD128) {
       return LOD128;
-    } else if (scale <= 16) {
+    } else if (scale <= texture.LOD64) {
       return LOD64;
-    } else if (scale <= 32) {
+    } else if (scale <= texture.LOD32) {
       return LOD32;
     } else {
       return LOD16;
@@ -296,13 +302,13 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
   }
 
   public PImage getSprite(float scale) {
-    if (scale <= 4) {
+    if (scale <= texture.LOD256) {
       return LOD256;
-    } else if (scale <= 8) {
+    } else if (scale <= texture.LOD128) {
       return LOD128;
-    } else if (scale <= 16) {
+    } else if (scale <= texture.LOD64) {
       return LOD64;
-    } else if (scale <= 32) {
+    } else if (scale <= texture.LOD32) {
       return LOD32;
     } else {
       return LOD16;
@@ -397,13 +403,13 @@ class EventHandler implements Comparable<EventHandler>, Handler {
   }
 
   public PImage getSprite(float scale) {
-    if (scale <= 4) {
+    if (scale <= texture.LOD256) {
       return LOD256;
-    } else if (scale <= 8) {
+    } else if (scale <= texture.LOD128) {
       return LOD128;
-    } else if (scale <= 16) {
+    } else if (scale <= texture.LOD64) {
       return LOD64;
-    } else if (scale <= 32) {
+    } else if (scale <= texture.LOD32) {
       return LOD32;
     } else {
       return LOD16;
