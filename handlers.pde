@@ -1,10 +1,10 @@
 //------------------TextureStore---------------------
 class TextureCache {
   //paper textures
-  public PImage gridLOD256;
-  public PImage gridLOD128;
-  public PImage gridLOD64;
-  public PImage gridLOD32;
+  public PImage gridLOD256 = null;
+  public PImage gridLOD128 = null;
+  public PImage gridLOD64 = null;
+  public PImage gridLOD32 = null;
 
   //level pieces
   private File pieceDir;
@@ -35,14 +35,14 @@ class TextureCache {
     gridLOD256 = loadImage("PaperGrid_1024x1024.png");
     gridLOD256.resize(256*gridCount, 256*gridCount);
 
-    gridLOD128 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //128
-    gridLOD128.resize(128*gridCount, 128*gridCount);
+    //gridLOD128 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //128
+    //gridLOD128.resize(128*gridCount, 128*gridCount);
 
-    gridLOD64 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //64
-    gridLOD64.resize(64*gridCount, 64*gridCount);
+    //gridLOD64 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //64
+    //gridLOD64.resize(64*gridCount, 64*gridCount);
 
-    gridLOD32 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //32
-    gridLOD32.resize(32*gridCount, 32*gridCount);
+    //gridLOD32 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //32
+    //gridLOD32.resize(32*gridCount, 32*gridCount);
 
     //level assets
     loadLevelPieces();
@@ -54,15 +54,15 @@ class TextureCache {
   }
   
   public PImage getGrid(float scale) {
-    if (scale <= 4) {
+    //if (scale <= 4) {
       return gridLOD256;
-    } else if (scale <= 8) {
-      return gridLOD128;
-    } else if (scale <= 32) {
-      return gridLOD64;
-    } else {
-      return gridLOD32;
-    }
+    //} else if (scale <= 8) {
+    //  return gridLOD128;
+    //} else if (scale <= 32) {
+    //  return gridLOD64;
+    //} else {
+    //  return gridLOD32;
+    //}
   }
 
   private void loadTiles() {
