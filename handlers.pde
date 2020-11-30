@@ -263,6 +263,10 @@ class TileHandler implements Comparable<TileHandler>, Handler {
   }
 
   public void draw(float pX, float pY, float size) {
+    if(LOD128 == null){
+        LOD128 = LOD256.get();  //16
+        LOD128.resize(128, 128);
+      }
     //draw the scaled image
     image(LOD128, pX, pY, size, size);
   }
