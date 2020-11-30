@@ -6,7 +6,6 @@ class TextureCache {
   public PImage gridLOD64 = null;
   public PImage gridLOD32 = null;
   public PImage gridLOD16 = null;
-  public PImage gridLOD8 = null;
 
   //level pieces
   private File pieceDir;
@@ -49,7 +48,7 @@ class TextureCache {
     //gridLOD32 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //32
     //gridLOD32.resize(32*gridCount, 32*gridCount);
 
-    gridLOD32 = loadImage("PaperGrid_64x64.png");
+    gridLOD16 = loadImage("PaperGrid_64x64.png");
     //gridLOD16 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //16
     //gridLOD16.resize(16*gridCount, 16*gridCount);
 
