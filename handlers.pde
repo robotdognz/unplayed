@@ -190,31 +190,31 @@ interface Handler {
 //------------------TileHandler---------------------
 class TileHandler implements Comparable<TileHandler>, Handler {
   File datapath;
-  PImage LOD256 = null;
-  PImage LOD128 = null;
-  PImage LOD64 = null;
-  PImage LOD32 = null;
-  PImage LOD16 = null;
+  PImage LOD256;
+  PImage LOD128;
+  PImage LOD64;
+  PImage LOD32;
+  PImage LOD16;
 
   public TileHandler(File file) {
     datapath = file;
     String path = file.getAbsolutePath();
 
     try {
-      LOD256 = loadImage(path);  //256
+      LOD256 = requestImage(path);  //256
       LOD256.resize(256, 256);
 
-      //LOD128 = LOD256.get(); //128
-      //LOD128.resize(128, 128);
+      LOD128 = LOD256.get(); //128
+      LOD128.resize(128, 128);
 
-      //LOD64 = LOD256.get(); //64
-      //LOD64.resize(64, 64);
+      LOD64 = LOD256.get(); //64
+      LOD64.resize(64, 64);
 
-      //LOD32 = LOD256.get(); //32
-      //LOD32.resize(32, 32);
+      LOD32 = LOD256.get(); //32
+      LOD32.resize(32, 32);
 
-      //LOD16 = LOD256.get();  //16
-      //LOD16.resize(16, 16);
+      LOD16 = LOD256.get();  //16
+      LOD16.resize(16, 16);
     }
     catch(Exception e) {
       //set sprite to file not found image
@@ -230,25 +230,25 @@ class TileHandler implements Comparable<TileHandler>, Handler {
 
   public PImage getSprite(float scale) {
     if (scale > texture.LOD32) {
-      if(LOD16 == null){
+      if(LOD16.width < 1){
         LOD16 = LOD256.get();  //16
         LOD16.resize(16, 16);
       }
       return LOD16;
     } else if (scale > texture.LOD64) {
-      if(LOD32 == null){
+      if(LOD32.width < 1){
         LOD32 = LOD256.get();  //32
         LOD32.resize(32, 32);
       }
       return LOD32;
     } else if (scale > texture.LOD128) {
-      if(LOD64 == null){
+      if(LOD64.width < 1){
         LOD64 = LOD256.get();  //64
         LOD64.resize(64, 64);
       }
       return LOD64;
     } else if (scale > texture.LOD256) {
-      if(LOD128 == null){
+      if(LOD128.width < 1){
         LOD128 = LOD256.get();  //16
         LOD128.resize(128, 128);
       }
@@ -263,7 +263,7 @@ class TileHandler implements Comparable<TileHandler>, Handler {
   }
 
   public void draw(float pX, float pY, float size) {
-    if(LOD128 == null){
+    if(LOD128.width < 1){
         LOD128 = LOD256.get();  //16
         LOD128.resize(128, 128);
       }
