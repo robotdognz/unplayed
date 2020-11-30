@@ -89,17 +89,17 @@ class Game {
     player.setPosition(level.getPlayerStart());
 
     if (camera.getGame()) {
-      camera.setScale(level.getStartScale());
+      //camera.setScale(level.getStartScale());
       newScale = level.getStartScale();
-      camera.setCenter(level.getStartCenter());
+      //camera.setCenter(level.getStartCenter());
       newCenter = new PVector(level.getStartCenter().x, level.getStartCenter().y);
-      topEdge = level.getTopBar();
+      //topEdge = level.getTopBar();
       newTopEdge = level.getTopBar();
-      bottomEdge = level.getBottomBar();
+      //bottomEdge = level.getBottomBar();
       newBottomEdge = level.getBottomBar();
-      leftEdge = camera.getCenter().x-newScale/2;
+      //leftEdge = camera.getCenter().x-newScale/2;
       newLeftEdge = newCenter.x-newScale/2;
-      rightEdge = camera.getCenter().x+newScale/2;
+      //rightEdge = camera.getCenter().x+newScale/2;
       newRightEdge = newCenter.x+newScale/2;
     }
   }
