@@ -5,7 +5,7 @@ class TextureCache {
   public int LOD128 = 8;
   public int LOD64 = 16;
   public int LOD32 = 64;
-  
+
   //paper textures
   private PImage gridLOD256 = null;
   private PImage gridLOD128 = null;
@@ -58,7 +58,7 @@ class TextureCache {
     gridLOD16 = loadImage("PaperGrid_64x64.png");
     //gridLOD16 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //16
     //gridLOD16.resize(16*gridCount, 16*gridCount);
-    
+
     gridLOD8 = loadImage("PaperGrid_32x32.png");
 
     //level assets
@@ -84,18 +84,18 @@ class TextureCache {
     //} else {
     //  return gridLOD8;
     //}
-    
-    if(scale > 64){
+
+    if (scale > 64) {
       return gridLOD8; //larger than 64
-    }else if(scale > 32){
+    } else if (scale > 32) {
       return gridLOD16; //between 32 and 64
-    }else if(scale > 16){
+    } else if (scale > 16) {
       return gridLOD32; //between 16 and 32
-    }else if(scale > 8){
+    } else if (scale > 8) {
       return gridLOD64; //between 8 and 16
-    }else if(scale > 4){
+    } else if (scale > 4) {
       return gridLOD128; //between 4 and 8
-    }else{
+    } else {
       return gridLOD256; //less than 4
     }
   }
@@ -226,7 +226,7 @@ class TileHandler implements Comparable<TileHandler>, Handler {
 
       LOD32 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
       LOD32.resize(32, 32);
-      
+
       LOD16 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //16
       LOD16.resize(16, 16);
     }
@@ -243,16 +243,28 @@ class TileHandler implements Comparable<TileHandler>, Handler {
   }
 
   public PImage getSprite(float scale) {
-    if (scale <= texture.LOD256) {
-      return LOD256;
-    } else if (scale <= texture.LOD128) {
-      return LOD128;
-    } else if (scale <= texture.LOD64) {
-      return LOD64;
-    } else if (scale <= texture.LOD32) {
-      return LOD32;
-    } else {
+    //if (scale <= texture.LOD256) {
+    //  return LOD256;
+    //} else if (scale <= texture.LOD128) {
+    //  return LOD128;
+    //} else if (scale <= texture.LOD64) {
+    //  return LOD64;
+    //} else if (scale <= texture.LOD32) {
+    //  return LOD32;
+    //} else {
+    //  return LOD16;
+    //}
+
+    if (scale > texture.LOD32) {
       return LOD16;
+    } else if (scale > texture.LOD64) {
+      return LOD32;
+    } else if (scale > texture.LOD128) {
+      return LOD64;
+    } else if (scale > texture.LOD256) {
+      return LOD128;
+    } else {
+      return LOD256;
     }
   }
 
@@ -303,7 +315,7 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
 
       LOD32 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
       LOD32.resize(32*pWidth, 32*pHeight);
-      
+
       LOD16 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //16
       LOD16.resize(16*pWidth, 16*pHeight);
     }
@@ -321,16 +333,28 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
   }
 
   public PImage getSprite(float scale) {
-    if (scale <= texture.LOD256) {
-      return LOD256;
-    } else if (scale <= texture.LOD128) {
-      return LOD128;
-    } else if (scale <= texture.LOD64) {
-      return LOD64;
-    } else if (scale <= texture.LOD32) {
-      return LOD32;
-    } else {
+    //if (scale <= texture.LOD256) {
+    //  return LOD256;
+    //} else if (scale <= texture.LOD128) {
+    //  return LOD128;
+    //} else if (scale <= texture.LOD64) {
+    //  return LOD64;
+    //} else if (scale <= texture.LOD32) {
+    //  return LOD32;
+    //} else {
+    //  return LOD16;
+    //}
+    
+    if (scale > texture.LOD32) {
       return LOD16;
+    } else if (scale > texture.LOD64) {
+      return LOD32;
+    } else if (scale > texture.LOD128) {
+      return LOD64;
+    } else if (scale > texture.LOD256) {
+      return LOD128;
+    } else {
+      return LOD256;
     }
   }
 
@@ -400,7 +424,7 @@ class EventHandler implements Comparable<EventHandler>, Handler {
 
       LOD32 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //32
       LOD32.resize(32*pWidth, 32*pHeight);
-      
+
       LOD16 = LOD256.get(0, 0, LOD256.width, LOD256.height);  //16
       LOD16.resize(16*pWidth, 16*pHeight);
     }
@@ -422,16 +446,28 @@ class EventHandler implements Comparable<EventHandler>, Handler {
   }
 
   public PImage getSprite(float scale) {
-    if (scale <= texture.LOD256) {
-      return LOD256;
-    } else if (scale <= texture.LOD128) {
-      return LOD128;
-    } else if (scale <= texture.LOD64) {
-      return LOD64;
-    } else if (scale <= texture.LOD32) {
-      return LOD32;
-    } else {
+    //if (scale <= texture.LOD256) {
+    //  return LOD256;
+    //} else if (scale <= texture.LOD128) {
+    //  return LOD128;
+    //} else if (scale <= texture.LOD64) {
+    //  return LOD64;
+    //} else if (scale <= texture.LOD32) {
+    //  return LOD32;
+    //} else {
+    //  return LOD16;
+    //}
+    
+    if (scale > texture.LOD32) {
       return LOD16;
+    } else if (scale > texture.LOD64) {
+      return LOD32;
+    } else if (scale > texture.LOD128) {
+      return LOD64;
+    } else if (scale > texture.LOD256) {
+      return LOD128;
+    } else {
+      return LOD256;
     }
   }
 
