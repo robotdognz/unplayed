@@ -32,7 +32,7 @@ class TextureCache {
 
     //paper textures
     int gridCount = 4; //number of squares in the grid texture
-    gridLOD256 = loadImage("PaperGrid_512x512.png");
+    gridLOD256 = loadImage("PaperGrid_1024x1024.png");
     gridLOD256.resize(256*gridCount, 256*gridCount);
 
     gridLOD128 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //128
