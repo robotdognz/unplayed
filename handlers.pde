@@ -473,20 +473,27 @@ class EventHandler implements Comparable<EventHandler>, Handler {
 
   public void draw(float pX, float pY, float size) {
     //calculate how to scale the image so it appears in the scroll bar correctly
-
-    if (LOD128 != null) {
-      float scaleFactor;
-      if (getWidth() >= getHeight()) {
-        scaleFactor = size/getWidth();
-      } else {
-        scaleFactor = size/getHeight();
-      }
-
-      //draw the scaled image
-      image(getSprite(6), pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
+    float scaleFactor;
+    if (getWidth() >= getHeight()) {
+      scaleFactor = size/getWidth();
     } else {
-      showToast("Failed to load: " + datapath);
+      scaleFactor = size/getHeight();
     }
+    //draw the scaled image
+    image(getSprite(6), pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
+    //if (LOD128 != null) {
+    //  float scaleFactor;
+    //  if (getWidth() >= getHeight()) {
+    //    scaleFactor = size/getWidth();
+    //  } else {
+    //    scaleFactor = size/getHeight();
+    //  }
+
+    //  //draw the scaled image
+    //  image(getSprite(6), pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
+    //} else {
+    //  showToast("Failed to load: " + datapath);
+    //}
   }
 
   @Override
