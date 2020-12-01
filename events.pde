@@ -20,6 +20,7 @@ abstract class Event extends Rectangle {
   }
 
   public void activate(Game g) {
+    showToast(getX() + " " + getY() + " " + getWidth() + " " + getHeight());
   }
 
   public void draw(float scale) {
@@ -38,6 +39,7 @@ class PlayerDeath extends Event {
   }
 
   public void activate(Game g) {
+    super.activate(g);
     g.restart(); //TODO: this needs a custom method in game
   }
 }
@@ -82,6 +84,7 @@ class CameraChange extends Event {
   //}
 
   public void activate(Game g) {
+    super.activate(g);
     //these values should continue to be stored in game, they get pushed to the camera by game on the next step
     //that way camera changes will take effect when moving back to game camera from editor camera
 
