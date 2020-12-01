@@ -1,6 +1,7 @@
 abstract class Event extends Rectangle {
   private boolean hasTexture;
   private EventHandler eventTexture;
+  private String name;
 
   public Event(String name, float x, float y, float rWidth, float rHeight) {
     super(x, y, rWidth, rHeight);
@@ -29,6 +30,10 @@ abstract class Event extends Rectangle {
     } else {
       //display missing texture texture
     }
+  }
+  
+  public String getName(){
+    return name;
   }
 }
 
@@ -69,7 +74,19 @@ class CameraChange extends Event {
     this.cameraZoom = cameraZoom;
     this.edgeZoom = edgeZoom;
     //this.type = type;
-    //this.sprite = loadImage("cameraChange.png");
+  }
+  
+  public PVector getCameraTopLeft(){
+    return cameraTopLeft;
+  }
+  public PVector getCameraBottomRight(){
+    return cameraBottomRight;
+  }
+  public float getCameraZoom(){
+    return cameraZoom;
+  }
+  public float getEdgeZoom(){
+    return edgeZoom;
   }
 
   //use constructor overloading
