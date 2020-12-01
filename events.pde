@@ -10,6 +10,7 @@ abstract class Event extends Rectangle {
       setWidth(eventTexture.getWidth());
       setHeight(eventTexture.getHeight());
       hasTexture = true;
+      showToast("Got event handler from map");
     } else {
       hasTexture = false;
       showToast("Failed to get event handler from map");
