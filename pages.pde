@@ -6,7 +6,8 @@ class Page {
   PVector position; //center of the page in page view
   float size; //size of the page in page view
   float angle; //rotation of the page in page view
-  
+  Rectangle angledRect; //a rectangle that contains the rotated page
+
   //PGraphics //need to figure out if these can be rotated
 
   public Page(Game game, PVector topLeft, PVector bottomRight, PVector position, float size) {
@@ -17,12 +18,15 @@ class Page {
     this.pageObjects = new HashSet<Rectangle>();
     this.position = position;
     this.size = size;
-    this.angle = 0; //to be implemented later
+
+    //to be implemented later
+    this.angle = 0; 
+    //angledRect //calculate a rectangle that the angled page fits inside
   }
 
   public void draw(float scale) {
     //draw the page
-    
+
     //draw player and environment
     background(240);
     for (Rectangle p : pageObjects) { //draw pieces
@@ -49,10 +53,17 @@ class Page {
   }
 }
 
-//page view class
+class PageView {
+  //arraylist of pages
+  private ArrayList<Page> pages;
 
-//arraylist of pages
+  public PageView() {
+    pages = new ArrayList<Page>();
+  }
 
-//draw()
+  public void draw() {
+  }
 
-//step()
+  public void step() {
+  }
+}
