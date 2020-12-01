@@ -4,12 +4,11 @@ abstract class Event extends Rectangle {
 
   public Event(String name, float x, float y, float rWidth, float rHeight) {
     super(x, y, rWidth, rHeight);
-    showToast(rWidth+ " : " + rHeight + " - " + getWidth() + " : " + getHeight());
 
     if (name != null && texture.getEventMap().containsKey(name)) {
       this.eventTexture = texture.getEventMap().get(name);
-      setWidth(eventTexture.getWidth());
-      setHeight(eventTexture.getHeight());
+      //setWidth(eventTexture.getWidth());
+      //setHeight(eventTexture.getHeight());
       hasTexture = true;
     } else {
       hasTexture = false;
@@ -26,7 +25,7 @@ abstract class Event extends Rectangle {
 
   public void draw(float scale) {
     if (hasTexture) {
-      image(eventTexture.getSprite(scale), getX(), getY(), 100, 100); //getWidth(), getHeight()
+      image(eventTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
     } else {
       //display missing texture texture
     }

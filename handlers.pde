@@ -380,11 +380,8 @@ class EventHandler implements Comparable<EventHandler>, Handler {
     String path = file.getAbsolutePath();
 
     try {
-      pWidth = 1;  //these are temp, to be replaced when event constuction requires size
-      pHeight = 1;
-
       LOD256 = requestImage(path);
-      LOD256.resize(256*pWidth, 256*pHeight);
+      LOD256.resize(256*pWidth/100, 256*pHeight/100);
     }
     catch(Exception e) {
       //set sprite to file not found image
@@ -407,25 +404,25 @@ class EventHandler implements Comparable<EventHandler>, Handler {
     if (scale > texture.LOD32) {
       if (LOD16 == null) {
         LOD16 = LOD256.get();  //16
-        LOD16.resize(16*pWidth, 16*pHeight);
+        LOD16.resize(16*pWidth/100, 16*pHeight/100);
       }
       return LOD16;
     } else if (scale > texture.LOD64) {
       if (LOD32 == null) {
         LOD32 = LOD256.get();  //32
-        LOD32.resize(32*pWidth, 32*pHeight);
+        LOD32.resize(32*pWidth/100, 32*pHeight/100);
       }
       return LOD32;
     } else if (scale > texture.LOD128) {
       if (LOD64 == null) {
         LOD64 = LOD256.get();  //64
-        LOD64.resize(64*pWidth, 64*pHeight);
+        LOD64.resize(64*pWidth/100, 64*pHeight/100);
       }
       return LOD64;
     } else if (scale > texture.LOD256) {
       if (LOD128 == null) {
         LOD128 = LOD256.get();  //16
-        LOD128.resize(128*pWidth, 128*pHeight);
+        LOD128.resize(128*pWidth/100, 128*pHeight/100);
       }
       return LOD128;
     } else {
