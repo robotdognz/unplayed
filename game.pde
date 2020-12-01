@@ -1,6 +1,6 @@
 class Game {
   public Player player;
-  private Level level;
+  //private Level level;
   private Paper paper;
 
   public Quadtree world;
@@ -38,23 +38,35 @@ class Game {
   public float boarderZoomSpeed = 0.1; //0.1 is default
 
   Game(Camera c, Vibe v) {
+    //legacy variables from level class TODO: write these out eventually
+    PVector playerStart = new PVector(0, 0);
+    PVector cameraTopLeft = new PVector(-400, -400);
+    PVector cameraBottomRight = new PVector(500, 400);
+    int centerX = (int)((cameraBottomRight.x-cameraTopLeft.x)/2+cameraTopLeft.x);
+    int centerY = (int)((cameraTopLeft.y-cameraBottomRight.y)/2+cameraBottomRight.y);
+    PVector startCenter = new PVector(centerX, centerY);
+    int startScale = (int)Math.abs(cameraBottomRight.x-cameraTopLeft.x);
+    int bottomOfTopBar = (int)cameraTopLeft.y;
+    int topOfBottomBar = (int)cameraBottomRight.y;
+    
+    //actual game class starts here
     camera = c;
-    level = new BlankLevel();
+    //level = new BlankLevel();
     eventVis = true;
     quadVis = false;
 
-    player = new Player((int)level.getPlayerStart().x, (int)level.getPlayerStart().y, v);
+    player = new Player(playerStart.x, playerStart.y, v);
 
-    startingWorld = new Rectangle(level.getPlayerStart().x-400, level.getPlayerStart().y-400, 900, 900);
+    startingWorld = new Rectangle(playerStart.x-400, playerStart.y-400, 900, 900);
     world = new Quadtree(startingWorld);
     playerObjects = new HashSet<Rectangle>();
     
     paper = new Paper();
-
+    
     //camera
-    camera.setScale(level.getStartScale());
-    newScale = level.getStartScale();
-    camera.setCenter(level.getStartCenter());
+    camera.setScale(startScale);
+    newScale = startScale;
+    camera.setCenter(startCenter);
     newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 
     //calculate screen space
@@ -65,9 +77,9 @@ class Game {
     screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
     screenObjects = new HashSet<Rectangle>();
 
-    topEdge = level.getTopBar();
+    topEdge = bottomOfTopBar;
     newTopEdge = topEdge;
-    bottomEdge = level.getBottomBar();
+    bottomEdge = topOfBottomBar;
     newBottomEdge = bottomEdge;
     leftEdge = camera.getCenter().x-newScale/2;
     newLeftEdge = leftEdge;
@@ -75,33 +87,40 @@ class Game {
     newRightEdge = rightEdge;
 
     //import level
-    for (Rectangle p : level.getPlatforms()) {
-      world.insert(p);
-    }
-    for (Rectangle e : level.getEvents()) {
-      world.insert(e);
-    }
+    //for (Rectangle p : level.getPlatforms()) {
+    //  world.insert(p);
+    //}
+    world.insert(new Tile(texture.getTileList().get(0).getFile(), 0, 100));  //TODO: to be replaced when there is a player start event
+    //for (Rectangle e : level.getEvents()) {
+    //  world.insert(e);
+    //}
     //everything needs to be a multiple of 20 (multiple of 10 so you can always fall down holes, and 20 so you don't clip through things 90 apart because of speed 10)
   }
 
   public void restart() {
+    //legacy variables from level class TODO: write these out eventually
+    PVector playerStart = new PVector(0, 0);
+    PVector cameraTopLeft = new PVector(-400, -400);
+    PVector cameraBottomRight = new PVector(500, 400);
+    int centerX = (int)((cameraBottomRight.x-cameraTopLeft.x)/2+cameraTopLeft.x);
+    int centerY = (int)((cameraTopLeft.y-cameraBottomRight.y)/2+cameraBottomRight.y);
+    PVector startCenter = new PVector(centerX, centerY);
+    int startScale = (int)Math.abs(cameraBottomRight.x-cameraTopLeft.x);
+    int bottomOfTopBar = (int)cameraTopLeft.y;
+    int topOfBottomBar = (int)cameraBottomRight.y;
+    
+    //actual restart code
     player.resetVelocity();
-    player.setPosition(level.getPlayerStart());
+    player.setPosition(playerStart);
 
-    if (camera.getGame()) {
-      //camera.setScale(level.getStartScale());
-      newScale = level.getStartScale();
-      //camera.setCenter(level.getStartCenter());
-      newCenter = new PVector(level.getStartCenter().x, level.getStartCenter().y);
-      //topEdge = level.getTopBar();
-      newTopEdge = level.getTopBar();
-      //bottomEdge = level.getBottomBar();
-      newBottomEdge = level.getBottomBar();
-      //leftEdge = camera.getCenter().x-newScale/2;
+    //if (camera.getGame()) {
+      newScale = startScale;
+      newCenter = startCenter;
+      newTopEdge = bottomOfTopBar;
+      newBottomEdge = topOfBottomBar;
       newLeftEdge = newCenter.x-newScale/2;
-      //rightEdge = camera.getCenter().x+newScale/2;
       newRightEdge = newCenter.x+newScale/2;
-    }
+    //}
   }
 
   void draw() {
