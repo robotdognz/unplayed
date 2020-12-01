@@ -5,6 +5,7 @@ abstract class Event extends Rectangle {
 
   public Event(String name, float x, float y, float rWidth, float rHeight) {
     super(x, y, rWidth, rHeight);
+    this.name = name;
 
     if (name != null && texture.getEventMap().containsKey(name)) {
       this.eventTexture = texture.getEventMap().get(name);
