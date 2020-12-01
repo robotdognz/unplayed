@@ -4,6 +4,7 @@ abstract class Event extends Rectangle {
 
   public Event(String name, float x, float y, float rWidth, float rHeight) {
     super(x, y, rWidth, rHeight);
+    showToast(rWidth+ " : " + rHeight + " - " + getWidth() + " : " + getHeight());
 
     if (name != null && texture.getEventMap().containsKey(name)) {
       this.eventTexture = texture.getEventMap().get(name);
@@ -20,7 +21,7 @@ abstract class Event extends Rectangle {
   }
 
   public void activate(Game g) {
-    showToast(getX() + " " + getY() + " " + getWidth() + " " + getHeight());
+    //showToast(getX() + " " + getY() + " " + getWidth() + " " + getHeight());
   }
 
   public void draw(float scale) {
