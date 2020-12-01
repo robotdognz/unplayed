@@ -1,6 +1,5 @@
 class Game {
   public Player player;
-  //private Level level;
   private Paper paper;
 
   public Quadtree world;
@@ -48,10 +47,9 @@ class Game {
     int startScale = (int)Math.abs(cameraBottomRight.x-cameraTopLeft.x);
     int bottomOfTopBar = (int)cameraTopLeft.y;
     int topOfBottomBar = (int)cameraBottomRight.y;
-    
+
     //actual game class starts here
     camera = c;
-    //level = new BlankLevel();
     eventVis = true;
     quadVis = false;
 
@@ -60,9 +58,9 @@ class Game {
     startingWorld = new Rectangle(playerStart.x-400, playerStart.y-400, 900, 900);
     world = new Quadtree(startingWorld);
     playerObjects = new HashSet<Rectangle>();
-    
+
     paper = new Paper();
-    
+
     //camera
     camera.setScale(startScale);
     newScale = startScale;
@@ -86,14 +84,7 @@ class Game {
     rightEdge = camera.getCenter().x+newScale/2;
     newRightEdge = rightEdge;
 
-    //import level
-    //for (Rectangle p : level.getPlatforms()) {
-    //  world.insert(p);
-    //}
     world.insert(new Tile(texture.getTileList().get(0).getFile(), 0, 100));  //TODO: to be replaced when there is a player start event
-    //for (Rectangle e : level.getEvents()) {
-    //  world.insert(e);
-    //}
     //everything needs to be a multiple of 20 (multiple of 10 so you can always fall down holes, and 20 so you don't clip through things 90 apart because of speed 10)
   }
 
@@ -108,19 +99,16 @@ class Game {
     int startScale = (int)Math.abs(cameraBottomRight.x-cameraTopLeft.x);
     int bottomOfTopBar = (int)cameraTopLeft.y;
     int topOfBottomBar = (int)cameraBottomRight.y;
-    
-    //actual restart code
+
+    //actual restart code starts here
     player.resetVelocity();
     player.setPosition(playerStart);
-
-    //if (camera.getGame()) {
-      newScale = startScale;
-      newCenter = startCenter;
-      newTopEdge = bottomOfTopBar;
-      newBottomEdge = topOfBottomBar;
-      newLeftEdge = newCenter.x-newScale/2;
-      newRightEdge = newCenter.x+newScale/2;
-    //}
+    newScale = startScale;
+    newCenter = startCenter;
+    newTopEdge = bottomOfTopBar;
+    newBottomEdge = topOfBottomBar;
+    newLeftEdge = newCenter.x-newScale/2;
+    newRightEdge = newCenter.x+newScale/2;
   }
 
   void draw() {
@@ -131,7 +119,7 @@ class Game {
     scale((float)width/(float)camera.getScale()); //width/screen fits the level scale to the screen
     scale(camera.getSubScale()); //apply offset for tall screen spaces
     translate(-camera.getCenter().x, -camera.getCenter().y); //moves the view around the level
-    
+
     float currentScale = convert.getScale();
 
     //draw player and environment
@@ -199,7 +187,7 @@ class Game {
   void step() {
     screenObjects.clear();
     world.retrieve(screenObjects, screenSpace);
-    
+
     //find platforms near the player
     playerObjects.clear();
     world.retrieve(playerObjects, player.getPlayerArea());
