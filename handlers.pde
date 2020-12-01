@@ -135,7 +135,7 @@ class TextureCache {
     String spikes = "Spikes";
     File playerDeathFile = new File(eventDir+"/spikes.png");
     EventHandler playerDeath = new EventHandler(playerDeathFile) {
-      public Event makeEvent(int x, int y) {//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
+      public Event makeEvent(int x, int y) {
         String spikes = "Spikes";
         return new PlayerDeath(spikes, x, y);
       }
@@ -146,7 +146,7 @@ class TextureCache {
     String camera = "CameraChange";
     File cameraChangeFile = new File(eventDir+"/cameraChange.png");
     EventHandler cameraChange = new EventHandler(cameraChangeFile) {
-      public Event makeEvent(int x, int y) {//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
+      public Event makeEvent(int x, int y) {
         String camera = "CameraChange";
         return new CameraChange(camera, x, y, 100, 100, new PVector(-700, -200), new PVector(700, 1500), 2, 2);
       }

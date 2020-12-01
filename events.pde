@@ -10,10 +10,8 @@ abstract class Event extends Rectangle {
       setWidth(eventTexture.getWidth());
       setHeight(eventTexture.getHeight());
       hasTexture = true;
-      showToast("Got event handler from map");
     } else {
       hasTexture = false;
-      showToast("Failed to get event handler from map");
     }
   }
   
@@ -26,7 +24,7 @@ abstract class Event extends Rectangle {
 
   public void draw(float scale) {
     if (hasTexture) {
-      image(eventTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
+      image(eventTexture.getSprite(scale), getX(), getY(), 100, 100); //getWidth(), getHeight()
     } else {
       //display missing texture texture
     }
