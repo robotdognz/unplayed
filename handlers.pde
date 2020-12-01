@@ -7,12 +7,12 @@ class TextureCache {
   public int LOD32 = 64;
 
   //paper textures
-  private PImage gridLOD256 = null;
-  private PImage gridLOD128 = null;
-  private PImage gridLOD64 = null;
-  private PImage gridLOD32 = null;
-  private PImage gridLOD16 = null;
-  private PImage gridLOD8 = null;
+  private PImage gridLOD256;
+  private PImage gridLOD128;
+  private PImage gridLOD64;
+  private PImage gridLOD32;
+  private PImage gridLOD16;
+  private PImage gridLOD8;
 
   //level pieces
   private File pieceDir;
@@ -201,20 +201,8 @@ class TileHandler implements Comparable<TileHandler>, Handler {
     String path = file.getAbsolutePath();
 
     try {
-      LOD256 = requestImage(path);  //256
+      LOD256 = requestImage(path);
       LOD256.resize(256, 256);
-
-      //LOD128 = LOD256.get(); //128
-      //LOD128.resize(128, 128);
-
-      //LOD64 = LOD256.get(); //64
-      //LOD64.resize(64, 64);
-
-      //LOD32 = LOD256.get(); //32
-      //LOD32.resize(32, 32);
-
-      //LOD16 = LOD256.get();  //16
-      //LOD16.resize(16, 16);
     }
     catch(Exception e) {
       //set sprite to file not found image
@@ -294,20 +282,8 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
     String path = file.getAbsolutePath();
 
     try {
-      LOD256 = requestImage(path);  //256
+      LOD256 = requestImage(path);
       LOD256.resize(256*pWidth, 256*pHeight);
-
-      //LOD128 = LOD256.get();  //128
-      //LOD128.resize(128*pWidth, 128*pHeight);
-
-      //LOD64 = LOD256.get();  //64
-      //LOD64.resize(64*pWidth, 64*pHeight);
-
-      //LOD32 = LOD256.get();  //32
-      //LOD32.resize(32*pWidth, 32*pHeight);
-
-      //LOD16 = LOD256.get();  //16
-      //LOD16.resize(16*pWidth, 16*pHeight);
     }
     catch(Exception e) {
       //set sprite to file not found image
@@ -364,8 +340,6 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
     } else {
       scaleFactor = size/getHeight();
     }
-
-
     //draw the scaled image
     image(getSprite(6), pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
   }
@@ -405,20 +379,8 @@ class EventHandler implements Comparable<EventHandler>, Handler {
       pWidth = 1;  //these are temp, to be replaced when event constuction requires size
       pHeight = 1;
 
-      LOD256 = requestImage(path);  //256
+      LOD256 = requestImage(path);
       LOD256.resize(256*pWidth, 256*pHeight);
-
-      //LOD128 = LOD256.get();  //128
-      //LOD128.resize(128*pWidth, 128*pHeight);
-
-      //LOD64 = LOD256.get();  //64
-      //LOD64.resize(64*pWidth, 64*pHeight);
-
-      //LOD32 = LOD256.get();  //32
-      //LOD32.resize(32*pWidth, 32*pHeight);
-
-      //LOD16 = LOD256.get();  //16
-      //LOD16.resize(16*pWidth, 16*pHeight);
     }
     catch(Exception e) {
       //set sprite to file not found image
