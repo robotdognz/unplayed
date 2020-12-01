@@ -12,6 +12,7 @@ abstract class Event extends Rectangle {
       hasTexture = true;
     } else {
       hasTexture = false;
+      showToast("Failed to get event handler from map");
     }
   }
   
