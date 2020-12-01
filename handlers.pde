@@ -27,7 +27,7 @@ class TextureCache {
   //events
   private File eventDir;
   //private File[] eventPaths;
-  private HashMap<File, EventHandler> eventMap;
+  private HashMap<String, EventHandler> eventMap;
   private ArrayList<EventHandler> eventList;
 
   //blocks
@@ -129,25 +129,29 @@ class TextureCache {
   private void loadEvents() {
     //get directory and make map
     eventDir = new File(dataPath("events")+'/');
-    eventMap = new HashMap<File, EventHandler>();
+    eventMap = new HashMap<String, EventHandler>();
 
     //player death
+    String spikes = "Spikes";
     File playerDeathFile = new File(eventDir+"/spikes.png");
     EventHandler playerDeath = new EventHandler(playerDeathFile) {
       public Event makeEvent(int x, int y) {//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
-        return new PlayerDeath(datapath, x, y);
+        String spikes = "Spikes";
+        return new PlayerDeath(spikes, x, y);
       }
     };
-    eventMap.put(playerDeathFile, playerDeath);
+    eventMap.put(spikes, playerDeath);
 
     //camera change
+    String camera = "CameraChange";
     File cameraChangeFile = new File(eventDir+"/cameraChange.png");
     EventHandler cameraChange = new EventHandler(cameraChangeFile) {
       public Event makeEvent(int x, int y) {//, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
-        return new CameraChange(datapath, x, y, 100, 100, new PVector(-700, -200), new PVector(700, 1500), 2, 2);
+        String camera = "CameraChange";
+        return new CameraChange(camera, x, y, 100, 100, new PVector(-700, -200), new PVector(700, 1500), 2, 2);
       }
     };
-    eventMap.put(cameraChangeFile, cameraChange);
+    eventMap.put(camera, cameraChange);
 
     //make sorted list
     eventList = new ArrayList<EventHandler>(eventMap.values());
@@ -170,7 +174,7 @@ class TextureCache {
     return pieceList;
   }
 
-  public HashMap<File, EventHandler> getEventMap() {
+  public HashMap<String, EventHandler> getEventMap() {
     return eventMap;
   }
 

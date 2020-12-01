@@ -2,11 +2,11 @@ abstract class Event extends Rectangle {
   private boolean hasTexture;
   private EventHandler eventTexture;
 
-  public Event(File file, float x, float y, float rWidth, float rHeight) {
+  public Event(String name, float x, float y, float rWidth, float rHeight) {
     super(x, y, rWidth, rHeight);
 
-    if (file != null && texture.getEventMap().containsKey(file)) {
-      this.eventTexture = texture.getEventMap().get(file);
+    if (name != null && texture.getEventMap().containsKey(name)) {
+      this.eventTexture = texture.getEventMap().get(name);
       setWidth(eventTexture.getWidth());
       setHeight(eventTexture.getHeight());
       hasTexture = true;
@@ -33,8 +33,8 @@ abstract class Event extends Rectangle {
 
 //------------------PlayerDeath---------------------
 class PlayerDeath extends Event {
-  PlayerDeath (File file, int x, int y) {
-    super(file, x, y, 100, 100);
+  PlayerDeath (String name, int x, int y) {
+    super(name, x, y, 100, 100);
   }
 
   public void activate(Game g) {
@@ -55,8 +55,8 @@ class CameraChange extends Event {
   private float edgeZoom;
   //private String type; //Strings: "Static", "Full", "Horizontal", "Vertical"
 
-  CameraChange(File file, int x, int y, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) { 
-    super(file, x, y, eventW, eventH);
+  CameraChange(String name, int x, int y, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) { 
+    super(name, x, y, eventW, eventH);
     //considering separating edgeZoom into in speed and out speed
     int centerX = (int)((cameraBottomRight.x-cameraTopLeft.x)/2+cameraTopLeft.x);
     int centerY = (int)((cameraTopLeft.y-cameraBottomRight.y)/2+cameraBottomRight.y);
