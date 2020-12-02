@@ -73,8 +73,9 @@ class Page {
 
     game.player.draw(pageGraphics);
     game.paper.draw(pageGraphics, view, scale);
-
+    //end drawing on the page
     pageGraphics.endDraw();
+    
     imageMode(CENTER);
     pushMatrix();
     scale(size);
