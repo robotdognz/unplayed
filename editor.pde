@@ -304,6 +304,7 @@ class EditorBottom extends Toolbar {
   private String folder = dataPath("ui") + '/';
   private PImage toolbar;
   private PImage tab;
+  private int tabSize;
   private float widgetHeight;
 
   //scroll bars
@@ -335,6 +336,7 @@ class EditorBottom extends Toolbar {
     pieceArea = new Rectangle(0, height-pieceAreaHeight, width, pieceAreaHeight);
     toolbar = requestImage(folder+"icn_toolbar_bg.png");
     tab = requestImage(folder+"icn_tab.png");
+    tabSize = 220;
 
     widgetHeight = pieceArea.getY()-54; //TODO: get the height right
 
@@ -358,7 +360,7 @@ class EditorBottom extends Toolbar {
     for (int i = 0; i < eWidgets.size(); i++) {
       //if current widget is active, draw tab at the current x position
       imageMode(CENTER);
-      image(tab, eWidgetOffset+eWidgetSpacing*i, widgetHeight, 280, 280);
+      image(tab, eWidgetOffset+eWidgetSpacing*i, widgetHeight, tabSize, tabSize);
       eWidgets.get(i).draw(eWidgetOffset+eWidgetSpacing*i, widgetHeight);  
       eWidgets.get(i).updateActive();
 

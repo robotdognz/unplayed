@@ -103,7 +103,9 @@ abstract class Widget {
         image(imageActive, position.x, position.y, wSize*1.5, wSize*1.5);
       } else {
         //not active
-        image(imageInactive, position.x, position.y, wSize*1.5, wSize*1.5);
+        if (imageInactive != null) {
+          image(imageInactive, position.x, position.y, wSize*1.5, wSize*1.5);
+        }
         tint(75);
       }
     } else {
@@ -332,7 +334,7 @@ class DebugWidget extends Widget {
     super(editor, parent);
     icon = loadImage(folder+"debugging.png");
   }
-  
+
   public void clicked() {
     editor.debug = !editor.debug;
   }
@@ -506,15 +508,16 @@ class SelectWidget extends Widget {
   }
 }
 
-//------------------EditorType---------------------
+//------------------BottomToolbarWidgets---------------------
 class BlockModeWidget extends Widget {
   public BlockModeWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
     icon = loadImage(folder+"colider.png");
+    imageInactive = null;
     active = true;
-  }
+  } 
 
-  public void clicked() {
+    public void clicked() {
     editor.eType = editorType.BLOCK;
   }
 
@@ -530,6 +533,7 @@ class ImageModeWidget extends Widget {
   public ImageModeWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
     icon = loadImage(folder+"image.png");
+    imageInactive = null;
   }
 
   public void clicked() {
@@ -548,6 +552,7 @@ class EventModeWidget extends Widget {
   public EventModeWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
     icon = loadImage(folder+"event.png");
+    imageInactive = null;
   }
 
   public void clicked() {
@@ -662,7 +667,7 @@ class LoadWidget extends Widget {
     closeAfterSubWidget = true;
     icon = loadImage(folder+"load.png");
   }
-  
+
   public void clicked() {
     //load the level
     editor.eJSON.load(editor.eGame);
