@@ -356,6 +356,7 @@ class EditorBottom extends Toolbar {
       }
     }
 
+    imageMode(CORNER);
     image(toolbar, pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
 
     //widgets
