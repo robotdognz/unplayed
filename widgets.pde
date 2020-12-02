@@ -260,15 +260,13 @@ class SettingsWidget extends Widget {
     Widget w1 = new RestartWidget(editor, parent);
     Widget w2 = new PlayModeWidget(editor, parent);
     Widget w3 = new SnapWidget(editor, parent);
-    //Widget w4 = new PickImageWidget(editor, parent);
-    //Widget w5 = new PickEventWidget(editor, parent);
-    //Widget w6 = new PickBlockWidget(editor, parent);
+    Widget w4 = new DebugWidget(editor, parent);
+    Widget w5 = new QuadtreeWidget(editor, parent);
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
-    //subWidgets.add(w4);
-    //subWidgets.add(w5);
-    //subWidgets.add(w6);
+    subWidgets.add(w4);
+    subWidgets.add(w5);
   }
 }
 class RestartWidget extends Widget {
@@ -329,30 +327,41 @@ class SnapWidget extends Widget {
     }
   }
 }
-//class PickImageWidget extends Widget {
-//  public PickImageWidget(Editor editor, Toolbar parent) {
-//    super(editor, parent);
-//    available = false;
-//    closeAfterSubWidget = true;
-//    icon = loadImage(folder+"pickImage.png");
-//  }
-//}
-//class PickEventWidget extends Widget {
-//  public PickEventWidget(Editor editor, Toolbar parent) {
-//    super(editor, parent);
-//    available = false;
-//    closeAfterSubWidget = true;
-//    icon = loadImage(folder+"pickEvent.png");
-//  }
-//}
-//class PickBlockWidget extends Widget {
-//  public PickBlockWidget(Editor editor, Toolbar parent) {
-//    super(editor, parent);
-//    available = false;
-//    closeAfterSubWidget = true;
-//    icon = loadImage(folder+"pickBlock.png");
-//  }
-//}
+class DebugWidget extends Widget {
+  public DebugWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
+    icon = loadImage(folder+"debugging.png");
+  }
+  
+  public void clicked() {
+    editor.debug = !editor.debug;
+  }
+
+  public void updateActive() {
+    if (editor.debug) {
+      active = true;
+    } else {
+      active = false;
+    }
+  }
+}
+class QuadtreeWidget extends Widget {
+  public QuadtreeWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
+    icon = loadImage(folder+"quadTree.png");
+  }
+  public void clicked() {
+    editor.quadtree = !editor.quadtree;
+  }
+
+  public void updateActive() {
+    if (editor.quadtree) {
+      active = true;
+    } else {
+      active = false;
+    }
+  }
+}
 
 //------------------EditorControls---------------------
 class PlayerControlWidget extends Widget {
@@ -498,30 +507,15 @@ class SelectWidget extends Widget {
 }
 
 //------------------EditorType---------------------
-//class EditorTypeWidget extends Widget {
-//  public EditorTypeWidget(Editor editor, Toolbar parent) {
-//    super(editor, parent);
-//    icon = loadImage(folder+"colider.png");
-//    iconIsCurrentSubWidget = true;
-//    Widget w1 = new BlockModeWidget(editor, parent);
-//    Widget w2 = new ImageModeWidget(editor, parent);
-//    Widget w3 = new EventModeWidget(editor, parent);
-//    subWidgets.add(w1);
-//    subWidgets.add(w2);
-//    subWidgets.add(w3);
-//  }
-//}
 class BlockModeWidget extends Widget {
   public BlockModeWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
-    //closeAfterSubWidget = true;
     icon = loadImage(folder+"colider.png");
     active = true;
   }
 
   public void clicked() {
     editor.eType = editorType.BLOCK;
-    //editor.eController = new EditorControl(editor);
   }
 
   public void updateActive() {
@@ -535,13 +529,11 @@ class BlockModeWidget extends Widget {
 class ImageModeWidget extends Widget {
   public ImageModeWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
-    //closeAfterSubWidget = true;
     icon = loadImage(folder+"image.png");
   }
 
   public void clicked() {
     editor.eType = editorType.IMAGE;
-    //editor.eController = new EditorControl(editor);
   }
 
   public void updateActive() {
@@ -555,13 +547,11 @@ class ImageModeWidget extends Widget {
 class EventModeWidget extends Widget {
   public EventModeWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
-    //closeAfterSubWidget = true;
     icon = loadImage(folder+"event.png");
   }
 
   public void clicked() {
     editor.eType = editorType.EVENT;
-    //editor.eController = new EditorControl(editor);
   }
 
   public void updateActive() {

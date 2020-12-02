@@ -33,7 +33,9 @@ class Editor {
   //saver/loader class
   EditorJSON eJSON;
 
-  //frame count
+  //frame count and debug visualisation / quadtree
+  boolean debug = false;
+  boolean quadtree = false;
   int frameDelay = 100;
   float frame;
 
@@ -55,6 +57,11 @@ class Editor {
     }
 
     frameCounter();
+    if(quadtree == true){
+      game.quadVis = true;
+    }else{
+      game.quadVis = false;
+    }
 
     if (!(eController instanceof EditorControl)) {
       game.point = null;
@@ -70,12 +77,14 @@ class Editor {
     editorBottom.draw();
 
     //draw frame counter and other readouts
-    fill(80);
-    textSize(50);
-    textAlign(CENTER, CENTER);
-    text(nf(convert.getScale(), 1, 2), width/2, height-editorBottom.getHeight()-150);
-    text(game.scanSize + " : " + game.screenObjects.size(), width/2, height-editorBottom.getHeight()-100);
-    text("FPS: " + nf(this.frame, 1, 2), width/2, height-editorBottom.getHeight()-50);
+    if (debug) {
+      fill(80);
+      textSize(50);
+      textAlign(CENTER, CENTER);
+      text(nf(convert.getScale(), 1, 2), width/2, height-editorBottom.getHeight()-150);
+      text(game.scanSize + " : " + game.screenObjects.size(), width/2, height-editorBottom.getHeight()-100);
+      text("FPS: " + nf(this.frame, 1, 2), width/2, height-editorBottom.getHeight()-50);
+    }
   }
 
   private void frameCounter() {
