@@ -5,7 +5,8 @@ class Game {
   public Quadtree world;
   public Rectangle startingWorld;
   public HashSet<Rectangle> playerObjects;
-  public int scanSize = 0;
+  public PageView pageView;
+  public boolean displayPages;
 
   private boolean eventVis;
   private boolean quadVis;
@@ -58,6 +59,9 @@ class Game {
     startingWorld = new Rectangle(playerStart.x-400, playerStart.y-400, 900, 900);
     world = new Quadtree(startingWorld);
     playerObjects = new HashSet<Rectangle>();
+    
+    pageView = new PageView(camera);
+    displayPages = false;
 
     paper = new Paper();
 
@@ -112,6 +116,10 @@ class Game {
   }
 
   void draw() {
+    if(displayPages){
+      pageView.draw();
+      return;
+    }
     pushMatrix(); //start working at game scale
     translate(width/2, height/2); //set x=0 and y=0 to the middle of the screen
 
@@ -191,7 +199,6 @@ class Game {
     //find platforms near the player
     playerObjects.clear();
     world.retrieve(playerObjects, player.getPlayerArea());
-    scanSize = playerObjects.size();
     player.step(playerObjects, this);
 
     if (camera.getGame()) {

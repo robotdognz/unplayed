@@ -19,7 +19,7 @@ class Page {
     this.view = new Rectangle(topLeft.x, topLeft.y, rWidth, rHeight);
     this.pageObjects = new HashSet<Rectangle>();
     this.excludedObjects = new HashSet<String>();
-    
+
     this.pageGraphics = createGraphics((int)rWidth, (int)rHeight);
     this.position = position;
     this.size = size;
@@ -27,8 +27,8 @@ class Page {
     //this.angle = 0; 
     //angledRect //calculate a rectangle that the angled page fits inside
   }
-  
-  public void exclude(Rectangle object){
+
+  public void exclude(Rectangle object) {
     excludedObjects.add(object.toString());
   }
 
@@ -73,7 +73,7 @@ class Page {
 
     game.player.draw(pageGraphics);
     game.paper.draw(pageGraphics, view, scale);
-    
+
     pageGraphics.endDraw();
   }
 
@@ -83,8 +83,8 @@ class Page {
     game.world.retrieve(pageObjects, view);
     //the step and draw process could be optimised by getting pageObjects once when the level is run
   }
-  
-  public Set<String> getExcluded(){
+
+  public Set<String> getExcluded() {
     return Collections.unmodifiableSet(excludedObjects);
   }
 }
@@ -92,44 +92,59 @@ class Page {
 class PageView {
   //arraylist of pages
   private ArrayList<Page> pages;
-  
+
   //editor camera
+  private Camera camera;
   private float scale;
   private float subScale = 1; //defaults to 1
   private PVector center;
 
-  public PageView() {
+  public PageView(Camera camera) {
+    this.camera = camera;
     pages = new ArrayList<Page>();
   }
 
-  public void draw(float scale) {
-    for(Page p : pages){
-      p.draw(scale);
+  public void draw() {
+    pushMatrix(); //start working at game scale
+    translate(width/2, height/2); //set x=0 and y=0 to the middle of the screen
+
+    //camera
+    scale((float)width/(float)camera.getScale()); //width/screen fits the level scale to the screen
+    scale(camera.getSubScale()); //apply offset for tall screen spaces
+    translate(-camera.getCenter().x, -camera.getCenter().y); //moves the view around the level
+
+    float currentScale = convert.getScale();
+    
+    background(100);
+
+    for (Page p : pages) {
+      p.draw(currentScale);
     }
+    popMatrix();
   }
 
   public void step() {
-    for(Page p : pages){
+    for (Page p : pages) {
       p.step();
     }
   }
-  
-  public float getScale(){
+
+  public float getScale() {
     return scale;
   }
-  public float getSubScale(){
+  public float getSubScale() {
     return subScale;
   }
-  public PVector getCenter(){
+  public PVector getCenter() {
     return center;
   }
-  public void setScale(float scale){
+  public void setScale(float scale) {
     this.scale = scale;
   }
-  public void setSubScale(float subScale){
+  public void setSubScale(float subScale) {
     this.subScale = subScale;
   }
-  public void setCenter(float x, float y){
+  public void setCenter(float x, float y) {
     this.center.x = x;
     this.center.y = y;
   }

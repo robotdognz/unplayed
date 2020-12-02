@@ -58,10 +58,15 @@ class Editor {
     }
 
     frameCounter();
-    if(quadtree == true){
+    if(quadtree){ //update quadtree display in game class
       game.quadVis = true;
     }else{
       game.quadVis = false;
+    }
+    if(pageView){ //update pageview display in game class
+      game.displayPages = true;
+    }else{
+      game.displayPages = false;
     }
 
     if (!(eController instanceof EditorControl)) {
@@ -83,7 +88,7 @@ class Editor {
       textSize(50);
       textAlign(CENTER, CENTER);
       text(nf(convert.getScale(), 1, 2), width/2, height-editorBottom.getHeight()-150);
-      text(game.scanSize + " : " + game.screenObjects.size(), width/2, height-editorBottom.getHeight()-100);
+      text(game.playerObjects.size() + " : " + game.screenObjects.size(), width/2, height-editorBottom.getHeight()-100);
       text("FPS: " + nf(this.frame, 1, 2), width/2, height-editorBottom.getHeight()-50);
     }
   }
