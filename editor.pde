@@ -349,8 +349,10 @@ class EditorBottom extends Toolbar {
 
   public void draw() {
     for (int i = 0; i < eWidgets.size(); i++) {
-      //draw the three nehind tabs
-      //eWidgetOffset+eWidgetSpacing*i, widgetHeight
+      //draw the two behind tabs
+      if(!eWidgets.get(i).isActive()){
+        image(tab, eWidgetOffset+eWidgetSpacing*i, widgetHeight, tabSize, tabSize);
+      }
     }
 
     image(toolbar, pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
@@ -360,7 +362,9 @@ class EditorBottom extends Toolbar {
     for (int i = 0; i < eWidgets.size(); i++) {
       //if current widget is active, draw tab at the current x position
       imageMode(CENTER);
-      image(tab, eWidgetOffset+eWidgetSpacing*i, widgetHeight, tabSize, tabSize);
+      if(eWidgets.get(i).isActive()){
+        image(tab, eWidgetOffset+eWidgetSpacing*i, widgetHeight, tabSize, tabSize);
+      }
       eWidgets.get(i).draw(eWidgetOffset+eWidgetSpacing*i, widgetHeight);  
       eWidgets.get(i).updateActive();
 
