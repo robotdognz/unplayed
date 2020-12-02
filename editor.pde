@@ -338,7 +338,7 @@ class EditorBottom extends Toolbar {
     tab = requestImage(folder+"icn_tab.png");
     tabSize = 220;
 
-    widgetHeight = pieceArea.getY()-54; //TODO: get the height right
+    widgetHeight = pieceArea.getY()-53; //TODO: get the height right
 
     //scroll bars
     size = 150;
