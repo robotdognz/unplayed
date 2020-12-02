@@ -230,7 +230,7 @@ abstract class Toolbar {
 }
 
 class EditorTop extends Toolbar {
-  private String folder = dataPath("ui") + '/';
+  private String folder = dataPath("ui") + '/' + "widgets" + '/';
   private PImage uiExtra;
 
   public EditorTop(Editor editor) {
