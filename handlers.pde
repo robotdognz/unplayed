@@ -39,26 +39,11 @@ class TextureCache {
     //and > 0 if it has loaded 
 
     //paper textures
-    //int gridCount = 4; //number of squares in the grid texture
     gridLOD256 = requestImage("PaperGrid_1024x1024.png");
-    //gridLOD256.resize(256*gridCount, 256*gridCount);
-
     gridLOD128 = requestImage("PaperGrid_512x512.png");
-    //gridLOD128 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //128
-    //gridLOD128.resize(128*gridCount, 128*gridCount);
-
     gridLOD64 = requestImage("PaperGrid_256x256.png");
-    //gridLOD64 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //64
-    //gridLOD64.resize(64*gridCount, 64*gridCount);
-
     gridLOD32 = requestImage("PaperGrid_128x128.png");
-    //gridLOD32 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //32
-    //gridLOD32.resize(32*gridCount, 32*gridCount);
-
     gridLOD16 = requestImage("PaperGrid_64x64.png");
-    //gridLOD16 = gridLOD256.get(0, 0, gridLOD256.width, gridLOD256.height);  //16
-    //gridLOD16.resize(16*gridCount, 16*gridCount);
-
     gridLOD8 = requestImage("PaperGrid_32x32.png");
 
     //level assets
@@ -66,7 +51,7 @@ class TextureCache {
     loadTiles();
     loadEvents();
 
-    //blocks
+    //player TODO: get rid of this
     defaultBlock = requestImage("player_main.png");
   }
 
@@ -132,11 +117,11 @@ class TextureCache {
     eventMap = new HashMap<String, EventHandler>();
 
     //player death
-    String spikes = "Spikes";
+    String spikes = "PlayerDeath";
     File playerDeathFile = new File(eventDir+"/spikes.png");
     EventHandler playerDeath = new EventHandler(playerDeathFile) {
       public Event makeEvent(int x, int y) {
-        String spikes = "Spikes";
+        String spikes = "PlayerDeath";
         return new PlayerDeath(spikes, x, y);
       }
     };

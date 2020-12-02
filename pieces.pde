@@ -26,6 +26,10 @@ class Piece extends Rectangle {
       //display missing texture texture
     }
   }
+  
+  public String getName(){
+    return "Piece";
+  }
 
   public File getFile() {
     return pieceTexture.getFile();
@@ -57,6 +61,10 @@ class Tile extends Rectangle {
     } else {
       //display missing texture texture
     }
+  }
+  
+  public String getName(){
+    return "Tile";
   }
 
   public File getFile() {

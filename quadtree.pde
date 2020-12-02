@@ -32,7 +32,11 @@ public class Rectangle {
   }
   
   public String toString(){
-    return this.getClass().getName() + " " + getX() + " " + getY() + " " + getWidth() + " " + getHeight();
+    return this.getName() + " " + getX() + " " + getY() + " " + getWidth() + " " + getHeight();
+  }
+  
+  public String getName(){
+    return "Rectangle";
   }
 
   //setters
