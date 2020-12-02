@@ -354,9 +354,11 @@ class EditorBottom extends Toolbar {
     image(toolbar, pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
 
     //widgets
+    imageMode(CENTER);
     for (int i = 0; i < eWidgets.size(); i++) {
       //if current widget is active, draw tab at the current x position
-      image(tab, eWidgetOffset+eWidgetSpacing*i, widgetHeight, 150, 150);
+      
+      image(tab, eWidgetOffset+eWidgetSpacing*i, widgetHeight, 300, 300);
       eWidgets.get(i).draw(eWidgetOffset+eWidgetSpacing*i, widgetHeight);  
       eWidgets.get(i).updateActive();
 
@@ -365,6 +367,7 @@ class EditorBottom extends Toolbar {
         eWidgets.get(i).hover(lastTouch);
       }
     }
+    imageMode(CORNER);
 
     //figure out what type to show
     ArrayList<Handler> objects = new ArrayList<Handler>(); //current objects to draw in the scroll bar
