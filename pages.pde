@@ -20,7 +20,7 @@ class Page {
     this.pageObjects = new HashSet<Rectangle>();
     this.excludedObjects = new HashSet<String>();
 
-    this.pageGraphics = createGraphics((int)rWidth, (int)rHeight);
+    this.pageGraphics = createGraphics((int)rWidth, (int)rHeight, P2D);
     this.position = position;
     this.size = size;
     //to be implemented later
@@ -33,12 +33,6 @@ class Page {
   }
 
   public void draw(float scale) {
-    //draw the page
-    pageGraphics.beginDraw();
-
-    //draw environment and player
-    pageGraphics.background(240);
-
     ArrayList<Rectangle> drawFirst = new ArrayList<Rectangle>();
     ArrayList<Rectangle> drawSecond = new ArrayList<Rectangle>();
     for (Rectangle r : pageObjects) {
@@ -56,6 +50,12 @@ class Page {
         }
       }
     }
+    
+    //begin drawing on the page
+    pageGraphics.beginDraw();
+
+    //draw environment and player
+    pageGraphics.background(240);
 
     for (Rectangle r : drawFirst) { //draw pieces
       if (r instanceof Piece) {
