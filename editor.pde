@@ -354,11 +354,11 @@ class EditorBottom extends Toolbar {
     image(toolbar, pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
 
     //widgets
-    imageMode(CENTER);
+    
     for (int i = 0; i < eWidgets.size(); i++) {
       //if current widget is active, draw tab at the current x position
-      
-      image(tab, eWidgetOffset+eWidgetSpacing*i, widgetHeight, 300, 300);
+      imageMode(CENTER);
+      image(tab, eWidgetOffset+eWidgetSpacing*i, widgetHeight, 280, 280);
       eWidgets.get(i).draw(eWidgetOffset+eWidgetSpacing*i, widgetHeight);  
       eWidgets.get(i).updateActive();
 
