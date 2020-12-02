@@ -40,7 +40,7 @@ class Game {
     //legacy variables from level class TODO: write these out eventually
     PVector playerStart = new PVector(0, 0);
     PVector cameraTopLeft = new PVector(-400, -400);
-    PVector cameraBottomRight = new PVector(500, 500);
+    PVector cameraBottomRight = new PVector(500, 600);
     int centerX = (int)((cameraBottomRight.x-cameraTopLeft.x)/2+cameraTopLeft.x);
     int centerY = (int)((cameraTopLeft.y-cameraBottomRight.y)/2+cameraBottomRight.y);
     PVector startCenter = new PVector(centerX, centerY);
@@ -92,7 +92,7 @@ class Game {
     //legacy variables from level class TODO: write these out eventually
     PVector playerStart = new PVector(0, 0);
     PVector cameraTopLeft = new PVector(-400, -400);
-    PVector cameraBottomRight = new PVector(500, 500);
+    PVector cameraBottomRight = new PVector(500, 600);
     int centerX = (int)((cameraBottomRight.x-cameraTopLeft.x)/2+cameraTopLeft.x);
     int centerY = (int)((cameraTopLeft.y-cameraBottomRight.y)/2+cameraBottomRight.y);
     PVector startCenter = new PVector(centerX, centerY);
