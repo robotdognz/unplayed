@@ -32,7 +32,7 @@ public class Rectangle {
   }
   
   public String toString(){
-    return this.getName() + " " + getX() + " " + getY() + " " + getWidth() + " " + getHeight();
+    return this.getName() + " " + (int)getX() + " " + (int)getY() + " " + (int)getWidth() + " " + (int)getHeight();
   }
   
   public String getName(){
