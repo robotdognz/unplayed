@@ -62,6 +62,8 @@ class Game {
     
     pageView = new PageView(camera);
     displayPages = false;
+    //testing page view
+    pageView.addPage(new Page(this, new PVector(-400, -500), new PVector(500, 600),new PVector(200, 200), 100));
 
     paper = new Paper();
 
@@ -208,6 +210,8 @@ class Game {
     float screenSpaceWidth = convert.screenToLevel(width+screenSpaceOffset*2);
     float screenSpaceHeight = convert.screenToLevel(height+screenSpaceOffset*2);
     screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
+    
+    pageView.step(); //step the page view
   }
 
   void screenMovement() {

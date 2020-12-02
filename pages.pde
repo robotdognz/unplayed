@@ -75,6 +75,11 @@ class Page {
     game.paper.draw(pageGraphics, view, scale);
 
     pageGraphics.endDraw();
+    imageMode(CENTER);
+    pushMatrix();
+    scale(size);
+    image(pageGraphics, position.x, position.y, pageGraphics.width, pageGraphics.height);
+    popMatrix();
   }
 
   public void step() {
@@ -127,6 +132,10 @@ class PageView {
     for (Page p : pages) {
       p.step();
     }
+  }
+  
+  public void addPage(Page page){
+    pages.add(page);
   }
 
   public float getScale() {
