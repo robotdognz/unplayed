@@ -9,7 +9,6 @@ public class Rectangle {
     this.rHeight = rHeight;
     this.topLeft = new PVector(x, y);
     this.bottomRight = new PVector(x+rWidth, y+rHeight);
-    showToast(this.toString());
   }
 
   //getters

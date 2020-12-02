@@ -169,6 +169,7 @@ class Editor {
         if (spaceFree) { //if there isn't something already there
           if (eMode == editorMode.ADD) {
             g.world.insert(toInsert);
+            showToast(toInsert.toString());
           }
         } else {
           if (eMode == editorMode.ERASE && foundAtPoint != null) {
