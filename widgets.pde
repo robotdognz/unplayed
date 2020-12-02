@@ -279,7 +279,7 @@ class RestartWidget extends Widget {
   }
 
   public void clicked() {
-    g.restart();
+    game.restart();
   }
 
   public void updateActive() {
@@ -605,7 +605,7 @@ class ConfirmWidget extends Widget {
   }
 
   public void updateActive() {
-    if (editor.eController instanceof EditorControl && !editor.snap && g.point != null) {
+    if (editor.eController instanceof EditorControl && !editor.snap && game.point != null) {
       available = true;
     } else {
       available = false;

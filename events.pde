@@ -25,9 +25,9 @@ abstract class Event extends Rectangle {
     //showToast(getX() + " " + getY() + " " + getWidth() + " " + getHeight());
   }
 
-  public void draw(float scale) {
+  public void draw(PGraphics graphics, float scale) {
     if (hasTexture) {
-      image(eventTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
+      graphics.image(eventTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
     } else {
       //display missing texture texture
     }

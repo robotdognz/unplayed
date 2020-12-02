@@ -19,9 +19,9 @@ class Piece extends Rectangle {
     }
   }
 
-  public void draw(float scale) {
+  public void draw(PGraphics graphics, float scale) {
     if (hasTexture) {
-      image(pieceTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
+      graphics.image(pieceTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
     } else {
       //display missing texture texture
     }
@@ -55,9 +55,9 @@ class Tile extends Rectangle {
     }
   }
 
-  public void draw(float scale) {
+  public void draw(PGraphics graphics, float scale) {
     if (hasTexture) {
-      image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
+      graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
     } else {
       //display missing texture texture
     }

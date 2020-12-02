@@ -57,7 +57,7 @@ class Editor {
     frameCounter();
 
     if (!(eController instanceof EditorControl)) {
-      g.point = null;
+      game.point = null;
     }
 
     //figure out what is being placed
@@ -74,7 +74,7 @@ class Editor {
     textSize(50);
     textAlign(CENTER, CENTER);
     text(nf(convert.getScale(), 1, 2), width/2, height-editorBottom.getHeight()-150);
-    text(g.scanSize + " : " + g.screenObjects.size(), width/2, height-editorBottom.getHeight()-100);
+    text(game.scanSize + " : " + game.screenObjects.size(), width/2, height-editorBottom.getHeight()-100);
     text("FPS: " + nf(this.frame, 1, 2), width/2, height-editorBottom.getHeight()-50);
   }
 
@@ -132,10 +132,10 @@ class Editor {
   }
 
   public void placeObject() {
-    if (g.point != null) {
+    if (game.point != null) {
 
-      int platformX = (int) g.point.x;
-      int platformY = (int) g.point.y;
+      int platformX = (int) game.point.x;
+      int platformY = (int) game.point.y;
 
       boolean spaceFree = true;
       Rectangle foundAtPoint = null;
@@ -149,13 +149,13 @@ class Editor {
       } else if (eType == editorType.EVENT && currentEvent != null) {
         toInsert = currentEvent.makeEvent(platformX, platformY);
       } else {
-        g.point = null; //if there is nothing to put in, remove the point
+        game.point = null; //if there is nothing to put in, remove the point
       }
 
       //insert it or remove
-      if (toInsert != null && g.point != null) {
+      if (toInsert != null && game.point != null) {
         HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
-        g.world.retrieve(getRectangles, toInsert);
+        game.world.retrieve(getRectangles, toInsert);
         for (Rectangle p : getRectangles) {
 
           if (p.getTopLeft().x == platformX && 
@@ -168,15 +168,15 @@ class Editor {
 
         if (spaceFree) { //if there isn't something already there
           if (eMode == editorMode.ADD) {
-            g.world.insert(toInsert);
+            game.world.insert(toInsert);
             showToast(toInsert.toString());
           }
         } else {
           if (eMode == editorMode.ERASE && foundAtPoint != null) {
-            g.world.remove(foundAtPoint);
+            game.world.remove(foundAtPoint);
           }
         }
-        g.point = null;
+        game.point = null;
       }
     }
   }

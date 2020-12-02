@@ -23,11 +23,11 @@ class PlayerControl implements Controller {
       //}
     }
     if (left > right) {
-      g.player.left();
+      game.player.left();
     } else if (left < right) {
-      g.player.right();
+      game.player.right();
     } else {
-      g.player.still();
+      game.player.still();
     }
   }
   public void touchStarted() {
@@ -36,7 +36,7 @@ class PlayerControl implements Controller {
     //lastTouch.y >= height/3 && 
       lastTouch.x > width/4 && 
       lastTouch.x < (width/4)*3) {
-      g.player.jump();
+      game.player.jump();
     }
   }
   public void touchEnded() {
@@ -60,7 +60,7 @@ class CameraControl implements Controller {
   }
 
   public void step() {
-    g.player.still();
+    game.player.still();
   }
 
   public void touchStarted() {
@@ -110,7 +110,7 @@ class EditorControl implements Controller {
   }
 
   public void step() {
-    g.player.still();
+    game.player.still();
   }
   public void touchStarted() {
   }
@@ -128,7 +128,7 @@ class EditorControl implements Controller {
     float finalX = Math.round((placement.x-50)/snapNo)*snapNo;
     float finalY = Math.round((placement.y-50)/snapNo)*snapNo;
 
-    g.point = new PVector(finalX, finalY);
+    game.point = new PVector(finalX, finalY);
     if (editor.snap) {
       editor.placeObject();
     }

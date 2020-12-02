@@ -4,6 +4,7 @@ class Page {
   HashSet<Rectangle> pageObjects;
   HashSet<String> excludedObjects; //a list of rectangle strings to exclude while drawing
 
+  PGraphics pageGraphics;
   PVector position; //center of the page in page view
   float size; //size of the page in page view
   float angle; //rotation of the page in page view
@@ -18,11 +19,12 @@ class Page {
     this.view = new Rectangle(topLeft.x, topLeft.y, rWidth, rHeight);
     this.pageObjects = new HashSet<Rectangle>();
     this.excludedObjects = new HashSet<String>();
+    
+    this.pageGraphics = createGraphics((int)rWidth, (int)rHeight);
     this.position = position;
     this.size = size;
-
     //to be implemented later
-    this.angle = 0; 
+    //this.angle = 0; 
     //angledRect //calculate a rectangle that the angled page fits inside
   }
   
@@ -32,9 +34,10 @@ class Page {
 
   public void draw(float scale) {
     //draw the page
+    pageGraphics.beginDraw();
 
     //draw environment and player
-    background(240);
+    pageGraphics.background(240);
 
     ArrayList<Rectangle> drawFirst = new ArrayList<Rectangle>();
     ArrayList<Rectangle> drawSecond = new ArrayList<Rectangle>();
@@ -56,20 +59,22 @@ class Page {
 
     for (Rectangle r : drawFirst) { //draw pieces
       if (r instanceof Piece) {
-        ((Piece) r).draw(scale);
+        ((Piece) r).draw(pageGraphics, scale);
       }
     }
     for (Rectangle r : drawSecond) { //draw tiles and events
       if (r instanceof Tile) {
-        ((Tile) r).draw(scale);
+        ((Tile) r).draw(pageGraphics, scale);
       }
       if (r instanceof Event) {
-        ((Event) r).draw(scale);
+        ((Event) r).draw(pageGraphics, scale);
       }
     }
 
-    game.player.draw();
-    game.paper.draw(view, scale);
+    game.player.draw(pageGraphics);
+    game.paper.draw(pageGraphics, view, scale);
+    
+    pageGraphics.endDraw();
   }
 
   public void step() {
@@ -78,11 +83,20 @@ class Page {
     game.world.retrieve(pageObjects, view);
     //the step and draw process could be optimised by getting pageObjects once when the level is run
   }
+  
+  public Set<String> getExcluded(){
+    return Collections.unmodifiableSet(excludedObjects);
+  }
 }
 
 class PageView {
   //arraylist of pages
   private ArrayList<Page> pages;
+  
+  //editor camera
+  private float scale;
+  private float subScale = 1; //defaults to 1
+  private PVector center;
 
   public PageView() {
     pages = new ArrayList<Page>();
@@ -95,5 +109,28 @@ class PageView {
   }
 
   public void step() {
+    for(Page p : pages){
+      p.step();
+    }
+  }
+  
+  public float getScale(){
+    return scale;
+  }
+  public float getSubScale(){
+    return subScale;
+  }
+  public PVector getCenter(){
+    return center;
+  }
+  public void setScale(float scale){
+    this.scale = scale;
+  }
+  public void setSubScale(float subScale){
+    this.subScale = subScale;
+  }
+  public void setCenter(float x, float y){
+    this.center.x = x;
+    this.center.y = y;
   }
 }

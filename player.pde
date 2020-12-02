@@ -139,14 +139,14 @@ class Player extends Rectangle {
     lastXPos = getTopLeft().x;
   }
 
-  void draw() {
+  void draw(PGraphics graphics) {
     //draw player
-    image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
+    graphics.image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
     //image(img, dx, dy, dw, dh, sx, sy, sw, sh); //d is where to draw it, s is where (in pixels) to get it from the image
     //image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight(), 0, 0, 128, 128); //sprite sheet test
     if (drawArea) {
-      fill(0, 0, 0, 150);
-      rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
+      graphics.fill(0, 0, 0, 150);
+      graphics.rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
     }
   }
 

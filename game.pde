@@ -126,19 +126,19 @@ class Game {
     background(240);
     for (Rectangle p : screenObjects) { //draw pieces
       if (p instanceof Piece) {
-        ((Piece) p).draw(currentScale);
+        ((Piece) p).draw(mainGraphics, currentScale);
       }
     }
     for (Rectangle p : screenObjects) { //draw tiles and events on top of pieces
       if (p instanceof Tile) {
-        ((Tile) p).draw(currentScale);
+        ((Tile) p).draw(mainGraphics, currentScale);
       }
       if (p instanceof Event && eventVis) {
-        ((Event) p).draw(currentScale);
+        ((Event) p).draw(mainGraphics, currentScale);
       }
     }
-    player.draw();
-    paper.draw(screenSpace, currentScale);
+    player.draw(mainGraphics);
+    paper.draw(mainGraphics, screenSpace, currentScale);
 
     //draw black bars
     if (camera.getGame()) {
@@ -252,7 +252,7 @@ class Paper {
     gridSize = 400;
   }
 
-  public void draw(Rectangle screen, float scale) {
+  public void draw(PGraphics graphics, Rectangle screen, float scale) {
     //if(convert.getScale() > 30){ // stop drawing paper/tiles at this size
     //  return;
     //}
@@ -267,7 +267,7 @@ class Paper {
     //nested for loops to tile the images
     for (int y = startY; y < endY; y += gridSize) {
       for (int x = startX; x < endX; x += gridSize) {
-        image(texture.getGrid(scale), x, y, gridSize, gridSize);
+        graphics.image(texture.getGrid(scale), x, y, gridSize, gridSize);
       }
     }
   }

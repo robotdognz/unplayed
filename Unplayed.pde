@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Environment;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.HashSet;
 import java.util.regex.*;
 
@@ -12,6 +13,8 @@ import java.io.Writer;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import android.widget.Toast;
+
+public PGraphics mainGraphics; 
 
 public KetaiGesture gesture;
 public Vibe vibe;
@@ -23,7 +26,7 @@ public Context context;
 
 private int splash; //true if the game hasn't started looping and a splash screen should be drawn
 private PImage splashScreen;
-Game g; //holds the game class
+Game game; //holds the game class
 Camera gCamera; //holds the game camera
 Controller gController; //holds the current controller
 Editor edit; //holds the editor
@@ -49,6 +52,7 @@ void setup() {
   fullScreen(P2D);
   background(40, 40, 40);
   frameRate(60);
+  mainGraphics = g; //get default PGraphics
   splash = 0;
 
   //setup feilds for Toast
@@ -79,9 +83,9 @@ void init() {
 
   //setup game
   gCamera = new FreeCamera(); //new GameCamera();
-  g = new Game(gCamera, vibe); 
+  game = new Game(gCamera, vibe); 
   gController = new PlayerControl();
-  edit = new Editor(g);
+  edit = new Editor(game);
 
   ////setup non editor widget(s)
   Widget menuW = new MenuWidget(edit, null);
@@ -120,9 +124,9 @@ void draw() {
     } else {
       gController.step();
     }
-    g.step(); //step game
+    game.step(); //step game
   }
-  g.draw(); //draw the game
+  game.draw(); //draw the game
 
   //testing.draw(); //draw touch events
   //reset stored touch events
