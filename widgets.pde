@@ -285,6 +285,23 @@ class RestartWidget extends Widget {
   public void updateActive() {
   }
 }
+class PageViewWidget extends Widget {
+  public PageViewWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
+    //icon = loadImage(folder+"Pause.png");
+  }
+  public void clicked() {
+    editor.pageView = !editor.pageView;
+  }
+
+  public void updateActive() {
+    if (editor.pageView) {
+      active = true;
+    } else {
+      active = false;
+    }
+  }
+}
 class PlayModeWidget extends Widget {
   boolean previousStatus = false;
 

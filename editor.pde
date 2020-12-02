@@ -20,6 +20,7 @@ class Editor {
   editorType eType = editorType.BLOCK;
   editorMode eMode = editorMode.ADD;
   imagePlane eImagePlane = imagePlane.LEVEL;
+  boolean pageView = false;
 
   //current object to put into level
   PieceHandler currentPiece = null;
