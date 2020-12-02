@@ -351,6 +351,7 @@ class EditorBottom extends Toolbar {
     for (int i = 0; i < eWidgets.size(); i++) {
       //draw the two behind tabs
       if(!eWidgets.get(i).isActive()){
+        imageMode(CENTER);
         image(tab, eWidgetOffset+eWidgetSpacing*i, widgetHeight, tabSize, tabSize);
       }
     }
