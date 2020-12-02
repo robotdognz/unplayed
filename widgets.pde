@@ -387,7 +387,7 @@ class PlayerControlWidget extends Widget {
   }
 }
 class CameraControlWidget extends Widget {
-  PImage uiExtra = loadImage(folder+"UI_element01.png");
+  //PImage uiExtra = loadImage(folder+"UI_element01.png");
   public CameraControlWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
     icon = loadImage(folder+"CameraControls.png");
@@ -408,10 +408,10 @@ class CameraControlWidget extends Widget {
     }
   }
 
-  public void drawExtra() {
-    float widgetScale = wSize*1.5;
-    image(uiExtra, position.x, position.y, widgetScale*4.4, widgetScale*1.2); //1.25333333  //4.426666
-  }
+  //public void drawExtra() {
+  //  float widgetScale = wSize*1.5;
+  //  image(uiExtra, position.x, position.y, widgetScale*4.4, widgetScale*1.2); //1.25333333  //4.426666
+  //}
 }
 
 //------------------EditorMode---------------------

@@ -230,9 +230,12 @@ abstract class Toolbar {
 }
 
 class EditorTop extends Toolbar {
+  private String folder = dataPath("ui") + '/';
+  private PImage uiExtra;
 
   public EditorTop(Editor editor) {
     super(editor);
+    uiExtra = loadImage(folder+"UI_element01.png");
 
     //setup widgets
     this.eWidgets = new ArrayList<Widget>();
@@ -240,15 +243,13 @@ class EditorTop extends Toolbar {
     Widget settingsW = new SettingsWidget(editor, this);
     Widget playerW = new PlayerControlWidget(editor, this);
     Widget cameraW = new CameraControlWidget(editor, this);
-    Widget editModeW = new EditorModeWidget(editor, this); 
-    //Widget editTypeW = new EditorTypeWidget(editor, this); 
+    Widget editModeW = new EditorModeWidget(editor, this);
     Widget extraW = new ExtraWidget(editor, this); 
     eWidgets.add(menuW);
     eWidgets.add(settingsW);
     eWidgets.add(playerW);
     eWidgets.add(cameraW);
     eWidgets.add(editModeW);
-    //eWidgets.add(editTypeW);
     eWidgets.add(extraW);
 
     //this.eWidgetSpacing = width/(this.eWidgets.size()+1);
@@ -257,6 +258,11 @@ class EditorTop extends Toolbar {
   }
 
   public void draw() {
+    //draw ui extra piece
+    imageMode(CENTER);
+    float widgetScale = 75*1.5; //wSize*1.5 //TODO: this is messed up code, do it a better way!
+    image(uiExtra, eWidgetOffset+eWidgetSpacing*3, 120, widgetScale*4.4, widgetScale*1.2);
+    
     //widget menus - draw them and close them if lastTouch is below longest open widget menu
     float currentWidgetHeight = 0; //used to find the bottom of the longest open widget menu
     boolean wMenuOpen = false; 
