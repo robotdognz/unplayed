@@ -261,14 +261,16 @@ class SettingsWidget extends Widget {
     icon = loadImage(folder+"settings.png");
     Widget w1 = new RestartWidget(editor, parent);
     Widget w2 = new PlayModeWidget(editor, parent);
-    Widget w3 = new SnapWidget(editor, parent);
-    Widget w4 = new DebugWidget(editor, parent);
-    Widget w5 = new QuadtreeWidget(editor, parent);
+    Widget w3 = new PageViewWidget(editor, parent);
+    Widget w4 = new SnapWidget(editor, parent);
+    Widget w5 = new DebugWidget(editor, parent);
+    Widget w6 = new QuadtreeWidget(editor, parent);
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
     subWidgets.add(w4);
     subWidgets.add(w5);
+    subWidgets.add(w6);
   }
 }
 class RestartWidget extends Widget {
