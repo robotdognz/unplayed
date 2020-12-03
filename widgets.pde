@@ -278,32 +278,32 @@ class SettingsWidget extends Widget {
   public SettingsWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
     icon = loadImage(folder+"settings.png");
-    Widget w1 = new RestartWidget(editor, parent);
+    //Widget w1 = new RestartWidget(editor, parent);
     Widget w2 = new PlayModeWidget(editor, parent);
     Widget w3 = new SnapWidget(editor, parent);
     Widget w4 = new DebugWidget(editor, parent);
     Widget w5 = new QuadtreeWidget(editor, parent);
-    subWidgets.add(w1);
+    //subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
     subWidgets.add(w4);
     subWidgets.add(w5);
   }
 }
-class RestartWidget extends Widget {
-  public RestartWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    icon = loadImage(folder+"ResetGame.png");
-    closeAfterSubWidget = true;
-  }
+//class RestartWidget extends Widget {
+//  public RestartWidget(Editor editor, Toolbar parent) {
+//    super(editor, parent);
+//    icon = loadImage(folder+"ResetGame.png");
+//    closeAfterSubWidget = true;
+//  }
 
-  public void clicked() {
-    game.restart();
-  }
+//  public void clicked() {
+//    game.restart();
+//  }
 
-  public void updateActive() {
-  }
-}
+//  public void updateActive() {
+//  }
+//}
 class PlayModeWidget extends Widget {
   boolean previousStatus = false;
 
@@ -394,6 +394,8 @@ class PlayerControlWidget extends Widget {
   public void clicked() {
     if (!active) {
       editor.eController = new PlayerControl();
+    }else{
+      game.restart();
     }
   }
 
@@ -586,19 +588,31 @@ class ExtraWidget extends Widget {
   public ExtraWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
     icon = loadImage(folder+"extraActions.png");
-    Widget w1 = new ConfirmWidget(editor, parent);
-    Widget w2 = new MenuWidget(editor, parent);
-    //Widget w2 = new EditSelectedWidget(editor, parent);
+    
     //Widget w3 = new LayerForwardWidget(editor, parent);
     //Widget w4 = new LayerBackwardWidget(editor, parent);
-    Widget w5 = new SaveMenuWidget(editor, parent);
     //Widget w6 = new PlaneMenuWidget(editor, parent);
+    
+    Widget w1 = new ConfirmWidget(editor, parent);
+    Widget w2 = new PlayModeWidget(editor, parent);
+    Widget w3 = new SnapWidget(editor, parent);
+    Widget w4 = new EditSelectedWidget(editor, parent);
+    
+    Widget w5 = new DebugWidget(editor, parent);
+    Widget w6 = new QuadtreeWidget(editor, parent);
+    
+    Widget w7 = new MenuWidget(editor, parent);
+    
+   // Widget w8 = new SaveMenuWidget(editor, parent);
+    
     subWidgets.add(w1);
     subWidgets.add(w2);
-    //subWidgets.add(w3);
-    //subWidgets.add(w4);
+    subWidgets.add(w3);
+    subWidgets.add(w4);
     subWidgets.add(w5);
-    //subWidgets.add(w6);
+    subWidgets.add(w6);
+    subWidgets.add(w7);
+    //subWidgets.add(w8);
   }
 }
 class ConfirmWidget extends Widget {
@@ -647,7 +661,7 @@ class SaveMenuWidget extends Widget {
   public SaveMenuWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
     icon = loadImage(folder+"save.png");
-    wd = widgetDirection.LEFT;
+    //wd = widgetDirection.LEFT;
     Widget w1 = new SaveWidget(editor, parent);
     Widget w2 = new SaveAsWidget(editor, parent);
     Widget w3 = new LoadWidget(editor, parent);

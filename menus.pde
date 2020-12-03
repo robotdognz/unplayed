@@ -13,6 +13,7 @@ abstract class Menu {
   }
   
   public void draw() {
+    noStroke();
     fill(150);
     rect(menuCenterX-menuWidth/2, menuTopY, menuWidth, menuHeight);
     //draw the buttons

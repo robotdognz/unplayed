@@ -245,16 +245,16 @@ class EditorTop extends Toolbar {
 
     //setup widgets
     this.eWidgets = new ArrayList<Widget>();
-    //Widget menuW = new MenuWidget(editor, this);
     
-    Widget settingsW = new SettingsWidget(editor, this);
+    //Widget settingsW = new SettingsWidget(editor, this);
+    Widget saveW = new SaveMenuWidget(editor, this);
     Widget pageW = new PageViewWidget(editor, this);
     Widget playerW = new PlayerControlWidget(editor, this);
     Widget cameraW = new CameraControlWidget(editor, this);
     Widget editModeW = new EditorModeWidget(editor, this);
     Widget extraW = new ExtraWidget(editor, this); 
-    //eWidgets.add(menuW);
-    eWidgets.add(settingsW);
+    
+    eWidgets.add(saveW);
     eWidgets.add(pageW);
     eWidgets.add(playerW);
     eWidgets.add(cameraW);
