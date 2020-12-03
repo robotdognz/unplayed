@@ -87,14 +87,15 @@ class Page {
     imageMode(CENTER);
     pushMatrix();
     translate(position.x, position.y);
+    
+    scale(size);
+    rotate(radians(angle));
     if(flipH){
       scale(-1, 1);
     }
     if(flipV){
       scale(1, -1);
     }
-    scale(size);
-    rotate(radians(angle));
     image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height);
     popMatrix();
   }
