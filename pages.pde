@@ -81,7 +81,8 @@ class Page {
     imageMode(CENTER);
     pushMatrix();
     scale(size);
-    image(pageGraphics, position.x, position.y, pageGraphics.width, pageGraphics.height);
+    translate(position.x, position.y);
+    image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height);
     popMatrix();
   }
 
