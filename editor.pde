@@ -10,11 +10,11 @@ class Editor {
   //camera variables
   float minZoom = 3;
   float maxZoom = 100;
-  //page view camera
+  //page view camera backup
   private float pvScale;
   private float pvSubScale;
   private PVector pvCenter;
-  //level view camera
+  //level view camera backup
   private float lvScale;
   private float lvSubScale;
   private PVector lvCenter;
