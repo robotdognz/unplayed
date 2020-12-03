@@ -65,6 +65,7 @@ class Editor {
     }
     if(pageView){ //update pageview display in game class
       game.displayPages = true;
+      game.point = null;
     }else{
       game.displayPages = false;
     }
@@ -147,7 +148,7 @@ class Editor {
   }
 
   public void placeObject() {
-    if (game.point != null && !pageView) {
+    if (game.point != null) {
 
       int platformX = (int) game.point.x;
       int platformY = (int) game.point.y;

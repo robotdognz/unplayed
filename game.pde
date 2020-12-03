@@ -159,10 +159,10 @@ class Game {
       strokeWeight(4);
       rect(pView.getX(), pView.getY(), pView.getWidth(), pView.getHeight());
     }
+    noStroke();
 
     //draw black bars
     if (camera.getGame()) {
-      noStroke();
       player.drawArrows(this);
       fill(20, 255); //10, 255
       int barSize = 1000000;
