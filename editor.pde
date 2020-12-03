@@ -10,6 +10,14 @@ class Editor {
   //camera variables
   float minZoom = 3;
   float maxZoom = 100;
+  //page view camera
+  private float pvScale;
+  private float pvSubScale;
+  private PVector pvCenter;
+  //level view camera
+  private float lvScale;
+  private float lvSubScale;
+  private PVector lvCenter;
 
   //controller
   Controller eController; //holds the current controller
@@ -46,6 +54,14 @@ class Editor {
     this.editorTop = new EditorTop(this);
     this.editorBottom = new EditorBottom(this);
     this.eJSON = new EditorJSON();
+    
+    //initalise camera backup fields
+    lvScale = 0;
+    lvSubScale = 0;
+    lvCenter = new PVector(0,0);
+    pvScale = 0;
+    pvSubScale = 0;
+    pvCenter = new PVector(0,0);
   }
 
   public void step() {
@@ -58,15 +74,15 @@ class Editor {
     }
 
     frameCounter();
-    if(quadtree){ //update quadtree display in game class
+    if (quadtree) { //update quadtree display in game class
       game.quadVis = true;
-    }else{
+    } else {
       game.quadVis = false;
     }
-    if(pageView){ //update pageview display in game class
+    if (pageView) { //update pageview display in game class
       game.displayPages = true;
       game.point = null;
-    }else{
+    } else {
       game.displayPages = false;
     }
 
@@ -145,6 +161,32 @@ class Editor {
 
   public void onTap(float x, float y) {
     editorBottom.onTap(x, y);
+  }
+
+  public void switchView() {
+    if (pageView) {
+      pageView = false;
+      //save page view camera
+      pvScale = game.camera.getScale();
+      pvSubScale = game.camera.getSubScale();
+      pvCenter.x = game.camera.getCenter().x;
+      pvCenter.y = game.camera.getCenter().y;
+      //set camera to level view
+      game.camera.setScale(lvScale);
+      game.camera.setSubScale(lvSubScale);
+      game.camera.setCenter(lvCenter);
+    } else {
+      pageView = true;
+      //save level view camera
+      lvScale = game.camera.getScale();
+      lvSubScale = game.camera.getSubScale();
+      lvCenter.x = game.camera.getCenter().x;
+      lvCenter.y = game.camera.getCenter().y;
+      //set camera to page view
+      game.camera.setScale(pvScale);
+      game.camera.setSubScale(pvSubScale);
+      game.camera.setCenter(pvCenter);
+    }
   }
 
   public void placeObject() {
@@ -246,14 +288,14 @@ class EditorTop extends Toolbar {
 
     //setup widgets
     this.eWidgets = new ArrayList<Widget>();
-    
+
     Widget saveW = new SaveMenuWidget(editor, this);
     Widget pageW = new PageViewWidget(editor, this);
     Widget playerW = new PlayerControlWidget(editor, this);
     Widget cameraW = new CameraControlWidget(editor, this);
     Widget editModeW = new EditorModeWidget(editor, this);
     Widget extraW = new ExtraWidget(editor, this); 
-    
+
     eWidgets.add(saveW);
     eWidgets.add(pageW);
     eWidgets.add(playerW);
@@ -271,7 +313,7 @@ class EditorTop extends Toolbar {
     imageMode(CENTER);
     float widgetScale = 75*1.5; //wSize*1.5 //TODO: this is messed up code, do it a better way!
     image(uiExtra, eWidgetOffset+eWidgetSpacing*3, 120, widgetScale*4.4, widgetScale*1.2);
-    
+
     //widget menus - draw them and close them if lastTouch is below longest open widget menu
     float currentWidgetHeight = 0; //used to find the bottom of the longest open widget menu
     boolean wMenuOpen = false; 
@@ -365,7 +407,7 @@ class EditorBottom extends Toolbar {
   public void draw() {
     for (int i = 0; i < eWidgets.size(); i++) {
       //draw the two behind tabs
-      if(!eWidgets.get(i).isActive()){
+      if (!eWidgets.get(i).isActive()) {
         imageMode(CENTER);
         image(tab, eWidgetOffset+eWidgetSpacing*i, widgetHeight, tabSize, tabSize);
       }
@@ -375,11 +417,11 @@ class EditorBottom extends Toolbar {
     image(toolbar, pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
 
     //widgets
-    
+
     for (int i = 0; i < eWidgets.size(); i++) {
       //if current widget is active, draw tab at the current x position
       imageMode(CENTER);
-      if(eWidgets.get(i).isActive()){
+      if (eWidgets.get(i).isActive()) {
         image(tab, eWidgetOffset+eWidgetSpacing*i, widgetHeight, tabSize, tabSize);
       }
       eWidgets.get(i).draw(eWidgetOffset+eWidgetSpacing*i, widgetHeight);  

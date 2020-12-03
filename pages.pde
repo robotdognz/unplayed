@@ -120,11 +120,8 @@ class PageView {
   //arraylist of pages
   private ArrayList<Page> pages;
 
-  //editor camera
+  //camera
   private Camera camera;
-  private float scale;
-  private float subScale = 1; //defaults to 1
-  private PVector center;
 
   public PageView(Camera camera) {
     this.camera = camera;
@@ -162,25 +159,5 @@ class PageView {
   
   public List<Page> getPages(){
     return Collections.unmodifiableList(pages);
-  }
-
-  public float getScale() {
-    return scale;
-  }
-  public float getSubScale() {
-    return subScale;
-  }
-  public PVector getCenter() {
-    return center;
-  }
-  public void setScale(float scale) {
-    this.scale = scale;
-  }
-  public void setSubScale(float subScale) {
-    this.subScale = subScale;
-  }
-  public void setCenter(float x, float y) {
-    this.center.x = x;
-    this.center.y = y;
   }
 }
