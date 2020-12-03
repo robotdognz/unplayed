@@ -9,10 +9,12 @@ class Page {
   float size; //size of the page in page view
   float angle; //rotation of the page in page view
   Rectangle angledRect; //a rectangle that contains the rotated page
+  boolean flipH;
+  boolean flipV;
 
   //PGraphics //need to figure out if these can be rotated
 
-  public Page(Game game, PVector topLeft, PVector bottomRight, PVector position, float size, float angle) {
+  public Page(Game game, PVector topLeft, PVector bottomRight, PVector position, float size, float angle, boolean flipH, boolean flipV) {
     this.game = game;
     float rWidth = bottomRight.x-topLeft.x;
     float rHeight = bottomRight.y-topLeft.y;
@@ -26,6 +28,9 @@ class Page {
     this.angle = angle;
     //to be implemented later
     //angledRect //calculate a rectangle that the angled page fits inside
+    
+    this.flipH = flipH;
+    this.flipV = flipV;
   }
 
   public void exclude(Rectangle object) {
@@ -82,6 +87,12 @@ class Page {
     imageMode(CENTER);
     pushMatrix();
     translate(position.x, position.y);
+    if(flipH){
+      scale(-1, 1);
+    }
+    if(flipV){
+      scale(1, -1);
+    }
     scale(size);
     rotate(radians(angle));
     image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height);

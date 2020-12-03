@@ -148,7 +148,7 @@ class Editor {
   }
 
   public void placeObject() {
-    if (game.point != null) {
+    if (game.point != null && !pageView) {
 
       int platformX = (int) game.point.x;
       int platformY = (int) game.point.y;
