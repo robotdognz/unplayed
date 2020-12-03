@@ -66,20 +66,20 @@ class Page {
 
     for (Rectangle r : drawFirst) { //draw pieces
       if (r instanceof Piece) {
-        ((Piece) r).draw(pageGraphics, scale);
+        ((Piece) r).draw(pageGraphics, scale/size);
       }
     }
     for (Rectangle r : drawSecond) { //draw tiles and events
       if (r instanceof Tile) {
-        ((Tile) r).draw(pageGraphics, scale);
+        ((Tile) r).draw(pageGraphics, scale/size); //scale is divided by size so that LODs are relative to page size
       }
       if (r instanceof Event) {
-        ((Event) r).draw(pageGraphics, scale);
+        ((Event) r).draw(pageGraphics, scale/size);
       }
     }
 
     game.player.draw(pageGraphics);
-    game.paper.draw(pageGraphics, view, scale);
+    game.paper.draw(pageGraphics, view, scale/size);
     //end drawing on the page
     pageGraphics.endDraw();
     
