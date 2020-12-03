@@ -12,7 +12,7 @@ class Page {
 
   //PGraphics //need to figure out if these can be rotated
 
-  public Page(Game game, PVector topLeft, PVector bottomRight, PVector position, float size) {
+  public Page(Game game, PVector topLeft, PVector bottomRight, PVector position, float size, float angle) {
     this.game = game;
     float rWidth = bottomRight.x-topLeft.x;
     float rHeight = bottomRight.y-topLeft.y;
@@ -23,8 +23,8 @@ class Page {
     this.pageGraphics = createGraphics((int)rWidth, (int)rHeight, P2D);
     this.position = position;
     this.size = size;
+    this.angle = angle;
     //to be implemented later
-    //this.angle = 0; 
     //angledRect //calculate a rectangle that the angled page fits inside
   }
 
@@ -78,9 +78,11 @@ class Page {
     //end drawing on the page
     pageGraphics.endDraw();
     
+    //draw the page
     imageMode(CENTER);
     pushMatrix();
     scale(size);
+    rotate(radians(angle));
     translate(position.x, position.y);
     image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height);
     popMatrix();
