@@ -56,12 +56,12 @@ class Editor {
     this.eJSON = new EditorJSON();
     
     //initalise camera backup fields
-    lvScale = 0;
-    lvSubScale = 0;
-    lvCenter = new PVector(0,0);
-    pvScale = 0;
-    pvSubScale = 0;
-    pvCenter = new PVector(0,0);
+    lvScale = game.camera.getScale();
+    lvSubScale = game.camera.getSubScale();
+    lvCenter = new PVector(game.camera.getCenter().x, game.camera.getCenter().y);
+    pvScale = game.camera.getScale();
+    pvSubScale = game.camera.getSubScale();
+    pvCenter = new PVector(game.camera.getCenter().x, game.camera.getCenter().y);
   }
 
   public void step() {
