@@ -710,7 +710,7 @@ class MenuWidget extends Widget {
 
   public MenuWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
-    icon = loadImage(folder+"menu.png");
+    icon = loadImage(folder+"exit.png");
   }
 
   public void clicked() {
