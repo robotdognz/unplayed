@@ -81,9 +81,9 @@ class Page {
     //draw the page
     imageMode(CENTER);
     pushMatrix();
+    translate(position.x, position.y);
     scale(size);
     rotate(radians(angle));
-    translate(position.x, position.y);
     image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height);
     popMatrix();
   }
