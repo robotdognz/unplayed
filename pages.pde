@@ -54,7 +54,7 @@ class Page {
     //begin drawing on the page
     pageGraphics.beginDraw();
     
-    pageGraphics.translate(pageGraphics.width/2, pageGraphics.height/2);
+    pageGraphics.translate(pageGraphics.width/2-50, pageGraphics.height/2-50);
 
     //draw environment and player
     pageGraphics.background(240);
