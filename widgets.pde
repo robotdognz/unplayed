@@ -96,7 +96,6 @@ abstract class Widget {
     }
 
     imageMode(CENTER);
-    drawExtra();
     if (available) {
       if (active) {
         //active
@@ -118,9 +117,6 @@ abstract class Widget {
     image(icon, position.x, position.y, wSize, wSize);
     noTint();
     imageMode(CORNER);
-  }
-
-  public void drawExtra() {
   }
 
   public boolean isMenu() {
@@ -228,29 +224,49 @@ abstract class Widget {
   }
 }
 
-
-//------------------Menu---------------------
-class MenuWidget extends Widget {
-  boolean previousStatus = false;
-
-  public MenuWidget(Editor editor, Toolbar parent) {
+//------------------FileMenu---------------------
+class SaveMenuWidget extends Widget {
+  public SaveMenuWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
-    icon = loadImage(folder+"menu.png");
+    icon = loadImage(folder+"file.png");
+    //wd = widgetDirection.LEFT;
+    Widget w1 = new SaveWidget(editor, parent);
+    Widget w2 = new SaveAsWidget(editor, parent);
+    Widget w3 = new LoadWidget(editor, parent);
+    subWidgets.add(w1);
+    subWidgets.add(w2);
+    subWidgets.add(w3);
+  }
+}
+class SaveWidget extends Widget {
+  public SaveWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
+    closeAfterSubWidget = true;
+    icon = loadImage(folder+"save.png");
   }
 
   public void clicked() {
-    if (!active) {
-      active = true;
-      previousStatus = gPaused;
-      gPaused = true; //switch pause state
-      menu = new PauseMenu(this);
-    }
+    //save the level
+    editor.eJSON.save(editor.eGame);
+  }
+}
+class SaveAsWidget extends Widget {
+  public SaveAsWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
+    available = false;
+    icon = loadImage(folder+"saveAs.png");
+  }
+}
+class LoadWidget extends Widget {
+  public LoadWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
+    closeAfterSubWidget = true;
+    icon = loadImage(folder+"load.png");
   }
 
-  public void updateActive() {
-    if (menu != null) {
-      active = true;
-    }
+  public void clicked() {
+    //load the level
+    editor.eJSON.load(editor.eGame);
   }
 }
 
@@ -266,117 +282,6 @@ class PageViewWidget extends Widget {
 
   public void updateActive() {
     if (editor.pageView) {
-      active = true;
-    } else {
-      active = false;
-    }
-  }
-}
-
-//------------------Settings---------------------
-class SettingsWidget extends Widget {
-  public SettingsWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    icon = loadImage(folder+"settings.png");
-    //Widget w1 = new RestartWidget(editor, parent);
-    Widget w2 = new PlayModeWidget(editor, parent);
-    Widget w3 = new SnapWidget(editor, parent);
-    Widget w4 = new DebugWidget(editor, parent);
-    Widget w5 = new QuadtreeWidget(editor, parent);
-    //subWidgets.add(w1);
-    subWidgets.add(w2);
-    subWidgets.add(w3);
-    subWidgets.add(w4);
-    subWidgets.add(w5);
-  }
-}
-//class RestartWidget extends Widget {
-//  public RestartWidget(Editor editor, Toolbar parent) {
-//    super(editor, parent);
-//    icon = loadImage(folder+"ResetGame.png");
-//    closeAfterSubWidget = true;
-//  }
-
-//  public void clicked() {
-//    game.restart();
-//  }
-
-//  public void updateActive() {
-//  }
-//}
-class PlayModeWidget extends Widget {
-  boolean previousStatus = false;
-
-  public PlayModeWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    icon = loadImage(folder+"Pause.png");
-    closeAfterSubWidget = true;
-  }
-
-  public void clicked() {
-    if (active) {
-      gCamera = new FreeCamera();
-    } else {
-      gCamera = new GameCamera();
-      editor.eController = new PlayerControl();
-    }
-  }
-
-  public void updateActive() {
-    if (gCamera instanceof FreeCamera) {
-      active = false;
-    } else {
-      active = true;
-    }
-  }
-}
-class SnapWidget extends Widget {
-  public SnapWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    icon = loadImage(folder+"snaptoGrid.png");
-  }
-
-  public void clicked() {
-    editor.snap = !editor.snap;
-  }
-
-  public void updateActive() {
-    if (editor.snap) {
-      active = true;
-    } else {
-      active = false;
-    }
-  }
-}
-class DebugWidget extends Widget {
-  public DebugWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    icon = loadImage(folder+"debugging.png");
-  }
-
-  public void clicked() {
-    editor.debug = !editor.debug;
-  }
-
-  public void updateActive() {
-    if (editor.debug) {
-      active = true;
-    } else {
-      active = false;
-    }
-  }
-}
-class QuadtreeWidget extends Widget {
-  public QuadtreeWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    icon = loadImage(folder+"quadTree.png");
-  }
-  public void clicked() {
-    editor.quadtree = !editor.quadtree;
-  }
-
-  public void updateActive() {
-    if (editor.quadtree) {
       active = true;
     } else {
       active = false;
@@ -597,13 +502,9 @@ class ExtraWidget extends Widget {
     Widget w2 = new PlayModeWidget(editor, parent);
     Widget w3 = new SnapWidget(editor, parent);
     Widget w4 = new EditSelectedWidget(editor, parent);
-    
     Widget w5 = new DebugWidget(editor, parent);
     Widget w6 = new QuadtreeWidget(editor, parent);
-    
     Widget w7 = new MenuWidget(editor, parent);
-    
-   // Widget w8 = new SaveMenuWidget(editor, parent);
     
     subWidgets.add(w1);
     subWidgets.add(w2);
@@ -612,7 +513,6 @@ class ExtraWidget extends Widget {
     subWidgets.add(w5);
     subWidgets.add(w6);
     subWidgets.add(w7);
-    //subWidgets.add(w8);
   }
 }
 class ConfirmWidget extends Widget {
@@ -632,6 +532,85 @@ class ConfirmWidget extends Widget {
       available = true;
     } else {
       available = false;
+    }
+  }
+}
+class PlayModeWidget extends Widget {
+  boolean previousStatus = false;
+
+  public PlayModeWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
+    icon = loadImage(folder+"Pause.png");
+    closeAfterSubWidget = true;
+  }
+
+  public void clicked() {
+    if (active) {
+      gCamera = new FreeCamera();
+    } else {
+      gCamera = new GameCamera();
+      editor.eController = new PlayerControl();
+    }
+  }
+
+  public void updateActive() {
+    if (gCamera instanceof FreeCamera) {
+      active = false;
+    } else {
+      active = true;
+    }
+  }
+}
+class SnapWidget extends Widget {
+  public SnapWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
+    icon = loadImage(folder+"snaptoGrid.png");
+  }
+
+  public void clicked() {
+    editor.snap = !editor.snap;
+  }
+
+  public void updateActive() {
+    if (editor.snap) {
+      active = true;
+    } else {
+      active = false;
+    }
+  }
+}
+class DebugWidget extends Widget {
+  public DebugWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
+    icon = loadImage(folder+"debugging.png");
+  }
+
+  public void clicked() {
+    editor.debug = !editor.debug;
+  }
+
+  public void updateActive() {
+    if (editor.debug) {
+      active = true;
+    } else {
+      active = false;
+    }
+  }
+}
+class QuadtreeWidget extends Widget {
+  public QuadtreeWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
+    icon = loadImage(folder+"quadTree.png");
+  }
+  public void clicked() {
+    editor.quadtree = !editor.quadtree;
+  }
+
+  public void updateActive() {
+    if (editor.quadtree) {
+      active = true;
+    } else {
+      active = false;
     }
   }
 }
@@ -655,50 +634,6 @@ class LayerBackwardWidget extends Widget {
     super(editor, parent);
     available = false;
     icon = loadImage(folder+"MoveLayerBackward.png");
-  }
-}
-class SaveMenuWidget extends Widget {
-  public SaveMenuWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    icon = loadImage(folder+"file.png");
-    //wd = widgetDirection.LEFT;
-    Widget w1 = new SaveWidget(editor, parent);
-    Widget w2 = new SaveAsWidget(editor, parent);
-    Widget w3 = new LoadWidget(editor, parent);
-    subWidgets.add(w1);
-    subWidgets.add(w2);
-    subWidgets.add(w3);
-  }
-}
-class SaveWidget extends Widget {
-  public SaveWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    closeAfterSubWidget = true;
-    icon = loadImage(folder+"save.png");
-  }
-
-  public void clicked() {
-    //save the level
-    editor.eJSON.save(editor.eGame);
-  }
-}
-class SaveAsWidget extends Widget {
-  public SaveAsWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    available = false;
-    icon = loadImage(folder+"saveAs.png");
-  }
-}
-class LoadWidget extends Widget {
-  public LoadWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    closeAfterSubWidget = true;
-    icon = loadImage(folder+"load.png");
-  }
-
-  public void clicked() {
-    //load the level
-    editor.eJSON.load(editor.eGame);
   }
 }
 
@@ -764,6 +699,31 @@ class BackgroundWidget extends Widget {
       active = true;
     } else {
       active = false;
+    }
+  }
+}
+
+//------------------Menu---------------------
+class MenuWidget extends Widget {
+  boolean previousStatus = false;
+
+  public MenuWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
+    icon = loadImage(folder+"menu.png");
+  }
+
+  public void clicked() {
+    if (!active) {
+      active = true;
+      previousStatus = gPaused;
+      gPaused = true; //switch pause state
+      menu = new PauseMenu(this);
+    }
+  }
+
+  public void updateActive() {
+    if (menu != null) {
+      active = true;
     }
   }
 }
