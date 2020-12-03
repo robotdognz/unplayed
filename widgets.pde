@@ -254,6 +254,25 @@ class MenuWidget extends Widget {
   }
 }
 
+//------------------TogglePageView---------------------
+class PageViewWidget extends Widget {
+  public PageViewWidget(Editor editor, Toolbar parent) {
+    super(editor, parent);
+    icon = loadImage(folder+"pageView.png");
+  }
+  public void clicked() {
+    editor.pageView = !editor.pageView;
+  }
+
+  public void updateActive() {
+    if (editor.pageView) {
+      active = true;
+    } else {
+      active = false;
+    }
+  }
+}
+
 //------------------Settings---------------------
 class SettingsWidget extends Widget {
   public SettingsWidget(Editor editor, Toolbar parent) {
@@ -261,16 +280,14 @@ class SettingsWidget extends Widget {
     icon = loadImage(folder+"settings.png");
     Widget w1 = new RestartWidget(editor, parent);
     Widget w2 = new PlayModeWidget(editor, parent);
-    Widget w3 = new PageViewWidget(editor, parent);
-    Widget w4 = new SnapWidget(editor, parent);
-    Widget w5 = new DebugWidget(editor, parent);
-    Widget w6 = new QuadtreeWidget(editor, parent);
+    Widget w3 = new SnapWidget(editor, parent);
+    Widget w4 = new DebugWidget(editor, parent);
+    Widget w5 = new QuadtreeWidget(editor, parent);
     subWidgets.add(w1);
     subWidgets.add(w2);
     subWidgets.add(w3);
     subWidgets.add(w4);
     subWidgets.add(w5);
-    subWidgets.add(w6);
   }
 }
 class RestartWidget extends Widget {
@@ -285,23 +302,6 @@ class RestartWidget extends Widget {
   }
 
   public void updateActive() {
-  }
-}
-class PageViewWidget extends Widget {
-  public PageViewWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    //icon = loadImage(folder+"Pause.png");
-  }
-  public void clicked() {
-    editor.pageView = !editor.pageView;
-  }
-
-  public void updateActive() {
-    if (editor.pageView) {
-      active = true;
-    } else {
-      active = false;
-    }
   }
 }
 class PlayModeWidget extends Widget {
@@ -406,7 +406,6 @@ class PlayerControlWidget extends Widget {
   }
 }
 class CameraControlWidget extends Widget {
-  //PImage uiExtra = loadImage(folder+"UI_element01.png");
   public CameraControlWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
     icon = loadImage(folder+"CameraControls.png");
@@ -426,11 +425,6 @@ class CameraControlWidget extends Widget {
       active = false;
     }
   }
-
-  //public void drawExtra() {
-  //  float widgetScale = wSize*1.5;
-  //  image(uiExtra, position.x, position.y, widgetScale*4.4, widgetScale*1.2); //1.25333333  //4.426666
-  //}
 }
 
 //------------------EditorMode---------------------
@@ -593,17 +587,18 @@ class ExtraWidget extends Widget {
     super(editor, parent);
     icon = loadImage(folder+"extraActions.png");
     Widget w1 = new ConfirmWidget(editor, parent);
-    Widget w2 = new EditSelectedWidget(editor, parent);
-    Widget w3 = new LayerForwardWidget(editor, parent);
-    Widget w4 = new LayerBackwardWidget(editor, parent);
+    Widget w2 = new MenuWidget(editor, parent);
+    //Widget w2 = new EditSelectedWidget(editor, parent);
+    //Widget w3 = new LayerForwardWidget(editor, parent);
+    //Widget w4 = new LayerBackwardWidget(editor, parent);
     Widget w5 = new SaveMenuWidget(editor, parent);
-    Widget w6 = new PlaneMenuWidget(editor, parent);
+    //Widget w6 = new PlaneMenuWidget(editor, parent);
     subWidgets.add(w1);
     subWidgets.add(w2);
-    subWidgets.add(w3);
-    subWidgets.add(w4);
+    //subWidgets.add(w3);
+    //subWidgets.add(w4);
     subWidgets.add(w5);
-    subWidgets.add(w6);
+    //subWidgets.add(w6);
   }
 }
 class ConfirmWidget extends Widget {
