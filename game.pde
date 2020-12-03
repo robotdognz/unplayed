@@ -64,7 +64,7 @@ class Game {
     displayPages = false;
     //testing page view
     pageView.addPage(new Page(this, new PVector(-400, -400), new PVector(500, 500), new PVector(0, 0), 1));
-    pageView.addPage(new Page(this, new PVector(-200, -200), new PVector(600, 600), new PVector(0, 300), 1));
+    pageView.addPage(new Page(this, new PVector(-200, -200), new PVector(600, 600), new PVector(0, 900), 1));
 
     paper = new Paper();
 
