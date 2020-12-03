@@ -660,7 +660,7 @@ class LayerBackwardWidget extends Widget {
 class SaveMenuWidget extends Widget {
   public SaveMenuWidget(Editor editor, Toolbar parent) {
     super(editor, parent);
-    icon = loadImage(folder+"save.png");
+    icon = loadImage(folder+"file.png");
     //wd = widgetDirection.LEFT;
     Widget w1 = new SaveWidget(editor, parent);
     Widget w2 = new SaveAsWidget(editor, parent);
