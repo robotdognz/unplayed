@@ -95,6 +95,10 @@ class Page {
   public Set<String> getExcluded() {
     return Collections.unmodifiableSet(excludedObjects);
   }
+  
+  public Rectangle getView(){
+    return view;
+  }
 }
 
 class PageView {
@@ -139,6 +143,10 @@ class PageView {
   
   public void addPage(Page page){
     pages.add(page);
+  }
+  
+  public List<Page> getPages(){
+    return Collections.unmodifiableList(pages);
   }
 
   public float getScale() {

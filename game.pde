@@ -149,6 +149,15 @@ class Game {
     }
     player.draw(mainGraphics);
     paper.draw(mainGraphics, screenSpace, currentScale);
+    
+    //draw page views
+    for(Page p : pageView.getPages()){
+      Rectangle pView = p.getView();
+      noFill();
+      stroke(255,0,0);
+      strokeWeight(4);
+      rect(pView.getX(), pView.getY(), pView.getWidth(), pView.getHeight());
+    }
 
     //draw black bars
     if (camera.getGame()) {
