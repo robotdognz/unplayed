@@ -8,9 +8,8 @@ class Page {
   private PVector position; //center of the page in page view
   private float size; //size of the page in page view
   private float angle; //rotation of the page in page view
-  Rectangle angledRect; //a rectangle that contains the rotated page
-  //private boolean flipH;
-  //private boolean flipV;
+  Rectangle angledRect; //an axis locked rectangle that contains the rotated page (used to check if page is on screen)
+  //variables for flipping the page
   private float flipX;
   private float flipY;
 
@@ -39,9 +38,6 @@ class Page {
     }else{
       flipY = 1;
     }
-    
-    //this.flipH = flipH;
-    //this.flipV = flipV;
   }
 
   public void exclude(Rectangle object) {
@@ -99,16 +95,10 @@ class Page {
     pushMatrix();
     translate(position.x, position.y);
     
-    scale(size);
-    rotate(radians(angle));
-    //if(flipH){
-    //  scale(-1, 1);
-    //}
-    //if(flipV){
-    //  scale(1, -1);
-    //}
-    scale(flipX, flipY);
-    image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height);
+    scale(size); //size the page will appear in the page view
+    rotate(radians(angle)); //angle of the page
+    scale(flipX, flipY); //flipping the page
+    image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height); //draw the page
     popMatrix();
   }
 
@@ -129,10 +119,9 @@ class Page {
 }
 
 class PageView {
-  //arraylist of pages
   private ArrayList<Page> pages;
 
-  //camera
+  //world camera
   private Camera camera;
 
   public PageView(Camera camera) {

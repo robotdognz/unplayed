@@ -1,11 +1,11 @@
 class Game {
-  public Player player;
+  private Player player;
   private Paper paper;
 
-  public Quadtree world;
+  private Quadtree world;
   public Rectangle startingWorld;
   public HashSet<Rectangle> playerObjects;
-  public PageView pageView;
+  private PageView pageView;
   public boolean displayPages;
 
   private boolean eventVis;
@@ -261,6 +261,18 @@ class Game {
     if (bottomEdge != newBottomEdge) {
       bottomEdge = lerp(bottomEdge, newBottomEdge, exp(-boarderZoomSpeed));
     }
+  }
+  
+  public Player getPlayer(){
+    return player;
+  }
+  
+  public Quadtree getWorld(){
+    return world;
+  }
+  
+  public PageView getPageView(){
+    return pageView; 
   }
 }
 

@@ -6,6 +6,8 @@ class Editor {
   public boolean nextTouchInactive = false;
 
   Game eGame; //reference to game, same instance of game used everywhere else
+  PageView ePageView;
+  Quadtree eWorld;
 
   //camera variables
   float minZoom = 3;
@@ -50,6 +52,8 @@ class Editor {
 
   public Editor(Game game) {
     this.eGame = game;
+    this.ePageView = game.getPageView();
+    this.eWorld = game.getWorld();
     this.eController = new CameraControl(this);
     this.editorTop = new EditorTop(this);
     this.editorBottom = new EditorBottom(this);
