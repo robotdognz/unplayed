@@ -14,11 +14,11 @@ class TextureCache {
   private PImage gridLOD16;
   private PImage gridLOD8;
 
-  //level pieces
-  private File pieceDir;
-  private File[] piecePaths;
-  private HashMap<File, PieceHandler> pieceMap;
-  private ArrayList<PieceHandler> pieceList;
+  //level image
+  private File imageDir;
+  private File[] imagePaths;
+  private HashMap<File, ImageHandler> imageMap;
+  private ArrayList<ImageHandler> imageList;
   //tiles
   private File tileDir;
   private File[] tilePaths;
@@ -47,7 +47,7 @@ class TextureCache {
     gridLOD8 = requestImage("PaperGrid_32x32.png");
 
     //level assets
-    loadLevelPieces();
+    loadLevelImages();
     loadTiles();
     loadEvents();
 
@@ -86,13 +86,13 @@ class TextureCache {
     Collections.sort(tileList);
   }
 
-  private void loadLevelPieces() {
-    //level pieces
-    pieceDir = new File(dataPath("pieces")+'/');
-    piecePaths = pieceDir.listFiles();
-    pieceMap = new HashMap<File, PieceHandler>();
+  private void loadLevelImages() {
+    //level images
+    imageDir = new File(dataPath("images")+'/');
+    imagePaths = imageDir.listFiles();
+    imageMap = new HashMap<File, ImageHandler>();
     ArrayList<Integer> temp = new ArrayList<Integer>(); //holds the numbers found in the file name
-    for (File file : piecePaths) {
+    for (File file : imagePaths) {
       String path = file.getAbsolutePath();
       if (path.matches(".+([0-9]+)x([0-9]+).png$")) { //check file ends with number "x" number ".png"
         Pattern p = Pattern.compile("\\d+");
@@ -102,13 +102,13 @@ class TextureCache {
           temp.add(i);
         }
         if (temp.size() >= 2) {
-          pieceMap.put(file, new PieceHandler(file, temp.get(temp.size()-2), temp.get(temp.size()-1)));
+          imageMap.put(file, new ImageHandler(file, temp.get(temp.size()-2), temp.get(temp.size()-1)));
         }
       }
       temp.clear();
     }
-    pieceList = new ArrayList<PieceHandler>(pieceMap.values());
-    Collections.sort(pieceList);
+    imageList = new ArrayList<ImageHandler>(imageMap.values());
+    Collections.sort(imageList);
   }
 
   private void loadEvents() {
@@ -151,12 +151,12 @@ class TextureCache {
     return tileList;
   }
 
-  public HashMap<File, PieceHandler> getPieceMap() {
-    return pieceMap;
+  public HashMap<File, ImageHandler> getImageMap() {
+    return imageMap;
   }
 
-  public ArrayList<PieceHandler> getPieceList() {
-    return pieceList;
+  public ArrayList<ImageHandler> getImageList() {
+    return imageList;
   }
 
   public HashMap<String, EventHandler> getEventMap() {
@@ -253,8 +253,8 @@ class TileHandler implements Comparable<TileHandler>, Handler {
   }
 }
 
-//------------------PieceHandler---------------------
-class PieceHandler implements Comparable<PieceHandler>, Handler {
+//------------------ImageHandler---------------------
+class ImageHandler implements Comparable<ImageHandler>, Handler {
   File datapath;
   PImage LOD256;
   PImage LOD128 = null;
@@ -264,7 +264,7 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
   int pWidth;
   int pHeight;
 
-  public PieceHandler(File file, int pWidth, int pHeight) {
+  public ImageHandler(File file, int pWidth, int pHeight) {
     datapath = file;
     this.pWidth = pWidth*100;  //these are turned from grid amound to draw units for the level
     this.pHeight = pHeight*100;
@@ -334,8 +334,8 @@ class PieceHandler implements Comparable<PieceHandler>, Handler {
   }
 
   @Override
-    public int compareTo(PieceHandler otherPieceHandler) {
-    float otherArea = otherPieceHandler.getWidth()*otherPieceHandler.getHeight();
+    public int compareTo(ImageHandler otherImageHandler) {
+    float otherArea = otherImageHandler.getWidth()*otherImageHandler.getHeight();
     float area = getWidth()*getHeight();
     if (otherArea > area) {
       return -1;

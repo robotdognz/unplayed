@@ -130,7 +130,7 @@ class EditorControl implements Controller {
 
     game.point = new PVector(finalX, finalY);
     if (editor.snap) {
-      editor.placeObject();
+      editor.editWorld();
     }
   }
 

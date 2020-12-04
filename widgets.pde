@@ -439,11 +439,11 @@ class BlockModeWidget extends Widget {
   } 
 
     public void clicked() {
-    editor.eType = editorType.BLOCK;
+    editor.eType = editorType.TILE;
   }
 
   public void updateActive() {
-    if (editor.eType == editorType.BLOCK) {
+    if (editor.eType == editorType.TILE) {
       active = true;
     } else {
       active = false;
@@ -502,10 +502,9 @@ class ExtraWidget extends Widget {
     Widget w1 = new ConfirmWidget(editor, parent);
     Widget w2 = new PlayModeWidget(editor, parent);
     Widget w3 = new SnapWidget(editor, parent);
-    Widget w4 = new EditSelectedWidget(editor, parent);
-    Widget w5 = new DebugWidget(editor, parent);
-    Widget w6 = new QuadtreeWidget(editor, parent);
-    Widget w7 = new MenuWidget(editor, parent);
+    Widget w4 = new DebugWidget(editor, parent);
+    Widget w5 = new QuadtreeWidget(editor, parent);
+    Widget w6 = new MenuWidget(editor, parent);
     
     subWidgets.add(w1);
     subWidgets.add(w2);
@@ -513,7 +512,6 @@ class ExtraWidget extends Widget {
     subWidgets.add(w4);
     subWidgets.add(w5);
     subWidgets.add(w6);
-    subWidgets.add(w7);
   }
 }
 class ConfirmWidget extends Widget {
@@ -525,7 +523,7 @@ class ConfirmWidget extends Widget {
 
   public void clicked() {
     //finalise block
-    editor.placeObject();
+    editor.editWorld();
   }
 
   public void updateActive() {
@@ -615,94 +613,94 @@ class QuadtreeWidget extends Widget {
     }
   }
 }
-class EditSelectedWidget extends Widget {
-  public EditSelectedWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    available = false;
-    icon = loadImage(folder+"EditSelected.png");
-    closeAfterSubWidget = true;
-  }
-}
-class LayerForwardWidget extends Widget {
-  public LayerForwardWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    available = false;
-    icon = loadImage(folder+"MoveLayerForward.png");
-  }
-}
-class LayerBackwardWidget extends Widget {
-  public LayerBackwardWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    available = false;
-    icon = loadImage(folder+"MoveLayerBackward.png");
-  }
-}
+//class EditSelectedWidget extends Widget {
+//  public EditSelectedWidget(Editor editor, Toolbar parent) {
+//    super(editor, parent);
+//    available = false;
+//    icon = loadImage(folder+"EditSelected.png");
+//    closeAfterSubWidget = true;
+//  }
+//}
+//class LayerForwardWidget extends Widget {
+//  public LayerForwardWidget(Editor editor, Toolbar parent) {
+//    super(editor, parent);
+//    available = false;
+//    icon = loadImage(folder+"MoveLayerForward.png");
+//  }
+//}
+//class LayerBackwardWidget extends Widget {
+//  public LayerBackwardWidget(Editor editor, Toolbar parent) {
+//    super(editor, parent);
+//    available = false;
+//    icon = loadImage(folder+"MoveLayerBackward.png");
+//  }
+//}
 
-class PlaneMenuWidget extends Widget {
-  public PlaneMenuWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    icon = loadImage(folder+"save.png");
-    iconIsCurrentSubWidget = true;
-    wd = widgetDirection.LEFT;
-    Widget w1 = new BackgroundWidget(editor, parent);
-    Widget w2 = new LevelWidget(editor, parent);
-    Widget w3 = new ForegroundWidget(editor, parent);
-    subWidgets.add(w1);
-    subWidgets.add(w2);
-    subWidgets.add(w3);
-  }
-}
-class ForegroundWidget extends Widget {
-  public ForegroundWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    icon = loadImage(folder+"WorkFront.png");
-  }
-  public void clicked() {
-    editor.eImagePlane = imagePlane.FRONT;
-    editor.eType = editorType.IMAGE;
-  }
-  public void updateActive() {
-    if (editor.eImagePlane == imagePlane.FRONT) {
-      active = true;
-    } else {
-      active = false;
-    }
-  }
-}
-class LevelWidget extends Widget {
-  public LevelWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    icon = loadImage(folder+"WorkMid.png");
-  }
-  public void clicked() {
-    editor.eImagePlane = imagePlane.LEVEL;
-    editor.eType = editorType.IMAGE;
-  }
-  public void updateActive() {
-    if (editor.eImagePlane == imagePlane.LEVEL) {
-      active = true;
-    } else {
-      active = false;
-    }
-  }
-}
-class BackgroundWidget extends Widget {
-  public BackgroundWidget(Editor editor, Toolbar parent) {
-    super(editor, parent);
-    icon = loadImage(folder+"WorkBack.png");
-  }
-  public void clicked() {
-    editor.eImagePlane = imagePlane.BACK;
-    editor.eType = editorType.IMAGE;
-  }
-  public void updateActive() {
-    if (editor.eImagePlane == imagePlane.BACK) {
-      active = true;
-    } else {
-      active = false;
-    }
-  }
-}
+//class PlaneMenuWidget extends Widget {
+//  public PlaneMenuWidget(Editor editor, Toolbar parent) {
+//    super(editor, parent);
+//    icon = loadImage(folder+"save.png");
+//    iconIsCurrentSubWidget = true;
+//    wd = widgetDirection.LEFT;
+//    Widget w1 = new BackgroundWidget(editor, parent);
+//    Widget w2 = new LevelWidget(editor, parent);
+//    Widget w3 = new ForegroundWidget(editor, parent);
+//    subWidgets.add(w1);
+//    subWidgets.add(w2);
+//    subWidgets.add(w3);
+//  }
+//}
+//class ForegroundWidget extends Widget {
+//  public ForegroundWidget(Editor editor, Toolbar parent) {
+//    super(editor, parent);
+//    icon = loadImage(folder+"WorkFront.png");
+//  }
+//  public void clicked() {
+//    editor.eImagePlane = imagePlane.FRONT;
+//    editor.eType = editorType.IMAGE;
+//  }
+//  public void updateActive() {
+//    if (editor.eImagePlane == imagePlane.FRONT) {
+//      active = true;
+//    } else {
+//      active = false;
+//    }
+//  }
+//}
+//class LevelWidget extends Widget {
+//  public LevelWidget(Editor editor, Toolbar parent) {
+//    super(editor, parent);
+//    icon = loadImage(folder+"WorkMid.png");
+//  }
+//  public void clicked() {
+//    editor.eImagePlane = imagePlane.LEVEL;
+//    editor.eType = editorType.IMAGE;
+//  }
+//  public void updateActive() {
+//    if (editor.eImagePlane == imagePlane.LEVEL) {
+//      active = true;
+//    } else {
+//      active = false;
+//    }
+//  }
+//}
+//class BackgroundWidget extends Widget {
+//  public BackgroundWidget(Editor editor, Toolbar parent) {
+//    super(editor, parent);
+//    icon = loadImage(folder+"WorkBack.png");
+//  }
+//  public void clicked() {
+//    editor.eImagePlane = imagePlane.BACK;
+//    editor.eType = editorType.IMAGE;
+//  }
+//  public void updateActive() {
+//    if (editor.eImagePlane == imagePlane.BACK) {
+//      active = true;
+//    } else {
+//      active = false;
+//    }
+//  }
+//}
 
 //------------------Menu---------------------
 class MenuWidget extends Widget {

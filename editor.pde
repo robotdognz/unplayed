@@ -28,14 +28,14 @@ class Editor {
 
   //editor settings
   boolean snap = true; //things placed in the level will snap to grid
-  editorType eType = editorType.BLOCK;
+  editorType eType = editorType.TILE;
   editorMode eMode = editorMode.ADD;
   imagePlane eImagePlane = imagePlane.LEVEL;
   boolean pageView = false;
 
   //current object to put into level
-  PieceHandler currentPiece = null;
   TileHandler currentTile = null;
+  ImageHandler currentPiece = null;
   EventHandler currentEvent = null;
 
   //toolbars
@@ -195,7 +195,15 @@ class Editor {
     }
   }
 
-  public void placeObject() { //also erase
+  public void editWorld() { //currently does placing and erasing
+    if (eMode == editorMode.ADD) {
+      addObject();
+    } else if (eMode == editorMode.ERASE){
+      eraseObject();
+    } else if (eMode == editorMode.SELECT){
+      selectObject();
+    }
+  
     if (eGame.point != null && !pageView) {
 
       int platformX = (int) eGame.point.x;
@@ -206,10 +214,10 @@ class Editor {
 
       //create the new piece to put in
       Rectangle toInsert = null;
-      if (eType == editorType.BLOCK && currentTile != null) {
+      if (eType == editorType.TILE && currentTile != null) {
         toInsert = new Tile(currentTile.getFile(), platformX, platformY);
       } else if (eType == editorType.IMAGE && currentPiece != null) {
-        toInsert = new Piece(currentPiece.getFile(), platformX, platformY, currentPiece.getWidth(), currentPiece.getHeight());
+        toInsert = new Image(currentPiece.getFile(), platformX, platformY, currentPiece.getWidth(), currentPiece.getHeight());
       } else if (eType == editorType.EVENT && currentEvent != null) {
         toInsert = currentEvent.makeEvent(platformX, platformY);
       } else {
@@ -242,6 +250,18 @@ class Editor {
         eGame.point = null;
       }
     }
+  }
+  
+  private void addObject(){
+    
+  }
+  
+  private void eraseObject(){
+    
+  }
+  
+  private void selectObject(){
+    
   }
 
   public Controller getController() {
@@ -374,7 +394,7 @@ class EditorBottom extends Toolbar {
   private int size; //size to drawn object in the scroll bar
   private ArrayList<TileHandler> tiles; //tiles
   private float tileOffset;
-  private ArrayList<PieceHandler> pieces; //pieces
+  private ArrayList<ImageHandler> pieces; //pieces
   private float pieceOffset;
   private ArrayList<EventHandler> events; //events
   private float eventOffset;
@@ -406,7 +426,7 @@ class EditorBottom extends Toolbar {
     //scroll bars
     size = 150;
     tiles = texture.getTileList();
-    pieces = texture.getPieceList();
+    pieces = texture.getImageList();
     events = texture.getEventList();
   }
 
@@ -444,7 +464,7 @@ class EditorBottom extends Toolbar {
     ArrayList<Handler> objects = new ArrayList<Handler>(); //current objects to draw in the scroll bar
     Float offset = 0.0;
     Handler currentHandler = null;
-    if (editor.eType == editorType.BLOCK) {
+    if (editor.eType == editorType.TILE) {
       objects.addAll(tiles);
       offset = tileOffset;
       currentHandler = editor.currentTile;
@@ -487,7 +507,7 @@ class EditorBottom extends Toolbar {
       //figure out what type is being clicked on
       ArrayList<Handler> objects = new ArrayList<Handler>(); //current objects to draw in the scroll bar
       Float offset = 0.0;
-      if (editor.eType == editorType.BLOCK) {
+      if (editor.eType == editorType.TILE) {
         objects.addAll(tiles);
         offset = tileOffset;
       } else if (editor.eType == editorType.IMAGE) {
@@ -503,10 +523,10 @@ class EditorBottom extends Toolbar {
         float leftEdge = pieceArea.getX() + (i)*pieceArea.getHeight() - offset;
         float rightEdge = pieceArea.getX() + (i+1)*pieceArea.getHeight() - offset;
         if (x > leftEdge && x < rightEdge) {
-          if (editor.eType == editorType.BLOCK) {
+          if (editor.eType == editorType.TILE) {
             editor.currentTile = (TileHandler) objects.get(i);
           } else if (editor.eType == editorType.IMAGE) {
-            editor.currentPiece = (PieceHandler) objects.get(i);
+            editor.currentPiece = (ImageHandler) objects.get(i);
           } else if (editor.eType == editorType.EVENT) {
             editor.currentEvent = (EventHandler) objects.get(i);
           }
@@ -517,7 +537,7 @@ class EditorBottom extends Toolbar {
 
   public void touchMoved() {
     if (touches.length == 1 && mouseY >= pieceArea.getY()) {
-      if (editor.eType == editorType.BLOCK) {
+      if (editor.eType == editorType.TILE) {
         tileOffset += (pmouseX - mouseX)/3;
       } else if (editor.eType == editorType.IMAGE) {
         pieceOffset += (pmouseX - mouseX)/3;
@@ -541,7 +561,7 @@ class EditorBottom extends Toolbar {
 
 //------------------EditorSettingsEnums---------------------
 enum editorType {
-  BLOCK, 
+  TILE, 
     IMAGE, 
     EVENT
 }

@@ -135,17 +135,17 @@ class Game {
 
     //draw player and environment
     background(240);
-    for (Rectangle p : screenObjects) { //draw pieces
-      if (p instanceof Piece) {
-        ((Piece) p).draw(mainGraphics, currentScale);
+    for (Rectangle r : screenObjects) { //draw pieces
+      if (r instanceof Image) {
+        ((Image) r).draw(mainGraphics, currentScale);
       }
     }
-    for (Rectangle p : screenObjects) { //draw tiles and events on top of pieces
-      if (p instanceof Tile) {
-        ((Tile) p).draw(mainGraphics, currentScale);
+    for (Rectangle r : screenObjects) { //draw tiles and events on top of pieces
+      if (r instanceof Tile) {
+        ((Tile) r).draw(mainGraphics, currentScale);
       }
-      if (p instanceof Event && eventVis) {
-        ((Event) p).draw(mainGraphics, currentScale);
+      if (r instanceof Event && eventVis) {
+        ((Event) r).draw(mainGraphics, currentScale);
       }
     }
     player.draw(mainGraphics);

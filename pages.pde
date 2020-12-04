@@ -55,7 +55,7 @@ class Page {
         }
       }
       if (!excluded) { //if the rectangle is not on the excluded list
-        if (r instanceof Piece) {
+        if (r instanceof Image) {
           drawFirst.add(r);
         } else {
           drawSecond.add(r);
@@ -72,8 +72,8 @@ class Page {
     pageGraphics.background(240);
 
     for (Rectangle r : drawFirst) { //draw pieces
-      if (r instanceof Piece) {
-        ((Piece) r).draw(pageGraphics, scale/size);
+      if (r instanceof Image) {
+        ((Image) r).draw(pageGraphics, scale/size);
       }
     }
     for (Rectangle r : drawSecond) { //draw tiles and events

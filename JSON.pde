@@ -23,9 +23,9 @@ class EditorJSON {
         if (r instanceof Tile) {  //tiles
           object.setString("type", "tile");
           object.setString("file", (((Tile) r).getFile()).toString() );
-        } else if (r instanceof Piece) {    //pieces
+        } else if (r instanceof Image) {    //pieces
           object.setString("type", "piece");
-          object.setString("file", (((Piece) r).getFile()).toString() );
+          object.setString("file", (((Image) r).getFile()).toString() );
         } else if (r instanceof Event) {    //events
           object.setString("name", ((Event) r).getName());
           if (r instanceof PlayerDeath) {
@@ -76,7 +76,7 @@ class EditorJSON {
           objects.add(t);
         } else if (type.equals("piece")) {  //if it is a piece
           File textureFile = new File(object.getString("file"));
-          Piece p = new Piece(textureFile, pX, pY, pWidth, pHeight);
+          Image p = new Image(textureFile, pX, pY, pWidth, pHeight);
           objects.add(p);
         } else if (type.equals("PlayerDeath")) {
           String name = object.getString("name");

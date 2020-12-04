@@ -230,28 +230,11 @@ public class QuadNode {
         }
       } else { //if this node doesn't have children
         ArrayList<Rectangle> matches = new ArrayList<Rectangle>();
-        for (Rectangle r : objects) { //find all matching rectangles
-          //if (current.equals(r)) { // || r.getX() == current.getX() && r.getY() == current.getY()) { //TODO: this needs to be cleaned up, probably doesn't need to make a list and go throught it
-          //  matches.add(r); kbkjg
-          //}
-
-          //trying new removal algorithm
-          if (r.getClass().equals(current.getClass())) {
-            if (r.getTopLeft().x > current.getBottomRight().x-1) {
-              continue;
-            }
-            if (r.getBottomRight().x < current.getTopLeft().x+1) {
-              continue;
-            }
-            if (r.getTopLeft().y > current.getBottomRight().y-1) {
-              continue;
-            }
-            if (r.getBottomRight().y < current.getTopLeft().y+1) {
-              continue;
-            }
+        for (Rectangle r : objects) { //find all matching rectangles, should switch to for loop instead of two for each loops
+          if (current.equals(r)) {
             matches.add(r);
           }
-          
+
         }
         for (Rectangle r : matches) { //remove them
           objects.remove(r);

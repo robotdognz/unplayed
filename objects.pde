@@ -1,12 +1,12 @@
 //------------------LevelPiece---------------------
-class Piece extends Rectangle {
+class Image extends Rectangle {
   private boolean hasTexture;
   private PieceHandler pieceTexture;
   //rotation
   //vetrtical flip
   //horazontal flip
 
-  Piece(File file, int x, int y, int pieceW, int pieceH) {
+  Image(File file, int x, int y, int pieceW, int pieceH) {
     super(x, y, pieceW, pieceH);
 
     if (file != null && texture.getPieceMap().containsKey(file)) {
