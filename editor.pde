@@ -35,7 +35,7 @@ class Editor {
 
   //current object to put into level
   TileHandler currentTile = null;
-  ImageHandler currentPiece = null;
+  ImageHandler currentImage = null;
   EventHandler currentEvent = null;
 
   //toolbars
@@ -212,12 +212,12 @@ class Editor {
       boolean spaceFree = true;
       Rectangle foundAtPoint = null;
 
-      //create the new piece to put in
+      //create the new object to put in
       Rectangle toInsert = null;
       if (eType == editorType.TILE && currentTile != null) {
         toInsert = new Tile(currentTile.getFile(), platformX, platformY);
-      } else if (eType == editorType.IMAGE && currentPiece != null) {
-        toInsert = new Image(currentPiece.getFile(), platformX, platformY, currentPiece.getWidth(), currentPiece.getHeight());
+      } else if (eType == editorType.IMAGE && currentImage != null) {
+        toInsert = new Image(currentImage.getFile(), platformX, platformY, currentImage.getWidth(), currentImage.getHeight());
       } else if (eType == editorType.EVENT && currentEvent != null) {
         toInsert = currentEvent.makeEvent(platformX, platformY);
       } else {
@@ -383,7 +383,7 @@ class EditorTop extends Toolbar {
 }
 
 class EditorBottom extends Toolbar {
-  private Rectangle pieceArea;  //TODO: rename
+  private Rectangle objectArea;  //TODO: rename
   private String folder = dataPath("ui") + '/';
   private PImage toolbar;
   private PImage tab;
@@ -394,8 +394,8 @@ class EditorBottom extends Toolbar {
   private int size; //size to drawn object in the scroll bar
   private ArrayList<TileHandler> tiles; //tiles
   private float tileOffset;
-  private ArrayList<ImageHandler> pieces; //pieces
-  private float pieceOffset;
+  private ArrayList<ImageHandler> images; //images
+  private float imageOffset;
   private ArrayList<EventHandler> events; //events
   private float eventOffset;
 
@@ -415,18 +415,18 @@ class EditorBottom extends Toolbar {
     eWidgetSpacing = 140;    //TODO: get the spacing right
 
     //setup toolbar
-    int pieceAreaHeight = 230; //200
-    pieceArea = new Rectangle(0, height-pieceAreaHeight, width, pieceAreaHeight);
+    int objectAreaHeight = 230; //200
+    objectArea = new Rectangle(0, height-objectAreaHeight, width, objectAreaHeight);
     toolbar = requestImage(folder+"icn_toolbar_bg.png");
     tab = requestImage(folder+"icn_tab.png");
     tabSize = 220;
 
-    widgetHeight = pieceArea.getY()-53; //TODO: get the height right
+    widgetHeight = objectArea.getY()-53; //TODO: get the height right
 
     //scroll bars
     size = 150;
     tiles = texture.getTileList();
-    pieces = texture.getImageList();
+    images = texture.getImageList();
     events = texture.getEventList();
   }
 
@@ -440,7 +440,7 @@ class EditorBottom extends Toolbar {
     }
 
     imageMode(CORNER);
-    image(toolbar, pieceArea.getX(), pieceArea.getY(), pieceArea.getWidth(), pieceArea.getHeight());
+    image(toolbar, objectArea.getX(), objectArea.getY(), objectArea.getWidth(), objectArea.getHeight());
 
     //widgets
 
@@ -469,9 +469,9 @@ class EditorBottom extends Toolbar {
       offset = tileOffset;
       currentHandler = editor.currentTile;
     } else if (editor.eType == editorType.IMAGE) {
-      objects.addAll(pieces);
-      offset = pieceOffset;
-      currentHandler = editor.currentPiece;
+      objects.addAll(images);
+      offset = imageOffset;
+      currentHandler = editor.currentImage;
     } else if (editor.eType == editorType.EVENT) {
       objects.addAll(events);
       offset = eventOffset;
@@ -485,13 +485,13 @@ class EditorBottom extends Toolbar {
     translate(-offset, 0);
     for (int i = 0; i < objects.size(); i++) {
       Handler object = objects.get(i);
-      if (object.equals(currentHandler)) { //if this is the selected piece
+      if (object.equals(currentHandler)) { //if this is the selected object
         //draw highlight behind
         noStroke();
         fill(0, 0, 0, 120);
-        rect(pieceArea.getX()+pieceArea.getHeight()/2 + i*pieceArea.getHeight(), pieceArea.getY()+pieceArea.getHeight()/2, pieceArea.getHeight(), pieceArea.getHeight());
+        rect(objectArea.getX()+objectArea.getHeight()/2 + i*objectArea.getHeight(), objectArea.getY()+objectArea.getHeight()/2, objectArea.getHeight(), objectArea.getHeight());
       }
-      object.draw(pieceArea.getX()+pieceArea.getHeight()/2 + i*pieceArea.getHeight(), pieceArea.getY()+pieceArea.getHeight()/2, size);
+      object.draw(objectArea.getX()+objectArea.getHeight()/2 + i*objectArea.getHeight(), objectArea.getY()+objectArea.getHeight()/2, size);
     }
     imageMode(CORNER);
     rectMode(CORNER);
@@ -499,8 +499,8 @@ class EditorBottom extends Toolbar {
   }
 
   public void onTap(float x, float y) {
-    //select piece 
-    if (y >= pieceArea.getY()) {
+    //select object
+    if (y >= objectArea.getY()) {
       editor.eController = new EditorControl(editor);
       editor.eMode = editorMode.ADD;
 
@@ -511,22 +511,22 @@ class EditorBottom extends Toolbar {
         objects.addAll(tiles);
         offset = tileOffset;
       } else if (editor.eType == editorType.IMAGE) {
-        objects.addAll(pieces);
-        offset = pieceOffset;
+        objects.addAll(images);
+        offset = imageOffset;
       } else if (editor.eType == editorType.EVENT) {
         objects.addAll(events);
         offset = eventOffset;
       }
 
-      //click on that piece
+      //click on that object
       for (int i = 0; i < objects.size(); i++) {
-        float leftEdge = pieceArea.getX() + (i)*pieceArea.getHeight() - offset;
-        float rightEdge = pieceArea.getX() + (i+1)*pieceArea.getHeight() - offset;
+        float leftEdge = objectArea.getX() + (i)*objectArea.getHeight() - offset;
+        float rightEdge = objectArea.getX() + (i+1)*objectArea.getHeight() - offset;
         if (x > leftEdge && x < rightEdge) {
           if (editor.eType == editorType.TILE) {
             editor.currentTile = (TileHandler) objects.get(i);
           } else if (editor.eType == editorType.IMAGE) {
-            editor.currentPiece = (ImageHandler) objects.get(i);
+            editor.currentImage = (ImageHandler) objects.get(i);
           } else if (editor.eType == editorType.EVENT) {
             editor.currentEvent = (EventHandler) objects.get(i);
           }
@@ -536,11 +536,11 @@ class EditorBottom extends Toolbar {
   }
 
   public void touchMoved() {
-    if (touches.length == 1 && mouseY >= pieceArea.getY()) {
+    if (touches.length == 1 && mouseY >= objectArea.getY()) {
       if (editor.eType == editorType.TILE) {
         tileOffset += (pmouseX - mouseX)/3;
       } else if (editor.eType == editorType.IMAGE) {
-        pieceOffset += (pmouseX - mouseX)/3;
+        imageOffset += (pmouseX - mouseX)/3;
       } else if (editor.eType == editorType.EVENT) {
         eventOffset += (pmouseX - mouseX)/3;
       }
@@ -555,7 +555,7 @@ class EditorBottom extends Toolbar {
   }
 
   public float getHeight() {
-    return pieceArea.getHeight();
+    return objectArea.getHeight();
   }
 }
 

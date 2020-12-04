@@ -1,18 +1,18 @@
-//------------------LevelPiece---------------------
+//------------------Image---------------------
 class Image extends Rectangle {
   private boolean hasTexture;
-  private PieceHandler pieceTexture;
+  private ImageHandler imageTexture;
   //rotation
   //vetrtical flip
   //horazontal flip
 
-  Image(File file, int x, int y, int pieceW, int pieceH) {
-    super(x, y, pieceW, pieceH);
+  Image(File file, int x, int y, int imageW, int imageH) {
+    super(x, y, imageW, imageH);
 
-    if (file != null && texture.getPieceMap().containsKey(file)) {
-      this.pieceTexture = texture.getPieceMap().get(file);
-      setWidth(pieceTexture.getWidth());
-      setHeight(pieceTexture.getHeight());
+    if (file != null && texture.getImageMap().containsKey(file)) {
+      this.imageTexture = texture.getImageMap().get(file);
+      setWidth(imageTexture.getWidth());
+      setHeight(imageTexture.getHeight());
       hasTexture = true;
     } else {
       hasTexture = false;
@@ -21,18 +21,18 @@ class Image extends Rectangle {
 
   public void draw(PGraphics graphics, float scale) {
     if (hasTexture) {
-      graphics.image(pieceTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
+      graphics.image(imageTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
     } else {
       //display missing texture texture
     }
   }
   
   public String getName(){
-    return "Piece";
+    return "Image";
   }
 
   public File getFile() {
-    return pieceTexture.getFile();
+    return imageTexture.getFile();
   }
 }
 

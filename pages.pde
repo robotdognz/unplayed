@@ -71,7 +71,7 @@ class Page {
     //draw environment and player
     pageGraphics.background(240);
 
-    for (Rectangle r : drawFirst) { //draw pieces
+    for (Rectangle r : drawFirst) { //draw images
       if (r instanceof Image) {
         ((Image) r).draw(pageGraphics, scale/size);
       }

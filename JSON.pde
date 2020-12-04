@@ -23,8 +23,8 @@ class EditorJSON {
         if (r instanceof Tile) {  //tiles
           object.setString("type", "tile");
           object.setString("file", (((Tile) r).getFile()).toString() );
-        } else if (r instanceof Image) {    //pieces
-          object.setString("type", "piece");
+        } else if (r instanceof Image) {    //images
+          object.setString("type", "image");
           object.setString("file", (((Image) r).getFile()).toString() );
         } else if (r instanceof Event) {    //events
           object.setString("name", ((Event) r).getName());
@@ -74,7 +74,7 @@ class EditorJSON {
           File textureFile = new File(object.getString("file"));
           Tile t = new Tile(textureFile, pX, pY);
           objects.add(t);
-        } else if (type.equals("piece")) {  //if it is a piece
+        } else if (type.equals("image")) {  //if it is an image
           File textureFile = new File(object.getString("file"));
           Image p = new Image(textureFile, pX, pY, pWidth, pHeight);
           objects.add(p);
