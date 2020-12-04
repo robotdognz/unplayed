@@ -237,16 +237,16 @@ public class QuadNode {
 
           //trying new removal algorithm
           if (r.getClass().equals(current.getClass())) {
-            if (r.getTopLeft().x > current.getBottomRight().x) {
+            if (r.getTopLeft().x > current.getBottomRight().x-1) {
               continue;
             }
-            if (r.getBottomRight().x < current.getTopLeft().x) {
+            if (r.getBottomRight().x < current.getTopLeft().x+1) {
               continue;
             }
-            if (r.getTopLeft().y > current.getBottomRight().y) {
+            if (r.getTopLeft().y > current.getBottomRight().y-1) {
               continue;
             }
-            if (r.getBottomRight().y < current.getTopLeft().y) {
+            if (r.getBottomRight().y < current.getTopLeft().y+1) {
               continue;
             }
             matches.add(r);
