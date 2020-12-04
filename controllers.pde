@@ -74,7 +74,7 @@ class CameraControl implements Controller {
       float moveX = (pmouseX - mouseX)/3;
       float moveY = (pmouseY - mouseY)/3;
       PVector diff = new PVector(convert.screenToLevel(moveX), convert.screenToLevel(moveY));
-      gCamera.setCenter(gCamera.getCenter().add(diff));
+      editor.eCamera.setCenter(editor.eCamera.getCenter().add(diff));
     }
   }
 
@@ -88,7 +88,7 @@ class CameraControl implements Controller {
     }
 
     if (touches.length == 2) {
-      float newScale = gCamera.getScale()-convert.screenToLevel(d);
+      float newScale = editor.eCamera.getScale()-convert.screenToLevel(d);
       float newTotalScale = convert.getTotalFromScale(newScale);
       if (newTotalScale < editor.minZoom) {
         newScale = convert.getScaleFromTotal(editor.minZoom);//editor.minZoom;
@@ -96,7 +96,7 @@ class CameraControl implements Controller {
       if (newTotalScale > editor.maxZoom) { 
         newScale = convert.getScaleFromTotal(editor.maxZoom);//editor.maxZoom;
       }
-      gCamera.setScale(newScale);
+      editor.eCamera.setScale(newScale);
     }
   }
 }

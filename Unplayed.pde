@@ -26,10 +26,9 @@ public Context context;
 
 private int splash; //true if the game hasn't started looping and a splash screen should be drawn
 private PImage splashScreen;
-Game game; //holds the game class
-Camera gCamera; //holds the game camera
-Controller gController; //holds the current controller
-Editor edit; //holds the editor
+public Game game; //holds the game class
+public Controller gController; //holds the current controller
+public Editor edit; //holds the editor
 
 boolean gPaused; //is the game class paused
 private ArrayList<Widget> gWidgets;
@@ -79,13 +78,13 @@ void init() {
   texture = new TextureCache();
   gesture = new KetaiGesture(this);
   vibe = new Vibe();
-  convert = new Converter();
 
   //setup game
-  gCamera = new FreeCamera(); //new GameCamera();
-  game = new Game(gCamera, vibe); 
+  Camera camera = new FreeCamera(); //new GameCamera();
+  convert = new Converter(camera); //camera converter
+  game = new Game(camera, vibe); 
   gController = new PlayerControl();
-  edit = new Editor(game);
+  edit = new Editor(game, camera);
 
   ////setup non editor widget(s)
   Widget menuW = new MenuWidget(edit, null);
@@ -265,42 +264,47 @@ void showToast(final String message) {
 
 //------------------LevelToScreenConverter---------------------
 class Converter {
+  private Camera cCamera;
   private float currentScale;
   private float currentSubScale;
   private PVector currentCenter;
 
   private PVector lastCalc;
 
-  public Converter() {
-    lastCalc = new PVector(0, 0);
+  public Converter(Camera camera) {
+    this.cCamera = camera;
+    this.lastCalc = new PVector(0, 0);
   }
 
   public PVector screenToLevel(float screenX, float screenY) {
-    currentScale = gCamera.getScale();
-    currentSubScale = gCamera.getSubScale();
-    currentCenter = gCamera.getCenter();
+    currentScale = cCamera.getScale();
+    currentSubScale = cCamera.getSubScale();
+    currentCenter = cCamera.getCenter();
     lastCalc.x = ((screenX-width/2)/((float)width/currentScale)/currentSubScale) + currentCenter.x;
     lastCalc.y = ((screenY-height/2)/((float)width/currentScale)/currentSubScale) + currentCenter.y;
     return lastCalc;
   }
 
   public float screenToLevel(float distance) {
-    currentScale = gCamera.getScale();
-    currentSubScale = gCamera.getSubScale();
+    currentScale = cCamera.getScale();
+    currentSubScale = cCamera.getSubScale();
     float result = distance/((float)width/currentScale)/currentSubScale;
     return result;
   }
 
   public float getScale() {
-    //return (((float)width/currentScale)/currentSubScale);
+    currentScale = cCamera.getScale();
+    currentSubScale = cCamera.getSubScale();
     return currentScale/currentSubScale/100; //how many square is the width of the screen
   }
 
   public float getTotalFromScale(float scale) { //calculate total scale from potential scale
+    currentSubScale = cCamera.getSubScale();
     return scale/currentSubScale/100;
   }
 
   public float getScaleFromTotal(float totalScale) {
+    currentSubScale = cCamera.getSubScale();
     return totalScale*currentSubScale*100;
   }
   //public PVector levelToScreen(float levelX, levelY){

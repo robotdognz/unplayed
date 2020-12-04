@@ -301,7 +301,7 @@ class PlayerControlWidget extends Widget {
     if (!active) {
       editor.eController = new PlayerControl();
     }else{
-      game.restart();
+      editor.eGame.restart();
     }
   }
 
@@ -322,7 +322,7 @@ class CameraControlWidget extends Widget {
   public void clicked() {
     if (!active) {
       editor.eController = new CameraControl(editor);
-      gCamera = new FreeCamera();
+      editor.eCamera = new FreeCamera();
     }
   }
 
@@ -529,7 +529,7 @@ class ConfirmWidget extends Widget {
   }
 
   public void updateActive() {
-    if (editor.eController instanceof EditorControl && !editor.snap && game.point != null) {
+    if (editor.eController instanceof EditorControl && !editor.snap && editor.eGame.point != null) {
       available = true;
     } else {
       available = false;
@@ -547,15 +547,15 @@ class PlayModeWidget extends Widget {
 
   public void clicked() {
     if (active) {
-      gCamera = new FreeCamera();
+      editor.eCamera = new FreeCamera();
     } else {
-      gCamera = new GameCamera();
+      editor.eCamera = new GameCamera();
       editor.eController = new PlayerControl();
     }
   }
 
   public void updateActive() {
-    if (gCamera instanceof FreeCamera) {
+    if (editor.eCamera instanceof FreeCamera) {
       active = false;
     } else {
       active = true;

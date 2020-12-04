@@ -67,9 +67,9 @@ class PauseMenu extends Menu{
         gPaused = m.previousStatus;
         menu = null; //remove pause menu
         if(!editorToggle){
-          gCamera = new GameCamera();
+          game.camera = new GameCamera();
         }else{
-          gCamera = new FreeCamera();
+          game.camera = new FreeCamera();
         }
       }else if(b.click().equals(restart)){
         init(); //rebuild the game

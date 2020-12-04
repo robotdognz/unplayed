@@ -8,6 +8,7 @@ class Editor {
   Game eGame; //reference to game, same instance of game used everywhere else
   PageView ePageView;
   Quadtree eWorld;
+  Camera eCamera;
 
   //camera variables
   float minZoom = 3;
@@ -50,22 +51,23 @@ class Editor {
   int frameDelay = 100;
   float frame;
 
-  public Editor(Game game) {
+  public Editor(Game game, Camera camera) {
     this.eGame = game;
-    this.ePageView = game.getPageView();
-    this.eWorld = game.getWorld();
+    this.ePageView = eGame.getPageView();
+    this.eWorld = eGame.getWorld();
+    this.eCamera = camera;
     this.eController = new CameraControl(this);
     this.editorTop = new EditorTop(this);
     this.editorBottom = new EditorBottom(this);
     this.eJSON = new EditorJSON();
     
     //initalise camera backup fields
-    lvScale = game.camera.getScale();
-    lvSubScale = game.camera.getSubScale();
-    lvCenter = new PVector(game.camera.getCenter().x, game.camera.getCenter().y);
-    pvScale = game.camera.getScale();
-    pvSubScale = game.camera.getSubScale();
-    pvCenter = new PVector(game.camera.getCenter().x, game.camera.getCenter().y);
+    lvScale = eCamera.getScale();
+    lvSubScale = eCamera.getSubScale();
+    lvCenter = new PVector(eCamera.getCenter().x, eCamera.getCenter().y);
+    pvScale = eCamera.getScale();
+    pvSubScale = eCamera.getSubScale();
+    pvCenter = new PVector(eCamera.getCenter().x, eCamera.getCenter().y);
   }
 
   public void step() {
@@ -79,19 +81,19 @@ class Editor {
 
     frameCounter();
     if (quadtree) { //update quadtree display in game class
-      game.quadVis = true;
+      eGame.quadVis = true;
     } else {
-      game.quadVis = false;
+      eGame.quadVis = false;
     }
     if (pageView) { //update pageview display in game class
-      game.displayPages = true;
-      game.point = null;
+      eGame.displayPages = true;
+      eGame.point = null;
     } else {
-      game.displayPages = false;
+      eGame.displayPages = false;
     }
 
     if (!(eController instanceof EditorControl)) {
-      game.point = null;
+      eGame.point = null;
     }
 
     //figure out what is being placed
@@ -109,7 +111,7 @@ class Editor {
       textSize(50);
       textAlign(CENTER, CENTER);
       text(nf(convert.getScale(), 1, 2), width/2, height-editorBottom.getHeight()-150);
-      text(game.playerObjects.size() + " : " + game.screenObjects.size(), width/2, height-editorBottom.getHeight()-100);
+      text(eGame.playerObjects.size() + " : " + eGame.screenObjects.size(), width/2, height-editorBottom.getHeight()-100);
       text("FPS: " + nf(this.frame, 1, 2), width/2, height-editorBottom.getHeight()-50);
     }
   }
@@ -171,33 +173,33 @@ class Editor {
     if (pageView) {
       pageView = false;
       //save page view camera
-      pvScale = game.camera.getScale();
-      pvSubScale = game.camera.getSubScale();
-      pvCenter.x = game.camera.getCenter().x;
-      pvCenter.y = game.camera.getCenter().y;
+      pvScale = eCamera.getScale();
+      pvSubScale = eCamera.getSubScale();
+      pvCenter.x = eCamera.getCenter().x;
+      pvCenter.y = eCamera.getCenter().y;
       //set camera to level view
-      game.camera.setScale(lvScale);
-      game.camera.setSubScale(lvSubScale);
-      game.camera.setCenter(lvCenter);
+      eCamera.setScale(lvScale);
+      eCamera.setSubScale(lvSubScale);
+      eCamera.setCenter(lvCenter);
     } else {
       pageView = true;
       //save level view camera
-      lvScale = game.camera.getScale();
-      lvSubScale = game.camera.getSubScale();
-      lvCenter.x = game.camera.getCenter().x;
-      lvCenter.y = game.camera.getCenter().y;
+      lvScale = eCamera.getScale();
+      lvSubScale = eCamera.getSubScale();
+      lvCenter.x = eCamera.getCenter().x;
+      lvCenter.y = eCamera.getCenter().y;
       //set camera to page view
-      game.camera.setScale(pvScale);
-      game.camera.setSubScale(pvSubScale);
-      game.camera.setCenter(pvCenter);
+      eCamera.setScale(pvScale);
+      eCamera.setSubScale(pvSubScale);
+      eCamera.setCenter(pvCenter);
     }
   }
 
   public void placeObject() {
-    if (game.point != null && !pageView) {
+    if (eGame.point != null && !pageView) {
 
-      int platformX = (int) game.point.x;
-      int platformY = (int) game.point.y;
+      int platformX = (int) eGame.point.x;
+      int platformY = (int) eGame.point.y;
 
       boolean spaceFree = true;
       Rectangle foundAtPoint = null;
@@ -211,13 +213,13 @@ class Editor {
       } else if (eType == editorType.EVENT && currentEvent != null) {
         toInsert = currentEvent.makeEvent(platformX, platformY);
       } else {
-        game.point = null; //if there is nothing to put in, remove the point
+        eGame.point = null; //if there is nothing to put in, remove the point
       }
 
       //insert it or remove
-      if (toInsert != null && game.point != null) {
+      if (toInsert != null && eGame.point != null) {
         HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
-        game.world.retrieve(getRectangles, toInsert);
+        eWorld.retrieve(getRectangles, toInsert);
         for (Rectangle p : getRectangles) {
 
           if (p.getTopLeft().x == platformX && 
@@ -230,14 +232,14 @@ class Editor {
 
         if (spaceFree) { //if there isn't something already there
           if (eMode == editorMode.ADD) {
-            game.world.insert(toInsert);
+            eWorld.insert(toInsert);
           }
         } else {
           if (eMode == editorMode.ERASE && foundAtPoint != null) {
-            game.world.remove(foundAtPoint);
+            eWorld.remove(foundAtPoint);
           }
         }
-        game.point = null;
+        eGame.point = null;
       }
     }
   }

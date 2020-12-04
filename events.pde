@@ -22,7 +22,6 @@ abstract class Event extends Rectangle {
   }
 
   public void activate(Game g) {
-    //showToast(getX() + " " + getY() + " " + getWidth() + " " + getHeight());
   }
 
   public void draw(PGraphics graphics, float scale) {
