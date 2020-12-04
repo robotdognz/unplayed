@@ -9,6 +9,7 @@ class Editor {
   PageView ePageView;
   Quadtree eWorld;
   Camera eCamera;
+  Tools eTools;
 
   //camera variables
   float minZoom = 3;
@@ -56,6 +57,7 @@ class Editor {
     this.ePageView = eGame.getPageView();
     this.eWorld = eGame.getWorld();
     this.eCamera = camera;
+    this.eTools = new Tools(this, eGame);
     this.eController = new CameraControl(this);
     this.editorTop = new EditorTop(this);
     this.editorBottom = new EditorBottom(this);
@@ -259,16 +261,16 @@ class Editor {
   private void addObject() {
     switch(eType) {
     case TILE:
-
+      eTools.addTile();
       break;
     case IMAGE:
-
+      eTools.addImage();
       break;
     case EVENT:
-
+      eTools.addEvent();
       break;
     case PAGE:
-
+      eTools.addPage();
       break;
     }
   }
@@ -276,16 +278,16 @@ class Editor {
   private void eraseObject() {
     switch(eType) {
     case TILE:
-
+      eTools.eraseTile();
       break;
     case IMAGE:
-
+      eTools.eraseImage();
       break;
     case EVENT:
-
+      eTools.eraseEvent();
       break;
     case PAGE:
-
+      eTools.erasePage();
       break;
     }
   }
@@ -293,23 +295,20 @@ class Editor {
   private void selectObject() {
     switch(eType) {
     case TILE:
-
+      eTools.selectTile();
       break;
     case IMAGE:
-
+      eTools.selectImage();
       break;
     case EVENT:
-
+      eTools.selectEvent();
       break;
     case PAGE:
-
+      eTools.selectPage();
       break;
     }
   }
 
-  public Controller getController() {
-    return eController;
-  }
 }
 
 //------------------Toolbar---------------------

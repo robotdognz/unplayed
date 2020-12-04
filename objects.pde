@@ -1,3 +1,39 @@
+//------------------Tile---------------------
+class Tile extends Rectangle {
+  private boolean hasTexture;
+  private TileHandler tileTexture;
+  //rotation
+  //vetrtical flip
+  //horazontal flip
+
+  public Tile(File file, int x, int y) {
+    super(x, y, 100, 100);
+
+    if (file != null && texture.getTileMap().containsKey(file)) {
+      this.tileTexture = texture.getTileMap().get(file);
+      hasTexture = true;
+    } else {
+      hasTexture = false;
+    }
+  }
+
+  public void draw(PGraphics graphics, float scale) {
+    if (hasTexture) {
+      graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
+    } else {
+      //display missing texture texture
+    }
+  }
+  
+  public String getName(){
+    return "Tile";
+  }
+
+  public File getFile() {
+    return tileTexture.getFile();
+  }
+}
+
 //------------------Image---------------------
 class Image extends Rectangle {
   private boolean hasTexture;
@@ -36,38 +72,9 @@ class Image extends Rectangle {
   }
 }
 
-//------------------Tile---------------------
-class Tile extends Rectangle {
-  private boolean hasTexture;
-  private TileHandler tileTexture;
-  //rotation
-  //vetrtical flip
-  //horazontal flip
-
-  public Tile(File file, int x, int y) {
-    super(x, y, 100, 100);
-
-    if (file != null && texture.getTileMap().containsKey(file)) {
-      this.tileTexture = texture.getTileMap().get(file);
-      hasTexture = true;
-    } else {
-      hasTexture = false;
-    }
-  }
-
-  public void draw(PGraphics graphics, float scale) {
-    if (hasTexture) {
-      graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
-    } else {
-      //display missing texture texture
-    }
-  }
-  
-  public String getName(){
-    return "Tile";
-  }
-
-  public File getFile() {
-    return tileTexture.getFile();
+//------------------PageArea---------------------
+class PageArea extends Rectangle {
+  public PageArea(int x, int y, int areaW, int areaH){
+    super(x, y, areaW, areaH);
   }
 }

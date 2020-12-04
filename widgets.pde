@@ -277,7 +277,6 @@ class PageViewWidget extends Widget {
     icon = loadImage(folder+"pageView.png");
   }
   public void clicked() {
-    //editor.pageView = !editor.pageView;
     editor.switchView();
   }
 
