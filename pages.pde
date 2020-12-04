@@ -1,18 +1,18 @@
 class Page {
-  Game game;
-  Rectangle view; //the page's view into the world
-  HashSet<Rectangle> pageObjects;
-  HashSet<String> excludedObjects; //a list of rectangle strings to exclude while drawing
+  private Game game;
+  private Rectangle view; //the page's view into the world
+  private HashSet<Rectangle> pageObjects;
+  private HashSet<String> excludedObjects; //a list of rectangle strings to exclude while drawing
 
-  PGraphics pageGraphics;
-  PVector position; //center of the page in page view
-  float size; //size of the page in page view
-  float angle; //rotation of the page in page view
+  private PGraphics pageGraphics;
+  private PVector position; //center of the page in page view
+  private float size; //size of the page in page view
+  private float angle; //rotation of the page in page view
   Rectangle angledRect; //a rectangle that contains the rotated page
-  boolean flipH;
-  boolean flipV;
-
-  //PGraphics //need to figure out if these can be rotated
+  //private boolean flipH;
+  //private boolean flipV;
+  private float flipX;
+  private float flipY;
 
   public Page(Game game, PVector topLeft, PVector bottomRight, PVector position, float size, float angle, boolean flipH, boolean flipV) {
     this.game = game;
@@ -29,8 +29,19 @@ class Page {
     //to be implemented later
     //angledRect //calculate a rectangle that the angled page fits inside
     
-    this.flipH = flipH;
-    this.flipV = flipV;
+    if(flipH){
+      flipX = -1;
+    }else{
+      flipX = 1;
+    }
+    if(flipV){
+      flipY = -1;
+    }else{
+      flipY = 1;
+    }
+    
+    //this.flipH = flipH;
+    //this.flipV = flipV;
   }
 
   public void exclude(Rectangle object) {
@@ -90,12 +101,13 @@ class Page {
     
     scale(size);
     rotate(radians(angle));
-    if(flipH){
-      scale(-1, 1);
-    }
-    if(flipV){
-      scale(1, -1);
-    }
+    //if(flipH){
+    //  scale(-1, 1);
+    //}
+    //if(flipV){
+    //  scale(1, -1);
+    //}
+    scale(flipX, flipY);
     image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height);
     popMatrix();
   }
