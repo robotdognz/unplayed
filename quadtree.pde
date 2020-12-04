@@ -209,7 +209,7 @@ public class QuadNode {
     }
   }
 
-  public void remove(Rectangle current) {
+  public void remove(Rectangle current) { //removes the given rectangle instance from the quad tree
     if (insideBounds(current)) { //if it is inside the current node bounds
       if (topLeft != null) { //if this node has children
         topLeft.remove(current);

@@ -60,7 +60,7 @@ class Editor {
     this.editorTop = new EditorTop(this);
     this.editorBottom = new EditorBottom(this);
     this.eJSON = new EditorJSON();
-    
+
     //initalise camera backup fields
     lvScale = eCamera.getScale();
     lvSubScale = eCamera.getSubScale();
@@ -196,14 +196,18 @@ class Editor {
   }
 
   public void editWorld() { //currently does placing and erasing
-    if (eMode == editorMode.ADD) {
+    switch(eMode) {
+    case ADD:
       addObject();
-    } else if (eMode == editorMode.ERASE){
+      break;
+    case ERASE:
       eraseObject();
-    } else if (eMode == editorMode.SELECT){
+      break;
+    case SELECT:
       selectObject();
+      break;
     }
-  
+
     if (eGame.point != null && !pageView) {
 
       int platformX = (int) eGame.point.x;
@@ -251,17 +255,56 @@ class Editor {
       }
     }
   }
-  
-  private void addObject(){
-    
+
+  private void addObject() {
+    switch(eType) {
+    case TILE:
+
+      break;
+    case IMAGE:
+
+      break;
+    case EVENT:
+
+      break;
+    case PAGE:
+
+      break;
+    }
   }
-  
-  private void eraseObject(){
-    
+
+  private void eraseObject() {
+    switch(eType) {
+    case TILE:
+
+      break;
+    case IMAGE:
+
+      break;
+    case EVENT:
+
+      break;
+    case PAGE:
+
+      break;
+    }
   }
-  
-  private void selectObject(){
-    
+
+  private void selectObject() {
+    switch(eType) {
+    case TILE:
+
+      break;
+    case IMAGE:
+
+      break;
+    case EVENT:
+
+      break;
+    case PAGE:
+
+      break;
+    }
   }
 
   public Controller getController() {
@@ -563,7 +606,8 @@ class EditorBottom extends Toolbar {
 enum editorType {
   TILE, 
     IMAGE, 
-    EVENT
+    EVENT, 
+    PAGE
 }
 
 enum editorMode {
