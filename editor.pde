@@ -195,7 +195,7 @@ class Editor {
     }
   }
 
-  public void placeObject() {
+  public void placeObject() { //also erase
     if (eGame.point != null && !pageView) {
 
       int platformX = (int) eGame.point.x;

@@ -2,7 +2,7 @@
 public class Rectangle {
   private float rWidth, rHeight;
   private PVector topLeft, bottomRight;
-  
+
 
   public Rectangle(float x, float y, float rWidth, float rHeight) {
     this.rWidth = rWidth;
@@ -30,12 +30,12 @@ public class Rectangle {
   public PVector getBottomRight() {
     return bottomRight;
   }
-  
-  public String toString(){
+
+  public String toString() {
     return this.getName() + " " + (int)getX() + " " + (int)getY() + " " + (int)getWidth() + " " + (int)getHeight();
   }
-  
-  public String getName(){
+
+  public String getName() {
     return "Rectangle";
   }
 
@@ -217,7 +217,7 @@ public class QuadNode {
         bottomLeft.remove(current);
         bottomRight.remove(current);
 
-        //This only removes inner nodes, it doesn't remove outer nodes, but that's probably fine
+        //Shrink the tree if neccassary. This only removes inner nodes, it doesn't remove outer nodes, but that's probably fine
         HashSet<Rectangle> allBelow = new HashSet<Rectangle>();
         getAll(allBelow);
         if (allBelow.size() < MAX_OBJECTS) {
@@ -231,9 +231,27 @@ public class QuadNode {
       } else { //if this node doesn't have children
         ArrayList<Rectangle> matches = new ArrayList<Rectangle>();
         for (Rectangle r : objects) { //find all matching rectangles
-          if (current.equals(r)) { // || r.getX() == current.getX() && r.getY() == current.getY()) { //TODO: this needs to be cleaned up, probably doesn't need to make a list and go throught it
+          //if (current.equals(r)) { // || r.getX() == current.getX() && r.getY() == current.getY()) { //TODO: this needs to be cleaned up, probably doesn't need to make a list and go throught it
+          //  matches.add(r); kbkjg
+          //}
+
+          //trying new removal algorithm
+          if (r.getClass().equals(current.getClass())) {
+            if (r.getTopLeft().x > current.getBottomRight().x) {
+              continue;
+            }
+            if (r.getBottomRight().x < current.getTopLeft().x) {
+              continue;
+            }
+            if (r.getTopLeft().y > current.getBottomRight().y) {
+              continue;
+            }
+            if (r.getBottomRight().y < current.getTopLeft().y) {
+              continue;
+            }
             matches.add(r);
           }
+          
         }
         for (Rectangle r : matches) { //remove them
           objects.remove(r);
