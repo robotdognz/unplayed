@@ -51,7 +51,7 @@ public class PauseMenu extends Menu {
 					game.camera = new FreeCamera();
 				}
 			} else if (b.click().equals(restart)) {
-				gl.init(); // rebuild the game TODO: implement this
+				gl.init(); // rebuild the game 
 			}
 		}
 	}

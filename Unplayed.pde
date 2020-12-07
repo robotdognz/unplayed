@@ -11,28 +11,29 @@ import ui.*;
 import android.content.Context;
 import android.app.Activity;
 
-PGraphics mainGraphics;
-
-GameLogic gl;
-KetaiGesture gesture;
-Vibe vibe;
-Converter convert;
-TextureCache texture;
+//PGraphics mainGraphics;
 
 Activity activity;
 Context context;
+GameLogic gl;
+//KetaiGesture gesture;
+//Vibe vibe;
+//Converter convert;
+//TextureCache texture;
 
-Game game; //holds the game class
-Controller controller; //holds the current controller
-Editor editor; //holds the editor
 
-ArrayList<Widget> widgets;
-float widgetSpacing; //size of gap between widgets
+
+//Game game; //holds the game class
+//Controller controller; //holds the current controller
+//Editor editor; //holds the editor
+
+//ArrayList<Widget> widgets;
+//float widgetSpacing; //size of gap between widgets
 
 //touch screen stuff
 //TouchTesting testing = new TouchTesting();
-ArrayList<PVector> touch;
-PVector lastTouch;
+//ArrayList<PVector> touch;
+//PVector lastTouch;
 
 //splash screen
 int splash; //true if the game hasn't started looping and a splash screen should be drawn
@@ -43,14 +44,13 @@ void setup() {
   fullScreen(P2D);
   background(40, 40, 40);
   frameRate(60);
-  mainGraphics = g; //get default PGraphics
+  //mainGraphics = g; //get default PGraphics
   splash = 0;
 
-  //setup feilds for Toast
+  //setup game logic
   activity = this.getActivity();
   context = activity.getApplicationContext();
-  
-  gl = new GameLogic(activity);
+  gl = new GameLogic(this, activity, context);
 
   //check and get permissions
   if (!hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
@@ -59,30 +59,32 @@ void setup() {
 }
 
 void init() {
+  gl.init();
   //setup fields
-  gl.gPaused = false;
-  widgets = new ArrayList<Widget>();
-  gl.editorToggle = true;
-  gl.menu = null;
-  touch = new ArrayList<PVector>();
-  lastTouch = new PVector(0, 0);
+  //gl.gPaused = false;
+  //widgets = new ArrayList<Widget>();
+  //gl.editorToggle = true;
+  //gl.menu = null;
+  //gl.touch = new ArrayList<PVector>();
+  //gl.lastTouch = new PVector(0, 0);
 
   //setup special classes
-  texture = new TextureCache(this);
-  gesture = new KetaiGesture(this);
-  vibe = new Vibe(context);
+  //texture = new TextureCache(this);
+  //gesture = new KetaiGesture(this);
+  //vibe = new Vibe(context);
   
   //setup game
-  Camera camera = new FreeCamera(); //new GameCamera();
-  convert = new Converter(this, camera); //camera converter
-  game = new Game(this, camera, vibe, texture, convert, gl); 
-  controller = new PlayerControl(this, game);
-  editor = new Editor(this, texture, game, camera, convert, gl);
+  //Camera camera = new FreeCamera(); //new GameCamera();
+  //convert = new Converter(this, camera); //camera converter
+  //game = new Game(this, camera, vibe, texture, convert); 
+  //controller = new PlayerControl(this, game);
+  //DoToast toast = new DoToast(activity);
+  //editor = new Editor(this, texture, game, camera, convert, toast);
 
-  ////setup non editor widget(s)
-  Widget menuW = new MenuWidget(this, editor, null);
-  widgets.add(menuW);
-  widgetSpacing = width/(widgets.size()+1);
+  //////setup non editor widget(s)
+  //Widget menuW = new MenuWidget(this, editor, null);
+  //widgets.add(menuW);
+  //widgetSpacing = width/(widgets.size()+1);
 }
 
 //this is the only draw method that should have step logic in it
@@ -110,36 +112,36 @@ void draw() {
 
   //testing.draw(); //draw touch events
   //reset stored touch events
-  touch.clear();
+  gl.touches.clear();
   for (TouchEvent.Pointer t : touches) {
-    touch.add(new PVector(t.x, t.y));
+    gl.touches.add(new PVector(t.x, t.y));
   }
   if (touches.length > 0) {
-    lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
+    gl.lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
   } else {
-    lastTouch = new PVector(0, 0);
+    gl.lastTouch = new PVector(0, 0);
   }
 
   //game
   if (!gl.gPaused) { //step the game if it is not paused
     //step editor or game controller depending on editor toggle
     if (gl.editorToggle) {
-      editor.step(touch);
+      gl.editor.step(gl.touches);
     } else {
-      controller.step(touch);
+      gl.controller.step(gl.touches);
     }
-    game.step(); //step game
+    gl.game.step(); //step game
   }
-  game.draw(); //draw the game
+  gl.game.draw(); //draw the game
   
   if (gl.editorToggle) {
-    editor.draw(lastTouch, gl.menu);
+    gl.editor.draw(gl.lastTouch, gl.menu);
   } else {
-    for (int i = 0; i < widgets.size(); i++) {
-      widgets.get(i).draw(widgetSpacing*(i+1), 120);
-      widgets.get(i).updateActive();
+    for (int i = 0; i < gl.widgets.size(); i++) {
+      gl.widgets.get(i).draw(gl.widgetSpacing*(i+1), 120);
+      gl.widgets.get(i).updateActive();
       if (gl.menu == null) {
-        widgets.get(i).hover(lastTouch);
+        gl.widgets.get(i).hover(gl.lastTouch);
       }
     }
   }
@@ -147,45 +149,45 @@ void draw() {
   //draw the menu
   if (gl.menu != null) { 
     gl.menu.draw();
-    gl.menu.hover(lastTouch);
+    gl.menu.hover(gl.lastTouch);
   }
 }
 
 void touchStarted() {
   //find true last touch
-  if (touches.length >= touch.size() && 
+  if (touches.length >= gl.touches.size() && 
     touches.length > 1) {
     for (int i = 0; i < touches.length; i++) {
       boolean match = false;
-      for (PVector t : touch) {
+      for (PVector t : gl.touches) {
         float currentDiff = sqrt(sq(t.x-touches[i].x)+sq(t.x-touches[i].x));
         if (currentDiff < 10) {
           match = true;
         }
       }
       if (!match) { //no match for current touch, so it's new
-        lastTouch = new PVector(touches[i].x, touches[i].y);
+        gl.lastTouch = new PVector(touches[i].x, touches[i].y);
       }
     }
   } else if (touches.length == 1) {
-    lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
+    gl.lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
   }
 
   if (gl.menu == null) {
     if (gl.editorToggle) {
-      editor.touchStarted(lastTouch);
+      gl.editor.touchStarted(gl.lastTouch);
     } else {
-      controller.touchStarted(lastTouch);
+      gl.controller.touchStarted(gl.lastTouch);
     }
   }
 }
 
 void touchEnded() {
   if (gl.editorToggle) {
-    editor.touchEnded();
+    gl.editor.touchEnded();
   } else {
-    for (int i = 0; i < widgets.size(); i++) {
-      widgets.get(i).click();
+    for (int i = 0; i < gl.widgets.size(); i++) {
+      gl.widgets.get(i).click();
     }
   }
 
@@ -197,9 +199,9 @@ void touchEnded() {
 void touchMoved() {
   if (gl.menu == null) {
     if (gl.editorToggle) {
-      editor.touchMoved(touch);
+      gl.editor.touchMoved(gl.touches);
     } else {
-      controller.touchMoved(touch);
+      gl.controller.touchMoved(gl.touches);
     }
   }
 }
@@ -207,9 +209,9 @@ void touchMoved() {
 void onPinch(float x, float y, float d) {
   if (gl.menu == null) {
     if (gl.editorToggle) {
-      editor.onPinch(touch, x, y, d);
+      gl.editor.onPinch(gl.touches, x, y, d);
     } else {
-      controller.onPinch(touch, x, y, d);
+      gl.controller.onPinch(gl.touches, x, y, d);
     }
   }
 }
@@ -217,7 +219,7 @@ void onPinch(float x, float y, float d) {
 void onTap (float x, float y) {
   if (gl.menu == null) {
     if (gl.editorToggle) {
-      editor.onTap(x, y);
+      gl.editor.onTap(x, y);
     } else {
       //controller.onTap(x, y);
     }

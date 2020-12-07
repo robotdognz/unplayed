@@ -8,7 +8,6 @@ import controllers.CameraControl;
 import controllers.Controller;
 import controllers.EditorControl;
 import game.Game;
-import game.GameLogic;
 import game.PageView;
 import game.Quadtree;
 import handlers.EventHandler;
@@ -17,6 +16,7 @@ import handlers.TextureCache;
 import handlers.TileHandler;
 import menus.Menu;
 import misc.Converter;
+import misc.DoToast;
 import misc.EditorJSON;
 import objects.Image;
 import objects.Rectangle;
@@ -74,13 +74,13 @@ public class Editor {
 	// saver/loader class
 	public EditorJSON eJSON;
 
-	// frame count and debug visualisation / quadtree
+	// frame count and debug visualization / quadtree
 	public boolean debug = false;
 	public boolean quadtree = false;
 	private int frameDelay = 100;
 	private float frame;
 
-	public Editor(PApplet p, TextureCache texture, Game game, Camera camera, Converter convert, GameLogic gl) {
+	public Editor(PApplet p, TextureCache texture, Game game, Camera camera, Converter convert, DoToast toast) {
 		this.p = p;
 		this.texture = texture;
 		this.convert = convert;
@@ -92,7 +92,7 @@ public class Editor {
 		this.eController = new CameraControl(p, this);
 		this.editorTop = new EditorTop(p, this);
 		this.editorBottom = new EditorBottom(p, this, texture);
-		this.eJSON = new EditorJSON(p, texture, gl);
+		this.eJSON = new EditorJSON(p, texture, toast);
 
 		TOP_DEADZONE = 200;
 		BOTTOM_DEADZONE = p.height - 300;

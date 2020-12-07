@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.HashSet;
 
 import game.Game;
-import game.GameLogic;
 import handlers.TextureCache;
 import objects.CameraChange;
 import objects.Event;
@@ -18,13 +17,13 @@ import processing.data.*;
 public class EditorJSON {
 	PApplet p;
 	TextureCache texture;
-	GameLogic gl;
+	DoToast toast;
 	JSONArray values;
 
-	public EditorJSON(PApplet p, TextureCache texture, GameLogic gl) {
+	public EditorJSON(PApplet p, TextureCache texture, DoToast toast) {
 		this.p = p;
 		this.texture = texture;
-		this.gl = gl;
+		this.toast = toast;
 		// remember that you can save files to the invisible private directory for the
 		// game
 		// that would be a good way to stop people from using their level files if they
@@ -72,9 +71,9 @@ public class EditorJSON {
 
 			File file = new File("storage/emulated/0/levels/" + "level" + ".json");
 			p.saveJSONArray(values, file.getAbsolutePath());
-			gl.showToast("Level Saved");
+			toast.showToast("Level Saved");
 		} catch (Exception e) {
-			gl.showToast(e.getMessage());
+			toast.showToast(e.getMessage());
 		}
 	}
 
@@ -124,9 +123,9 @@ public class EditorJSON {
 			for (Rectangle r : objects) {
 				game.world.insert(r);
 			}
-			gl.showToast("Level Loaded");
+			toast.showToast("Level Loaded");
 		} catch (Exception e) {
-			gl.showToast(e.getMessage());
+			toast.showToast(e.getMessage());
 		}
 	}
 }

@@ -15,7 +15,6 @@ import static processing.core.PConstants.*;
 
 public class Game {
 	private PApplet p;
-	//private TextureCache texture;
 	public Player player;
 	public Paper paper;
 	public Converter convert;
@@ -56,7 +55,7 @@ public class Game {
 	public float newRightEdge;
 	public float boarderZoomSpeed = 0.1f; // 0.1 is default
 
-	public Game(PApplet p, Camera c, Vibe v, TextureCache texture, Converter convert, GameLogic gl) {
+	public Game(PApplet p, Camera c, Vibe v, TextureCache texture, Converter convert) {
 		// legacy variables from level class TODO: write these out eventually
 		PVector playerStart = new PVector(0, 0);
 		PVector cameraTopLeft = new PVector(-400, -400);
@@ -70,10 +69,8 @@ public class Game {
 
 		// actual game class starts here
 		this.p = p;
-		//this.texture = texture;
 		this.camera = c;
 		this.convert = convert;
-		this.gl = gl;
 		eventVis = true;
 		quadVis = false;
 
@@ -119,6 +116,10 @@ public class Game {
 		// everything needs to be a multiple of 20 (multiple of 10 so you can always
 		// fall down holes, and 20 so you don't clip through things 90 apart because of
 		// speed 10)
+	}
+	
+	public void passGameLogic(GameLogic gl) {
+		this.gl = gl;
 	}
 
 	public void restart() {
