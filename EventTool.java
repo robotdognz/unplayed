@@ -20,7 +20,7 @@ public class EventTool implements Tool {
 	
 	@Override
 	public void activate() {
-		if (game.point != null && !editor.showPageView) {
+		if (game.point != null && game.point.x != -1 && !editor.showPageView) {
 			int platformX = (int) game.point.x;
 			int platformY = (int) game.point.y;
 
