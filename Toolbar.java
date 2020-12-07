@@ -31,7 +31,7 @@ public abstract class Toolbar {
 	public void touchEnded() {
 	}
 
-	public void touchMoved() {
+	public void touchMoved(ArrayList<PVector> touch) {
 	}
 
 	public void onTap(float x, float y) {

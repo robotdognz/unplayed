@@ -184,8 +184,8 @@ public class Editor {
 	}
 
 	public void touchMoved(ArrayList<PVector> touch) {
-		editorTop.touchMoved();
-		editorBottom.touchMoved();
+		editorTop.touchMoved(touch);
+		editorBottom.touchMoved(touch);
 
 		if (nextTouchInactive) { // don't do controller if next touch inactive
 			return;
