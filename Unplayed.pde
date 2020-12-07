@@ -78,7 +78,7 @@ void init() {
   convert = new Converter(this, camera); //camera converter
   game = new Game(this, camera, vibe, texture, convert, gl); 
   controller = new PlayerControl(this, game);
-  editor = new Editor(this, texture, game, camera, convert);
+  editor = new Editor(this, texture, game, camera, convert, gl);
 
   ////setup non editor widget(s)
   Widget menuW = new MenuWidget(this, editor, null);

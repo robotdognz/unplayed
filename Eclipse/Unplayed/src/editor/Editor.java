@@ -8,6 +8,7 @@ import controllers.CameraControl;
 import controllers.Controller;
 import controllers.EditorControl;
 import game.Game;
+import game.GameLogic;
 import game.PageView;
 import game.Quadtree;
 import handlers.EventHandler;
@@ -79,7 +80,7 @@ public class Editor {
 	private int frameDelay = 100;
 	private float frame;
 
-	public Editor(PApplet p, TextureCache texture, Game game, Camera camera, Converter convert) {
+	public Editor(PApplet p, TextureCache texture, Game game, Camera camera, Converter convert, GameLogic gl) {
 		this.p = p;
 		this.texture = texture;
 		this.convert = convert;
@@ -91,7 +92,7 @@ public class Editor {
 		this.eController = new CameraControl(p, this);
 		this.editorTop = new EditorTop(p, this);
 		this.editorBottom = new EditorBottom(p, this, texture);
-		this.eJSON = new EditorJSON(p, texture);
+		this.eJSON = new EditorJSON(p, texture, gl);
 
 		TOP_DEADZONE = 200;
 		BOTTOM_DEADZONE = p.height - 300;
