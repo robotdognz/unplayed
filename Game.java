@@ -34,7 +34,7 @@ public class Game {
 	public int screenSpaceOffset;
 	public HashSet<Rectangle> screenObjects;
 
-	public PVector point;
+	public PVector point = null;
 
 	// local variables for camera
 	public float newScale;
