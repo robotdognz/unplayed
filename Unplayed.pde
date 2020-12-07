@@ -11,7 +11,7 @@ import ui.*;
 import android.content.Context;
 import android.app.Activity;
 
-PGraphics mainGraphics; 
+PGraphics mainGraphics;
 
 GameLogic gl;
 KetaiGesture gesture;
