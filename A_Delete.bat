@@ -1,0 +1,1 @@
+for /f %%F in ('dir /b /a-d ^| findstr /vile ".bat .pde .xml .properties"') do del "%%F"
