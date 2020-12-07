@@ -15,7 +15,7 @@ public abstract class Widget {
 	protected PVector position; // position of the widget
 	protected float wSize = 75; // 60 //size of the widget
 	protected float touchScale = 1.2f; // 1.5
-	protected String folder = p.dataPath("ui") + '/' + "widgets" + '/'; // data path of widget icons
+	protected String folder;
 	protected PImage icon;
 	protected PImage imageActive;
 	protected PImage imageInactive;
@@ -38,6 +38,7 @@ public abstract class Widget {
 
 	public Widget(PApplet p, Editor editor, Toolbar parent) {
 		this.p = p;
+		folder = p.dataPath("ui") + '/' + "widgets" + '/'; // data path of widget icons
 		imageActive = p.loadImage(folder + "active.png");
 		imageInactive = p.loadImage(folder + "inactive.png");
 		imageUnavailable = p.loadImage(folder + "unavailable.png");
