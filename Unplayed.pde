@@ -8,20 +8,20 @@ import misc.*;
 import objects.*;
 import ui.*;
 
-import android.os.Vibrator;
-import android.os.VibrationEffect;
+//import android.os.Vibrator;
+//import android.os.VibrationEffect;
 import android.content.Context;
 import android.app.Activity;
 import android.os.Environment;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.regex.*;
+//import java.util.Collections;
+//import java.util.List;
+//import java.util.Set;
+//import java.util.HashSet;
+//import java.util.regex.*;
 
-import java.io.Writer;
-import java.io.FileWriter;
-import java.io.BufferedWriter;
+//import java.io.Writer;
+//import java.io.FileWriter;
+//import java.io.BufferedWriter;
 import android.widget.Toast;
 
 PGraphics mainGraphics; 
@@ -48,10 +48,6 @@ float widgetSpacing; //size of gap between widgets
 //TouchTesting testing = new TouchTesting();
 ArrayList<PVector> touch;
 PVector lastTouch;
-
-//frame count
-//int frameDelay;
-//float frame;
 
 
 void setup() {
@@ -82,13 +78,11 @@ void init() {
   gl.menu = null;
   touch = new ArrayList<PVector>();
   lastTouch = new PVector(0, 0);
-  //frameDelay = 100;
 
   //setup special classes
   texture = new TextureCache(this);
   gesture = new KetaiGesture(this);
   vibe = new Vibe(context);
-
   
   //setup game
   Camera camera = new FreeCamera(); //new GameCamera();
@@ -126,8 +120,6 @@ void draw() {
     return;
   }
 
-  
-
   //testing.draw(); //draw touch events
   //reset stored touch events
   touch.clear();
@@ -140,8 +132,6 @@ void draw() {
     lastTouch = new PVector(0, 0);
   }
 
-  
-  
   //game
   if (!gl.gPaused) { //step the game if it is not paused
     //step editor or game controller depending on editor toggle
@@ -274,9 +264,6 @@ void showToast(final String message) {
   //Save stuff
   super.onDestroy();
 }
-
-
-
 
 
 //------------------TouchTesting---------------------
