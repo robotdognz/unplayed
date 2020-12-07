@@ -82,7 +82,7 @@ void init() {
   gl.menu = null;
   touch = new ArrayList<PVector>();
   lastTouch = new PVector(0, 0);
-  frameDelay = 100;
+  //frameDelay = 100;
 
   //setup special classes
   texture = new TextureCache(this);
@@ -100,7 +100,7 @@ void init() {
   ////setup non editor widget(s)
   Widget menuW = new MenuWidget(this, editor, null);
   widgets.add(menuW);
-  widgetSpacing = width/(gWidgets.size()+1);
+  widgetSpacing = width/(widgets.size()+1);
 }
 
 //this is the only draw method that should have step logic in it
