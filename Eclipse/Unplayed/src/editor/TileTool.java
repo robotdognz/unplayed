@@ -7,19 +7,16 @@ import game.Game;
 import handlers.TextureCache;
 import objects.Rectangle;
 import objects.Tile;
-import processing.core.PVector;
 
 public class TileTool implements Tool {
 	Editor editor;
 	Game game;
 	TextureCache texture;
-	PVector point;
 
 	public TileTool(Editor editor) {
 		this.editor = editor;
 		this.game = editor.game;
 		this.texture = editor.texture;
-		this.point = game.point;
 	}
 
 	@Override

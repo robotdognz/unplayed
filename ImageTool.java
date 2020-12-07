@@ -7,19 +7,16 @@ import game.Game;
 import handlers.TextureCache;
 import objects.Image;
 import objects.Rectangle;
-import processing.core.PVector;
 
 public class ImageTool implements Tool {
 	Editor editor;
 	Game game;
 	TextureCache texture;
-	PVector point;
 
 	public ImageTool(Editor editor) {
 		this.editor = editor;
 		this.game = editor.game;
 		this.texture = editor.texture;
-		this.point = game.point;
 	}
 
 	@Override

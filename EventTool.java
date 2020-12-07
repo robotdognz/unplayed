@@ -6,19 +6,16 @@ import editor.Editor.editorMode;
 import game.Game;
 import handlers.TextureCache;
 import objects.Rectangle;
-import processing.core.PVector;
 
 public class EventTool implements Tool {
 	Editor editor;
 	Game game;
 	TextureCache texture;
-	PVector point;
 
 	public EventTool(Editor editor) {
 		this.editor = editor;
 		this.game = editor.game;
 		this.texture = editor.texture;
-		this.point = game.point;
 	}
 	
 	@Override
