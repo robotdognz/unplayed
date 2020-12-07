@@ -72,9 +72,9 @@ public class EditorJSON {
 
 			File file = new File("storage/emulated/0/levels/" + "level" + ".json");
 			p.saveJSONArray(values, file.getAbsolutePath());
-			gl.showToast("Level Saved"); //TODO
+			gl.showToast("Level Saved");
 		} catch (Exception e) {
-			gl.showToast(e.getMessage()); //TODO
+			gl.showToast(e.getMessage());
 		}
 	}
 
@@ -124,9 +124,9 @@ public class EditorJSON {
 			for (Rectangle r : objects) {
 				game.world.insert(r);
 			}
-			gl.showToast("Level Loaded"); //TODO
+			gl.showToast("Level Loaded");
 		} catch (Exception e) {
-			gl.showToast(e.getMessage()); //TODO
+			gl.showToast(e.getMessage());
 		}
 	}
 }

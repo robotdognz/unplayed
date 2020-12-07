@@ -46,12 +46,12 @@ void setup() {
   frameRate(60);
   mainGraphics = g; //get default PGraphics
   splash = 0;
-  
-  gl = new GameLogic();
 
   //setup feilds for Toast
   activity = this.getActivity();
   context = activity.getApplicationContext();
+  
+  gl = new GameLogic(activity);
 
   //check and get permissions
   if (!hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
