@@ -1,3 +1,13 @@
+import camera.*;
+import controllers.*;
+import editor.*;
+import game.*;
+import handlers.*;
+import menus.*;
+import misc.*;
+import objects.*;
+import ui.*;
+
 import android.os.Vibrator;
 import android.os.VibrationEffect;
 import android.content.Context;
@@ -14,32 +24,33 @@ import java.io.FileWriter;
 import java.io.BufferedWriter;
 import android.widget.Toast;
 
-public PGraphics mainGraphics; 
+PGraphics mainGraphics; 
 
-public KetaiGesture gesture;
-public Vibe vibe;
-public Converter convert;
-public TextureCache texture;
+GameLogic gl;
+KetaiGesture gesture;
+Vibe vibe;
+Converter convert;
+TextureCache texture;
 
-public Activity activity;
-public Context context;
+Activity activity;
+Context context;
 
-private int splash; //true if the game hasn't started looping and a splash screen should be drawn
-private PImage splashScreen;
-public Game game; //holds the game class
-public Controller gController; //holds the current controller
-public Editor edit; //holds the editor
+int splash; //true if the game hasn't started looping and a splash screen should be drawn
+PImage splashScreen;
+Game game; //holds the game class
+Controller controller; //holds the current controller
+Editor editor; //holds the editor
 
-boolean gPaused; //is the game class paused
-private ArrayList<Widget> gWidgets;
-private float gWidgetSpacing; //size of gap between widgets
-private boolean editorToggle; //is the game in editor mode
-private Menu menu;
+//boolean gPaused; //is the game class paused
+ArrayList<Widget> gWidgets;
+float gWidgetSpacing; //size of gap between widgets
+//boolean editorToggle; //is the game in editor mode
+//Menu menu;
 
 //touch screen stuff
-//private TouchTesting testing = new TouchTesting();
-private ArrayList<PVector> touch;
-private PVector lastTouch;
+//TouchTesting testing = new TouchTesting();
+ArrayList<PVector> touch;
+PVector lastTouch;
 
 //frame count
 int frameDelay;
@@ -53,6 +64,8 @@ void setup() {
   frameRate(60);
   mainGraphics = g; //get default PGraphics
   splash = 0;
+  
+  gl = new GameLogic();
 
   //setup feilds for Toast
   activity = this.getActivity();
@@ -66,28 +79,29 @@ void setup() {
 
 void init() {
   //setup fields
-  gPaused = false;
+  gl.gPaused = false;
   gWidgets = new ArrayList<Widget>();
-  editorToggle = true;
-  menu = null;
+  gl.editorToggle = true;
+  gl.menu = null;
   touch = new ArrayList<PVector>();
   lastTouch = new PVector(0, 0);
   frameDelay = 100;
 
   //setup special classes
-  texture = new TextureCache();
+  texture = new TextureCache(this);
   gesture = new KetaiGesture(this);
-  vibe = new Vibe();
+  vibe = new Vibe(context);
 
+  
   //setup game
   Camera camera = new FreeCamera(); //new GameCamera();
-  convert = new Converter(camera); //camera converter
-  game = new Game(camera, vibe); 
-  gController = new PlayerControl();
-  edit = new Editor(game, camera);
+  convert = new Converter(this, camera); //camera converter
+  game = new Game(this, camera, vibe, texture, convert, gl); 
+  controller = new PlayerControl(this, game);
+  editor = new Editor(this, texture, game, camera, convert);
 
   ////setup non editor widget(s)
-  Widget menuW = new MenuWidget(edit, null);
+  Widget menuW = new MenuWidget(this, editor, null);
   gWidgets.add(menuW);
   gWidgetSpacing = width/(gWidgets.size()+1);
 }
@@ -115,17 +129,7 @@ void draw() {
     return;
   }
 
-  //game
-  if (!gPaused) { //step the game if it is not paused
-    //step editor or game controller depending on editor toggle
-    if (editorToggle) {
-      edit.step();
-    } else {
-      gController.step();
-    }
-    game.step(); //step game
-  }
-  game.draw(); //draw the game
+  
 
   //testing.draw(); //draw touch events
   //reset stored touch events
@@ -139,22 +143,36 @@ void draw() {
     lastTouch = new PVector(0, 0);
   }
 
-  if (editorToggle) {
-    edit.draw();
+  
+  
+  //game
+  if (!gl.gPaused) { //step the game if it is not paused
+    //step editor or game controller depending on editor toggle
+    if (gl.editorToggle) {
+      editor.step(touch);
+    } else {
+      controller.step(touch);
+    }
+    game.step(); //step game
+  }
+  game.draw(); //draw the game
+  
+  if (gl.editorToggle) {
+    editor.draw(lastTouch, gl.menu);
   } else {
     for (int i = 0; i < gWidgets.size(); i++) {
       gWidgets.get(i).draw(gWidgetSpacing*(i+1), 120);
       gWidgets.get(i).updateActive();
-      if (menu == null) {
+      if (gl.menu == null) {
         gWidgets.get(i).hover(lastTouch);
       }
     }
   }
 
   //draw the menu
-  if (menu != null) { 
-    menu.draw();
-    menu.hover(lastTouch);
+  if (gl.menu != null) { 
+    gl.menu.draw();
+    gl.menu.hover(lastTouch);
   }
 }
 
@@ -178,53 +196,53 @@ void touchStarted() {
     lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
   }
 
-  if (menu == null) {
-    if (editorToggle) {
-      edit.touchStarted();
+  if (gl.menu == null) {
+    if (gl.editorToggle) {
+      editor.touchStarted(lastTouch);
     } else {
-      gController.touchStarted();
+      controller.touchStarted(lastTouch);
     }
   }
 }
 
 void touchEnded() {
-  if (editorToggle) {
-    edit.touchEnded();
+  if (gl.editorToggle) {
+    editor.touchEnded();
   } else {
     for (int i = 0; i < gWidgets.size(); i++) {
       gWidgets.get(i).click();
     }
   }
 
-  if (menu != null) {
-    menu.click();
+  if (gl.menu != null) {
+    gl.menu.click();
   }
 }
 
 void touchMoved() {
-  if (menu == null) {
-    if (editorToggle) {
-      edit.touchMoved();
+  if (gl.menu == null) {
+    if (gl.editorToggle) {
+      editor.touchMoved(touch);
     } else {
-      gController.touchMoved();
+      controller.touchMoved(touch);
     }
   }
 }
 
 void onPinch(float x, float y, float d) {
-  if (menu == null) {
-    if (editorToggle) {
-      edit.onPinch(x, y, d);
+  if (gl.menu == null) {
+    if (gl.editorToggle) {
+      editor.onPinch(touch, x, y, d);
     } else {
-      gController.onPinch(x, y, d);
+      controller.onPinch(touch, x, y, d);
     }
   }
 }
 
 void onTap (float x, float y) {
-  if (menu == null) {
-    if (editorToggle) {
-      edit.onTap(x, y);
+  if (gl.menu == null) {
+    if (gl.editorToggle) {
+      editor.onTap(x, y);
     } else {
       //gController.onTap(x, y);
     }
@@ -262,92 +280,7 @@ void showToast(final String message) {
 
 
 
-//------------------LevelToScreenConverter---------------------
-class Converter {
-  private Camera cCamera;
-  private float currentScale;
-  private float currentSubScale;
-  private PVector currentCenter;
 
-  private PVector lastCalc;
-
-  public Converter(Camera camera) {
-    this.cCamera = camera;
-    this.lastCalc = new PVector(0, 0);
-  }
-
-  public PVector screenToLevel(float screenX, float screenY) {
-    currentScale = cCamera.getScale();
-    currentSubScale = cCamera.getSubScale();
-    currentCenter = cCamera.getCenter();
-    lastCalc.x = ((screenX-width/2)/((float)width/currentScale)/currentSubScale) + currentCenter.x;
-    lastCalc.y = ((screenY-height/2)/((float)width/currentScale)/currentSubScale) + currentCenter.y;
-    return lastCalc;
-  }
-
-  public float screenToLevel(float distance) {
-    currentScale = cCamera.getScale();
-    currentSubScale = cCamera.getSubScale();
-    float result = distance/((float)width/currentScale)/currentSubScale;
-    return result;
-  }
-
-  public float getScale() {
-    currentScale = cCamera.getScale();
-    currentSubScale = cCamera.getSubScale();
-    return currentScale/currentSubScale/100; //how many square is the width of the screen
-  }
-
-  public float getTotalFromScale(float scale) { //calculate total scale from potential scale
-    currentSubScale = cCamera.getSubScale();
-    return scale/currentSubScale/100;
-  }
-
-  public float getScaleFromTotal(float totalScale) {
-    currentSubScale = cCamera.getSubScale();
-    return totalScale*currentSubScale*100;
-  }
-  //public PVector levelToScreen(float levelX, levelY){
-
-  //}
-}
-
-//------------------Vibe---------------------
-class Vibe {
-  private Vibrator vibe;
-  private boolean deprecated;
-
-  public Vibe() {
-    vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE); 
-    deprecated = android.os.Build.VERSION.SDK_INT < 26;// && vibe.hasVibrator();
-    //this class needs to be updated to calculate fine grained vibration strength using a combination of amount and level
-  }
-
-  @SuppressWarnings("deprecation")
-    public void vibrate(long amount) {
-    //amount = duration
-    if (!deprecated) {
-      vibe.vibrate(VibrationEffect.createOneShot(amount, 255));
-    } else {
-      //this is for older versions of anroid
-      //need to make a second version of vibration tuned for older systems
-      vibe.vibrate(amount);
-    }
-  }
-
-  @SuppressWarnings("deprecation")
-    public void vibrate(long amount, int level) {
-    //amount = duration
-    //level = intensity
-    if (!deprecated) {
-      vibe.vibrate(VibrationEffect.createOneShot(amount, level));
-    } else {
-      //this is for older versions of anroid
-      //need to make a second version of vibration tuned for older systems
-      vibe.vibrate(amount);
-    }
-  }
-}
 
 //------------------TouchTesting---------------------
 class TouchTesting {

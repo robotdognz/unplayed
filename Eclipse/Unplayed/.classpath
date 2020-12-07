@@ -6,6 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/robot/Documents/processing-3.5.4/core/library/core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/robot/AppData/Local/Android/Sdk/platforms/android-30/android.jar"/>
+	<classpathentry kind="lib" path="C:/Users/robot/Documents/Processing/modes/AndroidMode/processing-core.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
