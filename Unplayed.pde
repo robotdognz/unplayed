@@ -10,7 +10,6 @@ import ui.*;
 
 import android.content.Context;
 import android.app.Activity;
-import android.widget.Toast;
 
 PGraphics mainGraphics; 
 
@@ -231,16 +230,6 @@ void onTap (float x, float y) {
 //  //v velocity of flick
 //}
 //void onRotate(float x, float y, float angle) {}
-
-//used for printing messages to the screen
-void showToast(final String message) { 
-  activity.runOnUiThread(new Runnable() { 
-    public void run() { 
-      android.widget.Toast.makeText(activity.getApplicationContext(), message, android.widget.Toast.LENGTH_SHORT).show();
-    }
-  }
-  );
-}
 
 @ Override
   public void onStop() { //This should be called when the app closes
