@@ -76,10 +76,5 @@ public class GameLogic {
 		Widget menuW = new MenuWidget(p, editor, null);
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
-
-		
-
-		// TODO implement this
 	}
-
 }
