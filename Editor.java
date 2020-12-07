@@ -52,10 +52,9 @@ public class Editor {
 
 	// editor settings
 	public boolean snap = true; // things placed in the level will snap to grid
-	//public editorType eType = editorType.TILE;
-	public Tool currentTool = new TileTool(this);
-	public editorMode eMode = editorMode.ADD;
-	imagePlane eImagePlane = imagePlane.LEVEL;
+	public Tool currentTool;
+	public editorMode eMode;
+	public imagePlane eImagePlane;
 	public boolean showPageView = false;
 
 	// current object to put into level
@@ -88,6 +87,10 @@ public class Editor {
 		this.editorTop = new EditorTop(p, this);
 		this.editorBottom = new EditorBottom(p, this, texture);
 		this.eJSON = new EditorJSON(p, texture, toast);
+		
+		this.currentTool = new TileTool(this);
+		this.eMode = editorMode.ADD;
+		this.eImagePlane = imagePlane.LEVEL;
 
 		TOP_DEADZONE = 200;
 		BOTTOM_DEADZONE = p.height - 300;
