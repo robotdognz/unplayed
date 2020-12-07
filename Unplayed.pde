@@ -41,11 +41,8 @@ Game game; //holds the game class
 Controller controller; //holds the current controller
 Editor editor; //holds the editor
 
-//boolean gPaused; //is the game class paused
-ArrayList<Widget> gWidgets;
-float gWidgetSpacing; //size of gap between widgets
-//boolean editorToggle; //is the game in editor mode
-//Menu menu;
+ArrayList<Widget> widgets;
+float widgetSpacing; //size of gap between widgets
 
 //touch screen stuff
 //TouchTesting testing = new TouchTesting();
@@ -53,8 +50,8 @@ ArrayList<PVector> touch;
 PVector lastTouch;
 
 //frame count
-int frameDelay;
-float frame;
+//int frameDelay;
+//float frame;
 
 
 void setup() {
@@ -80,7 +77,7 @@ void setup() {
 void init() {
   //setup fields
   gl.gPaused = false;
-  gWidgets = new ArrayList<Widget>();
+  widgets = new ArrayList<Widget>();
   gl.editorToggle = true;
   gl.menu = null;
   touch = new ArrayList<PVector>();
@@ -102,8 +99,8 @@ void init() {
 
   ////setup non editor widget(s)
   Widget menuW = new MenuWidget(this, editor, null);
-  gWidgets.add(menuW);
-  gWidgetSpacing = width/(gWidgets.size()+1);
+  widgets.add(menuW);
+  widgetSpacing = width/(gWidgets.size()+1);
 }
 
 //this is the only draw method that should have step logic in it
@@ -160,11 +157,11 @@ void draw() {
   if (gl.editorToggle) {
     editor.draw(lastTouch, gl.menu);
   } else {
-    for (int i = 0; i < gWidgets.size(); i++) {
-      gWidgets.get(i).draw(gWidgetSpacing*(i+1), 120);
-      gWidgets.get(i).updateActive();
+    for (int i = 0; i < widgets.size(); i++) {
+      widgets.get(i).draw(widgetSpacing*(i+1), 120);
+      widgets.get(i).updateActive();
       if (gl.menu == null) {
-        gWidgets.get(i).hover(lastTouch);
+        widgets.get(i).hover(lastTouch);
       }
     }
   }
@@ -209,8 +206,8 @@ void touchEnded() {
   if (gl.editorToggle) {
     editor.touchEnded();
   } else {
-    for (int i = 0; i < gWidgets.size(); i++) {
-      gWidgets.get(i).click();
+    for (int i = 0; i < widgets.size(); i++) {
+      widgets.get(i).click();
     }
   }
 
@@ -244,7 +241,7 @@ void onTap (float x, float y) {
     if (gl.editorToggle) {
       editor.onTap(x, y);
     } else {
-      //gController.onTap(x, y);
+      //controller.onTap(x, y);
     }
   }
 }
