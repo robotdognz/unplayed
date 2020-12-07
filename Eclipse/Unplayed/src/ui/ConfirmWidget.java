@@ -13,12 +13,12 @@ public class ConfirmWidget extends Widget {
 	}
 
 	public void clicked() {
-		// finalise block
+		// Finalize block
 		editor.editWorld();
 	}
 
 	public void updateActive() {
-		if (editor.eController instanceof EditorControl && !editor.snap && editor.eGame.point != null) {
+		if (editor.controller instanceof EditorControl && !editor.snap && editor.game.point != null) {
 			available = true;
 		} else {
 			available = false;

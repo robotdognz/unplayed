@@ -15,7 +15,7 @@ public class MenuWidget extends Widget {
 	public MenuWidget(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "exit.png");
-		game = editor.eGame;
+		game = editor.game;
 		gl = game.gl;
 	}
 

@@ -13,14 +13,14 @@ public class PlayerControlWidget extends Widget {
 
 	public void clicked() {
 		if (!active) {
-			editor.eController = new PlayerControl(p, editor.eGame);
+			editor.controller = new PlayerControl(p, editor.game);
 		} else {
-			editor.eGame.restart();
+			editor.game.restart();
 		}
 	}
 
 	public void updateActive() {
-		if (editor.eController instanceof PlayerControl) {
+		if (editor.controller instanceof PlayerControl) {
 			active = true;
 		} else {
 			active = false;

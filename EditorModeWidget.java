@@ -23,14 +23,14 @@ public class EditorModeWidget extends Widget {
 	public void clicked() {
 		if (active == false) {
 			active = true;
-			editor.eController = new EditorControl(p, editor);
+			editor.controller = new EditorControl(p, editor);
 		} else {
 			sActive = !sActive;
 		}
 	}
 
 	public void updateActiveUser() {
-		if (editor.eController instanceof EditorControl) {
+		if (editor.controller instanceof EditorControl) {
 			active = true;
 		} else {
 			active = false;

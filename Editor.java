@@ -1,8 +1,6 @@
 package editor;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-
 import camera.Camera;
 import controllers.CameraControl;
 import controllers.Controller;
@@ -18,9 +16,6 @@ import menus.Menu;
 import misc.Converter;
 import misc.DoToast;
 import misc.EditorJSON;
-import objects.Image;
-import objects.Rectangle;
-import objects.Tile;
 import processing.core.*;
 import static processing.core.PConstants.*;
 
@@ -33,10 +28,10 @@ public class Editor {
 	PApplet p;
 	TextureCache texture;
 	Converter convert;
-	public Game eGame; // reference to game, same instance of game used everywhere else
-	PageView ePageView;
-	Quadtree eWorld;
-	public Camera eCamera;
+	public Game game; // reference to game, same instance of game used everywhere else
+	PageView pageView;
+	Quadtree world;
+	public Camera camera;
 	//Tools eTools;
 
 	// camera variables
@@ -52,15 +47,16 @@ public class Editor {
 	private PVector lvCenter;
 
 	// controller
-	public Controller eController; // holds the current controller
-	boolean eControllerActive = true; // is the current controller active
+	public Controller controller; // holds the current controller
+	boolean controllerActive = true; // is the current controller active
 
 	// editor settings
 	public boolean snap = true; // things placed in the level will snap to grid
-	public editorType eType = editorType.TILE;
+	//public editorType eType = editorType.TILE;
+	public Tool currentTool = new TileTool(this);
 	public editorMode eMode = editorMode.ADD;
 	imagePlane eImagePlane = imagePlane.LEVEL;
-	public boolean pageView = false;
+	public boolean showPageView = false;
 
 	// current object to put into level
 	TileHandler currentTile = null;
@@ -84,12 +80,11 @@ public class Editor {
 		this.p = p;
 		this.texture = texture;
 		this.convert = convert;
-		this.eGame = game;
-		this.ePageView = eGame.getPageView();
-		this.eWorld = eGame.getWorld();
-		this.eCamera = camera;
-		//this.eTools = new Tools(this, eGame);
-		this.eController = new CameraControl(p, this);
+		this.game = game;
+		this.pageView = game.getPageView();
+		this.world = game.getWorld();
+		this.camera = camera;
+		this.controller = new CameraControl(p, this);
 		this.editorTop = new EditorTop(p, this);
 		this.editorBottom = new EditorBottom(p, this, texture);
 		this.eJSON = new EditorJSON(p, texture, toast);
@@ -98,12 +93,12 @@ public class Editor {
 		BOTTOM_DEADZONE = p.height - 300;
 
 		// Initialize camera backup fields
-		lvScale = eCamera.getScale();
-		lvSubScale = eCamera.getSubScale();
-		lvCenter = new PVector(eCamera.getCenter().x, eCamera.getCenter().y);
-		pvScale = eCamera.getScale();
-		pvSubScale = eCamera.getSubScale();
-		pvCenter = new PVector(eCamera.getCenter().x, eCamera.getCenter().y);
+		lvScale = camera.getScale();
+		lvSubScale = camera.getSubScale();
+		lvCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
+		pvScale = camera.getScale();
+		pvSubScale = camera.getSubScale();
+		pvCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 	}
 
 	public void step(ArrayList<PVector> touch) {
@@ -112,25 +107,25 @@ public class Editor {
 
 		// step the controller if there are no widget menus open and touch has been
 		// reenabled
-		if (eControllerActive && !nextTouchInactive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
-			eController.step(touch); // draw event for controls
+		if (controllerActive && !nextTouchInactive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
+			controller.step(touch); // draw event for controls
 		}
 
 		frameCounter();
 		if (quadtree) { // update quadtree display in game class
-			eGame.quadVis = true;
+			game.quadVis = true;
 		} else {
-			eGame.quadVis = false;
+			game.quadVis = false;
 		}
-		if (pageView) { // update pageview display in game class
-			eGame.displayPages = true;
-			eGame.point = null;
+		if (showPageView) { // update pageview display in game class
+			game.displayPages = true;
+			game.point = null;
 		} else {
-			eGame.displayPages = false;
+			game.displayPages = false;
 		}
 
-		if (!(eController instanceof EditorControl)) {
-			eGame.point = null;
+		if (!(controller instanceof EditorControl)) {
+			game.point = null;
 		}
 
 		// figure out what is being placed
@@ -149,7 +144,7 @@ public class Editor {
 			p.textSize(50);
 			p.textAlign(CENTER, CENTER);
 			p.text(PApplet.nf(convert.getScale(), 1, 2), p.width / 2, p.height - editorBottom.getHeight() - 150);
-			p.text(eGame.playerObjects.size() + " : " + eGame.screenObjects.size(), p.width / 2,
+			p.text(game.playerObjects.size() + " : " + game.screenObjects.size(), p.width / 2,
 					p.height - editorBottom.getHeight() - 100);
 			p.text("FPS: " + PApplet.nf(this.frame, 1, 2), p.width / 2, p.height - editorBottom.getHeight() - 50);
 		}
@@ -169,8 +164,8 @@ public class Editor {
 		if (nextTouchInactive) {
 			return;
 		}
-		if (eControllerActive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
-			eController.touchStarted(touch); // Controls for touch started event
+		if (controllerActive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
+			controller.touchStarted(touch); // Controls for touch started event
 		}
 	}
 
@@ -190,8 +185,8 @@ public class Editor {
 		if (nextTouchInactive) { // don't do controller if next touch inactive
 			return;
 		}
-		if (eControllerActive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
-			eController.touchMoved(touch); // Controls for touch moved event
+		if (controllerActive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
+			controller.touchMoved(touch); // Controls for touch moved event
 		}
 	}
 
@@ -199,8 +194,8 @@ public class Editor {
 		if (nextTouchInactive) {
 			return;
 		}
-		if (eControllerActive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
-			eController.onPinch(touch, x, y, d); // controlls for on pinch event
+		if (controllerActive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
+			controller.onPinch(touch, x, y, d); // controlls for on pinch event
 		}
 	}
 
@@ -209,146 +204,87 @@ public class Editor {
 	}
 
 	public void switchView() {
-		if (pageView) {
-			pageView = false;
+		if (showPageView) {
+			showPageView = false;
 			// save page view camera
-			pvScale = eCamera.getScale();
-			pvSubScale = eCamera.getSubScale();
-			pvCenter.x = eCamera.getCenter().x;
-			pvCenter.y = eCamera.getCenter().y;
+			pvScale = camera.getScale();
+			pvSubScale = camera.getSubScale();
+			pvCenter.x = camera.getCenter().x;
+			pvCenter.y = camera.getCenter().y;
 			// set camera to level view
-			eCamera.setScale(lvScale);
-			eCamera.setSubScale(lvSubScale);
-			eCamera.setCenter(lvCenter);
+			camera.setScale(lvScale);
+			camera.setSubScale(lvSubScale);
+			camera.setCenter(lvCenter);
 		} else {
-			pageView = true;
+			showPageView = true;
 			// save level view camera
-			lvScale = eCamera.getScale();
-			lvSubScale = eCamera.getSubScale();
-			lvCenter.x = eCamera.getCenter().x;
-			lvCenter.y = eCamera.getCenter().y;
+			lvScale = camera.getScale();
+			lvSubScale = camera.getSubScale();
+			lvCenter.x = camera.getCenter().x;
+			lvCenter.y = camera.getCenter().y;
 			// set camera to page view
-			eCamera.setScale(pvScale);
-			eCamera.setSubScale(pvSubScale);
-			eCamera.setCenter(pvCenter);
+			camera.setScale(pvScale);
+			camera.setSubScale(pvSubScale);
+			camera.setCenter(pvCenter);
 		}
 	}
 
 	public void editWorld() { // currently does placing and erasing
-		switch (eMode) {
-		case ADD:
-			addObject();
-			break;
-		case ERASE:
-			eraseObject();
-			break;
-		case SELECT:
-			selectObject();
-			break;
-		}
+		//TODO: run the current tool
+		
+		currentTool.activate();
 
-		if (eGame.point != null && !pageView) {
-
-			int platformX = (int) eGame.point.x;
-			int platformY = (int) eGame.point.y;
-
-			boolean spaceFree = true;
-			Rectangle foundAtPoint = null;
-
-			// create the new object to put in
-			Rectangle toInsert = null;
-			if (eType == editorType.TILE && currentTile != null) {
-				toInsert = new Tile(texture, currentTile.getFile(), platformX, platformY);
-			} else if (eType == editorType.IMAGE && currentImage != null) {
-				toInsert = new Image(texture, currentImage.getFile(), platformX, platformY, currentImage.getWidth(),
-						currentImage.getHeight());
-			} else if (eType == editorType.EVENT && currentEvent != null) {
-				toInsert = currentEvent.makeEvent(platformX, platformY);
-			} else {
-				eGame.point = null; // if there is nothing to put in, remove the point
-			}
-
-			// insert it or remove
-			if (toInsert != null && eGame.point != null) {
-				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
-				eWorld.retrieve(getRectangles, toInsert);
-				for (Rectangle p : getRectangles) {
-
-					if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY
-							&& toInsert.getClass().equals(p.getClass())) {
-						spaceFree = false;
-						foundAtPoint = p;
-					}
-				}
-
-				if (spaceFree) { // if there isn't something already there
-					if (eMode == editorMode.ADD) {
-						eWorld.insert(toInsert);
-					}
-				} else {
-					if (eMode == editorMode.ERASE && foundAtPoint != null) {
-						eWorld.remove(foundAtPoint);
-					}
-				}
-				eGame.point = null;
-			}
-		}
-	}
-
-	private void addObject() {
-//		switch (eType) {
-//		case TILE:
-//			eTools.addTile();
-//			break;
-//		case IMAGE:
-//			eTools.addImage();
-//			break;
-//		case EVENT:
-//			eTools.addEvent();
-//			break;
-//		case PAGE:
-//			eTools.addPage();
-//			break;
+//		if (game.point != null && !showPageView) {
+//
+//			int platformX = (int) game.point.x;
+//			int platformY = (int) game.point.y;
+//
+//			boolean spaceFree = true;
+//			Rectangle foundAtPoint = null;
+//
+//			// create the new object to put in
+//			Rectangle toInsert = null;
+//			if (eType == editorType.TILE && currentTile != null) {
+//				toInsert = new Tile(texture, currentTile.getFile(), platformX, platformY);
+//			} else if (eType == editorType.IMAGE && currentImage != null) {
+//				toInsert = new Image(texture, currentImage.getFile(), platformX, platformY, currentImage.getWidth(),
+//						currentImage.getHeight());
+//			} else if (eType == editorType.EVENT && currentEvent != null) {
+//				toInsert = currentEvent.makeEvent(platformX, platformY);
+//			} else {
+//				game.point = null; // if there is nothing to put in, remove the point
+//			}
+//
+//			// insert it or remove
+//			if (toInsert != null && game.point != null) {
+//				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
+//				world.retrieve(getRectangles, toInsert);
+//				for (Rectangle p : getRectangles) {
+//
+//					if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY
+//							&& toInsert.getClass().equals(p.getClass())) {
+//						spaceFree = false;
+//						foundAtPoint = p;
+//					}
+//				}
+//
+//				if (spaceFree) { // if there isn't something already there
+//					if (eMode == editorMode.ADD) {
+//						world.insert(toInsert);
+//					}
+//				} else {
+//					if (eMode == editorMode.ERASE && foundAtPoint != null) {
+//						world.remove(foundAtPoint);
+//					}
+//				}
+//				game.point = null;
+//			}
 //		}
 	}
 
-	private void eraseObject() {
-//		switch (eType) {
-//		case TILE:
-//			eTools.eraseTile();
-//			break;
-//		case IMAGE:
-//			eTools.eraseImage();
-//			break;
-//		case EVENT:
-//			eTools.eraseEvent();
-//			break;
-//		case PAGE:
-//			eTools.erasePage();
-//			break;
-//		}
-	}
-
-	private void selectObject() {
-//		switch (eType) {
-//		case TILE:
-//			eTools.selectTile();
-//			break;
-//		case IMAGE:
-//			eTools.selectImage();
-//			break;
-//		case EVENT:
-//			eTools.selectEvent();
-//			break;
-//		case PAGE:
-//			eTools.selectPage();
-//			break;
-//		}
-	}
-
-	public enum editorType {
-		TILE, IMAGE, EVENT, PAGE
-	}
+//	public enum editorType {
+//		TILE, IMAGE, EVENT, PAGE
+//	}
 
 	public enum editorMode {
 		ADD, ERASE, SELECT

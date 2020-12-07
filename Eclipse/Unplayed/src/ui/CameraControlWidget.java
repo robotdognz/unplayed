@@ -14,13 +14,13 @@ public class CameraControlWidget extends Widget {
 
 	public void clicked() {
 		if (!active) {
-			editor.eController = new CameraControl(p, editor);
-			editor.eCamera = new FreeCamera();
+			editor.controller = new CameraControl(p, editor);
+			editor.camera = new FreeCamera();
 		}
 	}
 
 	public void updateActive() {
-		if (available == true && editor.eController instanceof CameraControl) {
+		if (available == true && editor.controller instanceof CameraControl) {
 			active = true;
 		} else {
 			active = false;

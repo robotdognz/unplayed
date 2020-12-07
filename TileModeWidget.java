@@ -1,6 +1,7 @@
 package ui;
 
 import editor.Editor;
+import editor.TileTool;
 import editor.Toolbar;
 import processing.core.PApplet;
 
@@ -13,11 +14,11 @@ public class TileModeWidget extends Widget {
 	}
 
 	public void clicked() {
-		editor.eType = Editor.editorType.TILE;
+		editor.currentTool = new TileTool(editor);
 	}
 
 	public void updateActive() {
-		if (editor.eType == Editor.editorType.TILE) {
+		if (editor.currentTool instanceof TileTool) {
 			active = true;
 		} else {
 			active = false;

@@ -1,6 +1,7 @@
 package ui;
 
 import editor.Editor;
+import editor.EventTool;
 import editor.Toolbar;
 import processing.core.PApplet;
 
@@ -12,11 +13,11 @@ public class EventModeWidget extends Widget {
 	}
 
 	public void clicked() {
-		editor.eType = Editor.editorType.EVENT;
+		editor.currentTool = new EventTool(editor);
 	}
 
 	public void updateActive() {
-		if (editor.eType == Editor.editorType.EVENT) {
+		if (editor.currentTool instanceof EventTool) {
 			active = true;
 		} else {
 			active = false;

@@ -18,15 +18,15 @@ public class PlayModeWidget extends Widget {
 
 	public void clicked() {
 		if (active) {
-			editor.eCamera = new FreeCamera();
+			editor.camera = new FreeCamera();
 		} else {
-			editor.eCamera = new GameCamera();
-			editor.eController = new PlayerControl(p, editor.eGame);
+			editor.camera = new GameCamera();
+			editor.controller = new PlayerControl(p, editor.game);
 		}
 	}
 
 	public void updateActive() {
-		if (editor.eCamera instanceof FreeCamera) {
+		if (editor.camera instanceof FreeCamera) {
 			active = false;
 		} else {
 			active = true;

@@ -14,7 +14,7 @@ public class SelectWidget extends Widget {
 
 	public void clicked() {
 		editor.eMode = Editor.editorMode.SELECT;
-		editor.eController = new EditorControl(p, editor);
+		editor.controller = new EditorControl(p, editor);
 	}
 
 	public void updateActive() {

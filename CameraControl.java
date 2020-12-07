@@ -18,7 +18,7 @@ public class CameraControl implements Controller {
 	public CameraControl(PApplet p, Editor editor) {
 		this.p = p;
 		this.editor = editor;
-		this.game = editor.eGame;
+		this.game = editor.game;
 		this.convert = game.convert;
 		maxZoomSpeed = 150;
 	}
@@ -38,7 +38,7 @@ public class CameraControl implements Controller {
 			float moveX = (p.pmouseX - p.mouseX) / 3;
 			float moveY = (p.pmouseY - p.mouseY) / 3;
 			PVector diff = new PVector(convert.screenToLevel(moveX), convert.screenToLevel(moveY));
-			editor.eCamera.setCenter(editor.eCamera.getCenter().add(diff));
+			editor.camera.setCenter(editor.camera.getCenter().add(diff));
 		}
 	}
 
@@ -53,7 +53,7 @@ public class CameraControl implements Controller {
 		}
 
 		if (touch.size() == 2) {
-			float newScale = editor.eCamera.getScale() - convert.screenToLevel(d);
+			float newScale = editor.camera.getScale() - convert.screenToLevel(d);
 			float newTotalScale = convert.getTotalFromScale(newScale);
 			if (newTotalScale < editor.minZoom) {
 				newScale = convert.getScaleFromTotal(editor.minZoom);// editor.minZoom;
@@ -61,7 +61,7 @@ public class CameraControl implements Controller {
 			if (newTotalScale > editor.maxZoom) {
 				newScale = convert.getScaleFromTotal(editor.maxZoom);// editor.maxZoom;
 			}
-			editor.eCamera.setScale(newScale);
+			editor.camera.setScale(newScale);
 		}
 	}
 }

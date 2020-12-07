@@ -17,7 +17,7 @@ public class EditorControl implements Controller {
 	public EditorControl(PApplet p, Editor editor) {
 		this.p = p;
 		this.editor = editor;
-		this.game = editor.eGame;
+		this.game = editor.game;
 		this.convert = game.convert;
 	}
 

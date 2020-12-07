@@ -81,7 +81,7 @@ public class EditorTop extends Toolbar {
 				}
 			}
 		}
-		editor.eControllerActive = !wMenuOpen; // if a widget menu is open, deactivate controls
+		editor.controllerActive = !wMenuOpen; // if a widget menu is open, deactivate controls
 	}
 
 	public void touchEnded() {

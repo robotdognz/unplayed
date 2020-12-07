@@ -13,6 +13,6 @@ public class LoadWidget extends Widget {
 
 	public void clicked() {
 		// load the level
-		editor.eJSON.load(editor.eGame);
+		editor.eJSON.load(editor.game);
 	}
 }

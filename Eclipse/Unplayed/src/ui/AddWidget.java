@@ -14,7 +14,7 @@ public class AddWidget extends Widget {
 
 	public void clicked() {
 		editor.eMode = Editor.editorMode.ADD;
-		editor.eController = new EditorControl(p, editor);
+		editor.controller = new EditorControl(p, editor);
 	}
 
 	public void updateActive() {

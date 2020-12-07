@@ -13,6 +13,6 @@ public class SaveWidget extends Widget {
 
 	public void clicked() {
 		// save the level
-		editor.eJSON.save(editor.eGame);
+		editor.eJSON.save(editor.game);
 	}
 }

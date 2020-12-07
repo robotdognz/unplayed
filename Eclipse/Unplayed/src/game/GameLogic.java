@@ -21,9 +21,9 @@ import ui.Widget;
 
 //handles all of the logic at the application level
 public class GameLogic {
-	public PApplet p;
-	public Activity activity;
-	public Context context;
+	private PApplet p;
+	private Activity activity;
+	private Context context;
 
 	public KetaiGesture gesture;
 	public Vibe vibe;
@@ -40,7 +40,7 @@ public class GameLogic {
 	public PVector lastTouch; // the last on screen touch
 
 	public ArrayList<Widget> widgets;
-	public float widgetSpacing; //size of gap between widgets
+	public float widgetSpacing; // size of gap between widgets
 
 	public GameLogic(PApplet p, Activity activity, Context context) {
 		this.p = p;
@@ -77,4 +77,6 @@ public class GameLogic {
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
 	}
+	
+	//TODO: move all of the other methods in Unplayed here (touchMoved(), etc)
 }

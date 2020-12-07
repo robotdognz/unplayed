@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import controllers.EditorControl;
 import editor.Editor.editorMode;
-import editor.Editor.editorType;
 import handlers.EventHandler;
 import handlers.Handler;
 import handlers.ImageHandler;
@@ -102,15 +101,15 @@ public class EditorBottom extends Toolbar {
 		ArrayList<Handler> objects = new ArrayList<Handler>(); // current objects to draw in the scroll bar
 		Float offset = 0.0f;
 		Handler currentHandler = null;
-		if (editor.eType == editorType.TILE) {
+		if (editor.currentTool instanceof TileTool) {
 			objects.addAll(tiles);
 			offset = tileOffset;
 			currentHandler = editor.currentTile;
-		} else if (editor.eType == editorType.IMAGE) {
+		} else if (editor.currentTool instanceof ImageTool) {
 			objects.addAll(images);
 			offset = imageOffset;
 			currentHandler = editor.currentImage;
-		} else if (editor.eType == editorType.EVENT) {
+		} else if (editor.currentTool instanceof EventTool) {
 			objects.addAll(events);
 			offset = eventOffset;
 			currentHandler = editor.currentEvent;
@@ -141,19 +140,19 @@ public class EditorBottom extends Toolbar {
 	public void onTap(float x, float y) {
 		// select object
 		if (y >= objectArea.getY()) {
-			editor.eController = new EditorControl(p, editor);
+			editor.controller = new EditorControl(p, editor);
 			editor.eMode = editorMode.ADD;
 
 			// figure out what type is being clicked on
 			ArrayList<Handler> objects = new ArrayList<Handler>(); // current objects to draw in the scroll bar
 			Float offset = 0.0f;
-			if (editor.eType == editorType.TILE) {
+			if (editor.currentTool instanceof TileTool) {
 				objects.addAll(tiles);
 				offset = tileOffset;
-			} else if (editor.eType == editorType.IMAGE) {
+			} else if (editor.currentTool instanceof ImageTool) {
 				objects.addAll(images);
 				offset = imageOffset;
-			} else if (editor.eType == editorType.EVENT) {
+			} else if (editor.currentTool instanceof EventTool) {
 				objects.addAll(events);
 				offset = eventOffset;
 			}
@@ -163,11 +162,11 @@ public class EditorBottom extends Toolbar {
 				float leftEdge = objectArea.getX() + (i) * objectArea.getHeight() - offset;
 				float rightEdge = objectArea.getX() + (i + 1) * objectArea.getHeight() - offset;
 				if (x > leftEdge && x < rightEdge) {
-					if (editor.eType == editorType.TILE) {
+					if (editor.currentTool instanceof TileTool) {
 						editor.currentTile = (TileHandler) objects.get(i);
-					} else if (editor.eType == editorType.IMAGE) {
+					} else if (editor.currentTool instanceof ImageTool) {
 						editor.currentImage = (ImageHandler) objects.get(i);
-					} else if (editor.eType == editorType.EVENT) {
+					} else if (editor.currentTool instanceof EventTool) {
 						editor.currentEvent = (EventHandler) objects.get(i);
 					}
 				}
@@ -177,11 +176,11 @@ public class EditorBottom extends Toolbar {
 
 	public void touchMoved(ArrayList<PVector> touch) {
 		if (touch.size() == 1 && p.mouseY >= objectArea.getY()) {
-			if (editor.eType == editorType.TILE) {
+			if (editor.currentTool instanceof TileTool) {
 				tileOffset += (p.pmouseX - p.mouseX) / 3;
-			} else if (editor.eType == editorType.IMAGE) {
+			} else if (editor.currentTool instanceof ImageTool) {
 				imageOffset += (p.pmouseX - p.mouseX) / 3;
-			} else if (editor.eType == editorType.EVENT) {
+			} else if (editor.currentTool instanceof EventTool) {
 				eventOffset += (p.pmouseX - p.mouseX) / 3;
 			}
 		}

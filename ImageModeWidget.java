@@ -1,6 +1,7 @@
 package ui;
 
 import editor.Editor;
+import editor.ImageTool;
 import editor.Toolbar;
 import processing.core.PApplet;
 
@@ -12,11 +13,11 @@ public class ImageModeWidget extends Widget {
 	}
 
 	public void clicked() {
-		editor.eType = Editor.editorType.IMAGE;
+		editor.currentTool = new ImageTool(editor);
 	}
 
 	public void updateActive() {
-		if (editor.eType == Editor.editorType.IMAGE) {
+		if (editor.currentTool instanceof ImageTool) {
 			active = true;
 		} else {
 			active = false;
