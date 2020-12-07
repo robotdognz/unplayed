@@ -8,20 +8,8 @@ import misc.*;
 import objects.*;
 import ui.*;
 
-//import android.os.Vibrator;
-//import android.os.VibrationEffect;
 import android.content.Context;
 import android.app.Activity;
-import android.os.Environment;
-//import java.util.Collections;
-//import java.util.List;
-//import java.util.Set;
-//import java.util.HashSet;
-//import java.util.regex.*;
-
-//import java.io.Writer;
-//import java.io.FileWriter;
-//import java.io.BufferedWriter;
 import android.widget.Toast;
 
 PGraphics mainGraphics; 
@@ -35,8 +23,6 @@ TextureCache texture;
 Activity activity;
 Context context;
 
-int splash; //true if the game hasn't started looping and a splash screen should be drawn
-PImage splashScreen;
 Game game; //holds the game class
 Controller controller; //holds the current controller
 Editor editor; //holds the editor
@@ -49,6 +35,9 @@ float widgetSpacing; //size of gap between widgets
 ArrayList<PVector> touch;
 PVector lastTouch;
 
+//splash screen
+int splash; //true if the game hasn't started looping and a splash screen should be drawn
+PImage splashScreen;
 
 void setup() {
   //setup graphics
