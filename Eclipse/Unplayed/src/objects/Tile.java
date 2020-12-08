@@ -37,6 +37,10 @@ public class Tile extends Rectangle {
 	}
 
 	public File getFile() {
-		return tileTexture.getFile();
+		if (tileTexture != null) {
+			return tileTexture.getFile();
+		} else {
+			return null;
+		}
 	}
 }

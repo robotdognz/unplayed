@@ -41,6 +41,10 @@ public class Image extends Rectangle {
 	}
 
 	public File getFile() {
-		return imageTexture.getFile();
+		if (imageTexture != null) {
+			return imageTexture.getFile();
+		} else {
+			return null;
+		}
 	}
 }

@@ -24,7 +24,7 @@ public class TileTool implements Tool {
 		if (game.point != null && !editor.showPageView) {
 
 			// figure out what to insert
-			Rectangle toInsert = null;
+			Tile toInsert = null;
 			if (editor.currentTile != null) {
 				// create correct tile
 				toInsert = new Tile(texture, editor.currentTile.getFile(), (int) game.point.x, (int) game.point.y);
@@ -50,7 +50,7 @@ public class TileTool implements Tool {
 		}
 	}
 
-	private void add(Rectangle toInsert, HashSet<Rectangle> getRectangles) {
+	private void add(Tile toInsert, HashSet<Rectangle> getRectangles) {
 		// find anything that directly overlaps the inserting tile
 		Rectangle foundAtPoint = null;
 		for (Rectangle p : getRectangles) {
@@ -68,7 +68,11 @@ public class TileTool implements Tool {
 		}
 
 		// select the newly inserted tile
-		editor.selected = toInsert;
+		if (toInsert.getFile() != null) {
+			editor.selected = toInsert;
+		}else {
+			editor.selected = null;
+		}
 	}
 
 	private void erase(Rectangle toInsert, HashSet<Rectangle> getRectangles) {
@@ -87,11 +91,11 @@ public class TileTool implements Tool {
 				continue;
 			}
 			editor.world.remove(p);
-			if(editor.selected.equals(p)) {
+			if (p.equals(editor.selected)) {
 				editor.selected = null;
 			}
 		}
-		
+
 	}
 
 	private void select(Rectangle toInsert, HashSet<Rectangle> getRectangles) {
@@ -129,11 +133,11 @@ public class TileTool implements Tool {
 				if (p.getBottomRight().y < toInsert.getTopLeft().y + 1) {
 					continue;
 				}
-				//select the first overlap
+				// select the first overlap
 				editor.selected = p;
 				return;
 			}
-			//nothing was found, select nothing
+			// nothing was found, select nothing
 			editor.selected = null;
 		}
 
