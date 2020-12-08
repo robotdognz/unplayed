@@ -129,6 +129,8 @@ public class TileTool implements Tool {
 				editor.selected = p;
 				return;
 			}
+			//nothing was found, select nothing
+			editor.selected = null;
 		}
 
 	}
