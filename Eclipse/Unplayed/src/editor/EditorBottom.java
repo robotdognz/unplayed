@@ -54,7 +54,7 @@ public class EditorBottom extends Toolbar {
 		widgets.add(eventW);
 		widgets.add(viewW);
 
-		widgetOffset = p.width * 0.71f;
+		widgetOffset = p.width * 0.61f; //p.width * 0.71f
 		widgetSpacing = 140; // TODO: get the spacing right
 
 		// setup toolbar
