@@ -17,7 +17,6 @@ public class ConfirmWidget extends Widget {
 		if(editor.currentTool != null) {
 			editor.currentTool.touchMoved(); //TODO: this is a bit of a weird way to do it
 		}
-//		editor.editWorld();
 	}
 
 	public void updateActive() {

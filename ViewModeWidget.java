@@ -14,7 +14,7 @@ public class ViewModeWidget extends Widget {
 	}
 
 	public void clicked() {
-		editor.currentTool = new ViewTool(editor);
+		editor.currentTool = new ViewTool(p, editor);
 	}
 
 	public void updateActive() {
