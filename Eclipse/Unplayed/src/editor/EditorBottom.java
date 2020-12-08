@@ -106,7 +106,7 @@ public class EditorBottom extends Toolbar {
 		// figure out what type to show
 		ArrayList<Object> objects = new ArrayList<Object>(); // current objects to draw in the scroll bar
 		Float offset = 0.0f;
-		Object currentHandler = null;
+		Object currentHandler = null; //TODO: rename
 		if (editor.currentTool instanceof TileTool) {
 			objects.addAll(tiles);
 			offset = tileOffset;
@@ -122,6 +122,7 @@ public class EditorBottom extends Toolbar {
 		} else if (editor.currentTool instanceof ViewTool) {
 			objects.addAll(views);
 			offset = viewOffset;
+			currentHandler = editor.currentView;
 		}
 
 		// draw scroll bar for that type
@@ -142,8 +143,7 @@ public class EditorBottom extends Toolbar {
 				((Handler) object).draw(selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
 						selectionArea.getY() + selectionArea.getHeight() / 2, size);
 			} else if (object instanceof View) {
-				//TODO: draw the view 
-				//PApplet.println("view: " + i);
+				//TODO: draw the view
 				((View) object).drawToolbar(selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
 						selectionArea.getY() + selectionArea.getHeight() / 2, size);
 			}
@@ -160,7 +160,7 @@ public class EditorBottom extends Toolbar {
 			editor.eMode = editorMode.ADD;
 
 			// figure out what type is being clicked on
-			ArrayList<Handler> objects = new ArrayList<Handler>(); // current objects to draw in the scroll bar
+			ArrayList<Object> objects = new ArrayList<Object>(); // current objects to draw in the scroll bar
 			Float offset = 0.0f;
 			if (editor.currentTool instanceof TileTool) {
 				objects.addAll(tiles);
@@ -171,6 +171,9 @@ public class EditorBottom extends Toolbar {
 			} else if (editor.currentTool instanceof EventTool) {
 				objects.addAll(events);
 				offset = eventOffset;
+			} else if (editor.currentTool instanceof ViewTool) {
+				objects.addAll(views);
+				offset = viewOffset;
 			}
 
 			// click on that object
@@ -184,6 +187,8 @@ public class EditorBottom extends Toolbar {
 						editor.currentImage = (ImageHandler) objects.get(i);
 					} else if (editor.currentTool instanceof EventTool) {
 						editor.currentEvent = (EventHandler) objects.get(i);
+					} else if (editor.currentTool instanceof ViewTool) {
+						editor.currentView = (View) objects.get(i);
 					}
 				}
 			}
@@ -198,6 +203,8 @@ public class EditorBottom extends Toolbar {
 				imageOffset += (p.pmouseX - p.mouseX) / 3;
 			} else if (editor.currentTool instanceof EventTool) {
 				eventOffset += (p.pmouseX - p.mouseX) / 3;
+			} else if (editor.currentTool instanceof ViewTool) {
+				viewOffset += (p.pmouseX - p.mouseX) / 3;
 			}
 		}
 	}

@@ -17,6 +17,7 @@ import misc.Converter;
 import misc.DoToast;
 import misc.EditorJSON;
 import objects.Rectangle;
+import objects.View;
 import processing.core.*;
 import static processing.core.PConstants.*;
 
@@ -62,6 +63,7 @@ public class Editor {
 	TileHandler currentTile = null;
 	ImageHandler currentImage = null;
 	EventHandler currentEvent = null;
+	View currentView = null;
 	
 	//selected object
 	Rectangle selected;
@@ -144,6 +146,7 @@ public class Editor {
 		// draw toolbars
 		editorTop.draw(touch, menu);
 		editorBottom.draw(touch, menu);
+		//TODO: editorSide.draw(touch, menu);
 		
 		//draw tool effects
 		if(currentTool != null) {
@@ -155,7 +158,6 @@ public class Editor {
 			p.fill(80);
 			p.textSize(50);
 			p.textAlign(CENTER, CENTER);
-			p.text("Views: " + game.views.size() + " : " + ((EditorBottom)editorBottom).views.size(), p.width / 2, p.height - editorBottom.getHeight() - 200);
 			p.text(PApplet.nf(convert.getScale(), 1, 2), p.width / 2, p.height - editorBottom.getHeight() - 150);
 			p.text(game.playerObjects.size() + " : " + game.screenObjects.size(), p.width / 2,
 					p.height - editorBottom.getHeight() - 100);
