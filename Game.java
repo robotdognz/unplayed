@@ -179,7 +179,7 @@ public class Game {
 		player.draw(p.g);
 		paper.draw(p.g, screenSpace, currentScale);
 
-		// draw page views
+		// draw page views TODO: remove this
 		for (Page page : pageView.getPages()) {
 			Rectangle pView = page.getView();
 			p.noFill();
@@ -236,6 +236,7 @@ public class Game {
 			p.text(s, point.x + 105, point.y + 50);
 		}
 		
+		//draw selection box around selected object
 		if(selected != null) {
 			p.noFill();
 			p.stroke(255, 0, 0); //selection colour

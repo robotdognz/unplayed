@@ -144,6 +144,11 @@ public class Editor {
 		// draw toolbars
 		editorTop.draw(touch, menu);
 		editorBottom.draw(touch, menu);
+		
+		//draw tool effects
+		if(currentTool != null) {
+			currentTool.draw();
+		}
 
 		// draw frame counter and other readouts
 		if (debug) {
@@ -182,6 +187,10 @@ public class Editor {
 
 		if (nextTouchInactive) {
 			nextTouchInactive = false;
+		}
+		
+		if(currentTool != null) {
+			currentTool.touchEnded();
 		}
 	}
 

@@ -19,7 +19,7 @@ public class EventTool implements Tool {
 		this.game = editor.game;
 		this.texture = editor.texture;
 	}
-	
+
 	@Override
 	public void activate() {
 		if (game.point != null && !editor.showPageView) {
@@ -51,7 +51,8 @@ public class EventTool implements Tool {
 		}
 	}
 
-	//TODO: copied from ImageTool without adjusting
+	// TODO: can currently place events directly on top of each other, that could be
+	// fine
 	private void add(Event toInsert, HashSet<Rectangle> getRectangles) {
 		// find anything that directly overlaps the inserting event
 		Event foundAtPoint = null;
@@ -77,7 +78,7 @@ public class EventTool implements Tool {
 		}
 	}
 
-	//TODO: copied from ImageTool without adjusting
+	// TODO: copied from ImageTool without adjusting
 	private void erase(Event toInsert, HashSet<Rectangle> getRectangles) {
 		for (Rectangle p : getRectangles) {
 			// if the rectangle overlaps toInsert, remove it
@@ -104,7 +105,7 @@ public class EventTool implements Tool {
 
 	}
 
-	//TODO: copied from ImageTool without adjusting
+	// TODO: copied from ImageTool without adjusting
 	private void select(Event toInsert, HashSet<Rectangle> getRectangles) {
 		// if there is noting to check
 		if (getRectangles.size() < 1) {
@@ -150,6 +151,13 @@ public class EventTool implements Tool {
 			// nothing was found, select nothing
 			editor.selected = null;
 		}
+	}
 
+	@Override
+	public void touchEnded() {
+	}
+
+	@Override
+	public void draw() {
 	}
 }

@@ -146,7 +146,13 @@ public class TileTool implements Tool {
 			// nothing was found, select nothing
 			editor.selected = null;
 		}
-
 	}
 
+	@Override
+	public void touchEnded() {
+	}
+
+	@Override
+	public void draw() {
+	}
 }
