@@ -12,8 +12,8 @@ public class ViewTool implements Tool {
 	Editor editor;
 	Game game;
 	TextureCache texture;
-	PVector start; //start of rectangle drawing
-	PVector end; //end of rectangle drawing
+	PVector start; // start of rectangle drawing
+	PVector end; // end of rectangle drawing
 
 	public ViewTool(PApplet p, Editor editor) {
 		this.p = p;
@@ -26,9 +26,9 @@ public class ViewTool implements Tool {
 
 	@Override
 	public void touchMoved() {
-		if(start == null) {
+		if (start == null) {
 			start = new PVector(game.point.x, game.point.y);
-		}else {
+		} else {
 			end = new PVector(game.point.x, game.point.y);
 		}
 
@@ -39,8 +39,8 @@ public class ViewTool implements Tool {
 		// if the stored first point is not null
 		// confirm the second point (unless it's the same as the first point)
 		// place the view into the world
-		if(start != null && end != null) {
-			View newView = new View(p, (int)start.x, (int)start.y, (int)(end.x-start.x), (int)(end.y-start.y));
+		if (start != null && end != null) {
+			View newView = new View(p, (int) start.x, (int) start.y, (int) (end.x - start.x), (int) (end.y - start.y));
 			game.views.add(newView);
 			start = null;
 			end = null;
@@ -50,16 +50,13 @@ public class ViewTool implements Tool {
 	@Override
 	public void draw() {
 		// draw the current selection area
-		
-		if(start != null && end != null) {
+
+		if (start != null && end != null) {
 			p.rectMode(CORNERS);
 			p.noFill();
-			p.stroke(0,0,255);
+			p.stroke(0, 0, 255);
 			p.strokeWeight(4);
-			//TODO: check if you can draw rectangles backwards in CORNERS mode
-			//if(start.x < end.x && start.y < end.y) {
-				p.rect(start.x, start.y, end.x, end.y);
-			//}
+			p.rect(start.x, start.y, end.x, end.y);
 			p.rectMode(CORNER);
 		}
 	}
