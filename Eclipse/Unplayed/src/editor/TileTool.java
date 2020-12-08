@@ -66,8 +66,8 @@ public class TileTool implements Tool {
 			}
 			editor.world.insert(toInsert);
 		}
-		
-		//select the newly inserted tile
+
+		// select the newly inserted tile
 		editor.selected = toInsert;
 	}
 
@@ -91,10 +91,18 @@ public class TileTool implements Tool {
 	}
 
 	private void select(Rectangle toInsert, HashSet<Rectangle> getRectangles) {
-		if(getRectangles.size() < 1) {
+		if (getRectangles.size() < 1) {
 			editor.selected = null;
 			return;
+		} else if (getRectangles.size() == 1) {
+			for (Rectangle p : getRectangles) {
+				if (toInsert.getClass().equals(p.getClass())) {
+					editor.selected = p;
+					return;
+				}
+			}
 		}
+
 		Rectangle foundAtPoint = null;
 		for (Rectangle p : getRectangles) {
 			if (p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()
@@ -102,7 +110,11 @@ public class TileTool implements Tool {
 				foundAtPoint = p;
 			}
 		}
-		if (foundAtPoint == null) {
+		if (foundAtPoint != null) {
+			//if it found a perfect match
+			editor.selected = foundAtPoint;
+		} else {
+			//else grab the first thing it finds TODO: this is temp
 			for (Rectangle p : getRectangles) {
 				editor.selected = p;
 				return;
