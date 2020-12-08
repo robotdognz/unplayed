@@ -5,6 +5,8 @@ import java.util.HashSet;
 import editor.Editor.editorMode;
 import game.Game;
 import handlers.TextureCache;
+import objects.Event;
+import objects.PlayerDeath;
 import objects.Rectangle;
 
 public class EventTool implements Tool {
@@ -21,39 +23,133 @@ public class EventTool implements Tool {
 	@Override
 	public void activate() {
 		if (game.point != null && !editor.showPageView) {
-			int platformX = (int) game.point.x;
-			int platformY = (int) game.point.y;
 
-			boolean spaceFree = true;
-			Rectangle foundAtPoint = null;
-			Rectangle toInsert = null;
+			// figure out what to insert
+			Event toInsert = null;
 			if (editor.currentEvent != null) {
-				toInsert = editor.currentEvent.makeEvent(platformX, platformY);
+				// create correct event
+				toInsert = editor.currentEvent.makeEvent((int) game.point.x, (int) game.point.y);
+			} else {
+				// use blank event
+				toInsert = new PlayerDeath(null, null, (int) game.point.x, (int) game.point.y);
 			}
-			if (toInsert != null && game.point != null) {
+
+			// get all rectangles that overlap toInsert and pass them to the right method
+			if (game.point != null) {
 				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 				editor.world.retrieve(getRectangles, toInsert);
-				for (Rectangle p : getRectangles) {
 
-					if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY
-							&& toInsert.getClass().equals(p.getClass())) {
-						spaceFree = false;
-						foundAtPoint = p;
-					}
-				}
-
-				if (spaceFree) { // if there isn't something already there
-					if (editor.eMode == editorMode.ADD) {
-						editor.world.insert(toInsert);
-					}
-				} else {
-					if (editor.eMode == editorMode.ERASE && foundAtPoint != null) {
-						editor.world.remove(foundAtPoint);
-					}
+				if (editor.eMode == editorMode.ADD) { // adding event
+					add(toInsert, getRectangles);
+				} else if (editor.eMode == editorMode.ERASE) { // erasing event
+					erase(toInsert, getRectangles);
+				} else if (editor.eMode == editorMode.SELECT) { // selecting event
+					select(toInsert, getRectangles);
 				}
 				game.point = null;
 			}
 		}
 	}
 
+	//TODO: copied from ImageTool without adjusting
+	private void add(Event toInsert, HashSet<Rectangle> getRectangles) {
+		// find anything that directly overlaps the inserting event
+		Event foundAtPoint = null;
+		for (Rectangle p : getRectangles) {
+			if (p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()
+					&& toInsert.getClass().equals(p.getClass())) {
+				foundAtPoint = (Event) p;
+			}
+		}
+		// remove what was found and place the new event
+		if (editor.currentEvent != null) {
+			if (foundAtPoint != null) {
+				editor.world.remove(foundAtPoint);
+			}
+			editor.world.insert(toInsert);
+		}
+
+		// select the newly inserted event
+		if (toInsert.getName() != null) {
+			editor.selected = toInsert;
+		} else {
+			editor.selected = null;
+		}
+	}
+
+	//TODO: copied from ImageTool without adjusting
+	private void erase(Event toInsert, HashSet<Rectangle> getRectangles) {
+		for (Rectangle p : getRectangles) {
+			// if the rectangle overlaps toInsert, remove it
+			if (!(p instanceof Event)) {
+				continue;
+			}
+			if (p.getTopLeft().x > toInsert.getBottomRight().x - 1) {
+				continue;
+			}
+			if (p.getBottomRight().x < toInsert.getTopLeft().x + 1) {
+				continue;
+			}
+			if (p.getTopLeft().y > toInsert.getBottomRight().y - 1) {
+				continue;
+			}
+			if (p.getBottomRight().y < toInsert.getTopLeft().y + 1) {
+				continue;
+			}
+			editor.world.remove(p);
+			if (p.equals(editor.selected)) {
+				editor.selected = null;
+			}
+		}
+
+	}
+
+	//TODO: copied from ImageTool without adjusting
+	private void select(Event toInsert, HashSet<Rectangle> getRectangles) {
+		// if there is noting to check
+		if (getRectangles.size() < 1) {
+			editor.selected = null;
+			return;
+		}
+
+		// if there are things to check
+		// try to find exact match
+		Rectangle foundAtPoint = null;
+		for (Rectangle p : getRectangles) {
+			if (p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()
+					&& toInsert.getClass().equals(p.getClass())) {
+				foundAtPoint = p;
+			}
+		}
+
+		if (foundAtPoint != null) {
+			// if it found an exact match
+			editor.selected = foundAtPoint;
+		} else {
+			// if there is no exact match, look for overlaps
+			for (Rectangle p : getRectangles) {
+				if (!(p instanceof Event)) {
+					continue;
+				}
+				if (p.getTopLeft().x > toInsert.getBottomRight().x - 1) {
+					continue;
+				}
+				if (p.getBottomRight().x < toInsert.getTopLeft().x + 1) {
+					continue;
+				}
+				if (p.getTopLeft().y > toInsert.getBottomRight().y - 1) {
+					continue;
+				}
+				if (p.getBottomRight().y < toInsert.getTopLeft().y + 1) {
+					continue;
+				}
+				// select the first overlap
+				editor.selected = p;
+				return;
+			}
+			// nothing was found, select nothing
+			editor.selected = null;
+		}
+
+	}
 }

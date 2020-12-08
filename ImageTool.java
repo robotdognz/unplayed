@@ -51,6 +51,7 @@ public class ImageTool implements Tool {
 		}
 	}
 
+	//TODO: image adding should only erase those underneath if they perfectly overlap
 	private void add(Image toInsert, HashSet<Rectangle> getRectangles) {
 		// find anything that directly overlaps the inserting image
 		Image foundAtPoint = null;
@@ -76,6 +77,7 @@ public class ImageTool implements Tool {
 		}
 	}
 
+	//TODO: image erasing should always use a 100x100 image
 	private void erase(Image toInsert, HashSet<Rectangle> getRectangles) {
 		for (Rectangle p : getRectangles) {
 			// if the rectangle overlaps toInsert, remove it
@@ -102,6 +104,7 @@ public class ImageTool implements Tool {
 
 	}
 
+	//TODO: image selecting should always use a 100x100 image
 	private void select(Image toInsert, HashSet<Rectangle> getRectangles) {
 		// if there is noting to check
 		if (getRectangles.size() < 1) {
