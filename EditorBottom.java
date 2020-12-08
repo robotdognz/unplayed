@@ -143,6 +143,7 @@ public class EditorBottom extends Toolbar {
 						selectionArea.getY() + selectionArea.getHeight() / 2, size);
 			} else if (object instanceof View) {
 				//TODO: draw the view 
+				PApplet.println("view: " + i);
 				((View) object).drawToolbar(selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
 						selectionArea.getY() + selectionArea.getHeight() / 2, size);
 			}
