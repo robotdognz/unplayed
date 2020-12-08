@@ -52,11 +52,11 @@ public class TileTool implements Tool {
 
 	private void add(Tile toInsert, HashSet<Rectangle> getRectangles) {
 		// find anything that directly overlaps the inserting tile
-		Rectangle foundAtPoint = null;
+		Tile foundAtPoint = null;
 		for (Rectangle p : getRectangles) {
 			if (p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()
 					&& toInsert.getClass().equals(p.getClass())) {
-				foundAtPoint = p;
+				foundAtPoint = (Tile) p;
 			}
 		}
 		// remove what was found and place the new tile
@@ -70,14 +70,17 @@ public class TileTool implements Tool {
 		// select the newly inserted tile
 		if (toInsert.getFile() != null) {
 			editor.selected = toInsert;
-		}else {
+		} else {
 			editor.selected = null;
 		}
 	}
 
-	private void erase(Rectangle toInsert, HashSet<Rectangle> getRectangles) {
+	private void erase(Tile toInsert, HashSet<Rectangle> getRectangles) {
 		for (Rectangle p : getRectangles) {
 			// if the rectangle overlaps toInsert, remove it
+			if (!(p instanceof Tile)) {
+				continue;
+			}
 			if (p.getTopLeft().x > toInsert.getBottomRight().x - 1) {
 				continue;
 			}
@@ -98,7 +101,7 @@ public class TileTool implements Tool {
 
 	}
 
-	private void select(Rectangle toInsert, HashSet<Rectangle> getRectangles) {
+	private void select(Tile toInsert, HashSet<Rectangle> getRectangles) {
 		// if there is noting to check
 		if (getRectangles.size() < 1) {
 			editor.selected = null;
@@ -107,11 +110,11 @@ public class TileTool implements Tool {
 
 		// if there are things to check
 		// try to find exact match
-		Rectangle foundAtPoint = null;
+		Tile foundAtPoint = null;
 		for (Rectangle p : getRectangles) {
 			if (p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()
 					&& toInsert.getClass().equals(p.getClass())) {
-				foundAtPoint = p;
+				foundAtPoint = (Tile) p;
 			}
 		}
 
@@ -121,6 +124,9 @@ public class TileTool implements Tool {
 		} else {
 			// if there is no exact match, look for overlaps
 			for (Rectangle p : getRectangles) {
+				if (!(p instanceof Tile)) {
+					continue;
+				}
 				if (p.getTopLeft().x > toInsert.getBottomRight().x - 1) {
 					continue;
 				}
