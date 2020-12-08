@@ -91,18 +91,14 @@ public class TileTool implements Tool {
 	}
 
 	private void select(Rectangle toInsert, HashSet<Rectangle> getRectangles) {
+		// if there is noting to check
 		if (getRectangles.size() < 1) {
 			editor.selected = null;
 			return;
-		} else if (getRectangles.size() == 1) {
-			for (Rectangle p : getRectangles) {
-				if (toInsert.getClass().equals(p.getClass())) {
-					editor.selected = p;
-					return;
-				}
-			}
 		}
 
+		// if there are things to check
+		// try to find exact match
 		Rectangle foundAtPoint = null;
 		for (Rectangle p : getRectangles) {
 			if (p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()
@@ -110,16 +106,31 @@ public class TileTool implements Tool {
 				foundAtPoint = p;
 			}
 		}
+
 		if (foundAtPoint != null) {
-			//if it found a perfect match
+			// if it found an exact match
 			editor.selected = foundAtPoint;
 		} else {
-			//else grab the first thing it finds TODO: this is temp
+			// if there is no exact match, look for overlaps
 			for (Rectangle p : getRectangles) {
+				if (p.getTopLeft().x > toInsert.getBottomRight().x - 1) {
+					continue;
+				}
+				if (p.getBottomRight().x < toInsert.getTopLeft().x + 1) {
+					continue;
+				}
+				if (p.getTopLeft().y > toInsert.getBottomRight().y - 1) {
+					continue;
+				}
+				if (p.getBottomRight().y < toInsert.getTopLeft().y + 1) {
+					continue;
+				}
+				//select the first overlap
 				editor.selected = p;
 				return;
 			}
 		}
+
 	}
 
 }
