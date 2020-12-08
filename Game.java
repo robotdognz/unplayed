@@ -28,6 +28,7 @@ public class Game {
 
 	private boolean eventVis;
 	public boolean quadVis;
+	public Rectangle selected;
 
 	public Camera camera;
 	public Rectangle screenSpace;
@@ -233,6 +234,13 @@ public class Game {
 			int yCoord = (int) point.y;
 			String s = "[" + xCoord + ", " + yCoord + "]";
 			p.text(s, point.x + 105, point.y + 50);
+		}
+		
+		if(selected != null) {
+			p.noFill();
+			p.stroke(255, 0, 0); //selection colour
+			p.strokeWeight(2);
+			p.rect(selected.getX(), selected.getY(), selected.getWidth(), selected.getHeight());
 		}
 
 		p.popMatrix(); // start working at screen scale

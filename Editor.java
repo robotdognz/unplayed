@@ -16,6 +16,7 @@ import menus.Menu;
 import misc.Converter;
 import misc.DoToast;
 import misc.EditorJSON;
+import objects.Rectangle;
 import processing.core.*;
 import static processing.core.PConstants.*;
 
@@ -61,6 +62,9 @@ public class Editor {
 	TileHandler currentTile = null;
 	ImageHandler currentImage = null;
 	EventHandler currentEvent = null;
+	
+	//selected object
+	Rectangle selected;
 
 	// toolbars
 	Toolbar editorTop;
@@ -131,7 +135,7 @@ public class Editor {
 			game.point = null;
 		}
 
-		// figure out what is being placed
+		game.selected = selected;
 	}
 
 	// a bunch of this probably needs to be moved to step, for logical consistency
@@ -232,62 +236,10 @@ public class Editor {
 		}
 	}
 
-	public void editWorld() { // currently does placing and erasing
-		//TODO: run the current tool
-		
+	public void editWorld() {
 		currentTool.activate();
 
-//		if (game.point != null && !showPageView) {
-//
-//			int platformX = (int) game.point.x;
-//			int platformY = (int) game.point.y;
-//
-//			boolean spaceFree = true;
-//			Rectangle foundAtPoint = null;
-//
-//			// create the new object to put in
-//			Rectangle toInsert = null;
-//			if (eType == editorType.TILE && currentTile != null) {
-//				toInsert = new Tile(texture, currentTile.getFile(), platformX, platformY);
-//			} else if (eType == editorType.IMAGE && currentImage != null) {
-//				toInsert = new Image(texture, currentImage.getFile(), platformX, platformY, currentImage.getWidth(),
-//						currentImage.getHeight());
-//			} else if (eType == editorType.EVENT && currentEvent != null) {
-//				toInsert = currentEvent.makeEvent(platformX, platformY);
-//			} else {
-//				game.point = null; // if there is nothing to put in, remove the point
-//			}
-//
-//			// insert it or remove
-//			if (toInsert != null && game.point != null) {
-//				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
-//				world.retrieve(getRectangles, toInsert);
-//				for (Rectangle p : getRectangles) {
-//
-//					if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY
-//							&& toInsert.getClass().equals(p.getClass())) {
-//						spaceFree = false;
-//						foundAtPoint = p;
-//					}
-//				}
-//
-//				if (spaceFree) { // if there isn't something already there
-//					if (eMode == editorMode.ADD) {
-//						world.insert(toInsert);
-//					}
-//				} else {
-//					if (eMode == editorMode.ERASE && foundAtPoint != null) {
-//						world.remove(foundAtPoint);
-//					}
-//				}
-//				game.point = null;
-//			}
-//		}
 	}
-
-//	public enum editorType {
-//		TILE, IMAGE, EVENT, PAGE
-//	}
 
 	public enum editorMode {
 		ADD, ERASE, SELECT
