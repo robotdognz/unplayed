@@ -63,12 +63,19 @@ public class TileTool implements Tool {
 //							foundAtPoint = p;
 //						}
 						//if the rectangle overlaps toInsert, remove it
-						if(p.getTopLeft().x > toInsert.getBottomRight().x
-								&& p.getBottomRight().x < toInsert.getTopLeft().x
-								&& p.getTopLeft().y > toInsert.getBottomRight().y
-								&& p.getBottomRight().y < toInsert.getTopLeft().y) {
-							editor.world.remove(p);
+						if (p.getTopLeft().x > toInsert.getBottomRight().x) {
+							continue;
 						}
+						if (p.getBottomRight().x < toInsert.getTopLeft().x) {
+							continue;
+						}
+						if (p.getTopLeft().y > toInsert.getBottomRight().y) {
+							continue;
+						}
+						if (p.getBottomRight().y < toInsert.getTopLeft().y) {
+							continue;
+						}
+						editor.world.remove(p);
 						
 					}
 					
