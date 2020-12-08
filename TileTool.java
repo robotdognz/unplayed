@@ -25,37 +25,56 @@ public class TileTool implements Tool {
 			int platformX = (int) game.point.x;
 			int platformY = (int) game.point.y;
 
-			boolean spaceFree = true;
-			Rectangle foundAtPoint = null;
+			// figure out what to insert
 			Rectangle toInsert = null;
 			if (editor.currentTile != null) {
 				toInsert = new Tile(texture, editor.currentTile.getFile(), platformX, platformY);
 			} else {
-				toInsert = new Tile(null, null, platformX, platformY); // blank tile
+				toInsert = new Tile(null, null, platformX, platformY); // use blank tile
 			}
+
 			if (game.point != null) {
+				// get all rectangles that overlap toInsert
 				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 				editor.world.retrieve(getRectangles, toInsert);
-				for (Rectangle p : getRectangles) {
+				
 
-					if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY
-							&& toInsert.getClass().equals(p.getClass())) {
-						spaceFree = false;
-						foundAtPoint = p;
+				if (editor.eMode == editorMode.ADD) { // adding tile
+					//find anything that directly overlaps the inserting tile
+					Rectangle foundAtPoint = null;
+					for (Rectangle p : getRectangles) {
+						if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY
+								&& toInsert.getClass().equals(p.getClass())) {
+							foundAtPoint = p;
+						}
 					}
-				}
-				// was if(spaceFree)
-				if (editor.eMode == editorMode.ADD) { // if there isn't something already there
+					//remove what was found and place the new tile
 					if (editor.currentTile != null) {
 						if (foundAtPoint != null) {
 							editor.world.remove(foundAtPoint);
 						}
 						editor.world.insert(toInsert);
 					}
-				} else if (editor.eMode == editorMode.ERASE) {
-					if (foundAtPoint != null) {
-						editor.world.remove(foundAtPoint);
+				} else if (editor.eMode == editorMode.ERASE) { // erasing tile
+					//Rectangle foundAtPoint = null;
+					for (Rectangle p : getRectangles) {
+//						if (p.getTopLeft().x == platformX && p.getTopLeft().y == platformY
+//								&& toInsert.getClass().equals(p.getClass())) {
+//							foundAtPoint = p;
+//						}
+						//if the rectangle overlaps toInsert, remove it
+						if(p.getTopLeft().x-1 > toInsert.getBottomRight().x
+								&& p.getTopLeft().y-1 > toInsert.getBottomRight().y
+								&& p.getBottomRight().x-1 > toInsert.getTopLeft().x
+								&& p.getBottomRight().y-1 > toInsert.getTopLeft().y) {
+							editor.world.remove(p);
+						}
+						
 					}
+					
+//					if (foundAtPoint != null) {
+//						editor.world.remove(foundAtPoint);
+//					}
 				}
 				game.point = null;
 			}
