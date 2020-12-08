@@ -8,17 +8,17 @@ import static processing.core.PConstants.*;
 
 public class ViewTool implements Tool {
 	private PApplet p;
-	//Editor editor;
+	// Editor editor;
 	private Game game;
-	//TextureCache texture;
+	// TextureCache texture;
 	private PVector start; // start of rectangle drawing
 	private PVector end; // end of rectangle drawing
 
 	public ViewTool(PApplet p, Editor editor) {
 		this.p = p;
-		//this.editor = editor;
+		// this.editor = editor;
 		this.game = editor.game;
-		//this.texture = editor.texture;
+		// this.texture = editor.texture;
 		start = null;
 		end = null;
 	}
@@ -39,8 +39,22 @@ public class ViewTool implements Tool {
 		// confirm the second point (unless it's the same as the first point)
 		// place the view into the world
 		if (start != null && end != null) {
-			View newView = new View(p, (int) start.x, (int) start.y, (int) (end.x - start.x), (int) (end.y - start.y));
-			game.views.add(newView);
+			if (start.x < end.x && start.y < end.y) {
+				View newView = new View(p, (int) start.x, (int) start.y, (int) (end.x - start.x),
+						(int) (end.y - start.y));
+				game.views.add(newView);
+			} else if (start.x > end.x && start.y < end.y) {
+				View newView = new View(p, (int) end.x, (int) start.y, (int) (start.x - end.x),
+						(int) (end.y - start.y));
+				game.views.add(newView);
+			} else if (start.x < end.x && start.y > end.y) {
+				View newView = new View(p, (int) start.x, (int) end.y, (int) (end.x - start.x),
+						(int) (start.y - end.y));
+				game.views.add(newView);
+			} else if (start.x > end.x && start.y > end.y) {
+				View newView = new View(p, (int) end.x, (int) end.y, (int) (start.x - end.x), (int) (start.y - end.y));
+				game.views.add(newView);
+			}
 			start = null;
 			end = null;
 		}
