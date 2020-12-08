@@ -238,7 +238,6 @@ public class Editor {
 
 	public void editWorld() {
 		currentTool.activate();
-
 	}
 
 	public enum editorMode {

@@ -11,40 +11,19 @@ import ui.*;
 import android.content.Context;
 import android.app.Activity;
 
-//PGraphics mainGraphics;
-
 Activity activity;
 Context context;
-GameLogic gl;
-//KetaiGesture gesture;
-//Vibe vibe;
-//Converter convert;
-//TextureCache texture;
-
-
-
-//Game game; //holds the game class
-//Controller controller; //holds the current controller
-//Editor editor; //holds the editor
-
-//ArrayList<Widget> widgets;
-//float widgetSpacing; //size of gap between widgets
-
-//touch screen stuff
-//TouchTesting testing = new TouchTesting();
-//ArrayList<PVector> touch;
-//PVector lastTouch;
+GameLogic gl; //manages the application level game logic
 
 //splash screen
-int splash; //true if the game hasn't started looping and a splash screen should be drawn
-PImage splashScreen;
+int splash; //steps through the start up stages 
+PImage splashScreen; //the splash screen to be drawn while the game is loading
 
 void setup() {
   //setup graphics
   fullScreen(P2D);
   background(40, 40, 40);
   frameRate(60);
-  //mainGraphics = g; //get default PGraphics
   splash = 0;
 
   //setup game logic
@@ -59,32 +38,8 @@ void setup() {
 }
 
 void init() {
+  //initalise the game
   gl.init();
-  //setup fields
-  //gl.gPaused = false;
-  //widgets = new ArrayList<Widget>();
-  //gl.editorToggle = true;
-  //gl.menu = null;
-  //gl.touch = new ArrayList<PVector>();
-  //gl.lastTouch = new PVector(0, 0);
-
-  //setup special classes
-  //texture = new TextureCache(this);
-  //gesture = new KetaiGesture(this);
-  //vibe = new Vibe(context);
-  
-  //setup game
-  //Camera camera = new FreeCamera(); //new GameCamera();
-  //convert = new Converter(this, camera); //camera converter
-  //game = new Game(this, camera, vibe, texture, convert); 
-  //controller = new PlayerControl(this, game);
-  //DoToast toast = new DoToast(activity);
-  //editor = new Editor(this, texture, game, camera, convert, toast);
-
-  //////setup non editor widget(s)
-  //Widget menuW = new MenuWidget(this, editor, null);
-  //widgets.add(menuW);
-  //widgetSpacing = width/(widgets.size()+1);
 }
 
 //this is the only draw method that should have step logic in it
