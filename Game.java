@@ -88,8 +88,10 @@ public class Game {
 		pageView = new PageView(p, camera, convert);
 		displayPages = false;
 		// testing page view
-		pageView.addPage(new Page(p, this, new PVector(-400, -400), new PVector(500, 500), new PVector(0, 0), 1, 10, false, false));
-		pageView.addPage(new Page(p, this, new PVector(-200, -200), new PVector(600, 600), new PVector(0, 900), 0.5f, -18, true, false));
+		pageView.addPage(new Page(p, this, new PVector(-400, -400), new PVector(500, 500), new PVector(0, 0), 1, 10,
+				false, false));
+		pageView.addPage(new Page(p, this, new PVector(-200, -200), new PVector(600, 600), new PVector(0, 900), 0.5f,
+				-18, true, false));
 
 		paper = new Paper(texture);
 
@@ -116,13 +118,14 @@ public class Game {
 		rightEdge = camera.getCenter().x + newScale / 2;
 		newRightEdge = rightEdge;
 
-		world.insert(new Tile(texture, texture.getTileList().get(0).getFile(), 0, 100)); // TODO: to be replaced when there is a
-																				// player start event
+		world.insert(new Tile(texture, texture.getTileList().get(0).getFile(), 0, 100)); // TODO: to be replaced when
+																							// there is a
+		// player start event
 		// everything needs to be a multiple of 20 (multiple of 10 so you can always
 		// fall down holes, and 20 so you don't clip through things 90 apart because of
 		// speed 10)
 	}
-	
+
 	public void passGameLogic(GameLogic gl) {
 		this.gl = gl;
 	}
@@ -183,13 +186,21 @@ public class Game {
 		player.draw(p.g);
 		paper.draw(p.g, screenSpace, currentScale);
 
-		// draw page views TODO: remove this
+		// draw the page views TODO: remove this
 		for (Page page : pageView.getPages()) {
 			Rectangle pView = page.getView();
 			p.noFill();
 			p.stroke(255, 0, 0);
 			p.strokeWeight(4);
 			p.rect(pView.getX(), pView.getY(), pView.getWidth(), pView.getHeight());
+		}
+
+		// draw the views
+		for (View view : views) {
+			p.noFill();
+			p.stroke(255, 0, 0);
+			p.strokeWeight(4);
+			p.rect(view.getX(), view.getY(), view.getWidth(), view.getHeight());
 		}
 		p.noStroke();
 
@@ -239,11 +250,11 @@ public class Game {
 			String s = "[" + xCoord + ", " + yCoord + "]";
 			p.text(s, point.x + 105, point.y + 50);
 		}
-		
-		//draw selection box around selected object
-		if(selected != null) {
+
+		// draw selection box around selected object
+		if (selected != null) {
 			p.noFill();
-			p.stroke(255, 0, 0); //selection colour
+			p.stroke(255, 0, 0); // selection colour
 			p.strokeWeight(2);
 			p.rect(selected.getX(), selected.getY(), selected.getWidth(), selected.getHeight());
 		}

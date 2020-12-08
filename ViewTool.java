@@ -8,9 +8,7 @@ import static processing.core.PConstants.*;
 
 public class ViewTool implements Tool {
 	private PApplet p;
-	// Editor editor;
 	private Game game;
-	// TextureCache texture;
 	private PVector start; // start of rectangle drawing
 	private PVector end; // end of rectangle drawing
 
@@ -25,44 +23,52 @@ public class ViewTool implements Tool {
 
 	@Override
 	public void touchMoved() {
-		if (start == null) {
-			start = new PVector(game.point.x, game.point.y);
-		} else {
-			end = new PVector(game.point.x, game.point.y);
+		if (!game.displayPages) {// if in game view
+			if (start == null) {
+				start = new PVector(game.point.x, game.point.y);
+			} else {
+				end = new PVector(game.point.x, game.point.y);
+			}
+		} else { // if in page view
+
 		}
 
 	}
 
 	@Override
 	public void touchEnded() {
-		// if the stored first point is not null
-		// confirm the second point (unless it's the same as the first point)
-		// place the view into the world
-		if (start != null && end != null) {
-			if (start.x < end.x && start.y < end.y) {
-				View newView = new View(p, (int) start.x, (int) start.y, (int) (end.x - start.x),
-						(int) (end.y - start.y));
-				game.views.add(newView);
-			} else if (start.x > end.x && start.y < end.y) {
-				View newView = new View(p, (int) end.x, (int) start.y, (int) (start.x - end.x),
-						(int) (end.y - start.y));
-				game.views.add(newView);
-			} else if (start.x < end.x && start.y > end.y) {
-				View newView = new View(p, (int) start.x, (int) end.y, (int) (end.x - start.x),
-						(int) (start.y - end.y));
-				game.views.add(newView);
-			} else if (start.x > end.x && start.y > end.y) {
-				View newView = new View(p, (int) end.x, (int) end.y, (int) (start.x - end.x), (int) (start.y - end.y));
-				game.views.add(newView);
+		if (!game.displayPages) { // if we're in the game view
+			// if there is both a start and an end
+			if (start != null && end != null) {
+				// figure out which point is the topleft/bottomright and create/add the view
+				if (start.x < end.x && start.y < end.y) {
+					View newView = new View(p, (int) start.x, (int) start.y, (int) (end.x - start.x),
+							(int) (end.y - start.y));
+					game.views.add(newView);
+				} else if (start.x > end.x && start.y < end.y) {
+					View newView = new View(p, (int) end.x, (int) start.y, (int) (start.x - end.x),
+							(int) (end.y - start.y));
+					game.views.add(newView);
+				} else if (start.x < end.x && start.y > end.y) {
+					View newView = new View(p, (int) start.x, (int) end.y, (int) (end.x - start.x),
+							(int) (start.y - end.y));
+					game.views.add(newView);
+				} else if (start.x > end.x && start.y > end.y) {
+					View newView = new View(p, (int) end.x, (int) end.y, (int) (start.x - end.x),
+							(int) (start.y - end.y));
+					game.views.add(newView);
+				}
+				start = null;
+				end = null;
 			}
-			start = null;
-			end = null;
+		} else {// if we're in the page view
+
 		}
 	}
 
 	@Override
 	public void draw() {
-		// draw the current selection area
+		// TODO: needs to adjust to game scale and position
 
 		if (start != null && end != null) {
 			p.rectMode(CORNERS);
