@@ -16,7 +16,7 @@ public class Tile extends Rectangle {
 	public Tile(TextureCache texture, File file, int x, int y) {
 		super(x, y, 100, 100);
 
-		if (file != null && texture.getTileMap().containsKey(file)) {
+		if (file != null && texture != null && texture.getTileMap().containsKey(file)) {
 			this.tileTexture = texture.getTileMap().get(file);
 			hasTexture = true;
 		} else {

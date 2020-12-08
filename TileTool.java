@@ -30,8 +30,10 @@ public class TileTool implements Tool {
 			Rectangle toInsert = null;
 			if (editor.currentTile != null) {
 				toInsert = new Tile(texture, editor.currentTile.getFile(), platformX, platformY);
+			} else {
+				toInsert = new Tile(null, null, platformX, platformY); // blank tile
 			}
-			if (toInsert != null && game.point != null) {
+			if (game.point != null) {
 				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 				editor.world.retrieve(getRectangles, toInsert);
 				for (Rectangle p : getRectangles) {
@@ -42,13 +44,16 @@ public class TileTool implements Tool {
 						foundAtPoint = p;
 					}
 				}
-
-				if (spaceFree) { // if there isn't something already there
-					if (editor.eMode == editorMode.ADD) {
+				// was if(spaceFree)
+				if (editor.eMode == editorMode.ADD) { // if there isn't something already there
+					if (editor.currentTile != null) {
+						if (foundAtPoint != null) {
+							editor.world.remove(foundAtPoint);
+						}
 						editor.world.insert(toInsert);
 					}
-				} else {
-					if (editor.eMode == editorMode.ERASE && foundAtPoint != null) {
+				} else if (editor.eMode == editorMode.ERASE) {
+					if (foundAtPoint != null) {
 						editor.world.remove(foundAtPoint);
 					}
 				}

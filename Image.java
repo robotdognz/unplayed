@@ -18,7 +18,7 @@ public class Image extends Rectangle {
 		super(x, y, imageW, imageH);
 		//this.texture = texture;
 
-		if (file != null && texture.getImageMap().containsKey(file)) {
+		if (file != null && texture != null && texture.getImageMap().containsKey(file)) {
 			this.imageTexture = texture.getImageMap().get(file);
 			setWidth(imageTexture.getWidth());
 			setHeight(imageTexture.getHeight());
