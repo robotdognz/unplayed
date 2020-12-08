@@ -29,6 +29,9 @@ public class EditorControl implements Controller {
 	}
 
 	public void touchEnded() {
+		if(editor.currentTool != null) {
+			editor.currentTool.touchEnded();
+		}
 	}
 
 	public void touchMoved(ArrayList<PVector> touch) {
@@ -44,8 +47,9 @@ public class EditorControl implements Controller {
 		float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
 
 		game.point = new PVector(finalX, finalY);
-		if (editor.snap) {
-			editor.editWorld();
+		if (editor.snap && editor.currentTool != null) {
+			//editor.editWorld();
+			editor.currentTool.touchMoved();
 		}
 	}
 

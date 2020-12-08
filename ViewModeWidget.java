@@ -1,7 +1,6 @@
 package ui;
 
 import editor.Editor;
-import editor.TileTool;
 import editor.Toolbar;
 import editor.ViewTool;
 import processing.core.PApplet;

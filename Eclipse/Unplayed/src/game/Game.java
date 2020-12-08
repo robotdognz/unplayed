@@ -1,5 +1,6 @@
 package game;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import camera.Camera;
@@ -10,6 +11,7 @@ import objects.Event;
 import objects.Image;
 import objects.Rectangle;
 import objects.Tile;
+import objects.View;
 import processing.core.*;
 import static processing.core.PConstants.*;
 
@@ -21,6 +23,7 @@ public class Game {
 	public GameLogic gl;
 
 	public Quadtree world;
+	public ArrayList<View> views;
 	public Rectangle startingWorld;
 	public HashSet<Rectangle> playerObjects;
 	private PageView pageView;
@@ -79,6 +82,7 @@ public class Game {
 
 		startingWorld = new Rectangle(playerStart.x - 400, playerStart.y - 400, 900, 900);
 		world = new Quadtree(startingWorld);
+		views = new ArrayList<View>();
 		playerObjects = new HashSet<Rectangle>();
 
 		pageView = new PageView(p, camera, convert);

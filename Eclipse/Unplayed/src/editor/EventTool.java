@@ -21,7 +21,7 @@ public class EventTool implements Tool {
 	}
 
 	@Override
-	public void activate() {
+	public void touchMoved() {
 		if (game.point != null && !editor.showPageView) {
 
 			// figure out what to insert

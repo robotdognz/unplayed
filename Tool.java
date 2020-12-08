@@ -1,7 +1,7 @@
 package editor;
 
 public interface Tool {
-	public void activate();
+	public void touchMoved();
 	public void touchEnded();
 	public void draw();
 }

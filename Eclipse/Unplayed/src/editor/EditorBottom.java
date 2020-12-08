@@ -20,7 +20,7 @@ import menus.Menu;
 
 public class EditorBottom extends Toolbar {
 	private PApplet p;
-	private Rectangle objectArea; // TODO: rename
+	private Rectangle selectionArea;
 	private String folder;
 	private PImage toolbar;
 	private PImage tab;
@@ -54,24 +54,24 @@ public class EditorBottom extends Toolbar {
 		widgets.add(eventW);
 		widgets.add(viewW);
 
-		widgetOffset = p.width * 0.61f; //p.width * 0.71f
-		widgetSpacing = 140; // TODO: get the spacing right
+		widgetOffset = p.width * 0.65f;
+		widgetSpacing = 140; // TODO: needs to be relative to screen size
 
 		// setup toolbar
-		int objectAreaHeight = 230; // 200
-		objectArea = new Rectangle(0, p.height - objectAreaHeight, p.width, objectAreaHeight);
+		int objectAreaHeight = 230; // TODO: needs to be relative to screen size
+		selectionArea = new Rectangle(0, p.height - objectAreaHeight, p.width, objectAreaHeight);
 		toolbar = p.requestImage(folder + "icn_toolbar_bg.png");
 		tab = p.requestImage(folder + "icn_tab.png");
 		tabSize = 220;
 
-		widgetHeight = objectArea.getY() - 53; // TODO: get the height right
+		widgetHeight = selectionArea.getY() - 53; // TODO: needs to be relative to screen size
 
 		// scroll bars
 		size = 150;
 		tiles = texture.getTileList();
 		images = texture.getImageList();
 		events = texture.getEventList();
-		views = new ArrayList<View>();
+		views = editor.game.views;
 	}
 
 	public void draw(PVector touch, Menu menu) {
@@ -84,7 +84,7 @@ public class EditorBottom extends Toolbar {
 		}
 
 		p.imageMode(CORNER);
-		p.image(toolbar, objectArea.getX(), objectArea.getY(), objectArea.getWidth(), objectArea.getHeight());
+		p.image(toolbar, selectionArea.getX(), selectionArea.getY(), selectionArea.getWidth(), selectionArea.getHeight());
 
 		// widgets
 
@@ -135,12 +135,12 @@ public class EditorBottom extends Toolbar {
 				// draw highlight behind
 				p.noStroke();
 				p.fill(0, 0, 0, 120);
-				p.rect(objectArea.getX() + objectArea.getHeight() / 2 + i * objectArea.getHeight(),
-						objectArea.getY() + objectArea.getHeight() / 2, objectArea.getHeight(), objectArea.getHeight());
+				p.rect(selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
+						selectionArea.getY() + selectionArea.getHeight() / 2, selectionArea.getHeight(), selectionArea.getHeight());
 			}
 			if (object instanceof Handler) {
-				((Handler) object).draw(objectArea.getX() + objectArea.getHeight() / 2 + i * objectArea.getHeight(),
-						objectArea.getY() + objectArea.getHeight() / 2, size);
+				((Handler) object).draw(selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
+						selectionArea.getY() + selectionArea.getHeight() / 2, size);
 			} else if (object instanceof View) {
 				//TODO: draw the view 
 			}
@@ -152,7 +152,7 @@ public class EditorBottom extends Toolbar {
 
 	public void onTap(float x, float y) {
 		// select object
-		if (y >= objectArea.getY()) {
+		if (y >= selectionArea.getY()) {
 			editor.controller = new EditorControl(p, editor);
 			editor.eMode = editorMode.ADD;
 
@@ -172,8 +172,8 @@ public class EditorBottom extends Toolbar {
 
 			// click on that object
 			for (int i = 0; i < objects.size(); i++) {
-				float leftEdge = objectArea.getX() + (i) * objectArea.getHeight() - offset;
-				float rightEdge = objectArea.getX() + (i + 1) * objectArea.getHeight() - offset;
+				float leftEdge = selectionArea.getX() + (i) * selectionArea.getHeight() - offset;
+				float rightEdge = selectionArea.getX() + (i + 1) * selectionArea.getHeight() - offset;
 				if (x > leftEdge && x < rightEdge) {
 					if (editor.currentTool instanceof TileTool) {
 						editor.currentTile = (TileHandler) objects.get(i);
@@ -188,7 +188,7 @@ public class EditorBottom extends Toolbar {
 	}
 
 	public void touchMoved(ArrayList<PVector> touch) {
-		if (touch.size() == 1 && p.mouseY >= objectArea.getY()) {
+		if (touch.size() == 1 && p.mouseY >= selectionArea.getY()) {
 			if (editor.currentTool instanceof TileTool) {
 				tileOffset += (p.pmouseX - p.mouseX) / 3;
 			} else if (editor.currentTool instanceof ImageTool) {
@@ -207,6 +207,6 @@ public class EditorBottom extends Toolbar {
 	}
 
 	public float getHeight() {
-		return objectArea.getHeight();
+		return selectionArea.getHeight();
 	}
 }

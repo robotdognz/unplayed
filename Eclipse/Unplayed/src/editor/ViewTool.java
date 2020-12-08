@@ -15,7 +15,7 @@ public class ViewTool implements Tool {
 	}
 
 	@Override
-	public void activate() {
+	public void touchMoved() {
 
 		// first it should store the current point if it doesn't already have one
 
