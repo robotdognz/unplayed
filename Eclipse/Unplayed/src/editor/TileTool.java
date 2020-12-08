@@ -87,8 +87,11 @@ public class TileTool implements Tool {
 				continue;
 			}
 			editor.world.remove(p);
+			if(editor.selected.equals(p)) {
+				editor.selected = null;
+			}
 		}
-		editor.selected = null;
+		
 	}
 
 	private void select(Rectangle toInsert, HashSet<Rectangle> getRectangles) {
