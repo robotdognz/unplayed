@@ -91,6 +91,10 @@ public class TileTool implements Tool {
 	}
 
 	private void select(Rectangle toInsert, HashSet<Rectangle> getRectangles) {
+		if(getRectangles.size() < 1) {
+			editor.selected = null;
+			return;
+		}
 		Rectangle foundAtPoint = null;
 		for (Rectangle p : getRectangles) {
 			if (p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()
