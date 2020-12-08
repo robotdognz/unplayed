@@ -49,7 +49,7 @@ public abstract class Widget {
 		// TODO: should set available to false if editor == null
 		// TODO: update active and other methods that make checks against editor should
 		// also check if editor is null
-		// TODO: all weidgets need to be updated to use udateAciveUser instead of
+		// TODO: all widgets need to be updated to use udateAciveUser instead of
 		// updateActive
 	}
 
@@ -74,7 +74,7 @@ public abstract class Widget {
 
 	public void draw(float wX, float wY) {
 		if (parent != null) {
-			subWidgetSpacing = parent.eWidgetSpacing;
+			subWidgetSpacing = parent.widgetSpacing;
 		}
 		// update position
 		if (position == null) {

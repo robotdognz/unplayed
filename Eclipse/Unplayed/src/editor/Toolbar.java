@@ -7,15 +7,15 @@ import processing.core.PVector;
 import ui.Widget;
 
 public abstract class Toolbar {
-	public ArrayList<Widget> eWidgets;
-	public float eWidgetSpacing; // size of gap between widgets
-	public float eWidgetOffset; // amount to offset widget drawing by
+	public ArrayList<Widget> widgets;
+	public float widgetSpacing; // size of gap between widgets
+	public float widgetOffset; // amount to offset widget drawing by
 
 	public Editor editor;
 
 	public Toolbar(Editor editor) {
-		eWidgetSpacing = 0;
-		eWidgetOffset = 0;
+		widgetSpacing = 0;
+		widgetOffset = 0;
 		this.editor = editor;
 	}
 

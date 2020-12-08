@@ -1,6 +1,7 @@
 package editor;
 
 import objects.Rectangle;
+import objects.View;
 import processing.core.*;
 import ui.*;
 
@@ -34,6 +35,8 @@ public class EditorBottom extends Toolbar {
 	private float imageOffset;
 	private ArrayList<EventHandler> events; // events
 	private float eventOffset;
+	private ArrayList<View> views;// views
+	private float viewOffset;
 
 	public EditorBottom(PApplet p, Editor editor, TextureCache texture) {
 		super(editor);
@@ -41,16 +44,18 @@ public class EditorBottom extends Toolbar {
 		folder = p.dataPath("ui") + '/';
 
 		// setup widgets
-		this.eWidgets = new ArrayList<Widget>();
+		this.widgets = new ArrayList<Widget>();
 		Widget blockW = new TileModeWidget(p, editor, this);
 		Widget imageW = new ImageModeWidget(p, editor, this);
 		Widget eventW = new EventModeWidget(p, editor, this);
-		eWidgets.add(blockW);
-		eWidgets.add(imageW);
-		eWidgets.add(eventW);
+		Widget viewW = new ViewModeWidget(p, editor, this);
+		widgets.add(blockW);
+		widgets.add(imageW);
+		widgets.add(eventW);
+		widgets.add(viewW);
 
-		eWidgetOffset = p.width * 0.71f;
-		eWidgetSpacing = 140; // TODO: get the spacing right
+		widgetOffset = p.width * 0.71f;
+		widgetSpacing = 140; // TODO: get the spacing right
 
 		// setup toolbar
 		int objectAreaHeight = 230; // 200
@@ -66,14 +71,15 @@ public class EditorBottom extends Toolbar {
 		tiles = texture.getTileList();
 		images = texture.getImageList();
 		events = texture.getEventList();
+		views = new ArrayList<View>();
 	}
 
 	public void draw(PVector touch, Menu menu) {
-		for (int i = 0; i < eWidgets.size(); i++) {
+		for (int i = 0; i < widgets.size(); i++) {
 			// draw the two behind tabs
-			if (!eWidgets.get(i).isActive()) {
+			if (!widgets.get(i).isActive()) {
 				p.imageMode(CENTER);
-				p.image(tab, eWidgetOffset + eWidgetSpacing * i, widgetHeight, tabSize, tabSize);
+				p.image(tab, widgetOffset + widgetSpacing * i, widgetHeight, tabSize, tabSize);
 			}
 		}
 
@@ -82,25 +88,25 @@ public class EditorBottom extends Toolbar {
 
 		// widgets
 
-		for (int i = 0; i < eWidgets.size(); i++) {
+		for (int i = 0; i < widgets.size(); i++) {
 			// if current widget is active, draw tab at the current x position
 			p.imageMode(CENTER);
-			if (eWidgets.get(i).isActive()) {
-				p.image(tab, eWidgetOffset + eWidgetSpacing * i, widgetHeight, tabSize, tabSize);
+			if (widgets.get(i).isActive()) {
+				p.image(tab, widgetOffset + widgetSpacing * i, widgetHeight, tabSize, tabSize);
 			}
-			eWidgets.get(i).draw(eWidgetOffset + eWidgetSpacing * i, widgetHeight);
-			eWidgets.get(i).updateActive();
+			widgets.get(i).draw(widgetOffset + widgetSpacing * i, widgetHeight);
+			widgets.get(i).updateActive();
 
 			if (menu == null) {
-				eWidgets.get(i).hover(touch);
+				widgets.get(i).hover(touch);
 			}
 		}
 		p.imageMode(CORNER);
 
 		// figure out what type to show
-		ArrayList<Handler> objects = new ArrayList<Handler>(); // current objects to draw in the scroll bar
+		ArrayList<Object> objects = new ArrayList<Object>(); // current objects to draw in the scroll bar
 		Float offset = 0.0f;
-		Handler currentHandler = null;
+		Object currentHandler = null;
 		if (editor.currentTool instanceof TileTool) {
 			objects.addAll(tiles);
 			offset = tileOffset;
@@ -113,6 +119,9 @@ public class EditorBottom extends Toolbar {
 			objects.addAll(events);
 			offset = eventOffset;
 			currentHandler = editor.currentEvent;
+		} else if (editor.currentTool instanceof EventTool) {
+			objects.addAll(views);
+			offset = viewOffset;
 		}
 
 		// draw scroll bar for that type
@@ -121,7 +130,7 @@ public class EditorBottom extends Toolbar {
 		p.rectMode(CENTER);
 		p.translate(-offset, 0);
 		for (int i = 0; i < objects.size(); i++) {
-			Handler object = objects.get(i);
+			Object object = objects.get(i);
 			if (object.equals(currentHandler)) { // if this is the selected object
 				// draw highlight behind
 				p.noStroke();
@@ -129,8 +138,12 @@ public class EditorBottom extends Toolbar {
 				p.rect(objectArea.getX() + objectArea.getHeight() / 2 + i * objectArea.getHeight(),
 						objectArea.getY() + objectArea.getHeight() / 2, objectArea.getHeight(), objectArea.getHeight());
 			}
-			object.draw(objectArea.getX() + objectArea.getHeight() / 2 + i * objectArea.getHeight(),
-					objectArea.getY() + objectArea.getHeight() / 2, size);
+			if (object instanceof Handler) {
+				((Handler) object).draw(objectArea.getX() + objectArea.getHeight() / 2 + i * objectArea.getHeight(),
+						objectArea.getY() + objectArea.getHeight() / 2, size);
+			} else if (object instanceof View) {
+				//TODO: draw the view 
+			}
 		}
 		p.imageMode(CORNER);
 		p.rectMode(CORNER);
@@ -188,8 +201,8 @@ public class EditorBottom extends Toolbar {
 
 	public void touchEnded() {
 		// check for clicking on widgets
-		for (int i = 0; i < eWidgets.size(); i++) {
-			eWidgets.get(i).click();
+		for (int i = 0; i < widgets.size(); i++) {
+			widgets.get(i).click();
 		}
 	}
 
