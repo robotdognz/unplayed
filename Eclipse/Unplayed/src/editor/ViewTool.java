@@ -1,25 +1,24 @@
 package editor;
 
 import game.Game;
-import handlers.TextureCache;
 import objects.View;
 import processing.core.PApplet;
 import processing.core.PVector;
 import static processing.core.PConstants.*;
 
 public class ViewTool implements Tool {
-	PApplet p;
-	Editor editor;
-	Game game;
-	TextureCache texture;
-	PVector start; // start of rectangle drawing
-	PVector end; // end of rectangle drawing
+	private PApplet p;
+	//Editor editor;
+	private Game game;
+	//TextureCache texture;
+	private PVector start; // start of rectangle drawing
+	private PVector end; // end of rectangle drawing
 
 	public ViewTool(PApplet p, Editor editor) {
 		this.p = p;
-		this.editor = editor;
+		//this.editor = editor;
 		this.game = editor.game;
-		this.texture = editor.texture;
+		//this.texture = editor.texture;
 		start = null;
 		end = null;
 	}

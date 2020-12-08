@@ -35,7 +35,7 @@ public class EditorBottom extends Toolbar {
 	private float imageOffset;
 	private ArrayList<EventHandler> events; // events
 	private float eventOffset;
-	private ArrayList<View> views;// views
+	public ArrayList<View> views;// views
 	private float viewOffset;
 
 	public EditorBottom(PApplet p, Editor editor, TextureCache texture) {

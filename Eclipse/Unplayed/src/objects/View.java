@@ -33,11 +33,11 @@ public class View extends Rectangle {
 			scaleFactor = size / getHeight();
 		}
 		// draw the scaled view
-		p.noFill();
-		p.stroke(color);
-		p.strokeWeight(4);
-		p.rect(pX, pY, getWidth() * scaleFactor, getHeight() * scaleFactor);
 		p.noStroke();
+		p.fill(color);
+		//p.strokeWeight(4);
+		p.rect(pX, pY, getWidth() * scaleFactor, getHeight() * scaleFactor);
+		//p.noStroke();
 	}
 
 	public int getColor() {
