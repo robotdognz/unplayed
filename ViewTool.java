@@ -57,9 +57,9 @@ public class ViewTool implements Tool {
 			p.stroke(0,0,255);
 			p.strokeWeight(4);
 			//TODO: check if you can draw rectangles backwards in CORNERS mode
-			if(start.x < end.x && start.y < end.y) {
+			//if(start.x < end.x && start.y < end.y) {
 				p.rect(start.x, start.y, end.x, end.y);
-			}
+			//}
 			p.rectMode(CORNER);
 		}
 	}

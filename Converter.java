@@ -49,6 +49,7 @@ public class Converter {
 		currentSubScale = cCamera.getSubScale();
 		return totalScale * currentSubScale * 100;
 	}
+	
 	// public PVector levelToScreen(float levelX, levelY){
 
 	// }
