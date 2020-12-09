@@ -5,8 +5,9 @@ import camera.Camera;
 import controllers.CameraControl;
 import controllers.Controller;
 import controllers.EditorControl;
-import editor.bottom.EditorBottom;
-import editor.top.EditorTop;
+import editor.tools.TileTool;
+import editor.uibottom.EditorBottom;
+import editor.uitop.EditorTop;
 import game.Game;
 import game.PageView;
 import game.Quadtree;
@@ -36,12 +37,12 @@ public class Editor {
 
 	public boolean nextTouchInactive = false;
 
-	PApplet p;
-	TextureCache texture;
-	Converter convert;
+	private PApplet p;
+	public TextureCache texture;
+	public Converter convert;
 	public Game game; // reference to game, same instance of game used everywhere else
 	PageView pageView;
-	Quadtree world;
+	public Quadtree world;
 	public Camera camera;
 
 	// camera variables

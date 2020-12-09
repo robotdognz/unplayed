@@ -2,7 +2,7 @@ package ui;
 
 import camera.FreeCamera;
 import camera.GameCamera;
-import editor.top.MenuWidget;
+import editor.uitop.MenuWidget;
 import game.Game;
 import game.GameLogic;
 import processing.core.PApplet;

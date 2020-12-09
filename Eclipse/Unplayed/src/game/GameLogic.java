@@ -9,7 +9,7 @@ import camera.FreeCamera;
 import controllers.Controller;
 import controllers.PlayerControl;
 import editor.Editor;
-import editor.top.MenuWidget;
+import editor.uitop.MenuWidget;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.DoToast;

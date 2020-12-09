@@ -1,12 +1,4 @@
-//import camera.*;
-//import controllers.*;
-//import editor.*;
 import game.*;
-//import handlers.*;
-//import menus.*;
-//import misc.*;
-//import objects.*;
-//import ui.*;
 
 import android.content.Context;
 import android.app.Activity;
@@ -58,7 +50,7 @@ void draw() {
     imageMode(CORNER);
     splash = 2;
     return;
-  } else if (splash == 2) { //load textures
+  } else if (splash == 2) { //initalize game
     //delay(736);
     init();
     splash = 3;
@@ -66,7 +58,6 @@ void draw() {
   }
 
   //testing.draw(); //draw touch events
-  //reset stored touch events
   gl.step();
   gl.draw();
 }
