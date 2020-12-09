@@ -3,6 +3,7 @@ package game;
 import handlers.TextureCache;
 import objects.Rectangle;
 import processing.core.PGraphics;
+import static processing.core.PConstants.*;
 
 public class Paper {
 	// private PImage grid;
@@ -30,6 +31,7 @@ public class Paper {
 		// nested for loops to tile the images
 		for (int y = startY; y < endY; y += gridSize) {
 			for (int x = startX; x < endX; x += gridSize) {
+				graphics.imageMode(CORNER);
 				graphics.image(texture.getGrid(scale), x, y, gridSize, gridSize);
 			}
 		}
