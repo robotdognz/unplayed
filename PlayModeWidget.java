@@ -22,11 +22,12 @@ public class PlayModeWidget extends Widget {
 		} else {
 			editor.camera = new GameCamera();
 			editor.controller = new PlayerControl(p, editor.game);
+			editor.showPageView = true;
 		}
 	}
 
 	public void updateActive() {
-		if (editor.camera instanceof FreeCamera) {
+		if (editor.camera instanceof FreeCamera || !editor.showPageView) {
 			active = false;
 		} else {
 			active = true;
