@@ -13,7 +13,7 @@ public class View extends Rectangle {
 		super(x, y, rWidth, rHeight);
 		this.p = p;
 		removed = false;
-		color = p.color(p.random(255), p.random(255), p.random(255)); // TODO: implement random color
+		color = p.color(p.random(255), p.random(255), p.random(255));
 	}
 
 	public void draw(PGraphics graphics) {
@@ -35,13 +35,16 @@ public class View extends Rectangle {
 		// draw the scaled view
 		p.noStroke();
 		p.fill(color);
-		//p.strokeWeight(4);
 		p.rect(pX, pY, getWidth() * scaleFactor, getHeight() * scaleFactor);
-		//p.noStroke();
+		//TODO: draw width and height on top
 	}
 
 	public int getColor() {
 		return color;
+	}
+	
+	public void setColor(int color) {
+		this.color = color;
 	}
 
 	public void remove() {

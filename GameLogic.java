@@ -16,6 +16,7 @@ import misc.DoToast;
 import misc.KetaiGesture;
 import misc.Vibe;
 import processing.core.*;
+import processing.event.TouchEvent;
 import ui.MenuWidget;
 import ui.Widget;
 
@@ -78,5 +79,50 @@ public class GameLogic {
 		widgetSpacing = p.width / (widgets.size() + 1);
 	}
 	
-	//TODO: move all of the other methods in Unplayed here (touchMoved(), etc)
+	public void step() {}
+
+	public void draw() {
+		// touch screen
+		touches.clear();
+		for (TouchEvent.Pointer t : p.touches) {
+			touches.add(new PVector(t.x, t.y));
+		}
+		if (p.touches.length > 0) {
+			lastTouch = new PVector(p.touches[p.touches.length - 1].x, p.touches[p.touches.length - 1].y);
+		} else {
+			lastTouch = new PVector(0, 0);
+		}
+
+		// game
+		if (!gPaused) { // step the game if it is not paused
+			// step editor or game controller depending on editor toggle
+			if (editorToggle) {
+				editor.step(touches);
+			} else {
+				controller.step(touches);
+			}
+			game.step(); // step game
+		}
+		game.draw(); // draw the game
+
+		if (editorToggle) {
+			editor.draw(lastTouch, menu);
+		} else {
+			for (int i = 0; i < widgets.size(); i++) {
+				widgets.get(i).draw(widgetSpacing * (i + 1), 120);
+				widgets.get(i).updateActive();
+				if (menu == null) {
+					widgets.get(i).hover(lastTouch);
+				}
+			}
+		}
+
+		// draw the menu
+		if (menu != null) {
+			menu.draw();
+			menu.hover(lastTouch);
+		}
+	}
+
+	// TODO: move all of the other methods in Unplayed here (touchMoved(), etc)
 }

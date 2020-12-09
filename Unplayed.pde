@@ -67,45 +67,47 @@ void draw() {
 
   //testing.draw(); //draw touch events
   //reset stored touch events
-  gl.touches.clear();
-  for (TouchEvent.Pointer t : touches) {
-    gl.touches.add(new PVector(t.x, t.y));
-  }
-  if (touches.length > 0) {
-    gl.lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
-  } else {
-    gl.lastTouch = new PVector(0, 0);
-  }
+  gl.step();
+  gl.draw();
+  //gl.touches.clear();
+  //for (TouchEvent.Pointer t : touches) {
+  //  gl.touches.add(new PVector(t.x, t.y));
+  //}
+  //if (touches.length > 0) {
+  //  gl.lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
+  //} else {
+  //  gl.lastTouch = new PVector(0, 0);
+  //}
 
-  //game
-  if (!gl.gPaused) { //step the game if it is not paused
-    //step editor or game controller depending on editor toggle
-    if (gl.editorToggle) {
-      gl.editor.step(gl.touches);
-    } else {
-      gl.controller.step(gl.touches);
-    }
-    gl.game.step(); //step game
-  }
-  gl.game.draw(); //draw the game
+  ////game
+  //if (!gl.gPaused) { //step the game if it is not paused
+  //  //step editor or game controller depending on editor toggle
+  //  if (gl.editorToggle) {
+  //    gl.editor.step(gl.touches);
+  //  } else {
+  //    gl.controller.step(gl.touches);
+  //  }
+  //  gl.game.step(); //step game
+  //}
+  //gl.game.draw(); //draw the game
   
-  if (gl.editorToggle) {
-    gl.editor.draw(gl.lastTouch, gl.menu);
-  } else {
-    for (int i = 0; i < gl.widgets.size(); i++) {
-      gl.widgets.get(i).draw(gl.widgetSpacing*(i+1), 120);
-      gl.widgets.get(i).updateActive();
-      if (gl.menu == null) {
-        gl.widgets.get(i).hover(gl.lastTouch);
-      }
-    }
-  }
+  //if (gl.editorToggle) {
+  //  gl.editor.draw(gl.lastTouch, gl.menu);
+  //} else {
+  //  for (int i = 0; i < gl.widgets.size(); i++) {
+  //    gl.widgets.get(i).draw(gl.widgetSpacing*(i+1), 120);
+  //    gl.widgets.get(i).updateActive();
+  //    if (gl.menu == null) {
+  //      gl.widgets.get(i).hover(gl.lastTouch);
+  //    }
+  //  }
+  //}
 
-  //draw the menu
-  if (gl.menu != null) { 
-    gl.menu.draw();
-    gl.menu.hover(gl.lastTouch);
-  }
+  ////draw the menu
+  //if (gl.menu != null) { 
+  //  gl.menu.draw();
+  //  gl.menu.hover(gl.lastTouch);
+  //}
 }
 
 void touchStarted() {

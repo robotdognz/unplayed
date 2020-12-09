@@ -27,7 +27,6 @@ public class ViewTool implements Tool {
 		this.game = editor.game;
 		this.pageView = game.getPageView();
 		this.convert = editor.convert;
-		// this.texture = editor.texture;
 		start = null;
 		end = null;
 	}
@@ -89,12 +88,10 @@ public class ViewTool implements Tool {
 
 	@Override
 	public void draw() {
-		// TODO: needs to adjust to game scale and position
-
 		if (start != null && end != null) {
 			p.rectMode(CORNERS);
 			p.noFill();
-			p.stroke(0, 0, 255);
+			p.stroke(255, 0, 0);
 			p.strokeWeight(4);
 			p.rect(start.x, start.y, end.x, end.y);
 			p.rectMode(CORNER);
