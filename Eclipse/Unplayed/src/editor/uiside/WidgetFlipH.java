@@ -24,11 +24,6 @@ public class WidgetFlipH extends Widget {
 	
 	public void clicked() {
 		toolbar.flipH();
-//		if (hasSActive) {
-//			sActive = !sActive;
-//		} else {
-//			active = !active;
-//		}
 	}
 
 }

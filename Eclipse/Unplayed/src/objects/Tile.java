@@ -5,6 +5,7 @@ import java.io.File;
 import handlers.TextureCache;
 import handlers.TileHandler;
 import processing.core.PGraphics;
+import static processing.core.PConstants.*;
 
 public class Tile extends Rectangle {
 	private boolean hasTexture;
@@ -31,10 +32,10 @@ public class Tile extends Rectangle {
 
 	public void draw(PGraphics graphics, float scale) {
 		if (hasTexture) {
+			graphics.imageMode(CENTER);
 			graphics.pushMatrix();
-			graphics.translate(getX(), getY());
+			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
 			graphics.scale(flipX, flipY); // flipping the tile
-			//graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
 			graphics.popMatrix();
 
@@ -65,6 +66,22 @@ public class Tile extends Rectangle {
 
 	public boolean isFlippedH() {
 		if (flipX == 1) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public void flipV() {
+		if (flipY == 1) {
+			flipY = -1;
+		} else {
+			flipY = 1;
+		}
+	}
+
+	public boolean isFlippedV() {
+		if (flipY == 1) {
 			return false;
 		} else {
 			return true;

@@ -1,6 +1,6 @@
 package editor.uiside;
 
-import static processing.core.PConstants.CENTER;
+import static processing.core.PConstants.*;
 
 import java.util.ArrayList;
 
@@ -36,16 +36,17 @@ public class EditorSide extends Toolbar {
 
 		super.widgetSpacing = p.width / 8;
 
-		float height = widgetSpacing * (widgets.size()); //+1
+		float height = widgetSpacing * (widgets.size()); // +1
 
-		super.widgetOffset = p.height / 2 - (height-widgetSpacing) / 2;
+		super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
 
 		// sprites
 		// this.top = p.requestImage(folder + "???.png");
 		// this.middle = p.requestImage(folder + "???.png");
 		// this.bottom = p.requestImage(folder + "???.png");
 
-		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height); // TODO: needs to scale to screen and widget amount
+		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height); // TODO: needs to scale to screen and
+																					// widget amount
 	}
 
 	public void draw(PVector touch, Menu menu) {
@@ -84,26 +85,41 @@ public class EditorSide extends Toolbar {
 		// will only be called for page?
 	}
 
-	
-
 	public void flipV(boolean flipped) {
 
 	}
-	
-	//methods for the widget to access
+
+	// methods for the widget to access
 	public boolean isFlippedH() {
-		if(editor.selected != null) {
-			if(editor.selected instanceof Tile) {
-				return ((Tile)editor.selected).isFlippedH();
+		if (editor.selected != null) {
+			if (editor.selected instanceof Tile) {
+				return ((Tile) editor.selected).isFlippedH();
 			}
-			//figure out if it's flipped
 		}
 		return false;
 	}
+
 	public void flipH() {
-		if(editor.selected != null) {
-			if(editor.selected instanceof Tile) {
-				((Tile)editor.selected).flipH();
+		if (editor.selected != null) {
+			if (editor.selected instanceof Tile) {
+				((Tile) editor.selected).flipH();
+			}
+		}
+	}
+	
+	public boolean isFlippedV() {
+		if (editor.selected != null) {
+			if (editor.selected instanceof Tile) {
+				return ((Tile) editor.selected).isFlippedV();
+			}
+		}
+		return false;
+	}
+
+	public void flipV() {
+		if (editor.selected != null) {
+			if (editor.selected instanceof Tile) {
+				((Tile) editor.selected).flipV();
 			}
 		}
 	}
