@@ -36,7 +36,7 @@ public class EditorSide extends Toolbar {
 		widgets.add(filpH);
 		
 		this.widgetSpacing = p.width / 8;
-		this.widgetOffset = (p.width - widgetSpacing * 5) / 2;
+		this.widgetOffset = p.height / 2;
 
 		// sprites
 		// this.top = p.requestImage(folder + "???.png");
