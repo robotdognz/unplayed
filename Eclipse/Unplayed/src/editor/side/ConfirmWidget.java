@@ -1,9 +1,10 @@
-package ui;
+package editor.side;
 
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
 import processing.core.PApplet;
+import ui.Widget;
 
 public class ConfirmWidget extends Widget {
 	public ConfirmWidget(PApplet p, Editor editor, Toolbar parent) {

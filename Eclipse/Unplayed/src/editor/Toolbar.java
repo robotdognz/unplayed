@@ -2,8 +2,8 @@ package editor;
 
 import java.util.ArrayList;
 
-import menus.Menu;
 import processing.core.PVector;
+import ui.Menu;
 import ui.Widget;
 
 public abstract class Toolbar {

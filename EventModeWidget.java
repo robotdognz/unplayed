@@ -1,9 +1,10 @@
-package ui;
+package editor.bottom;
 
 import editor.Editor;
 import editor.EventTool;
 import editor.Toolbar;
 import processing.core.PApplet;
+import ui.Widget;
 
 public class EventModeWidget extends Widget {
 	public EventModeWidget(PApplet p, Editor editor, Toolbar parent) {

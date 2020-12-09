@@ -1,9 +1,10 @@
-package ui;
+package editor.top;
 
 import controllers.PlayerControl;
 import editor.Editor;
 import editor.Toolbar;
 import processing.core.PApplet;
+import ui.Widget;
 
 public class PlayerControlWidget extends Widget {
 	public PlayerControlWidget(PApplet p, Editor editor, Toolbar parent) {

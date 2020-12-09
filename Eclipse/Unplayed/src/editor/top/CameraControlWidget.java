@@ -1,10 +1,11 @@
-package ui;
+package editor.top;
 
 import camera.FreeCamera;
 import controllers.CameraControl;
 import editor.Editor;
 import editor.Toolbar;
 import processing.core.PApplet;
+import ui.Widget;
 
 public class CameraControlWidget extends Widget {
 	public CameraControlWidget(PApplet p, Editor editor, Toolbar parent) {

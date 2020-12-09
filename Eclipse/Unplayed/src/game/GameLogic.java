@@ -9,15 +9,15 @@ import camera.FreeCamera;
 import controllers.Controller;
 import controllers.PlayerControl;
 import editor.Editor;
+import editor.top.MenuWidget;
 import handlers.TextureCache;
-import menus.Menu;
 import misc.Converter;
 import misc.DoToast;
 import misc.KetaiGesture;
 import misc.Vibe;
 import processing.core.*;
 import processing.event.TouchEvent;
-import ui.MenuWidget;
+import ui.Menu;
 import ui.Widget;
 
 //handles all of the logic at the application level

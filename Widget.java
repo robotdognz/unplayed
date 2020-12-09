@@ -10,7 +10,7 @@ import processing.core.*;
 public abstract class Widget {
 	// TODO: currently does not scale based on screen size
 	protected PApplet p;
-	Editor editor;
+	protected Editor editor;
 	Toolbar parent;
 	protected PVector position; // position of the widget
 	protected float wSize = 75; // 60 //size of the widget

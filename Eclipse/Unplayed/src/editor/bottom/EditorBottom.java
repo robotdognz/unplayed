@@ -1,4 +1,4 @@
-package editor;
+package editor.bottom;
 
 import objects.Rectangle;
 import objects.View;
@@ -10,13 +10,18 @@ import static processing.core.PConstants.*;
 import java.util.ArrayList;
 
 import controllers.EditorControl;
+import editor.Editor;
+import editor.EventTool;
+import editor.ImageTool;
+import editor.TileTool;
+import editor.Toolbar;
+import editor.ViewTool;
 import editor.Editor.editorMode;
 import handlers.EventHandler;
 import handlers.Handler;
 import handlers.ImageHandler;
 import handlers.TextureCache;
 import handlers.TileHandler;
-import menus.Menu;
 
 public class EditorBottom extends Toolbar {
 	private PApplet p;

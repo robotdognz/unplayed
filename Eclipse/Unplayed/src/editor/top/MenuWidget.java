@@ -1,11 +1,12 @@
-package ui;
+package editor.top;
 
 import editor.Editor;
 import editor.Toolbar;
 import game.Game;
 import game.GameLogic;
-import menus.PauseMenu;
 import processing.core.PApplet;
+import ui.PauseMenu;
+import ui.Widget;
 
 public class MenuWidget extends Widget {
 	private boolean previousStatus = false;

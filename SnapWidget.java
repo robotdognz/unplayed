@@ -1,8 +1,9 @@
-package ui;
+package editor.top;
 
 import editor.Editor;
 import editor.Toolbar;
 import processing.core.PApplet;
+import ui.Widget;
 
 public class SnapWidget extends Widget {
 	public SnapWidget(PApplet p, Editor editor, Toolbar parent) {

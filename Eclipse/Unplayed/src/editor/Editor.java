@@ -5,6 +5,8 @@ import camera.Camera;
 import controllers.CameraControl;
 import controllers.Controller;
 import controllers.EditorControl;
+import editor.bottom.EditorBottom;
+import editor.top.EditorTop;
 import game.Game;
 import game.PageView;
 import game.Quadtree;
@@ -12,7 +14,6 @@ import handlers.EventHandler;
 import handlers.ImageHandler;
 import handlers.TextureCache;
 import handlers.TileHandler;
-import menus.Menu;
 import misc.Converter;
 import misc.DoToast;
 import misc.EditorJSON;
@@ -22,6 +23,8 @@ import objects.Rectangle;
 import objects.Tile;
 import objects.View;
 import processing.core.*;
+import ui.Menu;
+
 import static processing.core.PConstants.*;
 
 public class Editor {
@@ -55,7 +58,7 @@ public class Editor {
 
 	// controller
 	public Controller controller; // holds the current controller
-	boolean controllerActive = true; // is the current controller active
+	public boolean controllerActive = true; // is the current controller active
 	public PVector point = null; // holds the current selection point in the game world
 	public boolean eventVis; // are events visible
 	public boolean quadVis; // is the quad tree being draw
@@ -68,13 +71,13 @@ public class Editor {
 	public boolean showPageView = false;
 
 	// current object to put into level
-	TileHandler currentTile = null;
-	ImageHandler currentImage = null;
-	EventHandler currentEvent = null;
-	View currentView = null;
+	public TileHandler currentTile = null;
+	public ImageHandler currentImage = null;
+	public EventHandler currentEvent = null;
+	public View currentView = null;
 
 	// selected object
-	Rectangle selected;
+	public Rectangle selected;
 
 	// toolbars
 	Toolbar editorTop;

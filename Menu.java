@@ -1,4 +1,4 @@
-package menus;
+package ui;
 
 import java.util.ArrayList;
 

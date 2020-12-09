@@ -1,9 +1,10 @@
-package ui;
+package editor.top;
 
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
 import processing.core.PApplet;
+import ui.Widget;
 
 public class SelectWidget extends Widget {
 	public SelectWidget(PApplet p, Editor editor, Toolbar parent) {

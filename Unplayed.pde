@@ -1,12 +1,12 @@
-import camera.*;
-import controllers.*;
-import editor.*;
+//import camera.*;
+//import controllers.*;
+//import editor.*;
 import game.*;
-import handlers.*;
-import menus.*;
-import misc.*;
-import objects.*;
-import ui.*;
+//import handlers.*;
+//import menus.*;
+//import misc.*;
+//import objects.*;
+//import ui.*;
 
 import android.content.Context;
 import android.app.Activity;

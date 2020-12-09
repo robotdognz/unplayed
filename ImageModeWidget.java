@@ -1,9 +1,10 @@
-package ui;
+package editor.bottom;
 
 import editor.Editor;
 import editor.ImageTool;
 import editor.Toolbar;
 import processing.core.PApplet;
+import ui.Widget;
 
 public class ImageModeWidget extends Widget {
 	public ImageModeWidget(PApplet p, Editor editor, Toolbar parent) {

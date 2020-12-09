@@ -1,4 +1,4 @@
-package ui;
+package editor.top;
 
 import camera.FreeCamera;
 import camera.GameCamera;
@@ -6,6 +6,7 @@ import controllers.PlayerControl;
 import editor.Editor;
 import editor.Toolbar;
 import processing.core.PApplet;
+import ui.Widget;
 
 public class PlayModeWidget extends Widget {
 	boolean previousStatus = false;

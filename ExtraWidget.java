@@ -1,8 +1,10 @@
-package ui;
+package editor.top;
 
 import editor.Editor;
 import editor.Toolbar;
+import editor.side.ConfirmWidget;
 import processing.core.PApplet;
+import ui.Widget;
 
 public class ExtraWidget extends Widget {
 	public ExtraWidget(PApplet p, Editor editor, Toolbar parent) {

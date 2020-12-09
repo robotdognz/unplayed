@@ -1,8 +1,9 @@
-package editor;
+package editor.top;
 
 import java.util.ArrayList;
 
-import menus.Menu;
+import editor.Editor;
+import editor.Toolbar;
 import processing.core.*;
 import static processing.core.PConstants.*;
 

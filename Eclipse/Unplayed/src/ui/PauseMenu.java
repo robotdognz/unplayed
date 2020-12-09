@@ -1,11 +1,11 @@
-package menus;
+package ui;
 
 import camera.FreeCamera;
 import camera.GameCamera;
+import editor.top.MenuWidget;
 import game.Game;
 import game.GameLogic;
 import processing.core.PApplet;
-import ui.MenuWidget;
 
 public class PauseMenu extends Menu {
 	Game game;

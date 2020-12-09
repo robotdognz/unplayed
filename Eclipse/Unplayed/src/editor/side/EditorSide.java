@@ -1,14 +1,16 @@
-package editor;
+package editor.side;
 
 import static processing.core.PConstants.CENTER;
 
 import java.util.ArrayList;
 
-import menus.Menu;
+import editor.Editor;
+import editor.Toolbar;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
+import ui.Menu;
 import ui.Widget;
 
 public class EditorSide extends Toolbar {

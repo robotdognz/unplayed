@@ -1,9 +1,10 @@
-package ui;
+package editor.bottom;
 
 import editor.Editor;
 import editor.Toolbar;
 import editor.ViewTool;
 import processing.core.PApplet;
+import ui.Widget;
 
 public class ViewModeWidget extends Widget {
 	public ViewModeWidget(PApplet p, Editor editor, Toolbar parent) {

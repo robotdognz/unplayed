@@ -1,9 +1,10 @@
-package ui;
+package editor.bottom;
 
 import editor.Editor;
 import editor.TileTool;
 import editor.Toolbar;
 import processing.core.PApplet;
+import ui.Widget;
 
 public class TileModeWidget extends Widget {
 	public TileModeWidget(PApplet p, Editor editor, Toolbar parent) {

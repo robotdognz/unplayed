@@ -1,8 +1,9 @@
-package ui;
+package editor.top;
 
 import editor.Editor;
 import editor.Toolbar;
 import processing.core.PApplet;
+import ui.Widget;
 import controllers.EditorControl;
 
 public class EraseWidget extends Widget {
