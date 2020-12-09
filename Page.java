@@ -31,6 +31,9 @@ public class Page {
 	private float flipX;
 	private float flipY;
 
+	// TODO: performance problem with too many pages (perhaps pages without movement
+	// in them don't get redrawn)
+
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position, float size, float angle,
 			boolean flipH, boolean flipV) {
 		this.p = p;
