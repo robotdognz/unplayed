@@ -77,12 +77,14 @@ public class EditorBottom extends Toolbar {
 		images = texture.getImageList();
 		events = texture.getEventList();
 		views = editor.game.views;
+		
+		bounds = new Rectangle(0, p.height - 300, p.width, 300); //TODO: needs to scale to screen size
 	}
 	
-	public boolean insideBoundary(float x, float y) {
-		//TODO: need to add a boundary rectangle and complete this method
-		return false;
-	}
+//	public boolean insideBoundary(float x, float y) {
+//		//TODO: need to add a boundary rectangle and complete this method
+//		return false;
+//	}
 
 	public void draw(PVector touch, Menu menu) {
 		for (int i = 0; i < widgets.size(); i++) {

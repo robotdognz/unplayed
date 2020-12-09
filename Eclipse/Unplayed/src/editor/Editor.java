@@ -34,7 +34,7 @@ public class Editor {
 	// TODO: these need to be replaced with a system that checks if the current
 	// touch is inside the boundary of any of the toolbars
 	// public int TOP_DEADZONE;
-	public int BOTTOM_DEADZONE;
+	//public int BOTTOM_DEADZONE;
 
 	public boolean nextTouchInactive = false;
 
@@ -116,7 +116,7 @@ public class Editor {
 		this.quadVis = false;
 
 		// TOP_DEADZONE = 200;
-		BOTTOM_DEADZONE = p.height - 300;
+		//BOTTOM_DEADZONE = p.height - 300;
 
 		// Initialize camera backup fields
 		lvScale = camera.getScale();
@@ -134,8 +134,10 @@ public class Editor {
 
 		// step the controller if there are no widget menus open and touch has been
 		// re-enabled
-		if (controllerActive && !nextTouchInactive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
-				&& p.mouseY < BOTTOM_DEADZONE) {
+		if (controllerActive && !nextTouchInactive 
+				&& !editorTop.insideBoundary(p.mouseX, p.mouseY)
+				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY)
+				&& !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
 			controller.step(touches); // draw event for controls
 		}
 
@@ -266,7 +268,10 @@ public class Editor {
 		if (nextTouchInactive) {
 			return;
 		}
-		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY) && p.mouseY < BOTTOM_DEADZONE) {
+		if (controllerActive 
+				&& !editorTop.insideBoundary(p.mouseX, p.mouseY) 
+				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY)
+				&& !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
 			controller.touchStarted(touch); // Controls for touch started event
 		}
 	}
@@ -280,7 +285,10 @@ public class Editor {
 			nextTouchInactive = false;
 		}
 
-		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY) && p.mouseY < BOTTOM_DEADZONE) {
+		if (controllerActive 
+				&& !editorTop.insideBoundary(p.mouseX, p.mouseY) 
+				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY)
+				&& !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
 			controller.touchEnded(touch); // Controls for touch moved event
 		}
 
@@ -294,7 +302,10 @@ public class Editor {
 		if (nextTouchInactive) { // don't do controller if next touch inactive
 			return;
 		}
-		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY) && p.mouseY < BOTTOM_DEADZONE) {
+		if (controllerActive 
+				&& !editorTop.insideBoundary(p.mouseX, p.mouseY) 
+				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY)
+				&& !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
 			controller.touchMoved(touches); // Controls for touch moved event
 		}
 	}
@@ -303,7 +314,10 @@ public class Editor {
 		if (nextTouchInactive) {
 			return;
 		}
-		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY) && p.mouseY < BOTTOM_DEADZONE) {
+		if (controllerActive 
+				&& !editorTop.insideBoundary(p.mouseX, p.mouseY) 
+				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY)
+				&& !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
 			controller.onPinch(touches, x, y, d); // controlls for on pinch event
 		}
 	}

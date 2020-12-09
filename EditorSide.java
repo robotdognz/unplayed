@@ -42,9 +42,12 @@ public class EditorSide extends Toolbar {
 		// this.top = p.requestImage(folder + "???.png");
 		// this.middle = p.requestImage(folder + "???.png");
 		// this.bottom = p.requestImage(folder + "???.png");
+		
+		bounds = new Rectangle(0, p.height/2, 200, 300); //TODO: needs to scale to screen and widget amount
 	}
 
 	public void draw(PVector touch, Menu menu) {
+		p.rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 		p.imageMode(CENTER);
 		
 		for (int i = 0; i < widgets.size(); i++) {
@@ -61,13 +64,6 @@ public class EditorSide extends Toolbar {
 		for (int i = 0; i < widgets.size(); i++) {
 			widgets.get(i).click();
 		}
-	}
-
-	public boolean insideBoundary(float x, float y) {
-		// TODO: need to add a boundary rectangle and complete this method
-		// should implement the basic single rectangle version in the abstract class
-		// and implement the advanced version inside the sub class where necessary
-		return false;
 	}
 
 	// these methods are called by the widgets inside this toolbar, the toolbar then
