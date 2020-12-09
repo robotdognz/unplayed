@@ -37,7 +37,7 @@ void init() {
   if (!hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
     requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
   }
-  
+
   //initalise the game
   gl.init();
 }
@@ -73,87 +73,26 @@ void draw() {
 
 void touchStarted() {
   gl.touchStarted();
-  ////find true last touch
-  //if (touches.length >= gl.touches.size() && 
-  //  touches.length > 1) {
-  //  for (int i = 0; i < touches.length; i++) {
-  //    boolean match = false;
-  //    for (PVector t : gl.touches) {
-  //      float currentDiff = sqrt(sq(t.x-touches[i].x)+sq(t.x-touches[i].x));
-  //      if (currentDiff < 10) {
-  //        match = true;
-  //      }
-  //    }
-  //    if (!match) { //no match for current touch, so it's new
-  //      gl.lastTouch = new PVector(touches[i].x, touches[i].y);
-  //    }
-  //  }
-  //} else if (touches.length == 1) {
-  //  gl.lastTouch = new PVector(touches[touches.length-1].x, touches[touches.length-1].y);
-  //}
-
-  //if (gl.menu == null) {
-  //  if (gl.editorToggle) {
-  //    gl.editor.touchStarted(gl.lastTouch);
-  //  } else {
-  //    gl.controller.touchStarted(gl.lastTouch);
-  //  }
-  //}
 }
 
 void touchEnded() {
   gl.touchEnded();
-  //if (gl.editorToggle) {
-  //  gl.editor.touchEnded(gl.lastTouch);
-  //} else {
-  //  for (int i = 0; i < gl.widgets.size(); i++) {
-  //    gl.widgets.get(i).click();
-  //  }
-  //}
-
-  //if (gl.menu != null) {
-  //  gl.menu.click();
-  //}
 }
 
 void touchMoved() {
   gl.touchMoved();
-  //if (gl.menu == null) {
-  //  if (gl.editorToggle) {
-  //    gl.editor.touchMoved(gl.touches);
-  //  } else {
-  //    gl.controller.touchMoved(gl.touches);
-  //  }
-  //}
 }
 
 void onPinch(float x, float y, float d) {
   gl.onPinch(x, y, d);
-  //if (gl.menu == null) {
-  //  if (gl.editorToggle) {
-  //    gl.editor.onPinch(gl.touches, x, y, d);
-  //  } else {
-  //    gl.controller.onPinch(gl.touches, x, y, d);
-  //  }
-  //}
 }
 
 void onTap (float x, float y) {
   gl.onTap(x, y);
-  //if (gl.menu == null) {
-  //  if (gl.editorToggle) {
-  //    gl.editor.onTap(x, y);
-  //  } else {
-  //    //controller.onTap(x, y);
-  //  }
-  //}
 }
 
 void onFlick(float x, float y, float px, float py, float v) {
   gl.onFlick(x, y, px, py, v);
-  //x/y start of flick
-  //px/yx end of flick
-  //v velocity of flick
 }
 void onRotate(float x, float y, float angle) {
   gl.onRotate(x, y, angle);
