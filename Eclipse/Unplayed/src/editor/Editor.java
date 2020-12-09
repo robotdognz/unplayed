@@ -148,7 +148,7 @@ public class Editor {
 	// only drawing should be in draw
 	public void draw(PVector touch, Menu menu) {
 		// draw the level
-		if (showPageView) {
+		if (!showPageView) {
 			drawLevel();
 		}
 
