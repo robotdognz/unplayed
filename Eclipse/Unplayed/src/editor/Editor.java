@@ -288,6 +288,10 @@ public class Editor {
 //		if (currentTool != null) {
 //			currentTool.touchEnded(touch);
 //		}
+		if (controllerActive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
+			controller.touchEnded(touch); // Controls for touch moved event
+		}
+		
 	}
 
 	public void touchMoved(ArrayList<PVector> touch) {
