@@ -8,12 +8,12 @@ import processing.core.PApplet;
 import ui.PauseMenu;
 import ui.Widget;
 
-public class MenuWidget extends Widget {
+public class WidgetPauseMenu extends Widget {
 	private boolean previousStatus = false;
 	private Game game;
 	private GameLogic gl;
 
-	public MenuWidget(PApplet p, Editor editor, Toolbar parent) {
+	public WidgetPauseMenu(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "exit.png");
 		game = editor.game;

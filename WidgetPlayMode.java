@@ -8,10 +8,10 @@ import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class PlayModeWidget extends Widget {
+public class WidgetPlayMode extends Widget {
 	boolean previousStatus = false;
 
-	public PlayModeWidget(PApplet p, Editor editor, Toolbar parent) {
+	public WidgetPlayMode(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "Pause.png");
 		closeAfterSubWidget = true;
@@ -27,7 +27,7 @@ public class PlayModeWidget extends Widget {
 		}
 	}
 
-	public void updateActive() {
+	public void updateActive() { //TODO: change to updateActiveUser()?
 		if (editor.camera instanceof FreeCamera || !editor.showPageView) {
 			active = false;
 		} else {

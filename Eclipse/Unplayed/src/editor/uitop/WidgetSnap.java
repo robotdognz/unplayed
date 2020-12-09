@@ -5,18 +5,18 @@ import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class PageViewWidget extends Widget {
-	public PageViewWidget(PApplet p, Editor editor, Toolbar parent) {
+public class WidgetSnap extends Widget {
+	public WidgetSnap(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
-		icon = p.loadImage(folder + "pageView.png");
+		icon = p.loadImage(folder + "snaptoGrid.png");
 	}
 
 	public void clicked() {
-		editor.switchView();
+		editor.snap = !editor.snap;
 	}
 
 	public void updateActive() {
-		if (editor.showPageView) {
+		if (editor.snap) {
 			active = true;
 		} else {
 			active = false;

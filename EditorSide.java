@@ -83,11 +83,22 @@ public class EditorSide extends Toolbar {
 		// will only be called for page?
 	}
 
-	public void flipH(boolean flipped) {
-
-	}
+	
 
 	public void flipV(boolean flipped) {
 
+	}
+	
+	//methods for the widget to access
+	public boolean isFlippedH() {
+		if(editor.selected != null) {
+			//figure out if it's flipped
+		}
+		return false;
+	}
+	public void flipH() {
+		if(editor.selected != null) {
+			//flip it
+		}
 	}
 }

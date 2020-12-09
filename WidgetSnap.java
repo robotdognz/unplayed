@@ -5,8 +5,8 @@ import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class SnapWidget extends Widget {
-	public SnapWidget(PApplet p, Editor editor, Toolbar parent) {
+public class WidgetSnap extends Widget {
+	public WidgetSnap(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "snaptoGrid.png");
 	}

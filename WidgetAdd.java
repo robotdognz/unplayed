@@ -6,20 +6,20 @@ import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class SelectWidget extends Widget {
-	public SelectWidget(PApplet p, Editor editor, Toolbar parent) {
+public class WidgetAdd extends Widget {
+	public WidgetAdd(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		closeAfterSubWidget = true;
-		icon = p.loadImage(folder + "select.png");
+		icon = p.loadImage(folder + "PlaceBlock.png");
 	}
 
 	public void clicked() {
-		editor.eMode = Editor.editorMode.SELECT;
+		editor.eMode = Editor.editorMode.ADD;
 		editor.controller = new EditorControl(p, editor);
 	}
 
 	public void updateActive() {
-		if (editor.eMode == Editor.editorMode.SELECT) {
+		if (editor.eMode == Editor.editorMode.ADD) {
 			active = true;
 		} else {
 			active = false;

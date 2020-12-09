@@ -47,10 +47,10 @@ public class EditorBottom extends Toolbar {
 
 		// setup widgets
 		super.widgets = new ArrayList<Widget>();
-		Widget blockW = new TileModeWidget(p, editor, this);
-		Widget imageW = new ImageModeWidget(p, editor, this);
-		Widget eventW = new EventModeWidget(p, editor, this);
-		Widget viewW = new ViewModeWidget(p, editor, this);
+		Widget blockW = new WidgetTileMode(p, editor, this);
+		Widget imageW = new WidgetImageMode(p, editor, this);
+		Widget eventW = new WidgetEventMode(p, editor, this);
+		Widget viewW = new WidgetViewMode(p, editor, this);
 		widgets.add(blockW);
 		widgets.add(imageW);
 		widgets.add(eventW);
@@ -75,7 +75,7 @@ public class EditorBottom extends Toolbar {
 		this.events = texture.getEventList();
 		this.views = editor.game.views;
 		
-		super.bounds = new Rectangle(0, p.height - 340, p.width, 300); //TODO: needs to scale to screen size
+		super.bounds = new Rectangle(0, p.height - 350, p.width, 300); //TODO: needs to scale to screen size
 	}
 
 	public void draw(PVector touch, Menu menu) {

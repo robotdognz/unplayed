@@ -9,7 +9,7 @@ import camera.FreeCamera;
 import controllers.Controller;
 import controllers.PlayerControl;
 import editor.Editor;
-import editor.uitop.MenuWidget;
+import editor.uitop.WidgetPauseMenu;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.DoToast;
@@ -74,7 +74,7 @@ public class GameLogic {
 		editor = new Editor(p, texture, game, camera, convert, toast);
 
 		//// setup non editor widget(s)
-		Widget menuW = new MenuWidget(p, editor, null);
+		Widget menuW = new WidgetPauseMenu(p, editor, null);
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
 	}

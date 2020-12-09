@@ -5,18 +5,18 @@ import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class QuadtreeWidget extends Widget {
-	public QuadtreeWidget(PApplet p, Editor editor, Toolbar parent) {
+public class WidgetPageView extends Widget {
+	public WidgetPageView(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
-		icon = p.loadImage(folder + "quadTree.png");
+		icon = p.loadImage(folder + "pageView.png");
 	}
 
 	public void clicked() {
-		editor.quadVis = !editor.quadVis;
+		editor.switchView();
 	}
 
 	public void updateActive() {
-		if (editor.quadVis) {
+		if (editor.showPageView) {
 			active = true;
 		} else {
 			active = false;

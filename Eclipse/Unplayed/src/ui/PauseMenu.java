@@ -2,7 +2,7 @@ package ui;
 
 import camera.FreeCamera;
 import camera.GameCamera;
-import editor.uitop.MenuWidget;
+import editor.uitop.WidgetPauseMenu;
 import game.Game;
 import game.GameLogic;
 import processing.core.PApplet;
@@ -10,12 +10,12 @@ import processing.core.PApplet;
 public class PauseMenu extends Menu {
 	Game game;
 	GameLogic gl;
-	MenuWidget m;
+	WidgetPauseMenu m;
 	String resume = "Resume";
 	String editor = "Toggle Editor";
 	String restart = "Restart";
 
-	public PauseMenu(PApplet p, Game game, GameLogic gameLogic, MenuWidget m) {
+	public PauseMenu(PApplet p, Game game, GameLogic gameLogic, WidgetPauseMenu m) {
 		super(p);
 		this.game = game;
 		this.gl = gameLogic;

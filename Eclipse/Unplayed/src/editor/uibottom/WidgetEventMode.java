@@ -6,8 +6,8 @@ import editor.tools.EventTool;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class EventModeWidget extends Widget {
-	public EventModeWidget(PApplet p, Editor editor, Toolbar parent) {
+public class WidgetEventMode extends Widget {
+	public WidgetEventMode(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "event.png");
 		imageInactive = null;

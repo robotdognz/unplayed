@@ -5,15 +5,15 @@ import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class LoadWidget extends Widget {
-	public LoadWidget(PApplet p, Editor editor, Toolbar parent) {
+public class WidgetSave extends Widget {
+	public WidgetSave(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		closeAfterSubWidget = true;
-		icon = p.loadImage(folder + "load.png");
+		icon = p.loadImage(folder + "save.png");
 	}
 
 	public void clicked() {
-		// load the level
-		editor.eJSON.load(editor.game);
+		// save the level
+		editor.eJSON.save(editor.game);
 	}
 }

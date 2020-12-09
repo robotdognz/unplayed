@@ -7,8 +7,8 @@ import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class CameraControlWidget extends Widget {
-	public CameraControlWidget(PApplet p, Editor editor, Toolbar parent) {
+public class WidgetCameraControl extends Widget {
+	public WidgetCameraControl(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "CameraControls.png");
 	}

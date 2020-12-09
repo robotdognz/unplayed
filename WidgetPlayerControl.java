@@ -6,8 +6,8 @@ import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class PlayerControlWidget extends Widget {
-	public PlayerControlWidget(PApplet p, Editor editor, Toolbar parent) {
+public class WidgetPlayerControl extends Widget {
+	public WidgetPlayerControl(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "playerControls.png");
 	}
