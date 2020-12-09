@@ -36,7 +36,7 @@ public class EditorSide extends Toolbar {
 		widgets.add(filpH);
 		
 		this.widgetSpacing = p.width / 8;
-		this.widgetOffset = p.height / 2;
+		this.widgetOffset = p.height / 2 - widgetSpacing;
 
 		// sprites
 		// this.top = p.requestImage(folder + "???.png");
@@ -53,6 +53,13 @@ public class EditorSide extends Toolbar {
 			if (menu == null) {
 				widgets.get(i).hover(touch);
 			}
+		}
+	}
+	
+	public void touchEnded() {
+		// check for clicking on widgets
+		for (int i = 0; i < widgets.size(); i++) {
+			widgets.get(i).click();
 		}
 	}
 
