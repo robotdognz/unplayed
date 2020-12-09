@@ -7,6 +7,7 @@ import game.Game;
 import handlers.TextureCache;
 import objects.Image;
 import objects.Rectangle;
+import processing.core.PVector;
 
 public class ImageTool implements Tool {
 	Editor editor;
@@ -155,7 +156,7 @@ public class ImageTool implements Tool {
 	}
 
 	@Override
-	public void touchEnded() {
+	public void touchEnded(PVector touch) {
 	}
 
 	@Override

@@ -45,7 +45,7 @@ public class PlayerControl implements Controller {
 		}
 	}
 
-	public void touchEnded() {
+	public void touchEnded(PVector touch) {
 	}
 
 	public void touchMoved(ArrayList<PVector> touch) {

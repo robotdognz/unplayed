@@ -28,9 +28,9 @@ public class EditorControl implements Controller {
 	public void touchStarted(PVector touch) {
 	}
 
-	public void touchEnded() {
+	public void touchEnded(PVector touch) {
 		if(editor.currentTool != null) {
-			editor.currentTool.touchEnded();
+			editor.currentTool.touchEnded(touch);
 		}
 	}
 

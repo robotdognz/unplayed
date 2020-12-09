@@ -30,7 +30,7 @@ public class CameraControl implements Controller {
 	public void touchStarted(PVector touch) {
 	}
 
-	public void touchEnded() {
+	public void touchEnded(PVector touch) {
 	}
 
 	public void touchMoved(ArrayList<PVector> touch) {

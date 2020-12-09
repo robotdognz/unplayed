@@ -8,6 +8,7 @@ import handlers.TextureCache;
 import objects.Event;
 import objects.PlayerDeath;
 import objects.Rectangle;
+import processing.core.PVector;
 
 public class EventTool implements Tool {
 	Editor editor;
@@ -154,7 +155,7 @@ public class EventTool implements Tool {
 	}
 
 	@Override
-	public void touchEnded() {
+	public void touchEnded(PVector touch) {
 	}
 
 	@Override

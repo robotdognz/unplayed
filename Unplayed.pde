@@ -139,7 +139,7 @@ void touchStarted() {
 
 void touchEnded() {
   if (gl.editorToggle) {
-    gl.editor.touchEnded();
+    gl.editor.touchEnded(gl.lastTouch);
   } else {
     for (int i = 0; i < gl.widgets.size(); i++) {
       gl.widgets.get(i).click();

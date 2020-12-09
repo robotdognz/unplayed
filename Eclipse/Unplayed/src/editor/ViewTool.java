@@ -12,6 +12,8 @@ public class ViewTool implements Tool {
 	private Game game;
 	private PVector start; // start of rectangle drawing
 	private PVector end; // end of rectangle drawing
+	
+	//TODO: have an AreaSelectTool inside this tool instead of having two copies of the code
 
 	public ViewTool(PApplet p, Editor editor) {
 		this.p = p;
@@ -37,7 +39,7 @@ public class ViewTool implements Tool {
 	}
 
 	@Override
-	public void touchEnded() {
+	public void touchEnded(PVector touch) {
 		if (!game.displayPages) { // if we're in the game view
 			// if there is both a start and an end
 			if (start != null && end != null) {
@@ -63,7 +65,9 @@ public class ViewTool implements Tool {
 				end = null;
 			}
 		} else {// if we're in the page view
-
+			if(editor.currentView != null) { //if there is something to create a page from
+				
+			}
 		}
 	}
 

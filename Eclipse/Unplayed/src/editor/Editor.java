@@ -277,7 +277,7 @@ public class Editor {
 		}
 	}
 
-	public void touchEnded() {
+	public void touchEnded(PVector touch) {
 		editorTop.touchEnded();
 		editorBottom.touchEnded();
 
@@ -286,7 +286,7 @@ public class Editor {
 		}
 
 		if (currentTool != null) {
-			currentTool.touchEnded();
+			currentTool.touchEnded(touch);
 		}
 	}
 

@@ -7,6 +7,7 @@ import game.Game;
 import handlers.TextureCache;
 import objects.Rectangle;
 import objects.Tile;
+import processing.core.PVector;
 
 public class TileTool implements Tool {
 	Editor editor;
@@ -149,7 +150,7 @@ public class TileTool implements Tool {
 	}
 
 	@Override
-	public void touchEnded() {
+	public void touchEnded(PVector touch) {
 	}
 
 	@Override
