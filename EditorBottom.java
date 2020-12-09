@@ -75,7 +75,7 @@ public class EditorBottom extends Toolbar {
 		this.events = texture.getEventList();
 		this.views = editor.game.views;
 		
-		super.bounds = new Rectangle(0, p.height - 300, p.width, 300); //TODO: needs to scale to screen size
+		super.bounds = new Rectangle(0, p.height - 330, p.width, 300); //TODO: needs to scale to screen size
 	}
 
 	public void draw(PVector touch, Menu menu) {

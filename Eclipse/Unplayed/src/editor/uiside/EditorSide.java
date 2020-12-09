@@ -44,7 +44,7 @@ public class EditorSide extends Toolbar {
 		// this.middle = p.requestImage(folder + "???.png");
 		// this.bottom = p.requestImage(folder + "???.png");
 
-		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 180, height); // TODO: needs to scale to screen and widget amount
+		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height); // TODO: needs to scale to screen and widget amount
 	}
 
 	public void draw(PVector touch, Menu menu) {
@@ -52,7 +52,7 @@ public class EditorSide extends Toolbar {
 		p.imageMode(CENTER);
 
 		for (int i = 0; i < widgets.size(); i++) {
-			widgets.get(i).draw(100, widgetOffset + widgetSpacing * i); // TODO: they need to draw vertically
+			widgets.get(i).draw(80, widgetOffset + widgetSpacing * i); // TODO: they need to draw vertically
 			widgets.get(i).updateActive();
 			if (menu == null) {
 				widgets.get(i).hover(touch);
