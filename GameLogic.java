@@ -78,8 +78,9 @@ public class GameLogic {
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
 	}
-	
-	public void step() {}
+
+	public void step() {
+	}
 
 	public void draw() {
 		// touch screen
@@ -124,5 +125,86 @@ public class GameLogic {
 		}
 	}
 
-	// TODO: move all of the other methods in Unplayed here (touchMoved(), etc)
+	public void touchStarted() {
+		// find true last touch
+		if (p.touches.length >= touches.size() && p.touches.length > 1) {
+			for (int i = 0; i < p.touches.length; i++) {
+				boolean match = false;
+				for (PVector t : touches) {
+					float currentDiff = PApplet
+							.sqrt(PApplet.sq(t.x - p.touches[i].x) + PApplet.sq(t.x - p.touches[i].x));
+					if (currentDiff < 10) {
+						match = true;
+					}
+				}
+				if (!match) { // no match for current touch, so it's new
+					lastTouch = new PVector(p.touches[i].x, p.touches[i].y);
+				}
+			}
+		} else if (p.touches.length == 1) {
+			lastTouch = new PVector(p.touches[p.touches.length - 1].x, p.touches[p.touches.length - 1].y);
+		}
+
+		if (menu == null) {
+			if (editorToggle) {
+				editor.touchStarted(lastTouch);
+			} else {
+				controller.touchStarted(lastTouch);
+			}
+		}
+	}
+
+	public void touchEnded() {
+		if (editorToggle) {
+			editor.touchEnded(lastTouch);
+		} else {
+			for (int i = 0; i < widgets.size(); i++) {
+				widgets.get(i).click();
+			}
+		}
+
+		if (menu != null) {
+			menu.click();
+		}
+	}
+
+	public void touchMoved() {
+		if (menu == null) {
+			if (editorToggle) {
+				editor.touchMoved(touches);
+			} else {
+				controller.touchMoved(touches);
+			}
+		}
+	}
+
+	public void onPinch(float x, float y, float d) {
+		if (menu == null) {
+			if (editorToggle) {
+				editor.onPinch(touches, x, y, d);
+			} else {
+				controller.onPinch(touches, x, y, d);
+			}
+		}
+	}
+
+	public void onTap(float x, float y) {
+		if (menu == null) {
+			if (editorToggle) {
+				editor.onTap(x, y);
+			} else {
+				// controller.onTap(x, y);
+			}
+		}
+	}
+
+	public void onFlick(float x, float y, float px, float py, float v) {
+		// x/y start of flick
+		// px/yx end of flick
+		// v velocity of flick
+	}
+
+	public void onRotate(float x, float y, float angle) {
+	}
+
 }
