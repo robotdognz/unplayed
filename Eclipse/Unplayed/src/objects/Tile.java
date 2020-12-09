@@ -9,6 +9,8 @@ import processing.core.PGraphics;
 public class Tile extends Rectangle {
 	private boolean hasTexture;
 	private TileHandler tileTexture;
+	private float flipX;
+	private float flipY;
 	// rotation
 	// vetrtical flip
 	// horazontal flip
@@ -22,11 +24,20 @@ public class Tile extends Rectangle {
 		} else {
 			hasTexture = false;
 		}
+
+		flipX = 1;
+		flipY = 1;
 	}
 
 	public void draw(PGraphics graphics, float scale) {
 		if (hasTexture) {
-			graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
+			graphics.pushMatrix();
+			graphics.translate(getX(), getY());
+			graphics.scale(flipX, flipY); // flipping the tile
+			//graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
+			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
+			graphics.popMatrix();
+
 		} else {
 			// display missing texture texture
 		}
@@ -41,6 +52,22 @@ public class Tile extends Rectangle {
 			return tileTexture.getFile();
 		} else {
 			return null;
+		}
+	}
+
+	public void flipH() {
+		if (flipX == 1) {
+			flipX = -1;
+		} else {
+			flipX = 1;
+		}
+	}
+
+	public boolean isFlippedH() {
+		if (flipX == 1) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 }

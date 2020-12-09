@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import editor.Editor;
 import editor.Toolbar;
 import objects.Rectangle;
+import objects.Tile;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -92,13 +93,18 @@ public class EditorSide extends Toolbar {
 	//methods for the widget to access
 	public boolean isFlippedH() {
 		if(editor.selected != null) {
+			if(editor.selected instanceof Tile) {
+				return ((Tile)editor.selected).isFlippedH();
+			}
 			//figure out if it's flipped
 		}
 		return false;
 	}
 	public void flipH() {
 		if(editor.selected != null) {
-			//flip it
+			if(editor.selected instanceof Tile) {
+				((Tile)editor.selected).flipH();
+			}
 		}
 	}
 }
