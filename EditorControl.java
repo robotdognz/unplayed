@@ -35,6 +35,7 @@ public class EditorControl implements Controller {
 	}
 
 	public void touchMoved(ArrayList<PVector> touch) {
+		//TODO: this logic should potentially be moved directly into the tools
 		float snapNo = 10;
 		if (editor.snap) {
 			snapNo = 100;

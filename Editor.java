@@ -199,13 +199,13 @@ public class Editor {
 		game.paper.draw(p.g, game.screenSpace, currentScale);
 
 		// draw the page views TODO: remove this
-		for (Page page : pageView.getPages()) {
-			Rectangle pView = page.getView();
-			p.noFill();
-			p.stroke(255, 0, 0);
-			p.strokeWeight(4);
-			p.rect(pView.getX(), pView.getY(), pView.getWidth(), pView.getHeight());
-		}
+//		for (Page page : pageView.getPages()) {
+//			Rectangle pView = page.getView();
+//			p.noFill();
+//			p.stroke(255, 0, 0);
+//			p.strokeWeight(4);
+//			p.rect(pView.getX(), pView.getY(), pView.getWidth(), pView.getHeight());
+//		}
 
 		// draw the views
 		for (View view : game.views) {
@@ -230,8 +230,6 @@ public class Editor {
 			}
 			p.rect(game.player.getPlayerArea().getX(), game.player.getPlayerArea().getY(),
 					game.player.getPlayerArea().getWidth(), game.player.getPlayerArea().getHeight());
-			// rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(),
-			// screenSpace.getHeight());
 		}
 
 		// draw block placement selection if one exists and snapping is turned off
@@ -285,9 +283,6 @@ public class Editor {
 			nextTouchInactive = false;
 		}
 
-//		if (currentTool != null) {
-//			currentTool.touchEnded(touch);
-//		}
 		if (controllerActive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
 			controller.touchEnded(touch); // Controls for touch moved event
 		}

@@ -19,7 +19,7 @@ public class ViewTool implements Tool {
 	private PVector end; // end of rectangle drawing
 
 	// TODO: have an AreaSelectTool inside this tool instead of having two copies of
-	// the code
+	// TODO: currently only does adding, no erase or select
 
 	public ViewTool(PApplet p, Editor editor) {
 		this.p = p;
