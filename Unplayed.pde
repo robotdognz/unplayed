@@ -25,7 +25,9 @@ void setup() {
   background(0, 78, 83);
   frameRate(60);
   splash = 0;
+}
 
+void init() {
   //setup game logic
   activity = this.getActivity();
   context = activity.getApplicationContext();
@@ -35,9 +37,7 @@ void setup() {
   if (!hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
     requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
   }
-}
-
-void init() {
+  
   //initalise the game
   gl.init();
 }
@@ -47,7 +47,7 @@ void draw() {
 
   //splash screen
   if (splash == 0) {  //draw black screen
-    background(40, 40, 40);
+    background(0, 78, 83);
     splash = 1;
     return;
   } else if (splash == 1) { //draw loading image
