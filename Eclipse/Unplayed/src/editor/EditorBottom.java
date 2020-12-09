@@ -203,7 +203,7 @@ public class EditorBottom extends Toolbar {
 				imageOffset += (p.pmouseX - p.mouseX) / 3;
 			} else if (editor.currentTool instanceof EventTool) {
 				eventOffset += (p.pmouseX - p.mouseX) / 3;
-			} else if (editor.currentTool instanceof ViewTool) {
+			} else if (editor.currentTool instanceof ViewTool && views.size() > 0) {
 				viewOffset += (p.pmouseX - p.mouseX) / 3;
 			}
 		}

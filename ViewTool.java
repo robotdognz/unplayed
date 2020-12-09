@@ -1,6 +1,9 @@
 package editor;
 
 import game.Game;
+import game.Page;
+import game.PageView;
+import misc.Converter;
 import objects.View;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -9,16 +12,21 @@ import static processing.core.PConstants.*;
 public class ViewTool implements Tool {
 	private PApplet p;
 	private Editor editor;
+	private Converter convert;
 	private Game game;
+	private PageView pageView;
 	private PVector start; // start of rectangle drawing
 	private PVector end; // end of rectangle drawing
-	
-	//TODO: have an AreaSelectTool inside this tool instead of having two copies of the code
+
+	// TODO: have an AreaSelectTool inside this tool instead of having two copies of
+	// the code
 
 	public ViewTool(PApplet p, Editor editor) {
 		this.p = p;
 		this.editor = editor;
 		this.game = editor.game;
+		this.pageView = game.getPageView();
+		this.convert = editor.convert;
 		// this.texture = editor.texture;
 		start = null;
 		end = null;
@@ -30,7 +38,7 @@ public class ViewTool implements Tool {
 			if (start == null) {
 				start = new PVector(editor.point.x, editor.point.y);
 			} else {
-				end = new PVector(editor.point.x+100, editor.point.y+100);
+				end = new PVector(editor.point.x + 100, editor.point.y + 100);
 			}
 		} else { // if in page view
 
@@ -65,8 +73,16 @@ public class ViewTool implements Tool {
 				end = null;
 			}
 		} else {// if we're in the page view
-			if(editor.currentView != null) { //if there is something to create a page from
-				
+			if (editor.currentView != null) { // if there is something to create a page from
+				float snapNo = 10;
+				PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+				// round so blocks snap to grid
+				float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
+				float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
+				PVector center = new PVector(finalX, finalY);
+				Page page = new Page(p, game, editor.currentView.getTopLeft(), editor.currentView.getBottomRight(),
+						center, 1, 0, false, false);
+				pageView.addPage(page);
 			}
 		}
 	}
