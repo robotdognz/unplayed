@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import editor.Editor;
 import editor.Toolbar;
+import objects.Image;
 import objects.Rectangle;
 import objects.Tile;
 import processing.core.PApplet;
@@ -94,6 +95,8 @@ public class EditorSide extends Toolbar {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Tile) {
 				return ((Tile) editor.selected).isFlippedH();
+			}else if (editor.selected instanceof Image) {
+				return ((Image) editor.selected).isFlippedH();
 			}
 		}
 		return false;
@@ -103,6 +106,8 @@ public class EditorSide extends Toolbar {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Tile) {
 				((Tile) editor.selected).flipH();
+			}else if (editor.selected instanceof Image) {
+				((Image) editor.selected).flipH();
 			}
 		}
 	}
@@ -111,6 +116,8 @@ public class EditorSide extends Toolbar {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Tile) {
 				return ((Tile) editor.selected).isFlippedV();
+			}else if (editor.selected instanceof Image) {
+				return ((Image) editor.selected).isFlippedV();
 			}
 		}
 		return false;
@@ -120,6 +127,8 @@ public class EditorSide extends Toolbar {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Tile) {
 				((Tile) editor.selected).flipV();
+			}else if (editor.selected instanceof Image) {
+				((Image) editor.selected).flipV();
 			}
 		}
 	}

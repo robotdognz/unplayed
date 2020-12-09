@@ -4,6 +4,7 @@ import java.io.File;
 
 import handlers.TextureCache;
 import handlers.TileHandler;
+import processing.core.PApplet;
 import processing.core.PGraphics;
 import static processing.core.PConstants.*;
 
@@ -12,9 +13,7 @@ public class Tile extends Rectangle {
 	private TileHandler tileTexture;
 	private float flipX;
 	private float flipY;
-	// rotation
-	// vetrtical flip
-	// horazontal flip
+	private float angle;
 
 	public Tile(TextureCache texture, File file, int x, int y) {
 		super(x, y, 100, 100);
@@ -28,6 +27,7 @@ public class Tile extends Rectangle {
 
 		flipX = 1;
 		flipY = 1;
+		angle = 0;
 	}
 
 	public void draw(PGraphics graphics, float scale) {
@@ -35,6 +35,7 @@ public class Tile extends Rectangle {
 			graphics.imageMode(CENTER);
 			graphics.pushMatrix();
 			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
+			graphics.rotate(PApplet.radians(angle)); // angle of the tile
 			graphics.scale(flipX, flipY); // flipping the tile
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
 			graphics.popMatrix();
