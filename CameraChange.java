@@ -2,6 +2,7 @@ package objects;
 
 import game.Game;
 import handlers.TextureCache;
+import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class CameraChange extends Event {
@@ -73,6 +74,13 @@ public class CameraChange extends Event {
 	    g.newBottomEdge = (int)cameraBottomRight.y;
 	    g.newLeftEdge = (int)cameraTopLeft.x;
 	    g.newRightEdge = (int)cameraBottomRight.x;
+	  }
+	  
+	  public void drawSelected(PGraphics g) {
+		  super.drawSelected(g);
+		  g.noStroke();
+		  g.fill(255, 0, 0, 100);
+		  g.rect(cameraTopLeft.x, cameraTopLeft.y, cameraTopLeft.x-cameraBottomRight.x, cameraTopLeft.y-cameraBottomRight.y);
 	  }
 
 	  //public void draw() {

@@ -1,5 +1,6 @@
 package objects;
 
+import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class Rectangle {
@@ -11,6 +12,13 @@ public class Rectangle {
 		this.rHeight = rHeight;
 		this.topLeft = new PVector(x, y);
 		this.bottomRight = new PVector(x + rWidth, y + rHeight);
+	}
+	
+	public void drawSelected(PGraphics g) {
+		g.noFill();
+		g.stroke(255, 0, 0); // selection color
+		g.strokeWeight(2);
+		g.rect(getX(), getY(), getWidth(), getHeight());
 	}
 
 	// getters

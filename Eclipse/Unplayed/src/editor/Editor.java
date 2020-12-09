@@ -233,10 +233,11 @@ public class Editor {
 
 		// draw selection box around selected object
 		if (selected != null) {
-			p.noFill();
-			p.stroke(255, 0, 0); // selection colour
-			p.strokeWeight(2);
-			p.rect(selected.getX(), selected.getY(), selected.getWidth(), selected.getHeight());
+//			p.noFill();
+//			p.stroke(255, 0, 0); // selection colour
+//			p.strokeWeight(2);
+//			p.rect(selected.getX(), selected.getY(), selected.getWidth(), selected.getHeight());
+			selected.drawSelected(p.g);
 		}
 
 		p.popMatrix(); // start working at screen scale
