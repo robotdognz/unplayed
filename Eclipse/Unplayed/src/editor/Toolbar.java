@@ -10,8 +10,6 @@ public abstract class Toolbar {
 	public ArrayList<Widget> widgets;
 	public float widgetSpacing; // size of gap between widgets
 	public float widgetOffset; // amount to offset widget drawing by
-	
-	//TODO: need to add a boundary rectangle and a isInsideBoundary(x, y) method
 
 	public Editor editor;
 
@@ -19,6 +17,10 @@ public abstract class Toolbar {
 		widgetSpacing = 0;
 		widgetOffset = 0;
 		this.editor = editor;
+	}
+	
+	public boolean insideBoundary(float x, float y) {
+		return false;
 	}
 
 	public void step() {

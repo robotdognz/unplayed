@@ -83,6 +83,11 @@ public class EditorTop extends Toolbar {
 		}
 		editor.controllerActive = !wMenuOpen; // if a widget menu is open, deactivate controls
 	}
+	
+	public boolean insideBoundary(float x, float y) {
+		//TODO: need to add a boundary rectangle and complete this method
+		return false;
+	}
 
 	public void touchEnded() {
 		// check for clicking on widgets

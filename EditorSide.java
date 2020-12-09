@@ -41,6 +41,11 @@ public class EditorSide extends Toolbar {
 			}
 		}
 	}
+	
+	public boolean insideBoundary(float x, float y) {
+		//TODO: need to add a boundary rectangle and complete this method
+		return false;
+	}
 
 	// these methods are called by the widgets inside this toolbar, the toolbar then
 	// passes what they set on to the currently selected object in the editor
@@ -48,6 +53,10 @@ public class EditorSide extends Toolbar {
 	public void setAngle(float angle) {
 		// pass the angle straight to page if it is a page
 		// round it to the nearest 90 if it's anything else
+	}
+	
+	public void setArea(PVector topLeft, PVector bottomRight) {
+		
 	}
 
 	public void setSize(float size) {

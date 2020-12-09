@@ -73,6 +73,11 @@ public class EditorBottom extends Toolbar {
 		events = texture.getEventList();
 		views = editor.game.views;
 	}
+	
+	public boolean insideBoundary(float x, float y) {
+		//TODO: need to add a boundary rectangle and complete this method
+		return false;
+	}
 
 	public void draw(PVector touch, Menu menu) {
 		for (int i = 0; i < widgets.size(); i++) {
