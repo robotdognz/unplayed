@@ -13,7 +13,7 @@ public class View extends Rectangle {
 		super(x, y, rWidth, rHeight);
 		this.p = p;
 		removed = false;
-		color = p.color(255, 0, 0); // TODO: implement random color
+		color = p.color(p.random(255), p.random(255), p.random(255)); // TODO: implement random color
 	}
 
 	public void draw(PGraphics graphics) {
