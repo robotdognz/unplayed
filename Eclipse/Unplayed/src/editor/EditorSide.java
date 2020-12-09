@@ -41,9 +41,11 @@ public class EditorSide extends Toolbar {
 			}
 		}
 	}
-	
+
 	public boolean insideBoundary(float x, float y) {
-		//TODO: need to add a boundary rectangle and complete this method
+		// TODO: need to add a boundary rectangle and complete this method
+		// should implement the basic single rectangle version in the abstract class
+		// and implement the advanced version inside the sub class where necessary
 		return false;
 	}
 
@@ -54,9 +56,9 @@ public class EditorSide extends Toolbar {
 		// pass the angle straight to page if it is a page
 		// round it to the nearest 90 if it's anything else
 	}
-	
+
 	public void setArea(PVector topLeft, PVector bottomRight) {
-		
+
 	}
 
 	public void setSize(float size) {

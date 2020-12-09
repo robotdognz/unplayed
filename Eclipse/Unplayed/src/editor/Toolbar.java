@@ -18,8 +18,11 @@ public abstract class Toolbar {
 		widgetOffset = 0;
 		this.editor = editor;
 	}
-	
+
 	public boolean insideBoundary(float x, float y) {
+		// TODO: need to add a boundary rectangle and complete this method
+		// should implement the basic single rectangle version in the abstract class
+		// and implement the advanced version inside the sub class where necessary
 		return false;
 	}
 
