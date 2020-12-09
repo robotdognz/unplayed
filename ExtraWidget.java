@@ -2,7 +2,7 @@ package editor.uitop;
 
 import editor.Editor;
 import editor.Toolbar;
-import editor.uiside.ConfirmWidget;
+import editor.uiside.WidgetConfirm;
 import processing.core.PApplet;
 import ui.Widget;
 
@@ -11,7 +11,7 @@ public class ExtraWidget extends Widget {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "extraActions.png");
 
-		Widget w1 = new ConfirmWidget(p, editor, parent);
+		Widget w1 = new WidgetConfirm(p, editor, parent);
 		Widget w2 = new PlayModeWidget(p, editor, parent);
 		Widget w3 = new SnapWidget(p, editor, parent);
 		Widget w4 = new DebugWidget(p, editor, parent);

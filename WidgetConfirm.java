@@ -6,8 +6,8 @@ import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class ConfirmWidget extends Widget {
-	public ConfirmWidget(PApplet p, Editor editor, Toolbar parent) {
+public class WidgetConfirm extends Widget {
+	public WidgetConfirm(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "confirmTick.png");
 		closeAfterSubWidget = true;

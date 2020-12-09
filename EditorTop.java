@@ -18,7 +18,7 @@ public class EditorTop extends Toolbar {
 		super(editor);
 		this.p = p;
 		this.folder = p.dataPath("ui") + '/' + "widgets" + '/';
-		uiExtra = p.loadImage(folder + "UI_element01.png");
+		this.uiExtra = p.loadImage(folder + "UI_element01.png");
 
 		// setup widgets
 		this.widgets = new ArrayList<Widget>();

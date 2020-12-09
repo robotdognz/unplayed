@@ -29,14 +29,26 @@ public class EditorSide extends Toolbar {
 		// setup widgets
 		this.widgets = new ArrayList<Widget>();
 		// add widgets
+		Widget confirmW = new WidgetConfirm(p, editor, this);
+		Widget filpH = new WidgetFlipH(p, editor, this);
+
+		widgets.add(confirmW);
+		widgets.add(filpH);
+		
+		this.widgetSpacing = p.width / 8;
+		this.widgetOffset = (p.width - widgetSpacing * 5) / 2;
 
 		// sprites
-		// top = p.requestImage(folder + "???.png");
+		// this.top = p.requestImage(folder + "???.png");
+		// this.middle = p.requestImage(folder + "???.png");
+		// this.bottom = p.requestImage(folder + "???.png");
 	}
 
 	public void draw(PVector touch, Menu menu) {
+		p.imageMode(CENTER);
+		
 		for (int i = 0; i < widgets.size(); i++) {
-			widgets.get(i).draw(widgetOffset + widgetSpacing * i, 120); // TODO: they need to draw vertically
+			widgets.get(i).draw(100, widgetOffset + widgetSpacing * i); // TODO: they need to draw vertically
 			widgets.get(i).updateActive();
 			if (menu == null) {
 				widgets.get(i).hover(touch);

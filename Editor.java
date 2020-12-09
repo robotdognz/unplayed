@@ -7,6 +7,7 @@ import controllers.Controller;
 import controllers.EditorControl;
 import editor.tools.TileTool;
 import editor.uibottom.EditorBottom;
+import editor.uiside.EditorSide;
 import editor.uitop.EditorTop;
 import game.Game;
 import game.PageView;
@@ -83,6 +84,7 @@ public class Editor {
 	// toolbars
 	Toolbar editorTop;
 	Toolbar editorBottom;
+	Toolbar editorSide;
 
 	// saver/loader class
 	public EditorJSON eJSON;
@@ -104,6 +106,7 @@ public class Editor {
 		this.controller = new CameraControl(p, this);
 		this.editorTop = new EditorTop(p, this);
 		this.editorBottom = new EditorBottom(p, this, texture);
+		this.editorSide = new EditorSide(p, this);
 		this.eJSON = new EditorJSON(p, texture, toast);
 
 		this.currentTool = new TileTool(this);
@@ -124,14 +127,15 @@ public class Editor {
 		pvCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 	}
 
-	public void step(ArrayList<PVector> touch) {
+	public void step(ArrayList<PVector> touches) {
 		editorTop.step();
 		editorBottom.step();
+		editorSide.step();
 
 		// step the controller if there are no widget menus open and touch has been
 		// re-enabled
 		if (controllerActive && !nextTouchInactive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
-			controller.step(touch); // draw event for controls
+			controller.step(touches); // draw event for controls
 		}
 
 		frameCounter();
@@ -157,7 +161,7 @@ public class Editor {
 		// draw toolbars
 		editorTop.draw(touch, menu);
 		editorBottom.draw(touch, menu);
-		// TODO: editorSide.draw(touch, menu);
+		editorSide.draw(touch, menu);
 
 		// draw frame counter and other readouts
 		if (debug) {
@@ -269,6 +273,7 @@ public class Editor {
 	public void touchEnded(PVector touch) {
 		editorTop.touchEnded();
 		editorBottom.touchEnded();
+		editorSide.touchEnded();
 
 		if (nextTouchInactive) {
 			nextTouchInactive = false;
@@ -280,24 +285,25 @@ public class Editor {
 
 	}
 
-	public void touchMoved(ArrayList<PVector> touch) {
-		editorTop.touchMoved(touch);
-		editorBottom.touchMoved(touch);
+	public void touchMoved(ArrayList<PVector> touches) {
+		editorTop.touchMoved(touches);
+		editorBottom.touchMoved(touches);
+		editorSide.touchMoved(touches);
 
 		if (nextTouchInactive) { // don't do controller if next touch inactive
 			return;
 		}
 		if (controllerActive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
-			controller.touchMoved(touch); // Controls for touch moved event
+			controller.touchMoved(touches); // Controls for touch moved event
 		}
 	}
 
-	public void onPinch(ArrayList<PVector> touch, float x, float y, float d) {
+	public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
 		if (nextTouchInactive) {
 			return;
 		}
 		if (controllerActive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
-			controller.onPinch(touch, x, y, d); // controlls for on pinch event
+			controller.onPinch(touches, x, y, d); // controlls for on pinch event
 		}
 	}
 
