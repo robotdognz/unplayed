@@ -11,11 +11,11 @@ public class QuadtreeWidget extends Widget {
 	}
 
 	public void clicked() {
-		editor.quadtree = !editor.quadtree;
+		editor.quadVis = !editor.quadVis;
 	}
 
 	public void updateActive() {
-		if (editor.quadtree) {
+		if (editor.quadVis) {
 			active = true;
 		} else {
 			active = false;

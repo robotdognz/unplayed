@@ -22,20 +22,20 @@ public class EventTool implements Tool {
 
 	@Override
 	public void touchMoved() {
-		if (game.point != null && !editor.showPageView) {
+		if (editor.point != null && !editor.showPageView) {
 
 			// figure out what to insert
 			Event toInsert = null;
 			if (editor.currentEvent != null) {
 				// create correct event
-				toInsert = editor.currentEvent.makeEvent((int) game.point.x, (int) game.point.y);
+				toInsert = editor.currentEvent.makeEvent((int) editor.point.x, (int) editor.point.y);
 			} else {
 				// use blank event
-				toInsert = new PlayerDeath(null, null, (int) game.point.x, (int) game.point.y);
+				toInsert = new PlayerDeath(null, null, (int) editor.point.x, (int) editor.point.y);
 			}
 
 			// get all rectangles that overlap toInsert and pass them to the right method
-			if (game.point != null) {
+			if (editor.point != null) {
 				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 				editor.world.retrieve(getRectangles, toInsert);
 
@@ -46,7 +46,7 @@ public class EventTool implements Tool {
 				} else if (editor.eMode == editorMode.SELECT) { // selecting event
 					select(toInsert, getRectangles);
 				}
-				game.point = null;
+				editor.point = null;
 			}
 		}
 	}

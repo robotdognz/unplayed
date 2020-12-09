@@ -21,20 +21,20 @@ public class TileTool implements Tool {
 
 	@Override
 	public void touchMoved() {
-		if (game.point != null && !editor.showPageView) {
+		if (editor.point != null && !editor.showPageView) {
 
 			// figure out what to insert
 			Tile toInsert = null;
 			if (editor.currentTile != null) {
 				// create correct tile
-				toInsert = new Tile(texture, editor.currentTile.getFile(), (int) game.point.x, (int) game.point.y);
+				toInsert = new Tile(texture, editor.currentTile.getFile(), (int) editor.point.x, (int) editor.point.y);
 			} else {
 				// use blank tile
-				toInsert = new Tile(null, null, (int) game.point.x, (int) game.point.y);
+				toInsert = new Tile(null, null, (int) editor.point.x, (int) editor.point.y);
 			}
 
 			// get all rectangles that overlap toInsert and pass them to the right method
-			if (game.point != null) {
+			if (editor.point != null) {
 				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 				editor.world.retrieve(getRectangles, toInsert);
 
@@ -45,7 +45,7 @@ public class TileTool implements Tool {
 				} else if (editor.eMode == editorMode.SELECT) { // selecting tile
 					select(toInsert, getRectangles);
 				}
-				game.point = null;
+				editor.point = null;
 			}
 		}
 	}

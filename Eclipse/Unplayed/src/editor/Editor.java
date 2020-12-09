@@ -54,6 +54,10 @@ public class Editor {
 	// controller
 	public Controller controller; // holds the current controller
 	boolean controllerActive = true; // is the current controller active
+	public PVector point = null; //holds the current selection point in the game world
+	public boolean eventVis; //TODO: move to editor
+	public boolean quadVis; //TODO: move to editor
+	//public Rectangle selected; //TODO: move to editor
 
 	// editor settings
 	public boolean snap = true; // things placed in the level will snap to grid
@@ -80,7 +84,7 @@ public class Editor {
 
 	// frame count and debug visualization / quadtree
 	public boolean debug = false;
-	public boolean quadtree = false;
+	//public boolean quadtree = false;
 	private int frameDelay = 100;
 	private float frame;
 
@@ -100,6 +104,8 @@ public class Editor {
 		this.currentTool = new TileTool(this);
 		this.eMode = editorMode.ADD;
 		this.eImagePlane = imagePlane.LEVEL;
+		this.eventVis = true;
+		this.quadVis = false;
 
 		TOP_DEADZONE = 200;
 		BOTTOM_DEADZONE = p.height - 300;
@@ -124,24 +130,23 @@ public class Editor {
 		}
 
 		frameCounter();
-		// TODO: won't need this after moving draw logic
-		if (quadtree) { // update quadtree display in game class
-			game.quadVis = true;
-		} else {
-			game.quadVis = false;
-		}
+//		if (quadtree) { // update quadtree display in game class
+//			gamequadVis = true;
+//		} else {
+//			game.quadVis = false;
+//		}
 		if (showPageView) { // update pageview display in game class
 			game.displayPages = true;
-			game.point = null;
+			point = null;
 		} else {
 			game.displayPages = false;
 		}
 
 		if (!(controller instanceof EditorControl)) {
-			game.point = null;
+			point = null;
 		}
 
-		game.selected = selected; // TODO: won't need this after moving draw logic
+		//game.selected = selected; 
 	}
 
 	// a bunch of this probably needs to be moved to step, for logical consistency
@@ -175,7 +180,8 @@ public class Editor {
 	}
 
 	private void drawLevel() {
-		p.pushMatrix(); // start working at game scale
+		// start working at game scale
+		p.pushMatrix(); 
 		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
 
 		// camera
@@ -196,7 +202,7 @@ public class Editor {
 			if (r instanceof Tile) {
 				((Tile) r).draw(p.g, currentScale);
 			}
-			if (r instanceof Event && game.eventVis) {
+			if (r instanceof Event && (eventVis || ((Event)r).visible)) {
 				((Event) r).draw(p.g, currentScale);
 			}
 		}
@@ -222,7 +228,7 @@ public class Editor {
 		p.noStroke();
 
 		// draw quad tree logic for testing
-		if (game.quadVis) {
+		if (quadVis) {
 			world.draw(p);
 			p.fill(0, 0, 0, 150);
 			for (Rectangle r : game.playerObjects) {
@@ -235,16 +241,16 @@ public class Editor {
 		}
 
 		// draw block placement selection if one exists
-		if (game.point != null) {
+		if (point != null) {
 			p.fill(0, 0, 0, 150);
-			p.rect(game.point.x, game.point.y, 100, 100);
+			p.rect(point.x, point.y, 100, 100);
 			p.fill(0);
 			p.textSize(30);
 			p.textAlign(LEFT, CENTER);
-			int xCoord = (int) game.point.x;
-			int yCoord = (int) game.point.y;
+			int xCoord = (int) point.x;
+			int yCoord = (int) point.y;
 			String s = "[" + xCoord + ", " + yCoord + "]";
-			p.text(s, game.point.x + 105, game.point.y + 50);
+			p.text(s, point.x + 105, point.y + 50);
 		}
 
 		// draw selection box around selected object

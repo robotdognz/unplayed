@@ -8,13 +8,14 @@ import static processing.core.PConstants.*;
 
 public class ViewTool implements Tool {
 	private PApplet p;
+	private Editor editor;
 	private Game game;
 	private PVector start; // start of rectangle drawing
 	private PVector end; // end of rectangle drawing
 
 	public ViewTool(PApplet p, Editor editor) {
 		this.p = p;
-		// this.editor = editor;
+		this.editor = editor;
 		this.game = editor.game;
 		// this.texture = editor.texture;
 		start = null;
@@ -25,9 +26,9 @@ public class ViewTool implements Tool {
 	public void touchMoved() {
 		if (!game.displayPages) {// if in game view
 			if (start == null) {
-				start = new PVector(game.point.x, game.point.y);
+				start = new PVector(editor.point.x, editor.point.y);
 			} else {
-				end = new PVector(game.point.x+100, game.point.y+100);
+				end = new PVector(editor.point.x+100, editor.point.y+100);
 			}
 		} else { // if in page view
 

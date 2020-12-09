@@ -21,21 +21,21 @@ public class ImageTool implements Tool {
 
 	@Override
 	public void touchMoved() {
-		if (game.point != null && !editor.showPageView) {
+		if (editor.point != null && !editor.showPageView) {
 
 			// figure out what to insert
 			Image toInsert = null;
 			if (editor.currentImage != null) {
 				// create correct image
-				toInsert = new Image(texture, editor.currentImage.getFile(), (int) game.point.x, (int) game.point.y,
+				toInsert = new Image(texture, editor.currentImage.getFile(), (int) editor.point.x, (int) editor.point.y,
 						editor.currentImage.getWidth(), editor.currentImage.getHeight());
 			} else {
 				// use blank image
-				toInsert = new Image(null, null, (int) game.point.x, (int) game.point.y, 100, 100);
+				toInsert = new Image(null, null, (int) editor.point.x, (int) editor.point.y, 100, 100);
 			}
 
 			// get all rectangles that overlap toInsert and pass them to the right method
-			if (game.point != null) {
+			if (editor.point != null) {
 				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 				editor.world.retrieve(getRectangles, toInsert);
 
@@ -46,7 +46,7 @@ public class ImageTool implements Tool {
 				} else if (editor.eMode == editorMode.SELECT) { // selecting image
 					select(toInsert, getRectangles);
 				}
-				game.point = null;
+				editor.point = null;
 			}
 		}
 	}

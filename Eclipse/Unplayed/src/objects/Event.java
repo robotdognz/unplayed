@@ -9,10 +9,12 @@ public abstract class Event extends Rectangle {
 	private boolean hasTexture;
 	private EventHandler eventTexture;
 	private String name;
+	public boolean visible;
 
-	public Event(TextureCache texture, String name, float x, float y, float rWidth, float rHeight) {
+	public Event(TextureCache texture, String name, boolean visible, float x, float y, float rWidth, float rHeight) {
 		super(x, y, rWidth, rHeight);
 		this.name = name;
+		this.visible = visible;
 
 		if (name != null && texture != null && texture.getEventMap().containsKey(name)) {
 			this.eventTexture = texture.getEventMap().get(name);

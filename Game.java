@@ -7,13 +7,10 @@ import camera.Camera;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.Vibe;
-import objects.Event;
-import objects.Image;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
 import processing.core.*;
-import static processing.core.PConstants.*;
 
 public class Game {
 	private PApplet p;
@@ -29,16 +26,17 @@ public class Game {
 	private PageView pageView;
 	public boolean displayPages;
 
-	public boolean eventVis; //TODO: move to editor
-	public boolean quadVis; //TODO: move to editor
-	public Rectangle selected; //TODO: move to editor
+//	public boolean eventVis; 
+//	public boolean quadVis; 
+//	public Rectangle selected; 
 
-	public Camera camera; //TODO: move to editor?
-	public Rectangle screenSpace; //TODO: move to editor
-	public int screenSpaceOffset; //TODO: move to editor
-	public HashSet<Rectangle> screenObjects; //TODO: move to editor
+	public Camera camera;
+	//TODO: move these to editor?
+	public Rectangle screenSpace;
+	public int screenSpaceOffset;
+	public HashSet<Rectangle> screenObjects;
 
-	public PVector point = null; //TODO: move to editor
+//	public PVector point = null;
 
 	// local variables for camera
 	public float newScale;
@@ -75,8 +73,8 @@ public class Game {
 		this.p = p;
 		this.camera = c;
 		this.convert = convert;
-		eventVis = true;
-		quadVis = false;
+//		eventVis = true;
+//		quadVis = false;
 
 		player = new Player(p, texture, playerStart.x, playerStart.y, v);
 
@@ -118,9 +116,8 @@ public class Game {
 		rightEdge = camera.getCenter().x + newScale / 2;
 		newRightEdge = rightEdge;
 
-		world.insert(new Tile(texture, texture.getTileList().get(0).getFile(), 0, 100)); // TODO: to be replaced when
-																							// there is a
-		// player start event
+		world.insert(new Tile(texture, texture.getTileList().get(0).getFile(), 0, 100)); 
+		// TODO: to be replaced when there is a player start event
 		// everything needs to be a multiple of 20 (multiple of 10 so you can always
 		// fall down holes, and 20 so you don't clip through things 90 apart because of
 		// speed 10)
@@ -186,7 +183,7 @@ public class Game {
 //		player.draw(p.g);
 //		paper.draw(p.g, screenSpace, currentScale);
 //
-//		// draw the page views TODO: remove this
+//		// draw the page views
 //		for (Page page : pageView.getPages()) {
 //			Rectangle pView = page.getView();
 //			p.noFill();

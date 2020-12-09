@@ -46,7 +46,7 @@ public class EditorControl implements Controller {
 		float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
 		float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
 
-		game.point = new PVector(finalX, finalY);
+		editor.point = new PVector(finalX, finalY);
 		if (editor.snap && editor.currentTool != null) {
 			//editor.editWorld();
 			editor.currentTool.touchMoved();

@@ -17,7 +17,7 @@ public class CameraChange extends Event {
 	  //private String type; //Strings: "Static", "Full", "Horizontal", "Vertical"
 
 	  public CameraChange(TextureCache texture, String name, int x, int y, int eventW, int eventH, PVector cameraTopLeft, PVector cameraBottomRight, float cameraZoom, float edgeZoom) { 
-	    super(texture, name, x, y, eventW, eventH);
+	    super(texture, name, false, x, y, eventW, eventH);
 	    //considering separating edgeZoom into in speed and out speed
 	    int centerX = (int)((cameraBottomRight.x-cameraTopLeft.x)/2+cameraTopLeft.x);
 	    int centerY = (int)((cameraTopLeft.y-cameraBottomRight.y)/2+cameraBottomRight.y);

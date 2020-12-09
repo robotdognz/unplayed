@@ -20,7 +20,7 @@ public class ConfirmWidget extends Widget {
 	}
 
 	public void updateActive() {
-		if (editor.controller instanceof EditorControl && !editor.snap && editor.game.point != null) {
+		if (editor.controller instanceof EditorControl && !editor.snap && editor.point != null) {
 			available = true;
 		} else {
 			available = false;
