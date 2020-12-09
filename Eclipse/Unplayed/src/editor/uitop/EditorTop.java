@@ -11,13 +11,13 @@ import static processing.core.PConstants.*;
 import ui.*;
 
 public class EditorTop extends Toolbar {
-	private PApplet p;
+	//private PApplet p;
 	private String folder;
 	private PImage uiExtra;
 
 	public EditorTop(PApplet p, Editor editor) {
-		super(editor);
-		this.p = p;
+		super(p, editor);
+		//this.p = p;
 		this.folder = p.dataPath("ui") + '/' + "widgets" + '/';
 		this.uiExtra = p.loadImage(folder + "UI_element01.png");
 
@@ -46,6 +46,7 @@ public class EditorTop extends Toolbar {
 	}
 
 	public void draw(PVector touch, Menu menu) {
+		super.draw(touch, menu);
 		// draw ui extra piece
 		p.imageMode(CENTER);
 		float widgetScale = ((float) 75 * 1.5f); // wSize*1.5 //TODO: this is messed up code, do it a better way!

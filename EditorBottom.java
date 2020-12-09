@@ -24,7 +24,7 @@ import handlers.TextureCache;
 import handlers.TileHandler;
 
 public class EditorBottom extends Toolbar {
-	private PApplet p;
+	//private PApplet p;
 	private Rectangle selectionArea;
 	private String folder;
 	private PImage toolbar;
@@ -44,8 +44,8 @@ public class EditorBottom extends Toolbar {
 	private float viewOffset;
 
 	public EditorBottom(PApplet p, Editor editor, TextureCache texture) {
-		super(editor);
-		this.p = p;
+		super(p, editor);
+		//this.p = p;
 		folder = p.dataPath("ui") + '/';
 
 		// setup widgets
@@ -82,11 +82,12 @@ public class EditorBottom extends Toolbar {
 	}
 	
 //	public boolean insideBoundary(float x, float y) {
-//		//TODO: need to add a boundary rectangle and complete this method
+//		//TODO: need to add complex boundary checking? (might be best just to leave it as a rectangle)
 //		return false;
 //	}
 
 	public void draw(PVector touch, Menu menu) {
+		super.draw(touch, menu);
 		for (int i = 0; i < widgets.size(); i++) {
 			// draw the two behind tabs
 			if (!widgets.get(i).isActive()) {

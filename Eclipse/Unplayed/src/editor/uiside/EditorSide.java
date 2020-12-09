@@ -14,7 +14,7 @@ import ui.Menu;
 import ui.Widget;
 
 public class EditorSide extends Toolbar {
-	private PApplet p;
+	//private PApplet p;
 	private Rectangle widgetArea;
 	private String folder;
 	private PImage top;
@@ -22,8 +22,8 @@ public class EditorSide extends Toolbar {
 	private PImage bottom;
 
 	public EditorSide(PApplet p, Editor editor) {
-		super(editor);
-		this.p = p;
+		super(p, editor);
+		//this.p = p;
 		this.folder = p.dataPath("ui") + '/';
 
 		// setup widgets
@@ -47,7 +47,7 @@ public class EditorSide extends Toolbar {
 	}
 
 	public void draw(PVector touch, Menu menu) {
-		p.rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+		super.draw(touch, menu);
 		p.imageMode(CENTER);
 		
 		for (int i = 0; i < widgets.size(); i++) {
