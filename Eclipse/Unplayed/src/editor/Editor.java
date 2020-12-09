@@ -6,7 +6,6 @@ import controllers.CameraControl;
 import controllers.Controller;
 import controllers.EditorControl;
 import game.Game;
-import game.Page;
 import game.PageView;
 import game.Quadtree;
 import handlers.EventHandler;
@@ -197,15 +196,6 @@ public class Editor {
 		}
 		game.player.draw(p.g);
 		game.paper.draw(p.g, game.screenSpace, currentScale);
-
-		// draw the page views TODO: remove this
-//		for (Page page : pageView.getPages()) {
-//			Rectangle pView = page.getView();
-//			p.noFill();
-//			p.stroke(255, 0, 0);
-//			p.strokeWeight(4);
-//			p.rect(pView.getX(), pView.getY(), pView.getWidth(), pView.getHeight());
-//		}
 
 		// draw the views
 		for (View view : game.views) {

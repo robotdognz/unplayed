@@ -101,7 +101,7 @@ public class Page {
 				((Tile) r).draw(pageGraphics, scale / size); // scale is divided by size so that LODs are relative to
 																// page size
 			}
-			if (r instanceof Event) {
+			if (r instanceof Event && ((Event) r).visible) {
 				((Event) r).draw(pageGraphics, scale / size);
 			}
 		}

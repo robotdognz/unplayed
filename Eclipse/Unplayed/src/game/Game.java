@@ -26,17 +26,11 @@ public class Game {
 	private PageView pageView;
 	public boolean displayPages;
 
-//	public boolean eventVis; 
-//	public boolean quadVis; 
-//	public Rectangle selected; 
-
 	public Camera camera;
-	//TODO: move these to editor?
+	// TODO: move these to editor?
 	public Rectangle screenSpace;
 	public int screenSpaceOffset;
 	public HashSet<Rectangle> screenObjects;
-
-//	public PVector point = null;
 
 	// local variables for camera
 	public float newScale;
@@ -73,8 +67,6 @@ public class Game {
 		this.p = p;
 		this.camera = c;
 		this.convert = convert;
-//		eventVis = true;
-//		quadVis = false;
 
 		player = new Player(p, texture, playerStart.x, playerStart.y, v);
 
@@ -85,11 +77,6 @@ public class Game {
 
 		pageView = new PageView(p, camera, convert);
 		displayPages = false;
-		// testing page view
-//		pageView.addPage(new Page(p, this, new PVector(-400, -400), new PVector(500, 500), new PVector(0, 0), 1, 10,
-//				false, false));
-//		pageView.addPage(new Page(p, this, new PVector(-200, -200), new PVector(600, 600), new PVector(0, 900), 0.5f,
-//				-18, true, false));
 
 		paper = new Paper(texture);
 
@@ -116,8 +103,9 @@ public class Game {
 		rightEdge = camera.getCenter().x + newScale / 2;
 		newRightEdge = rightEdge;
 
-		world.insert(new Tile(texture, texture.getTileList().get(0).getFile(), 0, 100)); 
+		world.insert(new Tile(texture, texture.getTileList().get(0).getFile(), 0, 100));
 		// TODO: to be replaced when there is a player start event
+
 		// everything needs to be a multiple of 20 (multiple of 10 so you can always
 		// fall down holes, and 20 so you don't clip through things 90 apart because of
 		// speed 10)
@@ -155,6 +143,7 @@ public class Game {
 			pageView.draw();
 			return;
 		}
+		//TODO: do something with this view border code
 //		p.pushMatrix(); // start working at game scale
 //		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
 //
