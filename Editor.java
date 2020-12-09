@@ -285,9 +285,9 @@ public class Editor {
 			nextTouchInactive = false;
 		}
 
-		if (currentTool != null) {
-			currentTool.touchEnded(touch);
-		}
+//		if (currentTool != null) {
+//			currentTool.touchEnded(touch);
+//		}
 	}
 
 	public void touchMoved(ArrayList<PVector> touch) {
