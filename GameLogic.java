@@ -94,19 +94,23 @@ public class GameLogic {
 			lastTouch = new PVector(0, 0);
 		}
 
-		// game
+		// step the game ad editor
 		if (!gPaused) { // step the game if it is not paused
 			// step editor or game controller depending on editor toggle
-			if (editorToggle) {
+			if (editorToggle && editor != null) {
 				editor.step(touches);
 			} else {
 				controller.step(touches);
 			}
 			game.step(); // step game
 		}
-		game.draw(); // draw the game
+		
+		//draw the game
+		if (!editorToggle || editor == null || (editor != null && editor.showPageView)) {
+			game.draw(); // draw the game
+		}
 
-		if (editorToggle) {
+		if (editorToggle && editor != null) {
 			editor.draw(lastTouch, menu);
 		} else {
 			for (int i = 0; i < widgets.size(); i++) {
@@ -146,7 +150,7 @@ public class GameLogic {
 		}
 
 		if (menu == null) {
-			if (editorToggle) {
+			if (editorToggle && editor != null) {
 				editor.touchStarted(lastTouch);
 			} else {
 				controller.touchStarted(lastTouch);
@@ -155,7 +159,7 @@ public class GameLogic {
 	}
 
 	public void touchEnded() {
-		if (editorToggle) {
+		if (editorToggle && editor != null) {
 			editor.touchEnded(lastTouch);
 		} else {
 			for (int i = 0; i < widgets.size(); i++) {
@@ -170,7 +174,7 @@ public class GameLogic {
 
 	public void touchMoved() {
 		if (menu == null) {
-			if (editorToggle) {
+			if (editorToggle && editor != null) {
 				editor.touchMoved(touches);
 			} else {
 				controller.touchMoved(touches);
@@ -180,7 +184,7 @@ public class GameLogic {
 
 	public void onPinch(float x, float y, float d) {
 		if (menu == null) {
-			if (editorToggle) {
+			if (editorToggle && editor != null) {
 				editor.onPinch(touches, x, y, d);
 			} else {
 				controller.onPinch(touches, x, y, d);
@@ -190,7 +194,7 @@ public class GameLogic {
 
 	public void onTap(float x, float y) {
 		if (menu == null) {
-			if (editorToggle) {
+			if (editorToggle && editor != null) {
 				editor.onTap(x, y);
 			} else {
 				// controller.onTap(x, y);

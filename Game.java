@@ -139,10 +139,10 @@ public class Game {
 	}
 
 	public void draw() {
-		if (displayPages) {
+//		if (displayPages) {
 			pageView.draw();
-			return;
-		}
+//			return;
+//		}
 		//TODO: do something with this view border code
 //		p.pushMatrix(); // start working at game scale
 //		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
