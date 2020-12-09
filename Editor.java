@@ -199,12 +199,13 @@ public class Editor {
 
 		// draw the views
 		for (View view : game.views) {
-			p.noFill();
-			p.stroke(255, 0, 0);
-			p.strokeWeight(4);
-			p.rect(view.getX(), view.getY(), view.getWidth(), view.getHeight());
+			view.draw(p.g);
+//			p.noFill();
+//			p.stroke(255, 0, 0);
+//			p.strokeWeight(4);
+//			p.rect(view.getX(), view.getY(), view.getWidth(), view.getHeight());
 		}
-		p.noStroke();
+//		p.noStroke();
 
 		// draw tool effects
 		if (currentTool != null) {
