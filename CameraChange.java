@@ -80,7 +80,7 @@ public class CameraChange extends Event {
 		  super.drawSelected(g);
 		  g.noStroke();
 		  g.fill(255, 0, 0, 100);
-		  g.rect(cameraTopLeft.x, cameraTopLeft.y, cameraTopLeft.x-cameraBottomRight.x, cameraTopLeft.y-cameraBottomRight.y);
+		  g.rect(cameraTopLeft.x, cameraTopLeft.y, cameraBottomRight.x-cameraTopLeft.x, cameraBottomRight.y-cameraTopLeft.y);
 	  }
 
 	  //public void draw() {
