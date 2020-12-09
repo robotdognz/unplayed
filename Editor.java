@@ -34,7 +34,6 @@ public class Editor {
 	PageView pageView;
 	Quadtree world;
 	public Camera camera;
-	//Tools eTools;
 
 	// camera variables
 	final public float minZoom = 3;
