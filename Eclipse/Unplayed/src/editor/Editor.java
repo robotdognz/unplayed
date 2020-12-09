@@ -30,18 +30,12 @@ import ui.Menu;
 import static processing.core.PConstants.*;
 
 public class Editor {
-	// touch constraint variables
-	// TODO: these need to be replaced with a system that checks if the current
-	// touch is inside the boundary of any of the toolbars
-	// public int TOP_DEADZONE;
-	//public int BOTTOM_DEADZONE;
-
 	public boolean nextTouchInactive = false;
 
 	private PApplet p;
 	public TextureCache texture;
 	public Converter convert;
-	public Game game; // reference to game, same instance of game used everywhere else
+	public Game game;
 	PageView pageView;
 	public Quadtree world;
 	public Camera camera;
@@ -89,9 +83,8 @@ public class Editor {
 	// saver/loader class
 	public EditorJSON eJSON;
 
-	// frame count and debug visualization / quadtree
+	// frame count and debug visualization
 	public boolean debug = false;
-	// public boolean quadtree = false;
 	private int frameDelay = 100;
 	private float frame;
 
@@ -114,9 +107,6 @@ public class Editor {
 		this.eImagePlane = imagePlane.LEVEL;
 		this.eventVis = true;
 		this.quadVis = false;
-
-		// TOP_DEADZONE = 200;
-		//BOTTOM_DEADZONE = p.height - 300;
 
 		// Initialize camera backup fields
 		lvScale = camera.getScale();
