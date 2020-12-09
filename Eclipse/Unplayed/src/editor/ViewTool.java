@@ -27,7 +27,7 @@ public class ViewTool implements Tool {
 			if (start == null) {
 				start = new PVector(game.point.x, game.point.y);
 			} else {
-				end = new PVector(game.point.x, game.point.y);
+				end = new PVector(game.point.x+100, game.point.y+100);
 			}
 		} else { // if in page view
 
