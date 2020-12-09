@@ -8,6 +8,7 @@ import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
 import processing.core.*;
+import static processing.core.PConstants.*;
 
 public class Player extends Rectangle {
 	private PApplet p;
@@ -157,6 +158,7 @@ public class Player extends Rectangle {
 
 	public void draw(PGraphics graphics) {
 		// draw player
+		graphics.imageMode(CORNER);
 		graphics.image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
 		// image(img, dx, dy, dw, dh, sx, sy, sw, sh); //d is where to draw it, s is
 		// where (in pixels) to get it from the image
