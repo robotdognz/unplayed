@@ -35,7 +35,7 @@ public class EditorSide extends Toolbar {
 
 		super.widgetSpacing = p.width / 8;
 
-		float height = widgetSpacing * (widgets.size()+1);
+		float height = widgetSpacing * (widgets.size()); //+1
 
 		super.widgetOffset = p.height / 2 - (height-widgetSpacing) / 2;
 
@@ -44,7 +44,7 @@ public class EditorSide extends Toolbar {
 		// this.middle = p.requestImage(folder + "???.png");
 		// this.bottom = p.requestImage(folder + "???.png");
 
-		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 200, height); // TODO: needs to scale to screen and widget amount
+		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 180, height); // TODO: needs to scale to screen and widget amount
 	}
 
 	public void draw(PVector touch, Menu menu) {
