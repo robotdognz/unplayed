@@ -49,9 +49,8 @@ public abstract class Toolbar {
 
 	public void draw(PVector touch, Menu menu) {
 		if (bounds != null) {
-			p.noFill();
-			p.stroke(100);
-			p.strokeWeight(4);
+			p.noStroke();
+			p.fill(100, 100, 100, 100);
 			p.rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 		}
 	}
