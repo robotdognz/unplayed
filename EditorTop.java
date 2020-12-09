@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import editor.Editor;
 import editor.Toolbar;
+import objects.Rectangle;
 import processing.core.*;
 import static processing.core.PConstants.*;
 
@@ -40,6 +41,8 @@ public class EditorTop extends Toolbar {
 		// this.eWidgetSpacing = width/(this.eWidgets.size()+1);
 		this.widgetSpacing = p.width / 8;
 		this.widgetOffset = (p.width - widgetSpacing * 5) / 2;
+		
+		this.bounds = new Rectangle(0, 0, p.width, 200); //TODO: needs to be relative to screen size
 	}
 
 	public void draw(PVector touch, Menu menu) {

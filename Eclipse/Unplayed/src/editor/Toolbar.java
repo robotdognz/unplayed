@@ -2,6 +2,7 @@ package editor;
 
 import java.util.ArrayList;
 
+import objects.Rectangle;
 import processing.core.PVector;
 import ui.Menu;
 import ui.Widget;
@@ -10,7 +11,7 @@ public abstract class Toolbar {
 	public ArrayList<Widget> widgets;
 	public float widgetSpacing; // size of gap between widgets
 	public float widgetOffset; // amount to offset widget drawing by
-
+	protected Rectangle bounds;
 	public Editor editor;
 
 	public Toolbar(Editor editor) {
@@ -20,10 +21,23 @@ public abstract class Toolbar {
 	}
 
 	public boolean insideBoundary(float x, float y) {
-		// TODO: need to add a boundary rectangle and complete this method
-		// should implement the basic single rectangle version in the abstract class
-		// and implement the advanced version inside the sub class where necessary
-		return false;
+		if (bounds != null) {
+			if (x > bounds.getBottomRight().x) {
+				return false;
+			}
+			if (x < bounds.getTopLeft().x) {
+				return false;
+			}
+			if (y > bounds.getBottomRight().y) {
+				return false;
+			}
+			if (y < bounds.getTopLeft().y) {
+				return false;
+			}
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public void step() {
