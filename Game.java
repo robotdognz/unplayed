@@ -29,16 +29,16 @@ public class Game {
 	private PageView pageView;
 	public boolean displayPages;
 
-	private boolean eventVis;
-	public boolean quadVis;
-	public Rectangle selected;
+	public boolean eventVis; //TODO: move to editor
+	public boolean quadVis; //TODO: move to editor
+	public Rectangle selected; //TODO: move to editor
 
-	public Camera camera;
-	public Rectangle screenSpace;
-	public int screenSpaceOffset;
-	public HashSet<Rectangle> screenObjects;
+	public Camera camera; //TODO: move to editor?
+	public Rectangle screenSpace; //TODO: move to editor
+	public int screenSpaceOffset; //TODO: move to editor
+	public HashSet<Rectangle> screenObjects; //TODO: move to editor
 
-	public PVector point = null;
+	public PVector point = null; //TODO: move to editor
 
 	// local variables for camera
 	public float newScale;
@@ -158,108 +158,108 @@ public class Game {
 			pageView.draw();
 			return;
 		}
-		p.pushMatrix(); // start working at game scale
-		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
-
-		// camera
-		p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
-		p.scale(camera.getSubScale()); // apply offset for tall screen spaces
-		p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
-
-		float currentScale = convert.getScale();
-
-		// draw player and environment
-		p.background(240);
-		for (Rectangle r : screenObjects) { // draw images
-			if (r instanceof Image) {
-				((Image) r).draw(p.g, currentScale);
-			}
-		}
-		for (Rectangle r : screenObjects) { // draw tiles and events on top of images
-			if (r instanceof Tile) {
-				((Tile) r).draw(p.g, currentScale);
-			}
-			if (r instanceof Event && eventVis) {
-				((Event) r).draw(p.g, currentScale);
-			}
-		}
-		player.draw(p.g);
-		paper.draw(p.g, screenSpace, currentScale);
-
-		// draw the page views TODO: remove this
-		for (Page page : pageView.getPages()) {
-			Rectangle pView = page.getView();
-			p.noFill();
-			p.stroke(255, 0, 0);
-			p.strokeWeight(4);
-			p.rect(pView.getX(), pView.getY(), pView.getWidth(), pView.getHeight());
-		}
-
-		// draw the views
-		for (View view : views) {
-			p.noFill();
-			p.stroke(255, 0, 0);
-			p.strokeWeight(4);
-			p.rect(view.getX(), view.getY(), view.getWidth(), view.getHeight());
-		}
-		p.noStroke();
-
-		// draw black bars
-		if (camera.getGame()) {
-			player.drawArrows(this);
-			p.fill(20, 255); // 10, 255
-			int barSize = 1000000;
-			p.rectMode(CORNERS);
-			// top bar
-			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
-					topEdge);
-			// bottom bar
-			p.rect(-barSize + camera.getCenter().x, bottomEdge, barSize + camera.getCenter().x,
-					camera.getCenter().y + barSize);
-			// left bar
-			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, leftEdge,
-					camera.getCenter().y + barSize);
-			// right bar
-			p.rect(rightEdge, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
-					camera.getCenter().y + barSize);
-			p.rectMode(CORNER);
-		}
-
-		// draw quad tree logic for testing
-		if (quadVis) {
-			world.draw(p);
-			p.fill(0, 0, 0, 150);
-			for (Rectangle r : playerObjects) {
-				p.rect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
-			}
-			p.rect(player.getPlayerArea().getX(), player.getPlayerArea().getY(), player.getPlayerArea().getWidth(),
-					player.getPlayerArea().getHeight());
-			// rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(),
-			// screenSpace.getHeight());
-		}
-
-		// draw block placement selection if one exists
-		if (point != null) {
-			p.fill(0, 0, 0, 150);
-			p.rect(point.x, point.y, 100, 100);
-			p.fill(0);
-			p.textSize(30);
-			p.textAlign(LEFT, CENTER);
-			int xCoord = (int) point.x;
-			int yCoord = (int) point.y;
-			String s = "[" + xCoord + ", " + yCoord + "]";
-			p.text(s, point.x + 105, point.y + 50);
-		}
-
-		// draw selection box around selected object
-		if (selected != null) {
-			p.noFill();
-			p.stroke(255, 0, 0); // selection colour
-			p.strokeWeight(2);
-			p.rect(selected.getX(), selected.getY(), selected.getWidth(), selected.getHeight());
-		}
-
-		p.popMatrix(); // start working at screen scale
+//		p.pushMatrix(); // start working at game scale
+//		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
+//
+//		// camera
+//		p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
+//		p.scale(camera.getSubScale()); // apply offset for tall screen spaces
+//		p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
+//
+//		float currentScale = convert.getScale();
+//
+//		// draw player and environment
+//		p.background(240);
+//		for (Rectangle r : screenObjects) { // draw images
+//			if (r instanceof Image) {
+//				((Image) r).draw(p.g, currentScale);
+//			}
+//		}
+//		for (Rectangle r : screenObjects) { // draw tiles and events on top of images
+//			if (r instanceof Tile) {
+//				((Tile) r).draw(p.g, currentScale);
+//			}
+//			if (r instanceof Event && eventVis) {
+//				((Event) r).draw(p.g, currentScale);
+//			}
+//		}
+//		player.draw(p.g);
+//		paper.draw(p.g, screenSpace, currentScale);
+//
+//		// draw the page views TODO: remove this
+//		for (Page page : pageView.getPages()) {
+//			Rectangle pView = page.getView();
+//			p.noFill();
+//			p.stroke(255, 0, 0);
+//			p.strokeWeight(4);
+//			p.rect(pView.getX(), pView.getY(), pView.getWidth(), pView.getHeight());
+//		}
+//
+//		// draw the views
+//		for (View view : views) {
+//			p.noFill();
+//			p.stroke(255, 0, 0);
+//			p.strokeWeight(4);
+//			p.rect(view.getX(), view.getY(), view.getWidth(), view.getHeight());
+//		}
+//		p.noStroke();
+//
+//		// draw black bars
+//		if (camera.getGame()) {
+//			player.drawArrows(this);
+//			p.fill(20, 255); // 10, 255
+//			int barSize = 1000000;
+//			p.rectMode(CORNERS);
+//			// top bar
+//			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
+//					topEdge);
+//			// bottom bar
+//			p.rect(-barSize + camera.getCenter().x, bottomEdge, barSize + camera.getCenter().x,
+//					camera.getCenter().y + barSize);
+//			// left bar
+//			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, leftEdge,
+//					camera.getCenter().y + barSize);
+//			// right bar
+//			p.rect(rightEdge, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
+//					camera.getCenter().y + barSize);
+//			p.rectMode(CORNER);
+//		}
+//
+//		// draw quad tree logic for testing
+//		if (quadVis) {
+//			world.draw(p);
+//			p.fill(0, 0, 0, 150);
+//			for (Rectangle r : playerObjects) {
+//				p.rect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+//			}
+//			p.rect(player.getPlayerArea().getX(), player.getPlayerArea().getY(), player.getPlayerArea().getWidth(),
+//					player.getPlayerArea().getHeight());
+//			// rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(),
+//			// screenSpace.getHeight());
+//		}
+//
+//		// draw block placement selection if one exists
+//		if (point != null) {
+//			p.fill(0, 0, 0, 150);
+//			p.rect(point.x, point.y, 100, 100);
+//			p.fill(0);
+//			p.textSize(30);
+//			p.textAlign(LEFT, CENTER);
+//			int xCoord = (int) point.x;
+//			int yCoord = (int) point.y;
+//			String s = "[" + xCoord + ", " + yCoord + "]";
+//			p.text(s, point.x + 105, point.y + 50);
+//		}
+//
+//		// draw selection box around selected object
+//		if (selected != null) {
+//			p.noFill();
+//			p.stroke(255, 0, 0); // selection colour
+//			p.strokeWeight(2);
+//			p.rect(selected.getX(), selected.getY(), selected.getWidth(), selected.getHeight());
+//		}
+//
+//		p.popMatrix(); // start working at screen scale
 	}
 
 	public void step() {

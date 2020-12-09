@@ -155,7 +155,7 @@ public class Player extends Rectangle {
 		lastXPos = getTopLeft().x;
 	}
 
-	void draw(PGraphics graphics) {
+	public void draw(PGraphics graphics) {
 		// draw player
 		graphics.image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
 		// image(img, dx, dy, dw, dh, sx, sy, sw, sh); //d is where to draw it, s is

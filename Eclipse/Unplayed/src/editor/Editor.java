@@ -6,6 +6,7 @@ import controllers.CameraControl;
 import controllers.Controller;
 import controllers.EditorControl;
 import game.Game;
+import game.Page;
 import game.PageView;
 import game.Quadtree;
 import handlers.EventHandler;
@@ -16,7 +17,10 @@ import menus.Menu;
 import misc.Converter;
 import misc.DoToast;
 import misc.EditorJSON;
+import objects.Event;
+import objects.Image;
 import objects.Rectangle;
+import objects.Tile;
 import objects.View;
 import processing.core.*;
 import static processing.core.PConstants.*;
@@ -63,8 +67,8 @@ public class Editor {
 	ImageHandler currentImage = null;
 	EventHandler currentEvent = null;
 	View currentView = null;
-	
-	//selected object
+
+	// selected object
 	Rectangle selected;
 
 	// toolbars
@@ -92,7 +96,7 @@ public class Editor {
 		this.editorTop = new EditorTop(p, this);
 		this.editorBottom = new EditorBottom(p, this, texture);
 		this.eJSON = new EditorJSON(p, texture, toast);
-		
+
 		this.currentTool = new TileTool(this);
 		this.eMode = editorMode.ADD;
 		this.eImagePlane = imagePlane.LEVEL;
@@ -120,6 +124,7 @@ public class Editor {
 		}
 
 		frameCounter();
+		// TODO: won't need this after moving draw logic
 		if (quadtree) { // update quadtree display in game class
 			game.quadVis = true;
 		} else {
@@ -136,19 +141,24 @@ public class Editor {
 			game.point = null;
 		}
 
-		game.selected = selected;
+		game.selected = selected; // TODO: won't need this after moving draw logic
 	}
 
 	// a bunch of this probably needs to be moved to step, for logical consistency
 	// only drawing should be in draw
 	public void draw(PVector touch, Menu menu) {
+		// draw the level
+		if (showPageView) {
+			drawLevel();
+		}
+
 		// draw toolbars
 		editorTop.draw(touch, menu);
 		editorBottom.draw(touch, menu);
-		//TODO: editorSide.draw(touch, menu);
-		
-		//draw tool effects
-		if(currentTool != null) {
+		// TODO: editorSide.draw(touch, menu);
+
+		// draw tool effects
+		if (currentTool != null) {
 			currentTool.draw();
 		}
 
@@ -162,6 +172,90 @@ public class Editor {
 					p.height - editorBottom.getHeight() - 100);
 			p.text("FPS: " + PApplet.nf(this.frame, 1, 2), p.width / 2, p.height - editorBottom.getHeight() - 50);
 		}
+	}
+
+	private void drawLevel() {
+		p.pushMatrix(); // start working at game scale
+		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
+
+		// camera
+		p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
+		p.scale(camera.getSubScale()); // apply offset for tall screen spaces
+		p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
+
+		float currentScale = convert.getScale();
+
+		// draw player and environment
+		p.background(240);
+		for (Rectangle r : game.screenObjects) { // draw images
+			if (r instanceof Image) {
+				((Image) r).draw(p.g, currentScale);
+			}
+		}
+		for (Rectangle r : game.screenObjects) { // draw tiles and events on top of images
+			if (r instanceof Tile) {
+				((Tile) r).draw(p.g, currentScale);
+			}
+			if (r instanceof Event && game.eventVis) {
+				((Event) r).draw(p.g, currentScale);
+			}
+		}
+		game.player.draw(p.g);
+		game.paper.draw(p.g, game.screenSpace, currentScale);
+
+		// draw the page views TODO: remove this
+		for (Page page : pageView.getPages()) {
+			Rectangle pView = page.getView();
+			p.noFill();
+			p.stroke(255, 0, 0);
+			p.strokeWeight(4);
+			p.rect(pView.getX(), pView.getY(), pView.getWidth(), pView.getHeight());
+		}
+
+		// draw the views
+		for (View view : game.views) {
+			p.noFill();
+			p.stroke(255, 0, 0);
+			p.strokeWeight(4);
+			p.rect(view.getX(), view.getY(), view.getWidth(), view.getHeight());
+		}
+		p.noStroke();
+
+		// draw quad tree logic for testing
+		if (game.quadVis) {
+			world.draw(p);
+			p.fill(0, 0, 0, 150);
+			for (Rectangle r : game.playerObjects) {
+				p.rect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+			}
+			p.rect(game.player.getPlayerArea().getX(), game.player.getPlayerArea().getY(), game.player.getPlayerArea().getWidth(),
+					game.player.getPlayerArea().getHeight());
+			// rect(screenSpace.getX(), screenSpace.getY(), screenSpace.getWidth(),
+			// screenSpace.getHeight());
+		}
+
+		// draw block placement selection if one exists
+		if (game.point != null) {
+			p.fill(0, 0, 0, 150);
+			p.rect(game.point.x, game.point.y, 100, 100);
+			p.fill(0);
+			p.textSize(30);
+			p.textAlign(LEFT, CENTER);
+			int xCoord = (int) game.point.x;
+			int yCoord = (int) game.point.y;
+			String s = "[" + xCoord + ", " + yCoord + "]";
+			p.text(s, game.point.x + 105, game.point.y + 50);
+		}
+
+		// draw selection box around selected object
+		if (selected != null) {
+			p.noFill();
+			p.stroke(255, 0, 0); // selection colour
+			p.strokeWeight(2);
+			p.rect(selected.getX(), selected.getY(), selected.getWidth(), selected.getHeight());
+		}
+
+		p.popMatrix(); // start working at screen scale
 	}
 
 	private void frameCounter() {
@@ -190,8 +284,8 @@ public class Editor {
 		if (nextTouchInactive) {
 			nextTouchInactive = false;
 		}
-		
-		if(currentTool != null) {
+
+		if (currentTool != null) {
 			currentTool.touchEnded();
 		}
 	}
