@@ -24,7 +24,7 @@ public class Game {
 	public Rectangle startingWorld;
 	public HashSet<Rectangle> playerObjects;
 	private PageView pageView;
-	public boolean displayPages;
+	//public boolean displayPages;
 
 	public Camera camera;
 	// TODO: move these to editor?
@@ -76,7 +76,7 @@ public class Game {
 		playerObjects = new HashSet<Rectangle>();
 
 		pageView = new PageView(p, camera, convert);
-		displayPages = false;
+		//displayPages = false;
 
 		paper = new Paper(texture);
 

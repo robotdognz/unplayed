@@ -33,7 +33,7 @@ public class ViewTool implements Tool {
 
 	@Override
 	public void touchMoved() {
-		if (!game.displayPages) {// if in game view
+		if (!editor.showPageView) {// if in game view
 			if (start == null) {
 				start = new PVector(editor.point.x, editor.point.y);
 			} else {
@@ -47,7 +47,7 @@ public class ViewTool implements Tool {
 
 	@Override
 	public void touchEnded(PVector touch) {
-		if (!game.displayPages) { // if we're in the game view
+		if (!editor.showPageView) { // if we're in the game view
 			// if there is both a start and an end
 			if (start != null && end != null) {
 				// figure out which point is the topleft/bottomright and create/add the view

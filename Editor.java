@@ -129,10 +129,11 @@ public class Editor {
 
 		frameCounter();
 
-//		if (showPageView) { // update pageview display in game class
-//			game.displayPages = true;
-//			point = null;
-//		} else {
+		if (showPageView) { // update pageview display in game class
+			//game.displayPages = true;
+			point = null;
+		} 
+//		else {
 //			game.displayPages = false;
 //		}
 
