@@ -21,24 +21,23 @@ public abstract class Toolbar {
 	}
 
 	public boolean insideBoundary(float x, float y) {
-		return true;
-//		if (bounds != null) {
-//			if (x > bounds.getBottomRight().x) {
-//				return false;
-//			}
-//			if (x < bounds.getTopLeft().x) {
-//				return false;
-//			}
-//			if (y > bounds.getBottomRight().y) {
-//				return false;
-//			}
-//			if (y < bounds.getTopLeft().y) {
-//				return false;
-//			}
-//			return true;
-//		} else {
-//			return false;
-//		}
+		if (bounds != null) {
+			if (x > bounds.getBottomRight().x) {
+				return false;
+			}
+			if (x < bounds.getTopLeft().x) {
+				return false;
+			}
+			if (y > bounds.getBottomRight().y) {
+				return false;
+			}
+			if (y < bounds.getTopLeft().y) {
+				return false;
+			}
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public void step() {
