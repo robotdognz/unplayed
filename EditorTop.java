@@ -11,18 +11,15 @@ import static processing.core.PConstants.*;
 import ui.*;
 
 public class EditorTop extends Toolbar {
-	//private PApplet p;
-	private String folder;
 	private PImage uiExtra;
 
 	public EditorTop(PApplet p, Editor editor) {
 		super(p, editor);
-		//this.p = p;
-		this.folder = p.dataPath("ui") + '/' + "widgets" + '/';
+		super.folder = p.dataPath("ui") + '/' + "widgets" + '/';
 		this.uiExtra = p.loadImage(folder + "UI_element01.png");
 
 		// setup widgets
-		this.widgets = new ArrayList<Widget>();
+		super.widgets = new ArrayList<Widget>();
 
 		Widget saveW = new SaveMenuWidget(p, editor, this);
 		Widget pageW = new PageViewWidget(p, editor, this);
@@ -39,10 +36,10 @@ public class EditorTop extends Toolbar {
 		widgets.add(extraW);
 
 		// this.eWidgetSpacing = width/(this.eWidgets.size()+1);
-		this.widgetSpacing = p.width / 8;
-		this.widgetOffset = (p.width - widgetSpacing * 5) / 2;
+		super.widgetSpacing = p.width / 8;
+		super.widgetOffset = (p.width - widgetSpacing * 5) / 2;
 		
-		this.bounds = new Rectangle(0, 0, p.width, 200); //TODO: needs to be relative to screen size
+		super.bounds = new Rectangle(0, 0, p.width, 200); //TODO: needs to be relative to screen size
 	}
 
 	public void draw(PVector touch, Menu menu) {

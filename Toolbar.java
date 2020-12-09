@@ -14,6 +14,7 @@ public abstract class Toolbar {
 	public float widgetSpacing; // size of gap between widgets
 	public float widgetOffset; // amount to offset widget drawing by
 	protected Rectangle bounds;
+	protected String folder;
 	public Editor editor;
 
 	public Toolbar(PApplet p, Editor editor) {

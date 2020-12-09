@@ -24,9 +24,7 @@ import handlers.TextureCache;
 import handlers.TileHandler;
 
 public class EditorBottom extends Toolbar {
-	//private PApplet p;
 	private Rectangle selectionArea;
-	private String folder;
 	private PImage toolbar;
 	private PImage tab;
 	private int tabSize;
@@ -45,11 +43,10 @@ public class EditorBottom extends Toolbar {
 
 	public EditorBottom(PApplet p, Editor editor, TextureCache texture) {
 		super(p, editor);
-		//this.p = p;
-		folder = p.dataPath("ui") + '/';
+		super.folder = p.dataPath("ui") + '/';
 
 		// setup widgets
-		this.widgets = new ArrayList<Widget>();
+		super.widgets = new ArrayList<Widget>();
 		Widget blockW = new TileModeWidget(p, editor, this);
 		Widget imageW = new ImageModeWidget(p, editor, this);
 		Widget eventW = new EventModeWidget(p, editor, this);
@@ -59,32 +56,27 @@ public class EditorBottom extends Toolbar {
 		widgets.add(eventW);
 		widgets.add(viewW);
 
-		widgetOffset = p.width * 0.65f;
-		widgetSpacing = 140; // TODO: needs to be relative to screen size
+		super.widgetOffset = p.width * 0.65f;
+		super.widgetSpacing = 140; // TODO: needs to be relative to screen size
 
 		// setup toolbar
 		int objectAreaHeight = 230; // TODO: needs to be relative to screen size
-		selectionArea = new Rectangle(0, p.height - objectAreaHeight, p.width, objectAreaHeight);
-		toolbar = p.requestImage(folder + "icn_toolbar_bg.png");
-		tab = p.requestImage(folder + "icn_tab.png");
-		tabSize = 220;
+		this.selectionArea = new Rectangle(0, p.height - objectAreaHeight, p.width, objectAreaHeight);
+		this.toolbar = p.requestImage(folder + "icn_toolbar_bg.png");
+		this.tab = p.requestImage(folder + "icn_tab.png");
+		this.tabSize = 220;
 
-		widgetHeight = selectionArea.getY() - 53; // TODO: needs to be relative to screen size
+		this.widgetHeight = selectionArea.getY() - 53; // TODO: needs to be relative to screen size
 
 		// scroll bars
-		size = 150;
-		tiles = texture.getTileList();
-		images = texture.getImageList();
-		events = texture.getEventList();
-		views = editor.game.views;
+		this.size = 150;
+		this.tiles = texture.getTileList();
+		this.images = texture.getImageList();
+		this.events = texture.getEventList();
+		this.views = editor.game.views;
 		
-		bounds = new Rectangle(0, p.height - 300, p.width, 300); //TODO: needs to scale to screen size
+		super.bounds = new Rectangle(0, p.height - 300, p.width, 300); //TODO: needs to scale to screen size
 	}
-	
-//	public boolean insideBoundary(float x, float y) {
-//		//TODO: need to add complex boundary checking? (might be best just to leave it as a rectangle)
-//		return false;
-//	}
 
 	public void draw(PVector touch, Menu menu) {
 		super.draw(touch, menu);

@@ -14,42 +14,42 @@ import ui.Menu;
 import ui.Widget;
 
 public class EditorSide extends Toolbar {
-	//private PApplet p;
-	private Rectangle widgetArea;
-	private String folder;
 	private PImage top;
 	private PImage middle;
 	private PImage bottom;
 
 	public EditorSide(PApplet p, Editor editor) {
 		super(p, editor);
-		//this.p = p;
-		this.folder = p.dataPath("ui") + '/';
+		// this.p = p;
+		super.folder = p.dataPath("ui") + '/';
 
 		// setup widgets
-		this.widgets = new ArrayList<Widget>();
+		super.widgets = new ArrayList<Widget>();
 		// add widgets
 		Widget confirmW = new WidgetConfirm(p, editor, this);
 		Widget filpH = new WidgetFlipH(p, editor, this);
 
 		widgets.add(confirmW);
 		widgets.add(filpH);
-		
-		this.widgetSpacing = p.width / 8;
-		this.widgetOffset = p.height / 2 - widgetSpacing;
+
+		super.widgetSpacing = p.width / 8;
+
+		float height = widgetSpacing * (widgets.size() + 1);
+
+		super.widgetOffset = p.height / 2 - height / 2;
 
 		// sprites
 		// this.top = p.requestImage(folder + "???.png");
 		// this.middle = p.requestImage(folder + "???.png");
 		// this.bottom = p.requestImage(folder + "???.png");
-		
-		bounds = new Rectangle(0, p.height/2, 200, 300); //TODO: needs to scale to screen and widget amount
+
+		super.bounds = new Rectangle(0, widgetOffset, 200, height); // TODO: needs to scale to screen and widget amount
 	}
 
 	public void draw(PVector touch, Menu menu) {
 		super.draw(touch, menu);
 		p.imageMode(CENTER);
-		
+
 		for (int i = 0; i < widgets.size(); i++) {
 			widgets.get(i).draw(100, widgetOffset + widgetSpacing * i); // TODO: they need to draw vertically
 			widgets.get(i).updateActive();
@@ -58,7 +58,7 @@ public class EditorSide extends Toolbar {
 			}
 		}
 	}
-	
+
 	public void touchEnded() {
 		// check for clicking on widgets
 		for (int i = 0; i < widgets.size(); i++) {
