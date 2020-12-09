@@ -26,7 +26,7 @@ public class Page {
 	private float size; // size of the page in page view
 	private float angle; // rotation of the page in page view
 	Rectangle angledRect; // an axis locked rectangle that contains the rotated page (used to check if
-							// page is on screen)
+							// page is on screen and therefore should be drawn)
 	// variables for flipping the page
 	private float flipX;
 	private float flipY;

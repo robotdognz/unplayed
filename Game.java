@@ -24,10 +24,9 @@ public class Game {
 	public Rectangle startingWorld;
 	public HashSet<Rectangle> playerObjects;
 	private PageView pageView;
-	//public boolean displayPages;
 
 	public Camera camera;
-	// TODO: move these to editor?
+	// TODO: move these to editor (need to moved some logic from step too)
 	public Rectangle screenSpace;
 	public int screenSpaceOffset;
 	public HashSet<Rectangle> screenObjects;
@@ -76,7 +75,6 @@ public class Game {
 		playerObjects = new HashSet<Rectangle>();
 
 		pageView = new PageView(p, camera, convert);
-		//displayPages = false;
 
 		paper = new Paper(texture);
 
@@ -139,11 +137,9 @@ public class Game {
 	}
 
 	public void draw() {
-//		if (displayPages) {
-			pageView.draw();
-//			return;
-//		}
-		//TODO: do something with this view border code
+		pageView.draw();
+
+		// TODO: do something with this view border code
 //		p.pushMatrix(); // start working at game scale
 //		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
 //

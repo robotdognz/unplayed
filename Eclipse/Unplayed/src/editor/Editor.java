@@ -26,8 +26,11 @@ import static processing.core.PConstants.*;
 
 public class Editor {
 	// touch constraint variables
-	public int TOP_DEADZONE; // TODO: needs to scale with screen
-	public int BOTTOM_DEADZONE; // TODO: needs to scale with screen
+	// TODO: these need to be replaced with a system that checks if the current
+	// touch is inside the boundary of any of the toolbars
+	public int TOP_DEADZONE;
+	public int BOTTOM_DEADZONE;
+
 	public boolean nextTouchInactive = false;
 
 	PApplet p;
@@ -122,20 +125,16 @@ public class Editor {
 		editorBottom.step();
 
 		// step the controller if there are no widget menus open and touch has been
-		// reenabled
+		// re-enabled
 		if (controllerActive && !nextTouchInactive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
 			controller.step(touch); // draw event for controls
 		}
 
 		frameCounter();
 
-		if (showPageView) { // update pageview display in game class
-			//game.displayPages = true;
+		if (showPageView) {
 			point = null;
-		} 
-//		else {
-//			game.displayPages = false;
-//		}
+		}
 
 		if (!(controller instanceof EditorControl)) {
 			point = null;
@@ -273,7 +272,7 @@ public class Editor {
 		if (controllerActive && p.mouseY > TOP_DEADZONE && p.mouseY < BOTTOM_DEADZONE) {
 			controller.touchEnded(touch); // Controls for touch moved event
 		}
-		
+
 	}
 
 	public void touchMoved(ArrayList<PVector> touch) {
