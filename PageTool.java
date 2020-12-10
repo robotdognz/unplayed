@@ -57,6 +57,8 @@ public class PageTool extends AreaTool {
 						currentPage.setPosition(center);
 					}
 				}
+			}else if(editor.eMode == editorMode.ERASE) {
+				erasePage();
 			}
 		}
 	}
@@ -84,6 +86,14 @@ public class PageTool extends AreaTool {
 				selectPage();
 			}
 			currentPage = null;
+		}
+	}
+	
+	private void erasePage() {
+		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
+		Page found = pageView.getPage(mouse.x, mouse.y);
+		if(found != null) {
+			pageView.removePage(found);
 		}
 	}
 	

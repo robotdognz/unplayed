@@ -253,7 +253,7 @@ public class Editor {
 		}
 
 		// draw selection box around selected object
-		if (selected != null) {
+		if (selected != null && !(selected instanceof Page)) {
 			selected.drawSelected(p.g);
 		}
 

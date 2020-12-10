@@ -54,6 +54,10 @@ public class PageView {
 		pages.add(page);
 	}
 	
+	public void removePage(Page page) {
+		pages.remove(page);
+	}
+	
 	public Page getPage(float x, float y) {
 		if(pages.size() < 1) {
 			return null;
