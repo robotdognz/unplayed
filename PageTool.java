@@ -91,9 +91,30 @@ public class PageTool extends AreaTool {
 		super.touchEnded(touch);
 		Rectangle result = (Rectangle) super.getResult();
 		if (result != null) {
+			//check if there is already a matching view
+			for(View view : game.views) {
+				//if matching view found select it and return
+				if(view.getX() != result.getX()) {
+					continue;
+				}
+				if(view.getY() != result.getY()) {
+					continue;
+				}
+				if(view.getWidth() != result.getWidth()) {
+					continue;
+				}
+				if(view.getHeight() != result.getHeight()) {
+					continue;
+				}
+				editor.selected = view; //select the view
+				editor.currentView = view;
+				return;
+			}
 			View newView = new View(p, (int) result.getX(), (int) result.getY(), (int) result.getWidth(),
 					(int) result.getHeight());
-			game.views.add(newView);
+			game.views.add(newView); //add the view
+			editor.selected = newView; //select the view
+			editor.currentView = newView;
 		}
 	}
 	
@@ -123,6 +144,11 @@ public class PageTool extends AreaTool {
 					continue;
 				}
 				pageView.removePage(pages.get(i));
+				
+				//deselect the page if it is selected
+				if(pages.get(i).equals(editor.selected)) {
+					editor.selected = null;
+				}
 			}
 			
 		}
