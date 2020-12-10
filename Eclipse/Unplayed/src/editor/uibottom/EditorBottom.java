@@ -213,7 +213,7 @@ public class EditorBottom extends Toolbar {
 					// scroll
 					tileOffset += (p.pmouseX - p.mouseX) / 3;
 					// prevent scrolling off right edge
-					if (tileOffset > objectsWidth - selectionArea.getWidth()+4) {
+					if (tileOffset > objectsWidth - selectionArea.getWidth() + 1) {
 						tileOffset = objectsWidth - selectionArea.getWidth();
 					}
 					// prevent scrolling off left edge
@@ -222,22 +222,46 @@ public class EditorBottom extends Toolbar {
 					}
 				}
 			} else if (editor.currentTool instanceof ImageTool) {
-				imageOffset += (p.pmouseX - p.mouseX) / 3;
-				// prevent negative numbers
-				if (imageOffset < 0) {
-					imageOffset = 0;
+				float objectsWidth = images.size() * selectionArea.getHeight();
+				if (objectsWidth > selectionArea.getWidth()) {
+					// scroll
+					imageOffset += (p.pmouseX - p.mouseX) / 3;
+					// prevent scrolling off right edge
+					if (imageOffset > objectsWidth - selectionArea.getWidth() + 1) {
+						imageOffset = objectsWidth - selectionArea.getWidth();
+					}
+					// prevent scrolling off left edge
+					if (imageOffset < 0) {
+						imageOffset = 0;
+					}
 				}
 			} else if (editor.currentTool instanceof EventTool) {
-				eventOffset += (p.pmouseX - p.mouseX) / 3;
-				// prevent negative numbers
-				if (eventOffset < 0) {
-					eventOffset = 0;
+				float objectsWidth = events.size() * selectionArea.getHeight();
+				if (objectsWidth > selectionArea.getWidth()) {
+					// scroll
+					eventOffset += (p.pmouseX - p.mouseX) / 3;
+					// prevent scrolling off right edge
+					if (eventOffset > objectsWidth - selectionArea.getWidth() + 1) {
+						eventOffset = objectsWidth - selectionArea.getWidth();
+					}
+					// prevent scrolling off left edge
+					if (eventOffset < 0) {
+						eventOffset = 0;
+					}
 				}
 			} else if (editor.currentTool instanceof PageTool && views.size() > 0) {
-				viewOffset += (p.pmouseX - p.mouseX) / 3;
-				// prevent negative numbers
-				if (viewOffset < 0) {
-					viewOffset = 0;
+				float objectsWidth = views.size() * selectionArea.getHeight();
+				if (objectsWidth > selectionArea.getWidth()) {
+					// scroll
+					viewOffset += (p.pmouseX - p.mouseX) / 3;
+					// prevent scrolling off right edge
+					if (viewOffset > objectsWidth - selectionArea.getWidth() + 1) {
+						viewOffset = objectsWidth - selectionArea.getWidth();
+					}
+					// prevent scrolling off left edge
+					if (viewOffset < 0) {
+						viewOffset = 0;
+					}
 				}
 			}
 		}
