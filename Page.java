@@ -40,7 +40,7 @@ public class Page extends Editable {
 	public PVector getPosition() {
 		return position;
 	}
-	
+
 	public void setPosition(PVector pos) {
 		this.position = pos;
 		doAdjustedRect();
@@ -86,6 +86,11 @@ public class Page extends Editable {
 
 		// if(player is inside the page){ TODO: implement this
 		// begin drawing on the page
+
+		// TODO: one step further would be to draw the player on top of the page instead
+		// of in it, that way the page never needs to update
+		// Possible solution: have another PGraphics on top just for the player and effects?
+		// this might be perforance heavy in its own way
 		pageGraphics.beginDraw();
 
 		pageGraphics.translate(-view.getX(), -view.getY());
@@ -125,7 +130,7 @@ public class Page extends Editable {
 		p.image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height); // draw the page
 		p.popMatrix();
 	}
-	
+
 	@Override
 	public void drawSelected(PGraphics g) {
 		g.noFill();
