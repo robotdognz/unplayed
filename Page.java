@@ -22,9 +22,8 @@ public class Page extends Editable {
 
 	private PGraphics pageGraphics;
 	private boolean playerInside = true;
-//	private int pageRedraw = 0;
-//	private int redrawAmount = 60;
-//	private PGraphics paperGraphics;
+	private int redrawCount = 0;
+	private int stepSize = 60;
 	private PVector position; // center of the page in page view
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
@@ -41,13 +40,6 @@ public class Page extends Editable {
 		this.excludedObjects = new HashSet<String>();
 
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
-		// this.paperGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
-
-		// draw paper
-//		paperGraphics.beginDraw();
-//		paperGraphics.translate(-view.getX(), -view.getY());
-//		game.paper.draw(paperGraphics, view, 1);
-//		paperGraphics.endDraw();
 
 		setPosition(position);
 
@@ -84,8 +76,13 @@ public class Page extends Editable {
 
 	public void draw(float scale) {
 
-		if (playerInside) { // TODO: implement this
+		if (playerInside || redrawCount == 0) {
 			drawPage(scale);
+		}
+		if (redrawCount < stepSize) {
+			redrawCount++;
+		}else {
+			redrawCount = 0;
 		}
 
 		// draw the page
@@ -152,7 +149,7 @@ public class Page extends Editable {
 		}
 
 		game.player.draw(pageGraphics);
-		// game.paper.draw(pageGraphics, view, scale / size);
+		game.paper.draw(pageGraphics, view, scale / size);
 		// end drawing on the page
 		pageGraphics.endDraw();
 	}
@@ -170,11 +167,7 @@ public class Page extends Editable {
 		// get objects visible to this page
 		pageObjects.clear();
 		game.world.retrieve(pageObjects, view);
-//		if(pageRedraw < redrawAmount) {
-//			pageRedraw++;
-//		}else {
-//			pageRedraw = 0;
-//		}
+
 		// the step and draw process could be optimized by getting pageObjects once when
 		// the level is run
 
