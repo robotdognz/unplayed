@@ -242,4 +242,11 @@ public class Game {
 	public PageView getPageView() {
 		return pageView;
 	}
+	
+	public void setViews(ArrayList<View> views){
+		this.views.clear();
+		for(View view : views) {
+			this.views.add(view);
+		}
+	}
 }

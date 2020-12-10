@@ -282,8 +282,7 @@ public class EditorJSON {
 				views.add(v);
 			}
 		}
-		game.views = views;
-		toast.showToast("" + views.size());
+		game.setViews(views);
 	}
 
 	private void loadPages(JSONArray values, Game game) {
