@@ -15,6 +15,9 @@ public class ViewTool extends AreaTool {
 	private Converter convert;
 	private Game game;
 	private PageView pageView;
+
+	private Page currentPage;
+
 	// TODO: currently only does adding, no erase or select
 
 	public ViewTool(PApplet p, Editor editor) {
@@ -22,6 +25,7 @@ public class ViewTool extends AreaTool {
 		this.game = editor.game;
 		this.pageView = game.getPageView();
 		this.convert = editor.convert;
+		currentPage = null;
 	}
 
 	@Override
@@ -29,7 +33,24 @@ public class ViewTool extends AreaTool {
 		if (!editor.showPageView) {// if in game view
 			super.touchMoved();
 		} else { // if in page view
-
+			if (currentPage == null) {
+				float snapNo = 10;
+				PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+				// round so blocks snap to grid
+				float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
+				float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
+				PVector center = new PVector(finalX, finalY);
+				currentPage = new Page(p, game, editor.currentView.getTopLeft(), editor.currentView.getBottomRight(),
+						center);
+			}else {
+				float snapNo = 10;
+				PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+				// round so blocks snap to grid
+				float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
+				float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
+				PVector center = new PVector(finalX, finalY);
+				currentPage.setPosition(center);
+			}
 		}
 	}
 
@@ -46,16 +67,24 @@ public class ViewTool extends AreaTool {
 			}
 		} else {// if we're in the page view
 			if (editor.currentView != null) { // if there is something to create a page from
-				float snapNo = 10;
-				PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
-				// round so blocks snap to grid
-				float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
-				float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
-				PVector center = new PVector(finalX, finalY);
-				Page page = new Page(p, game, editor.currentView.getTopLeft(), editor.currentView.getBottomRight(),
-						center);
-				pageView.addPage(page);
+//				float snapNo = 10;
+//				PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+//				// round so blocks snap to grid
+//				float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
+//				float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
+//				PVector center = new PVector(finalX, finalY);
+//				Page page = new Page(p, game, editor.currentView.getTopLeft(), editor.currentView.getBottomRight(),
+//						center);
+				pageView.addPage(currentPage);
+				currentPage = null;
 			}
+		}
+	}
+	
+	@Override
+	public void draw() {
+		if(currentPage != null) {
+			currentPage.draw(1); //TODO: get scale
 		}
 	}
 

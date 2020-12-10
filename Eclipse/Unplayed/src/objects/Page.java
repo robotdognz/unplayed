@@ -38,6 +38,10 @@ public class Page extends Editable {
 		// to be implemented later
 		// angledRect //calculate a rectangle that the angled page fits inside
 	}
+	
+	public void setPosition (PVector p) {
+		this.position = p;
+	}
 
 	public void exclude(Rectangle object) {
 		excludedObjects.add(object.toString());
