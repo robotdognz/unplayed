@@ -133,6 +133,8 @@ public class EditorJSON {
 			object.setInt("pY", (int) view.getY());
 			object.setInt("pWidth", (int) view.getWidth());
 			object.setInt("pHeight", (int) view.getHeight());
+			
+			values.setJSONObject(values.size(), object); // add it on to the end
 		}
 
 	}
@@ -152,6 +154,8 @@ public class EditorJSON {
 			object.setInt("pY", (int) page.getY());
 			object.setInt("pWidth", (int) page.getWidth());
 			object.setInt("pHeight", (int) page.getHeight());
+			
+			values.setJSONObject(values.size(), object); // add it on to the end
 		}
 	}
 
