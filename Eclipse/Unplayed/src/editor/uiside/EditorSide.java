@@ -86,6 +86,11 @@ public class EditorSide extends Toolbar {
 
 	public void setSize(float size) {
 		// will only be called for page?
+//		if (editor.selected != null) {
+//			if (editor.selected instanceof Page) {
+//				((Editable) editor.selected).setSize(float size);
+//			}
+//		}
 	}
 
 	// methods for the widget to access
@@ -94,11 +99,6 @@ public class EditorSide extends Toolbar {
 			if (editor.selected instanceof Editable) {
 				return ((Editable) editor.selected).isFlippedH();
 			}
-//			else if (editor.selected instanceof Image) {
-//				return ((Image) editor.selected).isFlippedH();
-//			}else if (editor.selected instanceof Page) {
-//				return ((Page) editor.selected).isFlippedH();
-//			}
 		}
 		return false;
 	}
@@ -108,11 +108,6 @@ public class EditorSide extends Toolbar {
 			if (editor.selected instanceof Editable) {
 				((Editable) editor.selected).flipH();
 			}
-//			else if (editor.selected instanceof Image) {
-//				((Image) editor.selected).flipH();
-//			}else if (editor.selected instanceof Page) {
-//				((Page) editor.selected).flipH();
-//			}
 		}
 	}
 	
@@ -121,11 +116,6 @@ public class EditorSide extends Toolbar {
 			if (editor.selected instanceof Editable) {
 				return ((Editable) editor.selected).isFlippedV();
 			}
-//				else if (editor.selected instanceof Image) {
-//				return ((Image) editor.selected).isFlippedV();
-//			}else if (editor.selected instanceof Page) {
-//				return ((Page) editor.selected).isFlippedV();
-//			}
 		}
 		return false;
 	}
@@ -135,11 +125,6 @@ public class EditorSide extends Toolbar {
 			if (editor.selected instanceof Editable) {
 				((Editable) editor.selected).flipV();
 			}
-//			else if (editor.selected instanceof Image) {
-//				((Image) editor.selected).flipV();
-//			}else if (editor.selected instanceof Page) {
-//				((Page) editor.selected).flipV();
-//			}
 		}
 	}
 }

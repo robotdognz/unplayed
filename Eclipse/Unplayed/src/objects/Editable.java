@@ -3,13 +3,19 @@ package objects;
 public class Editable extends Rectangle {
 	protected float flipX;
 	protected float flipY;
+	protected float size;
 	protected float angle;
 
 	public Editable(float x, float y, float rWidth, float rHeight) {
 		super(x, y, rWidth, rHeight);
 		flipX = 1;
 		flipY = 1;
+		size = 1;
 		angle = 0;
+	}
+	
+	public void setSize() {
+		
 	}
 	
 	public void flipH() {

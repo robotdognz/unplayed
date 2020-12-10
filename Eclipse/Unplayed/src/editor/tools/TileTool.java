@@ -158,4 +158,9 @@ public class TileTool implements Tool {
 	@Override
 	public void draw() {
 	}
+
+	@Override
+	public Object getResult() {
+		return null;
+	}
 }

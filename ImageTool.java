@@ -164,4 +164,9 @@ public class ImageTool implements Tool {
 	@Override
 	public void draw() {
 	}
+
+	@Override
+	public Object getResult() {
+		return null;
+	}
 }

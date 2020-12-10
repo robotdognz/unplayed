@@ -18,7 +18,7 @@ public class Image extends Editable {
 
 	public Image(TextureCache texture, File file, int x, int y, int imageW, int imageH) {
 		super(x, y, imageW, imageH);
-		//this.texture = texture;
+		// this.texture = texture;
 
 		if (file != null && texture != null && texture.getImageMap().containsKey(file)) {
 			this.imageTexture = texture.getImageMap().get(file);
@@ -28,10 +28,6 @@ public class Image extends Editable {
 		} else {
 			hasTexture = false;
 		}
-		
-//		flipX = 1;
-//		flipY = 1;
-//		angle = 0;
 	}
 
 	public void draw(PGraphics graphics, float scale) {
@@ -59,36 +55,4 @@ public class Image extends Editable {
 			return null;
 		}
 	}
-	
-//	public void flipH() {
-//		if (flipX == 1) {
-//			flipX = -1;
-//		} else {
-//			flipX = 1;
-//		}
-//	}
-//
-//	public boolean isFlippedH() {
-//		if (flipX == 1) {
-//			return false;
-//		} else {
-//			return true;
-//		}
-//	}
-//	
-//	public void flipV() {
-//		if (flipY == 1) {
-//			flipY = -1;
-//		} else {
-//			flipY = 1;
-//		}
-//	}
-//
-//	public boolean isFlippedV() {
-//		if (flipY == 1) {
-//			return false;
-//		} else {
-//			return true;
-//		}
-//	}
 }

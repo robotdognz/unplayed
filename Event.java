@@ -12,10 +12,6 @@ public abstract class Event extends Editable {
 	private EventHandler eventTexture;
 	private String name;
 	public boolean visible;
-	
-//	private float flipX;
-//	private float flipY;
-//	private float angle;
 
 	public Event(TextureCache texture, String name, boolean visible, float x, float y, float rWidth, float rHeight) {
 		super(x, y, rWidth, rHeight);
@@ -30,10 +26,6 @@ public abstract class Event extends Editable {
 		} else {
 			hasTexture = false;
 		}
-		
-//		flipX = 1;
-//		flipY = 1;
-//		angle = 0;
 	}
 
 	public String getType() {
@@ -45,9 +37,6 @@ public abstract class Event extends Editable {
 
 	public void draw(PGraphics graphics, float scale) {
 		if (hasTexture) {
-//			graphics.imageMode(CORNER);
-//			graphics.image(eventTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
-			
 			graphics.imageMode(CENTER);
 			graphics.pushMatrix();
 			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);

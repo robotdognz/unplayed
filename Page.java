@@ -20,16 +20,8 @@ public class Page extends Editable {
 
 	private PGraphics pageGraphics;
 	private PVector position; // center of the page in page view
-	private float size; // size of the page in page view
-//	private float angle; // rotation of the page in page view
 	Rectangle angledRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
-	// variables for flipping the page
-//	private float flipX;
-//	private float flipY;
-
-	// TODO: performance problem with too many pages (perhaps pages without movement
-	// in them don't get redrawn)
 
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
 		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
@@ -43,21 +35,8 @@ public class Page extends Editable {
 
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 		this.position = position;
-		this.size = 1;
-		this.angle = 0;
 		// to be implemented later
 		// angledRect //calculate a rectangle that the angled page fits inside
-
-//		if (flipH) {
-//			flipX = -1;
-//		} else {
-//			flipX = 1;
-//		}
-//		if (flipV) {
-//			flipY = -1;
-//		} else {
-//			flipY = 1;
-//		}
 	}
 
 	public void exclude(Rectangle object) {
@@ -83,6 +62,7 @@ public class Page extends Editable {
 			}
 		}
 
+		//if(player is inside the page){ TODO: implement this
 		// begin drawing on the page
 		pageGraphics.beginDraw();
 
@@ -110,6 +90,7 @@ public class Page extends Editable {
 		game.paper.draw(pageGraphics, view, scale / size);
 		// end drawing on the page
 		pageGraphics.endDraw();
+		//}
 
 		// draw the page
 		p.imageMode(CENTER);
@@ -130,38 +111,6 @@ public class Page extends Editable {
 		// the step and draw process could be optimized by getting pageObjects once when
 		// the level is run
 	}
-
-//	public void flipH() {
-//		if (flipX == 1) {
-//			flipX = -1;
-//		} else {
-//			flipX = 1;
-//		}
-//	}
-//
-//	public boolean isFlippedH() {
-//		if (flipX == 1) {
-//			return false;
-//		} else {
-//			return true;
-//		}
-//	}
-//
-//	public void flipV() {
-//		if (flipY == 1) {
-//			flipY = -1;
-//		} else {
-//			flipY = 1;
-//		}
-//	}
-//
-//	public boolean isFlippedV() {
-//		if (flipY == 1) {
-//			return false;
-//		} else {
-//			return true;
-//		}
-//	}
 
 	public Set<String> getExcluded() {
 		return Collections.unmodifiableSet(excludedObjects);
