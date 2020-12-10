@@ -42,7 +42,7 @@ public class ViewTool extends AreaTool {
 				PVector center = new PVector(finalX, finalY);
 				currentPage = new Page(p, game, editor.currentView.getTopLeft(), editor.currentView.getBottomRight(),
 						center);
-			}else {
+			} else {
 				float snapNo = 10;
 				PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
 				// round so blocks snap to grid
@@ -66,25 +66,21 @@ public class ViewTool extends AreaTool {
 				game.views.add(newView);
 			}
 		} else {// if we're in the page view
-			if (editor.currentView != null) { // if there is something to create a page from
-//				float snapNo = 10;
-//				PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
-//				// round so blocks snap to grid
-//				float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
-//				float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
-//				PVector center = new PVector(finalX, finalY);
-//				Page page = new Page(p, game, editor.currentView.getTopLeft(), editor.currentView.getBottomRight(),
-//						center);
+			if (editor.currentView != null && currentPage != null) { // if there is something to create a page from
 				pageView.addPage(currentPage);
 				currentPage = null;
 			}
 		}
 	}
-	
+
 	@Override
 	public void draw() {
-		if(currentPage != null) {
-			currentPage.draw(1); //TODO: get scale
+		if (!editor.showPageView) {
+			super.draw();
+		}else {
+			if (currentPage != null) {
+				currentPage.draw(1); // TODO: get scale
+			}
 		}
 	}
 
