@@ -14,8 +14,20 @@ public class Editable extends Rectangle {
 		angle = 0;
 	}
 	
-	public void setSize() {
-		
+	public void setSize(float size) {
+		this.size = size;
+	}
+	
+	public float getSize() {
+		return size;
+	}
+	
+	public void setAngle(float angle) {
+		this.angle = angle;
+	}
+	
+	public float getAngle() {
+		return angle;
 	}
 	
 	public void flipH() {

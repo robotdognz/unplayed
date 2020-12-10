@@ -14,6 +14,6 @@ public class WidgetSave extends Widget {
 
 	public void clicked() {
 		// save the level
-		editor.eJSON.save(editor.game);
+		editor.eJSON.save(editor);
 	}
 }

@@ -7,20 +7,17 @@ import java.util.ArrayList;
 import editor.Editor;
 import editor.Toolbar;
 import objects.Editable;
-import objects.Image;
-import objects.Page;
 import objects.Rectangle;
-import objects.Tile;
 import processing.core.PApplet;
-import processing.core.PImage;
+//import processing.core.PImage;
 import processing.core.PVector;
 import ui.Menu;
 import ui.Widget;
 
 public class EditorSide extends Toolbar {
-	private PImage top;
-	private PImage middle;
-	private PImage bottom;
+//	private PImage top;
+//	private PImage middle;
+//	private PImage bottom;
 
 	public EditorSide(PApplet p, Editor editor) {
 		super(p, editor);

@@ -86,4 +86,8 @@ public class PageView {
 	public List<Page> getPages() {
 		return Collections.unmodifiableList(pages);
 	}
+	
+	public void setPages(ArrayList<Page> pages) {
+		this.pages = pages;
+	}
 }

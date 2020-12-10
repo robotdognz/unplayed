@@ -37,6 +37,10 @@ public class Page extends Editable {
 		setPosition(position);
 	}
 
+	public PVector getPosition() {
+		return position;
+	}
+	
 	public void setPosition(PVector pos) {
 		this.position = pos;
 		doAdjustedRect();
