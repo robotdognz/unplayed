@@ -50,6 +50,8 @@ public class Page extends Editable {
 //		paperGraphics.endDraw();
 
 		setPosition(position);
+
+		drawPage(3);
 	}
 
 	public PVector getPosition() {
@@ -81,6 +83,26 @@ public class Page extends Editable {
 	}
 
 	public void draw(float scale) {
+
+		if (playerInside) { // TODO: implement this
+			drawPage(scale);
+		}
+
+		// draw the page
+		p.imageMode(CENTER);
+		p.pushMatrix();
+		p.translate(position.x, position.y);
+
+		p.scale(size); // size the page will appear in the page view
+		p.rotate(PApplet.radians(angle)); // angle of the page
+		p.scale(flipX, flipY); // flipping the page
+		p.image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height); // draw the page
+		// p.image(paperGraphics, 0, 0, pageGraphics.width, pageGraphics.height); //
+		// draw the page
+		p.popMatrix();
+	}
+
+	private void drawPage(float scale) {
 		ArrayList<Rectangle> drawFirst = new ArrayList<Rectangle>();
 		ArrayList<Rectangle> drawSecond = new ArrayList<Rectangle>();
 		for (Rectangle r : pageObjects) {
@@ -99,55 +121,40 @@ public class Page extends Editable {
 			}
 		}
 
-		if (playerInside) { // TODO: implement this
-			// begin drawing on the page
+		// begin drawing on the page
 
-			// TODO: one step further would be to draw the player on top of the page instead
-			// of in it, that way the page never needs to update
-			// Possible solution: have another PGraphics on top just for the player and
-			// effects?
-			// this might be perforance heavy in its own way
-			pageGraphics.beginDraw();
+		// TODO: one step further would be to draw the player on top of the page instead
+		// of in it, that way the page never needs to update
+		// Possible solution: have another PGraphics on top just for the player and
+		// effects?
+		// this might be perforance heavy in its own way
+		pageGraphics.beginDraw();
 
-			pageGraphics.translate(-view.getX(), -view.getY());
+		pageGraphics.translate(-view.getX(), -view.getY());
 
-			// draw environment and player
-			pageGraphics.background(240);
+		// draw environment and player
+		pageGraphics.background(240);
 
-			for (Rectangle r : drawFirst) { // draw images
-				if (r instanceof Image) {
-					((Image) r).draw(pageGraphics, scale / size);
-				}
+		for (Rectangle r : drawFirst) { // draw images
+			if (r instanceof Image) {
+				((Image) r).draw(pageGraphics, scale / size);
 			}
-			for (Rectangle r : drawSecond) { // draw tiles and events
-				if (r instanceof Tile) {
-					((Tile) r).draw(pageGraphics, scale / size); // scale is divided by size so that LODs are relative
-																	// to
-																	// page size
-				}
-				if (r instanceof Event && ((Event) r).visible) {
-					((Event) r).draw(pageGraphics, scale / size);
-				}
+		}
+		for (Rectangle r : drawSecond) { // draw tiles and events
+			if (r instanceof Tile) {
+				((Tile) r).draw(pageGraphics, scale / size); // scale is divided by size so that LODs are relative
+																// to
+																// page size
 			}
-
-			game.player.draw(pageGraphics);
-			// game.paper.draw(pageGraphics, view, scale / size);
-			// end drawing on the page
-			pageGraphics.endDraw();
+			if (r instanceof Event && ((Event) r).visible) {
+				((Event) r).draw(pageGraphics, scale / size);
+			}
 		}
 
-		// draw the page
-		p.imageMode(CENTER);
-		p.pushMatrix();
-		p.translate(position.x, position.y);
-
-		p.scale(size); // size the page will appear in the page view
-		p.rotate(PApplet.radians(angle)); // angle of the page
-		p.scale(flipX, flipY); // flipping the page
-		p.image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height); // draw the page
-		// p.image(paperGraphics, 0, 0, pageGraphics.width, pageGraphics.height); //
-		// draw the page
-		p.popMatrix();
+		game.player.draw(pageGraphics);
+		// game.paper.draw(pageGraphics, view, scale / size);
+		// end drawing on the page
+		pageGraphics.endDraw();
 	}
 
 	@Override
@@ -170,20 +177,20 @@ public class Page extends Editable {
 //		}
 		// the step and draw process could be optimized by getting pageObjects once when
 		// the level is run
-		
-		if (view.getTopLeft().x > player.getBottomRight().x - 1) {
+
+		if (view.getTopLeft().x > player.getBottomRight().x + 20) {
 			playerInside = false;
 			return;
 		}
-		if (view.getBottomRight().x < player.getTopLeft().x + 1) {
+		if (view.getBottomRight().x < player.getTopLeft().x - 20) {
 			playerInside = false;
 			return;
 		}
-		if (view.getTopLeft().y > player.getBottomRight().y - 1) {
+		if (view.getTopLeft().y > player.getBottomRight().y + 20) {
 			playerInside = false;
 			return;
 		}
-		if (view.getBottomRight().y < player.getTopLeft().y + 1) {
+		if (view.getBottomRight().y < player.getTopLeft().y - 20) {
 			playerInside = false;
 			return;
 		}
