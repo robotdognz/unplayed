@@ -76,7 +76,8 @@ public class PageTool extends AreaTool {
 			}
 		} else {// pages
 			if (editor.eMode == editorMode.ADD) {
-				if (editor.currentView != null && currentPage != null) { // if there is something to create a page from
+				//editor.currentView != null && 
+				if (currentPage != null) { // if there is something to create a page from
 					pageView.addPage(currentPage);
 				}
 			}else if (editor.eMode == editorMode.SELECT) {
@@ -89,6 +90,7 @@ public class PageTool extends AreaTool {
 	private void selectPage() {
 		Page found = pageView.getPage(p.mouseX, p.mouseY);
 		if(found != null) {
+			PApplet.println("Page found");
 			editor.selected = found;
 		}
 	}

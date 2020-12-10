@@ -54,6 +54,7 @@ public class PageView {
 	}
 	
 	public Page getPage(float x, float y) {
+		PApplet.println("getPage()");
 		if(pages.size() < 1) {
 			return null;
 		}
