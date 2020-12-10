@@ -21,9 +21,9 @@ public class Page extends Editable {
 	private HashSet<String> excludedObjects; // a list of rectangle strings to exclude while drawing
 
 	private PGraphics pageGraphics;
-	private boolean playerInside = true;
-	private int redrawCount;
-	private int stepSize;
+	private boolean redraw = true;
+//	private int redrawCount;
+//	private int stepSize;
 	private PVector position; // center of the page in page view
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
@@ -43,8 +43,8 @@ public class Page extends Editable {
 
 		setPosition(position);
 
-		redrawCount = 0;
-		stepSize = (int) (60 + p.random(60)); //random step size between 60-120
+//		redrawCount = 0;
+//		stepSize = (int) (60 + p.random(60)); //random step size between 60-120
 	}
 
 	public PVector getPosition() {
@@ -77,14 +77,15 @@ public class Page extends Editable {
 
 	public void draw(float scale) {
 
-		if (playerInside || redrawCount == 0) {
+		if (redraw) { // || redrawCount == 0) {
 			drawPage(scale);
 		}
-		if (redrawCount < stepSize) {
-			redrawCount++;
-		}else {
-			redrawCount = 0;
-		}
+		checkRedraw();
+//		if (redrawCount < stepSize) {
+//			redrawCount++;
+//		}else {
+//			redrawCount = 0;
+//		}
 
 		// draw the page
 		p.imageMode(CENTER);
@@ -163,6 +164,26 @@ public class Page extends Editable {
 		g.rectMode(CORNER);
 		g.rect(adjustedRect.getX(), adjustedRect.getY(), adjustedRect.getWidth(), adjustedRect.getHeight());
 	}
+	
+	private void checkRedraw() {
+		if (view.getTopLeft().x > player.getPlayerArea().getBottomRight().x) {
+			redraw = false;
+			return;
+		}
+		if (view.getBottomRight().x < player.getPlayerArea().getTopLeft().x - 20) {
+			redraw = false;
+			return;
+		}
+		if (view.getTopLeft().y > player.getPlayerArea().getBottomRight().y + 20) {
+			redraw = false;
+			return;
+		}
+		if (view.getBottomRight().y < player.getPlayerArea().getTopLeft().y - 20) {
+			redraw = false;
+			return;
+		}
+		redraw = true;
+	}
 
 	public void step() {
 		// get objects visible to this page
@@ -172,23 +193,7 @@ public class Page extends Editable {
 		// the step and draw process could be optimized by getting pageObjects once when
 		// the level is run
 
-		if (view.getTopLeft().x > player.getBottomRight().x + 20) {
-			playerInside = false;
-			return;
-		}
-		if (view.getBottomRight().x < player.getTopLeft().x - 20) {
-			playerInside = false;
-			return;
-		}
-		if (view.getTopLeft().y > player.getBottomRight().y + 20) {
-			playerInside = false;
-			return;
-		}
-		if (view.getBottomRight().y < player.getTopLeft().y - 20) {
-			playerInside = false;
-			return;
-		}
-		playerInside = true;
+		
 	}
 
 	public Set<String> getExcluded() {
