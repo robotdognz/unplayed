@@ -19,6 +19,9 @@ public class Page extends Editable {
 	private HashSet<String> excludedObjects; // a list of rectangle strings to exclude while drawing
 
 	private PGraphics pageGraphics;
+	private int pageRedraw = 0;
+	private int redrawAmount = 60;
+	private PGraphics paperGraphics;
 	private PVector position; // center of the page in page view
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
@@ -34,6 +37,14 @@ public class Page extends Editable {
 		this.excludedObjects = new HashSet<String>();
 
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
+		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
+		
+		//draw paper
+		paperGraphics.beginDraw();
+		paperGraphics.translate(-view.getX(), -view.getY());
+		game.paper.draw(paperGraphics, view, 5 / size);
+		paperGraphics.endDraw();
+		
 		setPosition(position);
 	}
 
@@ -114,7 +125,7 @@ public class Page extends Editable {
 		}
 
 		game.player.draw(pageGraphics);
-		game.paper.draw(pageGraphics, view, scale / size);
+		//game.paper.draw(pageGraphics, view, scale / size);
 		// end drawing on the page
 		pageGraphics.endDraw();
 		// }
@@ -128,6 +139,7 @@ public class Page extends Editable {
 		p.rotate(PApplet.radians(angle)); // angle of the page
 		p.scale(flipX, flipY); // flipping the page
 		p.image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height); // draw the page
+		p.image(paperGraphics, 0, 0, pageGraphics.width, pageGraphics.height); // draw the page
 		p.popMatrix();
 	}
 
@@ -144,6 +156,11 @@ public class Page extends Editable {
 		// get objects visible to this page
 		pageObjects.clear();
 		game.world.retrieve(pageObjects, view);
+		if(pageRedraw < redrawAmount) {
+			pageRedraw++;
+		}else {
+			pageRedraw = 0;
+		}
 		// the step and draw process could be optimized by getting pageObjects once when
 		// the level is run
 	}
