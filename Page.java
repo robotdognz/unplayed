@@ -22,8 +22,6 @@ public class Page extends Editable {
 
 	private PGraphics pageGraphics;
 	private boolean redraw = true;
-//	private int redrawCount;
-//	private int stepSize;
 	private PVector position; // center of the page in page view
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
@@ -42,9 +40,6 @@ public class Page extends Editable {
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 
 		setPosition(position);
-
-//		redrawCount = 0;
-//		stepSize = (int) (60 + p.random(60)); //random step size between 60-120
 	}
 
 	public PVector getPosition() {
@@ -77,31 +72,24 @@ public class Page extends Editable {
 
 	public void draw(float scale) {
 
-		if (redraw) { // || redrawCount == 0) {
-			drawPage(scale);
+		if (redraw) {
+			drawView(scale);
 		}
 		checkRedraw();
-//		if (redrawCount < stepSize) {
-//			redrawCount++;
-//		}else {
-//			redrawCount = 0;
-//		}
 
 		// draw the page
-		p.imageMode(CENTER);
 		p.pushMatrix();
 		p.translate(position.x, position.y);
-
 		p.scale(size); // size the page will appear in the page view
 		p.rotate(PApplet.radians(angle)); // angle of the page
 		p.scale(flipX, flipY); // flipping the page
+		p.imageMode(CENTER);
 		p.image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height); // draw the page
-		// p.image(paperGraphics, 0, 0, pageGraphics.width, pageGraphics.height); //
-		// draw the page
 		p.popMatrix();
 	}
 
-	private void drawPage(float scale) {
+	private void drawView(float scale) {
+		// draw the view that will be shown on the page
 		ArrayList<Rectangle> drawFirst = new ArrayList<Rectangle>();
 		ArrayList<Rectangle> drawSecond = new ArrayList<Rectangle>();
 		for (Rectangle r : pageObjects) {
@@ -120,13 +108,11 @@ public class Page extends Editable {
 			}
 		}
 
-		// begin drawing on the page
+		// one step further would be to draw the player and world behind a
+		// pre-rendered page grid (the most expensive part of rendering the page)
+		// that only gets redrawn when the LOD changes
 
-		// TODO: one step further would be to draw the player on top of the page instead
-		// of in it, that way the page never needs to update
-		// Possible solution: have another PGraphics on top just for the player and
-		// effects?
-		// this might be perforance heavy in its own way
+		// begin drawing on the page
 		pageGraphics.beginDraw();
 
 		pageGraphics.translate(-view.getX(), -view.getY());
@@ -164,7 +150,7 @@ public class Page extends Editable {
 		g.rectMode(CORNER);
 		g.rect(adjustedRect.getX(), adjustedRect.getY(), adjustedRect.getWidth(), adjustedRect.getHeight());
 	}
-	
+
 	private void checkRedraw() {
 		if (view.getTopLeft().x > player.getPlayerArea().getBottomRight().x) {
 			redraw = false;
@@ -193,7 +179,6 @@ public class Page extends Editable {
 		// the step and draw process could be optimized by getting pageObjects once when
 		// the level is run
 
-		
 	}
 
 	public Set<String> getExcluded() {
