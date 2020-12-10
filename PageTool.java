@@ -57,7 +57,7 @@ public class PageTool extends AreaTool {
 						currentPage.setPosition(center);
 					}
 				}
-			}else if(editor.eMode == editorMode.ERASE) {
+			} else if (editor.eMode == editorMode.ERASE) {
 				erasePage();
 			}
 		}
@@ -78,31 +78,35 @@ public class PageTool extends AreaTool {
 			}
 		} else {// pages
 			if (editor.eMode == editorMode.ADD) {
-				//editor.currentView != null && 
-				if (currentPage != null) { // if there is something to create a page from
-					pageView.addPage(currentPage);
-				}
-			}else if (editor.eMode == editorMode.SELECT) {
+				addPage();
+			} else if (editor.eMode == editorMode.SELECT) {
 				selectPage();
 			}
 			currentPage = null;
 		}
 	}
-	
+
+	private void addPage() {
+		if (currentPage != null) { // if there is something to create a page from
+			pageView.addPage(currentPage);
+			editor.selected = currentPage;
+		}
+	}
+
 	private void erasePage() {
 		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
 		Page found = pageView.getPage(mouse.x, mouse.y);
-		if(found != null) {
+		if (found != null) {
 			pageView.removePage(found);
 		}
 	}
-	
+
 	private void selectPage() {
 		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
 		Page found = pageView.getPage(mouse.x, mouse.y);
-		if(found != null) {
+		if (found != null) {
 			editor.selected = found;
-		}else {
+		} else {
 			editor.selected = null;
 		}
 	}
