@@ -30,21 +30,21 @@ public class AreaTool implements Tool {
 
 	@Override
 	public void touchMoved() {
-		if (!editor.showPageView) {// if in game view
+//		if (!editor.showPageView) {// if in game view
 			if (start == null) {
 				start = new PVector(editor.point.x, editor.point.y);
 			} else {
 				end = new PVector(editor.point.x + 100, editor.point.y + 100);
 			}
-		} else { // if in page view
-
-		}
+//		} else { // if in page view
+//
+//		}
 
 	}
 
 	@Override
 	public void touchEnded(PVector touch) {
-		if (!editor.showPageView) { // if we're in the game view
+		//if (!editor.showPageView) { // if we're in the game view
 			// if there is both a start and an end
 			if (start != null && end != null) {
 				// figure out which point is the topleft/bottomright and create/add the view
@@ -68,9 +68,9 @@ public class AreaTool implements Tool {
 				start = null;
 				end = null;
 			}
-		} else { // if we're in the page view
-
-		}
+//		} else { // if we're in the page view
+//
+//		}
 
 	}
 

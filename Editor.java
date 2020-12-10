@@ -124,10 +124,8 @@ public class Editor {
 
 		// step the controller if there are no widget menus open and touch has been
 		// re-enabled
-		if (controllerActive && !nextTouchInactive 
-				&& !editorTop.insideBoundary(p.mouseX, p.mouseY)
-				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY)
-				&& !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
+		if (controllerActive && !nextTouchInactive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
+				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
 			controller.step(touches); // draw event for controls
 		}
 
@@ -149,6 +147,27 @@ public class Editor {
 		// draw the level
 		if (!showPageView) {
 			drawLevel();
+		} else {
+			// draw tool effects
+			if (currentTool != null) {
+				currentTool.draw();
+			}
+		}
+
+		// draw tool effects
+		if (currentTool != null) {
+			// start working at game scale
+			p.pushMatrix();
+			p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
+
+			// camera
+			p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
+			p.scale(camera.getSubScale()); // apply offset for tall screen spaces
+			p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
+			
+			currentTool.draw();
+			
+			p.popMatrix(); // start working at screen scale
 		}
 
 		// draw toolbars
@@ -234,10 +253,6 @@ public class Editor {
 
 		// draw selection box around selected object
 		if (selected != null) {
-//			p.noFill();
-//			p.stroke(255, 0, 0); // selection colour
-//			p.strokeWeight(2);
-//			p.rect(selected.getX(), selected.getY(), selected.getWidth(), selected.getHeight());
 			selected.drawSelected(p.g);
 		}
 
@@ -258,10 +273,8 @@ public class Editor {
 		if (nextTouchInactive) {
 			return;
 		}
-		if (controllerActive 
-				&& !editorTop.insideBoundary(p.mouseX, p.mouseY) 
-				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY)
-				&& !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
+		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
+				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
 			controller.touchStarted(touch); // Controls for touch started event
 		}
 	}
@@ -275,10 +288,8 @@ public class Editor {
 			nextTouchInactive = false;
 		}
 
-		if (controllerActive 
-				&& !editorTop.insideBoundary(p.mouseX, p.mouseY) 
-				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY)
-				&& !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
+		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
+				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
 			controller.touchEnded(touch); // Controls for touch moved event
 		}
 
@@ -292,10 +303,8 @@ public class Editor {
 		if (nextTouchInactive) { // don't do controller if next touch inactive
 			return;
 		}
-		if (controllerActive 
-				&& !editorTop.insideBoundary(p.mouseX, p.mouseY) 
-				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY)
-				&& !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
+		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
+				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
 			controller.touchMoved(touches); // Controls for touch moved event
 		}
 	}
@@ -304,10 +313,8 @@ public class Editor {
 		if (nextTouchInactive) {
 			return;
 		}
-		if (controllerActive 
-				&& !editorTop.insideBoundary(p.mouseX, p.mouseY) 
-				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY)
-				&& !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
+		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
+				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
 			controller.onPinch(touches, x, y, d); // controlls for on pinch event
 		}
 	}
