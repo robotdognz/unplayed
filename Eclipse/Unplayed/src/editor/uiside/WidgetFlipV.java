@@ -2,6 +2,7 @@ package editor.uiside;
 
 import editor.Editor;
 import editor.Toolbar;
+import objects.Editable;
 import processing.core.PApplet;
 import ui.Widget;
 
@@ -14,10 +15,15 @@ public class WidgetFlipV extends Widget {
 		icon = p.loadImage(folder + "FlipHVert.png");
 	}
 	public void updateActiveUser() {
-		if (toolbar.isFlippedV()) {
-			active = true;
+		if (editor.selected != null && editor.selected instanceof Editable) {
+			available = true;
+			if (toolbar.isFlippedV()) {
+				active = true;
+			} else {
+				active = false;
+			}
 		} else {
-			active = false;
+			available = false;
 		}
 	}
 	

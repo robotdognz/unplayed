@@ -2,6 +2,7 @@ package editor.uiside;
 
 import editor.Editor;
 import editor.Toolbar;
+import objects.Editable;
 import processing.core.PApplet;
 import ui.Widget;
 
@@ -15,13 +16,19 @@ public class WidgetFlipH extends Widget {
 	}
 
 	public void updateActiveUser() {
-		if (toolbar.isFlippedH()) {
-			active = true;
+		if (editor.selected != null && editor.selected instanceof Editable) {
+			available = true;
+			if (toolbar.isFlippedH()) {
+				active = true;
+			} else {
+				active = false;
+			}
 		} else {
-			active = false;
+			available = false;
 		}
+
 	}
-	
+
 	public void clicked() {
 		toolbar.flipH();
 	}
