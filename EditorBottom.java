@@ -210,16 +210,16 @@ public class EditorBottom extends Toolbar {
 			if (editor.currentTool instanceof TileTool) {
 				float objectsWidth = tiles.size() * selectionArea.getHeight();
 				if (objectsWidth > selectionArea.getWidth()) {
-					if (objectsWidth - selectionArea.getWidth() > tileOffset) {
-						tileOffset += (p.pmouseX - p.mouseX) / 3;
-					}
-					if (objectsWidth - selectionArea.getWidth() < tileOffset) {
+					// scroll
+					tileOffset += (p.pmouseX - p.mouseX) / 3;
+					// prevent scrolling off right edge
+					if (tileOffset > objectsWidth - selectionArea.getWidth()) {
 						tileOffset = objectsWidth - selectionArea.getWidth();
 					}
-				}
-				// prevent negative numbers
-				if (tileOffset < 0) {
-					tileOffset = 0;
+					// prevent scrolling off left edge
+					if (tileOffset < 0) {
+						tileOffset = 0;
+					}
 				}
 			} else if (editor.currentTool instanceof ImageTool) {
 				imageOffset += (p.pmouseX - p.mouseX) / 3;
