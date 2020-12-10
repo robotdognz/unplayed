@@ -74,12 +74,12 @@ public class EditorBottom extends Toolbar {
 		this.images = texture.getImageList();
 		this.events = texture.getEventList();
 		this.views = editor.game.views;
-		
-		super.bounds = new Rectangle(0, p.height - 350, p.width, 300); //TODO: needs to scale to screen size
+
+		super.bounds = new Rectangle(0, p.height - 350, p.width, 300); // TODO: needs to scale to screen size
 	}
 
 	public void draw(PVector touch, Menu menu) {
-		//super.draw(touch, menu);
+		// super.draw(touch, menu);
 		for (int i = 0; i < widgets.size(); i++) {
 			// draw the two behind tabs
 			if (!widgets.get(i).isActive()) {
@@ -89,7 +89,8 @@ public class EditorBottom extends Toolbar {
 		}
 
 		p.imageMode(CORNER);
-		p.image(toolbar, selectionArea.getX(), selectionArea.getY(), selectionArea.getWidth(), selectionArea.getHeight());
+		p.image(toolbar, selectionArea.getX(), selectionArea.getY(), selectionArea.getWidth(),
+				selectionArea.getHeight());
 
 		// widgets
 
@@ -111,7 +112,7 @@ public class EditorBottom extends Toolbar {
 		// figure out what type to show
 		ArrayList<Object> objects = new ArrayList<Object>(); // current objects to draw in the scroll bar
 		Float offset = 0.0f;
-		Object currentHandler = null; //TODO: rename
+		Object currentHandler = null; // TODO: rename
 		if (editor.currentTool instanceof TileTool) {
 			objects.addAll(tiles);
 			offset = tileOffset;
@@ -142,14 +143,17 @@ public class EditorBottom extends Toolbar {
 				p.noStroke();
 				p.fill(0, 0, 0, 120);
 				p.rect(selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
-						selectionArea.getY() + selectionArea.getHeight() / 2, selectionArea.getHeight(), selectionArea.getHeight());
+						selectionArea.getY() + selectionArea.getHeight() / 2, selectionArea.getHeight(),
+						selectionArea.getHeight());
 			}
 			if (object instanceof Handler) {
-				((Handler) object).draw(selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
+				((Handler) object).draw(
+						selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
 						selectionArea.getY() + selectionArea.getHeight() / 2, size);
 			} else if (object instanceof View) {
-				//TODO: draw the view
-				((View) object).drawToolbar(selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
+				// TODO: draw the view
+				((View) object).drawToolbar(
+						selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
 						selectionArea.getY() + selectionArea.getHeight() / 2, size);
 			}
 		}
@@ -204,13 +208,37 @@ public class EditorBottom extends Toolbar {
 	public void touchMoved(ArrayList<PVector> touch) {
 		if (touch.size() == 1 && p.mouseY >= selectionArea.getY()) {
 			if (editor.currentTool instanceof TileTool) {
-				tileOffset += (p.pmouseX - p.mouseX) / 3;
+				float objectsWidth = tiles.size() * selectionArea.getHeight();
+				if (objectsWidth > selectionArea.getWidth()) {
+					if (objectsWidth - selectionArea.getWidth() > tileOffset) {
+						tileOffset += (p.pmouseX - p.mouseX) / 3;
+					}
+					if (objectsWidth - selectionArea.getWidth() < tileOffset) {
+						tileOffset = objectsWidth - selectionArea.getWidth();
+					}
+				}
+				// prevent negative numbers
+				if (tileOffset < 0) {
+					tileOffset = 0;
+				}
 			} else if (editor.currentTool instanceof ImageTool) {
 				imageOffset += (p.pmouseX - p.mouseX) / 3;
+				// prevent negative numbers
+				if (imageOffset < 0) {
+					imageOffset = 0;
+				}
 			} else if (editor.currentTool instanceof EventTool) {
 				eventOffset += (p.pmouseX - p.mouseX) / 3;
+				// prevent negative numbers
+				if (eventOffset < 0) {
+					eventOffset = 0;
+				}
 			} else if (editor.currentTool instanceof PageTool && views.size() > 0) {
 				viewOffset += (p.pmouseX - p.mouseX) / 3;
+				// prevent negative numbers
+				if (viewOffset < 0) {
+					viewOffset = 0;
+				}
 			}
 		}
 	}

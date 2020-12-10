@@ -158,7 +158,7 @@ public class Editor {
 			p.translate(-camera.getCenter().x, -camera.getCenter().y);
 
 			// draw selection box around selected object
-			if (selected != null) {
+			if (selected != null && selected instanceof Page) {
 				selected.drawSelected(p.g);
 			}
 			// draw tool effects
