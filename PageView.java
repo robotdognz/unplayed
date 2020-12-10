@@ -54,11 +54,12 @@ public class PageView {
 	}
 	
 	public Page getPage(float x, float y) {
-		PApplet.println("getPage()");
+		
 		if(pages.size() < 1) {
 			return null;
 		}
 		for (Page p : pages) {
+			PApplet.println("try getPage()" + p);
 			if (p.getTopLeft().x > x) {
 				continue;
 			}
