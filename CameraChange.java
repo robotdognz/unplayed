@@ -4,6 +4,7 @@ import game.Game;
 import handlers.TextureCache;
 import processing.core.PGraphics;
 import processing.core.PVector;
+import static processing.core.PConstants.*;
 
 public class CameraChange extends Event {
 	private PVector cameraTopLeft;
@@ -75,6 +76,7 @@ public class CameraChange extends Event {
 		super.drawSelected(g);
 		// TODO: the camera area needs to be drawn in the page view
 		g.noStroke();
+		g.rectMode(CORNER);
 		g.fill(255, 0, 0, 100);
 		g.rect(cameraTopLeft.x, cameraTopLeft.y, cameraBottomRight.x - cameraTopLeft.x,
 				cameraBottomRight.y - cameraTopLeft.y);

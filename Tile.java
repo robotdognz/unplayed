@@ -8,12 +8,12 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 import static processing.core.PConstants.*;
 
-public class Tile extends Rectangle {
+public class Tile extends Editable {
 	private boolean hasTexture;
 	private TileHandler tileTexture;
-	private float flipX;
-	private float flipY;
-	private float angle;
+//	private float flipX;
+//	private float flipY;
+//	private float angle;
 
 	public Tile(TextureCache texture, File file, int x, int y) {
 		super(x, y, 100, 100);
@@ -25,9 +25,9 @@ public class Tile extends Rectangle {
 			hasTexture = false;
 		}
 
-		flipX = 1;
-		flipY = 1;
-		angle = 0;
+//		flipX = 1;
+//		flipY = 1;
+//		angle = 0;
 	}
 
 	public void draw(PGraphics graphics, float scale) {
@@ -57,35 +57,35 @@ public class Tile extends Rectangle {
 		}
 	}
 
-	public void flipH() {
-		if (flipX == 1) {
-			flipX = -1;
-		} else {
-			flipX = 1;
-		}
-	}
-
-	public boolean isFlippedH() {
-		if (flipX == 1) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
-	public void flipV() {
-		if (flipY == 1) {
-			flipY = -1;
-		} else {
-			flipY = 1;
-		}
-	}
-
-	public boolean isFlippedV() {
-		if (flipY == 1) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+//	public void flipH() {
+//		if (flipX == 1) {
+//			flipX = -1;
+//		} else {
+//			flipX = 1;
+//		}
+//	}
+//
+//	public boolean isFlippedH() {
+//		if (flipX == 1) {
+//			return false;
+//		} else {
+//			return true;
+//		}
+//	}
+//	
+//	public void flipV() {
+//		if (flipY == 1) {
+//			flipY = -1;
+//		} else {
+//			flipY = 1;
+//		}
+//	}
+//
+//	public boolean isFlippedV() {
+//		if (flipY == 1) {
+//			return false;
+//		} else {
+//			return true;
+//		}
+//	}
 }

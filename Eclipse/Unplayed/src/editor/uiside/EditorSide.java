@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 import editor.Editor;
 import editor.Toolbar;
+import objects.Editable;
 import objects.Image;
+import objects.Page;
 import objects.Rectangle;
 import objects.Tile;
 import processing.core.PApplet;
@@ -51,7 +53,7 @@ public class EditorSide extends Toolbar {
 	}
 
 	public void draw(PVector touch, Menu menu) {
-		super.draw(touch, menu);
+		//super.draw(touch, menu);
 		p.imageMode(CENTER);
 
 		for (int i = 0; i < widgets.size(); i++) {
@@ -86,50 +88,58 @@ public class EditorSide extends Toolbar {
 		// will only be called for page?
 	}
 
-	public void flipV(boolean flipped) {
-
-	}
-
 	// methods for the widget to access
 	public boolean isFlippedH() {
 		if (editor.selected != null) {
-			if (editor.selected instanceof Tile) {
-				return ((Tile) editor.selected).isFlippedH();
-			}else if (editor.selected instanceof Image) {
-				return ((Image) editor.selected).isFlippedH();
+			if (editor.selected instanceof Editable) {
+				return ((Editable) editor.selected).isFlippedH();
 			}
+//			else if (editor.selected instanceof Image) {
+//				return ((Image) editor.selected).isFlippedH();
+//			}else if (editor.selected instanceof Page) {
+//				return ((Page) editor.selected).isFlippedH();
+//			}
 		}
 		return false;
 	}
 
 	public void flipH() {
 		if (editor.selected != null) {
-			if (editor.selected instanceof Tile) {
-				((Tile) editor.selected).flipH();
-			}else if (editor.selected instanceof Image) {
-				((Image) editor.selected).flipH();
+			if (editor.selected instanceof Editable) {
+				((Editable) editor.selected).flipH();
 			}
+//			else if (editor.selected instanceof Image) {
+//				((Image) editor.selected).flipH();
+//			}else if (editor.selected instanceof Page) {
+//				((Page) editor.selected).flipH();
+//			}
 		}
 	}
 	
 	public boolean isFlippedV() {
 		if (editor.selected != null) {
-			if (editor.selected instanceof Tile) {
-				return ((Tile) editor.selected).isFlippedV();
-			}else if (editor.selected instanceof Image) {
-				return ((Image) editor.selected).isFlippedV();
+			if (editor.selected instanceof Editable) {
+				return ((Editable) editor.selected).isFlippedV();
 			}
+//				else if (editor.selected instanceof Image) {
+//				return ((Image) editor.selected).isFlippedV();
+//			}else if (editor.selected instanceof Page) {
+//				return ((Page) editor.selected).isFlippedV();
+//			}
 		}
 		return false;
 	}
 
 	public void flipV() {
 		if (editor.selected != null) {
-			if (editor.selected instanceof Tile) {
-				((Tile) editor.selected).flipV();
-			}else if (editor.selected instanceof Image) {
-				((Image) editor.selected).flipV();
+			if (editor.selected instanceof Editable) {
+				((Editable) editor.selected).flipV();
 			}
+//			else if (editor.selected instanceof Image) {
+//				((Image) editor.selected).flipV();
+//			}else if (editor.selected instanceof Page) {
+//				((Page) editor.selected).flipV();
+//			}
 		}
 	}
 }

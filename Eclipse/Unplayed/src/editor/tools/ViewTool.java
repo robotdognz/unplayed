@@ -1,9 +1,9 @@
 package editor.tools;
 
 import game.Game;
-import game.Page;
 import game.PageView;
 import misc.Converter;
+import objects.Page;
 import objects.View;
 import processing.core.PApplet;
 import processing.core.PVector;

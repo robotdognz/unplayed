@@ -79,7 +79,7 @@ public class EditorBottom extends Toolbar {
 	}
 
 	public void draw(PVector touch, Menu menu) {
-		super.draw(touch, menu);
+		//super.draw(touch, menu);
 		for (int i = 0; i < widgets.size(); i++) {
 			// draw the two behind tabs
 			if (!widgets.get(i).isActive()) {

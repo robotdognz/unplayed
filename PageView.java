@@ -6,6 +6,7 @@ import java.util.List;
 
 import camera.Camera;
 import misc.Converter;
+import objects.Page;
 import processing.core.*;
 
 public class PageView {

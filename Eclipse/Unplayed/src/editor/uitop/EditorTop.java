@@ -43,7 +43,7 @@ public class EditorTop extends Toolbar {
 	}
 
 	public void draw(PVector touch, Menu menu) {
-		super.draw(touch, menu);
+		//super.draw(touch, menu);
 		// draw ui extra piece
 		p.imageMode(CENTER);
 		float widgetScale = ((float) 75 * 1.5f); // wSize*1.5 //TODO: this is messed up code, do it a better way!

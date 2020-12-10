@@ -2,6 +2,7 @@ package objects;
 
 import processing.core.PGraphics;
 import processing.core.PVector;
+import static processing.core.PConstants.*;
 
 public class Rectangle {
 	private float rWidth, rHeight;
@@ -18,6 +19,7 @@ public class Rectangle {
 		g.noFill();
 		g.stroke(255, 0, 0); // selection color
 		g.strokeWeight(2);
+		g.rectMode(CORNER);
 		g.rect(getX(), getY(), getWidth(), getHeight());
 	}
 
