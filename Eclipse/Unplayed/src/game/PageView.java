@@ -59,7 +59,7 @@ public class PageView {
 			return null;
 		}
 		for (Page p : pages) {
-			PApplet.println("try getPage()" + p);
+			PApplet.println("try getPage(): " + p + "mouse: " + x + " " + y);
 			if (p.getTopLeft().x > x) {
 				continue;
 			}
