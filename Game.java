@@ -7,6 +7,7 @@ import camera.Camera;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.Vibe;
+import objects.Page;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
@@ -241,6 +242,30 @@ public class Game {
 
 	public PageView getPageView() {
 		return pageView;
+	}
+	
+	public View getView(float x, float y) {
+		if(views.size() < 1) {
+			return null;
+		}
+		for (View view : views) {
+			if (view.getTopLeft().x > x) {
+				continue;
+			}
+			if (view.getBottomRight().x < x) {
+				continue;
+			}
+			if (view.getTopLeft().y > y) {
+				continue;
+			}
+			if (view.getBottomRight().y < y) {
+				continue;
+			}
+			//return the first overlap
+			return view;
+		}
+		
+		return null;
 	}
 	
 	public void setViews(ArrayList<View> views){
