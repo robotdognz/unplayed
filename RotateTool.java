@@ -18,7 +18,7 @@ public class RotateTool implements Tool {
 	@Override
 	public void touchMoved() {
 		if (editor.selected != null && editor.selected instanceof Editable) {
-			((Editable) editor.selected).addAngle((p.pmouseX - p.mouseX) / 3);
+			((Editable) editor.selected).addAngle((p.pmouseX - p.mouseX) / 5);
 		}
 		
 	}
