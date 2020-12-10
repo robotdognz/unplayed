@@ -36,22 +36,27 @@ public class Page extends Editable {
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 		setPosition(position);
 	}
-	
-	public void setPosition (PVector pos) {
+
+	public void setPosition(PVector pos) {
 		this.position = pos;
 		doAdjustedRect();
 	}
-	
+
 	private void doAdjustedRect() {
-		//TODO: needs to take into account rotation and size
-		super.setX(position.x-getWidth()/2);
-		super.setY(position.y-getHeight()/2);
+		// TODO: needs to take into account rotation and size
+		if (adjustedRect == null) {
+			adjustedRect = new Rectangle(position.x - getWidth() / 2, position.y - getHeight() / 2, getWidth(),
+					getHeight());
+		} else {
+			adjustedRect.setX(position.x - getWidth() / 2);
+			adjustedRect.setY(position.y - getHeight() / 2);
+		}
 	}
 
 	public void exclude(Rectangle object) {
 		excludedObjects.add(object.toString());
 	}
-	
+
 	public Rectangle getAdjusted() {
 		return adjustedRect;
 	}
@@ -75,7 +80,7 @@ public class Page extends Editable {
 			}
 		}
 
-		//if(player is inside the page){ TODO: implement this
+		// if(player is inside the page){ TODO: implement this
 		// begin drawing on the page
 		pageGraphics.beginDraw();
 
@@ -103,7 +108,7 @@ public class Page extends Editable {
 		game.paper.draw(pageGraphics, view, scale / size);
 		// end drawing on the page
 		pageGraphics.endDraw();
-		//}
+		// }
 
 		// draw the page
 		p.imageMode(CENTER);
