@@ -75,7 +75,7 @@ public class EditorBottom extends Toolbar {
 		this.events = texture.getEventList();
 		this.views = editor.game.views;
 
-		super.bounds = new Rectangle(0, p.height - 350, p.width, 300); // TODO: needs to scale to screen size
+		super.bounds = new Rectangle(0, p.height - 350, p.width, 350); // TODO: needs to scale to screen size
 	}
 
 	public void draw(PVector touch, Menu menu) {
@@ -213,7 +213,7 @@ public class EditorBottom extends Toolbar {
 					// scroll
 					tileOffset += (p.pmouseX - p.mouseX) / 3;
 					// prevent scrolling off right edge
-					if (tileOffset > objectsWidth - selectionArea.getWidth()) {
+					if (tileOffset > objectsWidth - selectionArea.getWidth()+4) {
 						tileOffset = objectsWidth - selectionArea.getWidth();
 					}
 					// prevent scrolling off left edge
