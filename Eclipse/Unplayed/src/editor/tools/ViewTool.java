@@ -83,7 +83,7 @@ public class ViewTool implements Tool {
 				float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
 				PVector center = new PVector(finalX, finalY);
 				Page page = new Page(p, game, editor.currentView.getTopLeft(), editor.currentView.getBottomRight(),
-						center, 1, 0, false, false);
+						center);
 				pageView.addPage(page);
 			}
 		}
