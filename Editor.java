@@ -150,20 +150,25 @@ public class Editor {
 		if (!showPageView) {
 			drawLevel();
 		} else {
+			// start working at game scale
+			p.pushMatrix();
+			p.translate(p.width / 2, p.height / 2);
+			p.scale((float) p.width / (float) camera.getScale());
+			p.scale(camera.getSubScale());
+			p.translate(-camera.getCenter().x, -camera.getCenter().y);
+
+			// draw selection box around selected object
+			if (selected != null) {
+				selected.drawSelected(p.g);
+			}
 			// draw tool effects
 			if (currentTool != null) {
-				// start working at game scale
-				p.pushMatrix();
-				p.translate(p.width / 2, p.height / 2);
-				p.scale((float) p.width / (float) camera.getScale());
-				p.scale(camera.getSubScale());
-				p.translate(-camera.getCenter().x, -camera.getCenter().y);
 
 				currentTool.draw();
 
-				// start working at screen scale
-				p.popMatrix();
 			}
+			// start working at screen scale
+			p.popMatrix();
 		}
 
 		// draw toolbars
