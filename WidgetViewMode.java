@@ -9,9 +9,9 @@ import ui.Widget;
 public class WidgetViewMode extends Widget {
 	public WidgetViewMode(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
-		//icon = p.loadImage(folder + "colider.png");
+		icon = p.loadImage(folder + "View.png");
 		imageInactive = null;
-		active = true;
+		active = false;
 	}
 
 	public void clicked() {
