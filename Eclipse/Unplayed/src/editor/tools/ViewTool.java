@@ -33,23 +33,25 @@ public class ViewTool extends AreaTool {
 		if (!editor.showPageView) {// if in game view
 			super.touchMoved();
 		} else { // if in page view
-			if (currentPage == null) {
-				float snapNo = 10;
-				PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
-				// round so blocks snap to grid
-				float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
-				float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
-				PVector center = new PVector(finalX, finalY);
-				currentPage = new Page(p, game, editor.currentView.getTopLeft(), editor.currentView.getBottomRight(),
-						center);
-			} else {
-				float snapNo = 10;
-				PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
-				// round so blocks snap to grid
-				float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
-				float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
-				PVector center = new PVector(finalX, finalY);
-				currentPage.setPosition(center);
+			if (editor.currentView != null) {
+				if (currentPage == null) {
+					float snapNo = 10;
+					PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+					// round so blocks snap to grid
+					float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
+					float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
+					PVector center = new PVector(finalX, finalY);
+					currentPage = new Page(p, game, editor.currentView.getTopLeft(),
+							editor.currentView.getBottomRight(), center);
+				} else {
+					float snapNo = 10;
+					PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+					// round so blocks snap to grid
+					float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
+					float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
+					PVector center = new PVector(finalX, finalY);
+					currentPage.setPosition(center);
+				}
 			}
 		}
 	}
@@ -77,7 +79,7 @@ public class ViewTool extends AreaTool {
 	public void draw() {
 		if (!editor.showPageView) {
 			super.draw();
-		}else {
+		} else {
 			if (currentPage != null) {
 				currentPage.draw(1); // TODO: get scale
 			}
