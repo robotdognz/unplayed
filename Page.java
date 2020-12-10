@@ -121,6 +121,15 @@ public class Page extends Editable {
 		p.image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height); // draw the page
 		p.popMatrix();
 	}
+	
+	@Override
+	public void drawSelected(PGraphics g) {
+		g.noFill();
+		g.stroke(255, 0, 0); // selection color
+		g.strokeWeight(2);
+		g.rectMode(CORNER);
+		g.rect(adjustedRect.getX(), adjustedRect.getY(), adjustedRect.getWidth(), adjustedRect.getHeight());
+	}
 
 	public void step() {
 		// get objects visible to this page
