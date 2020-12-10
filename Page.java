@@ -22,8 +22,8 @@ public class Page extends Editable {
 
 	private PGraphics pageGraphics;
 	private boolean playerInside = true;
-	private int redrawCount = 0;
-	private int stepSize = 60;
+	private int redrawCount;
+	private int stepSize;
 	private PVector position; // center of the page in page view
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
@@ -43,7 +43,8 @@ public class Page extends Editable {
 
 		setPosition(position);
 
-		drawPage(3);
+		redrawCount = 0;
+		stepSize = (int) (60 + p.random(60)); //random step size between 60-120
 	}
 
 	public PVector getPosition() {
