@@ -31,7 +31,7 @@ public class WidgetRotate extends Widget {
 	}
 
 	public void clicked() {
-		editor.currentTool = new RotateTool();
+		editor.currentTool = new RotateTool(p, editor);
 	}
 
 }

@@ -26,9 +26,14 @@ public class Editable extends Rectangle {
 		this.angle = angle;
 	}
 	
+	public void addAngle(float angle) {
+		this.angle += angle;
+	}
+	
 	public float getAngle() {
 		return angle;
 	}
+	
 	
 	public void flipH() {
 		if (flipX == 1) {

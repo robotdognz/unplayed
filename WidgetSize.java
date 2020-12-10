@@ -31,7 +31,7 @@ public class WidgetSize extends Widget {
 	}
 
 	public void clicked() {
-		editor.currentTool = new SizeTool();
+		editor.currentTool = new SizeTool(p, editor);
 	}
 
 }

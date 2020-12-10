@@ -1,9 +1,18 @@
 package editor.tools;
 
+import editor.Editor;
 import editor.Tool;
+import processing.core.PApplet;
 import processing.core.PVector;
 
 public class SizeTool implements Tool {
+	protected PApplet p;
+	protected Editor editor;
+
+	public SizeTool(PApplet p, Editor editor) {
+		this.p = p;
+		this.editor = editor;
+	}
 
 	@Override
 	public void touchMoved() {
