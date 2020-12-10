@@ -78,9 +78,18 @@ public class PageTool extends AreaTool {
 			if (editor.eMode == editorMode.ADD) {
 				if (editor.currentView != null && currentPage != null) { // if there is something to create a page from
 					pageView.addPage(currentPage);
-					currentPage = null;
 				}
+			}else if (editor.eMode == editorMode.SELECT) {
+				selectPage();
 			}
+			currentPage = null;
+		}
+	}
+	
+	private void selectPage() {
+		Page found = pageView.getPage(p.mouseX, p.mouseY);
+		if(found != null) {
+			editor.selected = found;
 		}
 	}
 

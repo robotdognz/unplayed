@@ -52,6 +52,30 @@ public class PageView {
 	public void addPage(Page page) {
 		pages.add(page);
 	}
+	
+	public Page getPage(float x, float y) {
+		if(pages.size() < 1) {
+			return null;
+		}
+		for (Page p : pages) {
+			if (p.getTopLeft().x > x) {
+				continue;
+			}
+			if (p.getBottomRight().x < x) {
+				continue;
+			}
+			if (p.getTopLeft().y > y) {
+				continue;
+			}
+			if (p.getBottomRight().y < y) {
+				continue;
+			}
+			//return the first overlap
+			return p;
+		}
+		
+		return null;
+	}
 
 	public List<Page> getPages() {
 		return Collections.unmodifiableList(pages);
