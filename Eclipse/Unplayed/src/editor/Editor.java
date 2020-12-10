@@ -150,24 +150,18 @@ public class Editor {
 		} else {
 			// draw tool effects
 			if (currentTool != null) {
+				// start working at game scale
+				p.pushMatrix();
+				p.translate(p.width / 2, p.height / 2);
+				p.scale((float) p.width / (float) camera.getScale());
+				p.scale(camera.getSubScale());
+				p.translate(-camera.getCenter().x, -camera.getCenter().y);
+
 				currentTool.draw();
+
+				// start working at screen scale
+				p.popMatrix();
 			}
-		}
-
-		// draw tool effects
-		if (currentTool != null) {
-			// start working at game scale
-			p.pushMatrix();
-			p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
-
-			// camera
-			p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
-			p.scale(camera.getSubScale()); // apply offset for tall screen spaces
-			p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
-			
-			currentTool.draw();
-			
-			p.popMatrix(); // start working at screen scale
 		}
 
 		// draw toolbars
