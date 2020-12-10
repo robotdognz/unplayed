@@ -1,4 +1,4 @@
-package editor.uiside;
+package editor.uitop;
 
 import controllers.EditorControl;
 import editor.Editor;

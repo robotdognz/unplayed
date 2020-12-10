@@ -16,7 +16,7 @@ public class EditorTop extends Toolbar {
 	public EditorTop(PApplet p, Editor editor) {
 		super(p, editor);
 		super.folder = p.dataPath("ui") + '/' + "widgets" + '/';
-		this.uiExtra = p.loadImage(folder + "UI_element01.png");
+		this.uiExtra = p.loadImage(p.dataPath("ui") + '/' + "UI_element01.png");
 
 		// setup widgets
 		super.widgets = new ArrayList<Widget>();

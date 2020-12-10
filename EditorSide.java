@@ -26,11 +26,11 @@ public class EditorSide extends Toolbar {
 		// setup widgets
 		super.widgets = new ArrayList<Widget>();
 		// add widgets
-		Widget confirmW = new WidgetConfirm(p, editor, this);
+		Widget deleteW = new WidgetDelete(p, editor, this);
 		Widget flipH = new WidgetFlipH(p, editor, this);
 		Widget flipV = new WidgetFlipV(p, editor, this);
 
-		widgets.add(confirmW);
+		widgets.add(deleteW);
 		widgets.add(flipH);
 		widgets.add(flipV);
 
