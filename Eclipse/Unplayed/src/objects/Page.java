@@ -20,7 +20,7 @@ public class Page extends Editable {
 
 	private PGraphics pageGraphics;
 	private PVector position; // center of the page in page view
-	Rectangle angledRect; // an axis locked rectangle that contains the rotated page (used to check if
+	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
 
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
@@ -34,17 +34,26 @@ public class Page extends Editable {
 		this.excludedObjects = new HashSet<String>();
 
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
-		this.position = position;
-		// to be implemented later
-		// angledRect //calculate a rectangle that the angled page fits inside
+		setPosition(position);
 	}
 	
-	public void setPosition (PVector p) {
-		this.position = p;
+	public void setPosition (PVector pos) {
+		this.position = pos;
+		doAdjustedRect();
+	}
+	
+	private void doAdjustedRect() {
+		//TODO: needs to take into account rotation and size
+		super.setX(position.x-getWidth()/2);
+		super.setY(position.y-getHeight()/2);
 	}
 
 	public void exclude(Rectangle object) {
 		excludedObjects.add(object.toString());
+	}
+	
+	public Rectangle getAdjusted() {
+		return adjustedRect;
 	}
 
 	public void draw(float scale) {

@@ -7,6 +7,7 @@ import java.util.List;
 import camera.Camera;
 import misc.Converter;
 import objects.Page;
+import objects.Rectangle;
 import processing.core.*;
 
 public class PageView {
@@ -57,7 +58,8 @@ public class PageView {
 		if(pages.size() < 1) {
 			return null;
 		}
-		for (Page p : pages) {
+		for (Page page : pages) {
+			Rectangle p = page.getAdjusted();
 			if (p.getTopLeft().x > x) {
 				continue;
 			}
@@ -71,7 +73,7 @@ public class PageView {
 				continue;
 			}
 			//return the first overlap
-			return p;
+			return page;
 		}
 		
 		return null;

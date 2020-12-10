@@ -92,6 +92,8 @@ public class PageTool extends AreaTool {
 		Page found = pageView.getPage(mouse.x, mouse.y);
 		if(found != null) {
 			editor.selected = found;
+		}else {
+			editor.selected = null;
 		}
 	}
 
