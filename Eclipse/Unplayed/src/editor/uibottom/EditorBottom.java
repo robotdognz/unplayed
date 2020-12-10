@@ -194,6 +194,7 @@ public class EditorBottom extends Toolbar {
 						editor.currentEvent = (EventHandler) objects.get(i);
 					} else if (editor.currentTool instanceof PageTool) {
 						editor.currentView = (View) objects.get(i);
+						editor.selected = (View) objects.get(i);
 					}
 				}
 			}
