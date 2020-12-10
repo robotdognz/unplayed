@@ -21,6 +21,7 @@ import misc.DoToast;
 import misc.EditorJSON;
 import objects.Event;
 import objects.Image;
+import objects.Page;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
@@ -71,6 +72,7 @@ public class Editor {
 	public ImageHandler currentImage = null;
 	public EventHandler currentEvent = null;
 	public View currentView = null;
+	public Page currentPage = null;
 
 	// selected object
 	public Rectangle selected;

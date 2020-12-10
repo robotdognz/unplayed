@@ -16,7 +16,7 @@ import editor.Editor.editorMode;
 import editor.tools.EventTool;
 import editor.tools.ImageTool;
 import editor.tools.TileTool;
-import editor.tools.ViewTool;
+import editor.tools.PageTool;
 import handlers.EventHandler;
 import handlers.Handler;
 import handlers.ImageHandler;
@@ -124,7 +124,7 @@ public class EditorBottom extends Toolbar {
 			objects.addAll(events);
 			offset = eventOffset;
 			currentHandler = editor.currentEvent;
-		} else if (editor.currentTool instanceof ViewTool) {
+		} else if (editor.currentTool instanceof PageTool) {
 			objects.addAll(views);
 			offset = viewOffset;
 			currentHandler = editor.currentView;
@@ -176,7 +176,7 @@ public class EditorBottom extends Toolbar {
 			} else if (editor.currentTool instanceof EventTool) {
 				objects.addAll(events);
 				offset = eventOffset;
-			} else if (editor.currentTool instanceof ViewTool) {
+			} else if (editor.currentTool instanceof PageTool) {
 				objects.addAll(views);
 				offset = viewOffset;
 			}
@@ -192,7 +192,7 @@ public class EditorBottom extends Toolbar {
 						editor.currentImage = (ImageHandler) objects.get(i);
 					} else if (editor.currentTool instanceof EventTool) {
 						editor.currentEvent = (EventHandler) objects.get(i);
-					} else if (editor.currentTool instanceof ViewTool) {
+					} else if (editor.currentTool instanceof PageTool) {
 						editor.currentView = (View) objects.get(i);
 					}
 				}
@@ -208,7 +208,7 @@ public class EditorBottom extends Toolbar {
 				imageOffset += (p.pmouseX - p.mouseX) / 3;
 			} else if (editor.currentTool instanceof EventTool) {
 				eventOffset += (p.pmouseX - p.mouseX) / 3;
-			} else if (editor.currentTool instanceof ViewTool && views.size() > 0) {
+			} else if (editor.currentTool instanceof PageTool && views.size() > 0) {
 				viewOffset += (p.pmouseX - p.mouseX) / 3;
 			}
 		}

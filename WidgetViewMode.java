@@ -2,7 +2,7 @@ package editor.uibottom;
 
 import editor.Editor;
 import editor.Toolbar;
-import editor.tools.ViewTool;
+import editor.tools.PageTool;
 import processing.core.PApplet;
 import ui.Widget;
 
@@ -15,11 +15,11 @@ public class WidgetViewMode extends Widget {
 	}
 
 	public void clicked() {
-		editor.currentTool = new ViewTool(p, editor);
+		editor.currentTool = new PageTool(p, editor);
 	}
 
 	public void updateActive() {
-		if (editor.currentTool instanceof ViewTool) {
+		if (editor.currentTool instanceof PageTool) {
 			active = true;
 		} else {
 			active = false;
