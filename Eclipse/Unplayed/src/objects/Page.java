@@ -37,7 +37,7 @@ public class Page extends Editable {
 		this.excludedObjects = new HashSet<String>();
 
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
-		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
+		this.paperGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 		
 		//draw paper
 		paperGraphics.beginDraw();
