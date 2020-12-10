@@ -283,6 +283,7 @@ public class EditorJSON {
 			}
 		}
 		game.views = views;
+		toast.showToast("" + views.size());
 	}
 
 	private void loadPages(JSONArray values, Game game) {
