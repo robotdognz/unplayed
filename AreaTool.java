@@ -5,6 +5,7 @@ import static processing.core.PConstants.CORNERS;
 
 import editor.Editor;
 import editor.Tool;
+import editor.Editor.editorMode;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -12,7 +13,6 @@ import processing.core.PVector;
 public class AreaTool implements Tool {
 	protected PApplet p;
 	protected Editor editor;
-	// private Converter convert;
 
 	private PVector start; // start of rectangle drawing
 	private PVector end; // end of rectangle drawing
@@ -30,21 +30,29 @@ public class AreaTool implements Tool {
 
 	@Override
 	public void touchMoved() {
-//		if (!editor.showPageView) {// if in game view
+		if (editor.eMode == editorMode.ADD) {
 			if (start == null) {
+				//if there is no start, make a new start
 				start = new PVector(editor.point.x, editor.point.y);
-			} else {
-				end = new PVector(editor.point.x + 100, editor.point.y + 100);
+			} else if (end == null) {
+				//if there is no end, make a new end
+				end = new PVector(editor.point.x, editor.point.y);
+			}else {
+				//if there is a working end, update it
+				end.x = editor.point.x;
+				end.y = editor.point.y;
 			}
-//		} else { // if in page view
-//
-//		}
+		} else if (editor.eMode == editorMode.ERASE) {
+
+		} else if (editor.eMode == editorMode.SELECT) {
+
+		}
 
 	}
 
 	@Override
 	public void touchEnded(PVector touch) {
-		//if (!editor.showPageView) { // if we're in the game view
+		if (editor.eMode == editorMode.ADD) {
 			// if there is both a start and an end
 			if (start != null && end != null) {
 				// figure out which point is the topleft/bottomright and create/add the view
@@ -68,9 +76,11 @@ public class AreaTool implements Tool {
 				start = null;
 				end = null;
 			}
-//		} else { // if we're in the page view
-//
-//		}
+		} else if (editor.eMode == editorMode.ERASE) {
+
+		} else if (editor.eMode == editorMode.SELECT) {
+
+		}
 
 	}
 

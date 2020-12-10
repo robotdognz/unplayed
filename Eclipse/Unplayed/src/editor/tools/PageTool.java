@@ -13,28 +13,26 @@ import editor.Editor;
 import editor.Editor.editorMode;
 
 public class PageTool extends AreaTool {
+	// extends AreaTool because it functions like an AreaTool when making views
 	private Converter convert;
 	private Game game;
 	private PageView pageView;
-
 	private Page currentPage;
-
-	// TODO: currently only does adding, no erase or select
 
 	public PageTool(PApplet p, Editor editor) {
 		super(p, editor);
 		this.game = editor.game;
 		this.pageView = game.getPageView();
 		this.convert = editor.convert;
-		currentPage = null;
+		this.currentPage = null;
 	}
 
 	@Override
 	public void touchMoved() {
 		if (!editor.showPageView) {// views
-			if (editor.eMode == editorMode.ADD) {
-				super.touchMoved();
-			}
+			// if (editor.eMode == editorMode.ADD) {
+			super.touchMoved();
+			// }
 		} else { // pages
 			if (editor.eMode == editorMode.ADD) {
 				if (editor.currentView != null) {
@@ -66,16 +64,16 @@ public class PageTool extends AreaTool {
 	@Override
 	public void touchEnded(PVector touch) {
 		if (!editor.showPageView) { // views
-			if (editor.eMode == editorMode.ADD) {
-				// get the result of the area tool
-				super.touchEnded(touch);
-				Rectangle result = (Rectangle) super.getResult();
-				if (result != null) {
-					View newView = new View(p, (int) result.getX(), (int) result.getY(), (int) result.getWidth(),
-							(int) result.getHeight());
-					game.views.add(newView);
-				}
+			// if (editor.eMode == editorMode.ADD) {
+			// get the result of the area tool
+			super.touchEnded(touch);
+			Rectangle result = (Rectangle) super.getResult();
+			if (result != null) {
+				View newView = new View(p, (int) result.getX(), (int) result.getY(), (int) result.getWidth(),
+						(int) result.getHeight());
+				game.views.add(newView);
 			}
+			// }
 		} else {// pages
 			if (editor.eMode == editorMode.ADD) {
 				addPage();
