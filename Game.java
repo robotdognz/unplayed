@@ -7,7 +7,6 @@ import camera.Camera;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.Vibe;
-import objects.Page;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;

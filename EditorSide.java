@@ -27,12 +27,16 @@ public class EditorSide extends Toolbar {
 		super.widgets = new ArrayList<Widget>();
 		// add widgets
 		Widget deleteW = new WidgetDelete(p, editor, this);
-		Widget flipH = new WidgetFlipH(p, editor, this);
-		Widget flipV = new WidgetFlipV(p, editor, this);
+		Widget flipHW = new WidgetFlipH(p, editor, this);
+		Widget flipVW = new WidgetFlipV(p, editor, this);
+		Widget rotateW = new WidgetRotate(p, editor, this);
+		Widget sizeW = new WidgetSize(p, editor, this);
 
 		widgets.add(deleteW);
-		widgets.add(flipH);
-		widgets.add(flipV);
+		widgets.add(flipHW);
+		widgets.add(flipVW);
+		widgets.add(rotateW);
+		widgets.add(sizeW);
 
 		super.widgetSpacing = p.width / 8;
 
@@ -45,16 +49,15 @@ public class EditorSide extends Toolbar {
 		// this.middle = p.requestImage(folder + "???.png");
 		// this.bottom = p.requestImage(folder + "???.png");
 
-		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height); // TODO: needs to scale to screen and
-																					// widget amount
+		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height); // TODO: needs to scale to screen
 	}
 
 	public void draw(PVector touch, Menu menu) {
-		//super.draw(touch, menu);
+		// super.draw(touch, menu);
 		p.imageMode(CENTER);
 
 		for (int i = 0; i < widgets.size(); i++) {
-			widgets.get(i).draw(80, widgetOffset + widgetSpacing * i); // TODO: they need to draw vertically
+			widgets.get(i).draw(80, widgetOffset + widgetSpacing * i);
 			widgets.get(i).updateActive();
 			if (menu == null) {
 				widgets.get(i).hover(touch);
@@ -107,7 +110,7 @@ public class EditorSide extends Toolbar {
 			}
 		}
 	}
-	
+
 	public boolean isFlippedV() {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Editable) {
