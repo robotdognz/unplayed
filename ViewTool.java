@@ -81,6 +81,7 @@ public class ViewTool extends AreaTool {
 			super.draw();
 		} else {
 			if (currentPage != null) {
+				currentPage.step();
 				currentPage.draw(10); // TODO: get scale
 			}
 		}
