@@ -88,7 +88,8 @@ public class PageTool extends AreaTool {
 	}
 	
 	private void selectPage() {
-		Page found = pageView.getPage(p.mouseX, p.mouseY);
+		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
+		Page found = pageView.getPage(mouse.x, mouse.y);
 		if(found != null) {
 			PApplet.println("Page found");
 			editor.selected = found;
