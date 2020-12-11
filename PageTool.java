@@ -109,24 +109,18 @@ public class PageTool extends AreaTool {
 				((Page) editor.selected).addSize(convert.screenToLevel(d) / 500); // TODO: figure out what the 500
 																					// should be
 				//old code
-//				PVector center = convert.screenToLevel(x, y);
-//				((Page) editor.selected).setPosition(center);
+				PVector center = convert.screenToLevel(x, y);
+				((Page) editor.selected).setPosition(center);
 				
-				if (pX != 0 && pY != 0) {
-//					PVector newCenter = convert.screenToLevel(x, y);
-//					PVector oldCenter = convert.screenToLevel(pX, pY);
-//					float pageX = ((Page) editor.selected).getPosition().x;
-//					float pageY = ((Page) editor.selected).getPosition().y;
-//					PVector distance = new PVector();
-//					
-					float xDist = x-pX;
-					float yDist = y-pY;
-					xDist = convert.screenToLevel(xDist);
-					yDist = convert.screenToLevel(yDist);
-					((Page) editor.selected).addPosition(xDist, yDist);
-				}
-				pX = x;
-				pY = y;
+//				if (pX != 0 && pY != 0) {
+//					float xDist = x-pX;
+//					float yDist = y-pY;
+//					xDist = convert.screenToLevel(xDist);
+//					yDist = convert.screenToLevel(yDist);
+//					((Page) editor.selected).addPosition(xDist, yDist);
+//				}
+//				pX = x;
+//				pY = y;
 			}
 		}
 	}
