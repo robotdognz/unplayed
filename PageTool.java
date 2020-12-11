@@ -62,11 +62,8 @@ public class PageTool extends AreaTool {
 					}
 				}
 			} else {
-				// adjust the page
+				// adjust the page with a single finger
 				if (editor.selected != null && editor.selected instanceof Page) {
-//					PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
-//					PVector center = ((Page) editor.selected).getPosition();
-//					((Page) editor.selected).addPosition(mouse.x - center.x, mouse.y - center.y);
 					float xDist = p.mouseX-p.pmouseX;
 					float yDist = p.mouseY-p.pmouseY;
 					xDist = convert.screenToLevel(xDist/3);

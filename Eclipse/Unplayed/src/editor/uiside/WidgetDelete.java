@@ -30,7 +30,7 @@ public class WidgetDelete extends Widget {
 				game.world.remove(editor.selected);
 			} else if (editor.selected instanceof Event) {
 				game.world.remove(editor.selected);
-			} else if (editor.selected instanceof View) {
+			} else if (editor.selected instanceof View && !editor.showPageView) {
 				// remove matching the pages
 				List<Page> pages = game.getPageView().getPages();
 				for (int i = 0; i < pages.size(); i++) {
