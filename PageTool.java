@@ -207,6 +207,7 @@ public class PageTool extends AreaTool {
 		if (currentPage != null) { // if there is something to create a page from
 			pageView.addPage(currentPage);
 			editor.selected = currentPage;
+			editorSide.adjust = true;
 		}
 	}
 
