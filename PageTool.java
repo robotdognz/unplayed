@@ -178,12 +178,12 @@ public class PageTool extends AreaTool {
 				if (pages.get(i).getHeight() != found.getHeight()) {
 					continue;
 				}
-				pageView.removePage(pages.get(i));
-
+				
 				// deselect the page if it is selected
 				if (pages.get(i).equals(editor.selected)) {
 					editor.selected = null;
 				}
+				pageView.removePage(pages.get(i));
 			}
 
 		}
