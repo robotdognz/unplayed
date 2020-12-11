@@ -64,10 +64,14 @@ public class PageTool extends AreaTool {
 			} else {
 				// adjust the page
 				if (editor.selected != null && editor.selected instanceof Page) {
-					PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
-					PVector center = ((Page) editor.selected).getPosition();
-					//PVector position = new PVector(mouse.x - center.x, mouse.y - center.y);
-					((Page) editor.selected).addPosition(mouse.x - center.x, mouse.y - center.y);
+//					PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
+//					PVector center = ((Page) editor.selected).getPosition();
+//					((Page) editor.selected).addPosition(mouse.x - center.x, mouse.y - center.y);
+					float xDist = p.mouseX-p.pmouseX;
+					float yDist = p.mouseY-p.pmouseY;
+					xDist = convert.screenToLevel(xDist);
+					yDist = convert.screenToLevel(yDist);
+					((Page) editor.selected).addPosition(xDist, yDist);
 				}
 			}
 		}
