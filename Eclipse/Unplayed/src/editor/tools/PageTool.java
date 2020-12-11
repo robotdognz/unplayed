@@ -121,8 +121,8 @@ public class PageTool extends AreaTool {
 //					
 					float xDist = x-pX;
 					float yDist = y-pY;
-					xDist = convert.screenToLevel(xDist/3);
-					yDist = convert.screenToLevel(yDist/3);
+					xDist = convert.screenToLevel(xDist);
+					yDist = convert.screenToLevel(yDist);
 					((Page) editor.selected).addPosition(xDist, yDist);
 				}
 				pX = x;
