@@ -38,25 +38,27 @@ public class PageTool extends AreaTool {
 		if (!editor.showPageView) {// views
 			super.touchMoved();
 		} else { // pages
-			if (editor.eMode == editorMode.ADD) {
-				if (editor.currentView != null) {
-					if (currentPage == null) {
-						float snapNo = 10;
-						PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
-						// round so blocks snap to grid
-						float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
-						float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
-						PVector center = new PVector(finalX, finalY);
-						currentPage = new Page(p, game, editor.currentView.getTopLeft(),
-								editor.currentView.getBottomRight(), center);
-					} else {
-						float snapNo = 10;
-						PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
-						// round so blocks snap to grid
-						float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
-						float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
-						PVector center = new PVector(finalX, finalY);
-						currentPage.setPosition(center);
+			if (editorSide.mode == EditorSide.ModifyMode.NONE) {
+				if (editor.eMode == editorMode.ADD) {
+					if (editor.currentView != null) {
+						if (currentPage == null) {
+							float snapNo = 10;
+							PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+							// round so blocks snap to grid
+							float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
+							float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
+							PVector center = new PVector(finalX, finalY);
+							currentPage = new Page(p, game, editor.currentView.getTopLeft(),
+									editor.currentView.getBottomRight(), center);
+						} else {
+							float snapNo = 10;
+							PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+							// round so blocks snap to grid
+							float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
+							float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
+							PVector center = new PVector(finalX, finalY);
+							currentPage.setPosition(center);
+						}
 					}
 				}
 			}
@@ -74,14 +76,16 @@ public class PageTool extends AreaTool {
 				selectView();
 			}
 		} else {// pages
-			if (editor.eMode == editorMode.ADD) {
-				addPage();
-			} else if (editor.eMode == editorMode.ERASE) {
-				erasePage();
-			} else if (editor.eMode == editorMode.SELECT) {
-				selectPage();
+			if (editorSide.mode == EditorSide.ModifyMode.NONE) {
+				if (editor.eMode == editorMode.ADD) {
+					addPage();
+				} else if (editor.eMode == editorMode.ERASE) {
+					erasePage();
+				} else if (editor.eMode == editorMode.SELECT) {
+					selectPage();
+				}
+				currentPage = null;
 			}
-			currentPage = null;
 		}
 	}
 
