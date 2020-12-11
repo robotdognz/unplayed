@@ -13,32 +13,19 @@ public class Editable extends Rectangle {
 		size = 1;
 		angle = 0;
 	}
-	
-	public void setSize(float size) {
-		this.size = size;
-	}
-	
-	public void addSize(float size) {
-		this.size += size;
-	}
-	
-	public float getSize() {
-		return size;
-	}
-	
+
 	public void setAngle(float angle) {
 		this.angle = angle;
 	}
-	
+
 	public void addAngle(float angle) {
 		this.angle += angle;
 	}
-	
+
 	public float getAngle() {
 		return angle;
 	}
-	
-	
+
 	public void flipH() {
 		if (flipX == 1) {
 			flipX = -1;
@@ -54,7 +41,7 @@ public class Editable extends Rectangle {
 			return true;
 		}
 	}
-	
+
 	public void flipV() {
 		if (flipY == 1) {
 			flipY = -1;

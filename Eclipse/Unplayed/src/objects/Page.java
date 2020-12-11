@@ -176,6 +176,22 @@ public class Page extends Editable {
 		redraw = true;
 	}
 
+	public void setSize(float size) {
+		this.size = size;
+	}
+
+	public void addSize(float size) {
+		if (this.size + size > 0.5) {
+			this.size += size;
+		} else {
+			this.size += 0.5;
+		}
+	}
+
+	public float getSize() {
+		return size;
+	}
+
 	public void step() {
 		// get objects visible to this page
 		pageObjects.clear();
