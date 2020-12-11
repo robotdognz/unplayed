@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import editor.Editor;
 import editor.Toolbar;
 import objects.Editable;
+import objects.Page;
 import objects.Rectangle;
 import processing.core.PApplet;
 //import processing.core.PImage;
@@ -64,7 +65,7 @@ public class EditorSide extends Toolbar {
 		// super.draw(touch, menu);
 		
 		//step
-		if(editor.selected == null) {
+		if(!(editor.selected instanceof Page)) {
 			adjust = false;
 		}
 		
