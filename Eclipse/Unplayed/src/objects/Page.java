@@ -92,7 +92,8 @@ public class Page extends Editable {
 		p.pushMatrix();
 		p.translate(position.x, position.y);
 		p.scale(size); // size the page will appear in the page view
-		p.rotate(PApplet.radians(Math.round(angle / snapNo) * snapNo)); // angle of the page
+//		p.rotate(PApplet.radians(Math.round(angle / snapNo) * snapNo)); // angle of the page
+		p.rotate(angle); // angle of the page
 		p.scale(flipX, flipY); // flipping the page
 		p.imageMode(CENTER);
 		p.image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height); // draw the page
@@ -160,8 +161,9 @@ public class Page extends Editable {
 		g.stroke(255, 0, 0); // selection color
 		g.strokeWeight(2);
 		g.translate(position.x, position.y);
-		p.scale(size); // size the page will appear in the page view
-		g.rotate(PApplet.radians(Math.round(angle / snapNo) * snapNo)); // angle of the page
+		g.scale(size); // size the page will appear in the page view
+//		g.rotate(PApplet.radians(Math.round(angle / snapNo) * snapNo)); // angle of the page
+		g.rotate(angle); // angle of the page
 		g.rectMode(CENTER);
 		g.rect(0, 0, adjustedRect.getWidth(), adjustedRect.getHeight());
 		g.popMatrix();
