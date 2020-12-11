@@ -9,6 +9,7 @@ import editor.Editor;
 import game.Game;
 import handlers.TextureCache;
 import objects.CameraChange;
+import objects.Editable;
 import objects.Event;
 import objects.Image;
 import objects.Page;
@@ -61,6 +62,11 @@ public class EditorJSON {
 			object.setInt("pY", (int) r.getY());
 			object.setInt("pWidth", (int) r.getWidth());
 			object.setInt("pHeight", (int) r.getHeight());
+			if (r instanceof Editable) {
+				object.setBoolean("flipH", ((Editable) r).isFlippedH());
+				object.setBoolean("flipV", ((Editable) r).isFlippedV());
+				object.setFloat("angle", ((Editable) r).getAngle());
+			}
 
 			if (r instanceof Tile) { // tiles
 				object.setString("type", "tile");
@@ -98,7 +104,7 @@ public class EditorJSON {
 			object.setInt("pY", (int) view.getY());
 			object.setInt("pWidth", (int) view.getWidth());
 			object.setInt("pHeight", (int) view.getHeight());
-			
+
 			values.setJSONObject(values.size(), object); // add it on to the end
 		}
 
@@ -119,7 +125,7 @@ public class EditorJSON {
 			object.setInt("pY", (int) page.getY());
 			object.setInt("pWidth", (int) page.getWidth());
 			object.setInt("pHeight", (int) page.getHeight());
-			
+
 			values.setJSONObject(values.size(), object); // add it on to the end
 		}
 	}
@@ -152,18 +158,42 @@ public class EditorJSON {
 				int pY = object.getInt("pY");
 				int pWidth = object.getInt("pWidth");
 				int pHeight = object.getInt("pHeight");
+				boolean flipH = object.getBoolean("flipH");
+				boolean flipV = object.getBoolean("flipV");
+				float angle = object.getFloat("angle");
 
 				if (type.equals("tile")) { // if it is a tile
 					File textureFile = new File(object.getString("file"));
 					Tile t = new Tile(texture, textureFile, pX, pY);
+					t.setAngle(angle);
+					if (flipH) {
+						t.flipH();
+					}
+					if (flipV) {
+						t.flipV();
+					}
 					worldObjects.add(t);
 				} else if (type.equals("image")) { // if it is an image
 					File textureFile = new File(object.getString("file"));
-					Image p = new Image(texture, textureFile, pX, pY, pWidth, pHeight);
-					worldObjects.add(p);
+					Image im = new Image(texture, textureFile, pX, pY, pWidth, pHeight);
+					im.setAngle(angle);
+					if (flipH) {
+						im.flipH();
+					}
+					if (flipV) {
+						im.flipV();
+					}
+					worldObjects.add(im);
 				} else if (type.equals("PlayerDeath")) {
 					String name = object.getString("name");
 					PlayerDeath pd = new PlayerDeath(texture, name, pX, pY);
+					pd.setAngle(angle);
+					if (flipH) {
+						pd.flipH();
+					}
+					if (flipV) {
+						pd.flipV();
+					}
 					worldObjects.add(pd);
 				} else if (type.equals("CameraChange")) {
 					String name = object.getString("name");
@@ -175,6 +205,13 @@ public class EditorJSON {
 					float edgeZoom = object.getFloat("edgeZoom");
 					CameraChange cc = new CameraChange(texture, name, pX, pY, pWidth, pHeight, cameraTopLeft,
 							cameraBottomRight, cameraZoom, edgeZoom);
+					cc.setAngle(angle);
+					if (flipH) {
+						cc.flipH();
+					}
+					if (flipV) {
+						cc.flipV();
+					}
 					worldObjects.add(cc);
 				}
 			}
@@ -191,7 +228,7 @@ public class EditorJSON {
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
 			String type = object.getString("type");
-			if (type.equals("view")){
+			if (type.equals("view")) {
 				int pX = object.getInt("pX");
 				int pY = object.getInt("pY");
 				int pWidth = object.getInt("pWidth");
@@ -211,7 +248,7 @@ public class EditorJSON {
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
 			String type = object.getString("type");
-			if (type.equals("page")){
+			if (type.equals("page")) {
 				int centerX = object.getInt("centerX");
 				int centerY = object.getInt("centerY");
 				float size = object.getFloat("size");
@@ -223,13 +260,13 @@ public class EditorJSON {
 				int pWidth = object.getInt("pWidth");
 				int pHeight = object.getInt("pHeight");
 				PVector topLeft = new PVector(pX, pY);
-				PVector bottomRight = new PVector(pX+pWidth, pY+pHeight);
+				PVector bottomRight = new PVector(pX + pWidth, pY + pHeight);
 				PVector center = new PVector(centerX, centerY);
 				Page page = new Page(p, game, topLeft, bottomRight, center);
-				if(flipH) {
+				if (flipH) {
 					page.flipH();
 				}
-				if(flipV) {
+				if (flipV) {
 					page.flipV();
 				}
 				page.setSize(size);
