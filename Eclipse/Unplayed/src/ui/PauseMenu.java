@@ -1,7 +1,7 @@
 package ui;
 
-import camera.FreeCamera;
-import camera.GameCamera;
+//import camera.FreeCamera;
+//import camera.GameCamera;
 import editor.uitop.WidgetPauseMenu;
 import game.Game;
 import game.GameLogic;
@@ -45,11 +45,11 @@ public class PauseMenu extends Menu {
 				m.setActive(false); // change status of widget
 				gl.gPaused = m.getPreviousStatus();
 				gl.menu = null; // remove pause menu
-				if (!gl.editorToggle) {
-					game.camera = new GameCamera();
-				} else {
-					game.camera = new FreeCamera();
-				}
+//				if (!gl.editorToggle) {
+//					game.camera = new GameCamera();
+//				} else {
+//					game.camera = new FreeCamera();
+//				}
 			} else if (b.click().equals(restart)) {
 				gl.init(); // rebuild the game 
 			}
