@@ -60,6 +60,7 @@ public class Page extends Editable {
 	public void addPosition(float x, float y) {
 		this.position.x += x;
 		this.position.y += y;
+		doAdjustedRect();
 	}
 
 	private void doAdjustedRect() {
