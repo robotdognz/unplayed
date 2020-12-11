@@ -18,6 +18,10 @@ public class Editable extends Rectangle {
 		this.size = size;
 	}
 	
+	public void addSize(float size) {
+		this.size += size;
+	}
+	
 	public float getSize() {
 		return size;
 	}

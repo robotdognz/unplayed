@@ -9,21 +9,25 @@ import objects.View;
 import processing.core.PApplet;
 import processing.core.PVector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import editor.Editor;
 import editor.Editor.editorMode;
+import editor.uiside.EditorSide;
 
 public class PageTool extends AreaTool {
 	// extends AreaTool because it functions like an AreaTool when making views
 	private Converter convert;
 	private Game game;
+	private EditorSide editorSide;
 	private PageView pageView;
 	private Page currentPage;
 
 	public PageTool(PApplet p, Editor editor) {
 		super(p, editor);
 		this.game = editor.game;
+		this.editorSide = (EditorSide) editor.editorSide;
 		this.pageView = game.getPageView();
 		this.convert = editor.convert;
 		this.currentPage = null;
@@ -32,9 +36,7 @@ public class PageTool extends AreaTool {
 	@Override
 	public void touchMoved() {
 		if (!editor.showPageView) {// views
-			// if (editor.eMode == editorMode.ADD) {
 			super.touchMoved();
-			// }
 		} else { // pages
 			if (editor.eMode == editorMode.ADD) {
 				if (editor.currentView != null) {
@@ -58,9 +60,6 @@ public class PageTool extends AreaTool {
 					}
 				}
 			}
-//			else if (editor.eMode == editorMode.ERASE) {
-//				erasePage();
-//			}
 		}
 	}
 
@@ -86,71 +85,91 @@ public class PageTool extends AreaTool {
 		}
 	}
 
+	@Override
+	public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
+		// page resize
+		if (editor.showPageView && editorSide.mode == EditorSide.ModifyMode.SIZE) {
+			if (editor.selected != null && editor.selected instanceof Page) {
+				((Page) editor.selected).addSize(d);
+			}
+		}
+	}
+
+	@Override
+	public void onRotate(float x, float y, float angle) {
+		// page rotate
+		if (editor.showPageView && editorSide.mode == EditorSide.ModifyMode.ROTATE) {
+			if (editor.selected != null && editor.selected instanceof Page) {
+				((Page) editor.selected).addAngle(angle);
+			}
+		}
+	}
+
 	private void addView(PVector touch) {
 		// get the result of the area tool
 		super.touchEnded(touch);
 		Rectangle result = (Rectangle) super.getResult();
 		if (result != null) {
-			//check if there is already a matching view
-			for(View view : game.views) {
-				//if matching view found select it and return
-				if(view.getX() != result.getX()) {
+			// check if there is already a matching view
+			for (View view : game.views) {
+				// if matching view found select it and return
+				if (view.getX() != result.getX()) {
 					continue;
 				}
-				if(view.getY() != result.getY()) {
+				if (view.getY() != result.getY()) {
 					continue;
 				}
-				if(view.getWidth() != result.getWidth()) {
+				if (view.getWidth() != result.getWidth()) {
 					continue;
 				}
-				if(view.getHeight() != result.getHeight()) {
+				if (view.getHeight() != result.getHeight()) {
 					continue;
 				}
-				editor.selected = view; //select the view
+				editor.selected = view; // select the view
 				editor.currentView = view;
 				return;
 			}
 			View newView = new View(p, (int) result.getX(), (int) result.getY(), (int) result.getWidth(),
 					(int) result.getHeight());
-			game.views.add(newView); //add the view
-			editor.selected = newView; //select the view
+			game.views.add(newView); // add the view
+			editor.selected = newView; // select the view
 			editor.currentView = newView;
 		}
 	}
-	
+
 	private void eraseView() {
 		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
 		View found = game.getView(mouse.x, mouse.y);
 		if (found != null) {
-			//remove the view
+			// remove the view
 			game.views.remove(found);
-			//deselect it if it is selected
-			if(found.equals(editor.selected)) {
+			// deselect it if it is selected
+			if (found.equals(editor.selected)) {
 				editor.selected = null;
 			}
-			//find and erase all matching pages
+			// find and erase all matching pages
 			List<Page> pages = pageView.getPages();
-			for(int i = 0; i < pages.size(); i++) {
-				if(pages.get(i).getX() != found.getX()) {
+			for (int i = 0; i < pages.size(); i++) {
+				if (pages.get(i).getX() != found.getX()) {
 					continue;
 				}
-				if(pages.get(i).getY() != found.getY()) {
+				if (pages.get(i).getY() != found.getY()) {
 					continue;
 				}
-				if(pages.get(i).getWidth() != found.getWidth()) {
+				if (pages.get(i).getWidth() != found.getWidth()) {
 					continue;
 				}
-				if(pages.get(i).getHeight() != found.getHeight()) {
+				if (pages.get(i).getHeight() != found.getHeight()) {
 					continue;
 				}
 				pageView.removePage(pages.get(i));
-				
-				//deselect the page if it is selected
-				if(pages.get(i).equals(editor.selected)) {
+
+				// deselect the page if it is selected
+				if (pages.get(i).equals(editor.selected)) {
 					editor.selected = null;
 				}
 			}
-			
+
 		}
 	}
 
@@ -200,7 +219,7 @@ public class PageTool extends AreaTool {
 		} else { // pages
 			if (currentPage != null) {
 				currentPage.step();
-				currentPage.draw(80); //draw the page at lowest LOD
+				currentPage.draw(80); // draw the page at lowest LOD
 			}
 		}
 	}

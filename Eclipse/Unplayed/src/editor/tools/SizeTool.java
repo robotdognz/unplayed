@@ -1,5 +1,7 @@
 package editor.tools;
 
+import java.util.ArrayList;
+
 import editor.Editor;
 import editor.Tool;
 import processing.core.PApplet;
@@ -36,6 +38,18 @@ public class SizeTool implements Tool {
 	public Object getResult() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onRotate(float x, float y, float angle) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -3,6 +3,8 @@ package editor.tools;
 import static processing.core.PConstants.CORNER;
 import static processing.core.PConstants.CORNERS;
 
+import java.util.ArrayList;
+
 import editor.Editor;
 import editor.Tool;
 import editor.Editor.editorMode;
@@ -101,6 +103,14 @@ public class AreaTool implements Tool {
 		Rectangle toReturn = result;
 		result = null;
 		return toReturn;
+	}
+
+	@Override
+	public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
+	}
+
+	@Override
+	public void onRotate(float x, float y, float angle) {
 	}
 
 }

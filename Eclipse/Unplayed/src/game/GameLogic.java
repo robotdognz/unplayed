@@ -209,6 +209,13 @@ public class GameLogic {
 	}
 
 	public void onRotate(float x, float y, float angle) {
+		if (menu == null) {
+			if (editorToggle && editor != null) {
+				editor.onRotate(x, y, angle);
+			} else {
+				controller.onRotate(x, y, angle);
+			}
+		}
 	}
 
 }

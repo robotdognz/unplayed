@@ -2,7 +2,6 @@ package editor.uiside;
 
 import editor.Editor;
 import editor.Toolbar;
-import editor.tools.SizeTool;
 import objects.Page;
 import processing.core.PApplet;
 import ui.Widget;
@@ -19,7 +18,7 @@ public class WidgetSize extends Widget {
 	public void updateActiveUser() {
 		if (editor.selected != null && editor.selected instanceof Page) {
 			available = true;
-			if (editor.currentTool instanceof SizeTool) {
+			if (toolbar.mode == EditorSide.ModifyMode.SIZE) {
 				active = true;
 			} else {
 				active = false;
@@ -31,7 +30,7 @@ public class WidgetSize extends Widget {
 	}
 
 	public void clicked() {
-		editor.currentTool = new SizeTool(p, editor);
+		toolbar.mode = EditorSide.ModifyMode.SIZE;
 	}
 
 }

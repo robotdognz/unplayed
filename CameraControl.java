@@ -64,4 +64,7 @@ public class CameraControl implements Controller {
 			editor.camera.setScale(newScale);
 		}
 	}
+	
+	public void onRotate(float x, float y, float angle) {
+	}
 }

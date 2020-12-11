@@ -1,5 +1,6 @@
 package editor.tools;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import editor.Editor;
@@ -168,5 +169,13 @@ public class ImageTool implements Tool {
 	@Override
 	public Object getResult() {
 		return null;
+	}
+
+	@Override
+	public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
+	}
+
+	@Override
+	public void onRotate(float x, float y, float angle) {
 	}
 }

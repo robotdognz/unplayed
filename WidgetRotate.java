@@ -2,7 +2,6 @@ package editor.uiside;
 
 import editor.Editor;
 import editor.Toolbar;
-import editor.tools.RotateTool;
 import objects.Page;
 import processing.core.PApplet;
 import ui.Widget;
@@ -19,7 +18,7 @@ public class WidgetRotate extends Widget {
 	public void updateActiveUser() {
 		if (editor.selected != null && editor.selected instanceof Page) {
 			available = true;
-			if (editor.currentTool instanceof RotateTool) {
+			if (toolbar.mode == EditorSide.ModifyMode.ROTATE) {
 				active = true;
 			} else {
 				active = false;
@@ -31,7 +30,7 @@ public class WidgetRotate extends Widget {
 	}
 
 	public void clicked() {
-		editor.currentTool = new RotateTool(p, editor);
+		toolbar.mode = EditorSide.ModifyMode.ROTATE;
 	}
 
 }

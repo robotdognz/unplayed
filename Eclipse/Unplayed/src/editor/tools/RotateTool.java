@@ -1,5 +1,7 @@
 package editor.tools;
 
+import java.util.ArrayList;
+
 import editor.Editor;
 import editor.Tool;
 import objects.Editable;
@@ -34,6 +36,18 @@ public class RotateTool implements Tool {
 	@Override
 	public Object getResult() {
 		return null;
+	}
+
+	@Override
+	public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onRotate(float x, float y, float angle) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

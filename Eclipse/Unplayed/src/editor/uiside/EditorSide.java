@@ -18,6 +18,10 @@ public class EditorSide extends Toolbar {
 //	private PImage top;
 //	private PImage middle;
 //	private PImage bottom;
+	public ModifyMode mode;
+	public enum ModifyMode {
+		NONE, ROTATE, SIZE, MOVE
+	}
 
 	public EditorSide(PApplet p, Editor editor) {
 		super(p, editor);
@@ -44,6 +48,7 @@ public class EditorSide extends Toolbar {
 
 		super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
 
+		this.mode = ModifyMode.NONE;
 		// sprites
 		// this.top = p.requestImage(folder + "???.png");
 		// this.middle = p.requestImage(folder + "???.png");
@@ -51,9 +56,19 @@ public class EditorSide extends Toolbar {
 
 		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height); // TODO: needs to scale to screen
 	}
+	
+	public void reset() {
+		mode = ModifyMode.NONE;
+	}
 
 	public void draw(PVector touch, Menu menu) {
 		// super.draw(touch, menu);
+		
+		//step
+		if(editor.selected == null) {
+			mode = ModifyMode.NONE;
+		}
+		
 		p.imageMode(CENTER);
 
 		for (int i = 0; i < widgets.size(); i++) {

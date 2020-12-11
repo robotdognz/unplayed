@@ -78,9 +78,9 @@ public class Editor {
 	public Rectangle selected;
 
 	// toolbars
-	Toolbar editorTop;
-	Toolbar editorBottom;
-	Toolbar editorSide;
+	public Toolbar editorTop;
+	public Toolbar editorBottom;
+	public Toolbar editorSide;
 
 	// saver/loader class
 	public EditorJSON eJSON;
@@ -317,6 +317,16 @@ public class Editor {
 		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
 				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
 			controller.onPinch(touches, x, y, d); // controlls for on pinch event
+		}
+	}
+	
+	public void onRotate(float x, float y, float angle) {
+		if (nextTouchInactive) {
+			return;
+		}
+		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
+				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
+			controller.onRotate(x, y, angle); // controlls for on rotate event
 		}
 	}
 

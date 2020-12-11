@@ -49,11 +49,19 @@ public class EditorControl implements Controller {
 
 		editor.point = new PVector(finalX, finalY);
 		if (editor.snap && editor.currentTool != null) {
-			//editor.editWorld();
 			editor.currentTool.touchMoved();
 		}
 	}
 
-	public void onPinch(ArrayList<PVector> touch, float x, float y, float d) {
+	public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
+		if (editor.currentTool != null) {
+			editor.currentTool.onPinch(touches, x, y, d);
+		}
+	}
+	
+	public void onRotate(float x, float y, float angle) {
+		if (editor.currentTool != null) {
+			editor.currentTool.onRotate(x, y, angle);
+		}
 	}
 }
