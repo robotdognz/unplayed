@@ -61,13 +61,13 @@ public class PageTool extends AreaTool {
 						}
 					}
 				}
-			}else {
-				//adjust the page
+			} else {
+				// adjust the page
 				if (editor.selected != null && editor.selected instanceof Page) {
 					PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
 					PVector center = ((Page) editor.selected).getPosition();
-					PVector position = new PVector(mouse.x-center.x, mouse.y-center.y);
-					((Page) editor.selected).setPosition(position);
+					//PVector position = new PVector(mouse.x - center.x, mouse.y - center.y);
+					((Page) editor.selected).addPosition(mouse.x - center.x, mouse.y - center.y);
 				}
 			}
 		}
@@ -102,7 +102,8 @@ public class PageTool extends AreaTool {
 		// page resize
 		if (editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
-				((Page) editor.selected).addSize(convert.screenToLevel(d)/500);
+				((Page) editor.selected).addSize(convert.screenToLevel(d) / 500); // TODO: figure out what the 500
+																					// should be
 				PVector center = convert.screenToLevel(x, y);
 				((Page) editor.selected).setPosition(center);
 			}
