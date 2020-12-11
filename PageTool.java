@@ -104,8 +104,8 @@ public class PageTool extends AreaTool {
 		// page rotate
 		if (editor.showPageView && editorSide.mode == EditorSide.ModifyMode.ROTATE) {
 			if (editor.selected != null && editor.selected instanceof Page) {
-				((Page) editor.selected).addAngle(angle);
-				PApplet.println("angle: " + PApplet.degrees(angle));
+				((Page) editor.selected).addAngle(PApplet.degrees(angle));
+				//PApplet.println("angle: " + PApplet.degrees(angle)*100);
 			}
 		}
 	}
