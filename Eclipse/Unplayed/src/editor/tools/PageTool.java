@@ -24,6 +24,10 @@ public class PageTool extends AreaTool {
 	private PageView pageView;
 	private Page currentPage;
 
+	// variables for adjusting selected page
+	private float pX = 0;
+	private float pY = 0;
+
 	public PageTool(PApplet p, Editor editor) {
 		super(p, editor);
 		this.game = editor.game;
@@ -46,19 +50,15 @@ public class PageTool extends AreaTool {
 							// offset placement by 50
 							float finalX = placement.x - 50;
 							float finalY = placement.y - 50;
-//							placement.x = finalX;
-//							placement.y = finalY;
 							PVector center = new PVector(finalX, finalY);
 							currentPage = new Page(p, game, editor.currentView.getTopLeft(),
 									editor.currentView.getBottomRight(), center);
 						} else {
-							//float snapNo = 10;
+							// float snapNo = 10;
 							PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
 							// round so blocks snap to grid
 							float finalX = placement.x - 50;
 							float finalY = placement.y - 50;
-//							placement.x = finalX;
-//							placement.y = finalY;
 							PVector center = new PVector(finalX, finalY);
 							currentPage.setPosition(center);
 						}
@@ -67,10 +67,10 @@ public class PageTool extends AreaTool {
 			} else {
 				// adjust the page with a single finger
 				if (editor.selected != null && editor.selected instanceof Page) {
-					float xDist = p.mouseX-p.pmouseX;
-					float yDist = p.mouseY-p.pmouseY;
-					xDist = convert.screenToLevel(xDist/3);
-					yDist = convert.screenToLevel(yDist/3);
+					float xDist = p.mouseX - p.pmouseX;
+					float yDist = p.mouseY - p.pmouseY;
+					xDist = convert.screenToLevel(xDist / 3);
+					yDist = convert.screenToLevel(yDist / 3);
 					((Page) editor.selected).addPosition(xDist, yDist);
 				}
 			}
@@ -108,8 +108,25 @@ public class PageTool extends AreaTool {
 			if (editor.selected != null && editor.selected instanceof Page) {
 				((Page) editor.selected).addSize(convert.screenToLevel(d) / 500); // TODO: figure out what the 500
 																					// should be
-				PVector center = convert.screenToLevel(x, y);
-				((Page) editor.selected).setPosition(center);
+				//old code
+//				PVector center = convert.screenToLevel(x, y);
+//				((Page) editor.selected).setPosition(center);
+				
+				if (pX != 0 && pY != 0) {
+//					PVector newCenter = convert.screenToLevel(x, y);
+//					PVector oldCenter = convert.screenToLevel(pX, pY);
+//					float pageX = ((Page) editor.selected).getPosition().x;
+//					float pageY = ((Page) editor.selected).getPosition().y;
+//					PVector distance = new PVector();
+//					
+					float xDist = x-pX;
+					float yDist = y-pY;
+					xDist = convert.screenToLevel(xDist/3);
+					yDist = convert.screenToLevel(yDist/3);
+					((Page) editor.selected).addPosition(xDist, yDist);
+				}
+				pX = x;
+				pY = y;
 			}
 		}
 	}
@@ -181,7 +198,7 @@ public class PageTool extends AreaTool {
 				if (pages.get(i).getHeight() != found.getHeight()) {
 					continue;
 				}
-				
+
 				// deselect the page if it is selected
 				if (pages.get(i).equals(editor.selected)) {
 					editor.selected = null;
