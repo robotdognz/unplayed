@@ -39,7 +39,7 @@ public class Page extends Editable {
 		this.excludedObjects = new HashSet<String>();
 
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
-		
+
 		setPosition(position);
 	}
 
@@ -48,13 +48,18 @@ public class Page extends Editable {
 	}
 
 	public void setPosition(PVector pos) {
-		if(position == null) {
+		if (position == null) {
 			this.position = pos;
-		}else {
+		} else {
 			this.position.x = pos.x;
 			this.position.y = pos.y;
 		}
 		doAdjustedRect();
+	}
+
+	public void addPosition(float x, float y) {
+		this.position.x += x;
+		this.position.y += y;
 	}
 
 	private void doAdjustedRect() {

@@ -13,6 +13,11 @@ public class Editable extends Rectangle {
 		size = 1;
 		angle = 0;
 	}
+	
+//	public void addPosition(float x, float y) {
+//		setX(getX()+x);
+//		setY(getY()+y);
+//	}
 
 	public void setAngle(float angle) {
 		this.angle = angle;
