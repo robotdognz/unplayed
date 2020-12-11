@@ -97,6 +97,7 @@ public class PageTool extends AreaTool {
 				((Page) editor.selected).addSize(convert.screenToLevel(d)/p.width/2);
 				//PVector center = convert.screenToLevel(x, y);
 				((Page) editor.selected).setPosition(convert.screenToLevel(x, y));
+				PApplet.println("x: " + x + " y: " + y);
 			}
 		}
 	}
