@@ -18,10 +18,11 @@ public class EditorSide extends Toolbar {
 //	private PImage top;
 //	private PImage middle;
 //	private PImage bottom;
-	public ModifyMode mode;
-	public enum ModifyMode {
-		NONE, ROTATE, SIZE, MOVE
-	}
+	//public ModifyMode mode;
+	public boolean adjust;
+//	public enum ModifyMode {
+//		NONE, ROTATE, SIZE, MOVE
+//	}
 
 	public EditorSide(PApplet p, Editor editor) {
 		super(p, editor);
@@ -33,14 +34,14 @@ public class EditorSide extends Toolbar {
 		Widget deleteW = new WidgetDelete(p, editor, this);
 		Widget flipHW = new WidgetFlipH(p, editor, this);
 		Widget flipVW = new WidgetFlipV(p, editor, this);
-		Widget rotateW = new WidgetRotate(p, editor, this);
-		Widget sizeW = new WidgetSize(p, editor, this);
+		Widget adjustW = new WidgetAdjust(p, editor, this);
+//		Widget sizeW = new WidgetSize(p, editor, this);
 
 		widgets.add(deleteW);
 		widgets.add(flipHW);
 		widgets.add(flipVW);
-		widgets.add(rotateW);
-		widgets.add(sizeW);
+		widgets.add(adjustW);
+//		widgets.add(sizeW);
 
 		super.widgetSpacing = p.width / 8;
 
@@ -48,7 +49,7 @@ public class EditorSide extends Toolbar {
 
 		super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
 
-		this.mode = ModifyMode.NONE;
+		this.adjust = false;
 		// sprites
 		// this.top = p.requestImage(folder + "???.png");
 		// this.middle = p.requestImage(folder + "???.png");
@@ -58,7 +59,7 @@ public class EditorSide extends Toolbar {
 	}
 	
 	public void reset() {
-		mode = ModifyMode.NONE;
+		adjust = false;
 	}
 
 	public void draw(PVector touch, Menu menu) {
@@ -66,7 +67,7 @@ public class EditorSide extends Toolbar {
 		
 		//step
 		if(editor.selected == null) {
-			mode = ModifyMode.NONE;
+			adjust = false;
 		}
 		
 		p.imageMode(CENTER);

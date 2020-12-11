@@ -6,10 +6,10 @@ import objects.Page;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class WidgetRotate extends Widget {
+public class WidgetAdjust extends Widget {
 	EditorSide toolbar;
 
-	public WidgetRotate(PApplet p, Editor editor, Toolbar parent) {
+	public WidgetAdjust(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		toolbar = (EditorSide) parent;
 		icon = p.loadImage(folder + "rotateClockwise.png");
@@ -18,7 +18,7 @@ public class WidgetRotate extends Widget {
 	public void updateActiveUser() {
 		if (editor.selected != null && editor.selected instanceof Page) {
 			available = true;
-			if (toolbar.mode == EditorSide.ModifyMode.ROTATE) {
+			if (toolbar.adjust) {
 				active = true;
 			} else {
 				active = false;
@@ -30,7 +30,7 @@ public class WidgetRotate extends Widget {
 	}
 
 	public void clicked() {
-		toolbar.mode = EditorSide.ModifyMode.ROTATE;
+		toolbar.adjust = !toolbar.adjust;
 	}
 
 }

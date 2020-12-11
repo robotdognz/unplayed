@@ -38,7 +38,7 @@ public class PageTool extends AreaTool {
 		if (!editor.showPageView) {// views
 			super.touchMoved();
 		} else { // pages
-			if (editorSide.mode == EditorSide.ModifyMode.NONE) {
+			if (!editorSide.adjust) {
 				if (editor.eMode == editorMode.ADD) {
 					if (editor.currentView != null) {
 						if (currentPage == null) {
@@ -76,7 +76,7 @@ public class PageTool extends AreaTool {
 				selectView();
 			}
 		} else {// pages
-			if (editorSide.mode == EditorSide.ModifyMode.NONE) {
+			if (!editorSide.adjust) {
 				if (editor.eMode == editorMode.ADD) {
 					addPage();
 				} else if (editor.eMode == editorMode.ERASE) {
@@ -92,9 +92,9 @@ public class PageTool extends AreaTool {
 	@Override
 	public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
 		// page resize
-		if (editor.showPageView && editorSide.mode == EditorSide.ModifyMode.SIZE) {
+		if (editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
-				((Page) editor.selected).addSize(convert.screenToLevel(d)/3);
+				((Page) editor.selected).addSize(convert.screenToLevel(d)/1000);
 			}
 		}
 	}
@@ -102,7 +102,7 @@ public class PageTool extends AreaTool {
 	@Override
 	public void onRotate(float x, float y, float angle) {
 		// page rotate
-		if (editor.showPageView && editorSide.mode == EditorSide.ModifyMode.ROTATE) {
+		if (editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
 				((Page) editor.selected).addAngle(PApplet.degrees(angle));
 			}
