@@ -29,6 +29,10 @@ public class TextureCache {
 	private PImage gridLOD32;
 	private PImage gridLOD16;
 	private PImage gridLOD8;
+	
+	//desk textures
+	private PImage deskBehind;
+	private PImage deskInfront;
 
 	// level image
 	private File imageDir;
@@ -64,6 +68,9 @@ public class TextureCache {
 		gridLOD32 = p.requestImage("PaperGrid_128x128.png");
 		gridLOD16 = p.requestImage("PaperGrid_64x64.png");
 		gridLOD8 = p.requestImage("PaperGrid_32x32.png");
+		
+		deskBehind = p.requestImage("PagesViewBackGround.png");
+		deskInfront = p.requestImage("PagesViewBackGround_shading.png");
 
 		// level assets
 		loadLevelImages();
@@ -188,5 +195,13 @@ public class TextureCache {
 
 	public ArrayList<EventHandler> getEventList() {
 		return eventList;
+	}
+
+	public PImage getDeskBehind() {
+		return deskBehind;
+	}
+
+	public PImage getDeskInfront() {
+		return deskInfront;
 	}
 }

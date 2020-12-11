@@ -5,27 +5,35 @@ import java.util.Collections;
 import java.util.List;
 
 import camera.Camera;
+import handlers.TextureCache;
 import misc.Converter;
 import objects.Page;
 import objects.Rectangle;
 import processing.core.*;
+import static processing.core.PConstants.*;
 
 public class PageView {
 	private PApplet p;
+	private TextureCache texture;
 	private Converter convert;
 	private ArrayList<Page> pages;
 
 	// world camera
 	private Camera camera;
 
-	public PageView(PApplet p, Camera camera, Converter convert) {
+	public PageView(PApplet p, Camera camera, TextureCache texture, Converter convert) {
 		this.p = p;
+		this.texture = texture;
 		this.convert = convert;
 		this.camera = camera;
 		pages = new ArrayList<Page>();
 	}
 
 	public void draw() {
+		//draw the desk
+		p.imageMode(CENTER);
+		p.image(texture.getDeskBehind(), p.width/2, p.height/2);
+		
 		p.pushMatrix(); // start working at game scale
 		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
 
@@ -42,6 +50,10 @@ public class PageView {
 			p.draw(currentScale);
 		}
 		p.popMatrix();
+		
+		//draw desk shading
+		p.imageMode(CENTER);
+		p.image(texture.getDeskInfront(), p.width/2, p.height/2);
 	}
 
 	public void step() {

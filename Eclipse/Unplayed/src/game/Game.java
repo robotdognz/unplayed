@@ -74,7 +74,7 @@ public class Game {
 		views = new ArrayList<View>();
 		playerObjects = new HashSet<Rectangle>();
 
-		pageView = new PageView(p, camera, convert);
+		pageView = new PageView(p, camera, texture, convert);
 
 		paper = new Paper(texture);
 
