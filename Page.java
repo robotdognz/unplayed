@@ -184,7 +184,7 @@ public class Page extends Editable {
 		if (this.size + size > 0.5) {
 			this.size += size;
 		} else {
-			this.size += 0.5;
+			this.size = 0.5f;
 		}
 	}
 
