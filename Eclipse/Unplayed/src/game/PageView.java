@@ -30,10 +30,13 @@ public class PageView {
 	}
 
 	public void draw() {
-		//draw the desk
+		p.background(100);
+		// draw the desk
 		p.imageMode(CENTER);
-		p.image(texture.getDeskBehind(), p.width/2, p.height/2);
-		
+		PImage temp = texture.getDeskBehind();
+		float ratio = temp.height / temp.width;
+		p.image(temp, p.width / 2, p.height / 2, p.width, p.width*ratio);
+
 		p.pushMatrix(); // start working at game scale
 		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
 
@@ -44,16 +47,16 @@ public class PageView {
 
 		float currentScale = convert.getScale();
 
-		//p.background(100);
+		// p.background(100);
 
 		for (Page p : pages) {
 			p.draw(currentScale);
 		}
 		p.popMatrix();
-		
-		//draw desk shading
+
+		// draw desk shading
 		p.imageMode(CENTER);
-		p.image(texture.getDeskInfront(), p.width/2, p.height/2);
+		p.image(texture.getDeskInfront(), p.width / 2, p.height / 2, p.width, p.width*ratio);
 	}
 
 	public void step() {
@@ -65,13 +68,13 @@ public class PageView {
 	public void addPage(Page page) {
 		pages.add(page);
 	}
-	
+
 	public void removePage(Page page) {
 		pages.remove(page);
 	}
-	
+
 	public Page getPage(float x, float y) {
-		if(pages.size() < 1) {
+		if (pages.size() < 1) {
 			return null;
 		}
 		for (Page page : pages) {
@@ -88,17 +91,17 @@ public class PageView {
 			if (p.getBottomRight().y < y) {
 				continue;
 			}
-			//return the first overlap
+			// return the first overlap
 			return page;
 		}
-		
+
 		return null;
 	}
 
 	public List<Page> getPages() {
 		return Collections.unmodifiableList(pages);
 	}
-	
+
 	public void setPages(ArrayList<Page> pages) {
 		this.pages = pages;
 	}
