@@ -35,13 +35,11 @@ public class EditorSide extends Toolbar {
 		Widget flipHW = new WidgetFlipH(p, editor, this);
 		Widget flipVW = new WidgetFlipV(p, editor, this);
 		Widget adjustW = new WidgetAdjust(p, editor, this);
-//		Widget sizeW = new WidgetSize(p, editor, this);
 
 		widgets.add(deleteW);
 		widgets.add(flipHW);
 		widgets.add(flipVW);
 		widgets.add(adjustW);
-//		widgets.add(sizeW);
 
 		super.widgetSpacing = p.width / 8;
 

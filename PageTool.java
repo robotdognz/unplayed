@@ -94,7 +94,7 @@ public class PageTool extends AreaTool {
 		// page resize
 		if (editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
-				((Page) editor.selected).addSize(convert.screenToLevel(d)/1000);
+				((Page) editor.selected).addSize(convert.screenToLevel(d)/100);
 			}
 		}
 	}
