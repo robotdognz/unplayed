@@ -61,6 +61,15 @@ public class PageTool extends AreaTool {
 						}
 					}
 				}
+			}else {
+				//adjust the page
+				if (editor.selected != null && editor.selected instanceof Page) {
+					//((Page) editor.selected).addSize(convert.screenToLevel(d)/500);
+					PVector center = convert.screenToLevel(p.mouseX, p.mouseY);
+					//PApplet.println("" + ((Page) editor.selected).getPosition());
+					((Page) editor.selected).setPosition(center);
+					//PApplet.println("x: " + center.x + " y: " + center.y);
+				}
 			}
 		}
 	}
@@ -94,11 +103,11 @@ public class PageTool extends AreaTool {
 		// page resize
 		if (editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
-				((Page) editor.selected).addSize(convert.screenToLevel(d)/p.width/2);
+				((Page) editor.selected).addSize(convert.screenToLevel(d)/500);
 				PVector center = convert.screenToLevel(x, y);
-				PApplet.println("" + ((Page) editor.selected).getPosition());
+				//PApplet.println("" + ((Page) editor.selected).getPosition());
 				((Page) editor.selected).setPosition(center);
-				PApplet.println("x: " + center.x + " y: " + center.y);
+				//PApplet.println("x: " + center.x + " y: " + center.y);
 			}
 		}
 	}
