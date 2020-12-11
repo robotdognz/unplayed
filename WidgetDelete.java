@@ -24,11 +24,11 @@ public class WidgetDelete extends Widget {
 
 	public void clicked() {
 		if (editor.selected != null) {
-			if (editor.selected instanceof Tile) {
+			if (editor.selected instanceof Tile && !editor.showPageView) {
 				game.world.remove(editor.selected);
-			} else if (editor.selected instanceof Image) {
+			} else if (editor.selected instanceof Image && !editor.showPageView) {
 				game.world.remove(editor.selected);
-			} else if (editor.selected instanceof Event) {
+			} else if (editor.selected instanceof Event && !editor.showPageView) {
 				game.world.remove(editor.selected);
 			} else if (editor.selected instanceof View && !editor.showPageView) {
 				// remove matching the pages
