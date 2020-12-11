@@ -44,7 +44,7 @@ public class PageView {
 
 		float currentScale = convert.getScale();
 
-		p.background(100);
+		//p.background(100);
 
 		for (Page p : pages) {
 			p.draw(currentScale);
