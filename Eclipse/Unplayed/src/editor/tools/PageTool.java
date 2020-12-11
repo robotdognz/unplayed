@@ -94,7 +94,7 @@ public class PageTool extends AreaTool {
 		// page resize
 		if (editor.showPageView && editorSide.mode == EditorSide.ModifyMode.SIZE) {
 			if (editor.selected != null && editor.selected instanceof Page) {
-				((Page) editor.selected).addSize(d/10);
+				((Page) editor.selected).addSize(convert.screenToLevel(d));
 			}
 		}
 	}
@@ -105,6 +105,7 @@ public class PageTool extends AreaTool {
 		if (editor.showPageView && editorSide.mode == EditorSide.ModifyMode.ROTATE) {
 			if (editor.selected != null && editor.selected instanceof Page) {
 				((Page) editor.selected).addAngle(angle);
+				PApplet.println("angle: " + angle);
 			}
 		}
 	}
