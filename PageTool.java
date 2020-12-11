@@ -46,21 +46,21 @@ public class PageTool extends AreaTool {
 							// offset placement by 50
 							float finalX = placement.x - 50;
 							float finalY = placement.y - 50;
-							placement.x = finalX;
-							placement.y = finalY;
-							//PVector center = new PVector(finalX, finalY);
+//							placement.x = finalX;
+//							placement.y = finalY;
+							PVector center = new PVector(finalX, finalY);
 							currentPage = new Page(p, game, editor.currentView.getTopLeft(),
-									editor.currentView.getBottomRight(), placement);
+									editor.currentView.getBottomRight(), center);
 						} else {
 							//float snapNo = 10;
 							PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
 							// round so blocks snap to grid
 							float finalX = placement.x - 50;
 							float finalY = placement.y - 50;
-							placement.x = finalX;
-							placement.y = finalY;
-							//PVector center = new PVector(finalX, finalY);
-							currentPage.setPosition(placement);
+//							placement.x = finalX;
+//							placement.y = finalY;
+							PVector center = new PVector(finalX, finalY);
+							currentPage.setPosition(center);
 						}
 					}
 				}
