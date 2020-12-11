@@ -56,10 +56,10 @@ public class CameraControl implements Controller {
 			float newScale = editor.camera.getScale() - convert.screenToLevel(d);
 			float newTotalScale = convert.getTotalFromScale(newScale);
 			if (newTotalScale < editor.minZoom) {
-				newScale = convert.getScaleFromTotal(editor.minZoom);// editor.minZoom;
+				newScale = convert.getScaleFromTotal(editor.minZoom);
 			}
 			if (newTotalScale > editor.maxZoom) {
-				newScale = convert.getScaleFromTotal(editor.maxZoom);// editor.maxZoom;
+				newScale = convert.getScaleFromTotal(editor.maxZoom);
 			}
 			editor.camera.setScale(newScale);
 		}

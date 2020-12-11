@@ -150,6 +150,7 @@ public class Page extends Editable {
 		g.stroke(255, 0, 0); // selection color
 		g.strokeWeight(2);
 		g.translate(position.x, position.y);
+		p.scale(size); // size the page will appear in the page view
 		g.rotate(PApplet.radians(Math.round(angle / snapNo) * snapNo)); // angle of the page
 		g.rectMode(CENTER);
 		g.rect(0, 0, adjustedRect.getWidth(), adjustedRect.getHeight());
