@@ -14,7 +14,7 @@ public class PauseMenu extends Menu {
 	String resume = "Resume";
 	String editor = "Toggle Editor";
 	String restart = "Restart";
-	String quit = "quit";
+	String quit = "Quit and Purge";
 
 	public PauseMenu(PApplet p, Game game, AppLogic app, WidgetPauseMenu m) {
 		super(p);
@@ -56,7 +56,7 @@ public class PauseMenu extends Menu {
 			} else if (b.click().equals(restart)) {
 				app.init(); // rebuild the game
 			} else if (b.click().equals(quit)) {
-				app.quit(); // exit the game
+				app.quitPurge(); // exit the game
 			}
 		}
 	}

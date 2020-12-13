@@ -1,5 +1,6 @@
 package game;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -68,7 +69,7 @@ public class AppLogic {
 		Camera camera = new FreeCamera(); // new GameCamera();
 		convert = new Converter(p, camera); // camera converter
 		game = new Game(p, this, camera, vibe, texture, convert);
-		//game.passAppLogic(this);
+		// game.passAppLogic(this);
 		texture.passGame(game);
 		controller = new PlayerControl(p, game);
 		DoToast toast = new DoToast(activity);
@@ -79,7 +80,60 @@ public class AppLogic {
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
 	}
-	
+
+	public void quitPurge() {
+		// purge resources
+		// root
+		File rootDir = new File(p.dataPath("") + '/');
+		File[] rootPaths = rootDir.listFiles();
+		for (File file : rootPaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		// tiles
+		File tileDir = new File(p.dataPath("tiles") + '/');
+		File[] tilePaths = tileDir.listFiles();
+		for (File file : tilePaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		// images
+		File imageDir = new File(p.dataPath("images") + '/');
+		File[] imagePaths = imageDir.listFiles();
+		for (File file : imagePaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		// events
+		File eventDir = new File(p.dataPath("events") + '/');
+		File[] eventPaths = eventDir.listFiles();
+		for (File file : eventPaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		// ui
+		File uiDir = new File(p.dataPath("ui") + '/');
+		File[] uiPaths = uiDir.listFiles();
+		for (File file : uiPaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		// widgets
+		File widgetDir = new File(p.dataPath("ui") + '/' + "widgets" + '/');
+		File[] widgetPaths = widgetDir.listFiles();
+		for (File file : widgetPaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		quit();
+	}
+
 	public void quit() {
 		activity.finish();
 	}
@@ -106,8 +160,8 @@ public class AppLogic {
 			}
 			game.step(); // step game
 		}
-		
-		//draw the game
+
+		// draw the game
 		if (!editorToggle || editor == null || (editor != null && editor.showPageView)) {
 			game.draw(); // draw the game
 		}
@@ -183,7 +237,7 @@ public class AppLogic {
 			}
 		}
 	}
-	
+
 	public void onTap(float x, float y) {
 		if (menu == null) {
 			if (editorToggle && editor != null) {
@@ -192,22 +246,22 @@ public class AppLogic {
 				// controller.onTap(x, y);
 			}
 		}
-		
-		//gesture.
+
+		// gesture.
 	}
-	
+
 	public void onDoubleTap(float x, float y) {
-		
+
 	}
-	
+
 	public void onFlick(float x, float y, float px, float py, float v) {
 		// x/y start of flick
 		// px/yx end of flick
 		// v velocity of flick
 	}
-	
+
 	public void onLongPress(float x, float y) {
-		
+
 	}
 
 	public void onPinch(float x, float y, float d) {
