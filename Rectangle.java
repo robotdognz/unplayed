@@ -15,15 +15,7 @@ public class Rectangle {
 		this.bottomRight = new PVector(x + width, y + height);
 	}
 	
-	public void drawSelected(PGraphics g) {
-		g.noFill();
-		g.stroke(255, 0, 0); // selection color
-		g.strokeWeight(2);
-		g.rectMode(CORNER);
-		g.rect(getX(), getY(), getWidth(), getHeight());
-	}
-
-	// getters
+	// ------------getters
 	public float getX() {
 		return topLeft.x;
 	}
@@ -48,16 +40,7 @@ public class Rectangle {
 		return bottomRight;
 	}
 
-	public String toString() {
-		return this.getName() + " " + (int) getX() + " " + (int) getY() + " " + (int) getWidth() + " "
-				+ (int) getHeight();
-	}
-
-	public String getName() {
-		return "Rectangle";
-	}
-
-	// setters
+	// ------------setters
 	public void setX(float x) {
 		this.topLeft.x = x;
 		this.bottomRight.x = x + width;
@@ -68,6 +51,16 @@ public class Rectangle {
 		this.bottomRight.y = y + height;
 	}
 	
+	public void setWidth(float rWidth) {
+		this.width = rWidth;
+		this.bottomRight.x = this.topLeft.x + rWidth;
+	}
+
+	public void setHeight(float rHeight) {
+		this.height = rHeight;
+		this.bottomRight.y = this.topLeft.y + rHeight;
+	}
+
 	public void setTopLeft(PVector topLeft) {
 		this.topLeft.x = topLeft.x;
 		this.topLeft.y = topLeft.y;
@@ -82,18 +75,25 @@ public class Rectangle {
 		this.height = this.bottomRight.y-this.topLeft.y;
 	}
 
-	public void setWidth(float rWidth) {
-		this.width = rWidth;
-		this.bottomRight.x = this.topLeft.x + rWidth;
+	public void drawSelected(PGraphics g) {
+		g.noFill();
+		g.stroke(255, 0, 0); // selection color
+		g.strokeWeight(2);
+		g.rectMode(CORNER);
+		g.rect(getX(), getY(), getWidth(), getHeight());
 	}
 
-	public void setHeight(float rHeight) {
-		this.height = rHeight;
-		this.bottomRight.y = this.topLeft.y + rHeight;
+	public String getName() {
+		return "Rectangle";
 	}
 
-	public void setPosition(PVector newPosition) {
-		setX(newPosition.x);
-		setY(newPosition.y);
+	public String toString() {
+		return this.getName() + " " + (int) getX() + " " + (int) getY() + " " + (int) getWidth() + " "
+				+ (int) getHeight();
 	}
+
+//	public void setPosition(PVector newPosition) {
+//		setX(newPosition.x);
+//		setY(newPosition.y);
+//	}
 }

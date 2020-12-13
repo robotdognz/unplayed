@@ -24,10 +24,11 @@ public class CameraChange extends Event {
 		// considering separating edgeZoom into in speed and out speed
 
 		// TODO: figure out what the default values should be
-		PVector cameraTopLeft = new PVector(-700, -200);
-		PVector cameraBottomRight = new PVector(700, 1500);
-		this.camera = new Rectangle(cameraTopLeft.x, cameraTopLeft.y, cameraBottomRight.x - cameraTopLeft.x,
-				cameraBottomRight.y - cameraTopLeft.y);
+//		PVector cameraTopLeft = new PVector(-700, -200);
+//		PVector cameraBottomRight = new PVector(700, 1500);
+//		this.camera = new Rectangle(cameraTopLeft.x, cameraTopLeft.y, cameraBottomRight.x - cameraTopLeft.x,
+//				cameraBottomRight.y - cameraTopLeft.y);
+		this.camera = new Rectangle(-700, -200, 1400, 1700);
 		this.cameraZoom = 2;
 		this.edgeZoom = 2;
 
@@ -35,7 +36,7 @@ public class CameraChange extends Event {
 //		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 //		this.newCent = new PVector(centerX, centerY);
 //		this.newScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
-		
+
 //		int centerX = (int) ((camera.getBottomRight().x - camera.getTopLeft().x) / 2 + camera.getTopLeft().x);
 //		int centerY = (int) ((camera.getTopLeft().y - camera.getBottomRight().y) / 2 + camera.getBottomRight().y);
 
@@ -81,8 +82,8 @@ public class CameraChange extends Event {
 	// public String getType() {
 	// return type;
 	// }
-	
-	private PVector getCameraCenter() {
+
+	private PVector getCameraCentre() {
 		int centerX = (int) ((camera.getBottomRight().x - camera.getTopLeft().x) / 2 + camera.getTopLeft().x);
 		int centerY = (int) ((camera.getTopLeft().y - camera.getBottomRight().y) / 2 + camera.getBottomRight().y);
 		return new PVector(centerX, centerY);
@@ -91,11 +92,8 @@ public class CameraChange extends Event {
 	public void activate(Game g) {
 		super.activate(g);
 		if (g.camera.getGame()) {
-			// change center
-//			if (g.newCenter != this.newCent) {
-//				g.newCenter = new PVector(newCent.x, newCent.y);
-//			}
-			PVector center = getCameraCenter();
+			// change centre
+			PVector center = getCameraCentre();
 			if (g.newCenter != center) {
 				g.newCenter = new PVector(center.x, center.y);
 			}
