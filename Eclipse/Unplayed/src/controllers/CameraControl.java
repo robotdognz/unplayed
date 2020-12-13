@@ -24,7 +24,9 @@ public class CameraControl implements Controller {
 	}
 
 	public void step(ArrayList<PVector> touch) {
-		game.player.still();
+		if (game.player != null) {
+			game.player.still();
+		}
 	}
 
 	public void touchStarted(PVector touch) {
@@ -64,7 +66,7 @@ public class CameraControl implements Controller {
 			editor.camera.setScale(newScale);
 		}
 	}
-	
+
 	public void onRotate(float x, float y, float angle) {
 	}
 }
