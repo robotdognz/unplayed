@@ -73,21 +73,22 @@ public class CameraChange extends Event {
 
 	public void activate(Game g) {
 		super.activate(g);
-
-		// change center
-		if (g.newCenter != this.newCent) {
-			g.newCenter = new PVector(newCent.x, newCent.y);
+		if (g.camera.getGame()) {
+			// change center
+			if (g.newCenter != this.newCent) {
+				g.newCenter = new PVector(newCent.x, newCent.y);
+			}
+			// change scale
+			if (g.newScale != this.newScale) {
+				g.newScale = this.newScale;
+			}
+			g.zoomSpeed = cameraZoom;
+			g.boarderZoomSpeed = edgeZoom;
+			g.newTopEdge = (int) cameraTopLeft.y;
+			g.newBottomEdge = (int) cameraBottomRight.y;
+			g.newLeftEdge = (int) cameraTopLeft.x;
+			g.newRightEdge = (int) cameraBottomRight.x;
 		}
-		// change scale
-		if (g.newScale != this.newScale) {
-			g.newScale = this.newScale;
-		}
-		g.zoomSpeed = cameraZoom;
-		g.boarderZoomSpeed = edgeZoom;
-		g.newTopEdge = (int) cameraTopLeft.y;
-		g.newBottomEdge = (int) cameraBottomRight.y;
-		g.newLeftEdge = (int) cameraTopLeft.x;
-		g.newRightEdge = (int) cameraBottomRight.x;
 	}
 
 	public void drawCameraArea(PGraphics g) {

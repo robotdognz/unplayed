@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import camera.Camera;
+import camera.GameCamera;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.Vibe;
@@ -13,6 +14,7 @@ import processing.core.*;
 import static processing.core.PConstants.*;
 
 public class Game {
+	private static final GameCamera Camera = null;
 	private PApplet p;
 	public Player player;
 	public Paper paper;
@@ -144,12 +146,14 @@ public class Game {
 
 		// actual restart code starts here
 		createPlayer();
-		newScale = startScale;
-		newCenter = startCenter;
-		newTopEdge = bottomOfTopBar;
-		newBottomEdge = topOfBottomBar;
-		newLeftEdge = newCenter.x - newScale / 2;
-		newRightEdge = newCenter.x + newScale / 2;
+		if (camera.getGame()) {
+			newScale = startScale;
+			newCenter = startCenter;
+			newTopEdge = bottomOfTopBar;
+			newBottomEdge = topOfBottomBar;
+			newLeftEdge = newCenter.x - newScale / 2;
+			newRightEdge = newCenter.x + newScale / 2;
+		}
 	}
 
 	public void draw() {
