@@ -104,15 +104,7 @@ public class Game {
 		newLeftEdge = leftEdge;
 		rightEdge = camera.getCenter().x + newScale / 2;
 		newRightEdge = rightEdge;
-
-		// everything needs to be a multiple of 20 (multiple of 10 so you can always
-		// fall down holes, and 20 so you don't clip through things 90 apart because of
-		// speed 10)
 	}
-
-//	public void passAppLogic(AppLogic app) {
-//		this.app = app;
-//	}
 
 	public void setPlayerStart(float x, float y) {
 		playerStart.x = x;
@@ -157,7 +149,7 @@ public class Game {
 	public void draw() {
 		pageView.draw();
 
-		// TODO: do something with this view border code
+		// camera black border code
 		p.pushMatrix(); // start working at game scale
 		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
 
