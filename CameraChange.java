@@ -3,16 +3,18 @@ package objects.events;
 import game.Game;
 import handlers.TextureCache;
 import objects.Event;
+import objects.Rectangle;
 import processing.core.PGraphics;
 import processing.core.PVector;
 import static processing.core.PConstants.*;
 
 public class CameraChange extends Event {
-	private PVector cameraTopLeft;
-	private PVector cameraBottomRight;
+//	private PVector cameraTopLeft;
+//	private PVector cameraBottomRight;
+	private Rectangle camera;
 
-	private int newScale;
-	private PVector newCent;
+//	private int newScale;
+//	private PVector newCent;
 	private float cameraZoom;
 	private float edgeZoom;
 	// private String type; //Strings: "Static", "Full", "Horizontal", "Vertical"
@@ -22,33 +24,39 @@ public class CameraChange extends Event {
 		// considering separating edgeZoom into in speed and out speed
 
 		// TODO: figure out what the default values should be
-		this.cameraTopLeft = new PVector(-700, -200);
-		this.cameraBottomRight = new PVector(700, 1500);
+		PVector cameraTopLeft = new PVector(-700, -200);
+		PVector cameraBottomRight = new PVector(700, 1500);
+		this.camera = new Rectangle(cameraTopLeft.x, cameraTopLeft.y, cameraBottomRight.x - cameraTopLeft.x,
+				cameraBottomRight.y - cameraTopLeft.y);
 		this.cameraZoom = 2;
 		this.edgeZoom = 2;
 
-		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
-		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-		this.newCent = new PVector(centerX, centerY);
-		this.newScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
+//		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
+//		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
+//		this.newCent = new PVector(centerX, centerY);
+//		this.newScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
 
 		// this.type = type;
 	}
 
 	public PVector getCameraTopLeft() {
-		return cameraTopLeft;
+//		return cameraTopLeft;
+		return camera.getTopLeft();
 	}
 
 	public void setCameraTopLeft(PVector cameraTopLeft) {
-		this.cameraTopLeft = cameraTopLeft;
+//		this.cameraTopLeft = cameraTopLeft;
+		camera.setTopLeft(cameraTopLeft);
 	}
 
 	public PVector getCameraBottomRight() {
-		return cameraBottomRight;
+//		return cameraBottomRight;
+		return camera.getBottomRight();
 	}
 
 	public void setCameraBottomRight(PVector cameraBottomRight) {
-		this.cameraBottomRight = cameraBottomRight;
+//		this.cameraBottomRight = cameraBottomRight;
+		camera.setBottomRight(cameraBottomRight);
 	}
 
 	public float getCameraZoom() {
@@ -70,33 +78,40 @@ public class CameraChange extends Event {
 	// public String getType() {
 	// return type;
 	// }
+	
+	private PVector getCameraCenter() {
+		return new PVector(camera.getTopLeft().x+camera.getWidth()/2, camera.getTopLeft().y-camera.getHeight()/2);
+	}
 
 	public void activate(Game g) {
 		super.activate(g);
 		if (g.camera.getGame()) {
 			// change center
-			if (g.newCenter != this.newCent) {
-				g.newCenter = new PVector(newCent.x, newCent.y);
+//			if (g.newCenter != this.newCent) {
+//				g.newCenter = new PVector(newCent.x, newCent.y);
+//			}
+			PVector center = getCameraCenter();
+			if (g.newCenter != center) {
+				g.newCenter = new PVector(center.x, center.y);
 			}
 			// change scale
-			if (g.newScale != this.newScale) {
-				g.newScale = this.newScale;
+			if (g.newScale != this.camera.getWidth()) {
+				g.newScale = this.camera.getWidth();
 			}
 			g.zoomSpeed = cameraZoom;
 			g.boarderZoomSpeed = edgeZoom;
-			g.newTopEdge = (int) cameraTopLeft.y;
-			g.newBottomEdge = (int) cameraBottomRight.y;
-			g.newLeftEdge = (int) cameraTopLeft.x;
-			g.newRightEdge = (int) cameraBottomRight.x;
+			g.newTopEdge = (int) camera.getTopLeft().y;
+			g.newBottomEdge = (int) camera.getBottomRight().y;
+			g.newLeftEdge = (int) camera.getTopLeft().x;
+			g.newRightEdge = (int) camera.getBottomRight().x;
 		}
 	}
 
 	public void drawCameraArea(PGraphics g) {
 		g.noStroke();
-		g.rectMode(CORNER);
+		g.rectMode(CORNERS);
 		g.fill(255, 0, 0, 100);
-		g.rect(cameraTopLeft.x, cameraTopLeft.y, cameraBottomRight.x - cameraTopLeft.x,
-				cameraBottomRight.y - cameraTopLeft.y);
+		g.rect(camera.getTopLeft().x, camera.getTopLeft().y, camera.getBottomRight().x, camera.getBottomRight().y);
 	}
 
 }

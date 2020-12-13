@@ -5,14 +5,14 @@ import processing.core.PVector;
 import static processing.core.PConstants.*;
 
 public class Rectangle {
-	private float rWidth, rHeight;
+	private float width, height;
 	private PVector topLeft, bottomRight;
 
-	public Rectangle(float x, float y, float rWidth, float rHeight) {
-		this.rWidth = rWidth;
-		this.rHeight = rHeight;
+	public Rectangle(float x, float y, float width, float height) {
+		this.width = width;
+		this.height = height;
 		this.topLeft = new PVector(x, y);
-		this.bottomRight = new PVector(x + rWidth, y + rHeight);
+		this.bottomRight = new PVector(x + width, y + height);
 	}
 	
 	public void drawSelected(PGraphics g) {
@@ -33,11 +33,11 @@ public class Rectangle {
 	}
 
 	public float getWidth() {
-		return rWidth;
+		return width;
 	}
 
 	public float getHeight() {
-		return rHeight;
+		return height;
 	}
 
 	public PVector getTopLeft() {
@@ -60,21 +60,35 @@ public class Rectangle {
 	// setters
 	public void setX(float x) {
 		this.topLeft.x = x;
-		this.bottomRight.x = x + rWidth;
+		this.bottomRight.x = x + width;
 	}
 
 	public void setY(float y) {
 		this.topLeft.y = y;
-		this.bottomRight.y = y + rHeight;
+		this.bottomRight.y = y + height;
+	}
+	
+	public void setTopLeft(PVector topLeft) {
+		this.topLeft.x = topLeft.x;
+		this.topLeft.y = topLeft.y;
+		this.bottomRight.x = topLeft.x + width;
+		this.bottomRight.y = topLeft.y + height;
+	}
+	
+	public void setBottomRight(PVector bottomRight) {
+		this.bottomRight.x = bottomRight.x;
+		this.bottomRight.y = bottomRight.y;
+		this.width = this.bottomRight.x-this.topLeft.x;
+		this.height = this.bottomRight.y-this.topLeft.y;
 	}
 
 	public void setWidth(float rWidth) {
-		this.rWidth = rWidth;
+		this.width = rWidth;
 		this.bottomRight.x = this.topLeft.x + rWidth;
 	}
 
 	public void setHeight(float rHeight) {
-		this.rHeight = rHeight;
+		this.height = rHeight;
 		this.bottomRight.y = this.topLeft.y + rHeight;
 	}
 
