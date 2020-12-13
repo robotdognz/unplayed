@@ -134,7 +134,7 @@ public class PageTool extends AreaTool {
 			}
 		}
 	}
-
+	
 	private void addView(PVector touch) {
 		// get the result of the area tool
 		super.touchEnded(touch);
@@ -159,6 +159,8 @@ public class PageTool extends AreaTool {
 				editor.currentView = view;
 				return;
 			}
+			
+			//no existing match found, make a new view
 			View newView = new View(p, (int) result.getX(), (int) result.getY(), (int) result.getWidth(),
 					(int) result.getHeight());
 			game.views.add(newView); // add the view
@@ -238,7 +240,24 @@ public class PageTool extends AreaTool {
 		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
 		Page found = pageView.getPage(mouse.x, mouse.y);
 		if (found != null) {
-			editor.selected = found;
+			editor.selected = found; //select it
+			//set current view to corresponding view
+			for (View view : game.views) {
+				if (view.getX() != found.getX()) {
+					continue;
+				}
+				if (view.getY() != found.getY()) {
+					continue;
+				}
+				if (view.getWidth() != found.getWidth()) {
+					continue;
+				}
+				if (view.getHeight() != found.getHeight()) {
+					continue;
+				}
+				editor.currentView = view;
+				return;
+			}
 		} else {
 			editor.selected = null;
 		}
