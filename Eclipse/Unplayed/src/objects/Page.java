@@ -15,7 +15,7 @@ import static processing.core.PConstants.*;
 public class Page extends Editable {
 	private PApplet p;
 	private Game game;
-	private Player player;
+	// private Player player;
 	private Rectangle view; // the page's view into the world
 	private HashSet<Rectangle> pageObjects;
 	private HashSet<String> excludedObjects; // a list of rectangle strings to exclude while drawing
@@ -31,7 +31,7 @@ public class Page extends Editable {
 		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
 		this.p = p;
 		this.game = game;
-		this.player = game.player;
+		// this.player = game.player;
 		float rWidth = bottomRight.x - topLeft.x;
 		float rHeight = bottomRight.y - topLeft.y;
 		this.view = new Rectangle(topLeft.x, topLeft.y, rWidth, rHeight);
@@ -173,23 +173,26 @@ public class Page extends Editable {
 	}
 
 	private void checkRedraw() {
-		if (view.getTopLeft().x > player.getPlayerArea().getBottomRight().x) {
-			redraw = false;
-			return;
-		}
-		if (view.getBottomRight().x < player.getPlayerArea().getTopLeft().x - 20) {
-			redraw = false;
-			return;
-		}
-		if (view.getTopLeft().y > player.getPlayerArea().getBottomRight().y + 20) {
-			redraw = false;
-			return;
-		}
-		if (view.getBottomRight().y < player.getPlayerArea().getTopLeft().y - 20) {
-			redraw = false;
-			return;
+		if (game.player != null) {
+			if (view.getTopLeft().x > game.player.getPlayerArea().getBottomRight().x) {
+				redraw = false;
+				return;
+			}
+			if (view.getBottomRight().x < game.player.getPlayerArea().getTopLeft().x - 20) {
+				redraw = false;
+				return;
+			}
+			if (view.getTopLeft().y > game.player.getPlayerArea().getBottomRight().y + 20) {
+				redraw = false;
+				return;
+			}
+			if (view.getBottomRight().y < game.player.getPlayerArea().getTopLeft().y - 20) {
+				redraw = false;
+				return;
+			}
 		}
 		redraw = true;
+
 	}
 
 	public void setSize(float size) {
