@@ -19,6 +19,7 @@ public class WidgetErase extends Widget {
 	}
 
 	public void updateActive() {
+		super.updateActive();
 		if (editor.eMode == Editor.editorMode.ERASE) {
 			active = true;
 		} else {

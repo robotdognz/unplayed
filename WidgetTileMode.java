@@ -19,6 +19,7 @@ public class WidgetTileMode extends Widget {
 	}
 
 	public void updateActive() {
+		super.updateActive();
 		if (editor.currentTool instanceof TileTool) {
 			active = true;
 		} else {

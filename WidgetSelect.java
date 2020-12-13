@@ -19,6 +19,7 @@ public class WidgetSelect extends Widget {
 	}
 
 	public void updateActive() {
+		super.updateActive();
 		if (editor.eMode == Editor.editorMode.SELECT) {
 			active = true;
 		} else {

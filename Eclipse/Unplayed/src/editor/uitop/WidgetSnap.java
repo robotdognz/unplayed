@@ -16,6 +16,7 @@ public class WidgetSnap extends Widget {
 	}
 
 	public void updateActive() {
+		super.updateActive();
 		if (editor.snap) {
 			active = true;
 		} else {

@@ -5,7 +5,7 @@ import android.app.Activity;
 
 Activity activity;
 Context context;
-GameLogic gl; //manages the application level game logic
+AppLogic app; //manages the application level game logic
 
 //splash screen
 int splash; //steps through the start up stages 
@@ -23,7 +23,7 @@ void init() {
   //setup game logic
   activity = this.getActivity();
   context = activity.getApplicationContext();
-  gl = new GameLogic(this, activity, context);
+  app = new AppLogic(this, activity, context);
 
   //check and get permissions
   if (!hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
@@ -31,7 +31,7 @@ void init() {
   }
 
   //initalise the game
-  gl.init();
+  app.init();
 }
 
 //this is the only draw method that should have step logic in it
@@ -58,35 +58,44 @@ void draw() {
   }
 
   //testing.draw(); //draw touch events
-  gl.step();
-  gl.draw();
+  app.draw();
 }
 
 void touchStarted() {
-  gl.touchStarted();
+  app.touchStarted();
 }
 
 void touchEnded() {
-  gl.touchEnded();
+  app.touchEnded();
 }
 
 void touchMoved() {
-  gl.touchMoved();
-}
-
-void onPinch(float x, float y, float d) {
-  gl.onPinch(x, y, d);
+  app.touchMoved();
 }
 
 void onTap (float x, float y) {
-  gl.onTap(x, y);
+  app.onTap(x, y);
+}
+
+void onDoubleTap(float x, float y) {
+  app.onDoubleTap(x, y);
 }
 
 void onFlick(float x, float y, float px, float py, float v) {
-  gl.onFlick(x, y, px, py, v);
+  app.onFlick(x, y, px, py, v);
 }
+
+void onLongPress(float x, float y) {
+  app.onLongPress(x, y);
+}
+
+void onPinch(float x, float y, float d) {
+  app.onPinch(x, y, d);
+}
+
+
 void onRotate(float x, float y, float angle) {
-  gl.onRotate(x, y, angle);
+  app.onRotate(x, y, angle);
 }
 
 @ Override

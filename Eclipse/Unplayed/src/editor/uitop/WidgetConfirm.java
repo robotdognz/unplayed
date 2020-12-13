@@ -21,6 +21,7 @@ public class WidgetConfirm extends Widget {
 	}
 
 	public void updateActive() {
+		super.updateActive();
 		if (editor.controller instanceof EditorControl && !editor.snap && editor.point != null) {
 			available = true;
 		} else {

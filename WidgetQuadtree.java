@@ -16,6 +16,7 @@ public class WidgetQuadtree extends Widget {
 	}
 
 	public void updateActive() {
+		super.updateActive();
 		if (editor.quadVis) {
 			active = true;
 		} else {

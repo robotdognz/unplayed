@@ -58,7 +58,8 @@ public class WidgetDelete extends Widget {
 		}
 	}
 
-	public void updateActiveUser() {
+	public void updateActive() {
+		super.updateActive();
 		if (editor.selected != null) {
 			available = true;
 		} else {

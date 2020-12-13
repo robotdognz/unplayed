@@ -18,6 +18,7 @@ public class WidgetEventMode extends Widget {
 	}
 
 	public void updateActive() {
+		super.updateActive();
 		if (editor.currentTool instanceof EventTool) {
 			active = true;
 		} else {

@@ -21,6 +21,7 @@ public class WidgetCameraControl extends Widget {
 	}
 
 	public void updateActive() {
+		super.updateActive();
 		if (available == true && editor.controller instanceof CameraControl) {
 			active = true;
 		} else {

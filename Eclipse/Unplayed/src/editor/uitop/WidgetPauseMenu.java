@@ -3,7 +3,7 @@ package editor.uitop;
 import editor.Editor;
 import editor.Toolbar;
 import game.Game;
-import game.GameLogic;
+import game.AppLogic;
 import processing.core.PApplet;
 import ui.PauseMenu;
 import ui.Widget;
@@ -11,26 +11,27 @@ import ui.Widget;
 public class WidgetPauseMenu extends Widget {
 	private boolean previousStatus = false;
 	private Game game;
-	private GameLogic gl;
+	private AppLogic app;
 
 	public WidgetPauseMenu(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "exit.png");
 		game = editor.game;
-		gl = game.gl;
+		app = game.app;
 	}
 
 	public void clicked() {
 		if (!active) {
 			active = true;
-			previousStatus = gl.gPaused;
-			gl.gPaused = true; // switch pause state
-			gl.menu = new PauseMenu(p, game, gl, this);
+			previousStatus = app.gPaused;
+			app.gPaused = true; // switch pause state
+			app.menu = new PauseMenu(p, game, app, this);
 		}
 	}
 
 	public void updateActive() {
-		if (gl.menu != null) {
+		super.updateActive();
+		if (app.menu != null) {
 			active = true;
 		}
 	}

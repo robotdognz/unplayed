@@ -21,6 +21,7 @@ public class WidgetPlayerControl extends Widget {
 	}
 
 	public void updateActive() {
+		super.updateActive();
 		if (editor.controller instanceof PlayerControl) {
 			active = true;
 		} else {

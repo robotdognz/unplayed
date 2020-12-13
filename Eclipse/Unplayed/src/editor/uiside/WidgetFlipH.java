@@ -15,7 +15,8 @@ public class WidgetFlipH extends Widget {
 		icon = p.loadImage(folder + "FlipHoz.png");
 	}
 
-	public void updateActiveUser() {
+	public void updateActive() {
+		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Editable) {
 			available = true;
 			if (toolbar.isFlippedH()) {

@@ -4,21 +4,21 @@ package ui;
 //import camera.GameCamera;
 import editor.uitop.WidgetPauseMenu;
 import game.Game;
-import game.GameLogic;
+import game.AppLogic;
 import processing.core.PApplet;
 
 public class PauseMenu extends Menu {
 	Game game;
-	GameLogic gl;
+	AppLogic app;
 	WidgetPauseMenu m;
 	String resume = "Resume";
 	String editor = "Toggle Editor";
 	String restart = "Restart";
 
-	public PauseMenu(PApplet p, Game game, GameLogic gameLogic, WidgetPauseMenu m) {
+	public PauseMenu(PApplet p, Game game, AppLogic app, WidgetPauseMenu m) {
 		super(p);
 		this.game = game;
-		this.gl = gameLogic;
+		this.app = app;
 		this.m = m;
 		menuCenterX = p.width / 2;
 		menuWidth = 660;
@@ -38,20 +38,20 @@ public class PauseMenu extends Menu {
 		for (Button b : buttons) {
 			if (b.click().equals(resume)) { // resume the game if resume button pressed
 				m.setActive(false); // change status of pause widget
-				gl.gPaused = m.getPreviousStatus();
-				gl.menu = null; // remove pause menu
+				app.gPaused = m.getPreviousStatus();
+				app.menu = null; // remove pause menu
 			} else if (b.click().equals(editor)) {
-				gl.editorToggle = !gl.editorToggle;
+				app.editorToggle = !app.editorToggle;
 				m.setActive(false); // change status of widget
-				gl.gPaused = m.getPreviousStatus();
-				gl.menu = null; // remove pause menu
-//				if (!gl.editorToggle) {
+				app.gPaused = m.getPreviousStatus();
+				app.menu = null; // remove pause menu
+//				if (!app.editorToggle) {
 //					game.camera = new GameCamera();
 //				} else {
 //					game.camera = new FreeCamera();
 //				}
 			} else if (b.click().equals(restart)) {
-				gl.init(); // rebuild the game 
+				app.init(); // rebuild the game 
 			}
 		}
 	}

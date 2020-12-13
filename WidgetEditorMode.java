@@ -30,7 +30,8 @@ public class WidgetEditorMode extends Widget {
 		}
 	}
 
-	public void updateActiveUser() {
+	public void updateActive() {
+		super.updateActive();
 		if (editor.controller instanceof EditorControl) {
 			active = true;
 		} else {

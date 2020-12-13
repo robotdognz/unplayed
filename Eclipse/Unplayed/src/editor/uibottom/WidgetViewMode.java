@@ -19,6 +19,7 @@ public class WidgetViewMode extends Widget {
 	}
 
 	public void updateActive() {
+		super.updateActive();
 		if (editor.currentTool instanceof PageTool) {
 			active = true;
 		} else {

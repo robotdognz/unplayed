@@ -19,6 +19,7 @@ public class WidgetAdd extends Widget {
 	}
 
 	public void updateActive() {
+		super.updateActive();
 		if (editor.eMode == Editor.editorMode.ADD) {
 			active = true;
 		} else {

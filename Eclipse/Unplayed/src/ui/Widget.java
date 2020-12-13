@@ -238,12 +238,10 @@ public abstract class Widget {
 				}
 			}
 		}
-		updateActiveUser();
+		//updateActiveUser();
 	}
 
-	public void updateActiveUser() { // a method for doing a custom update active without overriding the default code
-										// in update active
-	}
+	//
 	
 	public void setActive(boolean newActive) {
 		active = newActive;

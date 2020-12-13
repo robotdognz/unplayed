@@ -27,7 +27,8 @@ public class WidgetPlayMode extends Widget {
 		}
 	}
 
-	public void updateActive() { //TODO: change to updateActiveUser()?
+	public void updateActive() {
+		super.updateActive();
 		if (editor.camera instanceof FreeCamera || !editor.showPageView) {
 			active = false;
 		} else {

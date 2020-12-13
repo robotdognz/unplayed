@@ -18,6 +18,7 @@ public class WidgetImageMode extends Widget {
 	}
 
 	public void updateActive() {
+		super.updateActive();
 		if (editor.currentTool instanceof ImageTool) {
 			active = true;
 		} else {

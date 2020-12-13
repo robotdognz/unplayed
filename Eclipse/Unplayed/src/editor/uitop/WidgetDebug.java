@@ -15,7 +15,8 @@ public class WidgetDebug extends Widget {
 		editor.debug = !editor.debug;
 	}
 
-	public void updateActiveUser() {
+	public void updateActive() {
+		super.updateActive();
 		if (editor.debug) {
 			active = true;
 		} else {

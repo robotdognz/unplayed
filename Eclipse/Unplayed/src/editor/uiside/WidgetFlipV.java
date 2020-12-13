@@ -14,7 +14,8 @@ public class WidgetFlipV extends Widget {
 		toolbar = (EditorSide) parent;
 		icon = p.loadImage(folder + "FlipHVert.png");
 	}
-	public void updateActiveUser() {
+	public void updateActive() {
+		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Editable) {
 			available = true;
 			if (toolbar.isFlippedV()) {

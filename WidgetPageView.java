@@ -16,6 +16,7 @@ public class WidgetPageView extends Widget {
 	}
 
 	public void updateActive() {
+		super.updateActive();
 		if (editor.showPageView) {
 			active = true;
 		} else {

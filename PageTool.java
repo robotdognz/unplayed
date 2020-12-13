@@ -25,8 +25,8 @@ public class PageTool extends AreaTool {
 	private Page currentPage;
 
 	// variables for adjusting selected page
-	private float pX = 0;
-	private float pY = 0;
+//	private float pX = 0;
+//	private float pY = 0;
 
 	public PageTool(PApplet p, Editor editor) {
 		super(p, editor);

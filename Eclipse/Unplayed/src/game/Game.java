@@ -17,7 +17,7 @@ public class Game {
 	public Player player;
 	public Paper paper;
 	public Converter convert;
-	public GameLogic gl;
+	public AppLogic app;
 
 	public Quadtree world;
 	public ArrayList<View> views;
@@ -109,8 +109,8 @@ public class Game {
 		// speed 10)
 	}
 
-	public void passGameLogic(GameLogic gl) {
-		this.gl = gl;
+	public void passGameLogic(AppLogic app) {
+		this.app = app;
 	}
 
 	public void restart() {

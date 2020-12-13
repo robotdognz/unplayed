@@ -21,7 +21,7 @@ import ui.Menu;
 import ui.Widget;
 
 //handles all of the logic at the application level
-public class GameLogic {
+public class AppLogic {
 	private PApplet p;
 	private Activity activity;
 	private Context context;
@@ -43,7 +43,7 @@ public class GameLogic {
 	public ArrayList<Widget> widgets;
 	public float widgetSpacing; // size of gap between widgets
 
-	public GameLogic(PApplet p, Activity activity, Context context) {
+	public AppLogic(PApplet p, Activity activity, Context context) {
 		this.p = p;
 		this.activity = activity;
 		this.context = context;
@@ -79,9 +79,6 @@ public class GameLogic {
 		widgetSpacing = p.width / (widgets.size() + 1);
 	}
 
-	public void step() {
-	}
-
 	public void draw() {
 		// touch screen
 		touches.clear();
@@ -94,7 +91,7 @@ public class GameLogic {
 			lastTouch = new PVector(0, 0);
 		}
 
-		// step the game ad editor
+		// step the game and editor
 		if (!gPaused) { // step the game if it is not paused
 			// step editor or game controller depending on editor toggle
 			if (editorToggle && editor != null) {
@@ -181,6 +178,32 @@ public class GameLogic {
 			}
 		}
 	}
+	
+	public void onTap(float x, float y) {
+		if (menu == null) {
+			if (editorToggle && editor != null) {
+				editor.onTap(x, y);
+			} else {
+				// controller.onTap(x, y);
+			}
+		}
+		
+		//gesture.
+	}
+	
+	public void onDoubleTap(float x, float y) {
+		
+	}
+	
+	public void onFlick(float x, float y, float px, float py, float v) {
+		// x/y start of flick
+		// px/yx end of flick
+		// v velocity of flick
+	}
+	
+	public void onLongPress(float x, float y) {
+		
+	}
 
 	public void onPinch(float x, float y, float d) {
 		if (menu == null) {
@@ -190,22 +213,6 @@ public class GameLogic {
 				controller.onPinch(touches, x, y, d);
 			}
 		}
-	}
-
-	public void onTap(float x, float y) {
-		if (menu == null) {
-			if (editorToggle && editor != null) {
-				editor.onTap(x, y);
-			} else {
-				// controller.onTap(x, y);
-			}
-		}
-	}
-
-	public void onFlick(float x, float y, float px, float py, float v) {
-		// x/y start of flick
-		// px/yx end of flick
-		// v velocity of flick
 	}
 
 	public void onRotate(float x, float y, float angle) {
