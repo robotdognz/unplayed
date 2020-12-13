@@ -72,7 +72,7 @@ public class Game {
 		this.texture = texture;
 		this.convert = convert;
 
-		//player = new Player(p, texture, playerStart.x, playerStart.y, v);
+		// player = new Player(p, texture, playerStart.x, playerStart.y, v);
 
 		startingWorld = new Rectangle(playerStart.x - 400, playerStart.y - 400, 900, 900);
 		world = new Quadtree(startingWorld);
@@ -106,7 +106,8 @@ public class Game {
 		rightEdge = camera.getCenter().x + newScale / 2;
 		newRightEdge = rightEdge;
 
-		//world.insert(new Tile(texture, texture.getTileList().get(0).getFile(), 0, 100));
+		// world.insert(new Tile(texture, texture.getTileList().get(0).getFile(), 0,
+		// 100));
 		// TODO: to be replaced when there is a player start event
 
 		// everything needs to be a multiple of 20 (multiple of 10 so you can always
@@ -117,23 +118,23 @@ public class Game {
 //	public void passAppLogic(AppLogic app) {
 //		this.app = app;
 //	}
-	
+
 	public void setPlayerStart(float x, float y) {
 		playerStart.x = x;
 		playerStart.y = y;
 	}
-	
+
 	public void createPlayer() {
-		if(playerStart != null) {
+		if (playerStart != null) {
 			player = new Player(p, texture, playerStart.x, playerStart.y, vibe);
 		}
 	}
 
 	public void restart() {
 		// legacy variables from level class TODO: write these out eventually
-		//PVector playerStart = new PVector(0, 0);
+		// PVector playerStart = new PVector(0, 0);
 		createPlayer();
-		
+
 		PVector cameraTopLeft = new PVector(-400, -400);
 		PVector cameraBottomRight = new PVector(500, 600);
 		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
@@ -195,9 +196,11 @@ public class Game {
 		world.retrieve(screenObjects, screenSpace);
 
 		// find platforms near the player
-		playerObjects.clear();
-		world.retrieve(playerObjects, player.getPlayerArea());
-		player.step(playerObjects, this);
+		if (player != null) {
+			playerObjects.clear();
+			world.retrieve(playerObjects, player.getPlayerArea());
+			player.step(playerObjects, this);
+		}
 
 		if (camera.getGame()) {
 			screenMovement();
@@ -260,9 +263,9 @@ public class Game {
 	public PageView getPageView() {
 		return pageView;
 	}
-	
+
 	public View getView(float x, float y) {
-		if(views.size() < 1) {
+		if (views.size() < 1) {
 			return null;
 		}
 		for (View view : views) {
@@ -278,16 +281,16 @@ public class Game {
 			if (view.getBottomRight().y < y) {
 				continue;
 			}
-			//return the first overlap
+			// return the first overlap
 			return view;
 		}
-		
+
 		return null;
 	}
-	
-	public void setViews(ArrayList<View> views){
+
+	public void setViews(ArrayList<View> views) {
 		this.views.clear();
-		for(View view : views) {
+		for (View view : views) {
 			this.views.add(view);
 		}
 	}
