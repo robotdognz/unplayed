@@ -79,6 +79,10 @@ public class AppLogic {
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
 	}
+	
+	public void quit() {
+		activity.finish();
+	}
 
 	public void draw() {
 		// touch screen

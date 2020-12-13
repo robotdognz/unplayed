@@ -14,6 +14,7 @@ public class PauseMenu extends Menu {
 	String resume = "Resume";
 	String editor = "Toggle Editor";
 	String restart = "Restart";
+	String quit = "quit";
 
 	public PauseMenu(PApplet p, Game game, AppLogic app, WidgetPauseMenu m) {
 		super(p);
@@ -27,9 +28,11 @@ public class PauseMenu extends Menu {
 		Button resumeB = new Button(p.width / 2, 500, buttonHeight, resume);
 		Button editorB = new Button(p.width / 2, 500, buttonHeight, editor);
 		Button restartB = new Button(p.width / 2, 500, buttonHeight, restart);
+		Button quitB = new Button(p.width / 2, 500, buttonHeight, quit);
 		buttons.add(resumeB);
 		buttons.add(editorB);
 		buttons.add(restartB);
+		buttons.add(quitB);
 		height();
 		menuTopY = p.height / 2 - menuHeight / 2;
 	}
@@ -51,7 +54,9 @@ public class PauseMenu extends Menu {
 //					game.camera = new FreeCamera();
 //				}
 			} else if (b.click().equals(restart)) {
-				app.init(); // rebuild the game 
+				app.init(); // rebuild the game
+			} else if (b.click().equals(quit)) {
+				app.quit(); // exit the game
 			}
 		}
 	}
