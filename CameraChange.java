@@ -90,14 +90,12 @@ public class CameraChange extends Event {
 		g.newRightEdge = (int) cameraBottomRight.x;
 	}
 
-	public void drawSelected(PGraphics g, boolean pageView) {
-		super.drawSelected(g);
-		if (pageView) {
-			g.noStroke();
-			g.rectMode(CORNER);
-			g.fill(255, 0, 0, 100);
-			g.rect(cameraTopLeft.x, cameraTopLeft.y, cameraBottomRight.x - cameraTopLeft.x,
-					cameraBottomRight.y - cameraTopLeft.y);
-		}
+	public void drawCameraArea(PGraphics g) {
+		g.noStroke();
+		g.rectMode(CORNER);
+		g.fill(255, 0, 0, 100);
+		g.rect(cameraTopLeft.x, cameraTopLeft.y, cameraBottomRight.x - cameraTopLeft.x,
+				cameraBottomRight.y - cameraTopLeft.y);
 	}
+
 }

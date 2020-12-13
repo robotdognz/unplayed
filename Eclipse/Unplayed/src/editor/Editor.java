@@ -163,7 +163,7 @@ public class Editor {
 				if (selected instanceof Page) {
 					selected.drawSelected(p.g);
 				} else if (selected instanceof CameraChange) {
-					((CameraChange) selected).drawSelected(p.g, true);
+					((CameraChange) selected).drawCameraArea(p.g);
 				}
 			}
 			// draw tool effects
