@@ -215,7 +215,9 @@ public class Editor {
 				((Event) r).draw(p.g, currentScale);
 			}
 		}
-		game.player.draw(p.g);
+		if (game.player != null) {
+			game.player.draw(p.g);
+		}
 		game.paper.draw(p.g, game.screenSpace, currentScale);
 
 		// draw the views
@@ -319,7 +321,7 @@ public class Editor {
 			controller.onPinch(touches, x, y, d); // controlls for on pinch event
 		}
 	}
-	
+
 	public void onRotate(float x, float y, float angle) {
 		if (nextTouchInactive) {
 			return;
