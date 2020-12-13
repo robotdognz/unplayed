@@ -4,6 +4,7 @@ import static processing.core.PConstants.*;
 
 import java.util.ArrayList;
 
+import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
 import objects.Editable;
@@ -19,11 +20,8 @@ public class EditorSide extends Toolbar {
 //	private PImage top;
 //	private PImage middle;
 //	private PImage bottom;
-	//public ModifyMode mode;
+	// public ModifyMode mode;
 	public boolean adjust;
-//	public enum ModifyMode {
-//		NONE, ROTATE, SIZE, MOVE
-//	}
 
 	public EditorSide(PApplet p, Editor editor) {
 		super(p, editor);
@@ -56,34 +54,47 @@ public class EditorSide extends Toolbar {
 
 		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height); // TODO: needs to scale to screen
 	}
-	
+
 	public void reset() {
 		adjust = false;
 	}
 
 	public void draw(PVector touch, Menu menu) {
 		// super.draw(touch, menu);
-		
-		//step
-		if(!(editor.selected instanceof Page)) {
-			adjust = false;
-		}
-		
-		p.imageMode(CENTER);
 
-		for (int i = 0; i < widgets.size(); i++) {
-			widgets.get(i).draw(80, widgetOffset + widgetSpacing * i);
-			widgets.get(i).updateActive();
-			if (menu == null) {
-				widgets.get(i).hover(touch);
+		// step if controlling the editor
+		if (editor.controller instanceof EditorControl) {
+			// step
+			if (!(editor.selected instanceof Page)) {
+				adjust = false;
+			}
+
+			p.imageMode(CENTER);
+
+			for (int i = 0; i < widgets.size(); i++) {
+				widgets.get(i).draw(80, widgetOffset + widgetSpacing * i);
+				widgets.get(i).updateActive();
+				if (menu == null) {
+					widgets.get(i).hover(touch);
+				}
 			}
 		}
 	}
 
+	public boolean insideBoundary(float x, float y) {
+		// prevent editor controls if controlling the editor
+		if (editor.controller instanceof EditorControl) {
+			return super.insideBoundary(x, y);
+		}
+		return false;
+	}
+
 	public void touchEnded() {
 		// check for clicking on widgets
-		for (int i = 0; i < widgets.size(); i++) {
-			widgets.get(i).click();
+		if (editor.controller instanceof EditorControl) {
+			for (int i = 0; i < widgets.size(); i++) {
+				widgets.get(i).click();
+			}
 		}
 	}
 
@@ -97,15 +108,6 @@ public class EditorSide extends Toolbar {
 
 	public void setArea(PVector topLeft, PVector bottomRight) {
 
-	}
-
-	public void setSize(float size) {
-		// will only be called for page?
-//		if (editor.selected != null) {
-//			if (editor.selected instanceof Page) {
-//				((Editable) editor.selected).setSize(float size);
-//			}
-//		}
 	}
 
 	// methods for the widget to access
