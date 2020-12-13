@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import game.Game;
-import game.Player;
 
 import java.util.ArrayList;
 
@@ -15,7 +14,6 @@ import static processing.core.PConstants.*;
 public class Page extends Editable {
 	private PApplet p;
 	private Game game;
-	// private Player player;
 	private Rectangle view; // the page's view into the world
 	private HashSet<Rectangle> pageObjects;
 	private HashSet<String> excludedObjects; // a list of rectangle strings to exclude while drawing
@@ -31,7 +29,6 @@ public class Page extends Editable {
 		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
 		this.p = p;
 		this.game = game;
-		// this.player = game.player;
 		float rWidth = bottomRight.x - topLeft.x;
 		float rHeight = bottomRight.y - topLeft.y;
 		this.view = new Rectangle(topLeft.x, topLeft.y, rWidth, rHeight);

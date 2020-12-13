@@ -10,6 +10,7 @@ import misc.Vibe;
 import objects.Rectangle;
 import objects.View;
 import processing.core.*;
+import static processing.core.PConstants.*;
 
 public class Game {
 	private PApplet p;
@@ -72,8 +73,6 @@ public class Game {
 		this.texture = texture;
 		this.convert = convert;
 
-		// player = new Player(p, texture, playerStart.x, playerStart.y, v);
-
 		startingWorld = new Rectangle(playerStart.x - 400, playerStart.y - 400, 900, 900);
 		world = new Quadtree(startingWorld);
 		views = new ArrayList<View>();
@@ -106,10 +105,6 @@ public class Game {
 		rightEdge = camera.getCenter().x + newScale / 2;
 		newRightEdge = rightEdge;
 
-		// world.insert(new Tile(texture, texture.getTileList().get(0).getFile(), 0,
-		// 100));
-		// TODO: to be replaced when there is a player start event
-
 		// everything needs to be a multiple of 20 (multiple of 10 so you can always
 		// fall down holes, and 20 so you don't clip through things 90 apart because of
 		// speed 10)
@@ -138,9 +133,6 @@ public class Game {
 
 	public void restart() {
 		// legacy variables from level class TODO: write these out eventually
-		// PVector playerStart = new PVector(0, 0);
-		createPlayer();
-
 		PVector cameraTopLeft = new PVector(-400, -400);
 		PVector cameraBottomRight = new PVector(500, 600);
 		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
@@ -151,8 +143,7 @@ public class Game {
 		int topOfBottomBar = (int) cameraBottomRight.y;
 
 		// actual restart code starts here
-//		player.resetVelocity();
-//		player.setPosition(playerStart);
+		createPlayer();
 		newScale = startScale;
 		newCenter = startCenter;
 		newTopEdge = bottomOfTopBar;
@@ -165,36 +156,36 @@ public class Game {
 		pageView.draw();
 
 		// TODO: do something with this view border code
-//		p.pushMatrix(); // start working at game scale
-//		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
-//
-//		// camera
-//		p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
-//		p.scale(camera.getSubScale()); // apply offset for tall screen spaces
-//		p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
-//
-//		// draw black bars
-//		if (camera.getGame()) {
-//			player.drawArrows(this);
-//			p.fill(20, 255); // 10, 255
-//			int barSize = 1000000;
-//			p.rectMode(CORNERS);
-//			// top bar
-//			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
-//					topEdge);
-//			// bottom bar
-//			p.rect(-barSize + camera.getCenter().x, bottomEdge, barSize + camera.getCenter().x,
-//					camera.getCenter().y + barSize);
-//			// left bar
-//			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, leftEdge,
-//					camera.getCenter().y + barSize);
-//			// right bar
-//			p.rect(rightEdge, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
-//					camera.getCenter().y + barSize);
-//			p.rectMode(CORNER);
-//		}
-//
-//		p.popMatrix(); // start working at screen scale
+		p.pushMatrix(); // start working at game scale
+		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
+
+		// camera
+		p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
+		p.scale(camera.getSubScale()); // apply offset for tall screen spaces
+		p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
+
+		// draw black bars
+		if (camera.getGame()) {
+			player.drawArrows(this);
+			p.fill(20, 255); // 10, 255
+			int barSize = 1000000;
+			p.rectMode(CORNERS);
+			// top bar
+			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
+					topEdge);
+			// bottom bar
+			p.rect(-barSize + camera.getCenter().x, bottomEdge, barSize + camera.getCenter().x,
+					camera.getCenter().y + barSize);
+			// left bar
+			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, leftEdge,
+					camera.getCenter().y + barSize);
+			// right bar
+			p.rect(rightEdge, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
+					camera.getCenter().y + barSize);
+			p.rectMode(CORNER);
+		}
+
+		p.popMatrix(); // start working at screen scale
 	}
 
 	public void step() {
