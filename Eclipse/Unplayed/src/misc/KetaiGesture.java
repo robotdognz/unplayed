@@ -1,7 +1,9 @@
 package misc;
 
 import java.lang.reflect.Method;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -66,6 +68,16 @@ public class KetaiGesture implements OnGestureListener, OnDoubleTapListener {
 		parent.registerMethod("touchEvent", this);
 
 		findParentIntentions();
+	}
+	
+	
+	//my custom methods
+	public Map<Integer, PVector> getCursors(){
+		return Collections.unmodifiableMap(cursors);
+	}
+	
+	public Map<Integer, PVector> getPcursors(){
+		return Collections.unmodifiableMap(pcursors);
 	}
 
 	/*
