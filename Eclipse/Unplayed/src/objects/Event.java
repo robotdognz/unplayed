@@ -13,8 +13,8 @@ public abstract class Event extends Editable {
 	private String name;
 	public boolean visible;
 
-	public Event(TextureCache texture, String name, boolean visible, float x, float y, float rWidth, float rHeight) {
-		super(x, y, rWidth, rHeight);
+	public Event(TextureCache texture, String name, boolean visible, float x, float y, float width, float height) {
+		super(x, y, width, height);
 		this.name = name;
 		this.visible = visible;
 

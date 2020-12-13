@@ -1,7 +1,8 @@
-package objects;
+package objects.events;
 
 import game.Game;
 import handlers.TextureCache;
+import objects.Event;
 import processing.core.PGraphics;
 import processing.core.PVector;
 import static processing.core.PConstants.*;

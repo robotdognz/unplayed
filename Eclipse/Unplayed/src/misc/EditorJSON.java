@@ -8,15 +8,15 @@ import java.util.List;
 import editor.Editor;
 import game.Game;
 import handlers.TextureCache;
-import objects.CameraChange;
 import objects.Editable;
 import objects.Event;
 import objects.Image;
 import objects.Page;
-import objects.PlayerDeath;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
+import objects.events.CameraChange;
+import objects.events.PlayerDeath;
 import processing.core.*;
 import processing.data.*;
 

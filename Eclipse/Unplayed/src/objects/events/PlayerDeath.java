@@ -1,7 +1,8 @@
-package objects;
+package objects.events;
 
 import game.Game;
 import handlers.TextureCache;
+import objects.Event;
 
 public class PlayerDeath extends Event {
 	public PlayerDeath(TextureCache texture, String name, int x, int y) {

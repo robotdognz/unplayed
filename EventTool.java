@@ -9,8 +9,8 @@ import editor.Editor.editorMode;
 import game.Game;
 import handlers.TextureCache;
 import objects.Event;
-import objects.PlayerDeath;
 import objects.Rectangle;
+import objects.events.PlayerDeath;
 import processing.core.PVector;
 
 public class EventTool implements Tool {

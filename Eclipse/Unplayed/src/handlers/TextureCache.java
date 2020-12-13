@@ -7,15 +7,18 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import objects.CameraChange;
+import game.Game;
 import objects.Event;
-import objects.PlayerDeath;
+import objects.events.CameraChange;
+import objects.events.PlayerDeath;
+import objects.events.PlayerStart;
 import processing.core.*;
 //import processing.data.*;
 
 public class TextureCache {
 	PApplet p;
-	
+	Game game;
+
 	// LODs
 	public int LOD256 = 4;
 	public int LOD128 = 8;
@@ -29,8 +32,8 @@ public class TextureCache {
 	private PImage gridLOD32;
 	private PImage gridLOD16;
 	private PImage gridLOD8;
-	
-	//desk textures
+
+	// desk textures
 	private PImage deskBehind;
 	private PImage deskInfront;
 
@@ -68,7 +71,7 @@ public class TextureCache {
 		gridLOD32 = p.requestImage("PaperGrid_128x128.png");
 		gridLOD16 = p.requestImage("PaperGrid_64x64.png");
 		gridLOD8 = p.requestImage("PaperGrid_32x32.png");
-		
+
 		deskBehind = p.requestImage("PagesViewBackGround.png");
 		deskInfront = p.requestImage("PagesViewBackGround_shading.png");
 
@@ -79,6 +82,10 @@ public class TextureCache {
 
 		// player TODO: get rid of this
 		defaultBlock = p.requestImage("player_main.png");
+	}
+	
+	public void passGame(Game game) {
+		this.game = game;
 	}
 
 	public PImage getGrid(float scale) {
@@ -128,7 +135,8 @@ public class TextureCache {
 					temp.add(i);
 				}
 				if (temp.size() >= 2) {
-					imageMap.put(file, new ImageHandler(p, this, file, temp.get(temp.size() - 2), temp.get(temp.size() - 1)));
+					imageMap.put(file,
+							new ImageHandler(p, this, file, temp.get(temp.size() - 2), temp.get(temp.size() - 1)));
 				}
 			}
 			temp.clear();
@@ -139,16 +147,28 @@ public class TextureCache {
 
 	private void loadEvents() {
 		@SuppressWarnings("unused")
-		TextureCache texture = this; //so that this can be passed to the modified event handlers below
-		
+		TextureCache texture = this; // so that this can be passed to the modified event handlers below
+
 		// get directory and make map
 		eventDir = new File(p.dataPath("events") + '/');
 		eventMap = new HashMap<String, EventHandler>();
 
-		// player death
+		// ----------------player start
+		String start = "PlayerStart";
+		File playerStartFile = new File(eventDir + "/spikes.png");
+
+		EventHandler playerStart = new EventHandler(p, this, playerStartFile) {
+			public Event makeEvent(int x, int y) {
+				String start = "PlayerStart";
+				return new PlayerStart(texture, start, x, y, game);
+			}
+		};
+		eventMap.put(start, playerStart);
+
+		// ----------------player death
 		String spikes = "PlayerDeath";
 		File playerDeathFile = new File(eventDir + "/spikes.png");
-		
+
 		EventHandler playerDeath = new EventHandler(p, this, playerDeathFile) {
 			public Event makeEvent(int x, int y) {
 				String spikes = "PlayerDeath";
@@ -157,13 +177,14 @@ public class TextureCache {
 		};
 		eventMap.put(spikes, playerDeath);
 
-		// camera change
+		// ----------------camera change
 		String camera = "CameraChange";
 		File cameraChangeFile = new File(eventDir + "/cameraChange.png");
 		EventHandler cameraChange = new EventHandler(p, this, cameraChangeFile) {
 			public Event makeEvent(int x, int y) {
 				String camera = "CameraChange";
-				return new CameraChange(texture, camera, x, y, 100, 100, new PVector(-700, -200), new PVector(700, 1500), 2, 2);
+				return new CameraChange(texture, camera, x, y, 100, 100, new PVector(-700, -200),
+						new PVector(700, 1500), 2, 2);
 			}
 		};
 		eventMap.put(camera, cameraChange);

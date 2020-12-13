@@ -8,7 +8,6 @@ import handlers.TextureCache;
 import misc.Converter;
 import misc.Vibe;
 import objects.Rectangle;
-import objects.Tile;
 import objects.View;
 import processing.core.*;
 
@@ -17,6 +16,8 @@ public class Game {
 	public Player player;
 	public Paper paper;
 	public Converter convert;
+	private Vibe vibe;
+	private TextureCache texture;
 	public AppLogic app;
 
 	public Quadtree world;
@@ -24,9 +25,10 @@ public class Game {
 	public Rectangle startingWorld;
 	public HashSet<Rectangle> playerObjects;
 	private PageView pageView;
+	private PVector playerStart;
 
 	public Camera camera;
-	// TODO: move these to editor (need to moved some logic from step too)
+	// TODO: move these to editor (need to move some logic from step too)
 	public Rectangle screenSpace;
 	public int screenSpaceOffset;
 	public HashSet<Rectangle> screenObjects;
@@ -50,9 +52,9 @@ public class Game {
 	public float newRightEdge;
 	public float boarderZoomSpeed = 0.1f; // 0.1 is default
 
-	public Game(PApplet p, Camera c, Vibe v, TextureCache texture, Converter convert) {
+	public Game(PApplet p, AppLogic app, Camera c, Vibe v, TextureCache texture, Converter convert) {
 		// legacy variables from level class TODO: write these out eventually
-		PVector playerStart = new PVector(0, 0);
+		playerStart = new PVector(0, 0);
 		PVector cameraTopLeft = new PVector(-400, -400);
 		PVector cameraBottomRight = new PVector(500, 600);
 		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
@@ -64,10 +66,13 @@ public class Game {
 
 		// actual game class starts here
 		this.p = p;
+		this.app = app;
 		this.camera = c;
+		this.vibe = v;
+		this.texture = texture;
 		this.convert = convert;
 
-		player = new Player(p, texture, playerStart.x, playerStart.y, v);
+		//player = new Player(p, texture, playerStart.x, playerStart.y, v);
 
 		startingWorld = new Rectangle(playerStart.x - 400, playerStart.y - 400, 900, 900);
 		world = new Quadtree(startingWorld);
@@ -101,7 +106,7 @@ public class Game {
 		rightEdge = camera.getCenter().x + newScale / 2;
 		newRightEdge = rightEdge;
 
-		world.insert(new Tile(texture, texture.getTileList().get(0).getFile(), 0, 100));
+		//world.insert(new Tile(texture, texture.getTileList().get(0).getFile(), 0, 100));
 		// TODO: to be replaced when there is a player start event
 
 		// everything needs to be a multiple of 20 (multiple of 10 so you can always
@@ -109,13 +114,26 @@ public class Game {
 		// speed 10)
 	}
 
-	public void passGameLogic(AppLogic app) {
-		this.app = app;
+//	public void passAppLogic(AppLogic app) {
+//		this.app = app;
+//	}
+	
+	public void setPlayerStart(float x, float y) {
+		playerStart.x = x;
+		playerStart.y = y;
+	}
+	
+	public void createPlayer() {
+		if(playerStart != null) {
+			player = new Player(p, texture, playerStart.x, playerStart.y, vibe);
+		}
 	}
 
 	public void restart() {
 		// legacy variables from level class TODO: write these out eventually
-		PVector playerStart = new PVector(0, 0);
+		//PVector playerStart = new PVector(0, 0);
+		createPlayer();
+		
 		PVector cameraTopLeft = new PVector(-400, -400);
 		PVector cameraBottomRight = new PVector(500, 600);
 		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
@@ -126,8 +144,8 @@ public class Game {
 		int topOfBottomBar = (int) cameraBottomRight.y;
 
 		// actual restart code starts here
-		player.resetVelocity();
-		player.setPosition(playerStart);
+//		player.resetVelocity();
+//		player.setPosition(playerStart);
 		newScale = startScale;
 		newCenter = startCenter;
 		newTopEdge = bottomOfTopBar;
