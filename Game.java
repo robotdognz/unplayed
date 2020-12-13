@@ -129,6 +129,12 @@ public class Game {
 			player = new Player(p, texture, playerStart.x, playerStart.y, vibe);
 		}
 	}
+	
+	public void stopPlayer() {
+		if(player != null) {
+			player.still();
+		}
+	}
 
 	public void restart() {
 		// legacy variables from level class TODO: write these out eventually

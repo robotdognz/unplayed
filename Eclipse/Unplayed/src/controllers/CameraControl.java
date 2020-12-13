@@ -24,9 +24,7 @@ public class CameraControl implements Controller {
 	}
 
 	public void step(ArrayList<PVector> touch) {
-		if (game.player != null) {
-			game.player.still();
-		}
+		game.stopPlayer();
 	}
 
 	public void touchStarted(PVector touch) {

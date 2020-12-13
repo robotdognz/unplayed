@@ -22,7 +22,7 @@ public class EditorControl implements Controller {
 	}
 
 	public void step(ArrayList<PVector> touch) {
-		game.player.still();
+		game.stopPlayer();
 	}
 
 	public void touchStarted(PVector touch) {
