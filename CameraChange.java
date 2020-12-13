@@ -35,6 +35,9 @@ public class CameraChange extends Event {
 //		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 //		this.newCent = new PVector(centerX, centerY);
 //		this.newScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
+		
+//		int centerX = (int) ((camera.getBottomRight().x - camera.getTopLeft().x) / 2 + camera.getTopLeft().x);
+//		int centerY = (int) ((camera.getTopLeft().y - camera.getBottomRight().y) / 2 + camera.getBottomRight().y);
 
 		// this.type = type;
 	}
@@ -80,7 +83,9 @@ public class CameraChange extends Event {
 	// }
 	
 	private PVector getCameraCenter() {
-		return new PVector(camera.getTopLeft().x+camera.getWidth()/2, camera.getTopLeft().y-camera.getHeight()/2);
+		int centerX = (int) ((camera.getBottomRight().x - camera.getTopLeft().x) / 2 + camera.getTopLeft().x);
+		int centerY = (int) ((camera.getTopLeft().y - camera.getBottomRight().y) / 2 + camera.getBottomRight().y);
+		return new PVector(centerX, centerY);
 	}
 
 	public void activate(Game g) {
