@@ -203,8 +203,13 @@ public class EditorJSON {
 							object.getFloat("cameraBottomRightY"));
 					float cameraZoom = object.getFloat("cameraZoom");
 					float edgeZoom = object.getFloat("edgeZoom");
-					CameraChange cc = new CameraChange(texture, name, pX, pY, pWidth, pHeight, cameraTopLeft,
-							cameraBottomRight, cameraZoom, edgeZoom);
+					CameraChange cc = new CameraChange(texture, name, pX, pY);
+					cc.setWidth(pWidth);
+					cc.setHeight(pHeight);
+					cc.setCameraTopLeft(cameraTopLeft);
+					cc.setCameraBottomRight(cameraBottomRight);
+					cc.setCameraZoom(cameraZoom);
+					cc.setEdgeZoom(edgeZoom);
 					cc.setAngle(angle);
 					if (flipH) {
 						cc.flipH();

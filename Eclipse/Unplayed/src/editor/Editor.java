@@ -25,6 +25,7 @@ import objects.Page;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
+import objects.events.CameraChange;
 import processing.core.*;
 import ui.Menu;
 
@@ -158,8 +159,12 @@ public class Editor {
 			p.translate(-camera.getCenter().x, -camera.getCenter().y);
 
 			// draw selection box around selected object
-			if (selected != null && selected instanceof Page) {
-				selected.drawSelected(p.g);
+			if (selected != null) {
+				if (selected instanceof Page) {
+					selected.drawSelected(p.g);
+				} else if (selected instanceof CameraChange) {
+					((CameraChange) selected).drawSelected(p.g, true);
+				}
 			}
 			// draw tool effects
 			if (currentTool != null) {

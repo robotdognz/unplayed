@@ -17,20 +17,21 @@ public class CameraChange extends Event {
 	private float edgeZoom;
 	// private String type; //Strings: "Static", "Full", "Horizontal", "Vertical"
 
-	// TODO: the constructor doesn't need all of these parameters if they are being
-	// set later, remove them and initialize them with default values
-	public CameraChange(TextureCache texture, String name, int x, int y, int eventW, int eventH, PVector cameraTopLeft,
-			PVector cameraBottomRight, float cameraZoom, float edgeZoom) {
-		super(texture, name, false, x, y, eventW, eventH);
+	public CameraChange(TextureCache texture, String name, int x, int y) {
+		super(texture, name, false, x, y, 100, 100);
 		// considering separating edgeZoom into in speed and out speed
+
+		// TODO: figure out what the default values should be
+		this.cameraTopLeft = new PVector(-700, -200);
+		this.cameraBottomRight = new PVector(700, 1500);
+		this.cameraZoom = 2;
+		this.edgeZoom = 2;
+
 		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
 		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 		this.newCent = new PVector(centerX, centerY);
 		this.newScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
-		this.cameraTopLeft = cameraTopLeft;
-		this.cameraBottomRight = cameraBottomRight;
-		this.cameraZoom = cameraZoom;
-		this.edgeZoom = edgeZoom;
+
 		// this.type = type;
 	}
 
@@ -38,16 +39,32 @@ public class CameraChange extends Event {
 		return cameraTopLeft;
 	}
 
+	public void setCameraTopLeft(PVector cameraTopLeft) {
+		this.cameraTopLeft = cameraTopLeft;
+	}
+
 	public PVector getCameraBottomRight() {
 		return cameraBottomRight;
+	}
+
+	public void setCameraBottomRight(PVector cameraBottomRight) {
+		this.cameraBottomRight = cameraBottomRight;
 	}
 
 	public float getCameraZoom() {
 		return cameraZoom;
 	}
 
+	public void setCameraZoom(float cameraZoom) {
+		this.cameraZoom = cameraZoom;
+	}
+
 	public float getEdgeZoom() {
 		return edgeZoom;
+	}
+
+	public void setEdgeZoom(float edgeZoom) {
+		this.edgeZoom = edgeZoom;
 	}
 
 	// public String getType() {
@@ -73,13 +90,14 @@ public class CameraChange extends Event {
 		g.newRightEdge = (int) cameraBottomRight.x;
 	}
 
-	public void drawSelected(PGraphics g) {
+	public void drawSelected(PGraphics g, boolean pageView) {
 		super.drawSelected(g);
-		// TODO: the camera area needs to be drawn in the page view
-		g.noStroke();
-		g.rectMode(CORNER);
-		g.fill(255, 0, 0, 100);
-		g.rect(cameraTopLeft.x, cameraTopLeft.y, cameraBottomRight.x - cameraTopLeft.x,
-				cameraBottomRight.y - cameraTopLeft.y);
+		if (pageView) {
+			g.noStroke();
+			g.rectMode(CORNER);
+			g.fill(255, 0, 0, 100);
+			g.rect(cameraTopLeft.x, cameraTopLeft.y, cameraBottomRight.x - cameraTopLeft.x,
+					cameraBottomRight.y - cameraTopLeft.y);
+		}
 	}
 }

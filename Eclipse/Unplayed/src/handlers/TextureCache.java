@@ -83,7 +83,7 @@ public class TextureCache {
 		// player TODO: get rid of this
 		defaultBlock = p.requestImage("player_main.png");
 	}
-	
+
 	public void passGame(Game game) {
 		this.game = game;
 	}
@@ -153,7 +153,7 @@ public class TextureCache {
 		eventDir = new File(p.dataPath("events") + '/');
 		eventMap = new HashMap<String, EventHandler>();
 
-		// ----------------player start
+		// ----------------player start----------------
 		String start = "PlayerStart";
 		File playerStartFile = new File(eventDir + "/spikes.png");
 
@@ -165,7 +165,7 @@ public class TextureCache {
 		};
 		eventMap.put(start, playerStart);
 
-		// ----------------player death
+		// ----------------player death----------------
 		String spikes = "PlayerDeath";
 		File playerDeathFile = new File(eventDir + "/spikes.png");
 
@@ -177,14 +177,13 @@ public class TextureCache {
 		};
 		eventMap.put(spikes, playerDeath);
 
-		// ----------------camera change
+		// ----------------camera change----------------
 		String camera = "CameraChange";
 		File cameraChangeFile = new File(eventDir + "/cameraChange.png");
 		EventHandler cameraChange = new EventHandler(p, this, cameraChangeFile) {
 			public Event makeEvent(int x, int y) {
 				String camera = "CameraChange";
-				return new CameraChange(texture, camera, x, y, 100, 100, new PVector(-700, -200),
-						new PVector(700, 1500), 2, 2);
+				return new CameraChange(texture, camera, x, y);
 			}
 		};
 		eventMap.put(camera, cameraChange);
