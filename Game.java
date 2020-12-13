@@ -124,9 +124,9 @@ public class Game {
 			player = new Player(p, texture, playerStart.x, playerStart.y, vibe);
 		}
 	}
-	
+
 	public void stopPlayer() {
-		if(player != null) {
+		if (player != null) {
 			player.still();
 		}
 	}
@@ -166,7 +166,9 @@ public class Game {
 
 		// draw black bars
 		if (camera.getGame()) {
-			player.drawArrows(this);
+			if (player != null) {
+				player.drawArrows(this);
+			}
 			p.fill(20, 255); // 10, 255
 			int barSize = 1000000;
 			p.rectMode(CORNERS);
