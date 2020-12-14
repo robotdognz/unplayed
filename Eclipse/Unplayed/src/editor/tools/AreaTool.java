@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import editor.Editor;
 import editor.Tool;
+import misc.Converter;
 import editor.Editor.editorMode;
 import objects.Rectangle;
 import processing.core.PApplet;
@@ -15,15 +16,19 @@ import processing.core.PVector;
 public class AreaTool implements Tool {
 	protected PApplet p;
 	protected Editor editor;
+	protected Converter convert;
 
 	private PVector start; // start of rectangle drawing
 	private PVector end; // end of rectangle drawing
 
 	private Rectangle result;
+	
+	public Rectangle edit; //the rectangle being edited
 
 	public AreaTool(PApplet p, Editor editor) {
 		this.p = p;
 		this.editor = editor;
+		this.convert = editor.convert;
 
 		start = null;
 		end = null;
@@ -31,7 +36,7 @@ public class AreaTool implements Tool {
 	}
 
 	@Override
-	public void touchMoved() {
+	public void touchMoved(PVector touch) {
 		if (editor.eMode == editorMode.ADD) {
 			if (start == null) {
 				//if there is no start, make a new start
@@ -47,7 +52,13 @@ public class AreaTool implements Tool {
 		} else if (editor.eMode == editorMode.ERASE) {
 
 		} else if (editor.eMode == editorMode.SELECT) {
-
+			if(edit != null) {
+				if(PVector.dist(edit.getTopLeft(), touch) < 100) {
+					edit.setTopLeft(touch);
+				}else if(PVector.dist(edit.getBottomRight(), touch) < 100) {
+					edit.setBottomRight(touch);
+				}
+			}
 		}
 
 	}

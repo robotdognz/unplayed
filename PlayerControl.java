@@ -55,7 +55,7 @@ public class PlayerControl implements Controller {
 	public void touchEnded(PVector touch) {
 	}
 
-	public void touchMoved(ArrayList<PVector> touch) {
+	public void touchMoved(PVector touch, ArrayList<PVector> touches) {
 	}
 
 	public void onPinch(ArrayList<PVector> touch, float x, float y, float d) {

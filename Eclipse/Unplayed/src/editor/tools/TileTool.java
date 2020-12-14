@@ -24,7 +24,7 @@ public class TileTool implements Tool {
 	}
 
 	@Override
-	public void touchMoved() {
+	public void touchMoved(PVector touch) {
 		if (editor.point != null && !editor.showPageView) {
 
 			// figure out what to insert

@@ -33,8 +33,8 @@ public class CameraControl implements Controller {
 	public void touchEnded(PVector touch) {
 	}
 
-	public void touchMoved(ArrayList<PVector> touch) {
-		if (touch.size() == 1) {
+	public void touchMoved(PVector touch, ArrayList<PVector> touches) {
+		if (touches.size() == 1) {
 			float moveX = (p.pmouseX - p.mouseX) / 3;
 			float moveY = (p.pmouseY - p.mouseY) / 3;
 			PVector diff = new PVector(convert.screenToLevel(moveX), convert.screenToLevel(moveY));

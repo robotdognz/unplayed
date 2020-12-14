@@ -34,7 +34,7 @@ public class EditorControl implements Controller {
 		}
 	}
 
-	public void touchMoved(ArrayList<PVector> touch) {
+	public void touchMoved(PVector touch, ArrayList<PVector> touches) {
 		//TODO: this logic should potentially be moved directly into the tools
 		float snapNo = 10;
 		if (editor.snap) {
@@ -49,7 +49,7 @@ public class EditorControl implements Controller {
 
 		editor.point = new PVector(finalX, finalY);
 		if (editor.snap && editor.currentTool != null) {
-			editor.currentTool.touchMoved();
+			editor.currentTool.touchMoved(touch);
 		}
 	}
 

@@ -25,7 +25,7 @@ public class EventTool extends AreaTool {
 	}
 
 	@Override
-	public void touchMoved() {
+	public void touchMoved(PVector touch) {
 		if (!editor.showPageView) { // world view
 			if (editor.point != null) {
 
@@ -55,8 +55,12 @@ public class EventTool extends AreaTool {
 				}
 			}
 		} else { // page view
-			if(editor.selected != null && editor.selected instanceof CameraChange) {
-				
+			if (editor.selected != null && editor.selected instanceof CameraChange
+					&& editor.eMode == editorMode.SELECT) {
+				edit = ((CameraChange) editor.selected).getCameraArea();
+				super.touchMoved(touch);
+			} else {
+				edit = null;
 			}
 		}
 	}

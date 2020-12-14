@@ -38,9 +38,9 @@ public class PageTool extends AreaTool {
 	}
 
 	@Override
-	public void touchMoved() {
+	public void touchMoved(PVector touch) {
 		if (!editor.showPageView) {// views
-			super.touchMoved();
+			super.touchMoved(touch);
 		} else { // pages
 			if (!editorSide.adjust) {
 				if (editor.eMode == editorMode.ADD) {

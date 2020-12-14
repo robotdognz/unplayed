@@ -4,6 +4,7 @@ import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
 import processing.core.PApplet;
+import processing.core.PVector;
 import ui.Widget;
 
 public class WidgetConfirm extends Widget {
@@ -16,7 +17,7 @@ public class WidgetConfirm extends Widget {
 	public void clicked() {
 		// Finalize block
 		if(editor.currentTool != null) {
-			editor.currentTool.touchMoved(); //TODO: this is a bit of a weird way to do it
+			editor.currentTool.touchMoved(new PVector()); //TODO: this is a bit of a weird way to do it
 		}
 	}
 

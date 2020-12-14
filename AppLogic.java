@@ -52,27 +52,6 @@ public class AppLogic {
 		menu = null;
 		editorToggle = true;
 
-//		final View decorView = activity.getWindow().getDecorView();
-//		decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-//			@Override
-//			public void onSystemUiVisibilityChange(int visibility) {
-//				// Note that system bars will only be "visible" if none of the
-//				// LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
-//				if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
-//					// TODO: The system bars are visible. Make any desired
-//					// adjustments to your UI, such as showing the action bar or
-//					// other navigational controls.
-//					int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
-//					decorView.setSystemUiVisibility(uiOptions);
-//
-//				} else {
-//					// TODO: The system bars are NOT visible. Make any desired
-//					// adjustments to your UI, such as hiding the action bar or
-//					// other navigational controls.
-//				}
-//			}
-//		});
-
 	}
 
 	public void init() {
@@ -90,7 +69,6 @@ public class AppLogic {
 		Camera camera = new FreeCamera(); // new GameCamera();
 		convert = new Converter(p, camera); // camera converter
 		game = new Game(p, this, camera, vibe, texture, convert);
-		// game.passAppLogic(this);
 		texture.passGame(game);
 		controller = new PlayerControl(p, game);
 		DoToast toast = new DoToast(activity);
@@ -100,63 +78,6 @@ public class AppLogic {
 		Widget menuW = new WidgetPauseMenu(p, editor, null);
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
-	}
-
-	public void quitPurge() {
-		// purge resources
-		// root
-		File rootDir = new File(p.dataPath("") + '/');
-		File[] rootPaths = rootDir.listFiles();
-		for (File file : rootPaths) {
-			if (file.exists()) {
-				file.delete();
-			}
-		}
-		// tiles
-		File tileDir = new File(p.dataPath("tiles") + '/');
-		File[] tilePaths = tileDir.listFiles();
-		for (File file : tilePaths) {
-			if (file.exists()) {
-				file.delete();
-			}
-		}
-		// images
-		File imageDir = new File(p.dataPath("images") + '/');
-		File[] imagePaths = imageDir.listFiles();
-		for (File file : imagePaths) {
-			if (file.exists()) {
-				file.delete();
-			}
-		}
-		// events
-		File eventDir = new File(p.dataPath("events") + '/');
-		File[] eventPaths = eventDir.listFiles();
-		for (File file : eventPaths) {
-			if (file.exists()) {
-				file.delete();
-			}
-		}
-		// ui
-		File uiDir = new File(p.dataPath("ui") + '/');
-		File[] uiPaths = uiDir.listFiles();
-		for (File file : uiPaths) {
-			if (file.exists()) {
-				file.delete();
-			}
-		}
-		// widgets
-		File widgetDir = new File(p.dataPath("ui") + '/' + "widgets" + '/');
-		File[] widgetPaths = widgetDir.listFiles();
-		for (File file : widgetPaths) {
-			if (file.exists()) {
-				file.delete();
-			}
-		}
-		quit();
-	}
-
-	public void quit() {
-		activity.finish();
 	}
 
 	public void draw() {
@@ -252,9 +173,9 @@ public class AppLogic {
 	public void touchMoved() {
 		if (menu == null) {
 			if (editorToggle && editor != null) {
-				editor.touchMoved(touches);
+				editor.touchMoved(lastTouch, touches);
 			} else {
-				controller.touchMoved(touches);
+				controller.touchMoved(lastTouch, touches);
 			}
 		}
 	}
@@ -303,6 +224,63 @@ public class AppLogic {
 				controller.onRotate(x, y, angle);
 			}
 		}
+	}
+
+	public void quit() {
+		activity.finish();
+	}
+
+	public void quitPurge() {
+		// purge resources
+		// root
+		File rootDir = new File(p.dataPath("") + '/');
+		File[] rootPaths = rootDir.listFiles();
+		for (File file : rootPaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		// tiles
+		File tileDir = new File(p.dataPath("tiles") + '/');
+		File[] tilePaths = tileDir.listFiles();
+		for (File file : tilePaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		// images
+		File imageDir = new File(p.dataPath("images") + '/');
+		File[] imagePaths = imageDir.listFiles();
+		for (File file : imagePaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		// events
+		File eventDir = new File(p.dataPath("events") + '/');
+		File[] eventPaths = eventDir.listFiles();
+		for (File file : eventPaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		// ui
+		File uiDir = new File(p.dataPath("ui") + '/');
+		File[] uiPaths = uiDir.listFiles();
+		for (File file : uiPaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		// widgets
+		File widgetDir = new File(p.dataPath("ui") + '/' + "widgets" + '/');
+		File[] widgetPaths = widgetDir.listFiles();
+		for (File file : widgetPaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		quit();
 	}
 
 }

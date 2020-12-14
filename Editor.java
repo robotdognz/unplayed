@@ -308,7 +308,7 @@ public class Editor {
 
 	}
 
-	public void touchMoved(ArrayList<PVector> touches) {
+	public void touchMoved(PVector touch, ArrayList<PVector> touches) {
 		editorTop.touchMoved(touches);
 		editorBottom.touchMoved(touches);
 		editorSide.touchMoved(touches);
@@ -318,7 +318,7 @@ public class Editor {
 		}
 		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
 				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
-			controller.touchMoved(touches); // Controls for touch moved event
+			controller.touchMoved(touch, touches); // Controls for touch moved event
 		}
 	}
 
