@@ -123,7 +123,7 @@ private void hideSystemUI() {
     // Enables regular immersive mode.
     // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
     // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-    android.view.View decorView = getActivity().getWindow().getDecorView();
+    android.view.View decorView = activity.getWindow().getDecorView();
     decorView.setSystemUiVisibility(
             android.view.View.SYSTEM_UI_FLAG_IMMERSIVE
             // Set the content to appear under the system bars so that the
@@ -139,7 +139,7 @@ private void hideSystemUI() {
 // Shows the system bars by removing all the flags
 // except for the ones that make the content appear under the system bars.
 private void showSystemUI() {
-    android.view.View decorView = getWindow().getDecorView();
+    android.view.View decorView = activity.getWindow().getDecorView();
     decorView.setSystemUiVisibility(
             android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
