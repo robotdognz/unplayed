@@ -153,40 +153,40 @@ public class TextureCache {
 		eventDir = new File(p.dataPath("events") + '/');
 		eventMap = new HashMap<String, EventHandler>();
 
-		// ----------------player start----------------
-		String start = "PlayerStart";
+		// ----------------PlayerStart----------------
+		String playerStartString = "PlayerStart";
 		File playerStartFile = new File(eventDir + "/spikes.png");
 
 		EventHandler playerStart = new EventHandler(p, this, playerStartFile) {
 			public Event makeEvent(int x, int y) {
-				String start = "PlayerStart";
-				return new PlayerStart(texture, start, x, y, game);
+				String playerStartString = "PlayerStart";
+				return new PlayerStart(texture, playerStartString, x, y, game);
 			}
 		};
-		eventMap.put(start, playerStart);
+		eventMap.put(playerStartString, playerStart);
 
-		// ----------------player death----------------
-		String spikes = "PlayerDeath";
+		// ----------------PlayerDeath----------------
+		String playerDeathString = "PlayerDeath";
 		File playerDeathFile = new File(eventDir + "/spikes.png");
 
 		EventHandler playerDeath = new EventHandler(p, this, playerDeathFile) {
 			public Event makeEvent(int x, int y) {
-				String spikes = "PlayerDeath";
-				return new PlayerDeath(texture, spikes, x, y);
+				String playerDeathString = "PlayerDeath";
+				return new PlayerDeath(texture, playerDeathString, x, y);
 			}
 		};
-		eventMap.put(spikes, playerDeath);
+		eventMap.put(playerDeathString, playerDeath);
 
-		// ----------------camera change----------------
-		String camera = "CameraChange";
+		// ----------------CameraChange----------------
+		String cameraChangeString = "CameraChange";
 		File cameraChangeFile = new File(eventDir + "/cameraChange.png");
 		EventHandler cameraChange = new EventHandler(p, this, cameraChangeFile) {
 			public Event makeEvent(int x, int y) {
-				String camera = "CameraChange";
-				return new CameraChange(texture, camera, x, y);
+				String cameraChangeString = "CameraChange";
+				return new CameraChange(texture, cameraChangeString, x, y);
 			}
 		};
-		eventMap.put(camera, cameraChange);
+		eventMap.put(cameraChangeString, cameraChange);
 
 		// make sorted list
 		eventList = new ArrayList<EventHandler>(eventMap.values());
