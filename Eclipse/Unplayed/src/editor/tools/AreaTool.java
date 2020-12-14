@@ -187,24 +187,24 @@ public class AreaTool implements Tool {
 			PVector topLeft = new PVector();
 			if (start.getX() < end.getX()) {
 				topLeft.x = start.getX();
-			} else if (start.getX() > end.getX()) {
+			} else {// if (start.getX() > end.getX()) {
 				topLeft.x = end.getX();
 			}
 			if (start.getY() < end.getY()) {
 				topLeft.y = start.getY();
-			} else if (start.getY() > end.getY()) {
+			} else {//if (start.getY() > end.getY()) {
 				topLeft.y = end.getY();
 			}
 			// bottom right corner
 			PVector bottomRight = new PVector();
 			if (end.getBottomRight().x > start.getBottomRight().x) {
 				bottomRight.x = end.getBottomRight().x;
-			} else if (end.getBottomRight().x < start.getBottomRight().x) {
+			} else {// if (end.getBottomRight().x < start.getBottomRight().x) {
 				bottomRight.x = start.getBottomRight().x;
 			}
 			if (end.getBottomRight().y > start.getBottomRight().y) {
 				bottomRight.y = end.getBottomRight().y;
-			} else if (end.getBottomRight().y < start.getBottomRight().y) {
+			} else {// if (end.getBottomRight().y < start.getBottomRight().y) {
 				bottomRight.y = start.getBottomRight().y;
 			}
 			
