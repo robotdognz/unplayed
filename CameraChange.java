@@ -81,10 +81,11 @@ public class CameraChange extends Event {
 			}
 			g.zoomSpeed = cameraZoom;
 			g.boarderZoomSpeed = edgeZoom;
-			g.newTopEdge = (int) camera.getTopLeft().y;
-			g.newBottomEdge = (int) camera.getBottomRight().y;
-			g.newLeftEdge = (int) camera.getTopLeft().x;
-			g.newRightEdge = (int) camera.getBottomRight().x;
+			g.newCameraArea.setCorners(camera.getTopLeft().x, camera.getTopLeft().y, camera.getBottomRight().x, camera.getBottomRight().y);
+//			g.newTopEdge = (int) camera.getTopLeft().y;
+//			g.newBottomEdge = (int) camera.getBottomRight().y;
+//			g.newLeftEdge = (int) camera.getTopLeft().x;
+//			g.newRightEdge = (int) camera.getBottomRight().x;
 		}
 	}
 

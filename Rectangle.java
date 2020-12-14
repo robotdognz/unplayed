@@ -14,7 +14,7 @@ public class Rectangle {
 		this.topLeft = new PVector(x, y);
 		this.bottomRight = new PVector(x + width, y + height);
 	}
-	
+
 	// ------------getters
 	public float getX() {
 		return topLeft.x;
@@ -50,7 +50,7 @@ public class Rectangle {
 		this.topLeft.y = y;
 		this.bottomRight.y = y + height;
 	}
-	
+
 	public void setWidth(float rWidth) {
 		this.width = rWidth;
 		this.bottomRight.x = this.topLeft.x + rWidth;
@@ -67,44 +67,44 @@ public class Rectangle {
 		this.bottomRight.x = topLeft.x + width;
 		this.bottomRight.y = topLeft.y + height;
 	}
-	
+
 	public void setTopLeft(float x, float y) {
 		this.topLeft.x = x;
 		this.topLeft.y = y;
 		this.bottomRight.x = topLeft.x + width;
 		this.bottomRight.y = topLeft.y + height;
 	}
-	
+
 	public void setBottomRight(PVector bottomRight) {
 		this.bottomRight.x = bottomRight.x;
 		this.bottomRight.y = bottomRight.y;
-		this.width = this.bottomRight.x-this.topLeft.x;
-		this.height = this.bottomRight.y-this.topLeft.y;
+		this.width = this.bottomRight.x - this.topLeft.x;
+		this.height = this.bottomRight.y - this.topLeft.y;
 	}
-	
+
 	public void setBottomRight(float x, float y) {
 		this.bottomRight.x = x;
 		this.bottomRight.y = y;
-		this.width = this.bottomRight.x-this.topLeft.x;
-		this.height = this.bottomRight.y-this.topLeft.y;
+		this.width = this.bottomRight.x - this.topLeft.x;
+		this.height = this.bottomRight.y - this.topLeft.y;
 	}
-	
+
 	public void setCorners(PVector topLeft, PVector bottomRight) {
 		this.topLeft.x = topLeft.x;
 		this.topLeft.y = topLeft.y;
 		this.bottomRight.x = bottomRight.x;
 		this.bottomRight.y = bottomRight.y;
-		this.width = this.bottomRight.x-this.topLeft.x;
-		this.height = this.bottomRight.y-this.topLeft.y;
+		this.width = this.bottomRight.x - this.topLeft.x;
+		this.height = this.bottomRight.y - this.topLeft.y;
 	}
-	
+
 	public void setCorners(float topLeftX, float topLeftY, float bottomRightX, float bottomRightY) {
 		this.topLeft.x = topLeftX;
 		this.topLeft.y = topLeftY;
 		this.bottomRight.x = bottomRightX;
 		this.bottomRight.y = bottomRightY;
-		this.width = this.bottomRight.x-this.topLeft.x;
-		this.height = this.bottomRight.y-this.topLeft.y;
+		this.width = this.bottomRight.x - this.topLeft.x;
+		this.height = this.bottomRight.y - this.topLeft.y;
 	}
 
 	public void drawSelected(PGraphics g) {
@@ -122,6 +122,26 @@ public class Rectangle {
 	public String toString() {
 		return this.getName() + " " + (int) getX() + " " + (int) getY() + " " + (int) getWidth() + " "
 				+ (int) getHeight();
+	}
+
+	public Rectangle copy() {
+		return new Rectangle(getX(), getY(), getWidth(), getHeight());
+	}
+
+	public boolean sameDimensions(Rectangle other) {
+		if (getX() != other.getX()) {
+			return false;
+		}
+		if (getY() != other.getY()) {
+			return false;
+		}
+		if (getWidth() != other.getWidth()) {
+			return false;
+		}
+		if (getHeight() != other.getHeight()) {
+			return false;
+		}
+		return true;
 	}
 
 //	public void setPosition(PVector newPosition) {

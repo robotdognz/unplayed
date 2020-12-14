@@ -50,10 +50,10 @@ public class Game {
 //	public float rightEdge;
 	public Rectangle cameraArea;
 
-	public float newTopEdge;
-	public float newBottomEdge;
-	public float newLeftEdge;
-	public float newRightEdge;
+//	public float newTopEdge;
+//	public float newBottomEdge;
+//	public float newLeftEdge;
+//	public float newRightEdge;
 	public Rectangle newCameraArea;
 
 	public float boarderZoomSpeed = 0.1f; // 0.1 is default
@@ -113,10 +113,11 @@ public class Game {
 //		newLeftEdge = leftEdge;
 //		newRightEdge = rightEdge;
 
-		newTopEdge = cameraArea.getTopLeft().y;
-		newBottomEdge = cameraArea.getBottomRight().y;
-		newLeftEdge = cameraArea.getTopLeft().x;
-		newRightEdge = cameraArea.getBottomRight().x;
+//		newTopEdge = cameraArea.getTopLeft().y;
+//		newBottomEdge = cameraArea.getBottomRight().y;
+//		newLeftEdge = cameraArea.getTopLeft().x;
+//		newRightEdge = cameraArea.getBottomRight().x;
+		newCameraArea = cameraArea.copy();
 	}
 
 	public void setPlayerStart(float x, float y) {
@@ -144,18 +145,21 @@ public class Game {
 		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 		PVector startCenter = new PVector(centerX, centerY);
 		int startScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
-		int bottomOfTopBar = (int) cameraTopLeft.y;
-		int topOfBottomBar = (int) cameraBottomRight.y;
+//		int bottomOfTopBar = (int) cameraTopLeft.y;
+//		int topOfBottomBar = (int) cameraBottomRight.y;
 
 		// actual restart code starts here
 		createPlayer();
 		if (camera.getGame()) {
 			newScale = startScale;
 			newCenter = startCenter;
-			newTopEdge = bottomOfTopBar;
-			newBottomEdge = topOfBottomBar;
-			newLeftEdge = newCenter.x - newScale / 2;
-			newRightEdge = newCenter.x + newScale / 2;
+//			newTopEdge = bottomOfTopBar;
+//			newBottomEdge = topOfBottomBar;
+//			newLeftEdge = newCenter.x - newScale / 2;
+//			newRightEdge = newCenter.x + newScale / 2;
+
+			newCameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
+					cameraBottomRight.y);
 		}
 	}
 
@@ -236,16 +240,29 @@ public class Game {
 		// uses the 'new...' versions of edge variables so that
 		// scaling happens immediately
 //		if (camera.getScale() != newScale || topEdge != newTopEdge || bottomEdge != newBottomEdge) {
-		if (camera.getScale() != newScale || cameraArea.getTopLeft().y != newTopEdge
-				|| cameraArea.getBottomRight().y != newBottomEdge) {
+//		if (camera.getScale() != newScale || cameraArea.getTopLeft().y != newTopEdge
+//				|| cameraArea.getBottomRight().y != newBottomEdge) {
+//			// if there might be a difference in tall screen scale
+//			if ((newBottomEdge - newTopEdge) / (newRightEdge - newLeftEdge) > (float) p.height / (float) p.width) {
+//				newSubScale = ((float) p.height / ((float) p.width / (float) (newRightEdge - newLeftEdge)))
+//						/ (newBottomEdge - newTopEdge);
+//			} else {
+//				newSubScale = 1;
+//			}
+//		}
+		if (camera.getScale() != newScale || !cameraArea.sameDimensions(newCameraArea)) {
 			// if there might be a difference in tall screen scale
-			if ((newBottomEdge - newTopEdge) / (newRightEdge - newLeftEdge) > (float) p.height / (float) p.width) {
-				newSubScale = ((float) p.height / ((float) p.width / (float) (newRightEdge - newLeftEdge)))
-						/ (newBottomEdge - newTopEdge);
+			if ((newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y)
+					/ (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) > (float) p.height
+							/ (float) p.width) {
+				newSubScale = ((float) p.height
+						/ ((float) p.width / (float) (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x)))
+						/ (newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y);
 			} else {
 				newSubScale = 1;
 			}
 		}
+
 		if (camera.getSubScale() != newSubScale) {
 			camera.setSubScale(PApplet.lerp(camera.getSubScale(), newSubScale, PApplet.exp(-zoomSpeed)));
 		}
@@ -271,19 +288,19 @@ public class Game {
 //			bottomEdge = PApplet.lerp(bottomEdge, newBottomEdge, PApplet.exp(-boarderZoomSpeed));
 //		}
 
+//		PVector newTopLeft = new PVector(newLeftEdge, newTopEdge);
+//		PVector newBottomRight = new PVector(newRightEdge, newBottomEdge);
 
-		PVector newTopLeft = new PVector(newLeftEdge, newTopEdge);
-		PVector newBottomRight = new PVector(newRightEdge, newBottomEdge);
-
-		//TODO: replace with .equals
-		if (cameraArea.getTopLeft() != newTopLeft || cameraArea.getBottomRight() != newBottomRight) {
-			float topLeftX = PApplet.lerp(cameraArea.getTopLeft().x, newLeftEdge, PApplet.exp(-boarderZoomSpeed));
-			float topLeftY = PApplet.lerp(cameraArea.getTopLeft().y, newTopEdge, PApplet.exp(-boarderZoomSpeed));
-			float bottomRightX = PApplet.lerp(cameraArea.getBottomRight().x, newRightEdge, PApplet.exp(-boarderZoomSpeed));
-			float bottomRightY = PApplet.lerp(cameraArea.getBottomRight().y, newBottomEdge, PApplet.exp(-boarderZoomSpeed));
+		// TODO: replace with .equals
+		if (!cameraArea.sameDimensions(newCameraArea)) {
+			float topLeftX = PApplet.lerp(cameraArea.getTopLeft().x, newCameraArea.getTopLeft().x, PApplet.exp(-boarderZoomSpeed));
+			float topLeftY = PApplet.lerp(cameraArea.getTopLeft().y, newCameraArea.getTopLeft().y, PApplet.exp(-boarderZoomSpeed));
+			float bottomRightX = PApplet.lerp(cameraArea.getBottomRight().x, newCameraArea.getBottomRight().x,
+					PApplet.exp(-boarderZoomSpeed));
+			float bottomRightY = PApplet.lerp(cameraArea.getBottomRight().y, newCameraArea.getBottomRight().y,
+					PApplet.exp(-boarderZoomSpeed));
 			cameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
 		}
-
 
 	}
 
