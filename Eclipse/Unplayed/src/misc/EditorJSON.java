@@ -155,7 +155,7 @@ public class EditorJSON {
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
 			String type = object.getString("type");
-			if (type.equals("tile") || type.equals("image") || type.equals("PlayerDeath")
+			if (type.equals("tile") || type.equals("image") || type.equals("PlayerStart") || type.equals("PlayerDeath")
 					|| type.equals("CameraChange")) {
 				int pX = object.getInt("pX");
 				int pY = object.getInt("pY");
@@ -188,11 +188,10 @@ public class EditorJSON {
 					}
 					worldObjects.add(im);
 				} else if (type.equals("PlayerStart")) {
-					toast.showToast("loading player start");
 					String name = object.getString("name");
 					PlayerStart ps = new PlayerStart(texture, name, pX, pY, game);
 					worldObjects.add(ps);
-					
+
 				} else if (type.equals("PlayerDeath")) {
 					String name = object.getString("name");
 					PlayerDeath pd = new PlayerDeath(texture, name, pX, pY);
