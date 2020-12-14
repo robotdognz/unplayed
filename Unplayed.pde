@@ -111,39 +111,44 @@ void onRotate(float x, float y, float angle) {
   super.onDestroy();
 }
 
- //@Override
+public void onResume() {
+  super.onResume();
+  hideSystemUI();
+}
+
+//@Override
 public void onWindowFocusChanged(boolean hasFocus) {
-   this.getActivity().onWindowFocusChanged(hasFocus);
-    if (hasFocus) {
-        hideSystemUI();
-    }
+  activity.onWindowFocusChanged(hasFocus);
+  if (hasFocus) {
+    hideSystemUI();
+  }
 }
 
 private void hideSystemUI() {
-    // Enables regular immersive mode.
-    // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
-    // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-    android.view.View decorView = activity.getWindow().getDecorView();
-    decorView.setSystemUiVisibility(
-            android.view.View.SYSTEM_UI_FLAG_IMMERSIVE
-            // Set the content to appear under the system bars so that the
-            // content doesn't resize when the system bars hide and show.
-            | android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            | android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            | android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            // Hide the nav bar and status bar
-            | android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-            | android.view.View.SYSTEM_UI_FLAG_FULLSCREEN);
+  // Enables regular immersive mode.
+  // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+  // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+  android.view.View decorView = activity.getWindow().getDecorView();
+  decorView.setSystemUiVisibility(
+    android.view.View.SYSTEM_UI_FLAG_IMMERSIVE
+    // Set the content to appear under the system bars so that the
+    // content doesn't resize when the system bars hide and show.
+    | android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+    | android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+    | android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+    // Hide the nav bar and status bar
+    | android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+    | android.view.View.SYSTEM_UI_FLAG_FULLSCREEN);
 }
 
 // Shows the system bars by removing all the flags
 // except for the ones that make the content appear under the system bars.
 private void showSystemUI() {
-    android.view.View decorView = activity.getWindow().getDecorView();
-    decorView.setSystemUiVisibility(
-            android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            | android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            | android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+  android.view.View decorView = activity.getWindow().getDecorView();
+  decorView.setSystemUiVisibility(
+    android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+    | android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+    | android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 }
 
 
