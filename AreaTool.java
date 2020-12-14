@@ -1,7 +1,6 @@
 package editor.tools;
 
-import static processing.core.PConstants.CORNER;
-import static processing.core.PConstants.CORNERS;
+import static processing.core.PConstants.*;
 
 import java.util.ArrayList;
 
@@ -168,6 +167,14 @@ public class AreaTool implements Tool {
 			p.stroke(255, 0, 0);
 			p.strokeWeight(4);
 			p.rect(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
+			p.rectMode(CORNER);
+		}
+		if(edit != null) {
+			p.noStroke();
+			p.fill(255, 0, 0);
+			p.rectMode(CENTER);
+			p.rect(edit.getX(), edit.getY(), 30, 30); //topLeft
+			p.rect(edit.getBottomRight().x, edit.getBottomRight().y, 30, 30); //bottomRight
 			p.rectMode(CORNER);
 		}
 	}
