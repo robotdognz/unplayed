@@ -31,7 +31,7 @@ public class EventTool extends AreaTool {
 
 				// figure out what to insert
 				Event toInsert = null;
-				if (editor.currentEvent != null) {
+				if (editor.currentEvent != null && editor.eMode == editorMode.ADD) { //TODO: janky code to stop player start messing things up
 					// create correct event
 					toInsert = editor.currentEvent.makeEvent((int) editor.point.getX(), (int) editor.point.getY());
 				} else {
@@ -147,7 +147,7 @@ public class EventTool extends AreaTool {
 			} else {
 				edit = null;
 			}
-			//return;
+			return;
 		} else {
 			// if there is no exact match, look for overlaps
 			for (Rectangle p : getRectangles) {
