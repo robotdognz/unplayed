@@ -40,7 +40,6 @@ public class PageTool extends AreaTool {
 	@Override
 	public void touchMoved(PVector touch) {
 		if (!editor.showPageView) {// views
-			super.touchMoved(touch);
 			if (editor.selected != null && editor.selected instanceof View
 					&& editor.eMode == editorMode.SELECT) {
 				edit = editor.selected;
@@ -48,6 +47,7 @@ public class PageTool extends AreaTool {
 			} else {
 				edit = null;
 			}
+			super.touchMoved(touch);
 		} else { // pages
 			if (!editorSide.adjust) {
 				if (editor.eMode == editorMode.ADD) {
@@ -272,8 +272,9 @@ public class PageTool extends AreaTool {
 
 	@Override
 	public void draw() {
+		super.draw();
 		if (!editor.showPageView) { // views
-			super.draw();
+			
 		} else { // pages
 			if (currentPage != null) {
 				currentPage.step();
