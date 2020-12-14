@@ -55,9 +55,10 @@ public class EventTool extends AreaTool {
 				}
 			}
 		} else { // page view
-			if (editor.selected != null && editor.selected instanceof CameraChange
-					&& editor.eMode == editorMode.SELECT) {
+//			if (editor.selected != null && editor.selected instanceof CameraChange
+//					&& editor.eMode == editorMode.SELECT) {
 //				edit = ((CameraChange) editor.selected).getCameraArea();
+				if(edit != null) {
 				super.touchMoved(touch);
 			} else {
 				edit = null;
@@ -124,6 +125,7 @@ public class EventTool extends AreaTool {
 		// if there is noting to check
 		if (getRectangles.size() < 1) {
 			editor.selected = null;
+			edit = null;
 			return;
 		}
 
@@ -141,7 +143,9 @@ public class EventTool extends AreaTool {
 			// if it found an exact match
 			editor.selected = foundAtPoint;
 			if (foundAtPoint instanceof CameraChange) {
-				edit = ((CameraChange) editor.selected).getCameraArea();
+				edit = ((CameraChange) foundAtPoint).getCameraArea();
+			} else {
+				edit = null;
 			}
 			return;
 		} else {
@@ -165,7 +169,9 @@ public class EventTool extends AreaTool {
 				// select the first overlap
 				editor.selected = p;
 				if (foundAtPoint instanceof CameraChange) {
-					edit = ((CameraChange) editor.selected).getCameraArea();
+					edit = ((CameraChange) foundAtPoint).getCameraArea();
+				} else {
+					edit = null;
 				}
 				return;
 			}
