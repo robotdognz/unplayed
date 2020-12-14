@@ -186,7 +186,7 @@ public class EventTool extends AreaTool {
 
 	@Override
 	public void draw() {
-		if (editor.showPageView) { // pages
+		if (editor.showPageView && editor.eMode == Editor.editorMode.SELECT) { // pages
 			super.draw();
 		}
 	}
