@@ -14,9 +14,6 @@ public class View extends Rectangle {
 	}
 
 	public void draw(PGraphics graphics) {
-		//graphics.noFill();
-		//graphics.stroke(color);
-		//graphics.strokeWeight(4);
 		graphics.noStroke();
 		graphics.fill(color, 70);
 		graphics.rect(getX(), getY(), getWidth(), getHeight());

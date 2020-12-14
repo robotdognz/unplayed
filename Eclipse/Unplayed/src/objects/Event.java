@@ -19,8 +19,6 @@ public abstract class Event extends Rectangle {
 
 		if (name != null && texture != null && texture.getEventMap().containsKey(name)) {
 			this.eventTexture = texture.getEventMap().get(name);
-			// setWidth(eventTexture.getWidth());
-			// setHeight(eventTexture.getHeight());
 			hasTexture = true;
 		} else {
 			hasTexture = false;
