@@ -4,53 +4,60 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import editor.Editor;
-import editor.Tool;
 import editor.Editor.editorMode;
 import game.Game;
 import handlers.TextureCache;
 import objects.Event;
 import objects.Rectangle;
+import objects.events.CameraChange;
 import objects.events.PlayerDeath;
+import processing.core.PApplet;
 import processing.core.PVector;
 
-public class EventTool implements Tool {
+public class EventTool extends AreaTool {
 	Editor editor;
 	Game game;
 	TextureCache texture;
 
-	public EventTool(Editor editor) {
-		this.editor = editor;
+	public EventTool(PApplet p, Editor editor) {
+		super(p, editor);
 		this.game = editor.game;
 		this.texture = editor.texture;
 	}
 
 	@Override
 	public void touchMoved() {
-		if (editor.point != null && !editor.showPageView) {
-
-			// figure out what to insert
-			Event toInsert = null;
-			if (editor.currentEvent != null) {
-				// create correct event
-				toInsert = editor.currentEvent.makeEvent((int) editor.point.x, (int) editor.point.y);
-			} else {
-				// use blank event
-				toInsert = new PlayerDeath(null, null, (int) editor.point.x, (int) editor.point.y);
-			}
-
-			// get all rectangles that overlap toInsert and pass them to the right method
+		if (!editor.showPageView) { // world view
 			if (editor.point != null) {
-				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
-				editor.world.retrieve(getRectangles, toInsert);
 
-				if (editor.eMode == editorMode.ADD) { // adding event
-					add(toInsert, getRectangles);
-				} else if (editor.eMode == editorMode.ERASE) { // erasing event
-					erase(toInsert, getRectangles);
-				} else if (editor.eMode == editorMode.SELECT) { // selecting event
-					select(toInsert, getRectangles);
+				// figure out what to insert
+				Event toInsert = null;
+				if (editor.currentEvent != null) {
+					// create correct event
+					toInsert = editor.currentEvent.makeEvent((int) editor.point.x, (int) editor.point.y);
+				} else {
+					// use blank event
+					toInsert = new PlayerDeath(null, null, (int) editor.point.x, (int) editor.point.y);
 				}
-				editor.point = null;
+
+				// get all rectangles that overlap toInsert and pass them to the right method
+				if (editor.point != null) {
+					HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
+					editor.world.retrieve(getRectangles, toInsert);
+
+					if (editor.eMode == editorMode.ADD) { // adding event
+						add(toInsert, getRectangles);
+					} else if (editor.eMode == editorMode.ERASE) { // erasing event
+						erase(toInsert, getRectangles);
+					} else if (editor.eMode == editorMode.SELECT) { // selecting event
+						select(toInsert, getRectangles);
+					}
+					editor.point = null;
+				}
+			}
+		} else { // page view
+			if(editor.selected != null && editor.selected instanceof CameraChange) {
+				
 			}
 		}
 	}

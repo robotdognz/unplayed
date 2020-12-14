@@ -17,6 +17,7 @@ import objects.Tile;
 import objects.View;
 import objects.events.CameraChange;
 import objects.events.PlayerDeath;
+import objects.events.PlayerStart;
 import processing.core.*;
 import processing.data.*;
 
@@ -76,7 +77,9 @@ public class EditorJSON {
 				object.setString("file", (((Image) r).getFile()).toString());
 			} else if (r instanceof Event) { // events
 				object.setString("name", ((Event) r).getName());
-				if (r instanceof PlayerDeath) {
+				if (r instanceof PlayerStart) {
+					object.setString("type", "PlayerStart");
+				} else if (r instanceof PlayerDeath) {
 					object.setString("type", "PlayerDeath");
 				} else if (r instanceof CameraChange) {
 					object.setString("type", "CameraChange");
@@ -184,6 +187,10 @@ public class EditorJSON {
 						im.flipV();
 					}
 					worldObjects.add(im);
+				} else if (type.equals("PlayerStart")) {
+					String name = object.getString("name");
+					PlayerStart ps = new PlayerStart(texture, name, pX, pY, game);
+					worldObjects.add(ps);
 				} else if (type.equals("PlayerDeath")) {
 					String name = object.getString("name");
 					PlayerDeath pd = new PlayerDeath(texture, name, pX, pY);

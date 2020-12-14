@@ -113,10 +113,6 @@ public class Game {
 //		newLeftEdge = leftEdge;
 //		newRightEdge = rightEdge;
 
-//		newTopEdge = cameraArea.getTopLeft().y;
-//		newBottomEdge = cameraArea.getBottomRight().y;
-//		newLeftEdge = cameraArea.getTopLeft().x;
-//		newRightEdge = cameraArea.getBottomRight().x;
 		newCameraArea = cameraArea.copy();
 	}
 
@@ -138,26 +134,20 @@ public class Game {
 	}
 
 	public void restart() {
-		// legacy variables from level class TODO: write these out eventually
-		PVector cameraTopLeft = new PVector(-400, -400);
-		PVector cameraBottomRight = new PVector(500, 600);
-		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
-		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-		PVector startCenter = new PVector(centerX, centerY);
-		int startScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
-//		int bottomOfTopBar = (int) cameraTopLeft.y;
-//		int topOfBottomBar = (int) cameraBottomRight.y;
 
-		// actual restart code starts here
 		createPlayer();
 		if (camera.getGame()) {
-			newScale = startScale;
-			newCenter = startCenter;
+			PVector cameraTopLeft = new PVector(-400, -400);
+			PVector cameraBottomRight = new PVector(500, 600);
+			newScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
+			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
+			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
+			newCenter = new PVector(centerX, centerY);
 //			newTopEdge = bottomOfTopBar;
 //			newBottomEdge = topOfBottomBar;
 //			newLeftEdge = newCenter.x - newScale / 2;
 //			newRightEdge = newCenter.x + newScale / 2;
-
+			
 			newCameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
 					cameraBottomRight.y);
 		}
@@ -195,6 +185,7 @@ public class Game {
 //			// right bar
 //			p.rect(rightEdge, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
 //					camera.getCenter().y + barSize);
+			
 			// top bar
 			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
 					cameraArea.getTopLeft().y);
@@ -288,10 +279,6 @@ public class Game {
 //			bottomEdge = PApplet.lerp(bottomEdge, newBottomEdge, PApplet.exp(-boarderZoomSpeed));
 //		}
 
-//		PVector newTopLeft = new PVector(newLeftEdge, newTopEdge);
-//		PVector newBottomRight = new PVector(newRightEdge, newBottomEdge);
-
-		// TODO: replace with .equals
 		if (!cameraArea.sameDimensions(newCameraArea)) {
 			float topLeftX = PApplet.lerp(cameraArea.getTopLeft().x, newCameraArea.getTopLeft().x, PApplet.exp(-boarderZoomSpeed));
 			float topLeftY = PApplet.lerp(cameraArea.getTopLeft().y, newCameraArea.getTopLeft().y, PApplet.exp(-boarderZoomSpeed));

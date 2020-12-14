@@ -14,7 +14,7 @@ public class WidgetEventMode extends Widget {
 	}
 
 	public void clicked() {
-		editor.currentTool = new EventTool(editor);
+		editor.currentTool = new EventTool(p, editor);
 	}
 
 	public void updateActive() {
