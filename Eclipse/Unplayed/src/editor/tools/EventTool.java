@@ -55,10 +55,10 @@ public class EventTool extends AreaTool {
 				}
 			}
 		} else { // page view
-//			if (editor.selected != null && editor.selected instanceof CameraChange
-//					&& editor.eMode == editorMode.SELECT) {
-//				edit = ((CameraChange) editor.selected).getCameraArea();
-				if(edit != null) {
+			if (editor.selected != null && editor.selected instanceof CameraChange
+					&& editor.eMode == editorMode.SELECT) {
+				edit = ((CameraChange) editor.selected).getCameraArea();
+
 				super.touchMoved(touch);
 			} else {
 				edit = null;
