@@ -64,8 +64,8 @@ public class EditorSide extends Toolbar {
 	public void draw(PVector touch, Menu menu) {
 		// super.draw(touch, menu);
 
-		// step if controlling the editor
-		if (editor.controller instanceof EditorControl) {
+		// step if controlling the editor and there is something selected
+		if (editor.controller instanceof EditorControl && editor.selected != null) {
 			// step
 			if (!(editor.selected instanceof Page)) {
 				adjust = false;
@@ -84,8 +84,9 @@ public class EditorSide extends Toolbar {
 	}
 
 	public boolean insideBoundary(float x, float y) {
-		// prevent editor controls if controlling the editor
-		if (editor.controller instanceof EditorControl) {
+		// prevent editor controls in this area if controlling the editor and something
+		// is selected
+		if (editor.controller instanceof EditorControl && editor.selected != null) {
 			return super.insideBoundary(x, y);
 		}
 		return false;
