@@ -60,6 +60,7 @@ public class Editor {
 	public PVector point = null; // holds the current selection point in the game world
 	public boolean eventVis; // are events visible
 	public boolean quadVis; // is the quad tree being draw
+	public boolean pageVis;
 
 	// editor settings
 	public boolean snap = true; // things placed in the level will snap to grid
@@ -87,7 +88,7 @@ public class Editor {
 	public EditorJSON eJSON;
 
 	// frame count and debug visualization
-	public boolean debug = false;
+	public boolean debugVis = false;
 	private int frameDelay = 100;
 	private float frame;
 
@@ -110,6 +111,7 @@ public class Editor {
 		this.eImagePlane = imagePlane.LEVEL;
 		this.eventVis = true;
 		this.quadVis = false;
+		this.pageVis = true;
 
 		// Initialize camera backup fields
 		lvScale = camera.getScale();
@@ -182,7 +184,7 @@ public class Editor {
 		editorSide.draw(touch, menu);
 
 		// draw frame counter and other readouts
-		if (debug) {
+		if (debugVis) {
 			p.fill(80);
 			p.textSize(50);
 			p.textAlign(CENTER, CENTER);
@@ -226,8 +228,10 @@ public class Editor {
 		game.paper.draw(p.g, game.screenSpace, currentScale);
 
 		// draw the views
-		for (View view : game.views) {
-			view.draw(p.g);
+		if (pageVis) {
+			for (View view : game.views) {
+				view.draw(p.g);
+			}
 		}
 
 		// draw tool effects

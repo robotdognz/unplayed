@@ -12,12 +12,12 @@ public class WidgetDebug extends Widget {
 	}
 
 	public void clicked() {
-		editor.debug = !editor.debug;
+		editor.debugVis = !editor.debugVis;
 	}
 
 	public void updateActive() {
 		super.updateActive();
-		if (editor.debug) {
+		if (editor.debugVis) {
 			active = true;
 		} else {
 			active = false;
