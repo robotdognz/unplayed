@@ -7,7 +7,7 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 import static processing.core.PConstants.*;
 
-public abstract class Event extends Editable {
+public abstract class Event extends Rectangle {
 	private boolean hasTexture;
 	private EventHandler eventTexture;
 	private String name;
@@ -40,8 +40,8 @@ public abstract class Event extends Editable {
 			graphics.imageMode(CENTER);
 			graphics.pushMatrix();
 			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
-			graphics.rotate(PApplet.radians(angle)); // angle of the tile
-			graphics.scale(flipX, flipY); // flipping the tile
+			//graphics.rotate(PApplet.radians(angle)); // angle of the tile
+			//graphics.scale(flipX, flipY); // flipping the tile
 			graphics.image(eventTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
 			graphics.popMatrix();
 		} else {
