@@ -170,7 +170,7 @@ public class Editor {
 				}
 			}
 			// draw tool effects
-			if (currentTool != null) {
+			if (currentTool != null && !camera.getGame()) {
 
 				currentTool.draw();
 
