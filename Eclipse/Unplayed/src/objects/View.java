@@ -10,7 +10,7 @@ public class View extends Rectangle {
 	public View(PApplet p, int x, int y, int rWidth, int rHeight) {
 		super(x, y, rWidth, rHeight);
 		this.p = p;
-		color = p.color(p.random(255), p.random(255), p.random(255), 100);
+		color = p.color(p.random(255), p.random(255), p.random(255), 70);
 	}
 
 	public void draw(PGraphics graphics) {
