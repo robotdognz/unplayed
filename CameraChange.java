@@ -9,12 +9,7 @@ import processing.core.PVector;
 import static processing.core.PConstants.*;
 
 public class CameraChange extends Event {
-//	private PVector cameraTopLeft;
-//	private PVector cameraBottomRight;
 	private Rectangle camera;
-
-//	private int newScale;
-//	private PVector newCent;
 	private float cameraZoom;
 	private float edgeZoom;
 	// private String type; //Strings: "Static", "Full", "Horizontal", "Vertical"
@@ -24,42 +19,25 @@ public class CameraChange extends Event {
 		// considering separating edgeZoom into in speed and out speed
 
 		// TODO: figure out what the default values should be
-//		PVector cameraTopLeft = new PVector(-700, -200);
-//		PVector cameraBottomRight = new PVector(700, 1500);
-//		this.camera = new Rectangle(cameraTopLeft.x, cameraTopLeft.y, cameraBottomRight.x - cameraTopLeft.x,
-//				cameraBottomRight.y - cameraTopLeft.y);
 		this.camera = new Rectangle(-700, -200, 1400, 1700);
 		this.cameraZoom = 2;
 		this.edgeZoom = 2;
-
-//		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
-//		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-//		this.newCent = new PVector(centerX, centerY);
-//		this.newScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
-
-//		int centerX = (int) ((camera.getBottomRight().x - camera.getTopLeft().x) / 2 + camera.getTopLeft().x);
-//		int centerY = (int) ((camera.getTopLeft().y - camera.getBottomRight().y) / 2 + camera.getBottomRight().y);
-
 		// this.type = type;
 	}
 
 	public PVector getCameraTopLeft() {
-//		return cameraTopLeft;
 		return camera.getTopLeft();
 	}
 
 	public void setCameraTopLeft(PVector cameraTopLeft) {
-//		this.cameraTopLeft = cameraTopLeft;
 		camera.setTopLeft(cameraTopLeft);
 	}
 
 	public PVector getCameraBottomRight() {
-//		return cameraBottomRight;
 		return camera.getBottomRight();
 	}
 
 	public void setCameraBottomRight(PVector cameraBottomRight) {
-//		this.cameraBottomRight = cameraBottomRight;
 		camera.setBottomRight(cameraBottomRight);
 	}
 
