@@ -195,13 +195,13 @@ public class EditorJSON {
 				} else if (type.equals("PlayerDeath")) {
 					String name = object.getString("name");
 					PlayerDeath pd = new PlayerDeath(texture, name, pX, pY);
-					pd.setAngle(angle);
-					if (flipH) {
-						pd.flipH();
-					}
-					if (flipV) {
-						pd.flipV();
-					}
+//					pd.setAngle(angle);
+//					if (flipH) {
+//						pd.flipH();
+//					}
+//					if (flipV) {
+//						pd.flipV();
+//					}
 					worldObjects.add(pd);
 				} else if (type.equals("CameraChange")) {
 					String name = object.getString("name");
@@ -218,13 +218,13 @@ public class EditorJSON {
 					cc.setCameraBottomRight(cameraBottomRight);
 					cc.setCameraZoom(cameraZoom);
 					cc.setEdgeZoom(edgeZoom);
-					cc.setAngle(angle);
-					if (flipH) {
-						cc.flipH();
-					}
-					if (flipV) {
-						cc.flipV();
-					}
+//					cc.setAngle(angle);
+//					if (flipH) {
+//						cc.flipH();
+//					}
+//					if (flipV) {
+//						cc.flipV();
+//					}
 					worldObjects.add(cc);
 				}
 			}
