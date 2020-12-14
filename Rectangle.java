@@ -74,6 +74,13 @@ public class Rectangle {
 		this.bottomRight.x = topLeft.x + width;
 		this.bottomRight.y = topLeft.y + height;
 	}
+	
+	public void adjustTopLeft(PVector topLeft) {
+		this.topLeft.x = topLeft.x;
+		this.topLeft.y = topLeft.y;
+		this.width = this.bottomRight.x - this.topLeft.x;
+		this.height = this.bottomRight.y - this.topLeft.y;
+	}
 
 	public void setBottomRight(PVector bottomRight) {
 		this.bottomRight.x = bottomRight.x;

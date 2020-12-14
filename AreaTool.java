@@ -52,12 +52,12 @@ public class AreaTool implements Tool {
 		} else if (editor.eMode == editorMode.ERASE) {
 
 		} else if (editor.eMode == editorMode.SELECT) {
-			if(edit != null) {
-				PVector adjustedTouch = convert.screenToLevel(touch.x, touch.y);
-				if(PVector.dist(edit.getTopLeft(), adjustedTouch) < 100) {
-					edit.setTopLeft(adjustedTouch);
-				}else if(PVector.dist(edit.getBottomRight(), adjustedTouch) < 100) {
-					edit.setBottomRight(adjustedTouch);
+			if(edit != null && editor.point != null) {
+				//PVector adjustedTouch = convert.screenToLevel(touch.x, touch.y);
+				if(PVector.dist(edit.getTopLeft(), editor.point) < 100) {
+					edit.adjustTopLeft(editor.point);
+				}else if(PVector.dist(edit.getBottomRight(), editor.point) < 100) {
+					edit.setBottomRight(editor.point);
 				}
 			}
 		}
