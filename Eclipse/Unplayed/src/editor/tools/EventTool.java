@@ -15,7 +15,6 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 public class EventTool extends AreaTool {
-	Editor editor;
 	Game game;
 	TextureCache texture;
 
