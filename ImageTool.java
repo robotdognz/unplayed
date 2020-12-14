@@ -31,11 +31,11 @@ public class ImageTool implements Tool {
 			Image toInsert = null;
 			if (editor.currentImage != null) {
 				// create correct image
-				toInsert = new Image(texture, editor.currentImage.getFile(), (int) editor.point.x, (int) editor.point.y,
-						editor.currentImage.getWidth(), editor.currentImage.getHeight());
+				toInsert = new Image(texture, editor.currentImage.getFile(), (int) editor.point.getX(),
+						(int) editor.point.getY(), editor.currentImage.getWidth(), editor.currentImage.getHeight());
 			} else {
 				// use blank image
-				toInsert = new Image(null, null, (int) editor.point.x, (int) editor.point.y, 100, 100);
+				toInsert = new Image(null, null, (int) editor.point.getX(), (int) editor.point.getY(), 100, 100);
 			}
 
 			// get all rectangles that overlap toInsert and pass them to the right method

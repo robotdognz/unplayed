@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import editor.Editor;
 import game.Game;
 import misc.Converter;
+import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -47,7 +48,8 @@ public class EditorControl implements Controller {
 		float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
 		float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
 
-		editor.point = new PVector(finalX, finalY);
+		//editor.point = new PVector(finalX, finalY);
+		editor.point = new Rectangle(finalX, finalY, 100, 100);
 		if (editor.snap && editor.currentTool != null) {
 			editor.currentTool.touchMoved(touch);
 		}

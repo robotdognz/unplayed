@@ -58,7 +58,7 @@ public class Editor {
 	// controller
 	public Controller controller; // holds the current controller
 	public boolean controllerActive = true; // is the current controller active
-	public PVector point = null; // holds the current selection point in the game world
+	public Rectangle point = null; // holds the current selection point in the game world
 	public boolean eventVis; // are events visible
 	public boolean quadVis; // is the quad tree being draw
 	public boolean pageVis;
@@ -254,14 +254,14 @@ public class Editor {
 		// draw block placement selection if one exists and snapping is turned off
 		if (point != null && !snap) {
 			p.fill(0, 0, 0, 150);
-			p.rect(point.x, point.y, 100, 100);
+			p.rect(point.getX(), point.getY(), 100, 100);
 			p.fill(0);
 			p.textSize(30);
 			p.textAlign(LEFT, CENTER);
-			int xCoord = (int) point.x;
-			int yCoord = (int) point.y;
+			int xCoord = (int) point.getX();
+			int yCoord = (int) point.getY();
 			String s = "[" + xCoord + ", " + yCoord + "]";
-			p.text(s, point.x + 105, point.y + 50);
+			p.text(s, point.getX() + 105, point.getY() + 50);
 		}
 
 		// draw selection box around selected object

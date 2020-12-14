@@ -31,10 +31,11 @@ public class TileTool implements Tool {
 			Tile toInsert = null;
 			if (editor.currentTile != null) {
 				// create correct tile
-				toInsert = new Tile(texture, editor.currentTile.getFile(), (int) editor.point.x, (int) editor.point.y);
+				toInsert = new Tile(texture, editor.currentTile.getFile(), (int) editor.point.getX(),
+						(int) editor.point.getY());
 			} else {
 				// use blank tile
-				toInsert = new Tile(null, null, (int) editor.point.x, (int) editor.point.y);
+				toInsert = new Tile(null, null, (int) editor.point.getX(), (int) editor.point.getY());
 			}
 
 			// get all rectangles that overlap toInsert and pass them to the right method

@@ -33,10 +33,10 @@ public class EventTool extends AreaTool {
 				Event toInsert = null;
 				if (editor.currentEvent != null) {
 					// create correct event
-					toInsert = editor.currentEvent.makeEvent((int) editor.point.x, (int) editor.point.y);
+					toInsert = editor.currentEvent.makeEvent((int) editor.point.getX(), (int) editor.point.getY());
 				} else {
 					// use blank event
-					toInsert = new PlayerDeath(null, null, (int) editor.point.x, (int) editor.point.y);
+					toInsert = new PlayerDeath(null, null, (int) editor.point.getX(), (int) editor.point.getY());
 				}
 
 				// get all rectangles that overlap toInsert and pass them to the right method

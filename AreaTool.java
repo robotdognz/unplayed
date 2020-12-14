@@ -40,24 +40,24 @@ public class AreaTool implements Tool {
 		if (editor.eMode == editorMode.ADD) {
 			if (start == null) {
 				//if there is no start, make a new start
-				start = new PVector(editor.point.x, editor.point.y);
+				start = new PVector(editor.point.getX(), editor.point.getY());
 			} else if (end == null) {
 				//if there is no end, make a new end
-				end = new PVector(editor.point.x, editor.point.y);
+				end = new PVector(editor.point.getX(), editor.point.getY());
 			}else {
 				//if there is a working end, update it
-				end.x = editor.point.x;
-				end.y = editor.point.y;
+				end.x = editor.point.getX();
+				end.y = editor.point.getY();
 			}
 		} else if (editor.eMode == editorMode.ERASE) {
 
 		} else if (editor.eMode == editorMode.SELECT) {
 			if(edit != null && editor.point != null) {
 				//PVector adjustedTouch = convert.screenToLevel(touch.x, touch.y);
-				if(PVector.dist(edit.getTopLeft(), editor.point) < 200) {
-					edit.adjustTopLeft(editor.point);
-				}else if(PVector.dist(edit.getBottomRight(), editor.point) < 200) {
-					edit.setBottomRight(editor.point);
+				if(PVector.dist(edit.getTopLeft(), editor.point.getTopLeft()) < 200) {
+					edit.adjustTopLeft(editor.point.getTopLeft());
+				}else if(PVector.dist(edit.getBottomRight(), editor.point.getBottomRight()) < 200) {
+					edit.setBottomRight(editor.point.getBottomRight());
 				}
 			}
 		}
