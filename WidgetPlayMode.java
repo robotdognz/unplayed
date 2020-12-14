@@ -5,16 +5,22 @@ import camera.GameCamera;
 import controllers.PlayerControl;
 import editor.Editor;
 import editor.Toolbar;
+import game.Game;
+import game.PageView;
 import processing.core.PApplet;
 import ui.Widget;
 
 public class WidgetPlayMode extends Widget {
 	boolean previousStatus = false;
+	Game game;
+	PageView pageView;
 
 	public WidgetPlayMode(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "Pause.png");
 		closeAfterSubWidget = true;
+		game = editor.game;
+		pageView = game.getPageView();
 	}
 
 	public void clicked() {
@@ -29,6 +35,12 @@ public class WidgetPlayMode extends Widget {
 
 	public void updateActive() {
 		super.updateActive();
+		if (game.player != null && pageView.getPages().size() > 0) {
+			available = true;
+		} else {
+			available = false;
+			return;
+		}
 		if (editor.camera instanceof FreeCamera || !editor.showPageView) {
 			active = false;
 			if(editor.camera instanceof GameCamera) {
