@@ -147,7 +147,7 @@ public class EventTool extends AreaTool {
 			} else {
 				edit = null;
 			}
-			return;
+			//return;
 		} else {
 			// if there is no exact match, look for overlaps
 			for (Rectangle p : getRectangles) {
