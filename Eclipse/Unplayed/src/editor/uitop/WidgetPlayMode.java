@@ -31,6 +31,9 @@ public class WidgetPlayMode extends Widget {
 		super.updateActive();
 		if (editor.camera instanceof FreeCamera || !editor.showPageView) {
 			active = false;
+			if(editor.camera instanceof GameCamera) {
+				editor.camera = new FreeCamera();
+			}
 		} else {
 			active = true;
 		}
