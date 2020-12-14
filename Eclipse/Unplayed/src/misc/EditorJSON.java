@@ -161,12 +161,12 @@ public class EditorJSON {
 				int pY = object.getInt("pY");
 				int pWidth = object.getInt("pWidth");
 				int pHeight = object.getInt("pHeight");
-				boolean flipH = object.getBoolean("flipH");
-				boolean flipV = object.getBoolean("flipV");
-				float angle = object.getFloat("angle");
 
 				if (type.equals("tile")) { // if it is a tile
 					File textureFile = new File(object.getString("file"));
+					boolean flipH = object.getBoolean("flipH");
+					boolean flipV = object.getBoolean("flipV");
+					float angle = object.getFloat("angle");
 					Tile t = new Tile(texture, textureFile, pX, pY);
 					t.setAngle(angle);
 					if (flipH) {
@@ -178,6 +178,9 @@ public class EditorJSON {
 					worldObjects.add(t);
 				} else if (type.equals("image")) { // if it is an image
 					File textureFile = new File(object.getString("file"));
+					boolean flipH = object.getBoolean("flipH");
+					boolean flipV = object.getBoolean("flipV");
+					float angle = object.getFloat("angle");
 					Image im = new Image(texture, textureFile, pX, pY, pWidth, pHeight);
 					im.setAngle(angle);
 					if (flipH) {

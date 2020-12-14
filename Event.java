@@ -3,7 +3,6 @@ package objects;
 import game.Game;
 import handlers.EventHandler;
 import handlers.TextureCache;
-import processing.core.PApplet;
 import processing.core.PGraphics;
 import static processing.core.PConstants.*;
 
