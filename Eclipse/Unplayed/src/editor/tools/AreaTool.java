@@ -54,13 +54,13 @@ public class AreaTool implements Tool {
 
 		} else if (editor.eMode == editorMode.SELECT) { //resize rectangle
 			if (edit != null && editor.point != null) {
-				if (PVector.dist(edit.getTopLeft(), touch) < 100) { //PVector.dist(edit.getTopLeft(), editor.point.getTopLeft()) < 200
+				if (PVector.dist(edit.getTopLeft(), convert.screenToLevel(touch.x, touch.y)) < 100) { //PVector.dist(edit.getTopLeft(), editor.point.getTopLeft()) < 200
 					// prevent adjustments that swap the corners
 					if (editor.point.getTopLeft().x < edit.getBottomRight().x
 							&& editor.point.getTopLeft().y < edit.getBottomRight().y) {
 						edit.adjustTopLeft(editor.point.getTopLeft());
 					}
-				} else if (PVector.dist(edit.getBottomRight(), touch) < 100) { //PVector.dist(edit.getBottomRight(), editor.point.getBottomRight()) < 200
+				} else if (PVector.dist(edit.getBottomRight(), convert.screenToLevel(touch.x, touch.y)) < 100) { //PVector.dist(edit.getBottomRight(), editor.point.getBottomRight()) < 200
 					// prevent adjustments that swap the corners
 					if (editor.point.getBottomRight().x > edit.getTopLeft().x
 							&& editor.point.getBottomRight().y > edit.getTopLeft().y) {
