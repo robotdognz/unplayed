@@ -5,6 +5,7 @@ import camera.Camera;
 import controllers.CameraControl;
 import controllers.Controller;
 import controllers.EditorControl;
+import controllers.PlayerControl;
 import editor.tools.TileTool;
 import editor.uibottom.EditorBottom;
 import editor.uiside.EditorSide;
@@ -161,7 +162,7 @@ public class Editor {
 			p.translate(-camera.getCenter().x, -camera.getCenter().y);
 
 			// draw selection box around selected object
-			if (selected != null) {
+			if (selected != null && !(controller instanceof PlayerControl)) {
 				if (selected instanceof Page) {
 					selected.drawSelected(p.g);
 				} else if (selected instanceof CameraChange) {
@@ -264,7 +265,7 @@ public class Editor {
 		}
 
 		// draw selection box around selected object
-		if (selected != null && !(selected instanceof Page)) {
+		if (selected != null && !(selected instanceof Page) && !(controller instanceof PlayerControl)) {
 			selected.drawSelected(p.g);
 		}
 
