@@ -114,7 +114,10 @@ void onRotate(float x, float y, float angle) {
 
 public void onCreate(Bundle savedInstanceState) {
   super.onCreate(savedInstanceState);
-  android.view.View decorView = getWindow().getDecorView();
+  
+  this.activity = this.getActivity();
+  
+  android.view.View decorView = activity.getWindow().getDecorView();
   decorView.setOnSystemUiVisibilityChangeListener
     (new android.view.View.OnSystemUiVisibilityChangeListener() {
     @Override
