@@ -18,11 +18,7 @@ public class CameraChange extends Event {
 		super(texture, name, false, x, y, 100, 100);
 		// considering separating edgeZoom into in speed and out speed
 
-		// TODO: figure out what the default values should be
 		this.camera = new Rectangle(-300, -400, 700, 900);
-		
-//		PVector cameraTopLeft = new PVector(-400, -400);
-//		PVector cameraBottomRight = new PVector(500, 600);
 		this.cameraZoom = 2;
 		this.edgeZoom = 2;
 		// this.type = type;

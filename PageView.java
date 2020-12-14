@@ -35,7 +35,8 @@ public class PageView {
 		p.imageMode(CENTER);
 		PImage temp = texture.getDeskBehind();
 		float ratio = (float) temp.height / (float) temp.width;
-		p.image(temp, p.width / 2, p.height / 2, p.width, p.width * ratio);
+		p.image(temp, 0, 0, p.width, p.width * ratio);
+		//p.image(temp, p.width / 2, p.height / 2, p.width, p.width * ratio);
 
 		p.pushMatrix(); // start working at game scale
 		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
@@ -56,7 +57,8 @@ public class PageView {
 
 		// draw desk shading
 		p.imageMode(CENTER);
-		p.image(texture.getDeskInfront(), p.width / 2, p.height / 2, p.width, p.width * ratio);
+		p.image(texture.getDeskInfront(), 0, 0, p.width, p.width * ratio);
+		//p.image(texture.getDeskInfront(), p.width / 2, p.height / 2, p.width, p.width * ratio);
 	}
 
 	public void step() {
