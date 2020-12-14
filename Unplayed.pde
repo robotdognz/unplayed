@@ -112,7 +112,7 @@ void onRotate(float x, float y, float angle) {
 }
 
 public void onResume() {
-  super.onResume();
+  //super.onResume();
   hideSystemUI();
 }
 
