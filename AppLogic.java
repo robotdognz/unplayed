@@ -53,7 +53,7 @@ public class AppLogic {
 		menu = null;
 		editorToggle = true;
 
-		View decorView = p.getWindow().getDecorView();
+		final View decorView = activity.getWindow().getDecorView();
 		decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
 			@Override
 			public void onSystemUiVisibilityChange(int visibility) {
