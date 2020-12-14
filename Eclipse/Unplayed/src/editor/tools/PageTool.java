@@ -6,6 +6,7 @@ import misc.Converter;
 import objects.Page;
 import objects.Rectangle;
 import objects.View;
+import objects.events.CameraChange;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -41,6 +42,14 @@ public class PageTool extends AreaTool {
 	public void touchMoved(PVector touch) {
 		if (!editor.showPageView) {// views
 			super.touchMoved(touch);
+			if (editor.selected != null && editor.selected instanceof View
+					&& editor.eMode == editorMode.SELECT) {
+//				edit = ((CameraChange) editor.selected).getCameraArea();
+				edit = editor.selected;
+				super.touchMoved(touch);
+			} else {
+				edit = null;
+			}
 		} else { // pages
 			if (!editorSide.adjust) {
 				if (editor.eMode == editorMode.ADD) {

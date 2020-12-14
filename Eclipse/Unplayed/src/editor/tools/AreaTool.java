@@ -22,8 +22,8 @@ public class AreaTool implements Tool {
 	private PVector end; // end of rectangle drawing
 
 	private Rectangle result;
-	
-	public Rectangle edit; //the rectangle being edited
+
+	public Rectangle edit; // the rectangle being edited
 
 	public AreaTool(PApplet p, Editor editor) {
 		this.p = p;
@@ -39,25 +39,32 @@ public class AreaTool implements Tool {
 	public void touchMoved(PVector touch) {
 		if (editor.eMode == editorMode.ADD) {
 			if (start == null) {
-				//if there is no start, make a new start
+				// if there is no start, make a new start
 				start = new PVector(editor.point.getX(), editor.point.getY());
 			} else if (end == null) {
-				//if there is no end, make a new end
+				// if there is no end, make a new end
 				end = new PVector(editor.point.getX(), editor.point.getY());
-			}else {
-				//if there is a working end, update it
+			} else {
+				// if there is a working end, update it
 				end.x = editor.point.getX();
 				end.y = editor.point.getY();
 			}
 		} else if (editor.eMode == editorMode.ERASE) {
 
 		} else if (editor.eMode == editorMode.SELECT) {
-			if(edit != null && editor.point != null) {
-				//PVector adjustedTouch = convert.screenToLevel(touch.x, touch.y);
-				if(PVector.dist(edit.getTopLeft(), editor.point.getTopLeft()) < 200) {
-					edit.adjustTopLeft(editor.point.getTopLeft());
-				}else if(PVector.dist(edit.getBottomRight(), editor.point.getBottomRight()) < 200) {
-					edit.setBottomRight(editor.point.getBottomRight());
+			if (edit != null && editor.point != null) {
+				if (PVector.dist(edit.getTopLeft(), editor.point.getTopLeft()) < 200) {
+					// prevent adjustments that swap the corners
+					if (editor.point.getTopLeft().x < edit.getBottomRight().x
+							&& editor.point.getTopLeft().y < edit.getBottomRight().y) {
+						edit.adjustTopLeft(editor.point.getTopLeft());
+					}
+				} else if (PVector.dist(edit.getBottomRight(), editor.point.getBottomRight()) < 200) {
+					// prevent adjustments that swap the corners
+					if (editor.point.getBottomRight().x > edit.getTopLeft().x
+							&& editor.point.getBottomRight().y > edit.getTopLeft().y) {
+						edit.setBottomRight(editor.point.getBottomRight());
+					}
 				}
 			}
 		}
