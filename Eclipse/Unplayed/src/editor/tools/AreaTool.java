@@ -18,8 +18,6 @@ public class AreaTool implements Tool {
 	protected Editor editor;
 	protected Converter convert;
 
-//	private PVector start; // start of rectangle drawing
-//	private PVector end; // end of rectangle drawing
 	private Rectangle start;
 	private Rectangle end;
 
@@ -52,18 +50,18 @@ public class AreaTool implements Tool {
 			}
 		} else if (editor.eMode == editorMode.ERASE) {
 
-		} else if (editor.eMode == editorMode.SELECT) { //resize rectangle
+		} else if (editor.eMode == editorMode.SELECT) { // resize rectangle
 			if (edit != null && editor.point != null) {
-				if (PVector.dist(edit.getTopLeft(), convert.screenToLevel(touch.x, touch.y)) < 100) { //PVector.dist(edit.getTopLeft(), editor.point.getTopLeft()) < 200
+				if (PVector.dist(edit.getTopLeft(), editor.point.getTopLeft()) < 150) { // 200
 					// prevent adjustments that swap the corners
-					if (editor.point.getTopLeft().x < edit.getBottomRight().x
-							&& editor.point.getTopLeft().y < edit.getBottomRight().y) {
+					if (editor.point.getTopLeft().x < edit.getBottomRight().x-100
+							&& editor.point.getTopLeft().y < edit.getBottomRight().y-100) {
 						edit.adjustTopLeft(editor.point.getTopLeft());
 					}
-				} else if (PVector.dist(edit.getBottomRight(), convert.screenToLevel(touch.x, touch.y)) < 100) { //PVector.dist(edit.getBottomRight(), editor.point.getBottomRight()) < 200
+				} else if (PVector.dist(edit.getBottomRight(), editor.point.getBottomRight()) < 150) { // 200
 					// prevent adjustments that swap the corners
-					if (editor.point.getBottomRight().x > edit.getTopLeft().x
-							&& editor.point.getBottomRight().y > edit.getTopLeft().y) {
+					if (editor.point.getBottomRight().x > edit.getTopLeft().x+100
+							&& editor.point.getBottomRight().y > edit.getTopLeft().y+100) {
 						edit.setBottomRight(editor.point.getBottomRight());
 					}
 				}
