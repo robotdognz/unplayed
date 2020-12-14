@@ -10,14 +10,14 @@ public class View extends Rectangle {
 	public View(PApplet p, int x, int y, int rWidth, int rHeight) {
 		super(x, y, rWidth, rHeight);
 		this.p = p;
-		color = p.color(p.random(255), p.random(255), p.random(255), 70);
+		color = p.color(p.random(255), p.random(255), p.random(255));
 	}
 
 	public void draw(PGraphics graphics) {
 		//graphics.noFill();
 		//graphics.stroke(color);
 		//graphics.strokeWeight(4);
-		graphics.fill(color);
+		graphics.fill(color, 70);
 		graphics.rect(getX(), getY(), getWidth(), getHeight());
 		graphics.noStroke();
 	}
