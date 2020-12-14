@@ -42,7 +42,7 @@ public class PageTool extends AreaTool {
 		if (!editor.showPageView) {// views
 			if (editor.selected != null && editor.selected instanceof View
 					&& editor.eMode == editorMode.SELECT) {
-				edit = editor.selected;
+//				edit = editor.selected;
 				super.touchMoved(touch);
 			} else {
 				edit = null;
@@ -218,8 +218,10 @@ public class PageTool extends AreaTool {
 		if (found != null) {
 			editor.selected = found;
 			editor.currentView = found;
+			edit = found;
 		} else {
 			editor.selected = null;
+			edit = null;
 		}
 	}
 
@@ -272,9 +274,8 @@ public class PageTool extends AreaTool {
 
 	@Override
 	public void draw() {
-		super.draw();
 		if (!editor.showPageView) { // views
-			
+			super.draw();
 		} else { // pages
 			if (currentPage != null) {
 				currentPage.step();
