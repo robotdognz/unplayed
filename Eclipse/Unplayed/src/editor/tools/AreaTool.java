@@ -55,9 +55,9 @@ public class AreaTool implements Tool {
 			if(edit != null) {
 				PVector adjustedTouch = convert.screenToLevel(touch.x, touch.y);
 				if(PVector.dist(edit.getTopLeft(), adjustedTouch) < 100) {
-					edit.setTopLeft(touch);
+					edit.setTopLeft(adjustedTouch);
 				}else if(PVector.dist(edit.getBottomRight(), adjustedTouch) < 100) {
-					edit.setBottomRight(touch);
+					edit.setBottomRight(adjustedTouch);
 				}
 			}
 		}
