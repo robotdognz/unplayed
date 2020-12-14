@@ -17,6 +17,7 @@ public class View extends Rectangle {
 		//graphics.noFill();
 		//graphics.stroke(color);
 		//graphics.strokeWeight(4);
+		graphics.noStroke();
 		graphics.fill(color, 70);
 		graphics.rect(getX(), getY(), getWidth(), getHeight());
 		graphics.noStroke();
