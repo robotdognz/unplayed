@@ -173,26 +173,26 @@ public class Player extends Rectangle {
 	public void drawArrows(Game g) {
 		p.fill(playerColor);
 		// draw player-off-screen arrows
-		if (getTopLeft().x + getWidth() - 10 <= g.leftEdge) {
-			// left edge
-			p.triangle(g.leftEdge + 20, getTopLeft().y + getHeight() / 2, g.leftEdge + 60,
-					getTopLeft().y + getHeight() / 2 - 40, g.leftEdge + 60, getTopLeft().y + getHeight() / 2 + 40);
-		}
-		if (getTopLeft().x + 10 >= g.rightEdge) {
-			// right edge
-			p.triangle(g.rightEdge - 20, getTopLeft().y + getHeight() / 2, g.rightEdge - 60,
-					getTopLeft().y + getHeight() / 2 - 40, g.rightEdge - 60, getTopLeft().y + getHeight() / 2 + 40);
-		}
-		if (getTopLeft().y + getHeight() - 10 <= g.topEdge) {
-			// top edge
-			p.triangle(getTopLeft().x + getWidth() / 2, g.topEdge + 20, getTopLeft().x + 40 + getWidth() / 2,
-					g.topEdge + 60, getTopLeft().x - 40 + getWidth() / 2, g.topEdge + 60);
-		}
-		if (getTopLeft().y + 10 >= g.bottomEdge) {
-			// top edge
-			p.triangle(getTopLeft().x + getWidth() / 2, g.bottomEdge - 20, getTopLeft().x + 40 + getWidth() / 2,
-					g.bottomEdge - 60, getTopLeft().x - 40 + getWidth() / 2, g.bottomEdge - 60);
-		}
+//		if (getTopLeft().x + getWidth() - 10 <= g.leftEdge) {
+//			// left edge
+//			p.triangle(g.leftEdge + 20, getTopLeft().y + getHeight() / 2, g.leftEdge + 60,
+//					getTopLeft().y + getHeight() / 2 - 40, g.leftEdge + 60, getTopLeft().y + getHeight() / 2 + 40);
+//		}
+//		if (getTopLeft().x + 10 >= g.rightEdge) {
+//			// right edge
+//			p.triangle(g.rightEdge - 20, getTopLeft().y + getHeight() / 2, g.rightEdge - 60,
+//					getTopLeft().y + getHeight() / 2 - 40, g.rightEdge - 60, getTopLeft().y + getHeight() / 2 + 40);
+//		}
+//		if (getTopLeft().y + getHeight() - 10 <= g.topEdge) {
+//			// top edge
+//			p.triangle(getTopLeft().x + getWidth() / 2, g.topEdge + 20, getTopLeft().x + 40 + getWidth() / 2,
+//					g.topEdge + 60, getTopLeft().x - 40 + getWidth() / 2, g.topEdge + 60);
+//		}
+//		if (getTopLeft().y + 10 >= g.bottomEdge) {
+//			// top edge
+//			p.triangle(getTopLeft().x + getWidth() / 2, g.bottomEdge - 20, getTopLeft().x + 40 + getWidth() / 2,
+//					g.bottomEdge - 60, getTopLeft().x - 40 + getWidth() / 2, g.bottomEdge - 60);
+//		}
 		// need to add corner arrows
 	}
 
