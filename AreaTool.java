@@ -58,7 +58,8 @@ public class AreaTool implements Tool {
 							&& editor.point.getTopLeft().y < edit.getBottomRight().y-100) {
 						edit.adjustTopLeft(editor.point.getTopLeft());
 					}
-				} else if (PVector.dist(edit.getBottomRight(), editor.point.getBottomRight()) < 150) { // 200
+				}
+				if (PVector.dist(edit.getBottomRight(), editor.point.getBottomRight()) < 150) { // 200
 					// prevent adjustments that swap the corners
 					if (editor.point.getBottomRight().x > edit.getTopLeft().x+100
 							&& editor.point.getBottomRight().y > edit.getTopLeft().y+100) {
