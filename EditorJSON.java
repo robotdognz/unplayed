@@ -188,10 +188,11 @@ public class EditorJSON {
 					}
 					worldObjects.add(im);
 				} else if (type.equals("PlayerStart")) {
+					toast.showToast("loading player start");
 					String name = object.getString("name");
 					PlayerStart ps = new PlayerStart(texture, name, pX, pY, game);
 					worldObjects.add(ps);
-					toast.showToast("PS loaded");
+					
 				} else if (type.equals("PlayerDeath")) {
 					String name = object.getString("name");
 					PlayerDeath pd = new PlayerDeath(texture, name, pX, pY);
