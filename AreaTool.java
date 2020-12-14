@@ -54,14 +54,14 @@ public class AreaTool implements Tool {
 			if (edit != null && editor.point != null) {
 				if (PVector.dist(edit.getTopLeft(), editor.point.getTopLeft()) < 150) { // 200
 					// prevent adjustments that swap the corners
-					if (editor.point.getTopLeft().x < edit.getBottomRight().x
-							&& editor.point.getTopLeft().y < edit.getBottomRight().y) {
+					if (editor.point.getTopLeft().x < edit.getBottomRight().x-100
+							&& editor.point.getTopLeft().y < edit.getBottomRight().y-100) {
 						edit.adjustTopLeft(editor.point.getTopLeft());
 					}
 				} else if (PVector.dist(edit.getBottomRight(), editor.point.getBottomRight()) < 150) { // 200
 					// prevent adjustments that swap the corners
-					if (editor.point.getBottomRight().x > edit.getTopLeft().x
-							&& editor.point.getBottomRight().y > edit.getTopLeft().y) {
+					if (editor.point.getBottomRight().x > edit.getTopLeft().x+100
+							&& editor.point.getBottomRight().y > edit.getTopLeft().y+100) {
 						edit.setBottomRight(editor.point.getBottomRight());
 					}
 				}
