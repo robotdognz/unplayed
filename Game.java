@@ -44,18 +44,8 @@ public class Game {
 	private float newSubScale = 1;
 
 	// variables for black border
-//	public float topEdge;
-//	public float bottomEdge;
-//	public float leftEdge;
-//	public float rightEdge;
 	public Rectangle cameraArea;
-
-//	public float newTopEdge;
-//	public float newBottomEdge;
-//	public float newLeftEdge;
-//	public float newRightEdge;
 	public Rectangle newCameraArea;
-
 	public float boarderZoomSpeed = 0.1f; // 0.1 is default
 
 	public Game(PApplet p, AppLogic app, Camera c, Vibe v, TextureCache texture, Converter convert) {
@@ -101,18 +91,8 @@ public class Game {
 		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
 		screenObjects = new HashSet<Rectangle>();
 
-//		topEdge = bottomOfTopBar;
-//		bottomEdge = topOfBottomBar;
-//		leftEdge = camera.getCenter().x - newScale / 2;
-//		rightEdge = camera.getCenter().x + newScale / 2;
 		float camX = camera.getCenter().x - newScale / 2;
 		cameraArea = new Rectangle(camX, bottomOfTopBar, newScale, topOfBottomBar - bottomOfTopBar);
-
-//		newTopEdge = topEdge;
-//		newBottomEdge = bottomEdge;
-//		newLeftEdge = leftEdge;
-//		newRightEdge = rightEdge;
-
 		newCameraArea = cameraArea.copy();
 	}
 
@@ -143,11 +123,6 @@ public class Game {
 			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
 			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 			newCenter = new PVector(centerX, centerY);
-//			newTopEdge = bottomOfTopBar;
-//			newBottomEdge = topOfBottomBar;
-//			newLeftEdge = newCenter.x - newScale / 2;
-//			newRightEdge = newCenter.x + newScale / 2;
-			
 			newCameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
 					cameraBottomRight.y);
 		}
@@ -173,18 +148,6 @@ public class Game {
 			p.fill(20, 255); // 10, 255
 			int barSize = 1000000;
 			p.rectMode(CORNERS);
-//			// top bar
-//			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
-//					topEdge);
-//			// bottom bar
-//			p.rect(-barSize + camera.getCenter().x, bottomEdge, barSize + camera.getCenter().x,
-//					camera.getCenter().y + barSize);
-//			// left bar
-//			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, leftEdge,
-//					camera.getCenter().y + barSize);
-//			// right bar
-//			p.rect(rightEdge, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
-//					camera.getCenter().y + barSize);
 			
 			// top bar
 			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
@@ -230,17 +193,6 @@ public class Game {
 		// tall screen space scaling
 		// uses the 'new...' versions of edge variables so that
 		// scaling happens immediately
-//		if (camera.getScale() != newScale || topEdge != newTopEdge || bottomEdge != newBottomEdge) {
-//		if (camera.getScale() != newScale || cameraArea.getTopLeft().y != newTopEdge
-//				|| cameraArea.getBottomRight().y != newBottomEdge) {
-//			// if there might be a difference in tall screen scale
-//			if ((newBottomEdge - newTopEdge) / (newRightEdge - newLeftEdge) > (float) p.height / (float) p.width) {
-//				newSubScale = ((float) p.height / ((float) p.width / (float) (newRightEdge - newLeftEdge)))
-//						/ (newBottomEdge - newTopEdge);
-//			} else {
-//				newSubScale = 1;
-//			}
-//		}
 		if (camera.getScale() != newScale || !cameraArea.sameDimensions(newCameraArea)) {
 			// if there might be a difference in tall screen scale
 			if ((newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y)
@@ -266,19 +218,6 @@ public class Game {
 			camera.setCenter(PVector.lerp(camera.getCenter(), newCenter, PApplet.exp(-zoomSpeed)));
 		}
 		// black border movement
-//		if (leftEdge != newLeftEdge) {
-//			leftEdge = PApplet.lerp(leftEdge, newLeftEdge, PApplet.exp(-boarderZoomSpeed));
-//		}
-//		if (rightEdge != newRightEdge) {
-//			rightEdge = PApplet.lerp(rightEdge, newRightEdge, PApplet.exp(-boarderZoomSpeed));
-//		}
-//		if (topEdge != newTopEdge) {
-//			topEdge = PApplet.lerp(topEdge, newTopEdge, PApplet.exp(-boarderZoomSpeed));
-//		}
-//		if (bottomEdge != newBottomEdge) {
-//			bottomEdge = PApplet.lerp(bottomEdge, newBottomEdge, PApplet.exp(-boarderZoomSpeed));
-//		}
-
 		if (!cameraArea.sameDimensions(newCameraArea)) {
 			float topLeftX = PApplet.lerp(cameraArea.getTopLeft().x, newCameraArea.getTopLeft().x, PApplet.exp(-boarderZoomSpeed));
 			float topLeftY = PApplet.lerp(cameraArea.getTopLeft().y, newCameraArea.getTopLeft().y, PApplet.exp(-boarderZoomSpeed));
