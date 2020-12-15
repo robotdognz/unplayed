@@ -104,20 +104,20 @@ public class Page extends Editable {
 		ArrayList<Rectangle> drawSecond = new ArrayList<Rectangle>();
 		for (Rectangle r : pageObjects) {
 			boolean excluded = false;
-			
-			if (r.getTopLeft().x > view.getBottomRight().x) {
+
+			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
 				continue;
 			}
-			if (r.getBottomRight().x < view.getTopLeft().x) {
+			if (r.getBottomRight().x < view.getTopLeft().x + 1) {
 				continue;
 			}
-			if (r.getTopLeft().y > view.getBottomRight().y) {
+			if (r.getTopLeft().y > view.getBottomRight().y - 1) {
 				continue;
 			}
-			if (r.getBottomRight().y < view.getTopLeft().y) {
+			if (r.getBottomRight().y < view.getTopLeft().y + 1) {
 				continue;
 			}
-			
+
 			for (String s : excludedObjects) { // check the rectangle against the excluded list
 				if (r.toString().equals(s)) {
 					excluded = true;
