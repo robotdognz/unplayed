@@ -183,9 +183,9 @@ public class EventTool extends AreaTool {
 
 	@Override
 	public void touchEnded(PVector touch) {
-		if(editor.selected instanceof PlayerStart) {
-			((PlayerStart) editor.selected).update();
-		}
+//		if(editor.selected instanceof PlayerStart) {
+//			((PlayerStart) editor.selected).update();
+//		}
 	}
 
 	@Override

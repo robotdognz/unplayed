@@ -103,7 +103,7 @@ public class Game {
 		playerStart.x = start.getX();
 		playerStart.y = start.getY();
 		// set start camera
-
+		startCameraArea = start.getCameraArea();
 	}
 
 	public void createPlayer() {
