@@ -46,7 +46,7 @@ public class PageView {
 		p.imageMode(CENTER);
 		PImage temp = texture.getDeskBehind();
 		float ratio = (float) temp.height / (float) temp.width;
-		p.image(temp, 0, 0, p.width*10, p.width*10 * ratio);
+		p.image(temp, 0, 0, p.width*5, p.width*5 * ratio);
 		// p.image(temp, p.width / 2, p.height / 2, p.width, p.width * ratio);
 
 		// p.background(100);
@@ -57,7 +57,7 @@ public class PageView {
 
 		// draw desk shading
 		p.imageMode(CENTER);
-		p.image(texture.getDeskInfront(), 0, 0, p.width*10, p.width*10 * ratio);
+		p.image(texture.getDeskInfront(), 0, 0, p.width*5, p.width*5 * ratio);
 		// p.image(texture.getDeskInfront(), p.width / 2, p.height / 2, p.width, p.width
 		// * ratio);
 
