@@ -139,30 +139,31 @@ public class Page extends Editable {
 		pageGraphics.beginDraw();
 
 		pageGraphics.translate(-view.getX(), -view.getY());
+		pageGraphics.scale(0.5f);
 
 		// draw environment and player
 		pageGraphics.background(240);
 
 		for (Rectangle r : drawFirst) { // draw images
 			if (r instanceof Image) {
-				((Image) r).draw(pageGraphics, scale / size);
+				((Image) r).draw(pageGraphics, scale / size/2);
 			}
 		}
 		for (Rectangle r : drawSecond) { // draw tiles and events
 			if (r instanceof Tile) {
-				((Tile) r).draw(pageGraphics, scale / size); // scale is divided by size so that LODs are relative
+				((Tile) r).draw(pageGraphics, scale / size/2); // scale is divided by size so that LODs are relative
 																// to
 																// page size
 			}
 			if (r instanceof Event && ((Event) r).visible) {
-				((Event) r).draw(pageGraphics, scale / size);
+				((Event) r).draw(pageGraphics, scale / size/2);
 			}
 		}
 
 		if (game.player != null) {
 			game.player.draw(pageGraphics);
 		}
-		game.paper.draw(pageGraphics, view, scale / size);
+		game.paper.draw(pageGraphics, view, scale / size/2);
 		// end drawing on the page
 		pageGraphics.endDraw();
 	}
@@ -175,7 +176,6 @@ public class Page extends Editable {
 		g.strokeWeight(2);
 		g.translate(position.x, position.y);
 		g.scale(size); // size the page will appear in the page view
-//		g.rotate(PApplet.radians(Math.round(angle / snapNo) * snapNo)); // angle of the page
 		g.rotate(PApplet.radians(angle)); // angle of the page
 		g.rectMode(CENTER);
 		g.rect(0, 0, adjustedRect.getWidth(), adjustedRect.getHeight());
