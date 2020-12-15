@@ -23,7 +23,6 @@ public class Page extends Editable {
 	private PVector position; // center of the page in page view
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
-	// private float snapNo = 7.5f;
 
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
 		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
@@ -35,7 +34,7 @@ public class Page extends Editable {
 		this.pageObjects = new HashSet<Rectangle>();
 		this.excludedObjects = new HashSet<String>();
 
-		this.pageGraphics = p.createGraphics((int) rWidth/2, (int) rHeight/2, P2D);
+		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 
 		setPosition(position);
 	}
@@ -89,7 +88,7 @@ public class Page extends Editable {
 		// draw the page
 		p.pushMatrix();
 		p.translate(position.x, position.y);
-		p.scale(size*2); // size the page will appear in the page view
+		p.scale(size); // size the page will appear in the page view
 		p.rotate(PApplet.radians(angle)); // angle of the page
 		p.scale(flipX, flipY); // flipping the page
 		p.imageMode(CENTER);
@@ -103,8 +102,8 @@ public class Page extends Editable {
 		ArrayList<Rectangle> drawSecond = new ArrayList<Rectangle>();
 		for (Rectangle r : pageObjects) {
 			boolean excluded = false;
-
-			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
+			
+			if (r.getTopLeft().x > view.getBottomRight().x -1) {
 				continue;
 			}
 			if (r.getBottomRight().x < view.getTopLeft().x + 1) {
@@ -116,7 +115,7 @@ public class Page extends Editable {
 			if (r.getBottomRight().y < view.getTopLeft().y + 1) {
 				continue;
 			}
-
+			
 			for (String s : excludedObjects) { // check the rectangle against the excluded list
 				if (r.toString().equals(s)) {
 					excluded = true;
@@ -139,7 +138,6 @@ public class Page extends Editable {
 		pageGraphics.beginDraw();
 
 		pageGraphics.translate(-view.getX(), -view.getY());
-		pageGraphics.scale(0.5f);
 
 		// draw environment and player
 		pageGraphics.background(240);
