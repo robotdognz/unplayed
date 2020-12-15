@@ -104,16 +104,16 @@ public class Game {
 		playerStart.y = start.getY();
 		// set start camera
 		startCameraArea = start.getCameraArea();
-//		int startScale = (int) Math.abs(startCameraArea.getBottomRight().x - startCameraArea.getTopLeft().x);
-//		newScale = startScale;
+		
 		PVector cameraTopLeft = startCameraArea.getTopLeft();
 		PVector cameraBottomRight = startCameraArea.getBottomRight();
 		newScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
 		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
 		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 		newCenter = new PVector(centerX, centerY);
-		newCameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
-				cameraBottomRight.y);
+//		newCameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
+//				cameraBottomRight.y);
+		newCameraArea = startCameraArea.copy();
 	}
 
 	public void createPlayer() {
