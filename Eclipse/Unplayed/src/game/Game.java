@@ -75,7 +75,7 @@ public class Game {
 		views = new ArrayList<View>();
 		playerObjects = new HashSet<Rectangle>();
 
-		pageView = new PageView(p, camera, texture, convert);
+		pageView = new PageView(p, this, camera, texture, convert);
 
 		paper = new Paper(texture);
 
@@ -274,7 +274,7 @@ public class Game {
 		if (views.size() < 1) {
 			return null;
 		}
-		View best = null;
+		View best = null; //best found match
 		for (View view : views) {
 			if (view.getTopLeft().x > x) {
 				continue;
@@ -289,7 +289,7 @@ public class Game {
 				continue;
 			}
 			
-			//find the view that is smallest
+			//find the view that on top
 			if(best != null) {
 				if(view.getX() > best.getX() || view.getY() > best.getY()) {
 					best = view;

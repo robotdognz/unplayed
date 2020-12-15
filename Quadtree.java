@@ -1,14 +1,19 @@
 package game;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
 
 import objects.Rectangle;
+import objects.events.CameraChange;
 import processing.core.PApplet;
 
 public class Quadtree {
 	private Rectangle bounds;
 	public QuadNode root;
 	private int insertCount = 0;
+
+	private HashSet<CameraChange> cameras; // easily accessible cameras
 
 	public Quadtree(Rectangle bounds) {
 		this.bounds = bounds;
@@ -22,11 +27,17 @@ public class Quadtree {
 
 	public void insert(Rectangle current) {
 		insertCount++;
+		if (current instanceof CameraChange) {
+			cameras.add((CameraChange) current);
+		}
 		root.nodeInsert(current);
 	}
 
 	public void remove(Rectangle current) {
 		insertCount--;
+		if (current instanceof CameraChange) {
+			cameras.remove((CameraChange) current);
+		}
 		root.remove(current);
 	}
 
@@ -56,5 +67,9 @@ public class Quadtree {
 	public HashSet<Rectangle> getAll(HashSet<Rectangle> returnSet) {
 		root.getAll(returnSet);
 		return returnSet;
+	}
+	
+	public Set<CameraChange> getCameras(){
+		return Collections.unmodifiableSet(cameras);
 	}
 }

@@ -9,11 +9,13 @@ import handlers.TextureCache;
 import misc.Converter;
 import objects.Page;
 import objects.Rectangle;
+import objects.events.CameraChange;
 import processing.core.*;
 import static processing.core.PConstants.*;
 
 public class PageView {
 	private PApplet p;
+	private Game game;
 	private TextureCache texture;
 	private Converter convert;
 	private ArrayList<Page> pages;
@@ -21,8 +23,9 @@ public class PageView {
 	// world camera
 	private Camera camera;
 
-	public PageView(PApplet p, Camera camera, TextureCache texture, Converter convert) {
+	public PageView(PApplet p, Game game, Camera camera, TextureCache texture, Converter convert) {
 		this.p = p;
+		this.game = game;
 		this.texture = texture;
 		this.convert = convert;
 		this.camera = camera;
@@ -30,7 +33,6 @@ public class PageView {
 	}
 
 	public void draw() {
-		
 
 		p.pushMatrix(); // start working at game scale
 		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
@@ -47,7 +49,7 @@ public class PageView {
 		p.imageMode(CENTER);
 		PImage temp = texture.getDeskBehind();
 		float ratio = (float) temp.height / (float) temp.width;
-		p.image(temp, 0, 0, p.width*5, p.width*5 * ratio);
+		p.image(temp, 0, 0, p.width * 5, p.width * 5 * ratio);
 
 		for (Page p : pages) {
 			p.draw(currentScale);
@@ -55,7 +57,19 @@ public class PageView {
 
 		// draw desk shading
 		p.imageMode(CENTER);
-		p.image(texture.getDeskInfront(), 0, 0, p.width*5, p.width*5 * ratio);
+		p.image(texture.getDeskInfront(), 0, 0, p.width * 5, p.width * 5 * ratio);
+
+		// draw existing cameras
+		if (!camera.getGame()) {
+			for (CameraChange c : game.world.getCameras()) {
+				Rectangle area = c.getCameraArea();
+				p.noFill();
+				p.stroke(0, 0, 255);
+				p.strokeWeight(4);
+				p.rectMode(CORNERS);
+				p.rect(area.getX(), area.getY(), area.getBottomRight().x, area.getBottomRight().y);
+			}
+		}
 
 		p.popMatrix();
 
