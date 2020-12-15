@@ -120,6 +120,7 @@ public class Game {
 			newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 			newCameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
 					cameraBottomRight.y);
+			cameraArea = newCameraArea.copy();
 			createPlayer();
 		}
 	}
