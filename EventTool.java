@@ -61,9 +61,6 @@ public class EventTool extends AreaTool {
 				edit = ((CameraChange) editor.selected).getCameraArea();
 
 				super.touchMoved(touch);
-				if(editor.selected instanceof PlayerStart) {
-					((PlayerStart) editor.selected).update();
-				}
 			} else {
 				edit = null;
 			}
@@ -186,6 +183,9 @@ public class EventTool extends AreaTool {
 
 	@Override
 	public void touchEnded(PVector touch) {
+		if(editor.selected instanceof PlayerStart) {
+			((PlayerStart) editor.selected).update();
+		}
 	}
 
 	@Override
