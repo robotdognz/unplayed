@@ -105,19 +105,23 @@ public class Game {
 		// set start camera
 		startCameraArea = start.getCameraArea();
 	}
-	
+
 	public void startGame() {
-		PVector cameraTopLeft = startCameraArea.getTopLeft();
-		PVector cameraBottomRight = startCameraArea.getBottomRight();
-		int startScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
-		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
-		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-		PVector startCenter = new PVector(centerX, centerY);
-		camera.setScale(startScale);
-		newScale = startScale;
-		camera.setCenter(startCenter);
-		newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
-		createPlayer();
+		if (startCameraArea != null) {
+			PVector cameraTopLeft = startCameraArea.getTopLeft();
+			PVector cameraBottomRight = startCameraArea.getBottomRight();
+			int startScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
+			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
+			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
+			PVector startCenter = new PVector(centerX, centerY);
+			camera.setScale(startScale);
+			newScale = startScale;
+			camera.setCenter(startCenter);
+			newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
+			newCameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
+					cameraBottomRight.y);
+			createPlayer();
+		}
 	}
 
 	public void createPlayer() {
