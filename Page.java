@@ -23,6 +23,7 @@ public class Page extends Editable {
 	private PVector position; // center of the page in page view
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
+	private int LODdiv = 4;
 
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
 		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
@@ -144,24 +145,24 @@ public class Page extends Editable {
 
 		for (Rectangle r : drawFirst) { // draw images
 			if (r instanceof Image) {
-				((Image) r).draw(pageGraphics, scale / size/2);
+				((Image) r).draw(pageGraphics, scale / size/LODdiv);
 			}
 		}
 		for (Rectangle r : drawSecond) { // draw tiles and events
 			if (r instanceof Tile) {
-				((Tile) r).draw(pageGraphics, scale / size/2); // scale is divided by size so that LODs are relative
+				((Tile) r).draw(pageGraphics, scale / size/LODdiv); // scale is divided by size so that LODs are relative
 																// to
 																// page size
 			}
 			if (r instanceof Event && ((Event) r).visible) {
-				((Event) r).draw(pageGraphics, scale / size/2);
+				((Event) r).draw(pageGraphics, scale / size/LODdiv);
 			}
 		}
 
 		if (game.player != null) {
 			game.player.draw(pageGraphics);
 		}
-		game.paper.draw(pageGraphics, view, scale / size/2);
+		game.paper.draw(pageGraphics, view, scale / size/LODdiv);
 		// end drawing on the page
 		pageGraphics.endDraw();
 	}
