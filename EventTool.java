@@ -11,7 +11,6 @@ import objects.Event;
 import objects.Rectangle;
 import objects.events.CameraChange;
 import objects.events.PlayerDeath;
-import objects.events.PlayerStart;
 import processing.core.PApplet;
 import processing.core.PVector;
 
