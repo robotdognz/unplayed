@@ -111,19 +111,23 @@ public class Game {
 			//calculate values
 			PVector cameraTopLeft = startCameraArea.getTopLeft();
 			PVector cameraBottomRight = startCameraArea.getBottomRight();
-			int startScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
+			//int startScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
 			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
 			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 			PVector startCenter = new PVector(centerX, centerY);
 			//apply values
-			camera.setScale(startScale);
-			newScale = startScale;
-			camera.setCenter(startCenter);
-			newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
-			newCameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
-					cameraBottomRight.y);
-			cameraArea = newCameraArea.copy();
-			createPlayer();
+//			camera.setScale(startScale); 	    	//scale
+//			newScale = startScale;					//new scale
+			camera.setScale(startCameraArea.getWidth());	//scale
+			newScale = startCameraArea.getWidth();		//new scale
+			camera.setCenter(startCenter);				//centre
+			newCenter = new PVector(camera.getCenter().x, camera.getCenter().y); //new centre
+//			cameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
+//					cameraBottomRight.y);
+			cameraArea = startCameraArea.copy(); 	//camera area
+			newCameraArea = cameraArea.copy();		//new camera area
+			//cameraArea = newCameraArea.copy();
+			createPlayer();							//initialise player
 		}
 	}
 
@@ -142,14 +146,18 @@ public class Game {
 	public void restart() {
 		createPlayer();
 		if (startCameraArea != null) { // if there is a player start
+			//calculate values
 			PVector cameraTopLeft = startCameraArea.getTopLeft();
 			PVector cameraBottomRight = startCameraArea.getBottomRight();
-			newScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
 			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
 			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-			newCenter = new PVector(centerX, centerY);
-			newCameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
-					cameraBottomRight.y);
+			//apply values
+//			newScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x); //new scale
+			newScale = startCameraArea.getWidth();								//new scale
+			newCenter = new PVector(centerX, centerY);							//new centre
+//			newCameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
+//					cameraBottomRight.y);		//new camera area
+			newCameraArea = startCameraArea.copy();
 		}
 	}
 
