@@ -35,7 +35,7 @@ public class Page extends Editable {
 		this.pageObjects = new HashSet<Rectangle>();
 		this.excludedObjects = new HashSet<String>();
 
-		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
+		this.pageGraphics = p.createGraphics((int) rWidth/2, (int) rHeight/2, P2D);
 
 		setPosition(position);
 	}
@@ -89,8 +89,7 @@ public class Page extends Editable {
 		// draw the page
 		p.pushMatrix();
 		p.translate(position.x, position.y);
-		p.scale(size); // size the page will appear in the page view
-//		p.rotate(PApplet.radians(Math.round(angle / snapNo) * snapNo)); // angle of the page
+		p.scale(size*2); // size the page will appear in the page view
 		p.rotate(PApplet.radians(angle)); // angle of the page
 		p.scale(flipX, flipY); // flipping the page
 		p.imageMode(CENTER);
