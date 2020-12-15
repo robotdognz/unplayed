@@ -145,24 +145,24 @@ public class Page extends Editable {
 
 		for (Rectangle r : drawFirst) { // draw images
 			if (r instanceof Image) {
-				((Image) r).draw(pageGraphics, scale / size/LODdiv);
+				((Image) r).draw(pageGraphics, scale / size*LODdiv);
 			}
 		}
 		for (Rectangle r : drawSecond) { // draw tiles and events
 			if (r instanceof Tile) {
-				((Tile) r).draw(pageGraphics, scale / size/LODdiv); // scale is divided by size so that LODs are relative
+				((Tile) r).draw(pageGraphics, scale / size*LODdiv); // scale is divided by size so that LODs are relative
 																// to
 																// page size
 			}
 			if (r instanceof Event && ((Event) r).visible) {
-				((Event) r).draw(pageGraphics, scale / size/LODdiv);
+				((Event) r).draw(pageGraphics, scale / size*LODdiv);
 			}
 		}
 
 		if (game.player != null) {
 			game.player.draw(pageGraphics);
 		}
-		game.paper.draw(pageGraphics, view, scale / size/LODdiv);
+		game.paper.draw(pageGraphics, view, scale / size*LODdiv);
 		// end drawing on the page
 		pageGraphics.endDraw();
 	}
