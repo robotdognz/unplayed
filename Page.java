@@ -23,7 +23,7 @@ public class Page extends Editable {
 	private PVector position; // center of the page in page view
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
-	private int LODdiv = 4;
+	//private int LODdiv = 4;
 
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
 		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
@@ -35,7 +35,7 @@ public class Page extends Editable {
 		this.pageObjects = new HashSet<Rectangle>();
 		this.excludedObjects = new HashSet<String>();
 
-		this.pageGraphics = p.createGraphics((int) rWidth/LODdiv, (int) rHeight/LODdiv, P2D);
+		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 
 		setPosition(position);
 	}
@@ -89,7 +89,7 @@ public class Page extends Editable {
 		// draw the page
 		p.pushMatrix();
 		p.translate(position.x, position.y);
-		p.scale(size*LODdiv); // size the page will appear in the page view
+		p.scale(size); // size the page will appear in the page view
 		p.rotate(PApplet.radians(angle)); // angle of the page
 		p.scale(flipX, flipY); // flipping the page
 		p.imageMode(CENTER);
@@ -139,31 +139,30 @@ public class Page extends Editable {
 		pageGraphics.beginDraw();
 
 		pageGraphics.translate(-view.getX(), -view.getY());
-		pageGraphics.scale(1/LODdiv);
 
 		// draw environment and player
 		pageGraphics.background(240);
 
 		for (Rectangle r : drawFirst) { // draw images
 			if (r instanceof Image) {
-				((Image) r).draw(pageGraphics, scale / size*LODdiv);
+				((Image) r).draw(pageGraphics, scale / size);
 			}
 		}
 		for (Rectangle r : drawSecond) { // draw tiles and events
 			if (r instanceof Tile) {
-				((Tile) r).draw(pageGraphics, scale / size*LODdiv); // scale is divided by size so that LODs are relative
+				((Tile) r).draw(pageGraphics, scale / size); // scale is divided by size so that LODs are relative
 																// to
 																// page size
 			}
 			if (r instanceof Event && ((Event) r).visible) {
-				((Event) r).draw(pageGraphics, scale / size*LODdiv);
+				((Event) r).draw(pageGraphics, scale / size);
 			}
 		}
 
 		if (game.player != null) {
 			game.player.draw(pageGraphics);
 		}
-		game.paper.draw(pageGraphics, view, scale / size*LODdiv);
+		game.paper.draw(pageGraphics, view, scale / size);
 		// end drawing on the page
 		pageGraphics.endDraw();
 	}
