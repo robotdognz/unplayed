@@ -104,6 +104,20 @@ public class Page extends Editable {
 		ArrayList<Rectangle> drawSecond = new ArrayList<Rectangle>();
 		for (Rectangle r : pageObjects) {
 			boolean excluded = false;
+			
+			if (r.getTopLeft().x > view.getBottomRight().x) {
+				continue;
+			}
+			if (r.getBottomRight().x < view.getTopLeft().x) {
+				continue;
+			}
+			if (r.getTopLeft().y > view.getBottomRight().y) {
+				continue;
+			}
+			if (r.getBottomRight().y < view.getTopLeft().y) {
+				continue;
+			}
+			
 			for (String s : excludedObjects) { // check the rectangle against the excluded list
 				if (r.toString().equals(s)) {
 					excluded = true;
@@ -149,7 +163,7 @@ public class Page extends Editable {
 		if (game.player != null) {
 			game.player.draw(pageGraphics);
 		}
-		//game.paper.draw(pageGraphics, view, scale / size);
+		game.paper.draw(pageGraphics, view, scale / size);
 		// end drawing on the page
 		pageGraphics.endDraw();
 	}
