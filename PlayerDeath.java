@@ -9,6 +9,7 @@ public class PlayerDeath extends Event {
 		super(texture, name, true, x, y, 100, 100);
 	}
 
+	@Override
 	public void activate(Game g) {
 		super.activate(g);
 		g.restart(); // TODO: this needs a custom method in game

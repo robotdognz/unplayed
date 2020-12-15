@@ -23,16 +23,20 @@ public class CameraControl implements Controller {
 		maxZoomSpeed = 150;
 	}
 
+	@Override
 	public void step(ArrayList<PVector> touch) {
 		game.stopPlayer();
 	}
 
+	@Override
 	public void touchStarted(PVector touch) {
 	}
 
+	@Override
 	public void touchEnded(PVector touch) {
 	}
 
+	@Override
 	public void touchMoved(PVector touch, ArrayList<PVector> touches) {
 		if (touches.size() == 1) {
 			float moveX = (p.pmouseX - p.mouseX) / 3;
@@ -42,6 +46,7 @@ public class CameraControl implements Controller {
 		}
 	}
 
+	@Override
 	public void onPinch(ArrayList<PVector> touch, float x, float y, float d) {
 		// TODO make this zoom from the center of the gesture, not the center of the
 		// screen
@@ -65,6 +70,7 @@ public class CameraControl implements Controller {
 		}
 	}
 
+	@Override
 	public void onRotate(float x, float y, float angle) {
 	}
 }

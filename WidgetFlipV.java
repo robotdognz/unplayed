@@ -14,6 +14,7 @@ public class WidgetFlipV extends Widget {
 		toolbar = (EditorSide) parent;
 		icon = p.loadImage(folder + "FlipHVert.png");
 	}
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Editable) {
@@ -28,6 +29,7 @@ public class WidgetFlipV extends Widget {
 		}
 	}
 	
+	@Override
 	public void clicked() {
 		toolbar.flipV();
 	}

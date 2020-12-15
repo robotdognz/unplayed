@@ -14,10 +14,12 @@ public class WidgetViewMode extends Widget {
 		active = false;
 	}
 
+	@Override
 	public void clicked() {
 		editor.currentTool = new PageTool(p, editor);
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.currentTool instanceof PageTool) {

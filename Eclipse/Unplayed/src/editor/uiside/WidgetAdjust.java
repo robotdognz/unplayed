@@ -15,6 +15,7 @@ public class WidgetAdjust extends Widget {
 		icon = p.loadImage(folder + "rotateClockwise.png");
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Page) {
@@ -30,6 +31,7 @@ public class WidgetAdjust extends Widget {
 
 	}
 
+	@Override
 	public void clicked() {
 		toolbar.adjust = !toolbar.adjust;
 	}

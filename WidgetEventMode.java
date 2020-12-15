@@ -13,10 +13,12 @@ public class WidgetEventMode extends Widget {
 		imageInactive = null;
 	}
 
+	@Override
 	public void clicked() {
 		editor.currentTool = new EventTool(p, editor);
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.currentTool instanceof EventTool) {

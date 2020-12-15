@@ -85,7 +85,7 @@ public class Game {
 		camera.setCenter(startCenter);
 		newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 
-		// calculate screen space TODO: clean this up
+		// calculate screen space TODO: clean this up, screen space should be moved to the editor
 		screenSpaceOffset = 0; // positive makes it larger, negative makes it smaller
 		PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
 		float screenSpaceWidth = convert.screenToLevel(p.width + screenSpaceOffset * 2);

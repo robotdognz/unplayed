@@ -15,10 +15,12 @@ public class WidgetFinish extends Widget {
 		icon = p.loadImage(folder + "confirmTick.png");
 	}
 	
+	@Override
 	public void clicked() {
 		editor.selected = null;
 	}
 	
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.selected != null) {

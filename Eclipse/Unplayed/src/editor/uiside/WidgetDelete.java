@@ -22,6 +22,7 @@ public class WidgetDelete extends Widget {
 		icon = p.loadImage(folder + "deleteButton.png");
 	}
 
+	@Override
 	public void clicked() {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Tile && !editor.showPageView) {
@@ -58,6 +59,7 @@ public class WidgetDelete extends Widget {
 		}
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.selected != null) {

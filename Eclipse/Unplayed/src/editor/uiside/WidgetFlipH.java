@@ -15,6 +15,7 @@ public class WidgetFlipH extends Widget {
 		icon = p.loadImage(folder + "FlipHoz.png");
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Editable) {
@@ -30,6 +31,7 @@ public class WidgetFlipH extends Widget {
 
 	}
 
+	@Override
 	public void clicked() {
 		toolbar.flipH();
 	}

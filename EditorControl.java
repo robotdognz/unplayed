@@ -22,19 +22,23 @@ public class EditorControl implements Controller {
 		this.convert = game.convert;
 	}
 
+	@Override
 	public void step(ArrayList<PVector> touch) {
 		game.stopPlayer();
 	}
 
+	@Override
 	public void touchStarted(PVector touch) {
 	}
 
+	@Override
 	public void touchEnded(PVector touch) {
 		if(editor.currentTool != null) {
 			editor.currentTool.touchEnded(touch);
 		}
 	}
 
+	@Override
 	public void touchMoved(PVector touch, ArrayList<PVector> touches) {
 		//TODO: this logic should potentially be moved directly into the tools
 		float snapNo = 10;
@@ -55,12 +59,14 @@ public class EditorControl implements Controller {
 		}
 	}
 
+	@Override
 	public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
 		if (editor.currentTool != null) {
 			editor.currentTool.onPinch(touches, x, y, d);
 		}
 	}
 	
+	@Override
 	public void onRotate(float x, float y, float angle) {
 		if (editor.currentTool != null) {
 			editor.currentTool.onRotate(x, y, angle);

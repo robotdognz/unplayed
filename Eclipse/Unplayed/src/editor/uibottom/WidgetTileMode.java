@@ -14,10 +14,12 @@ public class WidgetTileMode extends Widget {
 		active = true;
 	}
 
+	@Override
 	public void clicked() {
 		editor.currentTool = new TileTool(editor);
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.currentTool instanceof TileTool) {

@@ -14,6 +14,7 @@ public class PlayerControl implements Controller {
 		this.game = game;
 	}
 
+	@Override
 	public void step(ArrayList<PVector> touch) {
 		if (game.player != null) {
 			int left = 0;
@@ -39,6 +40,7 @@ public class PlayerControl implements Controller {
 		}
 	}
 
+	@Override
 	public void touchStarted(PVector touch) {
 		if (game.player != null) {
 			// jump if the last true touch was in the middle of the screen
@@ -52,15 +54,19 @@ public class PlayerControl implements Controller {
 		}
 	}
 
+	@Override
 	public void touchEnded(PVector touch) {
 	}
 
+	@Override
 	public void touchMoved(PVector touch, ArrayList<PVector> touches) {
 	}
 
+	@Override
 	public void onPinch(ArrayList<PVector> touch, float x, float y, float d) {
 	}
 
+	@Override
 	public void onRotate(float x, float y, float angle) {
 	}
 }

@@ -78,6 +78,7 @@ public class EditorBottom extends Toolbar {
 		super.bounds = new Rectangle(0, p.height - 350, p.width, 350); // TODO: needs to scale to screen size
 	}
 
+	@Override
 	public void draw(PVector touch, Menu menu) {
 		// super.draw(touch, menu);
 		for (int i = 0; i < widgets.size(); i++) {
@@ -162,6 +163,7 @@ public class EditorBottom extends Toolbar {
 		p.popMatrix();
 	}
 
+	@Override
 	public void onTap(float x, float y) {
 		// select object
 		if (y >= selectionArea.getY()) {
@@ -205,6 +207,7 @@ public class EditorBottom extends Toolbar {
 		}
 	}
 
+	@Override
 	public void touchMoved(ArrayList<PVector> touch) {
 		if (touch.size() == 1 && p.mouseY >= selectionArea.getY()) {
 			if (editor.currentTool instanceof TileTool) {
@@ -267,6 +270,7 @@ public class EditorBottom extends Toolbar {
 		}
 	}
 
+	@Override
 	public void touchEnded() {
 		// check for clicking on widgets
 		for (int i = 0; i < widgets.size(); i++) {
@@ -274,6 +278,7 @@ public class EditorBottom extends Toolbar {
 		}
 	}
 
+	@Override
 	public float getHeight() {
 		return selectionArea.getHeight();
 	}

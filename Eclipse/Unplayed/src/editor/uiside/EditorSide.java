@@ -61,6 +61,7 @@ public class EditorSide extends Toolbar {
 		adjust = false;
 	}
 
+	@Override
 	public void draw(PVector touch, Menu menu) {
 		// super.draw(touch, menu);
 
@@ -83,6 +84,7 @@ public class EditorSide extends Toolbar {
 		}
 	}
 
+	@Override
 	public boolean insideBoundary(float x, float y) {
 		// prevent editor controls in this area if controlling the editor and something
 		// is selected
@@ -92,6 +94,7 @@ public class EditorSide extends Toolbar {
 		return false;
 	}
 
+	@Override
 	public void touchEnded() {
 		// check for clicking on widgets
 		if (editor.controller instanceof EditorControl) {
