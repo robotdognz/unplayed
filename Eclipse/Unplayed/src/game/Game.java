@@ -108,12 +108,14 @@ public class Game {
 
 	public void startGame() {
 		if (startCameraArea != null) {
+			//calculate values
 			PVector cameraTopLeft = startCameraArea.getTopLeft();
 			PVector cameraBottomRight = startCameraArea.getBottomRight();
 			int startScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
 			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
 			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 			PVector startCenter = new PVector(centerX, centerY);
+			//apply values
 			camera.setScale(startScale);
 			newScale = startScale;
 			camera.setCenter(startCenter);
