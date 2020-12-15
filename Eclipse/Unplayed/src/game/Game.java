@@ -170,6 +170,7 @@ public class Game {
 			p.fill(20, 255); // 10, 255
 			int barSize = 1000000;
 			p.rectMode(CORNERS);
+			p.noStroke();
 
 			// top bar
 			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
