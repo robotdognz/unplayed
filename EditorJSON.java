@@ -85,6 +85,7 @@ public class EditorJSON {
 					object.setFloat("cameraBottomRightY", ((CameraChange) r).getCameraBottomRight().y);
 					object.setFloat("cameraZoom", ((CameraChange) r).getCameraZoom());
 					object.setFloat("edgeZoom", ((CameraChange) r).getEdgeZoom());
+					object.setInt("color", ((CameraChange) r).getColor());
 				} else if (r instanceof PlayerDeath) {
 					object.setString("type", "PlayerDeath");
 				} else if (r instanceof CameraChange) {
@@ -95,6 +96,7 @@ public class EditorJSON {
 					object.setFloat("cameraBottomRightY", ((CameraChange) r).getCameraBottomRight().y);
 					object.setFloat("cameraZoom", ((CameraChange) r).getCameraZoom());
 					object.setFloat("edgeZoom", ((CameraChange) r).getEdgeZoom());
+					object.setInt("color", ((CameraChange) r).getColor());
 				}
 			}
 
@@ -211,6 +213,12 @@ public class EditorJSON {
 					ps.setCameraBottomRight(cameraBottomRight);
 					ps.setCameraZoom(cameraZoom);
 					ps.setEdgeZoom(edgeZoom);
+					try {
+						int color = object.getInt("color");
+						ps.setColor(color);
+					} catch (Exception e) {
+
+					}
 					worldObjects.add(ps);
 				} else if (type.equals("PlayerDeath")) {
 					String name = object.getString("name");
@@ -231,6 +239,12 @@ public class EditorJSON {
 					cc.setCameraBottomRight(cameraBottomRight);
 					cc.setCameraZoom(cameraZoom);
 					cc.setEdgeZoom(edgeZoom);
+					try {
+						int color = object.getInt("color");
+						cc.setColor(color);
+					} catch (Exception e) {
+
+					}
 					worldObjects.add(cc);
 				}
 			}

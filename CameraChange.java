@@ -72,6 +72,10 @@ public class CameraChange extends Event {
 	public int getColor() {
 		return color;
 	}
+	
+	public void setColor(int color) {
+		this.color = color;
+	}
 
 	private PVector getCameraCentre() {
 		int centerX = (int) ((camera.getBottomRight().x - camera.getTopLeft().x) / 2 + camera.getTopLeft().x);
