@@ -12,7 +12,7 @@ public class PlayerStart extends CameraChange {
 		super(texture, name, x, y);
 		
 		//set player start
-		game.setPlayerStart(x, y);
+		game.setPlayerStart(this);
 		game.createPlayer();
 		
 		//remove all other player starts

@@ -9,6 +9,7 @@ import misc.Converter;
 import misc.Vibe;
 import objects.Rectangle;
 import objects.View;
+import objects.events.PlayerStart;
 import processing.core.*;
 import static processing.core.PConstants.*;
 
@@ -29,6 +30,7 @@ public class Game {
 	private PVector playerStart;
 
 	public Camera camera;
+	public Rectangle startCameraArea;
 
 	// TODO: move these to editor (need to move some logic from step too)
 	public Rectangle screenSpace;
@@ -96,9 +98,12 @@ public class Game {
 		newCameraArea = cameraArea.copy();
 	}
 
-	public void setPlayerStart(float x, float y) {
-		playerStart.x = x;
-		playerStart.y = y;
+	public void setPlayerStart(PlayerStart start) {
+		// set player start
+		playerStart.x = start.getX();
+		playerStart.y = start.getY();
+		// set start camera
+
 	}
 
 	public void createPlayer() {
@@ -116,7 +121,17 @@ public class Game {
 	public void restart() {
 
 		createPlayer();
-		if (camera.getGame()) {
+		if (startCameraArea != null) { // if there is a player start
+			PVector cameraTopLeft = startCameraArea.getTopLeft();
+			PVector cameraBottomRight = startCameraArea.getBottomRight();
+			newScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
+			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
+			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
+			newCenter = new PVector(centerX, centerY);
+			newCameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
+					cameraBottomRight.y);
+
+		} else if (camera.getGame()) { //legacy code
 			PVector cameraTopLeft = new PVector(-400, -400);
 			PVector cameraBottomRight = new PVector(500, 600);
 			newScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
@@ -148,7 +163,7 @@ public class Game {
 			p.fill(20, 255); // 10, 255
 			int barSize = 1000000;
 			p.rectMode(CORNERS);
-			
+
 			// top bar
 			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
 					cameraArea.getTopLeft().y);
@@ -219,8 +234,10 @@ public class Game {
 		}
 		// black border movement
 		if (!cameraArea.sameDimensions(newCameraArea)) {
-			float topLeftX = PApplet.lerp(cameraArea.getTopLeft().x, newCameraArea.getTopLeft().x, PApplet.exp(-boarderZoomSpeed));
-			float topLeftY = PApplet.lerp(cameraArea.getTopLeft().y, newCameraArea.getTopLeft().y, PApplet.exp(-boarderZoomSpeed));
+			float topLeftX = PApplet.lerp(cameraArea.getTopLeft().x, newCameraArea.getTopLeft().x,
+					PApplet.exp(-boarderZoomSpeed));
+			float topLeftY = PApplet.lerp(cameraArea.getTopLeft().y, newCameraArea.getTopLeft().y,
+					PApplet.exp(-boarderZoomSpeed));
 			float bottomRightX = PApplet.lerp(cameraArea.getBottomRight().x, newCameraArea.getBottomRight().x,
 					PApplet.exp(-boarderZoomSpeed));
 			float bottomRightY = PApplet.lerp(cameraArea.getBottomRight().y, newCameraArea.getBottomRight().y,
