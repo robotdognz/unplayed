@@ -79,6 +79,12 @@ public class EditorJSON {
 				object.setString("name", ((Event) r).getName());
 				if (r instanceof PlayerStart) {
 					object.setString("type", "PlayerStart");
+					object.setFloat("cameraTopLeftX", ((CameraChange) r).getCameraTopLeft().x);
+					object.setFloat("cameraTopLeftY", ((CameraChange) r).getCameraTopLeft().y);
+					object.setFloat("cameraBottomRightX", ((CameraChange) r).getCameraBottomRight().x);
+					object.setFloat("cameraBottomRightY", ((CameraChange) r).getCameraBottomRight().y);
+					object.setFloat("cameraZoom", ((CameraChange) r).getCameraZoom());
+					object.setFloat("edgeZoom", ((CameraChange) r).getEdgeZoom());
 				} else if (r instanceof PlayerDeath) {
 					object.setString("type", "PlayerDeath");
 				} else if (r instanceof CameraChange) {
@@ -192,19 +198,23 @@ public class EditorJSON {
 					worldObjects.add(im);
 				} else if (type.equals("PlayerStart")) {
 					String name = object.getString("name");
+					PVector cameraTopLeft = new PVector(object.getFloat("cameraTopLeftX"),
+							object.getFloat("cameraTopLeftY"));
+					PVector cameraBottomRight = new PVector(object.getFloat("cameraBottomRightX"),
+							object.getFloat("cameraBottomRightY"));
+					float cameraZoom = object.getFloat("cameraZoom");
+					float edgeZoom = object.getFloat("edgeZoom");
 					PlayerStart ps = new PlayerStart(texture, name, pX, pY, game);
+					ps.setWidth(pWidth);
+					ps.setHeight(pHeight);
+					ps.setCameraTopLeft(cameraTopLeft);
+					ps.setCameraBottomRight(cameraBottomRight);
+					ps.setCameraZoom(cameraZoom);
+					ps.setEdgeZoom(edgeZoom);
 					worldObjects.add(ps);
-
 				} else if (type.equals("PlayerDeath")) {
 					String name = object.getString("name");
 					PlayerDeath pd = new PlayerDeath(texture, name, pX, pY);
-//					pd.setAngle(angle);
-//					if (flipH) {
-//						pd.flipH();
-//					}
-//					if (flipV) {
-//						pd.flipV();
-//					}
 					worldObjects.add(pd);
 				} else if (type.equals("CameraChange")) {
 					String name = object.getString("name");
@@ -221,13 +231,6 @@ public class EditorJSON {
 					cc.setCameraBottomRight(cameraBottomRight);
 					cc.setCameraZoom(cameraZoom);
 					cc.setEdgeZoom(edgeZoom);
-//					cc.setAngle(angle);
-//					if (flipH) {
-//						cc.flipH();
-//					}
-//					if (flipV) {
-//						cc.flipV();
-//					}
 					worldObjects.add(cc);
 				}
 			}

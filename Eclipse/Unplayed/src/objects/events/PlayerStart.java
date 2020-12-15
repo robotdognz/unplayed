@@ -7,9 +7,11 @@ import handlers.TextureCache;
 import objects.Rectangle;
 
 public class PlayerStart extends CameraChange {
+	Game game;
 
 	public PlayerStart(TextureCache texture, String name, float x, float y, Game game) {
 		super(texture, name, x, y);
+		this.game = game;
 		
 		//set player start
 		game.setPlayerStart(this);
@@ -23,6 +25,10 @@ public class PlayerStart extends CameraChange {
 				game.world.remove(r);
 			}
 		}
+	}
+	
+	public void update() {
+		game.setPlayerStart(this);
 	}
 	
 	public void activate(Game g) {

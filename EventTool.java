@@ -11,6 +11,7 @@ import objects.Event;
 import objects.Rectangle;
 import objects.events.CameraChange;
 import objects.events.PlayerDeath;
+import objects.events.PlayerStart;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -60,6 +61,9 @@ public class EventTool extends AreaTool {
 				edit = ((CameraChange) editor.selected).getCameraArea();
 
 				super.touchMoved(touch);
+				if(editor.selected instanceof PlayerStart) {
+					((PlayerStart) editor.selected).update();
+				}
 			} else {
 				edit = null;
 			}
