@@ -14,7 +14,7 @@ public class CameraChange extends Event {
 	private float edgeZoom;
 	// private String type; //Strings: "Static", "Full", "Horizontal", "Vertical"
 
-	public CameraChange(TextureCache texture, String name, int x, int y) {
+	public CameraChange(TextureCache texture, String name, float x, float y) {
 		super(texture, name, false, x, y, 100, 100);
 		// considering separating edgeZoom into in speed and out speed
 

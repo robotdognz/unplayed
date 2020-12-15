@@ -4,13 +4,12 @@ import java.util.HashSet;
 
 import game.Game;
 import handlers.TextureCache;
-import objects.Event;
 import objects.Rectangle;
 
-public class PlayerStart extends Event {
+public class PlayerStart extends CameraChange {
 
 	public PlayerStart(TextureCache texture, String name, float x, float y, Game game) {
-		super(texture, name, false, x, y, 100, 100);
+		super(texture, name, x, y);
 		
 		//set player start
 		game.setPlayerStart(x, y);
@@ -24,6 +23,10 @@ public class PlayerStart extends Event {
 				game.world.remove(r);
 			}
 		}
+	}
+	
+	public void activate(Game g) {
+		//do nothing
 	}
 
 }
