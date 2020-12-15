@@ -4,6 +4,7 @@ import game.Game;
 import handlers.TextureCache;
 import objects.Event;
 import objects.Rectangle;
+import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PVector;
 import static processing.core.PConstants.*;
@@ -12,18 +13,22 @@ public class CameraChange extends Event {
 	private Rectangle camera;
 	private float cameraZoom;
 	private float edgeZoom;
+	private int color;
 	// private String type; //Strings: "Static", "Full", "Horizontal", "Vertical"
 
-	public CameraChange(TextureCache texture, String name, float x, float y) {
+	public CameraChange(PApplet p, TextureCache texture, String name, float x, float y) {
 		super(texture, name, false, x, y, 100, 100);
-		// considering separating edgeZoom into in speed and out speed
+		// I'm considering separating edgeZoom into in speed and out speed
 
+		color = p.color(p.random(255), p.random(255), p.random(255));
+
+		// set default values
 		this.camera = new Rectangle(-300, -400, 700, 900);
 		this.cameraZoom = 2;
 		this.edgeZoom = 2;
 		// this.type = type;
 	}
-	
+
 	public Rectangle getCameraArea() {
 		return camera;
 	}
@@ -64,6 +69,10 @@ public class CameraChange extends Event {
 	// return type;
 	// }
 
+	public int getColor() {
+		return color;
+	}
+
 	private PVector getCameraCentre() {
 		int centerX = (int) ((camera.getBottomRight().x - camera.getTopLeft().x) / 2 + camera.getTopLeft().x);
 		int centerY = (int) ((camera.getTopLeft().y - camera.getBottomRight().y) / 2 + camera.getBottomRight().y);
@@ -84,11 +93,8 @@ public class CameraChange extends Event {
 			}
 			g.zoomSpeed = cameraZoom;
 			g.boarderZoomSpeed = edgeZoom;
-			g.newCameraArea.setCorners(camera.getTopLeft().x, camera.getTopLeft().y, camera.getBottomRight().x, camera.getBottomRight().y);
-//			g.newTopEdge = (int) camera.getTopLeft().y;
-//			g.newBottomEdge = (int) camera.getBottomRight().y;
-//			g.newLeftEdge = (int) camera.getTopLeft().x;
-//			g.newRightEdge = (int) camera.getBottomRight().x;
+			g.newCameraArea.setCorners(camera.getTopLeft().x, camera.getTopLeft().y, camera.getBottomRight().x,
+					camera.getBottomRight().y);
 		}
 	}
 

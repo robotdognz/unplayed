@@ -64,8 +64,9 @@ public class PageView {
 			for (CameraChange c : game.world.getCameras()) {
 				Rectangle area = c.getCameraArea();
 				p.noFill();
-				p.stroke(0, 0, 255);
-				p.strokeWeight(4);
+//				p.stroke(0, 0, 255);
+				p.stroke(c.getColor());
+				p.strokeWeight(3);
 				p.rectMode(CORNERS);
 				p.rect(area.getX(), area.getY(), area.getBottomRight().x, area.getBottomRight().y);
 			}

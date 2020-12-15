@@ -204,7 +204,7 @@ public class EditorJSON {
 							object.getFloat("cameraBottomRightY"));
 					float cameraZoom = object.getFloat("cameraZoom");
 					float edgeZoom = object.getFloat("edgeZoom");
-					PlayerStart ps = new PlayerStart(texture, name, pX, pY, game);
+					PlayerStart ps = new PlayerStart(p, texture, name, pX, pY, game);
 					ps.setWidth(pWidth);
 					ps.setHeight(pHeight);
 					ps.setCameraTopLeft(cameraTopLeft);
@@ -224,7 +224,7 @@ public class EditorJSON {
 							object.getFloat("cameraBottomRightY"));
 					float cameraZoom = object.getFloat("cameraZoom");
 					float edgeZoom = object.getFloat("edgeZoom");
-					CameraChange cc = new CameraChange(texture, name, pX, pY);
+					CameraChange cc = new CameraChange(p, texture, name, pX, pY);
 					cc.setWidth(pWidth);
 					cc.setHeight(pHeight);
 					cc.setCameraTopLeft(cameraTopLeft);

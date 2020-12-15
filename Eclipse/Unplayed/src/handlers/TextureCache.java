@@ -160,7 +160,7 @@ public class TextureCache {
 		EventHandler playerStart = new EventHandler(p, this, playerStartFile) {
 			public Event makeEvent(int x, int y) {
 				String playerStartString = "PlayerStart";
-				return new PlayerStart(texture, playerStartString, x, y, game);
+				return new PlayerStart(p, texture, playerStartString, x, y, game);
 			}
 		};
 		eventMap.put(playerStartString, playerStart);
@@ -183,7 +183,7 @@ public class TextureCache {
 		EventHandler cameraChange = new EventHandler(p, this, cameraChangeFile) {
 			public Event makeEvent(int x, int y) {
 				String cameraChangeString = "CameraChange";
-				return new CameraChange(texture, cameraChangeString, x, y);
+				return new CameraChange(p, texture, cameraChangeString, x, y);
 			}
 		};
 		eventMap.put(cameraChangeString, cameraChange);
