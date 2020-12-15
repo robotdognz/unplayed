@@ -293,15 +293,13 @@ public class Game {
 			if(best != null) {
 				if(view.getX() > best.getX() || view.getY() > best.getY()) {
 					best = view;
+				}else if(view.getWidth() < best.getWidth() || view.getHeight() < best.getHeight()) {
+					best = view;
 				}
 			}else {
 				best = view;
 			}
-			
-//			// return the first overlap
-//			return view;
 		}
-
 		return best;
 	}
 
