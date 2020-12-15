@@ -85,7 +85,7 @@ public class Game {
 		camera.setCenter(startCenter);
 		newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 
-		// calculate screen space
+		// calculate screen space TODO: clean this up
 		screenSpaceOffset = 0; // positive makes it larger, negative makes it smaller
 		PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
 		float screenSpaceWidth = convert.screenToLevel(p.width + screenSpaceOffset * 2);
@@ -108,26 +108,21 @@ public class Game {
 
 	public void startGame() {
 		if (startCameraArea != null) {
-			//calculate values
+			// calculate values
 			PVector cameraTopLeft = startCameraArea.getTopLeft();
 			PVector cameraBottomRight = startCameraArea.getBottomRight();
-			//int startScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
 			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
 			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 			PVector startCenter = new PVector(centerX, centerY);
-			//apply values
-//			camera.setScale(startScale); 	    	//scale
-//			newScale = startScale;					//new scale
-			camera.setScale(startCameraArea.getWidth());	//scale
-			newScale = startCameraArea.getWidth();		//new scale
-			camera.setCenter(startCenter);				//centre
-			newCenter = new PVector(camera.getCenter().x, camera.getCenter().y); //new centre
-//			cameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
-//					cameraBottomRight.y);
-			cameraArea = startCameraArea.copy(); 	//camera area
-			newCameraArea = cameraArea.copy();		//new camera area
-			//cameraArea = newCameraArea.copy();
-			createPlayer();							//initialise player
+			// apply values
+			camera.setScale(startCameraArea.getWidth()); // scale
+			newScale = startCameraArea.getWidth(); // new scale
+			camera.setCenter(startCenter); // centre
+			newCenter = new PVector(camera.getCenter().x, camera.getCenter().y); // new centre
+			cameraArea = startCameraArea.copy(); // camera area
+			newCameraArea = cameraArea.copy(); // new camera area
+			// initialise player
+			createPlayer();
 		}
 	}
 
@@ -146,18 +141,15 @@ public class Game {
 	public void restart() {
 		createPlayer();
 		if (startCameraArea != null) { // if there is a player start
-			//calculate values
+			// calculate values
 			PVector cameraTopLeft = startCameraArea.getTopLeft();
 			PVector cameraBottomRight = startCameraArea.getBottomRight();
 			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
 			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-			//apply values
-//			newScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x); //new scale
-			newScale = startCameraArea.getWidth();								//new scale
-			newCenter = new PVector(centerX, centerY);							//new centre
-//			newCameraArea.setCorners(newCenter.x - newScale / 2, cameraTopLeft.y, newCenter.x + newScale / 2,
-//					cameraBottomRight.y);		//new camera area
-			newCameraArea = startCameraArea.copy();
+			// apply values
+			newScale = startCameraArea.getWidth(); // new scale
+			newCenter = new PVector(centerX, centerY); // new centre
+			newCameraArea = startCameraArea.copy(); // new camera area
 		}
 	}
 
@@ -282,6 +274,7 @@ public class Game {
 		if (views.size() < 1) {
 			return null;
 		}
+		View best = null;
 		for (View view : views) {
 			if (view.getTopLeft().x > x) {
 				continue;
@@ -295,11 +288,21 @@ public class Game {
 			if (view.getBottomRight().y < y) {
 				continue;
 			}
-			// return the first overlap
-			return view;
+			
+			//find the view that is smallest
+			if(best != null) {
+				if(view.getX() > best.getX() || view.getY() > best.getY()) {
+					best = view;
+				}
+			}else {
+				best = view;
+			}
+			
+//			// return the first overlap
+//			return view;
 		}
 
-		return null;
+		return best;
 	}
 
 	public void setViews(ArrayList<View> views) {
