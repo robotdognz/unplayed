@@ -23,7 +23,6 @@ public class Page extends Editable {
 	private PVector position; // center of the page in page view
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
-	//private int LODdiv = 4;
 
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
 		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
@@ -35,7 +34,7 @@ public class Page extends Editable {
 		this.pageObjects = new HashSet<Rectangle>();
 		this.excludedObjects = new HashSet<String>();
 
-		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
+		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight); //P2D
 
 		setPosition(position);
 	}
@@ -98,6 +97,7 @@ public class Page extends Editable {
 	}
 
 	private void drawView(float scale) {
+		
 		// draw the view that will be shown on the page
 		ArrayList<Rectangle> drawFirst = new ArrayList<Rectangle>();
 		ArrayList<Rectangle> drawSecond = new ArrayList<Rectangle>();

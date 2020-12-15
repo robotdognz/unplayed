@@ -15,7 +15,7 @@ PImage splashScreen; //the splash screen to be drawn while the game is loading
 
 void setup() {
   //setup graphics
-  fullScreen(P2D);
+  fullScreen(); //P2D
   background(0, 78, 83);
   frameRate(60);
   splash = 0;
