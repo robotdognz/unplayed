@@ -18,6 +18,7 @@ public class Quadtree {
 	public Quadtree(Rectangle bounds) {
 		this.bounds = bounds;
 		root = new QuadNode(bounds, null, this); // top level node has null for parent
+		cameras = new HashSet<CameraChange>();
 	}
 
 	public HashSet<Rectangle> retrieve(HashSet<Rectangle> returnObjects, Rectangle player) {
@@ -52,6 +53,7 @@ public class Quadtree {
 	public void clear() {
 		insertCount = 0;
 		root = new QuadNode(bounds, null, this);
+		cameras.clear();
 	}
 
 	public int size() {
