@@ -34,7 +34,7 @@ public class Page extends Editable {
 		this.pageObjects = new HashSet<Rectangle>();
 		this.excludedObjects = new HashSet<String>();
 
-		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight); //P2D
+		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 
 		setPosition(position);
 	}
