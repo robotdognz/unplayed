@@ -236,7 +236,7 @@ public class EditorJSON {
 					PlayerEnd pe = new PlayerEnd(texture, name, pX, pY);
 					pe.setLevelEnd(end);
 					pe.setNewPlayer(newPlayer);
-
+					worldObjects.add(pe);
 				} else if (type.equals("PlayerDeath")) {
 					String name = object.getString("name");
 					PlayerDeath pd = new PlayerDeath(texture, name, pX, pY);
