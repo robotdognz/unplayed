@@ -92,8 +92,8 @@ public class EditorJSON {
 					object.setBoolean("end", ((PlayerEnd) r).getLevelEnd());
 					object.setFloat("newPlayerX", ((PlayerEnd) r).getNewPlayer().getTopLeft().x);
 					object.setFloat("newPlayerY", ((PlayerEnd) r).getNewPlayer().getTopLeft().x);
-					object.setFloat("newPlayertWidth", ((PlayerEnd) r).getNewPlayer().getWidth());
-					object.setFloat("newPlayertHeight", ((PlayerEnd) r).getNewPlayer().getHeight());
+					object.setFloat("newPlayerWidth", ((PlayerEnd) r).getNewPlayer().getWidth());
+					object.setFloat("newPlayerHeight", ((PlayerEnd) r).getNewPlayer().getHeight());
 				} else if (r instanceof PlayerDeath) {
 					object.setString("type", "PlayerDeath");
 				} else if (r instanceof CameraChange) {
