@@ -11,6 +11,7 @@ import game.Game;
 import objects.Event;
 import objects.events.CameraChange;
 import objects.events.PlayerDeath;
+import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
 import processing.core.*;
 //import processing.data.*;
@@ -160,11 +161,24 @@ public class TextureCache {
 		EventHandler playerStart = new EventHandler(p, this, playerStartFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				String playerStartString = "PlayerStart";
+				//String playerStartString = "PlayerStart";
 				return new PlayerStart(p, texture, playerStartString, x, y, game);
 			}
 		};
 		eventMap.put(playerStartString, playerStart);
+
+		// ----------------PlayerEnd----------------
+		String playerEndString = "PlayerEnd";
+		File playerEndFile = new File(eventDir + "/Event_playerFinish.png");
+
+		EventHandler playerEnd = new EventHandler(p, this, playerEndFile) {
+			@Override
+			public Event makeEvent(int x, int y) {
+				//String playerEndString = "PlayerEnd";
+				return new PlayerEnd(texture, playerEndString, x, y);
+			}
+		};
+		eventMap.put(playerEndString, playerEnd);
 
 		// ----------------PlayerDeath----------------
 		String playerDeathString = "PlayerDeath";
@@ -173,7 +187,7 @@ public class TextureCache {
 		EventHandler playerDeath = new EventHandler(p, this, playerDeathFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				String playerDeathString = "PlayerDeath";
+				//String playerDeathString = "PlayerDeath";
 				return new PlayerDeath(texture, playerDeathString, x, y);
 			}
 		};
@@ -185,7 +199,7 @@ public class TextureCache {
 		EventHandler cameraChange = new EventHandler(p, this, cameraChangeFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				String cameraChangeString = "CameraChange";
+				//String cameraChangeString = "CameraChange";
 				return new CameraChange(p, texture, cameraChangeString, x, y);
 			}
 		};
