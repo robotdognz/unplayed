@@ -130,6 +130,7 @@ public class Game {
 
 	public void endGame() {
 		if (camera.getGame()) {
+			p.delay(60);
 			Editor editor = app.getEditor();
 			if (editor == null) { // in a normal game
 				// TODO: load next level, etc.
