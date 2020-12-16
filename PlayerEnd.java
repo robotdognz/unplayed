@@ -35,12 +35,12 @@ public class PlayerEnd extends Event {
 //			return;
 //		}
 		Player player = g.player;
-		if (player.getVelocity().x != 0) {
-			return;
-		}
-		if (player.getVelocity().y != 0) {
-			return;
-		}
+//		if (player.getVelocity().x != 0) {
+//			return;
+//		}
+//		if (player.getVelocity().y != 0) {
+//			return;
+//		}
 		if(!player.isStill()) {
 			return;
 		}
