@@ -14,11 +14,11 @@ public class CameraChange extends Event {
 	private float cameraZoom;
 	private float edgeZoom;
 	private int color;
-	// private String type; //Strings: "Static", "Full", "Horizontal", "Vertical"
+	// private String type; //Strings: "Static", "Full", "Horizontal", "Vertical" //should be an enum
 
 	public CameraChange(PApplet p, TextureCache texture, String name, float x, float y) {
 		super(texture, name, false, x, y, 100, 100);
-		// I'm considering separating edgeZoom into in speed and out speed
+		// I'm considering splitting both cameraZoom and edgeZoom into 'in speed' and 'out speed'
 
 		color = p.color(p.random(255), p.random(255), p.random(255));
 

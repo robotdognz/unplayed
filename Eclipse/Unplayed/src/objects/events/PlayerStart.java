@@ -8,11 +8,11 @@ import objects.Rectangle;
 import processing.core.PApplet;
 
 public class PlayerStart extends CameraChange {
-	Game game;
+	//Game game;
 
 	public PlayerStart(PApplet p, TextureCache texture, String name, float x, float y, Game game) {
 		super(p, texture, name, x, y);
-		this.game = game;
+		//this.game = game;
 		
 		//set player start
 		game.setPlayerStart(this);
@@ -27,13 +27,5 @@ public class PlayerStart extends CameraChange {
 			}
 		}
 	}
-	
-//	public void update() {
-//		game.setPlayerStart(this);
-//	}
-	
-//	public void activate(Game g) {
-//		//do nothing
-//	}
 
 }
