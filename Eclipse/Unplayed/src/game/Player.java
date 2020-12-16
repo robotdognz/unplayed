@@ -13,13 +13,14 @@ import static processing.core.PConstants.*;
 public class Player extends Rectangle {
 	private PApplet p;
 	private PVector previousPosition;
-	
+
 	// player fields
 	private Rectangle playerArea; // rectangle used for searching the level quad tree
 	private int areaSize;
 	private boolean drawArea = false;
 	private PVector velocity;
-	private int playerColor; //TODO: switched from lower case c to upper case c java.awt.color, might not work in processing
+	private int playerColor; // TODO: switched from lower case c to upper case c java.awt.color, might not
+								// work in processing
 	private int jumpCount = 0;
 	private final int playerSpeed = 10;
 	private final int playerGravity = 2;
@@ -104,11 +105,11 @@ public class Player extends Rectangle {
 	}
 
 	void step(HashSet<Rectangle> objects, Game g) {
-		//store previous position, used for player end
+		// store previous position, used for player end
 		previousPosition.x = getX();
 		previousPosition.y = getY();
-		
-		//code starts here
+
+		// code starts here
 		float previousY = getTopLeft().y;
 		vibration = 0;
 		if (velocity.y < terminalVelocity) {
@@ -136,14 +137,28 @@ public class Player extends Rectangle {
 			if (p instanceof Tile) { // platform collison
 				collision(p.getTopLeft(), p.getBottomRight());
 			} else if (p instanceof Event) { // event collision
-				PVector eventTopLeft = p.getTopLeft();
-				PVector eventBottomRight = p.getBottomRight();
-				// if colliding with the event
-				if (eventTopLeft.y < getTopLeft().y + getHeight() + velocity.y
-						&& eventBottomRight.y > getTopLeft().y + velocity.y
-						&& eventTopLeft.x < getTopLeft().x + getWidth() && eventBottomRight.x > getTopLeft().x) {
-					((Event) p).activate(g);
+//				PVector eventTopLeft = p.getTopLeft();
+//				PVector eventBottomRight = p.getBottomRight();
+//				// if colliding with the event
+//				if (eventTopLeft.y < getTopLeft().y + getHeight() + velocity.y
+//						&& eventBottomRight.y > getTopLeft().y + velocity.y
+//						&& eventTopLeft.x < getTopLeft().x + getWidth() && eventBottomRight.x > getTopLeft().x) {
+//					((Event) p).activate(g);
+//				}
+
+				if (getTopLeft().x > p.getBottomRight().x) {
+					continue;
 				}
+				if (getBottomRight().x < p.getTopLeft().x) {
+					continue;
+				}
+				if (getTopLeft().y > p.getBottomRight().y) {
+					continue;
+				}
+				if (getBottomRight().y < p.getTopLeft().y) {
+					continue;
+				}
+				((Event) p).activate(g);
 			}
 		}
 
@@ -162,16 +177,16 @@ public class Player extends Rectangle {
 		lastLastXPos = lastXPos;
 		lastXPos = getTopLeft().x;
 	}
-	
+
 	public PVector getVelocity() {
 		return velocity;
 	}
-	
+
 	public boolean isStill() {
-		if(previousPosition.x != getX()) {
+		if (previousPosition.x != getX()) {
 			return false;
 		}
-		if(previousPosition.y != getY()) {
+		if (previousPosition.y != getY()) {
 			return false;
 		}
 		return true;
