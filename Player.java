@@ -12,6 +12,7 @@ import static processing.core.PConstants.*;
 
 public class Player extends Rectangle {
 	private PApplet p;
+	private PVector previousPosition;
 	
 	// player fields
 	private Rectangle playerArea; // rectangle used for searching the level quad tree
@@ -51,6 +52,7 @@ public class Player extends Rectangle {
 		velocity = new PVector(0, 0);
 		playerColor = p.color(255, 94, 22);
 		sprite = texture.defaultBlock;
+		previousPosition = new PVector(getX(), getY());
 	}
 
 	public void jump() {
@@ -102,6 +104,11 @@ public class Player extends Rectangle {
 	}
 
 	void step(HashSet<Rectangle> objects, Game g) {
+		//store previous position, used for player end
+		previousPosition.x = getX();
+		previousPosition.y = getY();
+		
+		//code starts here
 		float previousY = getTopLeft().y;
 		vibration = 0;
 		if (velocity.y < terminalVelocity) {
@@ -158,6 +165,16 @@ public class Player extends Rectangle {
 	
 	public PVector getVelocity() {
 		return velocity;
+	}
+	
+	public boolean isStill() {
+		if(previousPosition.x != getX()) {
+			return false;
+		}
+		if(previousPosition.y != getY()) {
+			return false;
+		}
+		return true;
 	}
 
 	public void draw(PGraphics graphics) {
