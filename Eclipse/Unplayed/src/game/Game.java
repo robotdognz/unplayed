@@ -122,6 +122,7 @@ public class Game {
 	}
 
 	public void startGame() {
+		player = null;
 		if (startCameraArea != null) {
 			// calculate values
 			PVector cameraTopLeft = startCameraArea.getTopLeft();
