@@ -72,8 +72,8 @@ public class EditorJSON {
 			}
 
 			if (r instanceof Tile) { // tiles
-				if (editor.game.getPlaced() != null) {
-					if(editor.game.getPlaced().contains(r)) {
+				if (editor.game.placed != null) {
+					if(editor.game.placed.contains(r)) {
 						continue;
 					}
 				}
@@ -119,9 +119,7 @@ public class EditorJSON {
 	}
 
 	private void saveRemoved(JSONArray values, Editor editor) {
-		// Player player = editor.game.player;
-		ArrayList<Tile> removed = editor.game.getRemoved();
-		// Rectangle playerStart = editor.game.getPlayerStart();
+		ArrayList<Tile> removed = editor.game.removed;
 		if (removed != null) {
 			for (Tile t : removed) {
 				JSONObject object = new JSONObject();

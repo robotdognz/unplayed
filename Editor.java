@@ -192,11 +192,11 @@ public class Editor {
 			p.textSize(50);
 			p.textAlign(CENTER, CENTER);
 			if(game.placed != null) {
-				p.text("Placed" + game.placed.size(), p.width / 2,
+				p.text("Placed: " + game.placed.size(), p.width / 2,
 						p.height - editorBottom.getHeight() - 350);
 			}
 			if(game.removed != null) {
-				p.text("Removed" + game.removed.size(), p.width / 2,
+				p.text("Removed: " + game.removed.size(), p.width / 2,
 						p.height - editorBottom.getHeight() - 300);
 			}
 			if (game.player != null) {

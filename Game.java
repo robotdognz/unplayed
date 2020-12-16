@@ -115,17 +115,9 @@ public class Game {
 		startCameraArea = start.getCameraArea();
 		createPlayer(start);
 	}
-	
+
 	public Rectangle getPlayerStart() {
 		return playerStart;
-	}
-	
-	public ArrayList<Tile> getRemoved(){
-		return removed;
-	}
-	
-	public ArrayList<Tile> getPlaced(){
-		return placed;
 	}
 
 	public void startGame() {
@@ -143,24 +135,25 @@ public class Game {
 			newCenter = new PVector(camera.getCenter().x, camera.getCenter().y); // new centre
 			cameraArea = startCameraArea.copy(); // camera area
 			newCameraArea = cameraArea.copy(); // new camera area
-			// clear checkpoint
-			playerCheckpoint = null;
-
-			// reset removed and placed tiles
-			for (Tile t : placed) {
-				world.remove(t);
-			}
-			placed.clear();
-			for (Tile t : removed) {
-				world.insert(t);
-			}
-			removed.clear();
-
-			// initialise player
-			if (playerStart != null) {
-				createPlayer(playerStart);
-			}
 		}
+		// clear checkpoint
+		playerCheckpoint = null;
+
+		// reset removed and placed tiles
+		for (Tile t : placed) {
+			world.remove(t);
+		}
+		placed.clear();
+		for (Tile t : removed) {
+			world.insert(t);
+		}
+		removed.clear();
+
+		// initialise player
+		if (playerStart != null) {
+			createPlayer(playerStart);
+		}
+
 	}
 
 	public void endGame() {
@@ -230,12 +223,12 @@ public class Game {
 
 	public void restart() {
 		if (playerCheckpoint != null) {
-			Rectangle previousPlayer = removed.get(removed.size()-1);
+			Rectangle previousPlayer = removed.get(removed.size() - 1);
 			removed.remove(previousPlayer);
 			world.insert(previousPlayer);
 			createPlayer(playerCheckpoint);
 		} else if (playerStart != null) {
-			Rectangle previousPlayer = removed.get(removed.size()-1);
+			Rectangle previousPlayer = removed.get(removed.size() - 1);
 			removed.remove(previousPlayer);
 			world.insert(previousPlayer);
 			createPlayer(playerStart);
@@ -411,7 +404,7 @@ public class Game {
 	}
 
 	public void setPlayerCheckpoint(PVector playerCheckpoint) {
-		//TODO: this needs to be cleaned up
+		// TODO: this needs to be cleaned up
 		this.playerCheckpoint = new Rectangle(playerCheckpoint.x, playerCheckpoint.y, 100, 100);
 	}
 }
