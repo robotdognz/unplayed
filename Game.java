@@ -86,7 +86,8 @@ public class Game {
 		camera.setCenter(startCenter);
 		newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 
-		// calculate screen space TODO: clean this up, screen space should be moved to the editor
+		// calculate screen space TODO: clean this up, screen space should be moved to
+		// the editor
 		screenSpaceOffset = 0; // positive makes it larger, negative makes it smaller
 		PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
 		float screenSpaceWidth = convert.screenToLevel(p.width + screenSpaceOffset * 2);
@@ -126,14 +127,16 @@ public class Game {
 			createPlayer();
 		}
 	}
-	
+
 	public void endGame() {
-		Editor editor = app.getEditor();
-		if(editor == null) { //in a normal game
-			//TODO: load next level, etc.
-		}else { //in the editor
-			startGame();
-			editor.toast.showToast("Level Complete");
+		if (camera.getGame()) {
+			Editor editor = app.getEditor();
+			if (editor == null) { // in a normal game
+				// TODO: load next level, etc.
+			} else { // in the editor
+				startGame();
+				editor.toast.showToast("Level Complete");
+			}
 		}
 	}
 
@@ -285,7 +288,7 @@ public class Game {
 		if (views.size() < 1) {
 			return null;
 		}
-		View best = null; //best found match
+		View best = null; // best found match
 		for (View view : views) {
 			if (view.getTopLeft().x > x) {
 				continue;
@@ -299,15 +302,15 @@ public class Game {
 			if (view.getBottomRight().y < y) {
 				continue;
 			}
-			
-			//find the view that on top
-			if(best != null) {
-				if(view.getX() > best.getX() || view.getY() > best.getY()) {
+
+			// find the view that on top
+			if (best != null) {
+				if (view.getX() > best.getX() || view.getY() > best.getY()) {
 					best = view;
-				}else if(view.getWidth() < best.getWidth() || view.getHeight() < best.getHeight()) {
+				} else if (view.getWidth() < best.getWidth() || view.getHeight() < best.getHeight()) {
 					best = view;
 				}
-			}else {
+			} else {
 				best = view;
 			}
 		}
