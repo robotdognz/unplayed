@@ -61,7 +61,6 @@ public class PageTool extends AreaTool {
 							currentPage = new Page(p, game, editor.currentView.getTopLeft(),
 									editor.currentView.getBottomRight(), center);
 						} else {
-							// float snapNo = 10;
 							PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
 							// round so blocks snap to grid
 							float finalX = placement.x - 50;

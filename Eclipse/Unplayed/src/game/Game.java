@@ -29,6 +29,7 @@ public class Game {
 	public HashSet<Rectangle> playerObjects;
 	private PageView pageView;
 	private PVector playerStart;
+	private PVector playerCheckpoint;
 
 	public Camera camera;
 	public Rectangle startCameraArea;
@@ -130,7 +131,6 @@ public class Game {
 
 	public void endGame() {
 		if (camera.getGame()) {
-			p.delay(180);
 			Editor editor = app.getEditor();
 			if (editor == null) { // in a normal game
 				// TODO: load next level, etc.
@@ -142,7 +142,9 @@ public class Game {
 	}
 
 	public void createPlayer() {
-		if (playerStart != null) {
+		if(playerCheckpoint != null) {
+			player = new Player(p, texture, playerCheckpoint.x, playerCheckpoint.y, vibe);
+		}else if (playerStart != null) {
 			player = new Player(p, texture, playerStart.x, playerStart.y, vibe);
 		}
 	}
@@ -323,5 +325,9 @@ public class Game {
 		for (View view : views) {
 			this.views.add(view);
 		}
+	}
+
+	public void setPlayerCheckpoint(PVector playerCheckpoint) {
+		this.playerCheckpoint = new PVector(playerCheckpoint.x, playerCheckpoint.y);
 	}
 }

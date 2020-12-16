@@ -171,7 +171,7 @@ public class TextureCache {
 		EventHandler playerEnd = new EventHandler(p, this, playerEndFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				return new PlayerEnd(texture, playerEndString, x, y);
+				return new PlayerEnd(p, texture, playerEndString, x, y);
 			}
 		};
 		eventMap.put(playerEndString, playerEnd);
