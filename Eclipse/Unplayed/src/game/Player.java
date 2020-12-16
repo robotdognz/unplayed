@@ -13,7 +13,7 @@ import static processing.core.PConstants.*;
 public class Player extends Rectangle {
 	private PApplet p;
 	private PVector previousPosition;
-	private boolean event;
+//	private boolean event;
 
 	// player fields
 	private Rectangle playerArea; // rectangle used for searching the level quad tree
@@ -55,8 +55,8 @@ public class Player extends Rectangle {
 		playerColor = p.color(255, 94, 22);
 		sprite = texture.defaultBlock;
 
-		previousPosition = new PVector(getX(), getY());
-		event = false;
+		previousPosition = new PVector(getX(), getY()); //used to determine if the player is still
+//		event = false;
 	}
 
 	public void jump() {
@@ -140,23 +140,6 @@ public class Player extends Rectangle {
 			if (p instanceof Tile) { // platform collison
 				collision(p.getTopLeft(), p.getBottomRight());
 			} 
-//			else if (p instanceof Event) { // event collision
-
-//				if (getTopLeft().x > p.getBottomRight().x) {
-//					continue;
-//				}
-//				if (getBottomRight().x < p.getTopLeft().x) {
-//					continue;
-//				}
-//				if (getTopLeft().y > p.getBottomRight().y) {
-//					continue;
-//				}
-//				if (getBottomRight().y < p.getTopLeft().y) {
-//					continue;
-//				}
-//				event = true;
-//				((Event) p).activate(g);
-//			}
 		}
 
 		setX(getX() + velocity.x);
@@ -189,7 +172,7 @@ public class Player extends Rectangle {
 				if (getBottomRight().y < p.getTopLeft().y) {
 					continue;
 				}
-				event = true;
+//				event = true;
 				((Event) p).activate(g);
 			}
 		}
@@ -217,13 +200,14 @@ public class Player extends Rectangle {
 		// where (in pixels) to get it from the image
 		// image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight(), 0, 0,
 		// 128, 128); //sprite sheet test
-		if (event) {
-			graphics.noFill();
-			graphics.stroke(255, 0, 0);
-			graphics.strokeWeight(2);
-			graphics.rect(getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
-			event = false;
-		}
+		
+//		if (event) {
+//			graphics.noFill();
+//			graphics.stroke(255, 0, 0);
+//			graphics.strokeWeight(2);
+//			graphics.rect(getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
+//			event = false;
+//		}
 		if (drawArea) {
 			graphics.fill(0, 0, 0, 150);
 			graphics.rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
