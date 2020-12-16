@@ -28,13 +28,13 @@ public class Game {
 	public Quadtree world;
 	public ArrayList<Tile> removed; // holds the tiles that the player has become and have been removed from the
 									// world
-	public ArrayList<Tile> placed; //holds the tiles the player has left behind after slotting in
+	public ArrayList<Tile> placed; // holds the tiles the player has left behind after slotting in
 	public ArrayList<View> views;
 	public Rectangle startingWorld;
 	public HashSet<Rectangle> playerObjects;
 	private PageView pageView;
 	private Rectangle playerStart;
-	private PVector playerCheckpoint;
+	private Rectangle playerCheckpoint;
 
 	public Camera camera;
 	public Rectangle startCameraArea;
@@ -135,9 +135,9 @@ public class Game {
 			newCameraArea = cameraArea.copy(); // new camera area
 			// clear checkpoint
 			playerCheckpoint = null;
-			
+
 			// reset removed and placed tiles
-			for(Tile t : placed) {
+			for (Tile t : placed) {
 				world.remove(t);
 			}
 			placed.clear();
@@ -167,41 +167,13 @@ public class Game {
 	}
 
 	public void endPuzzle(Rectangle playerArea) {
-		// if (camera.getGame()) {
-//		HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
-//		ArrayList<Tile> newPlayer = new ArrayList<Tile>();
-//		world.retrieve(returnObjects, playerArea);
-//		for (Rectangle r : returnObjects) {
-//			if (!(r instanceof Tile)) {
-//				continue;
-//			}
-//			if (r.getTopLeft().x > playerArea.getBottomRight().x - 1) {
-//				continue;
-//			}
-//			if (r.getBottomRight().x < playerArea.getTopLeft().x + 1) {
-//				continue;
-//			}
-//			if (r.getTopLeft().y > playerArea.getBottomRight().y - 1) {
-//				continue;
-//			}
-//			if (r.getBottomRight().y < playerArea.getTopLeft().y + 1) {
-//				continue;
-//			}
-//
-//			newPlayer.add((Tile) r);
-//		}
-		// if(newPlayer.size() > 0) {
-		
-		//pause
+		// pause
 		p.delay(180);
-		//file the slot with a matching tile
+		// file the slot with a matching tile
 		Tile newTile = new Tile(texture, player.getFile(), player.getX(), player.getY());
 		world.insert(newTile);
 		placed.add(newTile);
 		createPlayer(playerArea);
-		// }
-
-		// }
 	}
 
 	public void createPlayer(Rectangle playerArea) {
@@ -232,7 +204,7 @@ public class Game {
 			removed.add(newPlayer.get(0));
 			world.remove(newPlayer.get(0));
 			if (playerCheckpoint != null) {
-				player = new Player(p, texture, file, playerCheckpoint.x, playerCheckpoint.y, vibe);
+				player = new Player(p, texture, file, playerCheckpoint.getX(), playerCheckpoint.getY(), vibe);
 			} else if (playerStart != null) {
 				player = new Player(p, texture, file, playerStart.getX(), playerStart.getX(), vibe);
 			}
@@ -247,7 +219,15 @@ public class Game {
 	}
 
 	public void restart() {
-		if (playerStart != null) {
+		if (playerCheckpoint != null) {
+			Rectangle previousPlayer = removed.get(removed.size()-1);
+			removed.remove(previousPlayer);
+			world.insert(previousPlayer);
+			createPlayer(playerCheckpoint);
+		} else if (playerStart != null) {
+			Rectangle previousPlayer = removed.get(removed.size()-1);
+			removed.remove(previousPlayer);
+			world.insert(previousPlayer);
 			createPlayer(playerStart);
 		}
 		if (startCameraArea != null) { // if there is a player start
@@ -421,6 +401,7 @@ public class Game {
 	}
 
 	public void setPlayerCheckpoint(PVector playerCheckpoint) {
-		this.playerCheckpoint = new PVector(playerCheckpoint.x, playerCheckpoint.y);
+		//TODO: this needs to be cleaned up
+		this.playerCheckpoint = new Rectangle(playerCheckpoint.x, playerCheckpoint.y, 100, 100);
 	}
 }
