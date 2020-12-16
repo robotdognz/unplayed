@@ -57,21 +57,29 @@ public class PlayerEnd extends Event {
 		if (!player.isStill()) {
 			return;
 		}
-		if (player.getTopLeft().x > getBottomRight().x - 1) {
+		
+		//TODO: this needs to be changed to player fully overlapping the event
+//		if (player.getTopLeft().x > getBottomRight().x - 1) {
+//			return;
+//		}
+//		if (player.getBottomRight().x < getTopLeft().x + 1) {
+//			return;
+//		}
+//		if (player.getTopLeft().y > getBottomRight().y - 1) {
+//			return;
+//		}
+//		if (player.getBottomRight().y < getTopLeft().y + 1) {
+//			return;
+//		}
+		if (player.getTopLeft().x != getTopLeft().x) {
 			return;
 		}
-		if (player.getBottomRight().x < getTopLeft().x + 1) {
-			return;
-		}
-		if (player.getTopLeft().y > getBottomRight().y - 1) {
-			return;
-		}
-		if (player.getBottomRight().y < getTopLeft().y + 1) {
+		
+		if (player.getTopLeft().y != getTopLeft().y) {
 			return;
 		}
 
 		// the player is perfectly in the slot
-//		p.delay(180);
 		if (levelEnd) { // if this is the end of the level
 			g.endGame();
 		} else { // if this is just part of the puzzle

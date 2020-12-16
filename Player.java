@@ -55,7 +55,7 @@ public class Player extends Rectangle {
 		playerColor = p.color(255, 94, 22);
 		sprite = texture.defaultBlock;
 
-		previousPosition = new PVector(getX(), getY()); //used to determine if the player is still
+		previousPosition = new PVector(getX(), getY()); // used to determine if the player is still
 //		event = false;
 	}
 
@@ -139,7 +139,7 @@ public class Player extends Rectangle {
 		for (Rectangle p : objects) {
 			if (p instanceof Tile) { // platform collison
 				collision(p.getTopLeft(), p.getBottomRight());
-			} 
+			}
 		}
 
 		setX(getX() + velocity.x);
@@ -160,16 +160,16 @@ public class Player extends Rectangle {
 		// do event collision
 		for (Rectangle p : objects) {
 			if (p instanceof Event) { // event collision
-				if (getTopLeft().x > p.getBottomRight().x) {
+				if (getTopLeft().x > p.getBottomRight().x - 1) {
 					continue;
 				}
-				if (getBottomRight().x < p.getTopLeft().x) {
+				if (getBottomRight().x < p.getTopLeft().x + 1) {
 					continue;
 				}
-				if (getTopLeft().y > p.getBottomRight().y) {
+				if (getTopLeft().y > p.getBottomRight().y - 1) {
 					continue;
 				}
-				if (getBottomRight().y < p.getTopLeft().y) {
+				if (getBottomRight().y < p.getTopLeft().y + 1) {
 					continue;
 				}
 //				event = true;
@@ -200,7 +200,7 @@ public class Player extends Rectangle {
 		// where (in pixels) to get it from the image
 		// image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight(), 0, 0,
 		// 128, 128); //sprite sheet test
-		
+
 //		if (event) {
 //			graphics.noFill();
 //			graphics.stroke(255, 0, 0);
