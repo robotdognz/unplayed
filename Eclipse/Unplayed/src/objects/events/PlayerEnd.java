@@ -56,9 +56,7 @@ public class PlayerEnd extends Event {
 		if (player.getBottomRight().y < getTopLeft().y + 1) {
 			return;
 		}
-//		if ((int) player.getBottomRight().y != (int) getBottomRight().y) {
-//			return;
-//		}
+		
 		// the player is perfectly in the slot
 		if (levelEnd) { // if this is the end of the level
 			g.endGame();

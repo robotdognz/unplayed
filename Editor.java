@@ -191,6 +191,10 @@ public class Editor {
 			p.fill(80);
 			p.textSize(50);
 			p.textAlign(CENTER, CENTER);
+			if (game.player != null) {
+				p.text("Position: " + game.player.getX() + " " + game.player.getY(), p.width / 2,
+						p.height - editorBottom.getHeight() - 200);
+			}
 			p.text(PApplet.nf(convert.getScale(), 1, 2), p.width / 2, p.height - editorBottom.getHeight() - 150);
 			p.text(game.playerObjects.size() + " : " + game.screenObjects.size(), p.width / 2,
 					p.height - editorBottom.getHeight() - 100);
