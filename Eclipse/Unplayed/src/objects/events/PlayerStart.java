@@ -16,7 +16,7 @@ public class PlayerStart extends CameraChange {
 		
 		//set player start
 		game.setPlayerStart(this);
-		game.createPlayer();
+		//game.createPlayer();
 		
 		//remove all other player starts
 		HashSet<Rectangle> returnSet = new HashSet<Rectangle>();

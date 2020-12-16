@@ -57,24 +57,9 @@ public class PlayerEnd extends Event {
 		if (!player.isStill()) {
 			return;
 		}
-		
-		//TODO: this needs to be changed to player fully overlapping the event
-//		if (player.getTopLeft().x > getBottomRight().x - 1) {
-//			return;
-//		}
-//		if (player.getBottomRight().x < getTopLeft().x + 1) {
-//			return;
-//		}
-//		if (player.getTopLeft().y > getBottomRight().y - 1) {
-//			return;
-//		}
-//		if (player.getBottomRight().y < getTopLeft().y + 1) {
-//			return;
-//		}
 		if (player.getTopLeft().x != getTopLeft().x) {
 			return;
 		}
-		
 		if (player.getTopLeft().y != getTopLeft().y) {
 			return;
 		}
@@ -85,7 +70,7 @@ public class PlayerEnd extends Event {
 		} else { // if this is just part of the puzzle
 			// TODO: spawn a new player
 			g.setPlayerCheckpoint(newPlayer.getTopLeft());
-			g.endPuzzle();
+			g.endPuzzle(newPlayer);
 		}
 	}
 

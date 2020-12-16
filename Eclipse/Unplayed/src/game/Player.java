@@ -1,27 +1,34 @@
 package game;
 
+import java.io.File;
 import java.util.HashSet;
 
 import handlers.TextureCache;
+import handlers.TileHandler;
 import misc.Vibe;
+import objects.Editable;
 import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
 import processing.core.*;
 import static processing.core.PConstants.*;
 
-public class Player extends Rectangle {
+public class Player extends Editable {
 	private PApplet p;
 	private PVector previousPosition;
-//	private boolean event;
+//	private boolean showEvent; //is the player colliding with an event
 
 	// player fields
 	private Rectangle playerArea; // rectangle used for searching the level quad tree
 	private int areaSize;
 	private boolean drawArea = false;
 	private PVector velocity;
-	private int playerColor; // TODO: switched from lower case c to upper case c java.awt.color, might not
-								// work in processing
+	private int playerColor;
+
+	private File file;
+	private boolean hasTexture;
+	private TileHandler tileTexture;
+
 	private int jumpCount = 0;
 	private final int playerSpeed = 10;
 	private final int playerGravity = 2;
@@ -29,7 +36,7 @@ public class Player extends Rectangle {
 	private final int playerJumpPower = 30;
 	private boolean left = false;
 	private boolean right = false;
-	private PImage sprite;
+	// private PImage sprite;
 
 	// vibration
 	private Vibe vibe;
@@ -53,10 +60,42 @@ public class Player extends Rectangle {
 
 		velocity = new PVector(0, 0);
 		playerColor = p.color(255, 94, 22);
-		sprite = texture.defaultBlock;
+		//sprite = texture.defaultBlock;
+		hasTexture = false;
 
 		previousPosition = new PVector(getX(), getY()); // used to determine if the player is still
 //		event = false;
+	}
+
+	Player(PApplet p, TextureCache texture, File file, float x, float y, Vibe v) {
+		super(x, y, 100, 100);
+		this.p = p;
+		this.file = file;
+		areaSize = 500;
+
+		playerArea = new Rectangle(getX() - ((areaSize - getWidth()) / 2), getY() - ((areaSize - getHeight()) / 2),
+				areaSize, areaSize);
+
+		vibe = v;
+		lastXPos = x;
+		lastLastXPos = lastXPos;
+
+		velocity = new PVector(0, 0);
+		playerColor = p.color(255, 94, 22);
+//		sprite = texture.defaultBlock;
+		if (file != null && texture != null && texture.getTileMap().containsKey(file)) {
+			this.tileTexture = texture.getTileMap().get(file);
+			hasTexture = true;
+		} else {
+			hasTexture = false;
+		}
+
+		previousPosition = new PVector(getX(), getY()); // used to determine if the player is still
+//		event = false;
+	}
+	
+	public File getFile() {
+		return file;
 	}
 
 	public void jump() {
@@ -120,7 +159,7 @@ public class Player extends Rectangle {
 			velocity.y += playerGravity;
 			vibeVelocity = 0;
 		} else if (velocity.y + playerGravity > terminalVelocity) {
-			// fall speed exactyly terminalVelocity
+			// fall speed exactly terminalVelocity
 			velocity.y = terminalVelocity;
 			vibeVelocity += playerGravity / 2;
 		}
@@ -172,7 +211,7 @@ public class Player extends Rectangle {
 				if (getBottomRight().y < p.getTopLeft().y + 1) {
 					continue;
 				}
-//				event = true;
+//				showEvent = true;
 				((Event) p).activate(g);
 			}
 		}
@@ -195,18 +234,35 @@ public class Player extends Rectangle {
 	public void draw(PGraphics graphics) {
 		// draw player
 		graphics.imageMode(CORNER);
-		graphics.image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
-		// image(img, dx, dy, dw, dh, sx, sy, sw, sh); //d is where to draw it, s is
-		// where (in pixels) to get it from the image
-		// image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight(), 0, 0,
-		// 128, 128); //sprite sheet test
+		if (hasTexture) {
+			// graphics.image(sprite, getTopLeft().x, getTopLeft().y, getWidth(),
+			// getHeight());
+			graphics.imageMode(CENTER);
+			graphics.pushMatrix();
+			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
+			graphics.rotate(PApplet.radians(angle)); // angle of the tile
+			graphics.scale(flipX, flipY); // flipping the tile
+			graphics.image(tileTexture.getSprite(3), 0, 0, getWidth(), getHeight()); // draw the tile //TODO: get scale
+			graphics.popMatrix();
+		} else {
+			//missing texture
+			graphics.noStroke();
+			graphics.fill(255, 0, 0, 150);
+			graphics.rectMode(CORNER);
+			graphics.rect(getX(), getY(), getWidth(), getHeight());
+		}
+		
+//		 image(img, dx, dy, dw, dh, sx, sy, sw, sh); //d is where to draw it, s is
+//		 where (in pixels) to get it from the image
+//		 image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight(), 0, 0,
+//		 128, 128); //sprite sheet test
 
-//		if (event) {
+//		if (showEvent) {
 //			graphics.noFill();
 //			graphics.stroke(255, 0, 0);
 //			graphics.strokeWeight(2);
 //			graphics.rect(getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
-//			event = false;
+//			showEvent = false;
 //		}
 		if (drawArea) {
 			graphics.fill(0, 0, 0, 150);

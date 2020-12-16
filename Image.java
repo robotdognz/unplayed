@@ -40,7 +40,11 @@ public class Image extends Editable {
 			graphics.image(imageTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the image
 			graphics.popMatrix();
 		} else {
-			// display missing texture texture
+			// missing texture
+			graphics.noStroke();
+			graphics.fill(255, 0, 0, 150);
+			graphics.rectMode(CORNER);
+			graphics.rect(getX(), getY(), getWidth(), getHeight());
 		}
 	}
 

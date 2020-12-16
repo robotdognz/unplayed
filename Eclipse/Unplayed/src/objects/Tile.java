@@ -12,7 +12,7 @@ public class Tile extends Editable {
 	private boolean hasTexture;
 	private TileHandler tileTexture;
 
-	public Tile(TextureCache texture, File file, int x, int y) {
+	public Tile(TextureCache texture, File file, float x, float y) {
 		super(x, y, 100, 100);
 
 		if (file != null && texture != null && texture.getTileMap().containsKey(file)) {
@@ -32,9 +32,12 @@ public class Tile extends Editable {
 			graphics.scale(flipX, flipY); // flipping the tile
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
 			graphics.popMatrix();
-
 		} else {
-			// display missing texture texture
+			// missing texture
+			graphics.noStroke();
+			graphics.fill(255, 0, 0, 150);
+			graphics.rectMode(CORNER);
+			graphics.rect(getX(), getY(), getWidth(), getHeight());
 		}
 	}
 

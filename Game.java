@@ -1,5 +1,6 @@
 package game;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -9,6 +10,7 @@ import handlers.TextureCache;
 import misc.Converter;
 import misc.Vibe;
 import objects.Rectangle;
+import objects.Tile;
 import objects.View;
 import objects.events.PlayerStart;
 import processing.core.*;
@@ -24,11 +26,14 @@ public class Game {
 	public AppLogic app;
 
 	public Quadtree world;
+	public ArrayList<Tile> removed; // holds the tiles that the player has become and have been removed from the
+									// world
+	public ArrayList<Tile> placed; //holds the tiles the player has left behind after slotting in
 	public ArrayList<View> views;
 	public Rectangle startingWorld;
 	public HashSet<Rectangle> playerObjects;
 	private PageView pageView;
-	private PVector playerStart;
+	private Rectangle playerStart;
 	private PVector playerCheckpoint;
 
 	public Camera camera;
@@ -54,7 +59,7 @@ public class Game {
 
 	public Game(PApplet p, AppLogic app, Camera c, Vibe v, TextureCache texture, Converter convert) {
 		// legacy variables from level class TODO: write these out eventually
-		playerStart = new PVector(0, 0);
+//		playerStart = new Rectangle(0, 0, 100, 100);
 		PVector cameraTopLeft = new PVector(-400, -400);
 		PVector cameraBottomRight = new PVector(500, 600);
 		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
@@ -72,8 +77,10 @@ public class Game {
 		this.texture = texture;
 		this.convert = convert;
 
-		startingWorld = new Rectangle(playerStart.x - 400, playerStart.y - 400, 900, 900);
+		startingWorld = new Rectangle(0 - 400, 0 - 400, 900, 900);
 		world = new Quadtree(startingWorld);
+		removed = new ArrayList<Tile>();
+		placed = new ArrayList<Tile>();
 		views = new ArrayList<View>();
 		playerObjects = new HashSet<Rectangle>();
 
@@ -103,8 +110,9 @@ public class Game {
 
 	public void setPlayerStart(PlayerStart start) {
 		// set player start
-		playerStart.x = start.getX();
-		playerStart.y = start.getY();
+		playerStart = start.copy();
+//		playerStart.x = start.getX();
+//		playerStart.y = start.getY();
 		// set start camera
 		startCameraArea = start.getCameraArea();
 	}
@@ -127,8 +135,20 @@ public class Game {
 			// clear checkpoint
 			playerCheckpoint = null;
 			
+			// reset removed and placed tiles
+			for(Tile t : placed) {
+				world.remove(t);
+			}
+			placed.clear();
+			for (Tile t : removed) {
+				world.insert(t);
+			}
+			removed.clear();
+
 			// initialise player
-			createPlayer();
+			if (playerStart != null) {
+				createPlayer(playerStart);
+			}
 		}
 	}
 
@@ -145,19 +165,78 @@ public class Game {
 		}
 	}
 
-	public void endPuzzle() {
-		if (camera.getGame()) {
-			p.delay(180);
-			createPlayer();
-		}
+	public void endPuzzle(Rectangle playerArea) {
+		// if (camera.getGame()) {
+//		HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
+//		ArrayList<Tile> newPlayer = new ArrayList<Tile>();
+//		world.retrieve(returnObjects, playerArea);
+//		for (Rectangle r : returnObjects) {
+//			if (!(r instanceof Tile)) {
+//				continue;
+//			}
+//			if (r.getTopLeft().x > playerArea.getBottomRight().x - 1) {
+//				continue;
+//			}
+//			if (r.getBottomRight().x < playerArea.getTopLeft().x + 1) {
+//				continue;
+//			}
+//			if (r.getTopLeft().y > playerArea.getBottomRight().y - 1) {
+//				continue;
+//			}
+//			if (r.getBottomRight().y < playerArea.getTopLeft().y + 1) {
+//				continue;
+//			}
+//
+//			newPlayer.add((Tile) r);
+//		}
+		// if(newPlayer.size() > 0) {
+		
+		//pause
+		p.delay(180);
+		//file the slot with a matching tile
+		Tile newTile = new Tile(texture, player.getFile(), player.getX(), player.getY());
+		world.insert(newTile);
+		placed.add(newTile);
+		createPlayer(playerArea);
+		// }
+
+		// }
 	}
 
-	public void createPlayer() {
-		if (playerCheckpoint != null) {
-			player = new Player(p, texture, playerCheckpoint.x, playerCheckpoint.y, vibe);
-		} else if (playerStart != null) {
-			player = new Player(p, texture, playerStart.x, playerStart.y, vibe);
+	public void createPlayer(Rectangle playerArea) {
+		HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
+		ArrayList<Tile> newPlayer = new ArrayList<Tile>();
+		world.retrieve(returnObjects, playerArea);
+		for (Rectangle r : returnObjects) {
+			if (!(r instanceof Tile)) {
+				continue;
+			}
+			if (r.getTopLeft().x > playerArea.getBottomRight().x - 1) {
+				continue;
+			}
+			if (r.getBottomRight().x < playerArea.getTopLeft().x + 1) {
+				continue;
+			}
+			if (r.getTopLeft().y > playerArea.getBottomRight().y - 1) {
+				continue;
+			}
+			if (r.getBottomRight().y < playerArea.getTopLeft().y + 1) {
+				continue;
+			}
+
+			newPlayer.add((Tile) r);
 		}
+		if (newPlayer.size() > 0) {
+			File file = newPlayer.get(0).getFile(); // TODO: needs to be able to do more than just one tile file
+			removed.add(newPlayer.get(0));
+			world.remove(newPlayer.get(0));
+			if (playerCheckpoint != null) {
+				player = new Player(p, texture, file, playerCheckpoint.x, playerCheckpoint.y, vibe);
+			} else if (playerStart != null) {
+				player = new Player(p, texture, file, playerStart.getX(), playerStart.getX(), vibe);
+			}
+		}
+
 	}
 
 	public void stopPlayer() {
@@ -167,7 +246,9 @@ public class Game {
 	}
 
 	public void restart() {
-		createPlayer();
+		if (playerStart != null) {
+			createPlayer(playerStart);
+		}
 		if (startCameraArea != null) { // if there is a player start
 			// calculate values
 			PVector cameraTopLeft = startCameraArea.getTopLeft();
