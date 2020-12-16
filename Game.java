@@ -206,7 +206,7 @@ public class Game {
 			if (playerCheckpoint != null) {
 				player = new Player(p, texture, file, playerCheckpoint.getX(), playerCheckpoint.getY(), vibe);
 			} else if (playerStart != null) {
-				player = new Player(p, texture, file, playerStart.getX(), playerStart.getX(), vibe);
+				player = new Player(p, texture, file, playerStart.getX(), playerStart.getY(), vibe);
 			}
 		}
 
