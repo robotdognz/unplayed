@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import camera.Camera;
+import editor.Editor;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.Vibe;
@@ -123,6 +124,16 @@ public class Game {
 			newCameraArea = cameraArea.copy(); // new camera area
 			// initialise player
 			createPlayer();
+		}
+	}
+	
+	public void endGame() {
+		Editor editor = app.getEditor();
+		if(editor == null) { //in a normal game
+			//TODO: load next level, etc.
+		}else { //in the editor
+			startGame();
+			editor.toast.showToast("Level Complete");
 		}
 	}
 

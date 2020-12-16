@@ -157,11 +157,9 @@ public class TextureCache {
 		// ----------------PlayerStart----------------
 		final String playerStartString = "PlayerStart";
 		File playerStartFile = new File(eventDir + "/Event_playerStart.png");
-
 		EventHandler playerStart = new EventHandler(p, this, playerStartFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				//String playerStartString = "PlayerStart";
 				return new PlayerStart(p, texture, playerStartString, x, y, game);
 			}
 		};
@@ -170,11 +168,9 @@ public class TextureCache {
 		// ----------------PlayerEnd----------------
 		final String playerEndString = "PlayerEnd";
 		File playerEndFile = new File(eventDir + "/Event_playerFinish.png");
-
 		EventHandler playerEnd = new EventHandler(p, this, playerEndFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				//String playerEndString = "PlayerEnd";
 				return new PlayerEnd(texture, playerEndString, x, y);
 			}
 		};
@@ -183,11 +179,9 @@ public class TextureCache {
 		// ----------------PlayerDeath----------------
 		final String playerDeathString = "PlayerDeath";
 		File playerDeathFile = new File(eventDir + "/Event_PlayerDeath.png");
-
 		EventHandler playerDeath = new EventHandler(p, this, playerDeathFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				//String playerDeathString = "PlayerDeath";
 				return new PlayerDeath(texture, playerDeathString, x, y);
 			}
 		};
@@ -199,7 +193,6 @@ public class TextureCache {
 		EventHandler cameraChange = new EventHandler(p, this, cameraChangeFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				//String cameraChangeString = "CameraChange";
 				return new CameraChange(p, texture, cameraChangeString, x, y);
 			}
 		};

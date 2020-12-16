@@ -38,6 +38,7 @@ public class Editor {
 	private PApplet p;
 	public TextureCache texture;
 	public Converter convert;
+	public DoToast toast;
 	public Game game;
 	PageView pageView;
 	public Quadtree world;
@@ -97,6 +98,7 @@ public class Editor {
 		this.p = p;
 		this.texture = texture;
 		this.convert = convert;
+		this.toast = toast;
 		this.game = game;
 		this.pageView = game.getPageView();
 		this.world = game.getWorld();
