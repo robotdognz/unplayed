@@ -111,8 +111,6 @@ public class Game {
 	public void setPlayerStart(PlayerStart start) {
 		// set player start
 		playerStart = start.copy();
-//		playerStart.x = start.getX();
-//		playerStart.y = start.getY();
 		// set start camera
 		startCameraArea = start.getCameraArea();
 		createPlayer(start);
