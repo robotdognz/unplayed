@@ -125,6 +125,10 @@ public class Game {
 	public ArrayList<Tile> getRemoved(){
 		return removed;
 	}
+	
+	public ArrayList<Tile> getPlaced(){
+		return placed;
+	}
 
 	public void startGame() {
 		if (startCameraArea != null) {

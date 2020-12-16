@@ -72,6 +72,11 @@ public class EditorJSON {
 			}
 
 			if (r instanceof Tile) { // tiles
+				if (editor.game.getPlaced() != null) {
+					if(editor.game.getPlaced().contains(r)) {
+						continue;
+					}
+				}
 				object.setString("type", "tile");
 				object.setString("file", (((Tile) r).getFile()).toString());
 			} else if (r instanceof Image) { // images
