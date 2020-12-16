@@ -17,6 +17,7 @@ import objects.Tile;
 import objects.View;
 import objects.events.CameraChange;
 import objects.events.PlayerDeath;
+import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
 import processing.core.*;
 import processing.data.*;
@@ -86,6 +87,13 @@ public class EditorJSON {
 					object.setFloat("cameraZoom", ((CameraChange) r).getCameraZoom());
 					object.setFloat("edgeZoom", ((CameraChange) r).getEdgeZoom());
 					object.setInt("color", ((CameraChange) r).getColor());
+				} else if (r instanceof PlayerEnd) {
+					object.setString("type", "PlayerEnd");
+					object.setBoolean("end", ((PlayerEnd) r).getLevelEnd());
+					object.setFloat("newPlayerX", ((PlayerEnd) r).getNewPlayer().getTopLeft().x);
+					object.setFloat("newPlayerY", ((PlayerEnd) r).getNewPlayer().getTopLeft().x);
+					object.setFloat("newPlayertWidth", ((PlayerEnd) r).getNewPlayer().getWidth());
+					object.setFloat("newPlayertHeight", ((PlayerEnd) r).getNewPlayer().getHeight());
 				} else if (r instanceof PlayerDeath) {
 					object.setString("type", "PlayerDeath");
 				} else if (r instanceof CameraChange) {
@@ -220,6 +228,15 @@ public class EditorJSON {
 
 					}
 					worldObjects.add(ps);
+				} else if (type.equals("PlayerEnd")) {
+					String name = object.getString("name");
+					boolean end = object.getBoolean("end");
+					Rectangle newPlayer = new Rectangle(object.getFloat("newPlayerX"), object.getFloat("newPlayerY"),
+							object.getFloat("newPlayerWidth"), object.getFloat("newPlayerHeight"));
+					PlayerEnd pe = new PlayerEnd(texture, name, pX, pY);
+					pe.setLevelEnd(end);
+					pe.setNewPlayer(newPlayer);
+
 				} else if (type.equals("PlayerDeath")) {
 					String name = object.getString("name");
 					PlayerDeath pd = new PlayerDeath(texture, name, pX, pY);

@@ -19,6 +19,18 @@ public class PlayerEnd extends Event {
 	public Rectangle getNewPlayer() {
 		return newPlayer;
 	}
+	
+	public void setNewPlayer(Rectangle newPlayer) {
+		this.newPlayer = newPlayer;
+	}
+	
+	public boolean getLevelEnd() {
+		return levelEnd;
+	}
+	
+	public void setLevelEnd(boolean levelEnd) {
+		this.levelEnd = levelEnd;
+	}
 
 	@Override
 	public void activate(Game g) {
