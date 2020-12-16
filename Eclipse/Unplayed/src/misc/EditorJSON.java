@@ -171,7 +171,7 @@ public class EditorJSON {
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
 			String type = object.getString("type");
-			if (type.equals("tile") || type.equals("image") || type.equals("PlayerStart") || type.equals("PlayerDeath")
+			if (type.equals("tile") || type.equals("image") || type.equals("PlayerStart")|| type.equals("PlayerEnd") || type.equals("PlayerDeath")
 					|| type.equals("CameraChange")) {
 				int pX = object.getInt("pX");
 				int pY = object.getInt("pY");
