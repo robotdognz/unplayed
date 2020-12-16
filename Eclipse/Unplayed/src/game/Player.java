@@ -155,6 +155,10 @@ public class Player extends Rectangle {
 		lastLastXPos = lastXPos;
 		lastXPos = getTopLeft().x;
 	}
+	
+	public PVector getVelocity() {
+		return velocity;
+	}
 
 	public void draw(PGraphics graphics) {
 		// draw player
