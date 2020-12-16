@@ -13,6 +13,7 @@ import static processing.core.PConstants.*;
 public class Player extends Rectangle {
 	private PApplet p;
 	private PVector previousPosition;
+	private boolean event;
 
 	// player fields
 	private Rectangle playerArea; // rectangle used for searching the level quad tree
@@ -53,7 +54,9 @@ public class Player extends Rectangle {
 		velocity = new PVector(0, 0);
 		playerColor = p.color(255, 94, 22);
 		sprite = texture.defaultBlock;
+
 		previousPosition = new PVector(getX(), getY());
+		event = false;
 	}
 
 	public void jump() {
@@ -158,6 +161,7 @@ public class Player extends Rectangle {
 				if (getBottomRight().y < p.getTopLeft().y) {
 					continue;
 				}
+				event = true;
 				((Event) p).activate(g);
 			}
 		}
@@ -200,6 +204,13 @@ public class Player extends Rectangle {
 		// where (in pixels) to get it from the image
 		// image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight(), 0, 0,
 		// 128, 128); //sprite sheet test
+		if (event) {
+			graphics.noFill();
+			graphics.stroke(255, 0, 0);
+			graphics.strokeWeight(2);
+			graphics.rect(getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
+			event = false;
+		}
 		if (drawArea) {
 			graphics.fill(0, 0, 0, 150);
 			graphics.rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
