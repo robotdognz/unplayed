@@ -91,7 +91,7 @@ public class EditorJSON {
 					object.setString("type", "PlayerEnd");
 					object.setBoolean("end", ((PlayerEnd) r).getLevelEnd());
 					object.setFloat("newPlayerX", ((PlayerEnd) r).getNewPlayer().getTopLeft().x);
-					object.setFloat("newPlayerY", ((PlayerEnd) r).getNewPlayer().getTopLeft().x);
+					object.setFloat("newPlayerY", ((PlayerEnd) r).getNewPlayer().getTopLeft().y);
 					object.setFloat("newPlayerWidth", ((PlayerEnd) r).getNewPlayer().getWidth());
 					object.setFloat("newPlayerHeight", ((PlayerEnd) r).getNewPlayer().getHeight());
 				} else if (r instanceof PlayerDeath) {
