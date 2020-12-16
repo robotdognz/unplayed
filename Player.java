@@ -139,31 +139,24 @@ public class Player extends Rectangle {
 		for (Rectangle p : objects) {
 			if (p instanceof Tile) { // platform collison
 				collision(p.getTopLeft(), p.getBottomRight());
-			} else if (p instanceof Event) { // event collision
-//				PVector eventTopLeft = p.getTopLeft();
-//				PVector eventBottomRight = p.getBottomRight();
-//				// if colliding with the event
-//				if (eventTopLeft.y < getTopLeft().y + getHeight() + velocity.y
-//						&& eventBottomRight.y > getTopLeft().y + velocity.y
-//						&& eventTopLeft.x < getTopLeft().x + getWidth() && eventBottomRight.x > getTopLeft().x) {
-//					((Event) p).activate(g);
-//				}
+			} 
+//			else if (p instanceof Event) { // event collision
 
-				if (getTopLeft().x > p.getBottomRight().x) {
-					continue;
-				}
-				if (getBottomRight().x < p.getTopLeft().x) {
-					continue;
-				}
-				if (getTopLeft().y > p.getBottomRight().y) {
-					continue;
-				}
-				if (getBottomRight().y < p.getTopLeft().y) {
-					continue;
-				}
-				event = true;
-				((Event) p).activate(g);
-			}
+//				if (getTopLeft().x > p.getBottomRight().x) {
+//					continue;
+//				}
+//				if (getBottomRight().x < p.getTopLeft().x) {
+//					continue;
+//				}
+//				if (getTopLeft().y > p.getBottomRight().y) {
+//					continue;
+//				}
+//				if (getBottomRight().y < p.getTopLeft().y) {
+//					continue;
+//				}
+//				event = true;
+//				((Event) p).activate(g);
+//			}
 		}
 
 		setX(getX() + velocity.x);
@@ -180,6 +173,26 @@ public class Player extends Rectangle {
 		// stores previous positions for wall vibration
 		lastLastXPos = lastXPos;
 		lastXPos = getTopLeft().x;
+
+		// do event collision
+		for (Rectangle p : objects) {
+			if (p instanceof Event) { // event collision
+				if (getTopLeft().x > p.getBottomRight().x) {
+					continue;
+				}
+				if (getBottomRight().x < p.getTopLeft().x) {
+					continue;
+				}
+				if (getTopLeft().y > p.getBottomRight().y) {
+					continue;
+				}
+				if (getBottomRight().y < p.getTopLeft().y) {
+					continue;
+				}
+				event = true;
+				((Event) p).activate(g);
+			}
+		}
 	}
 
 	public PVector getVelocity() {
