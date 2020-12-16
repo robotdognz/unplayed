@@ -43,6 +43,7 @@ public class EditorJSON {
 			values = new JSONArray();
 
 			saveWorldObjects(values, editor);
+			saveRemoved(values, editor);
 			saveViews(values, editor);
 			savePages(values, editor);
 
@@ -112,6 +113,28 @@ public class EditorJSON {
 		}
 	}
 
+	private void saveRemoved(JSONArray values, Editor editor) {
+		// Player player = editor.game.player;
+		ArrayList<Tile> removed = editor.game.getRemoved();
+		// Rectangle playerStart = editor.game.getPlayerStart();
+		if (removed != null) {
+			for (Tile t : removed) {
+				JSONObject object = new JSONObject();
+				object.setInt("pX", (int) t.getX());
+				object.setInt("pY", (int) t.getY());
+				object.setInt("pWidth", (int) t.getWidth());
+				object.setInt("pHeight", (int) t.getHeight());
+				object.setBoolean("flipH", t.isFlippedH());
+				object.setBoolean("flipV", t.isFlippedV());
+				object.setFloat("angle", t.getAngle());
+				object.setString("type", "tile");
+				object.setString("file", t.getFile().toString());
+				values.setJSONObject(values.size(), object); // add it on to the end
+			}
+		}
+
+	}
+
 	private void saveViews(JSONArray values, Editor editor) {
 		ArrayList<View> views = editor.game.views;
 
@@ -171,8 +194,8 @@ public class EditorJSON {
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
 			String type = object.getString("type");
-			if (type.equals("tile") || type.equals("image") || type.equals("PlayerStart")|| type.equals("PlayerEnd") || type.equals("PlayerDeath")
-					|| type.equals("CameraChange")) {
+			if (type.equals("tile") || type.equals("image") || type.equals("PlayerStart") || type.equals("PlayerEnd")
+					|| type.equals("PlayerDeath") || type.equals("CameraChange")) {
 				int pX = object.getInt("pX");
 				int pY = object.getInt("pY");
 				int pWidth = object.getInt("pWidth");

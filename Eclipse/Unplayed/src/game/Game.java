@@ -117,6 +117,14 @@ public class Game {
 		startCameraArea = start.getCameraArea();
 		createPlayer(start);
 	}
+	
+	public Rectangle getPlayerStart() {
+		return playerStart;
+	}
+	
+	public ArrayList<Tile> getRemoved(){
+		return removed;
+	}
 
 	public void startGame() {
 		if (startCameraArea != null) {
