@@ -124,6 +124,9 @@ public class Game {
 			newCenter = new PVector(camera.getCenter().x, camera.getCenter().y); // new centre
 			cameraArea = startCameraArea.copy(); // camera area
 			newCameraArea = cameraArea.copy(); // new camera area
+			// clear checkpoint
+			playerCheckpoint = null;
+			
 			// initialise player
 			createPlayer();
 		}
@@ -141,7 +144,7 @@ public class Game {
 			}
 		}
 	}
-	
+
 	public void endPuzzle() {
 		if (camera.getGame()) {
 			p.delay(180);
@@ -150,9 +153,9 @@ public class Game {
 	}
 
 	public void createPlayer() {
-		if(playerCheckpoint != null) {
+		if (playerCheckpoint != null) {
 			player = new Player(p, texture, playerCheckpoint.x, playerCheckpoint.y, vibe);
-		}else if (playerStart != null) {
+		} else if (playerStart != null) {
 			player = new Player(p, texture, playerStart.x, playerStart.y, vibe);
 		}
 	}
