@@ -155,7 +155,7 @@ public class TextureCache {
 		eventMap = new HashMap<String, EventHandler>();
 
 		// ----------------PlayerStart----------------
-		String playerStartString = "PlayerStart";
+		final String playerStartString = "PlayerStart";
 		File playerStartFile = new File(eventDir + "/Event_playerStart.png");
 
 		EventHandler playerStart = new EventHandler(p, this, playerStartFile) {
@@ -168,7 +168,7 @@ public class TextureCache {
 		eventMap.put(playerStartString, playerStart);
 
 		// ----------------PlayerEnd----------------
-		String playerEndString = "PlayerEnd";
+		final String playerEndString = "PlayerEnd";
 		File playerEndFile = new File(eventDir + "/Event_playerFinish.png");
 
 		EventHandler playerEnd = new EventHandler(p, this, playerEndFile) {
@@ -181,7 +181,7 @@ public class TextureCache {
 		eventMap.put(playerEndString, playerEnd);
 
 		// ----------------PlayerDeath----------------
-		String playerDeathString = "PlayerDeath";
+		final String playerDeathString = "PlayerDeath";
 		File playerDeathFile = new File(eventDir + "/Event_PlayerDeath.png");
 
 		EventHandler playerDeath = new EventHandler(p, this, playerDeathFile) {
@@ -194,7 +194,7 @@ public class TextureCache {
 		eventMap.put(playerDeathString, playerDeath);
 
 		// ----------------CameraChange----------------
-		String cameraChangeString = "CameraChange";
+		final String cameraChangeString = "CameraChange";
 		File cameraChangeFile = new File(eventDir + "/Event_CameraChange.png");
 		EventHandler cameraChange = new EventHandler(p, this, cameraChangeFile) {
 			@Override
