@@ -233,7 +233,7 @@ public class EditorJSON {
 					boolean end = object.getBoolean("end");
 					Rectangle newPlayer = new Rectangle(object.getFloat("newPlayerX"), object.getFloat("newPlayerY"),
 							object.getFloat("newPlayerWidth"), object.getFloat("newPlayerHeight"));
-					PlayerEnd pe = new PlayerEnd(p, texture, name, pX, pY);
+					PlayerEnd pe = new PlayerEnd(texture, name, pX, pY);
 					pe.setLevelEnd(end);
 					pe.setNewPlayer(newPlayer);
 					worldObjects.add(pe);

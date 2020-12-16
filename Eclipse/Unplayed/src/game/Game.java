@@ -131,6 +131,7 @@ public class Game {
 
 	public void endGame() {
 		if (camera.getGame()) {
+			p.delay(180);
 			Editor editor = app.getEditor();
 			if (editor == null) { // in a normal game
 				// TODO: load next level, etc.
@@ -138,6 +139,13 @@ public class Game {
 				startGame();
 				editor.toast.showToast("Level Complete");
 			}
+		}
+	}
+	
+	public void endPuzzle() {
+		if (camera.getGame()) {
+			p.delay(180);
+			createPlayer();
 		}
 	}
 
