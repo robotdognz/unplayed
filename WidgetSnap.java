@@ -11,10 +11,12 @@ public class WidgetSnap extends Widget {
 		icon = p.loadImage(folder + "snaptoGrid.png");
 	}
 
+	@Override
 	public void clicked() {
 		editor.snap = !editor.snap;
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.snap) {

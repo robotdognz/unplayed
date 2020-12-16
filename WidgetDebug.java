@@ -11,10 +11,12 @@ public class WidgetDebug extends Widget {
 		icon = p.loadImage(folder + "debugging.png");
 	}
 
+	@Override
 	public void clicked() {
 		editor.debugVis = !editor.debugVis;
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.debugVis) {

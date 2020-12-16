@@ -35,6 +35,7 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 		return otherName.compareTo(name);
 	}
 
+	@Override
 	public PImage getSprite(float scale) {
 		if (scale > texture.LOD32) {
 			if (LOD16 == null) {
@@ -65,19 +66,23 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 		}
 	}
 
+	@Override
 	public File getFile() {
 		return datapath;
 	}
 
+	@Override
 	public void draw(float pX, float pY, float size) {
 		// draw the scaled image
 		p.image(getSprite(6), pX, pY, size, size);
 	}
 
+	@Override
 	public int getWidth() {
 		return 100;
 	}
 
+	@Override
 	public int getHeight() {
 		return 100;
 	}

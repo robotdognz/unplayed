@@ -83,6 +83,7 @@ public class CameraChange extends Event {
 		return new PVector(centerX, centerY);
 	}
 
+	@Override
 	public void activate(Game g) {
 		super.activate(g);
 		if (g.camera.getGame()) {

@@ -23,6 +23,7 @@ public class WidgetPlayMode extends Widget {
 		pageView = game.getPageView();
 	}
 
+	@Override
 	public void clicked() {
 		if (active) {
 			editor.camera = new FreeCamera();
@@ -35,6 +36,7 @@ public class WidgetPlayMode extends Widget {
 		}
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (game.player != null && pageView.getPages().size() > 0) {

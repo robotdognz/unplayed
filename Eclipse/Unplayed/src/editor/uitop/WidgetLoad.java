@@ -12,6 +12,7 @@ public class WidgetLoad extends Widget {
 		icon = p.loadImage(folder + "load.png");
 	}
 
+	@Override
 	public void clicked() {
 		// load the level
 		editor.eJSON.load(editor.game);

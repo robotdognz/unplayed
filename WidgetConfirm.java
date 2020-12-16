@@ -14,6 +14,7 @@ public class WidgetConfirm extends Widget {
 		closeAfterSubWidget = true;
 	}
 
+	@Override
 	public void clicked() {
 		// Finalize block
 		if(editor.currentTool != null) {
@@ -21,6 +22,7 @@ public class WidgetConfirm extends Widget {
 		}
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.controller instanceof EditorControl && !editor.snap && editor.point != null) {

@@ -13,11 +13,13 @@ public class WidgetAdd extends Widget {
 		icon = p.loadImage(folder + "PlaceBlock.png");
 	}
 
+	@Override
 	public void clicked() {
 		editor.eMode = Editor.editorMode.ADD;
 		editor.controller = new EditorControl(p, editor);
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.eMode == Editor.editorMode.ADD) {

@@ -44,6 +44,7 @@ public class Image extends Editable {
 		}
 	}
 
+	@Override
 	public String getName() {
 		return "Image";
 	}

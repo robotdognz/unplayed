@@ -21,6 +21,7 @@ public class WidgetEditorMode extends Widget {
 		hasSActive = true;
 	}
 
+	@Override
 	public void clicked() {
 		if (active == false) {
 			active = true;
@@ -30,6 +31,7 @@ public class WidgetEditorMode extends Widget {
 		}
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.controller instanceof EditorControl) {

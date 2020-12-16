@@ -16,6 +16,7 @@ public class WidgetPlayerControl extends Widget {
 		this.game = editor.game;
 	}
 
+	@Override
 	public void clicked() {
 		if (game.player != null) {
 			if (!active) {
@@ -26,6 +27,7 @@ public class WidgetPlayerControl extends Widget {
 		}
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.controller instanceof PlayerControl) {

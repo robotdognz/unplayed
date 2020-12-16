@@ -42,6 +42,7 @@ public class EditorTop extends Toolbar {
 		super.bounds = new Rectangle(0, 0, p.width, 200); //TODO: needs to be relative to screen size
 	}
 
+	@Override
 	public void draw(PVector touch, Menu menu) {
 		//super.draw(touch, menu);
 		// draw ui extra piece
@@ -86,6 +87,7 @@ public class EditorTop extends Toolbar {
 		editor.controllerActive = !wMenuOpen; // if a widget menu is open, deactivate controls
 	}
 
+	@Override
 	public void touchEnded() {
 		// check for clicking on widgets
 		for (int i = 0; i < widgets.size(); i++) {

@@ -37,6 +37,7 @@ public class PauseMenu extends Menu {
 		menuTopY = p.height / 2 - menuHeight / 2;
 	}
 
+	@Override
 	public void click() {
 		for (Button b : buttons) {
 			if (b.click().equals(resume)) { // resume the game if resume button pressed

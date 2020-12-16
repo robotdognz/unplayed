@@ -13,11 +13,13 @@ public class WidgetSelect extends Widget {
 		icon = p.loadImage(folder + "select.png");
 	}
 
+	@Override
 	public void clicked() {
 		editor.eMode = Editor.editorMode.SELECT;
 		editor.controller = new EditorControl(p, editor);
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.eMode == Editor.editorMode.SELECT) {

@@ -38,6 +38,7 @@ public class Tile extends Editable {
 		}
 	}
 
+	@Override
 	public String getName() {
 		return "Tile";
 	}

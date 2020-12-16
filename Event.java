@@ -46,6 +46,7 @@ public abstract class Event extends Rectangle {
 		}
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}

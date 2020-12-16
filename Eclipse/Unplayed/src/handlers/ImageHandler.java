@@ -32,14 +32,17 @@ public class ImageHandler implements Comparable<ImageHandler>, Handler {
 		}
 	}
 
+	@Override
 	public int getWidth() {
 		return pWidth;
 	}
 
+	@Override
 	public int getHeight() {
 		return pHeight;
 	}
 
+	@Override
 	public PImage getSprite(float scale) {
 		if (scale > texture.LOD32) {
 			if (LOD16 == null) {
@@ -70,10 +73,12 @@ public class ImageHandler implements Comparable<ImageHandler>, Handler {
 		}
 	}
 
+	@Override
 	public File getFile() {
 		return datapath;
 	}
 
+	@Override
 	public void draw(float pX, float pY, float size) {
 		// calculate how to scale the image so it appears in the scroll bar correctly
 		float scaleFactor;

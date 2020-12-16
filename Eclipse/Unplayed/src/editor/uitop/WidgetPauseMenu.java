@@ -20,6 +20,7 @@ public class WidgetPauseMenu extends Widget {
 		app = game.app;
 	}
 
+	@Override
 	public void clicked() {
 		if (!active) {
 			active = true;
@@ -29,6 +30,7 @@ public class WidgetPauseMenu extends Widget {
 		}
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (app.menu != null) {

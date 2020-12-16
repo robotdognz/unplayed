@@ -12,6 +12,7 @@ public class WidgetSave extends Widget {
 		icon = p.loadImage(folder + "save.png");
 	}
 
+	@Override
 	public void clicked() {
 		// save the level
 		editor.eJSON.save(editor);

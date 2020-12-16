@@ -13,11 +13,13 @@ public class WidgetErase extends Widget {
 		icon = p.loadImage(folder + "eraser.png");
 	}
 
+	@Override
 	public void clicked() {
 		editor.eMode = Editor.editorMode.ERASE;
 		editor.controller = new EditorControl(p, editor);
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.eMode == Editor.editorMode.ERASE) {

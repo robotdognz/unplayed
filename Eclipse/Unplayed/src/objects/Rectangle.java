@@ -126,6 +126,7 @@ public class Rectangle {
 		return "Rectangle";
 	}
 
+	@Override
 	public String toString() {
 		return this.getName() + " " + (int) getX() + " " + (int) getY() + " " + (int) getWidth() + " "
 				+ (int) getHeight();

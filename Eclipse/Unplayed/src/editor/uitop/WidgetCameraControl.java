@@ -13,6 +13,7 @@ public class WidgetCameraControl extends Widget {
 		icon = p.loadImage(folder + "CameraControls.png");
 	}
 
+	@Override
 	public void clicked() {
 		if (!active) {
 			editor.controller = new CameraControl(p, editor);
@@ -20,6 +21,7 @@ public class WidgetCameraControl extends Widget {
 		}
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (available == true && editor.controller instanceof CameraControl) {

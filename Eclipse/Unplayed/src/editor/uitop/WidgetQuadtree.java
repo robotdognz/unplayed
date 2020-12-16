@@ -11,10 +11,12 @@ public class WidgetQuadtree extends Widget {
 		icon = p.loadImage(folder + "quadTree.png");
 	}
 
+	@Override
 	public void clicked() {
 		editor.quadVis = !editor.quadVis;
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.quadVis) {

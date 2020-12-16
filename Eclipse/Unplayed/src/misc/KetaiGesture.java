@@ -60,6 +60,7 @@ public class KetaiGesture implements OnGestureListener, OnDoubleTapListener {
 		me = this; // self reference for UI-thread constructor hackiness
 
 		parent.getActivity().runOnUiThread(new Runnable() {
+			@Override
 			public void run() {
 				gestures = new GestureDetector(parent.getActivity(), me);
 			}
@@ -86,6 +87,7 @@ public class KetaiGesture implements OnGestureListener, OnDoubleTapListener {
 	 * @see android.view.GestureDetector.OnGestureListener#onDown(android.view.
 	 * MotionEvent)
 	 */
+	@Override
 	public boolean onDown(MotionEvent arg0) {
 		return true;
 	}
@@ -96,6 +98,7 @@ public class KetaiGesture implements OnGestureListener, OnDoubleTapListener {
 	 * @see android.view.GestureDetector.OnGestureListener#onFling(android.view.
 	 * MotionEvent, android.view.MotionEvent, float, float)
 	 */
+	@Override
 	public boolean onFling(MotionEvent arg0, MotionEvent arg1, float arg2, float arg3) {
 		if (onFlickMethod != null) {
 			try {
@@ -115,6 +118,7 @@ public class KetaiGesture implements OnGestureListener, OnDoubleTapListener {
 	 * @see android.view.GestureDetector.OnGestureListener#onLongPress(android.view.
 	 * MotionEvent)
 	 */
+	@Override
 	public void onLongPress(MotionEvent arg0) {
 		if (onLongPressMethod != null) {
 			try {
@@ -130,6 +134,7 @@ public class KetaiGesture implements OnGestureListener, OnDoubleTapListener {
 	 * @see android.view.GestureDetector.OnGestureListener#onScroll(android.view.
 	 * MotionEvent, android.view.MotionEvent, float, float)
 	 */
+	@Override
 	public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2, float arg3) {
 		return true;
 	}
@@ -140,6 +145,7 @@ public class KetaiGesture implements OnGestureListener, OnDoubleTapListener {
 	 * @see android.view.GestureDetector.OnGestureListener#onShowPress(android.view.
 	 * MotionEvent)
 	 */
+	@Override
 	public void onShowPress(MotionEvent arg0) {
 	}
 
@@ -150,6 +156,7 @@ public class KetaiGesture implements OnGestureListener, OnDoubleTapListener {
 	 * android.view.GestureDetector.OnGestureListener#onSingleTapUp(android.view.
 	 * MotionEvent)
 	 */
+	@Override
 	public boolean onSingleTapUp(MotionEvent arg0) {
 		if (onTapMethod != null) {
 			try {
@@ -224,6 +231,7 @@ public class KetaiGesture implements OnGestureListener, OnDoubleTapListener {
 	 * android.view.GestureDetector.OnDoubleTapListener#onSingleTapConfirmed(android
 	 * .view.MotionEvent)
 	 */
+	@Override
 	public boolean onSingleTapConfirmed(MotionEvent arg0) {
 		return false;
 	}
@@ -235,6 +243,7 @@ public class KetaiGesture implements OnGestureListener, OnDoubleTapListener {
 	 * android.view.GestureDetector.OnDoubleTapListener#onDoubleTap(android.view.
 	 * MotionEvent)
 	 */
+	@Override
 	public boolean onDoubleTap(MotionEvent arg0) {
 		if (onDoubleTapMethod != null) {
 			try {
@@ -339,6 +348,7 @@ public class KetaiGesture implements OnGestureListener, OnDoubleTapListener {
 	 * android.view.GestureDetector.OnDoubleTapListener#onDoubleTapEvent(android.
 	 * view.MotionEvent)
 	 */
+	@Override
 	public boolean onDoubleTapEvent(MotionEvent arg0) {
 		// TODO Auto-generated method stub
 		return false;

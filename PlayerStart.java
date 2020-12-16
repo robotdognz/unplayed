@@ -32,8 +32,8 @@ public class PlayerStart extends CameraChange {
 //		game.setPlayerStart(this);
 //	}
 	
-	public void activate(Game g) {
-		//do nothing
-	}
+//	public void activate(Game g) {
+//		//do nothing
+//	}
 
 }

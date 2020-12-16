@@ -11,10 +11,12 @@ public class WidgetPageView extends Widget {
 		icon = p.loadImage(folder + "pageView.png");
 	}
 
+	@Override
 	public void clicked() {
 		editor.switchView();
 	}
 
+	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.showPageView) {
