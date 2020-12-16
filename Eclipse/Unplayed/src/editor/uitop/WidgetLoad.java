@@ -26,7 +26,5 @@ public class WidgetLoad extends Widget {
 		editor.selected = null;
 		
 		editor.game.startGame();
-		editor.game.removed.clear();
-		editor.game.placed.clear();
 	}
 }

@@ -83,6 +83,7 @@ public class Game {
 		placed = new ArrayList<Tile>();
 		views = new ArrayList<View>();
 		playerObjects = new HashSet<Rectangle>();
+		player = null;
 
 		pageView = new PageView(p, this, camera, texture, convert);
 
