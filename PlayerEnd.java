@@ -35,10 +35,10 @@ public class PlayerEnd extends Event {
 //			return;
 //		}
 		Player player = g.player;
-		if(player.getVelocity().x != 0) {
+		if (player.getVelocity().x != 0) {
 			return;
 		}
-		if(player.getVelocity().y != 0) {
+		if (player.getVelocity().y != 0) {
 			return;
 		}
 		if (player.getTopLeft().x > getBottomRight().x - 1) {
@@ -52,6 +52,9 @@ public class PlayerEnd extends Event {
 		}
 		if (player.getBottomRight().y < getTopLeft().y + 1) {
 			return;
+		}
+		if ((int) player.getBottomRight().y != (int) getBottomRight().y) {
+
 		}
 		// the player is perfectly in the slot
 		if (levelEnd) { // if this is the end of the level
