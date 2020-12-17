@@ -69,7 +69,7 @@ public class Editor {
 	public Tool currentTool;
 	public editorMode eMode;
 	public imagePlane eImagePlane;
-	public boolean showPageView = false;
+	public boolean showPageView = false; //are we seeing the page view
 
 	// current object to put into level
 	public TileHandler currentTile = null;

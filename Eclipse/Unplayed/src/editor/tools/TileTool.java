@@ -66,6 +66,26 @@ public class TileTool implements Tool {
 		}
 		// remove what was found and place the new tile
 		if (editor.currentTile != null) {
+			
+			//check if there is a tile in this position in game.removed
+			for(Tile t : game.removed) {
+				if (toInsert.getTopLeft().x > t.getBottomRight().x - 1) {
+					continue;
+				}
+				if (toInsert.getBottomRight().x < t.getTopLeft().x + 1) {
+					continue;
+				}
+				if (toInsert.getTopLeft().y > t.getBottomRight().y - 1) {
+					continue;
+				}
+				if (toInsert.getBottomRight().y < t.getTopLeft().y + 1) {
+					continue;
+				}
+				//match found
+				return;
+			}
+			
+			//run as normal if no tile was found in game.removed
 			if (foundAtPoint != null) {
 				editor.world.remove(foundAtPoint);
 			}
@@ -98,6 +118,12 @@ public class TileTool implements Tool {
 			if (p.getBottomRight().y < toInsert.getTopLeft().y + 1) {
 				continue;
 			}
+			
+			//check if the tile is also in game.placed
+			if(game.placed != null && game.placed.contains(p)) {
+				continue;
+			}
+			
 			editor.world.remove(p);
 			if (p.equals(editor.selected)) {
 				editor.selected = null;
