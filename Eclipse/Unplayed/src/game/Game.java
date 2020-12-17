@@ -123,23 +123,22 @@ public class Game {
 		return playerStart;
 	}
 
-	public void startGame(boolean pageView) { //TODO: it should do the check itself, not be passed a boolean
+	public void startGame() {
+		//only alter the camera if we're in game or play testing
 		if (cameraAreaStart != null && camera.getGame()) {
-			//if (pageView) {
-				// calculate values
-				PVector cameraTopLeft = cameraAreaStart.getTopLeft();
-				PVector cameraBottomRight = cameraAreaStart.getBottomRight();
-				int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
-				int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-				PVector startCenter = new PVector(centerX, centerY);
-				// apply values
-				camera.setScale(cameraAreaStart.getWidth()); // scale
-				newScale = cameraAreaStart.getWidth(); // new scale
-				camera.setCenter(startCenter); // centre
-				newCenter = new PVector(camera.getCenter().x, camera.getCenter().y); // new centre
-				cameraArea = cameraAreaStart.copy(); // camera area
-				newCameraArea = cameraArea.copy(); // new camera area
-			//}
+			// calculate values
+			PVector cameraTopLeft = cameraAreaStart.getTopLeft();
+			PVector cameraBottomRight = cameraAreaStart.getBottomRight();
+			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
+			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
+			PVector startCenter = new PVector(centerX, centerY);
+			// apply values
+			camera.setScale(cameraAreaStart.getWidth()); // scale
+			newScale = cameraAreaStart.getWidth(); // new scale
+			camera.setCenter(startCenter); // centre
+			newCenter = new PVector(camera.getCenter().x, camera.getCenter().y); // new centre
+			cameraArea = cameraAreaStart.copy(); // camera area
+			newCameraArea = cameraArea.copy(); // new camera area
 		}
 		// clear player
 		player = null;
@@ -169,7 +168,7 @@ public class Game {
 			if (editor == null) { // in a normal game
 				// TODO: load next level, etc.
 			} else { // in the editor
-				startGame(false);
+				startGame();
 				camera = new FreeCamera();
 				editor.toast.showToast("Level Complete");
 			}
@@ -179,7 +178,7 @@ public class Game {
 	public void endPuzzle(Rectangle playerArea) {
 		// pause
 		p.delay(180);
-		//update the checkpoints
+		// update the checkpoints
 		this.playerCheckpoint = playerArea.copy();
 		this.cameraAreaCheckpoint = cameraArea.copy();
 		// fill the slot with a matching tile
