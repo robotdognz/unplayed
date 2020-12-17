@@ -23,7 +23,6 @@ public class EditorSide extends Toolbar {
 //	private PImage bottom;
 	// public ModifyMode mode;
 	public boolean adjust;
-	//private String previousSelected = "";
 
 	public EditorSide(PApplet p, Editor editor) {
 		super(p, editor);
@@ -72,14 +71,11 @@ public class EditorSide extends Toolbar {
 		if (editor.selected == null) {
 			reset();
 		}
-//		if (editor.selected != null && !previousSelected.equals(editor.selected.getClass().getSimpleName())) {
-//			reset();
-//		}
 
 		// step if controlling the editor and there is something selected
 		if (editor.controller instanceof EditorControl && editor.selected != null) {
 			// step
-			if (!(editor.selected instanceof Page)) {
+			if (!(editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
 				adjust = false;
 			}
 
@@ -93,9 +89,6 @@ public class EditorSide extends Toolbar {
 				}
 			}
 		}
-//		if (editor.selected != null) {
-//			previousSelected = editor.selected.getClass().getSimpleName();
-//		}
 	}
 
 	@Override
