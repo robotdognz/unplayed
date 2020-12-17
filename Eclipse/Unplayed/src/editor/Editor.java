@@ -236,14 +236,15 @@ public class Editor {
 				((Tile) r).draw(p.g, currentScale);
 			}
 		}
-		for (Rectangle r : game.screenObjects) { // draw events on top of images and tiles
+		if (game.player != null) { //draw the player on top of tiles and images
+			game.player.draw(p.g);
+		}
+		for (Rectangle r : game.screenObjects) { // draw events on top of player, tiles, and images
 			if (r instanceof Event && (eventVis || ((Event) r).visible)) {
 				((Event) r).draw(p.g, currentScale);
 			}
 		}
-		if (game.player != null) {
-			game.player.draw(p.g);
-		}
+		
 		game.paper.draw(p.g, game.screenSpace, currentScale);
 
 		// draw the views
