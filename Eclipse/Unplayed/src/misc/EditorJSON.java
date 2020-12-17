@@ -180,6 +180,9 @@ public class EditorJSON {
 			File file = new File("storage/emulated/0/levels/" + "level" + ".json");
 			values = PApplet.loadJSONArray(file);
 
+			game.world.clear();
+			game.placed.clear();
+			game.removed.clear();
 			loadWorldObjects(values, game);
 			loadViews(values, game);
 			loadPages(values, game);
@@ -293,7 +296,6 @@ public class EditorJSON {
 			}
 		}
 
-		game.world.clear();
 		for (Rectangle r : worldObjects) {
 			game.world.insert(r);
 		}

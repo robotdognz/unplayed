@@ -14,16 +14,11 @@ public class WidgetRestart extends Widget {
 		icon = p.loadImage(folder + "ResetGame.png");
 		closeAfterSubWidget = true;
 		game = editor.game;
-		// pageView = game.getPageView();
 	}
 
 	@Override
 	public void clicked() {
-//		editor.camera = new GameCamera();
-//		editor.controller = new PlayerControl(p, editor.game);
 		game.startGame();
-//		editor.showPageView = true;
-//		editor.selected = null;
 
 	}
 
