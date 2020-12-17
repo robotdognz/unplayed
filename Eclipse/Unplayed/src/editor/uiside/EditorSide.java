@@ -22,6 +22,7 @@ public class EditorSide extends Toolbar {
 //	private PImage bottom;
 	// public ModifyMode mode;
 	public boolean adjust;
+	public boolean addSpawn;
 
 	public EditorSide(PApplet p, Editor editor) {
 		super(p, editor);
@@ -35,12 +36,14 @@ public class EditorSide extends Toolbar {
 		Widget flipHW = new WidgetFlipH(p, editor, this);
 		Widget flipVW = new WidgetFlipV(p, editor, this);
 		Widget adjustW = new WidgetAdjust(p, editor, this);
+		Widget spawnW = new WidgetAddSpawn(p, editor, this);
 
 		widgets.add(deleteW);
 		widgets.add(finishW);
 		widgets.add(flipHW);
 		widgets.add(flipVW);
 		widgets.add(adjustW);
+		widgets.add(spawnW);
 
 		super.widgetSpacing = p.width / 8;
 
@@ -48,7 +51,8 @@ public class EditorSide extends Toolbar {
 
 		super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
 
-		this.adjust = false;
+		this.adjust = false; //are we adjusting a page?
+		this.addSpawn = false; //is the current player end a puzzle end?
 		// sprites
 		// this.top = p.requestImage(folder + "???.png");
 		// this.middle = p.requestImage(folder + "???.png");
@@ -59,6 +63,7 @@ public class EditorSide extends Toolbar {
 
 	public void reset() {
 		adjust = false;
+		addSpawn = false;
 	}
 
 	@Override

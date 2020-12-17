@@ -15,7 +15,7 @@ public class PlayerEnd extends Event {
 
 	public PlayerEnd(TextureCache texture, String name, float x, float y) {
 		super(texture, name, false, x, y, 100, 100);
-		levelEnd = false; //true
+		levelEnd = true;
 		newPlayer = new Rectangle(getX() + getWidth(), getY() - getHeight(), getWidth(), getHeight());
 	}
 
