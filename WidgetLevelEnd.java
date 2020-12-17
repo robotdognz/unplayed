@@ -6,13 +6,13 @@ import objects.events.PlayerEnd;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class WidgetAddSpawn extends Widget {
+public class WidgetLevelEnd extends Widget {
 	EditorSide toolbar;
 
-	public WidgetAddSpawn(PApplet p, Editor editor, Toolbar parent) {
+	public WidgetLevelEnd(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		toolbar = (EditorSide) parent;
-		icon = p.loadImage(folder + "AddSpawn.png");
+		icon = p.loadImage(folder + "LevelEnd.png");
 	}
 	
 	@Override
