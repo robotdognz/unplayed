@@ -69,7 +69,10 @@ public class EditorSide extends Toolbar {
 	public void draw(PVector touch, Menu menu) {
 		// super.draw(touch, menu);
 
-		if (editor.selected != null || !previousSelected.equals(editor.selected.getClass().getSimpleName())) {
+		if (editor.selected == null) {
+			reset();
+		}
+		if (editor.selected != null && !previousSelected.equals(editor.selected.getClass().getSimpleName())) {
 			reset();
 		}
 
