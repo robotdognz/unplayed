@@ -34,7 +34,6 @@ public class EventTool extends AreaTool {
 			if (editor.point != null) {
 				if (editorSide.adjust && editor.selected instanceof PlayerEnd) { // if adjusting a PlayerEnd
 					if (!((PlayerEnd) editor.selected).getLevelEnd()) {
-						//TODO this is jank because it moves it when you select the event
 						((PlayerEnd) editor.selected).setNewPlayer(editor.point.copy());
 						return;
 					}

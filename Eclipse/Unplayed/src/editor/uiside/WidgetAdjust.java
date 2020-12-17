@@ -13,7 +13,7 @@ public class WidgetAdjust extends Widget {
 	public WidgetAdjust(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		toolbar = (EditorSide) parent;
-		icon = p.loadImage(folder + "rotateClockwise.png");
+		icon = p.loadImage(folder + "move.png");
 	}
 
 	@Override

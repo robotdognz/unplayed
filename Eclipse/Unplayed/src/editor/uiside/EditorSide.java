@@ -21,7 +21,6 @@ public class EditorSide extends Toolbar {
 //	private PImage top;
 //	private PImage middle;
 //	private PImage bottom;
-	// public ModifyMode mode;
 	public boolean adjust;
 
 	public EditorSide(PApplet p, Editor editor) {
@@ -68,7 +67,7 @@ public class EditorSide extends Toolbar {
 	public void draw(PVector touch, Menu menu) {
 		// super.draw(touch, menu);
 
-		//reset the side toolbar's options
+		//step - reset the side toolbar's options and abort drawing if nothing selected
 		if (editor.selected == null) {
 			reset();
 			return;
@@ -77,11 +76,7 @@ public class EditorSide extends Toolbar {
 		}
 
 		// step if controlling the editor and there is something selected
-		if (editor.controller instanceof EditorControl) {// && editor.selected != null) {
-			// step
-//			if (!(editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
-//				adjust = false;
-//			}
+		if (editor.controller instanceof EditorControl) {
 
 			p.imageMode(CENTER);
 
