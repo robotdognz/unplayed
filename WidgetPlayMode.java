@@ -30,7 +30,7 @@ public class WidgetPlayMode extends Widget {
 		} else {
 			editor.camera = new GameCamera();
 			editor.controller = new PlayerControl(p, editor.game);
-			game.startGame();
+			game.startGame(editor.pageVis);
 			editor.showPageView = true;
 			editor.selected = null;
 		}

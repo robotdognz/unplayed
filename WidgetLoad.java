@@ -25,6 +25,6 @@ public class WidgetLoad extends Widget {
 		editor.currentPage = null;
 		editor.selected = null;
 		
-		editor.game.startGame();
+		editor.game.startGame(editor.pageVis);
 	}
 }

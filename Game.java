@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import camera.Camera;
+import camera.FreeCamera;
 import editor.Editor;
 import handlers.TextureCache;
 import misc.Converter;
@@ -121,9 +122,9 @@ public class Game {
 		return playerStart;
 	}
 
-	public void startGame() {
+	public void startGame(boolean pageView) {
 		player = null;
-		if (startCameraArea != null) {
+		if (startCameraArea != null && pageView) {
 			// calculate values
 			PVector cameraTopLeft = startCameraArea.getTopLeft();
 			PVector cameraBottomRight = startCameraArea.getBottomRight();
@@ -165,7 +166,8 @@ public class Game {
 			if (editor == null) { // in a normal game
 				// TODO: load next level, etc.
 			} else { // in the editor
-				startGame();
+				startGame(false);
+				camera = new FreeCamera();
 				editor.toast.showToast("Level Complete");
 			}
 		}
