@@ -231,10 +231,12 @@ public class Editor {
 				((Image) r).draw(p.g, currentScale);
 			}
 		}
-		for (Rectangle r : game.screenObjects) { // draw tiles and events on top of images
+		for (Rectangle r : game.screenObjects) { // draw tiles on top of images
 			if (r instanceof Tile) {
 				((Tile) r).draw(p.g, currentScale);
 			}
+		}
+		for (Rectangle r : game.screenObjects) { // draw events on top of images and tiles
 			if (r instanceof Event && (eventVis || ((Event) r).visible)) {
 				((Event) r).draw(p.g, currentScale);
 			}
