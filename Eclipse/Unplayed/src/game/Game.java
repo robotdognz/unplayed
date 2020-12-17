@@ -162,7 +162,7 @@ public class Game {
 	}
 
 	public void endGame() {
-		if (camera.getGame()) {
+		//if (camera.getGame()) {
 			p.delay(180);
 			Editor editor = app.getEditor();
 			if (editor == null) { // in a normal game
@@ -172,7 +172,7 @@ public class Game {
 				camera = new FreeCamera();
 				editor.toast.showToast("Level Complete");
 			}
-		}
+		//}
 	}
 
 	public void endPuzzle(Rectangle playerArea) {
