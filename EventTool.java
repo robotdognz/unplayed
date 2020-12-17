@@ -200,8 +200,14 @@ public class EventTool extends AreaTool {
 
 	@Override
 	public void draw() {
+		//draw ui for editing camera area
 		if (editor.showPageView && editor.eMode == Editor.editorMode.SELECT) { // pages
 			super.draw();
+		}
+		//stop editing the camera change area if any of things aren't true
+		if (editor.selected == null || !(editor.selected instanceof CameraChange)
+				|| editor.eMode != editorMode.SELECT) {
+			edit = null;
 		}
 	}
 
