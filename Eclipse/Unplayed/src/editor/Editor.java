@@ -62,14 +62,14 @@ public class Editor {
 	public Rectangle point = null; // holds the current selection point in the game world
 	public boolean eventVis; // are events visible
 	public boolean quadVis; // is the quad tree being draw
-	public boolean viewVis; //are the views being drawn in level view
+	public boolean viewVis; // are the views being drawn in level view
 
 	// editor settings
 	public boolean snap = true; // things placed in the level will snap to grid
 	public Tool currentTool;
 	public editorMode eMode;
 	public imagePlane eImagePlane;
-	public boolean showPageView = false; //are we seeing the page view
+	public boolean showPageView = false; // are we seeing the page view
 
 	// current object to put into level
 	public TileHandler currentTile = null;
@@ -191,19 +191,16 @@ public class Editor {
 			p.fill(80);
 			p.textSize(50);
 			p.textAlign(CENTER, CENTER);
-			if(game.placed != null) {
-				p.text("Placed: " + game.placed.size(), p.width / 2,
-						p.height - editorBottom.getHeight() - 350);
+			if (game.placed != null) {
+				p.text("Placed: " + game.placed.size(), p.width / 2, p.height - editorBottom.getHeight() - 350);
 			}
-			if(game.removed != null) {
-				p.text("Removed: " + game.removed.size(), p.width / 2,
-						p.height - editorBottom.getHeight() - 300);
+			if (game.removed != null) {
+				p.text("Removed: " + game.removed.size(), p.width / 2, p.height - editorBottom.getHeight() - 300);
 			}
 			if (game.player != null) {
 				p.text("Position x:" + game.player.getX() + " y:" + game.player.getY(), p.width / 2,
 						p.height - editorBottom.getHeight() - 250);
-				p.text("Still: " + game.player.isStill(), p.width / 2,
-						p.height - editorBottom.getHeight() - 200);
+				p.text("Still: " + game.player.isStill(), p.width / 2, p.height - editorBottom.getHeight() - 200);
 			}
 			p.text(PApplet.nf(convert.getScale(), 1, 2), p.width / 2, p.height - editorBottom.getHeight() - 150);
 			p.text(game.playerObjects.size() + " : " + game.screenObjects.size(), p.width / 2,
@@ -236,23 +233,22 @@ public class Editor {
 				((Tile) r).draw(p.g, currentScale);
 			}
 		}
-		if (game.player != null) { //draw the player on top of tiles and images
+		if (game.player != null) { // draw the player on top of tiles and images
 			game.player.draw(p.g);
+		}
+
+		if (viewVis) { // draw the views behind events
+			for (View view : game.views) {
+				view.draw(p.g);
+			}
 		}
 		for (Rectangle r : game.screenObjects) { // draw events on top of player, tiles, and images
 			if (r instanceof Event && (eventVis || ((Event) r).visible)) {
 				((Event) r).draw(p.g, currentScale);
 			}
 		}
-		
-		game.paper.draw(p.g, game.screenSpace, currentScale);
 
-		// draw the views
-		if (viewVis) {
-			for (View view : game.views) {
-				view.draw(p.g);
-			}
-		}
+		game.paper.draw(p.g, game.screenSpace, currentScale);
 
 		// draw tool effects
 		if (currentTool != null) {
