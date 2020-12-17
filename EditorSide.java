@@ -68,8 +68,8 @@ public class EditorSide extends Toolbar {
 	@Override
 	public void draw(PVector touch, Menu menu) {
 		// super.draw(touch, menu);
-		
-		if(previousSelected.equals(editor.selected.getClass().getSimpleName())) {
+
+		if (previousSelected.equals(editor.selected.getClass().getSimpleName())) {
 			reset();
 		}
 
@@ -90,7 +90,9 @@ public class EditorSide extends Toolbar {
 				}
 			}
 		}
-		previousSelected = editor.selected.getClass().getSimpleName();
+		if (editor.selected != null) {
+			previousSelected = editor.selected.getClass().getSimpleName();
+		}
 	}
 
 	@Override
