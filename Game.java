@@ -123,9 +123,9 @@ public class Game {
 		return playerStart;
 	}
 
-	public void startGame(boolean pageView) {
-		if (cameraAreaStart != null) {
-			if (pageView) {
+	public void startGame(boolean pageView) { //TODO: it should do the check itself, not be passed a boolean
+		if (cameraAreaStart != null && camera.getGame()) {
+			//if (pageView) {
 				// calculate values
 				PVector cameraTopLeft = cameraAreaStart.getTopLeft();
 				PVector cameraBottomRight = cameraAreaStart.getBottomRight();
@@ -139,7 +139,7 @@ public class Game {
 				newCenter = new PVector(camera.getCenter().x, camera.getCenter().y); // new centre
 				cameraArea = cameraAreaStart.copy(); // camera area
 				newCameraArea = cameraArea.copy(); // new camera area
-			}
+			//}
 		}
 		// clear player
 		player = null;
