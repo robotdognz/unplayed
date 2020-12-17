@@ -124,7 +124,7 @@ public class Game {
 	}
 
 	public void startGame() {
-		//only alter the camera if we're in game or play testing
+		// only alter the camera if we're in game or play testing
 		if (cameraAreaStart != null && camera.getGame()) {
 			// calculate values
 			PVector cameraTopLeft = cameraAreaStart.getTopLeft();
@@ -162,17 +162,15 @@ public class Game {
 	}
 
 	public void endGame() {
-		//if (camera.getGame()) {
-			p.delay(180);
-			Editor editor = app.getEditor();
-			if (editor == null) { // in a normal game
-				// TODO: load next level, etc.
-			} else { // in the editor
-				startGame();
-//				camera = new FreeCamera();
-				editor.toast.showToast("Level Complete");
-			}
-		//}
+		Editor editor = app.getEditor();
+
+		if (editor == null) { // in a normal game
+			// TODO: load next level, etc.
+		} else { // in the editor
+			editor.toast.showToast("Level Complete");
+			p.delay(250);
+			startGame();
+		}
 	}
 
 	public void endPuzzle(Rectangle playerArea) {
