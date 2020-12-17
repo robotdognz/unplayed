@@ -10,6 +10,7 @@ import editor.Toolbar;
 import objects.Editable;
 import objects.Page;
 import objects.Rectangle;
+import objects.events.PlayerEnd;
 import processing.core.PApplet;
 //import processing.core.PImage;
 import processing.core.PVector;
@@ -22,7 +23,7 @@ public class EditorSide extends Toolbar {
 //	private PImage bottom;
 	// public ModifyMode mode;
 	public boolean adjust;
-	public boolean addSpawn;
+	//public boolean addSpawn;
 
 	public EditorSide(PApplet p, Editor editor) {
 		super(p, editor);
@@ -52,7 +53,7 @@ public class EditorSide extends Toolbar {
 		super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
 
 		this.adjust = false; //are we adjusting a page?
-		this.addSpawn = false; //is the current player end a puzzle end?
+		//this.addSpawn = false; //is the current player end a puzzle end?
 		// sprites
 		// this.top = p.requestImage(folder + "???.png");
 		// this.middle = p.requestImage(folder + "???.png");
@@ -63,7 +64,7 @@ public class EditorSide extends Toolbar {
 
 	public void reset() {
 		adjust = false;
-		addSpawn = false;
+		//addSpawn = false;
 	}
 
 	@Override
@@ -119,6 +120,23 @@ public class EditorSide extends Toolbar {
 
 	public void setArea(PVector topLeft, PVector bottomRight) {
 
+	}
+	
+	public boolean isLevelEnd() {
+		if (editor.selected != null) {
+			if (editor.selected instanceof PlayerEnd) {
+				return ((PlayerEnd) editor.selected).getLevelEnd();
+			}
+		}
+		return false;
+	}
+	
+	public void levelEnd(boolean levelEnd) {
+		if (editor.selected != null) {
+			if (editor.selected instanceof PlayerEnd) {
+				((PlayerEnd) editor.selected).setLevelEnd(levelEnd);
+			}
+		}
 	}
 
 	// methods for the widget to access

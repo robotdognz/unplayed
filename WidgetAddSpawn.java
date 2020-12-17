@@ -20,7 +20,7 @@ public class WidgetAddSpawn extends Widget {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof PlayerEnd) {
 			available = true;
-			if (toolbar.addSpawn) {
+			if (toolbar.isLevelEnd()) {
 				active = true;
 			} else {
 				active = false;
@@ -33,7 +33,7 @@ public class WidgetAddSpawn extends Widget {
 
 	@Override
 	public void clicked() {
-		toolbar.addSpawn = !toolbar.addSpawn;
+		toolbar.levelEnd(!toolbar.isLevelEnd());
 	}
 
 }
