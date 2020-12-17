@@ -68,16 +68,20 @@ public class EditorSide extends Toolbar {
 	public void draw(PVector touch, Menu menu) {
 		// super.draw(touch, menu);
 
+		//reset the side toolbar's options
 		if (editor.selected == null) {
 			reset();
+			return;
+		}else if (!(editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
+			adjust = false;
 		}
 
 		// step if controlling the editor and there is something selected
-		if (editor.controller instanceof EditorControl && editor.selected != null) {
+		if (editor.controller instanceof EditorControl) {// && editor.selected != null) {
 			// step
-			if (!(editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
-				adjust = false;
-			}
+//			if (!(editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
+//				adjust = false;
+//			}
 
 			p.imageMode(CENTER);
 
