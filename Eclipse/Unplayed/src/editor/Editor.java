@@ -234,7 +234,7 @@ public class Editor {
 			}
 		}
 		if (game.player != null) { // draw the player on top of tiles and images
-			game.player.draw(p.g);
+			game.player.draw(p.g, currentScale);
 		}
 
 		if (viewVis) { // draw the views behind events

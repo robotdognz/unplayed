@@ -231,7 +231,7 @@ public class Player extends Editable {
 		return true;
 	}
 
-	public void draw(PGraphics graphics) {
+	public void draw(PGraphics graphics, float scale) {
 		// draw player
 		graphics.imageMode(CORNER);
 		if (hasTexture) {
@@ -242,7 +242,7 @@ public class Player extends Editable {
 			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
 			graphics.rotate(PApplet.radians(angle)); // angle of the tile
 			graphics.scale(flipX, flipY); // flipping the tile
-			graphics.image(tileTexture.getSprite(3), 0, 0, getWidth(), getHeight()); // draw the tile //TODO: get scale
+			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile //TODO: get scale
 			graphics.popMatrix();
 		} else {
 			//missing texture

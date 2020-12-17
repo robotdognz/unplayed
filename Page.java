@@ -160,7 +160,7 @@ public class Page extends Editable {
 		}
 
 		if (game.player != null) {
-			game.player.draw(pageGraphics);
+			game.player.draw(pageGraphics, scale / size);
 		}
 		game.paper.draw(pageGraphics, view, scale / size);
 		// end drawing on the page
