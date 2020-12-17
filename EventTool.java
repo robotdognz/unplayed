@@ -5,33 +5,45 @@ import java.util.HashSet;
 
 import editor.Editor;
 import editor.Editor.editorMode;
+import editor.uiside.EditorSide;
 import game.Game;
 import handlers.TextureCache;
 import objects.Event;
 import objects.Rectangle;
 import objects.events.CameraChange;
 import objects.events.PlayerDeath;
+import objects.events.PlayerEnd;
 import processing.core.PApplet;
 import processing.core.PVector;
 
 public class EventTool extends AreaTool {
 	Game game;
 	TextureCache texture;
+	private EditorSide editorSide;
 
 	public EventTool(PApplet p, Editor editor) {
 		super(p, editor);
 		this.game = editor.game;
 		this.texture = editor.texture;
+		this.editorSide = (EditorSide) editor.editorSide;
 	}
 
 	@Override
 	public void touchMoved(PVector touch) {
 		if (!editor.showPageView) { // world view
 			if (editor.point != null) {
+				if (!editorSide.adjust && editor.selected instanceof PlayerEnd) { // if adjusting a PlayerEnd
+					if (!((PlayerEnd) editor.selected).getLevelEnd()) {
+						((PlayerEnd) editor.selected).setNewPlayer(editor.point.copy());
+						return;
+					}
+
+				}
 
 				// figure out what to insert
 				Event toInsert = null;
-				if (editor.currentEvent != null && editor.eMode == editorMode.ADD) { //TODO: janky code to stop player start messing things up
+				if (editor.currentEvent != null && editor.eMode == editorMode.ADD) { // TODO: janky code to stop player
+																						// start messing things up
 					// create correct event
 					toInsert = editor.currentEvent.makeEvent((int) editor.point.getX(), (int) editor.point.getY());
 				} else {
@@ -93,7 +105,6 @@ public class EventTool extends AreaTool {
 		}
 	}
 
-	// TODO: copied from ImageTool without adjusting
 	private void erase(Event toInsert, HashSet<Rectangle> getRectangles) {
 		for (Rectangle p : getRectangles) {
 			// if the rectangle overlaps toInsert, remove it

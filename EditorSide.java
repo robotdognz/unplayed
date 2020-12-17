@@ -23,6 +23,7 @@ public class EditorSide extends Toolbar {
 //	private PImage bottom;
 	// public ModifyMode mode;
 	public boolean adjust;
+	private String previousSelected = "";
 
 	public EditorSide(PApplet p, Editor editor) {
 		super(p, editor);
@@ -67,6 +68,10 @@ public class EditorSide extends Toolbar {
 	@Override
 	public void draw(PVector touch, Menu menu) {
 		// super.draw(touch, menu);
+		
+		if(previousSelected.equals(editor.selected.getClass().getSimpleName())) {
+			reset();
+		}
 
 		// step if controlling the editor and there is something selected
 		if (editor.controller instanceof EditorControl && editor.selected != null) {
@@ -85,6 +90,7 @@ public class EditorSide extends Toolbar {
 				}
 			}
 		}
+		previousSelected = editor.selected.getClass().getSimpleName();
 	}
 
 	@Override

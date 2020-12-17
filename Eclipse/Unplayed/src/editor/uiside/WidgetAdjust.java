@@ -3,6 +3,7 @@ package editor.uiside;
 import editor.Editor;
 import editor.Toolbar;
 import objects.Page;
+import objects.events.PlayerEnd;
 import processing.core.PApplet;
 import ui.Widget;
 
@@ -18,7 +19,7 @@ public class WidgetAdjust extends Widget {
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (editor.selected != null && editor.selected instanceof Page) {
+		if (editor.selected != null && (editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
 			available = true;
 			if (toolbar.adjust) {
 				active = true;
@@ -37,4 +38,3 @@ public class WidgetAdjust extends Widget {
 	}
 
 }
-
