@@ -30,10 +30,10 @@ public class WidgetPlayMode extends Widget {
 		} else {
 			editor.camera = new GameCamera();
 			editor.controller = new PlayerControl(p, editor.game);
-			game.startGame(editor.showPageView);
 			if (!editor.showPageView) { //if we are not on the page view
 				editor.switchView();
 			}
+			game.startGame(editor.showPageView);
 			editor.selected = null;
 		}
 	}
