@@ -38,7 +38,7 @@ public class EditorJSON {
 		// haven't paid
 	}
 
-	public void save(Editor editor) {
+	public void save(Editor editor, String path) {
 		try {
 			values = new JSONArray();
 
@@ -175,7 +175,7 @@ public class EditorJSON {
 		}
 	}
 
-	public void load(Game game) {
+	public void load(Game game, String path) {
 		try {
 			File file = new File("storage/emulated/0/levels/" + "level" + ".json");
 			values = PApplet.loadJSONArray(file);

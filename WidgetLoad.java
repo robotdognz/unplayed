@@ -2,12 +2,16 @@ package editor.uitop;
 
 import editor.Editor;
 import editor.Toolbar;
+import misc.FileChooser;
 import processing.core.PApplet;
 import ui.Widget;
 
 public class WidgetLoad extends Widget {
+	FileChooser files;
+	
 	public WidgetLoad(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
+		files = editor.files;
 		closeAfterSubWidget = true;
 		icon = p.loadImage(folder + "load.png");
 	}
@@ -15,7 +19,7 @@ public class WidgetLoad extends Widget {
 	@Override
 	public void clicked() {
 		// load the level
-		editor.eJSON.load(editor.game);
+		editor.eJSON.load(editor.game, "");
 
 		// deselect old objects
 		editor.currentTile = null;

@@ -20,6 +20,7 @@ import handlers.TileHandler;
 import misc.Converter;
 import misc.DoToast;
 import misc.EditorJSON;
+import misc.FileChooser;
 import objects.Event;
 import objects.Image;
 import objects.Page;
@@ -39,6 +40,7 @@ public class Editor {
 	public TextureCache texture;
 	public Converter convert;
 	public DoToast toast;
+	public FileChooser files;
 	public Game game;
 	PageView pageView;
 	public Quadtree world;
@@ -94,11 +96,12 @@ public class Editor {
 	private int frameDelay = 100;
 	private float frame;
 
-	public Editor(PApplet p, TextureCache texture, Game game, Camera camera, Converter convert, DoToast toast) {
+	public Editor(PApplet p, FileChooser files, TextureCache texture, Game game, Camera camera, Converter convert, DoToast toast) {
 		this.p = p;
 		this.texture = texture;
 		this.convert = convert;
 		this.toast = toast;
+		this.files = files;
 		this.game = game;
 		this.pageView = game.getPageView();
 		this.world = game.getWorld();

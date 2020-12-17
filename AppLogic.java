@@ -14,6 +14,7 @@ import editor.uitop.WidgetPauseMenu;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.DoToast;
+import misc.FileChooser;
 import misc.KetaiGesture;
 import misc.Vibe;
 import processing.core.*;
@@ -28,6 +29,7 @@ public class AppLogic {
 	private Context context;
 
 	public KetaiGesture gesture;
+	public FileChooser files;
 	public Vibe vibe;
 	public Converter convert;
 	public TextureCache texture;
@@ -64,6 +66,7 @@ public class AppLogic {
 
 		texture = new TextureCache(p);
 		gesture = new KetaiGesture(p);
+		files = new FileChooser(activity);
 		vibe = new Vibe(context);
 
 		Camera camera = new FreeCamera(); // new GameCamera();
@@ -72,14 +75,14 @@ public class AppLogic {
 		texture.passGame(game);
 		controller = new PlayerControl(p, game);
 		DoToast toast = new DoToast(activity);
-		editor = new Editor(p, texture, game, camera, convert, toast);
+		editor = new Editor(p, files, texture, game, camera, convert, toast);
 
 		//// setup non editor widget(s)
 		Widget menuW = new WidgetPauseMenu(p, editor, null);
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
 	}
-	
+
 	public Editor getEditor() {
 		return editor;
 	}
@@ -229,6 +232,8 @@ public class AppLogic {
 			}
 		}
 	}
+
+	// quit
 
 	public void quit() {
 		activity.finish();
