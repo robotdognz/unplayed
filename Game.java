@@ -124,7 +124,7 @@ public class Game {
 
 	public void startGame(boolean pageView) {
 		player = null;
-		if (startCameraArea != null && pageView) {
+		if (startCameraArea != null && pageView && false) {
 			// calculate values
 			PVector cameraTopLeft = startCameraArea.getTopLeft();
 			PVector cameraBottomRight = startCameraArea.getBottomRight();
