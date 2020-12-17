@@ -38,7 +38,8 @@ public class Game {
 	private Rectangle playerCheckpoint;
 
 	public Camera camera;
-	public Rectangle startCameraArea;
+	public Rectangle cameraAreaStart;
+	public Rectangle cameraAreaCheckpoint;
 
 	// TODO: move these to editor (need to move some logic from step too)
 	public Rectangle screenSpace;
@@ -114,7 +115,7 @@ public class Game {
 		// set player start
 		playerStart = start.copy();
 		// set start camera
-		startCameraArea = start.getCameraArea();
+		cameraAreaStart = start.getCameraArea();
 		createPlayer(start);
 	}
 
@@ -123,24 +124,24 @@ public class Game {
 	}
 
 	public void startGame(boolean pageView) {
-		if (startCameraArea != null) {
+		if (cameraAreaStart != null) {
 			if (pageView) {
 				// calculate values
-				PVector cameraTopLeft = startCameraArea.getTopLeft();
-				PVector cameraBottomRight = startCameraArea.getBottomRight();
+				PVector cameraTopLeft = cameraAreaStart.getTopLeft();
+				PVector cameraBottomRight = cameraAreaStart.getBottomRight();
 				int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
 				int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 				PVector startCenter = new PVector(centerX, centerY);
 				// apply values
-				camera.setScale(startCameraArea.getWidth()); // scale
-				newScale = startCameraArea.getWidth(); // new scale
+				camera.setScale(cameraAreaStart.getWidth()); // scale
+				newScale = cameraAreaStart.getWidth(); // new scale
 				camera.setCenter(startCenter); // centre
 				newCenter = new PVector(camera.getCenter().x, camera.getCenter().y); // new centre
-				cameraArea = startCameraArea.copy(); // camera area
+				cameraArea = cameraAreaStart.copy(); // camera area
 				newCameraArea = cameraArea.copy(); // new camera area
 			}
 		}
-		//clear player
+		// clear player
 		player = null;
 		// clear checkpoint
 		playerCheckpoint = null;
@@ -178,7 +179,10 @@ public class Game {
 	public void endPuzzle(Rectangle playerArea) {
 		// pause
 		p.delay(180);
-		// file the slot with a matching tile
+		//update the checkpoints
+		this.playerCheckpoint = playerArea.copy();
+		this.cameraAreaCheckpoint = cameraArea.copy();
+		// fill the slot with a matching tile
 		Tile newTile = new Tile(texture, player.getFile(), player.getX(), player.getY());
 		world.insert(newTile);
 		placed.add(newTile);
@@ -228,27 +232,37 @@ public class Game {
 	}
 
 	public void restart() {
-		if (playerCheckpoint != null) {
+		if (playerCheckpoint != null) { // if there is a player checkpoint
 			Rectangle previousPlayer = removed.get(removed.size() - 1);
 			removed.remove(previousPlayer);
 			world.insert(previousPlayer);
 			createPlayer(playerCheckpoint);
-		} else if (playerStart != null) {
+		} else if (playerStart != null) { // if there is a player start
 			Rectangle previousPlayer = removed.get(removed.size() - 1);
 			removed.remove(previousPlayer);
 			world.insert(previousPlayer);
 			createPlayer(playerStart);
 		}
-		if (startCameraArea != null) { // if there is a player start
+		if (cameraAreaCheckpoint != null) { // if there is a camera checkpoint
 			// calculate values
-			PVector cameraTopLeft = startCameraArea.getTopLeft();
-			PVector cameraBottomRight = startCameraArea.getBottomRight();
+			PVector cameraTopLeft = cameraAreaCheckpoint.getTopLeft();
+			PVector cameraBottomRight = cameraAreaCheckpoint.getBottomRight();
 			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
 			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 			// apply values
-			newScale = startCameraArea.getWidth(); // new scale
+			newScale = cameraAreaCheckpoint.getWidth(); // new scale
 			newCenter = new PVector(centerX, centerY); // new centre
-			newCameraArea = startCameraArea.copy(); // new camera area
+			newCameraArea = cameraAreaCheckpoint.copy(); // new camera area
+		} else if (cameraAreaStart != null) { // if there is a camera start
+			// calculate values
+			PVector cameraTopLeft = cameraAreaStart.getTopLeft();
+			PVector cameraBottomRight = cameraAreaStart.getBottomRight();
+			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
+			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
+			// apply values
+			newScale = cameraAreaStart.getWidth(); // new scale
+			newCenter = new PVector(centerX, centerY); // new centre
+			newCameraArea = cameraAreaStart.copy(); // new camera area
 		}
 	}
 
@@ -409,8 +423,8 @@ public class Game {
 		}
 	}
 
-	public void setPlayerCheckpoint(PVector playerCheckpoint) {
-		// TODO: this needs to be cleaned up
-		this.playerCheckpoint = new Rectangle(playerCheckpoint.x, playerCheckpoint.y, 100, 100);
-	}
+//	public void setPlayerCheckpoint(PVector playerCheckpoint) {
+//		// TODO: this needs to be cleaned up
+//		this.playerCheckpoint = new Rectangle(playerCheckpoint.x, playerCheckpoint.y, 100, 100);
+//	}
 }

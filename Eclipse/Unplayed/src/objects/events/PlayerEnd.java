@@ -69,7 +69,7 @@ public class PlayerEnd extends Event {
 			g.endGame();
 		} else { // if this is just part of the puzzle
 			// TODO: spawn a new player
-			g.setPlayerCheckpoint(newPlayer.getTopLeft());
+//			g.setPlayerCheckpoint(newPlayer.getTopLeft());
 			g.endPuzzle(newPlayer);
 		}
 	}
