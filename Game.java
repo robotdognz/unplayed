@@ -169,7 +169,7 @@ public class Game {
 				// TODO: load next level, etc.
 			} else { // in the editor
 				startGame();
-				camera = new FreeCamera();
+//				camera = new FreeCamera();
 				editor.toast.showToast("Level Complete");
 			}
 		//}
