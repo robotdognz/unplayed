@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import camera.Camera;
-import camera.FreeCamera;
 import editor.Editor;
 import handlers.TextureCache;
 import misc.Converter;
@@ -168,7 +167,7 @@ public class Game {
 			// TODO: load next level, etc.
 		} else { // in the editor
 			editor.toast.showToast("Level Complete");
-			p.delay(250);
+			p.delay(400);
 			startGame();
 		}
 	}
@@ -420,8 +419,4 @@ public class Game {
 		}
 	}
 
-//	public void setPlayerCheckpoint(PVector playerCheckpoint) {
-//		// TODO: this needs to be cleaned up
-//		this.playerCheckpoint = new Rectangle(playerCheckpoint.x, playerCheckpoint.y, 100, 100);
-//	}
 }
