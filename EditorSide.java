@@ -66,13 +66,14 @@ public class EditorSide extends Toolbar {
 	@Override
 	public void draw(PVector touch, Menu menu) {
 		// super.draw(touch, menu);
+		//TODO: I've gone a bit overkill with all the reset(), these must be a more elegant solution
 
 		//step - reset the side toolbar's options and abort drawing if nothing selected
 		if (editor.selected == null) {
 			reset();
 			return;
 		}else if (!(editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
-			adjust = false;
+			reset();
 		}
 
 		// step if controlling the editor and there is something selected
@@ -87,6 +88,8 @@ public class EditorSide extends Toolbar {
 					widgets.get(i).hover(touch);
 				}
 			}
+		}else {
+			reset();
 		}
 	}
 
