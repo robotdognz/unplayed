@@ -13,13 +13,13 @@ public class WidgetShowViews extends Widget {
 
 	@Override
 	public void clicked() {
-		editor.pageVis = !editor.pageVis;
+		editor.viewVis = !editor.viewVis;
 	}
 
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (editor.pageVis) {
+		if (editor.viewVis) {
 			active = true;
 		} else {
 			active = false;

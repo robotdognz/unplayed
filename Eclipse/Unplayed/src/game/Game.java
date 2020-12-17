@@ -123,25 +123,27 @@ public class Game {
 	}
 
 	public void startGame(boolean pageView) {
+		if (startCameraArea != null) {
+			if (pageView) {
+				// calculate values
+				PVector cameraTopLeft = startCameraArea.getTopLeft();
+				PVector cameraBottomRight = startCameraArea.getBottomRight();
+				int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
+				int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
+				PVector startCenter = new PVector(centerX, centerY);
+				// apply values
+				camera.setScale(startCameraArea.getWidth()); // scale
+				newScale = startCameraArea.getWidth(); // new scale
+				camera.setCenter(startCenter); // centre
+				newCenter = new PVector(camera.getCenter().x, camera.getCenter().y); // new centre
+				cameraArea = startCameraArea.copy(); // camera area
+				newCameraArea = cameraArea.copy(); // new camera area
+			}
+		}
+		//clear player
 		player = null;
-//		if (startCameraArea != null && pageView && false) {
-//			// calculate values
-//			PVector cameraTopLeft = startCameraArea.getTopLeft();
-//			PVector cameraBottomRight = startCameraArea.getBottomRight();
-//			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
-//			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-//			PVector startCenter = new PVector(centerX, centerY);
-//			// apply values
-//			camera.setScale(startCameraArea.getWidth()); // scale
-//			newScale = startCameraArea.getWidth(); // new scale
-//			camera.setCenter(startCenter); // centre
-//			newCenter = new PVector(camera.getCenter().x, camera.getCenter().y); // new centre
-//			cameraArea = startCameraArea.copy(); // camera area
-//			newCameraArea = cameraArea.copy(); // new camera area
-//		}
 		// clear checkpoint
 		playerCheckpoint = null;
-
 		// reset removed and placed tiles
 		for (Tile t : placed) {
 			world.remove(t);

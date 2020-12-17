@@ -62,7 +62,7 @@ public class Editor {
 	public Rectangle point = null; // holds the current selection point in the game world
 	public boolean eventVis; // are events visible
 	public boolean quadVis; // is the quad tree being draw
-	public boolean pageVis;
+	public boolean viewVis; //are the views being drawn in level view
 
 	// editor settings
 	public boolean snap = true; // things placed in the level will snap to grid
@@ -114,7 +114,7 @@ public class Editor {
 		this.eImagePlane = imagePlane.LEVEL;
 		this.eventVis = true;
 		this.quadVis = false;
-		this.pageVis = true;
+		this.viewVis = true;
 
 		// Initialize camera backup fields
 		lvScale = camera.getScale();
@@ -245,7 +245,7 @@ public class Editor {
 		game.paper.draw(p.g, game.screenSpace, currentScale);
 
 		// draw the views
-		if (pageVis) {
+		if (viewVis) {
 			for (View view : game.views) {
 				view.draw(p.g);
 			}

@@ -18,7 +18,7 @@ public class WidgetRestart extends Widget {
 
 	@Override
 	public void clicked() {
-		game.startGame(editor.pageVis);
+		game.startGame(editor.showPageView);
 
 	}
 
