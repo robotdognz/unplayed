@@ -31,7 +31,9 @@ public class WidgetPlayMode extends Widget {
 			editor.camera = new GameCamera();
 			editor.controller = new PlayerControl(p, editor.game);
 			game.startGame(editor.showPageView);
-			editor.switchView();
+			if (!editor.showPageView) { //if we are not on the page view
+				editor.switchView();
+			}
 			editor.selected = null;
 		}
 	}
@@ -47,7 +49,7 @@ public class WidgetPlayMode extends Widget {
 		}
 		if (editor.camera instanceof FreeCamera || !editor.showPageView) {
 			active = false;
-			if(editor.camera instanceof GameCamera) {
+			if (editor.camera instanceof GameCamera) {
 				editor.camera = new FreeCamera();
 			}
 		} else {
