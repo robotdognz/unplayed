@@ -23,7 +23,7 @@ public class EditorSide extends Toolbar {
 //	private PImage bottom;
 	// public ModifyMode mode;
 	public boolean adjust;
-	private String previousSelected = "";
+	//private String previousSelected = "";
 
 	public EditorSide(PApplet p, Editor editor) {
 		super(p, editor);
