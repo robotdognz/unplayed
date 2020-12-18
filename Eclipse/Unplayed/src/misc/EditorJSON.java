@@ -47,7 +47,8 @@ public class EditorJSON {
 			saveViews(values, editor);
 			savePages(values, editor);
 
-			File file = new File("storage/emulated/0/levels/" + "level" + ".json");
+			//File file = new File("storage/emulated/0/levels/" + "level" + ".json");
+			File file = new File(path);
 			p.saveJSONArray(values, file.getAbsolutePath());
 			toast.showToast("Level Saved");
 		} catch (Exception e) {
@@ -177,7 +178,8 @@ public class EditorJSON {
 
 	public void load(Game game, String path) {
 		try {
-			File file = new File("storage/emulated/0/levels/" + "level" + ".json");
+			//File file = new File("storage/emulated/0/levels/" + "level" + ".json");
+			File file = new File(path);
 			values = PApplet.loadJSONArray(file);
 
 			game.world.clear();
