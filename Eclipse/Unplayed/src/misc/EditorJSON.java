@@ -47,16 +47,22 @@ public class EditorJSON {
 			saveViews(values, editor);
 			savePages(values, editor);
 
-			//File file = new File("storage/emulated/0/levels/" + "level" + ".json");
-			
+			// File file = new File("storage/emulated/0/levels/" + "level" + ".json");
+
 			File file;
-			if(path.matches(".+.gay$")) {
+			if (path.matches(".+.gay$")) {
 				file = new File(path);
-			}else {
+			} else {
+				//delete the file made by the file explorer
+				File f = new File(path);
+				if (f.exists()) {
+					f.delete();
+				}
+				//create the file
 				file = new File(path + ".gay");
 			}
-			
-			//File file = new File(path);
+
+			// File file = new File(path);
 			p.saveJSONArray(values, file.getAbsolutePath());
 			toast.showToast("Level Saved");
 		} catch (Exception e) {
@@ -82,7 +88,7 @@ public class EditorJSON {
 
 			if (r instanceof Tile) { // tiles
 				if (editor.game.placed != null) {
-					if(editor.game.placed.contains(r)) {
+					if (editor.game.placed.contains(r)) {
 						continue;
 					}
 				}
@@ -186,7 +192,7 @@ public class EditorJSON {
 
 	public void load(Game game, String path) {
 		try {
-			//File file = new File("storage/emulated/0/levels/" + "level" + ".json");
+			// File file = new File("storage/emulated/0/levels/" + "level" + ".json");
 			File file = new File(path);
 			values = PApplet.loadJSONArray(file);
 
