@@ -9,7 +9,6 @@ import ui.Widget;
 public class WidgetLoad extends Widget {
 	private FileChooser files;
 	private EditorTop editorTop;
-	//private boolean loading = false;
 
 	public WidgetLoad(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);

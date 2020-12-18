@@ -9,7 +9,6 @@ import ui.Widget;
 public class WidgetSave extends Widget {
 	private FileChooser files;
 	private EditorTop editorTop;
-	//private boolean saving = false;
 
 	public WidgetSave(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
