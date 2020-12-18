@@ -20,9 +20,14 @@ public class WidgetSave extends Widget {
 	@Override
 	public void clicked() {
 		// request the file
-		files.createSaveFile();
-		saving = true;
-		p.delay(500); // delay so animation happens after the file browser is open
+		if (!files.hasUri()) {
+			files.createSaveFile();
+			saving = true;
+			p.delay(500); // delay so animation happens after the file browser is open
+		}else {
+			String file = files.getPath();
+			editor.eJSON.save(editor, file);
+		}
 	}
 
 	@Override
