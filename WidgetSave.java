@@ -19,12 +19,13 @@ public class WidgetSave extends Widget {
 
 	@Override
 	public void clicked() {
-		// request the file
 		if (!files.hasUri()) {
+			// request the file
 			files.createSaveFile();
 			saving = true;
 			p.delay(500); // delay so animation happens after the file browser is open
-		}else {
+		} else {
+			// we already have the file, just save
 			String file = files.getPath();
 			editor.eJSON.save(editor, file);
 		}

@@ -12,7 +12,7 @@ public class WidgetSaveAs extends Widget {
 	
 	public WidgetSaveAs(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
-		//available = false;
+		files = editor.files;
 		closeAfterSubWidget = true;
 		icon = p.loadImage(folder + "saveAs.png");
 	}
