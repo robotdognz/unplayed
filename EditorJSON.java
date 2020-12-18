@@ -48,7 +48,15 @@ public class EditorJSON {
 			savePages(values, editor);
 
 			//File file = new File("storage/emulated/0/levels/" + "level" + ".json");
-			File file = new File(path);
+			
+			File file;
+			if(path.matches(".+.gay$")) {
+				file = new File(path);
+			}else {
+				file = new File(path + ".gay");
+			}
+			
+			//File file = new File(path);
 			p.saveJSONArray(values, file.getAbsolutePath());
 			toast.showToast("Level Saved");
 		} catch (Exception e) {
