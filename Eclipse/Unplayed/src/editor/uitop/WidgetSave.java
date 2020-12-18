@@ -9,7 +9,7 @@ import ui.Widget;
 public class WidgetSave extends Widget {
 	private FileChooser files;
 	private boolean saving = false;
-	
+
 	public WidgetSave(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		files = editor.files;
@@ -19,7 +19,7 @@ public class WidgetSave extends Widget {
 
 	@Override
 	public void clicked() {
-		// save the level
+		// request the file
 		files.createSaveFile();
 		saving = true;
 	}
@@ -30,8 +30,10 @@ public class WidgetSave extends Widget {
 		// step
 		if (saving) {
 			if (files.hasUri()) {
+				// save the level
 				String file = files.getPath();
 				editor.eJSON.save(editor, file);
+				// end saving
 				saving = false;
 			}
 		}

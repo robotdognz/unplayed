@@ -19,22 +19,9 @@ public class WidgetLoad extends Widget {
 
 	@Override
 	public void clicked() {
-		// load the level
+		// request the file
 		files.createLoadFile();
 		loading = true;
-//		if (!file.equals("")) {
-//			editor.eJSON.load(editor.game, file);
-//		}
-
-//		// deselect old objects
-//		editor.currentTile = null;
-//		editor.currentImage = null;
-//		editor.currentEvent = null;
-//		editor.currentView = null;
-//		editor.currentPage = null;
-//		editor.selected = null;
-//
-//		editor.game.startGame();
 	}
 
 	@Override
@@ -53,8 +40,9 @@ public class WidgetLoad extends Widget {
 				editor.currentView = null;
 				editor.currentPage = null;
 				editor.selected = null;
-
+				// restart the game
 				editor.game.startGame();
+				// end loading
 				loading = false;
 			}
 		}

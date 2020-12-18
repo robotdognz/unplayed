@@ -12,7 +12,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
 public class FileChooser {
-	private static final int SELECT_IMAGE = 1;
+	private static final int SELECT_FILE = 1;
 
 	private Activity activity;
 	private Context context;
@@ -55,7 +55,7 @@ public class FileChooser {
 		Intent intent = new Intent();
 		intent.setType("application/json");
 		intent.setAction(Intent.ACTION_CREATE_DOCUMENT);
-		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_IMAGE);
+		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_FILE);
 //		if (uri != null) {
 //			String path = getPathFromUri(context, uri);
 //			return path;
@@ -70,7 +70,7 @@ public class FileChooser {
 		Intent intent = new Intent();
 		intent.setType("application/json");
 		intent.setAction(Intent.ACTION_GET_CONTENT);
-		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_IMAGE);
+		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_FILE);
 //		if (uri != null) {
 //			String path = getPathFromUri(context, uri);
 //			return path;
