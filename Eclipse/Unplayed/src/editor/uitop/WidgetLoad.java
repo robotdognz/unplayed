@@ -19,7 +19,8 @@ public class WidgetLoad extends Widget {
 	@Override
 	public void clicked() {
 		// load the level
-		editor.eJSON.load(editor.game, "");
+		String file = files.loadFile();
+		editor.eJSON.load(editor.game, file);
 
 		// deselect old objects
 		editor.currentTile = null;

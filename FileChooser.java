@@ -67,7 +67,7 @@ public class FileChooser {
 
 	// ----------convert uri to correct file path-----------
 
-	@SuppressWarnings("deprecation")
+	//@SuppressWarnings("deprecation")
 	public static String getPathFromUri(final Context context, final Uri uri) {
 
 		final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;

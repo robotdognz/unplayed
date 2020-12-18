@@ -19,6 +19,7 @@ public class WidgetSave extends Widget {
 	@Override
 	public void clicked() {
 		// save the level
-		editor.eJSON.save(editor, "");
+		String file = files.saveFile();
+		editor.eJSON.save(editor, file);
 	}
 }
