@@ -22,7 +22,7 @@ public class WidgetLoad extends Widget {
 		// request the file
 		files.createLoadFile();
 		loading = true;
-		p.delay(200);
+		p.delay(500); // delay so animation happens after the file browser is open
 	}
 
 	@Override
