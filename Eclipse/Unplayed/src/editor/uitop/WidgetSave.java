@@ -7,8 +7,9 @@ import processing.core.PApplet;
 import ui.Widget;
 
 public class WidgetSave extends Widget {
-	FileChooser files;
-
+	private FileChooser files;
+	private boolean saving = false;
+	
 	public WidgetSave(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		files = editor.files;
@@ -19,9 +20,20 @@ public class WidgetSave extends Widget {
 	@Override
 	public void clicked() {
 		// save the level
-		String file = files.saveFile();
-		if (!file.equals("")) {
-			editor.eJSON.save(editor, file);
+		files.createSaveFile();
+		saving = true;
+	}
+
+	@Override
+	public void updateActive() {
+		super.updateActive();
+		// step
+		if (saving) {
+			if (files.hasUri()) {
+				String file = files.getPath();
+				editor.eJSON.save(editor, file);
+				saving = false;
+			}
 		}
 	}
 }

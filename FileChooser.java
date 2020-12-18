@@ -10,9 +10,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-//import android.widget.FrameLayout;
-//import android.widget.ImageView;
-//import android.widget.RelativeLayout;
 
 public class FileChooser {
 	private static final int SELECT_IMAGE = 1;
@@ -20,68 +17,78 @@ public class FileChooser {
 	private Activity activity;
 	private Context context;
 
-	//private ImageView iv;
-	//private FrameLayout fl;
 	private Uri uri;
 
 	public FileChooser(Activity activity) {
 		this.activity = activity;
-//		iv = new ImageView(activity);
-//		iv.setX(30);
-//		iv.setY(40);
-//		iv.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-//				RelativeLayout.LayoutParams.MATCH_PARENT));
 		context = activity.getApplicationContext();
-//		fl = (FrameLayout) activity.findViewById(0x1000);
+	}
+	
+	public void setUri(Uri uri) {
+		this.uri = uri;
+	}
+	
+	public void removeUri() {
+		uri = null;
+	}
+	
+	public boolean hasUri() {
+		if (uri != null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public String getPath() {
+		if (uri != null) {
+			String path = getPathFromUri(context, uri);
+			return path;
+		}
+		return "";
 	}
 
 	// open file saver
-	public String saveFile() {
+	public void createSaveFile() {
+		uri = null; //remove uri
+		
 		Intent intent = new Intent();
 		intent.setType("application/json");
 		intent.setAction(Intent.ACTION_CREATE_DOCUMENT);
 		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_IMAGE);
-		if (uri != null) {
-			String path = getPathFromUri(context, uri);
-			return path;
-		}
-		return "";
+//		if (uri != null) {
+//			String path = getPathFromUri(context, uri);
+//			return path;
+//		}
+//		return "";
 	}
 
 	// open file loader
-	public String loadFile() {
+	public void createLoadFile() {
+		uri = null; //remove uri
+		
 		Intent intent = new Intent();
 		intent.setType("application/json");
 		intent.setAction(Intent.ACTION_GET_CONTENT);
 		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_IMAGE);
-		if (uri != null) {
-			String path = getPathFromUri(context, uri);
-			return path;
-		}
-		return "";
-	}
-
-//	@SuppressWarnings("static-access")
-//	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//		if (resultCode == activity.RESULT_OK) {
-//			if (requestCode == SELECT_IMAGE) {
-//				uri = data.getData();
-//
-//			}
+//		if (uri != null) {
+//			String path = getPathFromUri(context, uri);
+//			return path;
 //		}
-//	}
-
-	public void setUri(Uri uri) {
-		this.uri = uri;
+//		return "";
 	}
+
+	
 
 	// ----------convert uri to correct file path-----------
 
-	// @SuppressWarnings("deprecation")
+	@SuppressWarnings("deprecation")
 	public static String getPathFromUri(final Context context, final Uri uri) {
 
 		final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
+		//TODO: can probably remove the code for kitkat, old af and our app needs newer phones
+		
 		// DocumentProvider
 		if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
 			// ExternalStorageProvider
