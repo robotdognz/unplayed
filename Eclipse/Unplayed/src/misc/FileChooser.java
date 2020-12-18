@@ -53,7 +53,7 @@ public class FileChooser {
 		uri = null; //remove uri
 		
 		Intent intent = new Intent();
-		intent.setType("application/json");
+		//intent.setType("application/json");
 		intent.setAction(Intent.ACTION_CREATE_DOCUMENT);
 		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_FILE);
 //		if (uri != null) {
@@ -68,7 +68,7 @@ public class FileChooser {
 		uri = null; //remove uri
 		
 		Intent intent = new Intent();
-		intent.setType("application/json");
+		//intent.setType("application/json");
 		intent.setAction(Intent.ACTION_GET_CONTENT);
 		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_FILE);
 //		if (uri != null) {
