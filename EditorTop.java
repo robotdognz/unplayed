@@ -12,6 +12,8 @@ import ui.*;
 
 public class EditorTop extends Toolbar {
 	private PImage uiExtra;
+	public boolean saving = false;
+	public boolean loading = false;
 
 	public EditorTop(PApplet p, Editor editor) {
 		super(p, editor);

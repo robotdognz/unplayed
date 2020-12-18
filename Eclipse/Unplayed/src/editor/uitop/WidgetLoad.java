@@ -8,10 +8,12 @@ import ui.Widget;
 
 public class WidgetLoad extends Widget {
 	private FileChooser files;
-	private boolean loading = false;
+	private EditorTop editorTop;
+	//private boolean loading = false;
 
 	public WidgetLoad(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
+		editorTop = (EditorTop) parent;
 		files = editor.files;
 		closeAfterSubWidget = true;
 		icon = p.loadImage(folder + "load.png");
@@ -21,7 +23,8 @@ public class WidgetLoad extends Widget {
 	public void clicked() {
 		// request the file
 		files.createLoadFile();
-		loading = true;
+		editorTop.loading = true;
+		editorTop.saving = false;
 		p.delay(500); // delay so animation happens after the file browser is open
 	}
 
@@ -29,7 +32,7 @@ public class WidgetLoad extends Widget {
 	public void updateActive() {
 		super.updateActive();
 		// step
-		if (loading) {
+		if (editorTop.loading) {
 			if (files.hasUri()) {
 				// load the level
 				String file = files.getPath();
@@ -44,7 +47,7 @@ public class WidgetLoad extends Widget {
 				// restart the game
 				editor.game.startGame();
 				// end loading
-				loading = false;
+				editorTop.loading = false;
 			}
 		}
 	}

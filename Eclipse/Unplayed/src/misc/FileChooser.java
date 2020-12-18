@@ -57,11 +57,6 @@ public class FileChooser {
 		intent.setType("*/*");
 		intent.setAction(Intent.ACTION_CREATE_DOCUMENT);
 		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_FILE);
-//		if (uri != null) {
-//			String path = getPathFromUri(context, uri);
-//			return path;
-//		}
-//		return "";
 	}
 
 	// open file loader
@@ -73,11 +68,6 @@ public class FileChooser {
 		intent.setType("*/*");
 		intent.setAction(Intent.ACTION_GET_CONTENT);
 		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_FILE);
-//		if (uri != null) {
-//			String path = getPathFromUri(context, uri);
-//			return path;
-//		}
-//		return "";
 	}
 
 	
