@@ -22,6 +22,7 @@ public class WidgetSave extends Widget {
 		// request the file
 		files.createSaveFile();
 		saving = true;
+		p.delay(200); // delay so animation happens after the file browser is open
 	}
 
 	@Override

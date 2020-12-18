@@ -22,6 +22,7 @@ public class WidgetLoad extends Widget {
 		// request the file
 		files.createLoadFile();
 		loading = true;
+		p.delay(200);
 	}
 
 	@Override
