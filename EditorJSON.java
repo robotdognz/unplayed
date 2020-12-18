@@ -50,7 +50,7 @@ public class EditorJSON {
 			// File file = new File("storage/emulated/0/levels/" + "level" + ".json");
 
 			File file;
-			if (path.matches(".+.gay$")) {
+			if (path.matches(".+.unplayed$")) {
 				file = new File(path);
 			} else {
 				//delete the file made by the file explorer
@@ -59,7 +59,7 @@ public class EditorJSON {
 					f.delete();
 				}
 				//create the file
-				file = new File(path + ".gay");
+				file = new File(path + ".unplayed");
 			}
 
 			// File file = new File(path);
