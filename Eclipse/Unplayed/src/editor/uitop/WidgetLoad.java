@@ -20,6 +20,7 @@ public class WidgetLoad extends Widget {
 	public void clicked() {
 		// load the level
 		String file = files.loadFile();
+		p.delay(300);
 		editor.eJSON.load(editor.game, file);
 
 		// deselect old objects
