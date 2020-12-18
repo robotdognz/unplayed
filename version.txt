@@ -1,0 +1,8 @@
+(Major version).(Minor version).(Revision number)
+
+1.0.0:	First internal alpha build
+-fully working level editor (missing some basics, such as advanced CameraChanges and advanced PlayerEnds)
+-fully working save and load system (missing some quality of life touches)
+-level files now use .unplayed
+-uses temp physics engine
+-tile screen and main menu(s) yet to be implemented
