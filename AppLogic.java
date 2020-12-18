@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import camera.Camera;
 import camera.FreeCamera;
 import controllers.Controller;
@@ -85,6 +86,10 @@ public class AppLogic {
 
 	public Editor getEditor() {
 		return editor;
+	}
+	
+	public void setUri(Uri uri) {
+		files.setUri(uri);
 	}
 
 	public void draw() {

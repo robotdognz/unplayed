@@ -4,6 +4,18 @@ import android.content.Context;
 import android.app.Activity;
 import android.view.*;
 import android.os.Bundle;
+import android.content.Intent;
+
+//import android.app.Activity;
+//import android.content.ContentUris;
+//import android.content.Context;
+//import android.content.Intent;
+//import android.database.Cursor;
+//import android.net.Uri;
+//import android.os.Build;
+//import android.os.Environment;
+//import android.provider.DocumentsContract;
+//import android.provider.MediaStore;
 
 Activity activity;
 Context context;
@@ -99,6 +111,22 @@ void onPinch(float x, float y, float d) {
 void onRotate(float x, float y, float angle) {
   app.onRotate(x, y, angle);
 }
+
+//void test(){
+//  Intent intent = new Intent();
+//  intent.setType("application/json");
+//  intent.setAction(Intent.ACTION_CREATE_DOCUMENT);
+//  activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_IMAGE);
+//}
+
+@SuppressWarnings("static-access")
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (resultCode == this.getActivity().RESULT_OK) {
+      if (requestCode == SELECT_IMAGE) {
+        app.setUri(data.getData());
+      }
+    }
+  }
 
 @Override
   public void onStop() { //This should be called when the app closes

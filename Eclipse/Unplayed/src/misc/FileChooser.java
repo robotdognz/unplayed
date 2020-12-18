@@ -10,9 +10,9 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+//import android.widget.FrameLayout;
+//import android.widget.ImageView;
+//import android.widget.RelativeLayout;
 
 public class FileChooser {
 	private static final int SELECT_IMAGE = 1;
@@ -20,19 +20,19 @@ public class FileChooser {
 	private Activity activity;
 	private Context context;
 
-	private ImageView iv;
-	private FrameLayout fl;
+	//private ImageView iv;
+	//private FrameLayout fl;
 	private Uri uri;
 
 	public FileChooser(Activity activity) {
 		this.activity = activity;
-		iv = new ImageView(activity);
-		iv.setX(30);
-		iv.setY(40);
-		iv.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-				RelativeLayout.LayoutParams.MATCH_PARENT));
+//		iv = new ImageView(activity);
+//		iv.setX(30);
+//		iv.setY(40);
+//		iv.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+//				RelativeLayout.LayoutParams.MATCH_PARENT));
 		context = activity.getApplicationContext();
-		fl = (FrameLayout) activity.findViewById(0x1000);
+//		fl = (FrameLayout) activity.findViewById(0x1000);
 	}
 
 	// open file saver
@@ -41,8 +41,11 @@ public class FileChooser {
 		intent.setType("application/json");
 		intent.setAction(Intent.ACTION_CREATE_DOCUMENT);
 		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_IMAGE);
-		String path = getPathFromUri(context, uri);
-		return path;
+		if (uri != null) {
+			String path = getPathFromUri(context, uri);
+			return path;
+		}
+		return "";
 	}
 
 	// open file loader
@@ -51,8 +54,11 @@ public class FileChooser {
 		intent.setType("application/json");
 		intent.setAction(Intent.ACTION_GET_CONTENT);
 		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_IMAGE);
-		String path = getPathFromUri(context, uri);
-		return path;
+		if (uri != null) {
+			String path = getPathFromUri(context, uri);
+			return path;
+		}
+		return "";
 	}
 
 	@SuppressWarnings("static-access")
@@ -65,9 +71,13 @@ public class FileChooser {
 		}
 	}
 
+	public void setUri(Uri uri) {
+		this.uri = uri;
+	}
+
 	// ----------convert uri to correct file path-----------
 
-	//@SuppressWarnings("deprecation")
+	// @SuppressWarnings("deprecation")
 	public static String getPathFromUri(final Context context, final Uri uri) {
 
 		final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
