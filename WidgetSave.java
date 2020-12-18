@@ -8,7 +8,7 @@ import ui.Widget;
 
 public class WidgetSave extends Widget {
 	FileChooser files;
-	
+
 	public WidgetSave(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		files = editor.files;
@@ -20,7 +20,8 @@ public class WidgetSave extends Widget {
 	public void clicked() {
 		// save the level
 		String file = files.saveFile();
-		p.delay(300);
-		editor.eJSON.save(editor, file);
+		if (!file.equals("")) {
+			editor.eJSON.save(editor, file);
+		}
 	}
 }

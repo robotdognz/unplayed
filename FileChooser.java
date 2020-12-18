@@ -61,15 +61,15 @@ public class FileChooser {
 		return "";
 	}
 
-	@SuppressWarnings("static-access")
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == activity.RESULT_OK) {
-			if (requestCode == SELECT_IMAGE) {
-				uri = data.getData();
-
-			}
-		}
-	}
+//	@SuppressWarnings("static-access")
+//	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		if (resultCode == activity.RESULT_OK) {
+//			if (requestCode == SELECT_IMAGE) {
+//				uri = data.getData();
+//
+//			}
+//		}
+//	}
 
 	public void setUri(Uri uri) {
 		this.uri = uri;

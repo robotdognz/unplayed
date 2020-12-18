@@ -6,7 +6,7 @@ import android.view.*;
 import android.os.Bundle;
 import android.content.Intent;
 
-private static final int SELECT_IMAGE = 1;
+private static final int SELECT_LEVEL = 1;
 
 Activity activity;
 Context context;
@@ -103,17 +103,10 @@ void onRotate(float x, float y, float angle) {
   app.onRotate(x, y, angle);
 }
 
-//void test(){
-//  Intent intent = new Intent();
-//  intent.setType("application/json");
-//  intent.setAction(Intent.ACTION_CREATE_DOCUMENT);
-//  activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_IMAGE);
-//}
-
 @SuppressWarnings("static-access")
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode == this.getActivity().RESULT_OK) {
-      if (requestCode == SELECT_IMAGE) {
+      if (requestCode == SELECT_LEVEL) {
         app.setUri(data.getData());
       }
     }

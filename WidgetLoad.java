@@ -8,7 +8,7 @@ import ui.Widget;
 
 public class WidgetLoad extends Widget {
 	FileChooser files;
-	
+
 	public WidgetLoad(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		files = editor.files;
@@ -20,8 +20,9 @@ public class WidgetLoad extends Widget {
 	public void clicked() {
 		// load the level
 		String file = files.loadFile();
-		p.delay(300);
-		editor.eJSON.load(editor.game, file);
+		if (!file.equals("")) {
+			editor.eJSON.load(editor.game, file);
+		}
 
 		// deselect old objects
 		editor.currentTile = null;
@@ -30,7 +31,7 @@ public class WidgetLoad extends Widget {
 		editor.currentView = null;
 		editor.currentPage = null;
 		editor.selected = null;
-		
-		editor.game.startGame(); //editor.showPageView
+
+		editor.game.startGame(); // editor.showPageView
 	}
 }
