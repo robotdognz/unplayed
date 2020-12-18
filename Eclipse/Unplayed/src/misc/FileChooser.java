@@ -10,7 +10,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-//import android.widget.FrameLayout;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -21,7 +21,7 @@ public class FileChooser {
 	private Context context;
 
 	private ImageView iv;
-	//private FrameLayout fl;
+	private FrameLayout fl;
 	private Uri uri;
 
 	public FileChooser(Activity activity) {
@@ -32,7 +32,7 @@ public class FileChooser {
 		iv.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT));
 		context = activity.getApplicationContext();
-		//fl = (FrameLayout) activity.findViewById(0x1000);
+		fl = (FrameLayout) activity.findViewById(0x1000);
 	}
 
 	// open file saver
