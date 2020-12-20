@@ -65,6 +65,25 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 	    tile.vertex(-50, 50, 0, 1); //bottom left
 		tile.endShape();
 		tile.setStroke(false);
+		//tile.re
+	}
+	
+	public PShape createPShape(float x, float y, float width, float height, float flipX, float flipY, float angle) {
+		PShape tile;
+		tile = p.createShape();
+		tile.beginShape(QUAD);
+		tile.textureMode(NORMAL);
+		tile.texture(LOD256);
+		tile.vertex(-(width/2), -(height/2), 0, 0); //top left
+	    tile.vertex((width/2), -(height/2), 1, 0); //top right
+	    tile.vertex((width/2), (height/2), 1, 1); //bottom right
+	    tile.vertex(-(width/2), (height/2), 0, 1); //bottom left
+		tile.endShape();
+		tile.setStroke(false);
+		tile.scale(flipX, flipY);
+		tile.translate(x+(width/2), y+(height/2));
+		
+		return tile;
 	}
 
 	@Override
