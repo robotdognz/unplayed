@@ -29,9 +29,9 @@ public class Tile extends Editable {
 			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
 			graphics.rotate(PApplet.radians(angle)); // angle of the tile
 			graphics.scale(flipX, flipY); // flipping the tile
-//			graphics.imageMode(CENTER);
-//			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
-			tileTexture.drawSprite(graphics, scale);
+			graphics.imageMode(CENTER);
+			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
+//			tileTexture.drawSprite(graphics, scale);
 			graphics.popMatrix();
 			
 		} else {
