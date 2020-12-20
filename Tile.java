@@ -4,6 +4,7 @@ import java.io.File;
 
 import handlers.TextureCache;
 import handlers.TileHandler;
+import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PShape;
 
@@ -21,27 +22,27 @@ public class Tile extends Editable {
 		if (file != null && texture != null && texture.getTileMap().containsKey(file)) {
 			this.tileTexture = texture.getTileMap().get(file);
 			hasTexture = true;
-			this.tile = tileTexture.createPShape(x, y, 100, 100, flipX, flipY, angle);
+			this.tile = tileTexture.createPShape(getX(), getY(), getWidth(), getHeight(), flipX, flipY, angle);
 		} else {
 			hasTexture = false;
 		}
 	}
 	
 	public PShape getPShape() {
-		return tile;
+		return tileTexture.createPShape(getX(), getY(), getWidth(), getHeight(), flipX, flipY, angle);
 	}
 
 	public void draw(PGraphics graphics, float scale) {
 		if (hasTexture) {
-//			graphics.pushMatrix();
-//			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
-//			graphics.rotate(PApplet.radians(angle)); // angle of the tile
-//			graphics.scale(flipX, flipY); // flipping the tile
-//			graphics.imageMode(CENTER);
-//			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
-////			tileTexture.drawSprite(graphics, scale);
-//			graphics.popMatrix();
-			graphics.shape(tile);
+			graphics.pushMatrix();
+			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
+			graphics.rotate(PApplet.radians(angle)); // angle of the tile
+			graphics.scale(flipX, flipY); // flipping the tile
+			graphics.imageMode(CENTER);
+			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
+//			tileTexture.drawSprite(graphics, scale);
+			graphics.popMatrix();
+//			graphics.shape(tile);
 			
 		} else {
 			// missing texture

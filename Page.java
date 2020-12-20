@@ -24,6 +24,10 @@ public class Page extends Editable {
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
 
+	// PShape testing
+	PShape batchWorld; // stores the batch render world
+	int previousWorldSize = -1; // stores the previous world size, recalculate the batch world if this changes
+
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
 		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
 		this.p = p;
@@ -97,14 +101,14 @@ public class Page extends Editable {
 	}
 
 	private void drawView(float scale) {
-		
+
 		// draw the view that will be shown on the page
 		ArrayList<Rectangle> drawFirst = new ArrayList<Rectangle>();
 		ArrayList<Rectangle> drawSecond = new ArrayList<Rectangle>();
 		for (Rectangle r : pageObjects) {
 			boolean excluded = false;
-			
-			if (r.getTopLeft().x > view.getBottomRight().x -1) {
+
+			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
 				continue;
 			}
 			if (r.getBottomRight().x < view.getTopLeft().x + 1) {
@@ -116,7 +120,7 @@ public class Page extends Editable {
 			if (r.getBottomRight().y < view.getTopLeft().y + 1) {
 				continue;
 			}
-			
+
 			for (String s : excludedObjects) { // check the rectangle against the excluded list
 				if (r.toString().equals(s)) {
 					excluded = true;
@@ -131,6 +135,23 @@ public class Page extends Editable {
 			}
 		}
 
+		// batch render testing
+		if (previousWorldSize != drawSecond.size()) {
+			// make new batch world
+			batchWorld = p.createShape(PShape.GROUP);
+//			HashSet<Rectangle> returnSet = new HashSet<Rectangle>();
+//			world.getAll(returnSet);
+			for (Rectangle r : drawSecond) {
+				if (r instanceof Tile) {
+					batchWorld.addChild(((Tile) r).getPShape());
+				}
+			}
+
+			previousWorldSize = drawSecond.size();
+		}
+
+		
+		
 		// one step further would be to draw the player and world behind a
 		// pre-rendered page grid (the most expensive part of rendering the page)
 		// that only gets redrawn when the LOD changes
@@ -148,12 +169,18 @@ public class Page extends Editable {
 				((Image) r).draw(pageGraphics, scale / size);
 			}
 		}
+
+		//batch render testing
+		if (batchWorld != null) {
+			pageGraphics.shape(batchWorld);
+		}
+
 		for (Rectangle r : drawSecond) { // draw tiles and events
-			if (r instanceof Tile) {
-				((Tile) r).draw(pageGraphics, scale / size); // scale is divided by size so that LODs are relative
-																// to
-																// page size
-			}
+//			if (r instanceof Tile) {
+//				((Tile) r).draw(pageGraphics, scale / size); // scale is divided by size so that LODs are relative
+//																// to
+//																// page size
+//			}
 			if (r instanceof Event && ((Event) r).visible) {
 				((Event) r).draw(pageGraphics, scale / size);
 			}
