@@ -111,6 +111,7 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 	}
 
 	public void drawSprite(PGraphics g, float scale) {
+		getSprite(scale);
 		if (scale > texture.LOD32) {
 //			g.scale(scale16);
 			g.shape(tile16);
