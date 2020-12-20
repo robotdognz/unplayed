@@ -37,7 +37,15 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 		}
 		
 		tile = p.createShape(RECT,-50,-50,100,100);
+		//tile = p.createShape();
+		tile.beginShape();
+		tile.setStroke(false);
 		tile.texture(LOD256);
+//		tile.vertex(x, y, 0, 0); //top left
+//	    tile.vertex(x+platformW, y, rX, 0); //top right
+//	    tile.vertex(x+platformW, y+platformH, rX, rY); //bottom right
+//	    tile.vertex(x, y+platformH, 0, rY); //bottom left
+		tile.endShape();
 	}
 
 	@Override
