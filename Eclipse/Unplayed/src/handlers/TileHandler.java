@@ -10,15 +10,10 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 	TextureCache texture;
 	File datapath;
 	PImage LOD256;
-//	float scale256;
 	PImage LOD128 = null;
-//	float scale128;
 	PImage LOD64 = null;
-//	float scale64;
 	PImage LOD32 = null;
-//	float scale32;
 	PImage LOD16 = null;
-//	float scale16;
 	
 	PShape tile256;
 	PShape tile128;
@@ -35,7 +30,6 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 		try {
 			LOD256 = p.loadImage(path); //requestImage
 			LOD256.resize(256, 256);
-//			scale256 = 100 / LOD256.width;
 			
 		} catch (Exception e) {
 			// set sprite to file not found image
@@ -62,8 +56,6 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 	}
 	
 	private void createPShape(PShape tile, PImage texture) {
-//		tile = p.createShape();
-		
 		tile.beginShape(QUAD);
 		tile.textureMode(NORMAL);
 		tile.texture(texture);
