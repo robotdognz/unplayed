@@ -77,18 +77,18 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 	}
 
 	public void drawSprite(PGraphics g, float scale) {
-//		if (scale > texture.LOD32) {
-//			g.scale(scale16);
-//		} else if (scale > texture.LOD64) {
-//			g.scale(scale32);
-//		} else if (scale > texture.LOD128) {
-//			g.scale(scale64);
-//		} else if (scale > texture.LOD256) {
-//			g.scale(scale128);
-//		} else {
-//			g.scale(scale256);
-//		}
-		g.scale(100/getSprite(scale).width);
+		if (scale > texture.LOD32) {
+			g.scale(scale16);
+		} else if (scale > texture.LOD64) {
+			g.scale(scale32);
+		} else if (scale > texture.LOD128) {
+			g.scale(scale64);
+		} else if (scale > texture.LOD256) {
+			g.scale(scale128);
+		} else {
+			g.scale(scale256);
+		}
+		//g.scale(100/getSprite(scale).width);
 		g.image(getSprite(scale), 0, 0);
 	}
 
