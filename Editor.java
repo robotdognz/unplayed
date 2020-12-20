@@ -100,7 +100,7 @@ public class Editor {
 
 	// PShape testing
 	PShape batchWorld; //stores the batch render world
-	int previousWorldSize; //stores the previous world size, recalculate the batch world if this changes
+	int previousWorldSize = -1; //stores the previous world size, recalculate the batch world if this changes
 
 	public Editor(PApplet p, FileChooser files, TextureCache texture, Game game, Camera camera, Converter convert,
 			DoToast toast) {
