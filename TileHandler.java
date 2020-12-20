@@ -49,11 +49,11 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 		LOD64.resize(64, 64);
 		LOD128 = LOD256.get(); // 16
 		LOD128.resize(128, 128);
-//		tile16 = p.createShape();
-//		tile32 = p.createShape();
-//		tile64 = p.createShape();
-//		tile128 = p.createShape();
-//		tile256 = p.createShape();
+		tile16 = p.createShape();
+		tile32 = p.createShape();
+		tile64 = p.createShape();
+		tile128 = p.createShape();
+		tile256 = p.createShape();
 		createPShape(tile16, LOD16);
 		createPShape(tile32, LOD32);
 		createPShape(tile64, LOD64);
@@ -62,7 +62,7 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 	}
 	
 	private void createPShape(PShape tile, PImage texture) {
-		tile = p.createShape();
+//		tile = p.createShape();
 		
 		tile.beginShape(QUAD);
 		tile.textureMode(NORMAL);
