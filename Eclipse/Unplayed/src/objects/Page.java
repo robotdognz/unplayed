@@ -92,7 +92,7 @@ public class Page extends Editable {
 		p.rotate(PApplet.radians(angle)); // angle of the page
 		p.scale(flipX, flipY); // flipping the page
 		p.imageMode(CENTER);
-		p.image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height); // draw the page
+		p.image(pageGraphics, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
 		p.popMatrix();
 	}
 
