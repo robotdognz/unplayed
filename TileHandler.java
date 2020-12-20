@@ -3,6 +3,7 @@ package handlers;
 import java.io.File;
 
 import processing.core.*;
+import static processing.core.PConstants.*;
 
 public class TileHandler implements Comparable<TileHandler>, Handler {
 	PApplet p;
@@ -18,6 +19,8 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 	float scale32;
 	PImage LOD16 = null;
 	float scale16;
+	
+	PShape tile;
 
 	public TileHandler(PApplet p, TextureCache texture, File file) {
 		this.p = p;
@@ -26,12 +29,15 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 		String path = file.getAbsolutePath();
 
 		try {
-			LOD256 = p.requestImage(path);
+			LOD256 = p.loadImage(path); //requestImage
 			LOD256.resize(256, 256);
 			scale256 = 100 / LOD256.width;
 		} catch (Exception e) {
 			// set sprite to file not found image
 		}
+		
+		tile = p.createShape(RECT,-50,-50,100,100);
+		tile.texture(LOD256);
 	}
 
 	@Override
@@ -77,19 +83,20 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 	}
 
 	public void drawSprite(PGraphics g, float scale) {
-		if (scale > texture.LOD32) {
-			g.scale(scale16);
-		} else if (scale > texture.LOD64) {
-			g.scale(scale32);
-		} else if (scale > texture.LOD128) {
-			g.scale(scale64);
-		} else if (scale > texture.LOD256) {
-			g.scale(scale128);
-		} else {
-			g.scale(scale256);
-		}
+//		if (scale > texture.LOD32) {
+//			g.scale(scale16);
+//		} else if (scale > texture.LOD64) {
+//			g.scale(scale32);
+//		} else if (scale > texture.LOD128) {
+//			g.scale(scale64);
+//		} else if (scale > texture.LOD256) {
+//			g.scale(scale128);
+//		} else {
+//			g.scale(scale256);
+//		}
 		//g.scale(100/getSprite(scale).width);
-		g.image(getSprite(scale), 0, 0);
+//		g.image(getSprite(scale), 0, 0);
+		g.shape(tile);
 	}
 
 	@Override

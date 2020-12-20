@@ -34,7 +34,6 @@ public class Tile extends Editable {
 //			graphics.popMatrix();
 			
 			//trying new efficent drawing
-			graphics.imageMode(CENTER);
 			graphics.pushMatrix();
 			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
 			graphics.rotate(PApplet.radians(angle)); // angle of the tile
