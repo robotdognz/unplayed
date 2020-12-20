@@ -1,6 +1,8 @@
 package editor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+
 import camera.Camera;
 import controllers.CameraControl;
 import controllers.Controller;
@@ -96,7 +98,12 @@ public class Editor {
 	private int frameDelay = 100;
 	private float frame;
 
-	public Editor(PApplet p, FileChooser files, TextureCache texture, Game game, Camera camera, Converter convert, DoToast toast) {
+	// PShape testing
+	PShape batchWorld; //stores the batch render world
+	int previousWorldSize; //stores the previous world size, recalculate the batch world if this changes
+
+	public Editor(PApplet p, FileChooser files, TextureCache texture, Game game, Camera camera, Converter convert,
+			DoToast toast) {
 		this.p = p;
 		this.texture = texture;
 		this.convert = convert;
@@ -223,19 +230,41 @@ public class Editor {
 		p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
 
 		float currentScale = convert.getScale();
+		
+		p.background(240);
+		
+		
+		
+		//batch render testing
+		if(previousWorldSize != world.size()) {
+			//make new batch world
+			batchWorld = p.createShape(PShape.GROUP);
+			HashSet<Rectangle> returnSet = new HashSet<Rectangle>();
+			world.getAll(returnSet);
+			for(Rectangle r : returnSet) {
+				if(r instanceof Tile) {
+					batchWorld.addChild(((Tile) r).getPShape());
+				}
+			}
+			
+			previousWorldSize = world.size();
+		}
+		p.g.shape(batchWorld);
 
 		// draw player and environment
-		p.background(240);
-		for (Rectangle r : game.screenObjects) { // draw images
-			if (r instanceof Image) {
-				((Image) r).draw(p.g, currentScale);
-			}
-		}
-		for (Rectangle r : game.screenObjects) { // draw tiles on top of images
-			if (r instanceof Tile) {
-				((Tile) r).draw(p.g, currentScale);
-			}
-		}
+		
+//		for (Rectangle r : game.screenObjects) { // draw images
+//			if (r instanceof Image) {
+//				((Image) r).draw(p.g, currentScale);
+//			}
+//		}
+//		for (Rectangle r : game.screenObjects) { // draw tiles on top of images
+//			if (r instanceof Tile) {
+//				((Tile) r).draw(p.g, currentScale);
+//			}
+//		}
+		
+		
 		if (game.player != null) { // draw the player on top of tiles and images
 			game.player.draw(p.g, currentScale);
 		}

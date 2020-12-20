@@ -26,6 +26,10 @@ public class Tile extends Editable {
 			hasTexture = false;
 		}
 	}
+	
+	public PShape getPShape() {
+		return tile;
+	}
 
 	public void draw(PGraphics graphics, float scale) {
 		if (hasTexture) {
