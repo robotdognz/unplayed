@@ -90,14 +90,23 @@ public class Page extends Editable {
 		checkRedraw();
 
 		// draw the page
-		p.pushMatrix();
-		p.translate(position.x, position.y);
-		p.scale(size); // size the page will appear in the page view
-		p.rotate(PApplet.radians(angle)); // angle of the page
-		p.scale(flipX, flipY); // flipping the page
-		p.imageMode(CENTER);
-		p.image(pageGraphics, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
-		p.popMatrix();
+//		p.pushMatrix();
+//		p.translate(position.x, position.y);
+//		p.scale(size); // size the page will appear in the page view
+//		p.rotate(PApplet.radians(angle)); // angle of the page
+//		p.scale(flipX, flipY); // flipping the page
+//		p.imageMode(CENTER);
+//		p.image(pageGraphics, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
+//		p.popMatrix();
+		
+//		p.pushMatrix();
+//		p.translate(position.x, position.y);
+//		p.scale(size); // size the page will appear in the page view
+//		p.rotate(PApplet.radians(angle)); // angle of the page
+//		p.scale(flipX, flipY); // flipping the page
+//		p.imageMode(CENTER);
+		p.image(pageGraphics, position.x, position.y); // draw the page //, pageGraphics.width, pageGraphics.height
+//		p.popMatrix();
 	}
 
 	private void drawView(float scale) {
@@ -139,11 +148,9 @@ public class Page extends Editable {
 		if (previousWorldSize != drawSecond.size()) {
 			// make new batch world
 			batchWorld = p.createShape(PShape.GROUP);
-//			HashSet<Rectangle> returnSet = new HashSet<Rectangle>();
-//			world.getAll(returnSet);
 			for (Rectangle r : drawSecond) {
 				if (r instanceof Tile) {
-					batchWorld.addChild(((Tile) r).getPShape());
+					batchWorld.addChild(((Tile) r).getPShape(scale));
 				}
 			}
 
