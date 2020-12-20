@@ -36,24 +36,33 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 			LOD256 = p.loadImage(path); //requestImage
 			LOD256.resize(256, 256);
 			scale256 = 100 / LOD256.width;
-			createPShape(tile256, LOD256);
+			
 		} catch (Exception e) {
 			// set sprite to file not found image
 		}
 		
-//		tile = p.createShape();
-//		tile.beginShape(QUAD);
-//		tile.texture(LOD256);
-//		tile.vertex(-50, -50, 0, 0); //top left
-//	    tile.vertex(50, -50, 1, 0); //top right
-//	    tile.vertex(50, 50, 1, 1); //bottom right
-//	    tile.vertex(-50, 50, 0, 1); //bottom left
-//		tile.endShape();
-//		tile.setStroke(false);
+		LOD16 = LOD256.get(); // 16
+		LOD16.resize(16, 16);
+		LOD32 = LOD256.get(); // 32
+		LOD32.resize(32, 32);
+		LOD64 = LOD256.get(); // 64
+		LOD64.resize(64, 64);
+		LOD128 = LOD256.get(); // 16
+		LOD128.resize(128, 128);
+		tile16 = p.createShape();
+		tile32 = p.createShape();
+		tile64 = p.createShape();
+		tile128 = p.createShape();
+		tile256 = p.createShape();
+		createPShape(tile16, LOD16);
+		createPShape(tile32, LOD32);
+		createPShape(tile64, LOD64);
+		createPShape(tile128, LOD128);
+		createPShape(tile256, LOD256);
 	}
 	
 	private void createPShape(PShape tile, PImage texture) {
-		tile = p.createShape();
+//		tile = p.createShape();
 		tile.beginShape(QUAD);
 		tile.texture(texture);
 		tile.vertex(-50, -50, 0, 0); //top left
@@ -77,32 +86,32 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 			if (LOD16 == null) {
 				LOD16 = LOD256.get(); // 16
 				LOD16.resize(16, 16);
-				scale16 = 100 / LOD16.width;
-				createPShape(tile16, LOD16);
+//				scale16 = 100 / LOD16.width;
+				
 			}
 			return LOD16;
 		} else if (scale > texture.LOD64) {
 			if (LOD32 == null) {
 				LOD32 = LOD256.get(); // 32
 				LOD32.resize(32, 32);
-				scale32 = 100 / LOD32.width;
-				createPShape(tile32, LOD32);
+//				scale32 = 100 / LOD32.width;
+				
 			}
 			return LOD32;
 		} else if (scale > texture.LOD128) {
 			if (LOD64 == null) {
 				LOD64 = LOD256.get(); // 64
 				LOD64.resize(64, 64);
-				scale64 = 100 / LOD64.width;
-				createPShape(tile64, LOD64);
+//				scale64 = 100 / LOD64.width;
+				
 			}
 			return LOD64;
 		} else if (scale > texture.LOD256) {
 			if (LOD128 == null) {
 				LOD128 = LOD256.get(); // 16
 				LOD128.resize(128, 128);
-				scale128 = 100 / LOD128.width;
-				createPShape(tile128, LOD128);
+//				scale128 = 100 / LOD128.width;
+				
 			}
 			return LOD128;
 		} else {
@@ -111,24 +120,17 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 	}
 
 	public void drawSprite(PGraphics g, float scale) {
-		getSprite(scale);
 		if (scale > texture.LOD32) {
-//			g.scale(scale16);
 			g.shape(tile16);
 		} else if (scale > texture.LOD64) {
-//			g.scale(scale32);
 			g.shape(tile32);
 		} else if (scale > texture.LOD128) {
-//			g.scale(scale64);
 			g.shape(tile64);
 		} else if (scale > texture.LOD256) {
-//			g.scale(scale128);
 			g.shape(tile128);
 		} else {
-//			g.scale(scale256);
 			g.shape(tile256);
 		}
-		//g.scale(100/getSprite(scale).width);
 //		g.image(getSprite(scale), 0, 0);
 		
 	}
