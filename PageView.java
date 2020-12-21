@@ -53,22 +53,12 @@ public class PageView {
 
 		for (Page page : pages) {
 			
-//			PShape border = page.getBorder();
-//			PVector pageTopLeft = border.getVertex(0);
-//			PVector pageTopRight = border.getVertex(1);
-//			PVector pageBottomRight = border.getVertex(2);
-//			PVector pageBottomLeft = border.getVertex(3);
 			PVector screenTopLeft = convert.screenToLevel(0, 0);
-//			PVector screenTopRight = convert.screenToLevel(p.width, 0);
-//			PVector screenBottomRight = convert.screenToLevel(p.width, p.height);
-//			PVector screenBottomLeft = convert.screenToLevel(0, p.height);
-//			if(pageTopLeft.x < screenTopLeft.x 
-//					&& pageTopRight.x < screenTopLeft.x
-//					&& pageBottomRight.x < screenTopLeft.x
-//					&& pageBottomLeft.x < screenTopLeft.x) {
-//				continue;
-//			}
-			if(page.leftOf(screenTopLeft.x-20)) {
+			PVector screenBottomRight = convert.screenToLevel(p.width, p.height);
+			if(page.leftOf(screenTopLeft.x+20)) {
+				continue;
+			}
+			if(page.rightOf(screenBottomRight.x-20)) {
 				continue;
 			}
 			

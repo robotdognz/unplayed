@@ -76,7 +76,7 @@ public class Page extends Editable {
 		topRight.rotate(PApplet.radians(angle));
 		bottomLeft.rotate(PApplet.radians(angle));
 		bottomRight.rotate(PApplet.radians(angle));
-		//translate
+		// translate
 		topLeft.x += position.x;
 		topLeft.y += position.y;
 		topRight.x += position.x;
@@ -86,22 +86,38 @@ public class Page extends Editable {
 		bottomRight.x += position.x;
 		bottomRight.y += position.y;
 	}
-	
+
 	public boolean isInside(float x, float y) {
-		 return false;
+		return false;
 	}
-	
+
+	public boolean rightOf(float x) {
+		if (topLeft.x <= x) {
+			return false;
+		}
+		if (topRight.x <= x) {
+			return false;
+		}
+		if (bottomLeft.x <= x) {
+			return false;
+		}
+		if (bottomRight.x <= x) {
+			return false;
+		}
+		return true;
+	}
+
 	public boolean leftOf(float x) {
-		if(topLeft.x <= x) {
+		if (topLeft.x >= x) {
 			return false;
 		}
-		if(topRight.x <= x) {
+		if (topRight.x >= x) {
 			return false;
 		}
-		if(bottomLeft.x <= x) {
+		if (bottomLeft.x >= x) {
 			return false;
 		}
-		if(bottomRight.x <= x) {
+		if (bottomRight.x >= x) {
 			return false;
 		}
 		return true;
@@ -196,9 +212,9 @@ public class Page extends Editable {
 		p.imageMode(CENTER);
 		p.image(pageGraphics, 0, 0); // draw the page
 		p.popMatrix();
-		
+
 		p.rectMode(CENTER);
-		p.fill(255,0,0);
+		p.fill(255, 0, 0);
 		p.rect(topLeft.x, topLeft.y, 10, 10);
 		p.rect(topRight.x, topRight.y, 10, 10);
 		p.rect(bottomLeft.x, bottomLeft.y, 10, 10);
