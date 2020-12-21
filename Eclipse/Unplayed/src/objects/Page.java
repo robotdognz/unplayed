@@ -155,15 +155,15 @@ public class Page extends Editable {
 		pageObjects.clear();
 		game.world.retrieve(pageObjects, view);
 	
-		if (pageObjects.size() != worldCount) {// || game.placed.size() != placedCount
-				//|| game.removed.size() != removedCount) {
+		if (pageObjects.size() != worldCount || game.placed.size() != placedCount
+				|| game.removed.size() != removedCount) {
 			redraw = true;
-			PApplet.println("redraw: " + System.currentTimeMillis());
+			//PApplet.println("redraw: " + System.currentTimeMillis());
 		}
 	
 		worldCount = pageObjects.size();
-//		placedCount = game.placed.size();
-//		removedCount = game.removed.size();
+		placedCount = game.placed.size();
+		removedCount = game.removed.size();
 	
 	}
 
