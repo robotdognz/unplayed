@@ -112,13 +112,14 @@ public class AppLogic {
 			} else {
 				controller.step(touches);
 			}
+			game.step(); // step game
 		}
 
 		// step/draw the game
 		if (!editorToggle || editor == null || (editor != null && editor.showPageView)) {
-			if (!gPaused) {
-				game.step(); // step game
-			}
+//			if (!gPaused) {
+//				game.step(); // step game
+//			}
 			game.draw(); // draw the game
 		}
 
