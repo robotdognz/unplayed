@@ -120,7 +120,7 @@ public class Page extends Editable {
 //		}
 
 		pageGraphics.beginDraw();
-		pageGraphics.background(240); // background
+//		pageGraphics.background(240); // background
 		pageGraphics.imageMode(CORNER);
 		pageGraphics.image(tiles, 0, 0); // environment
 		pageGraphics.translate(-view.getX(), -view.getY());
@@ -155,15 +155,15 @@ public class Page extends Editable {
 		pageObjects.clear();
 		game.world.retrieve(pageObjects, view);
 	
-		if (pageObjects.size() != worldCount || game.placed.size() != placedCount
-				|| game.removed.size() != removedCount) {
+		if (pageObjects.size() != worldCount) {// || game.placed.size() != placedCount
+				//|| game.removed.size() != removedCount) {
 			redraw = true;
 			PApplet.println("redraw: " + System.currentTimeMillis());
 		}
 	
 		worldCount = pageObjects.size();
-		placedCount = game.placed.size();
-		removedCount = game.removed.size();
+//		placedCount = game.placed.size();
+//		removedCount = game.removed.size();
 	
 	}
 
@@ -207,6 +207,7 @@ public class Page extends Editable {
 		// that only gets redrawn when the LOD changes
 
 		tiles.beginDraw();
+		tiles.background(240); // background
 		tiles.translate(-view.getX(), -view.getY());
 
 		for (Rectangle r : pageObjects) { // draw images
