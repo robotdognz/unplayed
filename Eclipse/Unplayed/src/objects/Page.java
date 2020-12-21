@@ -184,6 +184,11 @@ public class Page extends Editable {
 		p.rect(topRight.x, topRight.y, 10, 10);
 		p.rect(bottomLeft.x, bottomLeft.y, 10, 10);
 		p.rect(bottomRight.x, bottomRight.y, 10, 10);
+		p.fill(0,255,0);
+		p.rect(border.getVertex(0).x, border.getVertex(0).y, 5, 5);
+		p.rect(border.getVertex(1).x, border.getVertex(0).y, 5, 5);
+		p.rect(border.getVertex(2).x, border.getVertex(0).y, 5, 5);
+		p.rect(border.getVertex(3).x, border.getVertex(0).y, 5, 5);
 //		p.popMatrix();
 	}
 
