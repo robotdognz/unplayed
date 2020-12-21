@@ -6,8 +6,6 @@ import java.util.Set;
 
 import game.Game;
 
-import java.util.ArrayList;
-
 import processing.core.*;
 import static processing.core.PConstants.*;
 
@@ -27,7 +25,9 @@ public class Page extends Editable {
 
 	private PShape border;
 
-	private int rectangleCount = -1;
+	private int worldCount = -1;
+	private int placedCount = -1;
+	private int removedCount = -1;
 
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
 		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
@@ -150,7 +150,23 @@ public class Page extends Editable {
 //		p.popMatrix();
 	}
 
-	public void drawView() { //float scale
+	public void step() {
+		// get objects visible to this page
+		pageObjects.clear();
+		game.world.retrieve(pageObjects, view);
+	
+		if (pageObjects.size() != worldCount || game.placed.size() != placedCount
+				|| game.removed.size() != removedCount) {
+			redraw = true;
+		}
+	
+		worldCount = pageObjects.size();
+		placedCount = game.placed.size();
+		removedCount = game.removed.size();
+	
+	}
+
+	public void drawView() { // float scale
 
 		// draw the view that will be shown on the page
 //		ArrayList<Rectangle> drawFirst = new ArrayList<Rectangle>();
@@ -346,21 +362,6 @@ public class Page extends Editable {
 
 	public float getSize() {
 		return size;
-	}
-
-	public void step() {
-		// get objects visible to this page
-		pageObjects.clear();
-		game.world.retrieve(pageObjects, view);
-		
-		if (pageObjects.size() != rectangleCount) {
-			redraw = true;
-		}
-
-		// the step and draw process could be optimized by getting pageObjects once when
-		// the level is run
-		rectangleCount = pageObjects.size();
-
 	}
 
 	public Set<String> getExcluded() {
