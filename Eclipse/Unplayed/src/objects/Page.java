@@ -112,15 +112,9 @@ public class Page extends Editable {
 			drawView();
 			redraw = false;
 		}
-//		checkRedraw();
-
-//		if (pageObjects.size() != rectangleCount) {
-//			drawView(); //scale
-//			rectangleCount = pageObjects.size();
-//		}
 
 		pageGraphics.beginDraw();
-//		pageGraphics.background(240); // background
+		pageGraphics.background(240); // background
 		pageGraphics.imageMode(CORNER);
 		pageGraphics.image(tiles, 0, 0); // environment
 		pageGraphics.translate(-view.getX(), -view.getY());
@@ -134,80 +128,36 @@ public class Page extends Editable {
 		p.pushMatrix();
 		p.translate(position.x, position.y);
 		p.scale(size); // size the page will appear in the page view
-		p.rotate(PApplet.radians(angle)); // angle of the page
-		p.scale(flipX, flipY); // flipping the page
+		p.rotate(PApplet.radians(angle)); // rotate the page
+		p.scale(flipX, flipY); // flip the page
 		p.imageMode(CENTER);
 		p.image(pageGraphics, 0, 0); // draw the page
 		p.popMatrix();
 
-//		p.pushMatrix();
-//		p.translate(position.x, position.y);
-//		p.scale(size); // size the page will appear in the page view
-//		p.rotate(PApplet.radians(angle)); // angle of the page
-//		p.scale(flipX, flipY); // flipping the page
-//		p.imageMode(CENTER);
-//		p.image(pageGraphics, position.x, position.y); // draw the page //, pageGraphics.width, pageGraphics.height
-//		p.popMatrix();
 	}
 
 	public void step() {
 		// get objects visible to this page
 		pageObjects.clear();
 		game.world.retrieve(pageObjects, view);
-	
+
+		// check if anything in the page has changed
 		if (pageObjects.size() != worldCount || game.placed.size() != placedCount
 				|| game.removed.size() != removedCount) {
 			redraw = true;
-			//PApplet.println("redraw: " + System.currentTimeMillis());
 		}
-	
+
+		// update previous count fields
 		worldCount = pageObjects.size();
 		placedCount = game.placed.size();
 		removedCount = game.removed.size();
-	
+
 	}
 
 	public void drawView() { // float scale
 
-		// draw the view that will be shown on the page
-//		ArrayList<Rectangle> drawFirst = new ArrayList<Rectangle>();
-//		ArrayList<Rectangle> drawSecond = new ArrayList<Rectangle>();
-//		for (Rectangle r : pageObjects) {
-//			boolean excluded = false;
-//
-//			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
-//				continue;
-//			}
-//			if (r.getBottomRight().x < view.getTopLeft().x + 1) {
-//				continue;
-//			}
-//			if (r.getTopLeft().y > view.getBottomRight().y - 1) {
-//				continue;
-//			}
-//			if (r.getBottomRight().y < view.getTopLeft().y + 1) {
-//				continue;
-//			}
-//
-//			for (String s : excludedObjects) { // check the rectangle against the excluded list
-//				if (r.toString().equals(s)) {
-//					excluded = true;
-//				}
-//			}
-//			if (!excluded) { // if the rectangle is not on the excluded list
-//				if (r instanceof Image) {
-//					drawFirst.add(r);
-//				} else {
-//					drawSecond.add(r);
-//				}
-//			}
-//		}
-
-		// one step further would be to draw the player and world behind a
-		// pre-rendered page grid (the most expensive part of rendering the page)
-		// that only gets redrawn when the LOD changes
-
 		tiles.beginDraw();
-		tiles.background(240); // background
+		tiles.background(0, 0); // background
 		tiles.translate(-view.getX(), -view.getY());
 
 		for (Rectangle r : pageObjects) { // draw images
@@ -227,8 +177,7 @@ public class Page extends Editable {
 				continue;
 			}
 			if (r instanceof Image) {
-				((Image) r).draw(tiles, 3);
-				// scale/size
+				((Image) r).draw(tiles, 3); // scale/size
 			}
 		}
 
@@ -249,52 +198,14 @@ public class Page extends Editable {
 				continue;
 			}
 			if (r instanceof Tile) {
-				((Tile) r).draw(tiles, 3); // scale is divided by size so that LODs are relative
-											// to
-											// page size
-				// scale/size
+				((Tile) r).draw(tiles, 3); // scale/size
 			}
 			if (r instanceof Event && ((Event) r).visible) {
-				((Event) r).draw(tiles, 3);
-				// scale/size
+				((Event) r).draw(tiles, 3); // scale/size
 			}
 		}
 
 		tiles.endDraw();
-
-		// begin drawing on the page
-//		pageGraphics.beginDraw();
-//
-//		// draw environment and player
-//		pageGraphics.background(240);
-//		pageGraphics.imageMode(CORNER);
-//		pageGraphics.image(tiles, 0, 0);
-//
-//		pageGraphics.translate(-view.getX(), -view.getY());
-//
-////		for (Rectangle r : drawFirst) { // draw images
-////			if (r instanceof Image) {
-////				((Image) r).draw(pageGraphics, scale / size);
-////			}
-////		}
-//
-////		for (Rectangle r : drawSecond) { // draw tiles and events
-////			if (r instanceof Tile) {
-////				((Tile) r).draw(pageGraphics, scale / size); // scale is divided by size so that LODs are relative
-////																// to
-////																// page size
-////			}
-////			if (r instanceof Event && ((Event) r).visible) {
-////				((Event) r).draw(pageGraphics, scale / size);
-////			}
-////		}
-//
-//		if (game.player != null) {
-//			game.player.draw(pageGraphics, scale / size);
-//		}
-////		game.paper.draw(pageGraphics, view, scale / size);
-//		// end drawing on the page
-//		pageGraphics.endDraw();
 	}
 
 	@Override
@@ -310,31 +221,6 @@ public class Page extends Editable {
 		g.rect(0, 0, adjustedRect.getWidth(), adjustedRect.getHeight());
 		g.popMatrix();
 	}
-
-//	private void checkRedraw() {
-//		if (game.player != null) {
-//			if (view.getTopLeft().x > game.player.getPlayerArea().getBottomRight().x) {
-//				redraw = false;
-//				return;
-//			}
-//			if (view.getBottomRight().x < game.player.getPlayerArea().getTopLeft().x - 20) {
-//				redraw = false;
-//				return;
-//			}
-//			if (view.getTopLeft().y > game.player.getPlayerArea().getBottomRight().y + 20) {
-//				redraw = false;
-//				return;
-//			}
-//			if (view.getBottomRight().y < game.player.getPlayerArea().getTopLeft().y - 20) {
-//				redraw = false;
-//				return;
-//			}
-//		}
-//		redraw = true;
-
-//		redraw = false;
-//
-//	}
 
 	@Override
 	public void setAngle(float angle) {
