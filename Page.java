@@ -24,7 +24,8 @@ public class Page extends Editable {
 	private PVector position; // center of the page in page view
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
-
+	
+	private int rectangleCount = -1;
 
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
 		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
@@ -37,7 +38,7 @@ public class Page extends Editable {
 		this.excludedObjects = new HashSet<String>();
 
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
-		this.tiles = p.createGraphics((int) rWidth, (int) rHeight, P2D); 
+		this.tiles = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 
 		setPosition(position);
 	}
@@ -82,11 +83,22 @@ public class Page extends Editable {
 	}
 
 	public void draw(float scale) {
-
 		if (redraw) {
 			drawView(scale);
 		}
 		checkRedraw();
+		
+		pageGraphics.beginDraw();
+		pageGraphics.background(240); //background
+		pageGraphics.imageMode(CORNER);
+		pageGraphics.image(tiles, 0, 0); //environment
+		pageGraphics.translate(-view.getX(), -view.getY());
+		if (game.player != null) {
+			game.player.draw(pageGraphics, scale / size); //player
+		}
+		game.paper.draw(pageGraphics, view, scale / size); //paper effect
+		pageGraphics.endDraw();
+		
 
 		// draw the page
 		p.pushMatrix();
@@ -95,10 +107,10 @@ public class Page extends Editable {
 		p.rotate(PApplet.radians(angle)); // angle of the page
 		p.scale(flipX, flipY); // flipping the page
 		p.imageMode(CENTER);
-		p.image(tiles, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
+//		p.image(tiles, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
 		p.image(pageGraphics, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
 		p.popMatrix();
-		
+
 //		p.pushMatrix();
 //		p.translate(position.x, position.y);
 //		p.scale(size); // size the page will appear in the page view
@@ -112,11 +124,51 @@ public class Page extends Editable {
 	private void drawView(float scale) {
 
 		// draw the view that will be shown on the page
-		ArrayList<Rectangle> drawFirst = new ArrayList<Rectangle>();
-		ArrayList<Rectangle> drawSecond = new ArrayList<Rectangle>();
-		for (Rectangle r : pageObjects) {
-			boolean excluded = false;
+//		ArrayList<Rectangle> drawFirst = new ArrayList<Rectangle>();
+//		ArrayList<Rectangle> drawSecond = new ArrayList<Rectangle>();
+//		for (Rectangle r : pageObjects) {
+//			boolean excluded = false;
+//
+//			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
+//				continue;
+//			}
+//			if (r.getBottomRight().x < view.getTopLeft().x + 1) {
+//				continue;
+//			}
+//			if (r.getTopLeft().y > view.getBottomRight().y - 1) {
+//				continue;
+//			}
+//			if (r.getBottomRight().y < view.getTopLeft().y + 1) {
+//				continue;
+//			}
+//
+//			for (String s : excludedObjects) { // check the rectangle against the excluded list
+//				if (r.toString().equals(s)) {
+//					excluded = true;
+//				}
+//			}
+//			if (!excluded) { // if the rectangle is not on the excluded list
+//				if (r instanceof Image) {
+//					drawFirst.add(r);
+//				} else {
+//					drawSecond.add(r);
+//				}
+//			}
+//		}
 
+		// one step further would be to draw the player and world behind a
+		// pre-rendered page grid (the most expensive part of rendering the page)
+		// that only gets redrawn when the LOD changes
+
+		tiles.beginDraw();
+		tiles.translate(-view.getX(), -view.getY());
+
+//		tiles.background(240);
+
+		for (Rectangle r : pageObjects) { // draw images
+			if(!(r instanceof Image)) {
+				continue;
+			}
 			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
 				continue;
 			}
@@ -129,75 +181,72 @@ public class Page extends Editable {
 			if (r.getBottomRight().y < view.getTopLeft().y + 1) {
 				continue;
 			}
-
-			for (String s : excludedObjects) { // check the rectangle against the excluded list
-				if (r.toString().equals(s)) {
-					excluded = true;
-				}
-			}
-			if (!excluded) { // if the rectangle is not on the excluded list
-				if (r instanceof Image) {
-					drawFirst.add(r);
-				} else {
-					drawSecond.add(r);
-				}
-			}
-		}
-
-		
-		
-		// one step further would be to draw the player and world behind a
-		// pre-rendered page grid (the most expensive part of rendering the page)
-		// that only gets redrawn when the LOD changes
-		
-		tiles.beginDraw();
-		tiles.translate(-view.getX(), -view.getY());
-		
-		tiles.background(240);
-		
-		for (Rectangle r : drawSecond) { // draw tiles and events
-			if (r instanceof Tile) {
-				((Tile) r).draw(tiles, scale / size); // scale is divided by size so that LODs are relative
-																// to
-																// page size
-			}
-		}
-		
-		tiles.endDraw();
-		
-
-		// begin drawing on the page
-		pageGraphics.clear();
-		pageGraphics.beginDraw();
-
-		pageGraphics.translate(-view.getX(), -view.getY());
-
-		// draw environment and player
-//		pageGraphics.background(240);
-
-		for (Rectangle r : drawFirst) { // draw images
 			if (r instanceof Image) {
 				((Image) r).draw(pageGraphics, scale / size);
 			}
 		}
 
-		for (Rectangle r : drawSecond) { // draw tiles and events
-//			if (r instanceof Tile) {
-//				((Tile) r).draw(pageGraphics, scale / size); // scale is divided by size so that LODs are relative
-//																// to
-//																// page size
-//			}
+		for (Rectangle r : pageObjects) { // draw tiles and events
+			if(!(r instanceof Tile || r instanceof Event)) {
+				continue;
+			}
+			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
+				continue;
+			}
+			if (r.getBottomRight().x < view.getTopLeft().x + 1) {
+				continue;
+			}
+			if (r.getTopLeft().y > view.getBottomRight().y - 1) {
+				continue;
+			}
+			if (r.getBottomRight().y < view.getTopLeft().y + 1) {
+				continue;
+			}
+			if (r instanceof Tile) {
+				((Tile) r).draw(tiles, scale / size); // scale is divided by size so that LODs are relative
+														// to
+														// page size
+			}
 			if (r instanceof Event && ((Event) r).visible) {
 				((Event) r).draw(pageGraphics, scale / size);
 			}
 		}
 
-		if (game.player != null) {
-			game.player.draw(pageGraphics, scale / size);
-		}
-//		game.paper.draw(pageGraphics, view, scale / size);
-		// end drawing on the page
-		pageGraphics.endDraw();
+		tiles.endDraw();
+
+		// begin drawing on the page
+//		pageGraphics.beginDraw();
+//
+//		// draw environment and player
+//		pageGraphics.background(240);
+//		pageGraphics.imageMode(CORNER);
+//		pageGraphics.image(tiles, 0, 0);
+//
+//		pageGraphics.translate(-view.getX(), -view.getY());
+//
+////		for (Rectangle r : drawFirst) { // draw images
+////			if (r instanceof Image) {
+////				((Image) r).draw(pageGraphics, scale / size);
+////			}
+////		}
+//
+////		for (Rectangle r : drawSecond) { // draw tiles and events
+////			if (r instanceof Tile) {
+////				((Tile) r).draw(pageGraphics, scale / size); // scale is divided by size so that LODs are relative
+////																// to
+////																// page size
+////			}
+////			if (r instanceof Event && ((Event) r).visible) {
+////				((Event) r).draw(pageGraphics, scale / size);
+////			}
+////		}
+//
+//		if (game.player != null) {
+//			game.player.draw(pageGraphics, scale / size);
+//		}
+////		game.paper.draw(pageGraphics, view, scale / size);
+//		// end drawing on the page
+//		pageGraphics.endDraw();
 	}
 
 	@Override
@@ -215,25 +264,27 @@ public class Page extends Editable {
 	}
 
 	private void checkRedraw() {
-		if (game.player != null) {
-			if (view.getTopLeft().x > game.player.getPlayerArea().getBottomRight().x) {
-				redraw = false;
-				return;
-			}
-			if (view.getBottomRight().x < game.player.getPlayerArea().getTopLeft().x - 20) {
-				redraw = false;
-				return;
-			}
-			if (view.getTopLeft().y > game.player.getPlayerArea().getBottomRight().y + 20) {
-				redraw = false;
-				return;
-			}
-			if (view.getBottomRight().y < game.player.getPlayerArea().getTopLeft().y - 20) {
-				redraw = false;
-				return;
-			}
-		}
-		redraw = true;
+//		if (game.player != null) {
+//			if (view.getTopLeft().x > game.player.getPlayerArea().getBottomRight().x) {
+//				redraw = false;
+//				return;
+//			}
+//			if (view.getBottomRight().x < game.player.getPlayerArea().getTopLeft().x - 20) {
+//				redraw = false;
+//				return;
+//			}
+//			if (view.getTopLeft().y > game.player.getPlayerArea().getBottomRight().y + 20) {
+//				redraw = false;
+//				return;
+//			}
+//			if (view.getBottomRight().y < game.player.getPlayerArea().getTopLeft().y - 20) {
+//				redraw = false;
+//				return;
+//			}
+//		}
+//		redraw = true;
+		
+		redraw = false;
 
 	}
 
