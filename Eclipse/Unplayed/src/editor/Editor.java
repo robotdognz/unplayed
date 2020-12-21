@@ -264,7 +264,7 @@ public class Editor {
 		}
 
 		// draw quad tree logic for testing
-		if (quadVis) {
+		if (quadVis && game.player != null) {
 			world.draw(p);
 			p.fill(0, 0, 0, 150);
 			for (Rectangle r : game.playerObjects) {

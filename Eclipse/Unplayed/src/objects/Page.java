@@ -25,9 +25,16 @@ public class Page extends Editable {
 
 	private PShape border;
 
+	// Fields used for updating contents of page
 	private int worldCount = -1;
 	private int placedCount = -1;
 	private int removedCount = -1;
+
+	// Page corners, relative to center
+	PVector topLeft;
+	PVector topRight;
+	PVector bottomLeft;
+	PVector bottomRight;
 
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
 		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
@@ -44,6 +51,31 @@ public class Page extends Editable {
 
 		setPosition(position);
 		makeBorder();
+		updateCorners();
+	}
+
+	private void updateCorners() {
+		if (topLeft == null) {
+			// Initialize
+			topLeft = new PVector();
+			topRight = new PVector();
+			bottomLeft = new PVector();
+			bottomRight = new PVector();
+		}
+		// set values
+		topLeft.x = position.x - (getWidth() / 2) * size;
+		topLeft.y = position.y - (getHeight() / 2) * size;
+		topRight.x = position.x + (getWidth() / 2) * size;
+		topRight.y = position.y - (getHeight() / 2) * size;
+		bottomLeft.x = position.x - (getWidth() / 2) * size;
+		bottomLeft.y = position.y + (getHeight() / 2) * size;
+		bottomRight.x = position.x - (getWidth() / 2) * size;
+		bottomRight.y = position.y + (getHeight() / 2) * size;
+		// rotate
+		topLeft.rotate(PApplet.radians(angle));
+		topRight.rotate(PApplet.radians(angle));
+		bottomLeft.rotate(PApplet.radians(angle));
+		bottomRight.rotate(PApplet.radians(angle));
 	}
 
 	private void makeBorder() {
@@ -75,6 +107,7 @@ public class Page extends Editable {
 		}
 		doAdjustedRect();
 		makeBorder();
+		updateCorners();
 	}
 
 	public void addPosition(float x, float y) {
@@ -82,6 +115,7 @@ public class Page extends Editable {
 		this.position.y += y;
 		doAdjustedRect();
 		makeBorder();
+		updateCorners();
 	}
 
 	private void doAdjustedRect() {
@@ -133,7 +167,13 @@ public class Page extends Editable {
 		p.imageMode(CENTER);
 		p.image(pageGraphics, 0, 0); // draw the page
 		p.popMatrix();
-
+		
+		p.rectMode(CENTER);
+		p.fill(255,0,0);
+		p.rect(topLeft.x, topLeft.y, 10, 10);
+		p.rect(topRight.x, topRight.y, 10, 10);
+		p.rect(bottomLeft.x, bottomLeft.y, 10, 10);
+		p.rect(bottomRight.x, bottomRight.y, 10, 10);
 	}
 
 	public void step() {
@@ -226,17 +266,20 @@ public class Page extends Editable {
 	public void setAngle(float angle) {
 		super.setAngle(angle);
 		makeBorder();
+		updateCorners();
 	}
 
 	@Override
 	public void addAngle(float angle) {
 		super.addAngle(angle);
 		makeBorder();
+		updateCorners();
 	}
 
 	public void setSize(float size) {
 		this.size = size;
 		makeBorder();
+		updateCorners();
 	}
 
 	public void addSize(float size) {
@@ -246,6 +289,7 @@ public class Page extends Editable {
 			this.size = 0.5f;
 		}
 		makeBorder();
+		updateCorners();
 	}
 
 	public float getSize() {
