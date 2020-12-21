@@ -58,7 +58,7 @@ public class PageView {
 //			PVector pageTopRight = border.getVertex(1);
 //			PVector pageBottomRight = border.getVertex(2);
 //			PVector pageBottomLeft = border.getVertex(3);
-//			PVector screenTopLeft = convert.screenToLevel(0, 0);
+			PVector screenTopLeft = convert.screenToLevel(0, 0);
 //			PVector screenTopRight = convert.screenToLevel(p.width, 0);
 //			PVector screenBottomRight = convert.screenToLevel(p.width, p.height);
 //			PVector screenBottomLeft = convert.screenToLevel(0, p.height);
@@ -68,6 +68,9 @@ public class PageView {
 //					&& pageBottomLeft.x < screenTopLeft.x) {
 //				continue;
 //			}
+			if(page.leftOf(screenTopLeft.x-20)) {
+				continue;
+			}
 			
 			page.draw(currentScale);
 		}

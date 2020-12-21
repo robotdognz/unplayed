@@ -23,7 +23,7 @@ public class Page extends Editable {
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
 
-	private PShape border;
+//	private PShape border;
 
 	// Fields used for updating contents of page
 	private int worldCount = -1;
@@ -50,7 +50,7 @@ public class Page extends Editable {
 		this.tiles = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 
 		setPosition(position);
-		makeBorder();
+//		makeBorder();
 		updateCorners();
 	}
 
@@ -86,22 +86,42 @@ public class Page extends Editable {
 		bottomRight.x += position.x;
 		bottomRight.y += position.y;
 	}
-
-	private void makeBorder() {
-		// used for selecting the page
-		border = p.createShape(RECT, 0 - (getWidth() / 2), 0 - (getHeight() / 2), getWidth(), getHeight());
-//		border.setStroke(p.color(0,255,0));
-//		border.noFill();
-//		border.setStrokeWeight(4);
-		border.scale(size);
-		border.rotate(PApplet.radians(angle));
-		border.translate(position.x, position.y);
-
-		// TODO: try using this to make a bounding box
-		// draw the width and height on screen and see if they correspond to the sides
-		// of the box, or its bounding box
-		// if it's the width and height of the bounding box, then use that
+	
+	public boolean isInside(float x, float y) {
+		 return false;
 	}
+	
+	public boolean leftOf(float x) {
+		if(topLeft.x <= x) {
+			return false;
+		}
+		if(topRight.x <= x) {
+			return false;
+		}
+		if(bottomLeft.x <= x) {
+			return false;
+		}
+		if(bottomRight.x <= x) {
+			return false;
+		}
+		return true;
+	}
+
+//	private void makeBorder() {
+//		// used for selecting the page
+//		border = p.createShape(RECT, 0 - (getWidth() / 2), 0 - (getHeight() / 2), getWidth(), getHeight());
+////		border.setStroke(p.color(0,255,0));
+////		border.noFill();
+////		border.setStrokeWeight(4);
+//		border.scale(size);
+//		border.rotate(PApplet.radians(angle));
+//		border.translate(position.x, position.y);
+//
+//		// TODO: try using this to make a bounding box
+//		// draw the width and height on screen and see if they correspond to the sides
+//		// of the box, or its bounding box
+//		// if it's the width and height of the bounding box, then use that
+//	}
 
 	public PVector getPosition() {
 		return position;
@@ -115,7 +135,7 @@ public class Page extends Editable {
 			this.position.y = pos.y;
 		}
 		doAdjustedRect();
-		makeBorder();
+//		makeBorder();
 		updateCorners();
 	}
 
@@ -123,7 +143,7 @@ public class Page extends Editable {
 		this.position.x += x;
 		this.position.y += y;
 		doAdjustedRect();
-		makeBorder();
+//		makeBorder();
 		updateCorners();
 	}
 
@@ -146,9 +166,9 @@ public class Page extends Editable {
 		return adjustedRect;
 	}
 
-	public PShape getBorder() {
-		return border;
-	}
+//	public PShape getBorder() {
+//		return border;
+//	}
 
 	public void draw(float scale) {
 		if (redraw) {
@@ -177,19 +197,12 @@ public class Page extends Editable {
 		p.image(pageGraphics, 0, 0); // draw the page
 		p.popMatrix();
 		
-//		p.pushMatrix();
 		p.rectMode(CENTER);
 		p.fill(255,0,0);
 		p.rect(topLeft.x, topLeft.y, 10, 10);
 		p.rect(topRight.x, topRight.y, 10, 10);
 		p.rect(bottomLeft.x, bottomLeft.y, 10, 10);
 		p.rect(bottomRight.x, bottomRight.y, 10, 10);
-		p.fill(0,255,0);
-		p.rect(border.getVertex(0).x, border.getVertex(0).y, 5, 5);
-		p.rect(border.getVertex(1).x, border.getVertex(0).y, 5, 5);
-		p.rect(border.getVertex(2).x, border.getVertex(0).y, 5, 5);
-		p.rect(border.getVertex(3).x, border.getVertex(0).y, 5, 5);
-//		p.popMatrix();
 	}
 
 	public void step() {
@@ -281,20 +294,20 @@ public class Page extends Editable {
 	@Override
 	public void setAngle(float angle) {
 		super.setAngle(angle);
-		makeBorder();
+//		makeBorder();
 		updateCorners();
 	}
 
 	@Override
 	public void addAngle(float angle) {
 		super.addAngle(angle);
-		makeBorder();
+//		makeBorder();
 		updateCorners();
 	}
 
 	public void setSize(float size) {
 		this.size = size;
-		makeBorder();
+//		makeBorder();
 		updateCorners();
 	}
 
@@ -304,7 +317,7 @@ public class Page extends Editable {
 		} else {
 			this.size = 0.5f;
 		}
-		makeBorder();
+//		makeBorder();
 		updateCorners();
 	}
 
