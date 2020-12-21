@@ -24,7 +24,7 @@ public class Converter {
 		currentCenter = cCamera.getCenter();
 		lastCalc.x = ((screenX - p.width / 2) / ((float) p.width / currentScale) / currentSubScale) + currentCenter.x;
 		lastCalc.y = ((screenY - p.height / 2) / ((float) p.width / currentScale) / currentSubScale) + currentCenter.y;
-		return lastCalc;
+		return lastCalc.copy();
 	}
 
 	public float screenToLevel(float distance) {
