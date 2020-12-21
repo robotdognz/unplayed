@@ -96,7 +96,7 @@ public class Page extends Editable {
 		p.scale(flipX, flipY); // flipping the page
 		p.imageMode(CENTER);
 		p.image(tiles, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
-		//p.image(pageGraphics, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
+		p.image(pageGraphics, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
 		p.popMatrix();
 		
 //		p.pushMatrix();
@@ -157,7 +157,7 @@ public class Page extends Editable {
 		
 		for (Rectangle r : drawSecond) { // draw tiles and events
 			if (r instanceof Tile) {
-				((Tile) r).draw(pageGraphics, scale / size); // scale is divided by size so that LODs are relative
+				((Tile) r).draw(tiles, scale / size); // scale is divided by size so that LODs are relative
 																// to
 																// page size
 			}
