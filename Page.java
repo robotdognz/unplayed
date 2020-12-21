@@ -92,22 +92,6 @@ public class Page extends Editable {
 	}
 
 	public boolean rightOf(float x) {
-		if (topLeft.x > x) {
-			return false;
-		}
-		if (topRight.x > x) {
-			return false;
-		}
-		if (bottomLeft.x > x) {
-			return false;
-		}
-		if (bottomRight.x > x) {
-			return false;
-		}
-		return true;
-	}
-
-	public boolean leftOf(float x) {
 		if (topLeft.x < x) {
 			return false;
 		}
@@ -118,6 +102,22 @@ public class Page extends Editable {
 			return false;
 		}
 		if (bottomRight.x < x) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean leftOf(float x) {
+		if (topLeft.x > x) {
+			return false;
+		}
+		if (topRight.x > x) {
+			return false;
+		}
+		if (bottomLeft.x > x) {
+			return false;
+		}
+		if (bottomRight.x > x) {
 			return false;
 		}
 		return true;
