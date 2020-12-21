@@ -24,7 +24,7 @@ public class Page extends Editable {
 	private PVector position; // center of the page in page view
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
-	
+
 	private int rectangleCount = -1;
 
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
@@ -83,22 +83,26 @@ public class Page extends Editable {
 	}
 
 	public void draw(float scale) {
-		if (redraw) {
+//		if (redraw) {
+//			drawView(scale);
+//		}
+//		checkRedraw();
+
+		if (pageObjects.size() != rectangleCount) {
 			drawView(scale);
+			rectangleCount = pageObjects.size();
 		}
-		checkRedraw();
-		
+
 		pageGraphics.beginDraw();
-		pageGraphics.background(240); //background
+		pageGraphics.background(240); // background
 		pageGraphics.imageMode(CORNER);
-		pageGraphics.image(tiles, 0, 0); //environment
+		pageGraphics.image(tiles, 0, 0); // environment
 		pageGraphics.translate(-view.getX(), -view.getY());
 		if (game.player != null) {
-			game.player.draw(pageGraphics, scale / size); //player
+			game.player.draw(pageGraphics, scale / size); // player
 		}
-		game.paper.draw(pageGraphics, view, scale / size); //paper effect
+		game.paper.draw(pageGraphics, view, scale / size); // paper effect
 		pageGraphics.endDraw();
-		
 
 		// draw the page
 		p.pushMatrix();
@@ -107,7 +111,6 @@ public class Page extends Editable {
 		p.rotate(PApplet.radians(angle)); // angle of the page
 		p.scale(flipX, flipY); // flipping the page
 		p.imageMode(CENTER);
-//		p.image(tiles, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
 		p.image(pageGraphics, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
 		p.popMatrix();
 
@@ -163,10 +166,8 @@ public class Page extends Editable {
 		tiles.beginDraw();
 		tiles.translate(-view.getX(), -view.getY());
 
-//		tiles.background(240);
-
 		for (Rectangle r : pageObjects) { // draw images
-			if(!(r instanceof Image)) {
+			if (!(r instanceof Image)) {
 				continue;
 			}
 			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
@@ -182,12 +183,13 @@ public class Page extends Editable {
 				continue;
 			}
 			if (r instanceof Image) {
-				((Image) r).draw(pageGraphics, scale / size);
+				((Image) r).draw(pageGraphics, 3);
+				// scale/size
 			}
 		}
 
 		for (Rectangle r : pageObjects) { // draw tiles and events
-			if(!(r instanceof Tile || r instanceof Event)) {
+			if (!(r instanceof Tile || r instanceof Event)) {
 				continue;
 			}
 			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
@@ -203,12 +205,14 @@ public class Page extends Editable {
 				continue;
 			}
 			if (r instanceof Tile) {
-				((Tile) r).draw(tiles, scale / size); // scale is divided by size so that LODs are relative
-														// to
-														// page size
+				((Tile) r).draw(tiles, 3); // scale is divided by size so that LODs are relative
+											// to
+											// page size
+				// scale/size
 			}
 			if (r instanceof Event && ((Event) r).visible) {
-				((Event) r).draw(pageGraphics, scale / size);
+				((Event) r).draw(pageGraphics, 3);
+				// scale/size
 			}
 		}
 
@@ -263,7 +267,7 @@ public class Page extends Editable {
 		g.popMatrix();
 	}
 
-	private void checkRedraw() {
+//	private void checkRedraw() {
 //		if (game.player != null) {
 //			if (view.getTopLeft().x > game.player.getPlayerArea().getBottomRight().x) {
 //				redraw = false;
@@ -283,10 +287,10 @@ public class Page extends Editable {
 //			}
 //		}
 //		redraw = true;
-		
-		redraw = false;
 
-	}
+//		redraw = false;
+//
+//	}
 
 	public void setSize(float size) {
 		this.size = size;
