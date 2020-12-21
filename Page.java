@@ -153,7 +153,7 @@ public class Page extends Editable {
 		tiles.beginDraw();
 		tiles.translate(-view.getX(), -view.getY());
 		
-		pageGraphics.background(240);
+		tiles.background(240);
 		
 		for (Rectangle r : drawSecond) { // draw tiles and events
 			if (r instanceof Tile) {
@@ -167,6 +167,7 @@ public class Page extends Editable {
 		
 
 		// begin drawing on the page
+		pageGraphics.clear();
 		pageGraphics.beginDraw();
 
 		pageGraphics.translate(-view.getX(), -view.getY());
