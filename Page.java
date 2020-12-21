@@ -158,6 +158,7 @@ public class Page extends Editable {
 		if (pageObjects.size() != worldCount || game.placed.size() != placedCount
 				|| game.removed.size() != removedCount) {
 			redraw = true;
+			PApplet.println("redraw: " + System.currentTimeMillis());
 		}
 	
 		worldCount = pageObjects.size();
@@ -225,7 +226,7 @@ public class Page extends Editable {
 				continue;
 			}
 			if (r instanceof Image) {
-				((Image) r).draw(pageGraphics, 3);
+				((Image) r).draw(tiles, 3);
 				// scale/size
 			}
 		}
@@ -253,7 +254,7 @@ public class Page extends Editable {
 				// scale/size
 			}
 			if (r instanceof Event && ((Event) r).visible) {
-				((Event) r).draw(pageGraphics, 3);
+				((Event) r).draw(tiles, 3);
 				// scale/size
 			}
 		}
