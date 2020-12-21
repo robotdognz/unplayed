@@ -19,14 +19,12 @@ public class Page extends Editable {
 	private HashSet<String> excludedObjects; // a list of rectangle strings to exclude while drawing
 
 	private PGraphics pageGraphics;
+	private PGraphics tiles;
 	private boolean redraw = true;
 	private PVector position; // center of the page in page view
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
 
-	// PShape testing
-	PShape batchWorld; // stores the batch render world
-	int previousWorldSize = -1; // stores the previous world size, recalculate the batch world if this changes
 
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
 		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
@@ -39,6 +37,7 @@ public class Page extends Editable {
 		this.excludedObjects = new HashSet<String>();
 
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
+		this.tiles = p.createGraphics((int) rWidth, (int) rHeight, P2D); 
 
 		setPosition(position);
 	}
@@ -90,14 +89,15 @@ public class Page extends Editable {
 		checkRedraw();
 
 		// draw the page
-//		p.pushMatrix();
-//		p.translate(position.x, position.y);
-//		p.scale(size); // size the page will appear in the page view
-//		p.rotate(PApplet.radians(angle)); // angle of the page
-//		p.scale(flipX, flipY); // flipping the page
-//		p.imageMode(CENTER);
-//		p.image(pageGraphics, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
-//		p.popMatrix();
+		p.pushMatrix();
+		p.translate(position.x, position.y);
+		p.scale(size); // size the page will appear in the page view
+		p.rotate(PApplet.radians(angle)); // angle of the page
+		p.scale(flipX, flipY); // flipping the page
+		p.imageMode(CENTER);
+		p.image(tiles, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
+		p.image(pageGraphics, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
+		p.popMatrix();
 		
 //		p.pushMatrix();
 //		p.translate(position.x, position.y);
@@ -105,7 +105,7 @@ public class Page extends Editable {
 //		p.rotate(PApplet.radians(angle)); // angle of the page
 //		p.scale(flipX, flipY); // flipping the page
 //		p.imageMode(CENTER);
-		p.image(pageGraphics, position.x, position.y); // draw the page //, pageGraphics.width, pageGraphics.height
+//		p.image(pageGraphics, position.x, position.y); // draw the page //, pageGraphics.width, pageGraphics.height
 //		p.popMatrix();
 	}
 
@@ -144,24 +144,27 @@ public class Page extends Editable {
 			}
 		}
 
-		// batch render testing
-		if (previousWorldSize != drawSecond.size()) {
-			// make new batch world
-			batchWorld = p.createShape(PShape.GROUP);
-			for (Rectangle r : drawSecond) {
-				if (r instanceof Tile) {
-					batchWorld.addChild(((Tile) r).getPShape(scale));
-				}
-			}
-
-			previousWorldSize = drawSecond.size();
-		}
-
 		
 		
 		// one step further would be to draw the player and world behind a
 		// pre-rendered page grid (the most expensive part of rendering the page)
 		// that only gets redrawn when the LOD changes
+		
+		tiles.beginDraw();
+		tiles.translate(-view.getX(), -view.getY());
+		
+		pageGraphics.background(240);
+		
+		for (Rectangle r : drawSecond) { // draw tiles and events
+			if (r instanceof Tile) {
+				((Tile) r).draw(pageGraphics, scale / size); // scale is divided by size so that LODs are relative
+																// to
+																// page size
+			}
+		}
+		
+		tiles.endDraw();
+		
 
 		// begin drawing on the page
 		pageGraphics.beginDraw();
@@ -169,17 +172,12 @@ public class Page extends Editable {
 		pageGraphics.translate(-view.getX(), -view.getY());
 
 		// draw environment and player
-		pageGraphics.background(240);
+//		pageGraphics.background(240);
 
 		for (Rectangle r : drawFirst) { // draw images
 			if (r instanceof Image) {
 				((Image) r).draw(pageGraphics, scale / size);
 			}
-		}
-
-		//batch render testing
-		if (batchWorld != null) {
-			pageGraphics.shape(batchWorld);
 		}
 
 		for (Rectangle r : drawSecond) { // draw tiles and events

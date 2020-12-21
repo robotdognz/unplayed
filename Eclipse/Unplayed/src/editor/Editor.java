@@ -1,7 +1,6 @@
 package editor;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import camera.Camera;
 import controllers.CameraControl;
@@ -97,10 +96,6 @@ public class Editor {
 	public boolean debugVis = false;
 	private int frameDelay = 100;
 	private float frame;
-
-	// PShape testing
-	PShape batchWorld; // stores the batch render world
-	int previousWorldSize = -1; // stores the previous world size, recalculate the batch world if this changes
 
 	public Editor(PApplet p, FileChooser files, TextureCache texture, Game game, Camera camera, Converter convert,
 			DoToast toast) {
@@ -232,24 +227,6 @@ public class Editor {
 		float currentScale = convert.getScale();
 
 		p.background(240);
-
-//		// batch render testing
-//		if (previousWorldSize != world.size()) {
-//			// make new batch world
-//			batchWorld = p.createShape(PShape.GROUP);
-//			HashSet<Rectangle> returnSet = new HashSet<Rectangle>();
-//			world.getAll(returnSet);
-//			for (Rectangle r : returnSet) {
-//				if (r instanceof Tile) {
-//					batchWorld.addChild(((Tile) r).getPShape());
-//				}
-//			}
-//
-//			previousWorldSize = world.size();
-//		}
-//		if (batchWorld != null) {
-//			p.g.shape(batchWorld);
-//		}
 
 		// draw player and environment
 
