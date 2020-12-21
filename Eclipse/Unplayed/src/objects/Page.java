@@ -63,19 +63,28 @@ public class Page extends Editable {
 			bottomRight = new PVector();
 		}
 		// set values
-		topLeft.x = position.x - (getWidth() / 2) * size;
-		topLeft.y = position.y - (getHeight() / 2) * size;
-		topRight.x = position.x + (getWidth() / 2) * size;
-		topRight.y = position.y - (getHeight() / 2) * size;
-		bottomLeft.x = position.x - (getWidth() / 2) * size;
-		bottomLeft.y = position.y + (getHeight() / 2) * size;
-		bottomRight.x = position.x - (getWidth() / 2) * size;
-		bottomRight.y = position.y + (getHeight() / 2) * size;
+		topLeft.x = 0 - (getWidth() / 2) * size;
+		topLeft.y = 0 - (getHeight() / 2) * size;
+		topRight.x = 0 + (getWidth() / 2) * size;
+		topRight.y = 0 - (getHeight() / 2) * size;
+		bottomLeft.x = 0 - (getWidth() / 2) * size;
+		bottomLeft.y = 0 + (getHeight() / 2) * size;
+		bottomRight.x = 0 + (getWidth() / 2) * size;
+		bottomRight.y = 0 + (getHeight() / 2) * size;
 		// rotate
 		topLeft.rotate(PApplet.radians(angle));
 		topRight.rotate(PApplet.radians(angle));
 		bottomLeft.rotate(PApplet.radians(angle));
 		bottomRight.rotate(PApplet.radians(angle));
+		//translate
+		topLeft.x += position.x;
+		topLeft.y += position.y;
+		topRight.x += position.x;
+		topRight.y += position.y;
+		bottomLeft.x += position.x;
+		bottomLeft.y += position.y;
+		bottomRight.x += position.x;
+		bottomRight.y += position.y;
 	}
 
 	private void makeBorder() {
@@ -168,12 +177,14 @@ public class Page extends Editable {
 		p.image(pageGraphics, 0, 0); // draw the page
 		p.popMatrix();
 		
+//		p.pushMatrix();
 		p.rectMode(CENTER);
 		p.fill(255,0,0);
 		p.rect(topLeft.x, topLeft.y, 10, 10);
 		p.rect(topRight.x, topRight.y, 10, 10);
 		p.rect(bottomLeft.x, bottomLeft.y, 10, 10);
 		p.rect(bottomRight.x, bottomRight.y, 10, 10);
+//		p.popMatrix();
 	}
 
 	public void step() {
