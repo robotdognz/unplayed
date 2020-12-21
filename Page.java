@@ -42,11 +42,7 @@ public class Page extends Editable {
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 		this.tiles = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 
-		border = p.createShape(RECT, 0 - (rWidth / 2), 0 - (rHeight / 2), rWidth, rHeight);
-		border.setStroke(p.color(0,255,0));
-		border.noFill();
-		border.setStrokeWeight(4);
-		//border.rotate();
+		makeBorder();
 
 		setPosition(position);
 	}
@@ -130,6 +126,7 @@ public class Page extends Editable {
 		p.scale(flipX, flipY); // flipping the page
 		p.imageMode(CENTER);
 		p.image(pageGraphics, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
+		p.shape(border);
 		p.popMatrix();
 
 //		p.pushMatrix();
@@ -282,7 +279,6 @@ public class Page extends Editable {
 		g.rotate(PApplet.radians(angle)); // angle of the page
 		g.rectMode(CENTER);
 		g.rect(0, 0, adjustedRect.getWidth(), adjustedRect.getHeight());
-		g.shape(border);
 		g.popMatrix();
 	}
 
