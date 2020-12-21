@@ -34,20 +34,20 @@ public class Tile extends Editable {
 
 	public void draw(PGraphics graphics, float scale) {
 		if (hasTexture) {
-//			graphics.pushMatrix();
-//			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
-//			graphics.rotate(PApplet.radians(angle)); // angle of the tile
-//			graphics.scale(flipX, flipY); // flipping the tile
-//			graphics.imageMode(CENTER);
-//			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
-//			tileTexture.drawSprite(graphics, scale);
-//			graphics.popMatrix();
+			graphics.pushMatrix();
+			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
+			graphics.rotate(PApplet.radians(angle)); // angle of the tile
+			graphics.scale(flipX, flipY); // flipping the tile
+			graphics.imageMode(CENTER);
+			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
+			//tileTexture.drawSprite(graphics, scale);
+			graphics.popMatrix();
 			
 //			tile.setTexture(tileTexture.getSprite(scale));
 //			graphics.shape(tile);
 			
-			graphics.imageMode(CORNER);
-			graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight()); // draw the tile
+//			graphics.imageMode(CORNER);
+//			graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight()); // draw the tile
 			
 		} else {
 			// missing texture
