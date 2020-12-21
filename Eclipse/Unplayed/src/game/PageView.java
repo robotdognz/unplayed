@@ -51,8 +51,25 @@ public class PageView {
 		float ratio = (float) temp.height / (float) temp.width;
 		p.image(temp, 0, 0, p.width * 5, p.width * 5 * ratio);
 
-		for (Page p : pages) {
-			p.draw(currentScale);
+		for (Page page : pages) {
+			
+			PShape border = page.getBorder();
+			PVector pageTopLeft = border.getVertex(0);
+			PVector pageTopRight = border.getVertex(1);
+			PVector pageBottomRight = border.getVertex(2);
+			PVector pageBottomLeft = border.getVertex(3);
+			PVector screenTopLeft = convert.screenToLevel(0, 0);
+			PVector screenTopRight = convert.screenToLevel(p.width, 0);
+			PVector screenBottomRight = convert.screenToLevel(p.width, p.height);
+			PVector screenBottomLeft = convert.screenToLevel(0, p.height);
+			if(pageTopLeft.x < screenTopLeft.x 
+					&& pageTopRight.x < screenTopLeft.x
+					&& pageBottomRight.x < screenTopLeft.x
+					&& pageBottomLeft.x < screenTopLeft.x) {
+				continue;
+			}
+			
+			page.draw(currentScale);
 		}
 
 		// draw desk shading
@@ -109,6 +126,9 @@ public class PageView {
 			}
 			// return the first overlap
 			return page;
+			
+//			PShape border = page.getBorder();
+//			float area = border.height * border.width;
 		}
 
 		return null;

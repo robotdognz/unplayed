@@ -42,19 +42,19 @@ public class Page extends Editable {
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 		this.tiles = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 
-		makeBorder();
-
 		setPosition(position);
+		makeBorder();
 	}
 	
 	private void makeBorder() {
+		//used for selecting the page
 		border = p.createShape(RECT, 0 - (getWidth() / 2), 0 - (getHeight() / 2), getWidth(), getHeight());
-		border.setStroke(p.color(0,255,0));
-		border.noFill();
-		border.setStrokeWeight(4);
+//		border.setStroke(p.color(0,255,0));
+//		border.noFill();
+//		border.setStrokeWeight(4);
 		border.scale(size);
-		border.rotate(angle);
-		
+		border.rotate(PApplet.radians(angle));
+		border.translate(position.x, position.y);
 	}
 
 	public PVector getPosition() {
@@ -69,12 +69,14 @@ public class Page extends Editable {
 			this.position.y = pos.y;
 		}
 		doAdjustedRect();
+		makeBorder();
 	}
 
 	public void addPosition(float x, float y) {
 		this.position.x += x;
 		this.position.y += y;
 		doAdjustedRect();
+		makeBorder();
 	}
 
 	private void doAdjustedRect() {
@@ -94,6 +96,10 @@ public class Page extends Editable {
 
 	public Rectangle getAdjusted() {
 		return adjustedRect;
+	}
+	
+	public PShape getBorder() {
+		return border;
 	}
 
 	public void draw(float scale) {
@@ -125,8 +131,7 @@ public class Page extends Editable {
 		p.rotate(PApplet.radians(angle)); // angle of the page
 		p.scale(flipX, flipY); // flipping the page
 		p.imageMode(CENTER);
-		p.image(pageGraphics, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
-		p.shape(border);
+		p.image(pageGraphics, 0, 0); // draw the page
 		p.popMatrix();
 
 //		p.pushMatrix();
