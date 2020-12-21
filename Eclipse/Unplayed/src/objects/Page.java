@@ -25,6 +25,8 @@ public class Page extends Editable {
 	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
 							// page is on screen and therefore should be drawn)
 
+	private PShape border;
+
 	private int rectangleCount = -1;
 
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
@@ -40,7 +42,23 @@ public class Page extends Editable {
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 		this.tiles = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 
+		border = p.createShape(RECT, 0 - (rWidth / 2), 0 - (rHeight / 2), rWidth, rHeight);
+		border.setStroke(p.color(0,255,0));
+		border.noFill();
+		border.setStrokeWeight(4);
+		//border.rotate();
+
 		setPosition(position);
+	}
+	
+	private void makeBorder() {
+		border = p.createShape(RECT, 0 - (getWidth() / 2), 0 - (getHeight() / 2), getWidth(), getHeight());
+		border.setStroke(p.color(0,255,0));
+		border.noFill();
+		border.setStrokeWeight(4);
+		border.scale(size);
+		border.rotate(angle);
+		
 	}
 
 	public PVector getPosition() {
@@ -264,6 +282,7 @@ public class Page extends Editable {
 		g.rotate(PApplet.radians(angle)); // angle of the page
 		g.rectMode(CENTER);
 		g.rect(0, 0, adjustedRect.getWidth(), adjustedRect.getHeight());
+		g.shape(border);
 		g.popMatrix();
 	}
 
@@ -291,9 +310,22 @@ public class Page extends Editable {
 //		redraw = false;
 //
 //	}
+	
+	@Override
+	public void setAngle(float angle) {
+		super.setAngle(angle);
+		makeBorder();
+	}
+	
+	@Override
+	public void addAngle(float angle) {
+		super.addAngle(angle);
+		makeBorder();
+	}
 
 	public void setSize(float size) {
 		this.size = size;
+		makeBorder();
 	}
 
 	public void addSize(float size) {
@@ -302,6 +334,7 @@ public class Page extends Editable {
 		} else {
 			this.size = 0.5f;
 		}
+		makeBorder();
 	}
 
 	public float getSize() {
