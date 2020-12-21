@@ -96,7 +96,7 @@ public class Page extends Editable {
 		p.scale(flipX, flipY); // flipping the page
 		p.imageMode(CENTER);
 		p.image(tiles, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
-		p.image(pageGraphics, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
+		//p.image(pageGraphics, 0, 0); // draw the page //, pageGraphics.width, pageGraphics.height
 		p.popMatrix();
 		
 //		p.pushMatrix();
@@ -195,7 +195,7 @@ public class Page extends Editable {
 		if (game.player != null) {
 			game.player.draw(pageGraphics, scale / size);
 		}
-		game.paper.draw(pageGraphics, view, scale / size);
+//		game.paper.draw(pageGraphics, view, scale / size);
 		// end drawing on the page
 		pageGraphics.endDraw();
 	}
