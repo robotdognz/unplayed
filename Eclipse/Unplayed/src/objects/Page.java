@@ -45,9 +45,9 @@ public class Page extends Editable {
 		setPosition(position);
 		makeBorder();
 	}
-	
+
 	private void makeBorder() {
-		//used for selecting the page
+		// used for selecting the page
 		border = p.createShape(RECT, 0 - (getWidth() / 2), 0 - (getHeight() / 2), getWidth(), getHeight());
 //		border.setStroke(p.color(0,255,0));
 //		border.noFill();
@@ -55,6 +55,11 @@ public class Page extends Editable {
 		border.scale(size);
 		border.rotate(PApplet.radians(angle));
 		border.translate(position.x, position.y);
+
+		// TODO: try using this to make a bounding box
+		// draw the width and height on screen and see if they correspond to the sides
+		// of the box, or its bounding box
+		// if it's the width and height of the bounding box, then use that
 	}
 
 	public PVector getPosition() {
@@ -97,21 +102,22 @@ public class Page extends Editable {
 	public Rectangle getAdjusted() {
 		return adjustedRect;
 	}
-	
+
 	public PShape getBorder() {
 		return border;
 	}
 
 	public void draw(float scale) {
-//		if (redraw) {
-//			drawView(scale);
-//		}
+		if (redraw) {
+			drawView();
+			redraw = false;
+		}
 //		checkRedraw();
 
-		if (pageObjects.size() != rectangleCount) {
-			drawView(scale);
-			rectangleCount = pageObjects.size();
-		}
+//		if (pageObjects.size() != rectangleCount) {
+//			drawView(); //scale
+//			rectangleCount = pageObjects.size();
+//		}
 
 		pageGraphics.beginDraw();
 		pageGraphics.background(240); // background
@@ -119,7 +125,7 @@ public class Page extends Editable {
 		pageGraphics.image(tiles, 0, 0); // environment
 		pageGraphics.translate(-view.getX(), -view.getY());
 		if (game.player != null) {
-			game.player.draw(pageGraphics, scale / size); // player
+			game.player.draw(pageGraphics, 3); // player scale/size
 		}
 		game.paper.draw(pageGraphics, view, scale / size); // paper effect
 		pageGraphics.endDraw();
@@ -144,7 +150,7 @@ public class Page extends Editable {
 //		p.popMatrix();
 	}
 
-	private void drawView(float scale) {
+	public void drawView() { //float scale
 
 		// draw the view that will be shown on the page
 //		ArrayList<Rectangle> drawFirst = new ArrayList<Rectangle>();
@@ -311,13 +317,13 @@ public class Page extends Editable {
 //		redraw = false;
 //
 //	}
-	
+
 	@Override
 	public void setAngle(float angle) {
 		super.setAngle(angle);
 		makeBorder();
 	}
-	
+
 	@Override
 	public void addAngle(float angle) {
 		super.addAngle(angle);
@@ -346,9 +352,14 @@ public class Page extends Editable {
 		// get objects visible to this page
 		pageObjects.clear();
 		game.world.retrieve(pageObjects, view);
+		
+		if (pageObjects.size() != rectangleCount) {
+			redraw = true;
+		}
 
 		// the step and draw process could be optimized by getting pageObjects once when
 		// the level is run
+		rectangleCount = pageObjects.size();
 
 	}
 

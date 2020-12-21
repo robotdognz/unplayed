@@ -87,7 +87,7 @@ public class AppLogic {
 	public Editor getEditor() {
 		return editor;
 	}
-	
+
 	public void setUri(Uri uri) {
 		files.setUri(uri);
 	}
@@ -112,11 +112,13 @@ public class AppLogic {
 			} else {
 				controller.step(touches);
 			}
-			game.step(); // step game
 		}
 
-		// draw the game
+		// step/draw the game
 		if (!editorToggle || editor == null || (editor != null && editor.showPageView)) {
+			if (!gPaused) {
+				game.step(); // step game
+			}
 			game.draw(); // draw the game
 		}
 
