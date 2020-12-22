@@ -24,7 +24,9 @@ public class PlayerStart extends CameraChange {
 			if (r instanceof PlayerStart) {
 				Tile oldRequired = ((PlayerStart) r).getRequired();
 				game.world.remove(r);
-				game.world.insert(oldRequired);
+				if (oldRequired != null) {
+					game.world.insert(oldRequired);
+				}
 			}
 		}
 
