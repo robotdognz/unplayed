@@ -49,14 +49,7 @@ public class PlayerEnd extends Event {
 	public Tile getRequired() {
 		return required;
 	}
-	
-	public boolean hasRequired() {
-		if(required != null) {
-			return true;
-		}
-//		return false;
-		return true;
-	}
+
 
 	private void drawNewPlayerArea(PGraphics g) {
 		g.noStroke();

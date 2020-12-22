@@ -95,7 +95,8 @@ public class EventTool extends AreaTool {
 		// remove what was found and place the new event
 		if (editor.currentEvent != null) {
 			if (foundAtPoint != null) {
-				editor.world.remove(foundAtPoint);
+				return;
+				//editor.world.remove(foundAtPoint);
 			}
 			editor.world.insert(toInsert);
 		}
@@ -108,7 +109,7 @@ public class EventTool extends AreaTool {
 			}
 		}
 		if (toInsert instanceof PlayerEnd) {
-			if (!((PlayerEnd) toInsert).hasRequired()) {
+			if (((PlayerEnd) toInsert).getRequired() == null) {
 				editor.world.remove(toInsert);
 				return;
 			}
