@@ -108,7 +108,7 @@ public class EventTool extends AreaTool {
 			}
 		}
 		if (toInsert instanceof PlayerEnd) {
-			if (((PlayerEnd) toInsert).hasRequired()) {
+			if (!((PlayerEnd) toInsert).hasRequired()) {
 				editor.world.remove(toInsert);
 				return;
 			}
