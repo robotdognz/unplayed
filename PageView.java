@@ -51,20 +51,28 @@ public class PageView {
 		float ratio = (float) temp.height / (float) temp.width;
 		p.image(temp, 0, 0, p.width * 5, p.width * 5 * ratio);
 
+		//calculate page drawing area
+		PVector topLeft;
+		PVector bottomRight;
+		if (game.camera.getGame()) {
+			topLeft = game.cameraArea.getTopLeft();
+			bottomRight = game.cameraArea.getBottomRight();
+		} else {
+			topLeft = convert.screenToLevel(0, 0);
+			bottomRight = convert.screenToLevel(p.width, p.height);
+		}
+		//draw pages that are inside that area
 		for (Page page : pages) {
-			// TODO: use camera rectangle when camera.getGame() is true
-			PVector screenTopLeft = convert.screenToLevel(0, 0);
-			PVector screenBottomRight = convert.screenToLevel(p.width, p.height);
-			if (page.leftOf(screenTopLeft.x)) {
+			if (page.leftOf(topLeft.x)) {
 				continue;
 			}
-			if (page.rightOf(screenBottomRight.x)) {
+			if (page.rightOf(bottomRight.x)) {
 				continue;
 			}
-			if (page.above(screenTopLeft.y)) {
+			if (page.above(topLeft.y)) {
 				continue;
 			}
-			if (page.below(screenBottomRight.y)) {
+			if (page.below(bottomRight.y)) {
 				continue;
 			}
 
