@@ -102,6 +102,10 @@ public class PlayerEnd extends Event {
 		if (player.getTopLeft().y != getTopLeft().y) {
 			return;
 		}
+		
+		if(!player.getFile().equals(required.getFile())) {
+			return;
+		}
 
 		// the player is perfectly in the slot
 		if (levelEnd) { // if this is the end of the level
