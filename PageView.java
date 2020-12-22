@@ -52,22 +52,22 @@ public class PageView {
 		p.image(temp, 0, 0, p.width * 5, p.width * 5 * ratio);
 
 		for (Page page : pages) {
-			//TODO: use camera rectangle when camera.getGame() is true
+			// TODO: use camera rectangle when camera.getGame() is true
 			PVector screenTopLeft = convert.screenToLevel(0, 0);
 			PVector screenBottomRight = convert.screenToLevel(p.width, p.height);
-			if(page.leftOf(screenTopLeft.x)) {
+			if (page.leftOf(screenTopLeft.x)) {
 				continue;
 			}
-			if(page.rightOf(screenBottomRight.x)) {
+			if (page.rightOf(screenBottomRight.x)) {
 				continue;
 			}
-			if(page.above(screenTopLeft.y)) {
+			if (page.above(screenTopLeft.y)) {
 				continue;
 			}
-			if(page.below(screenBottomRight.y)) {
+			if (page.below(screenBottomRight.y)) {
 				continue;
 			}
-			
+
 			page.draw(currentScale);
 		}
 
@@ -110,22 +110,24 @@ public class PageView {
 			return null;
 		}
 		for (Page page : pages) {
-			//Rectangle p = page.getAdjusted();
-			if (page.getTopLeft().x > x) {
-				continue;
-			}
-			if (page.getBottomRight().x < x) {
-				continue;
-			}
-			if (page.getTopLeft().y > y) {
-				continue;
-			}
-			if (page.getBottomRight().y < y) {
-				continue;
-			}
+			// Rectangle p = page.getAdjusted();
+//			if (page.getTopLeft().x > x) {
+//				continue;
+//			}
+//			if (page.getBottomRight().x < x) {
+//				continue;
+//			}
+//			if (page.getTopLeft().y > y) {
+//				continue;
+//			}
+//			if (page.getBottomRight().y < y) {
+//				continue;
+//			}
 			// return the first overlap
-			return page;
-			
+			if (page.isInside(x, y)) {
+				return page;
+			}
+
 //			PShape border = page.getBorder();
 //			float area = border.height * border.width;
 		}

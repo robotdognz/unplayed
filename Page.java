@@ -85,7 +85,25 @@ public class Page extends Editable {
 	}
 
 	public boolean isInside(float x, float y) {
-		return false;
+		PVector point = new PVector(x,y);
+		point.x -= position.x;
+		point.y -= position.y;
+		point.rotate(PApplet.radians(-angle));
+		
+		if (-(getWidth()/2)*size > point.x) { //(page.getTopLeft().x > x)
+			return false;
+		}
+		if ((getWidth()/2)*size < point.x) { //page.getBottomRight().x < point.x
+			return false;
+		}
+		if (-(getHeight()/2)*size > point.y) { //page.getTopLeft().y > point.y
+			return false;
+		}
+		if ((getHeight()/2)*size < point.y) { //page.getBottomRight().y < point.y
+			return false;
+		}
+		
+		return true;
 	}
 
 	public PVector getPosition() {
