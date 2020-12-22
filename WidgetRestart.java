@@ -24,7 +24,11 @@ public class WidgetRestart extends Widget {
 
 	@Override
 	public void updateActive() {
-
+		if (game.player != null) {
+			available = true;
+		} else {
+			available = false;
+		}
 	}
 
 }
