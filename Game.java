@@ -190,7 +190,7 @@ public class Game {
 	public void createPlayer(Rectangle playerArea) {
 		if (playerArea instanceof PlayerStart) {
 			Tile current = ((PlayerStart) playerArea).getRequired();
-			player = new Player(p, texture, current.getFile(), current.getX(), current.getY(), vibe);
+			player = new Player(p, texture, current, vibe);
 		} else {
 			HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
 			ArrayList<Tile> newPlayer = new ArrayList<Tile>();
