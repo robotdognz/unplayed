@@ -11,11 +11,11 @@ import processing.core.PGraphics;
 
 public class PlayerStart extends CameraChange {
 	private Tile required;
-	// Game game;
+	private Game game;
 
 	public PlayerStart(PApplet p, TextureCache texture, String name, float x, float y, Game game) {
 		super(p, texture, name, x, y);
-		// this.game = game;
+		this.game = game;
 
 		// remove all other player starts
 		HashSet<Rectangle> returnSet = new HashSet<Rectangle>();
@@ -61,9 +61,14 @@ public class PlayerStart extends CameraChange {
 	public Tile getRequired() {
 		return required;
 	}
-	
+
 	public void setRequired(Tile required) {
 		this.required = required;
+
+		if (this.required != null) {
+			// set player start
+			game.setPlayerStart(this);
+		}
 	}
 
 }
