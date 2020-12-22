@@ -240,9 +240,9 @@ public class Game {
 			world.insert(previousPlayer);
 			createPlayer(playerCheckpoint);
 		} else if (playerStart != null) { // if there is a player start
-			Rectangle previousPlayer = removed.get(removed.size() - 1);
-			removed.remove(previousPlayer);
-			world.insert(previousPlayer);
+//			Rectangle previousPlayer = removed.get(removed.size() - 1);
+//			removed.remove(previousPlayer);
+//			world.insert(previousPlayer);
 			createPlayer(playerStart);
 		}
 		if (cameraAreaCheckpoint != null) { // if there is a camera checkpoint

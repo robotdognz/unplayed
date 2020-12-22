@@ -96,7 +96,7 @@ public class EventTool extends AreaTool {
 		if (editor.currentEvent != null) {
 			if (foundAtPoint != null) {
 				return;
-				//editor.world.remove(foundAtPoint);
+				// editor.world.remove(foundAtPoint);
 			}
 			editor.world.insert(toInsert);
 		}
@@ -148,12 +148,16 @@ public class EventTool extends AreaTool {
 
 			if (p instanceof PlayerStart) {
 				Tile oldStart = ((PlayerStart) p).getRequired();
-				editor.world.insert(oldStart);
+				if (oldStart != null) {
+					editor.world.insert(oldStart);
+				}
 				editor.game.player = null;
 			}
 			if (p instanceof PlayerEnd) {
 				Tile oldEnd = ((PlayerEnd) p).getRequired();
-				editor.world.insert(oldEnd);
+				if (oldEnd != null) {
+					editor.world.insert(oldEnd);
+				}
 			}
 			editor.world.remove(p);
 			if (p.equals(editor.selected)) {

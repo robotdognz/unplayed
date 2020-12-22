@@ -102,7 +102,9 @@ public class PlayerEnd extends Event {
 		if (player.getTopLeft().y != getTopLeft().y) {
 			return;
 		}
-		
+		if(required == null) {
+			return;
+		}
 		if(!player.getFile().equals(required.getFile())) {
 			return;
 		}
