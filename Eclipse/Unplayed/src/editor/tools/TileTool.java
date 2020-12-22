@@ -10,6 +10,8 @@ import game.Game;
 import handlers.TextureCache;
 import objects.Rectangle;
 import objects.Tile;
+import objects.events.PlayerEnd;
+import objects.events.PlayerStart;
 import processing.core.PVector;
 
 public class TileTool implements Tool {
@@ -58,17 +60,27 @@ public class TileTool implements Tool {
 	private void add(Tile toInsert, HashSet<Rectangle> getRectangles) {
 		// find anything that directly overlaps the inserting tile
 		Tile foundAtPoint = null;
+		PlayerStart foundStart = null;
+		PlayerEnd foundEnd = null;
 		for (Rectangle p : getRectangles) {
-			if (p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()
-					&& toInsert.getClass().equals(p.getClass())) {
-				foundAtPoint = (Tile) p;
+			if (p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()) {
+				if (p instanceof Tile) {
+					foundAtPoint = (Tile) p;
+					break;
+				} else if (p instanceof PlayerStart) {
+					foundStart = (PlayerStart) p;
+					break;
+				} else if (p instanceof PlayerEnd) {
+					foundEnd = (PlayerEnd) p;
+					break;
+				}
 			}
 		}
 		// remove what was found and place the new tile
 		if (editor.currentTile != null) {
-			
-			//check if there is a tile in this position in game.removed
-			for(Tile t : game.removed) {
+
+			// check if there is a tile in this position in game.removed
+			for (Tile t : game.removed) {
 				if (toInsert.getTopLeft().x > t.getBottomRight().x - 1) {
 					continue;
 				}
@@ -81,15 +93,23 @@ public class TileTool implements Tool {
 				if (toInsert.getBottomRight().y < t.getTopLeft().y + 1) {
 					continue;
 				}
-				//match found
+				// match found
 				return;
 			}
-			
-			//run as normal if no tile was found in game.removed
-			if (foundAtPoint != null) {
-				editor.world.remove(foundAtPoint);
+
+			// if we found a PlayerStart or PlayerEnd
+			if (foundStart != null) {
+				foundStart.setRequired(toInsert);
+			} else if (foundEnd != null) {
+				foundEnd.setRequired(toInsert);
+			} else {
+
+				// run as normal if no tile was found in game.removed
+				if (foundAtPoint != null) {
+					editor.world.remove(foundAtPoint);
+				}
+				editor.world.insert(toInsert);
 			}
-			editor.world.insert(toInsert);
 		}
 
 		// select the newly inserted tile
@@ -118,12 +138,12 @@ public class TileTool implements Tool {
 			if (p.getBottomRight().y < toInsert.getTopLeft().y + 1) {
 				continue;
 			}
-			
-			//check if the tile is also in game.placed
-			if(game.placed != null && game.placed.contains(p)) {
+
+			// check if the tile is also in game.placed
+			if (game.placed != null && game.placed.contains(p)) {
 				continue;
 			}
-			
+
 			editor.world.remove(p);
 			if (p.equals(editor.selected)) {
 				editor.selected = null;

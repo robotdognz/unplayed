@@ -49,6 +49,10 @@ public class PlayerEnd extends Event {
 	public Tile getRequired() {
 		return required;
 	}
+	
+	public void setRequired(Tile required) {
+		this.required = required;
+	}
 
 	@Override
 	public void draw(PGraphics graphics, float scale) {

@@ -61,5 +61,9 @@ public class PlayerStart extends CameraChange {
 	public Tile getRequired() {
 		return required;
 	}
+	
+	public void setRequired(Tile required) {
+		this.required = required;
+	}
 
 }

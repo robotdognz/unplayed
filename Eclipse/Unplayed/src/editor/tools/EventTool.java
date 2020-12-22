@@ -102,21 +102,17 @@ public class EventTool extends AreaTool {
 		}
 
 		// prevent inserting PlayerStart and PlayerEnd on empty square
-		if (toInsert instanceof PlayerStart) {
-			if (((PlayerStart) toInsert).getRequired() == null) {
-				editor.world.remove(toInsert);
-				return;
-			}
-		}
-		if (toInsert instanceof PlayerEnd) {
-			if (((PlayerEnd) toInsert).getRequired() == null) {
-				editor.world.remove(toInsert);
-				return;
-			}
-		}
-//		if (toInsert instanceof PlayerEnd && ((PlayerEnd) toInsert).getRequired() == null) {
-//			editor.world.remove(toInsert);
-//			return;
+//		if (toInsert instanceof PlayerStart) {
+//			if (((PlayerStart) toInsert).getRequired() == null) {
+//				editor.world.remove(toInsert);
+//				return;
+//			}
+//		}
+//		if (toInsert instanceof PlayerEnd) {
+//			if (((PlayerEnd) toInsert).getRequired() == null) {
+//				editor.world.remove(toInsert);
+//				return;
+//			}
 //		}
 
 		// select the newly inserted event
