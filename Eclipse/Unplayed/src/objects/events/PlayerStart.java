@@ -47,7 +47,9 @@ public class PlayerStart extends CameraChange {
 		}
 
 		// set player start
-		game.setPlayerStart(this);
+		if (this.required != null) {
+			game.setPlayerStart(this);
+		}
 	}
 
 	@Override
@@ -67,6 +69,7 @@ public class PlayerStart extends CameraChange {
 
 		if (this.required != null) {
 			// start a new game with the new player
+			game.setPlayerStart(this);
 			game.startGame();
 		}
 	}
