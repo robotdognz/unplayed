@@ -123,7 +123,7 @@ public class TileTool implements Tool {
 	private void erase(Tile toInsert, HashSet<Rectangle> getRectangles) {
 		for (Rectangle p : getRectangles) {
 			// if the rectangle overlaps toInsert, remove it
-			if (!(p instanceof Tile)) {
+			if (!(p instanceof Tile || p instanceof PlayerStart || p instanceof PlayerEnd)) {
 				continue;
 			}
 			if (p.getTopLeft().x > toInsert.getBottomRight().x - 1) {
@@ -139,15 +139,30 @@ public class TileTool implements Tool {
 				continue;
 			}
 
-			// check if the tile is also in game.placed
+			// check if the tile is also in game.placed, if so, prevent removing it
 			if (game.placed != null && game.placed.contains(p)) {
 				continue;
 			}
 
-			editor.world.remove(p);
-			if (p.equals(editor.selected)) {
-				editor.selected = null;
+			if (p instanceof Tile) {
+				editor.world.remove(p);
+				if (p.equals(editor.selected)) {
+					editor.selected = null;
+				}
+			} else if (p instanceof PlayerStart) {
+				Tile required = ((PlayerStart) p).getRequired();
+				if (required != null && required.equals(editor.selected)) {
+					editor.selected = null;
+				}
+				((PlayerStart) p).setRequired(null);
+			} else if (p instanceof PlayerEnd) {
+				Tile required = ((PlayerEnd) p).getRequired();
+				if (required != null && required.equals(editor.selected)) {
+					editor.selected = null;
+				}
+				((PlayerEnd) p).setRequired(null);
 			}
+
 		}
 
 	}
