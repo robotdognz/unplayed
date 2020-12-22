@@ -178,16 +178,38 @@ public class TileTool implements Tool {
 		// if there are things to check
 		// try to find exact match
 		Tile foundAtPoint = null;
+		PlayerStart foundStart = null;
+		PlayerEnd foundEnd = null;
 		for (Rectangle p : getRectangles) {
-			if (p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()
-					&& toInsert.getClass().equals(p.getClass())) {
-				foundAtPoint = (Tile) p;
+			if (p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()) {
+				if (p instanceof Tile) {
+					foundAtPoint = (Tile) p;
+					break;
+				} else if (p instanceof PlayerStart) {
+					foundStart = (PlayerStart) p;
+					break;
+				} else if (p instanceof PlayerEnd) {
+					foundEnd = (PlayerEnd) p;
+					break;
+				}
 			}
 		}
 
 		if (foundAtPoint != null) {
 			// if it found an exact match
 			editor.selected = foundAtPoint;
+		} else if (foundStart != null) {
+			// if it found a PlayerStart
+			Tile required = foundStart.getRequired();
+			if (required != null) {
+				editor.selected = required;
+			}
+		} else if (foundEnd != null) {
+			// if it found a PlayerEnd
+			Tile required = foundEnd.getRequired();
+			if (required != null) {
+				editor.selected = required;
+			}
 		} else {
 			// if there is no exact match, look for overlaps
 			for (Rectangle p : getRectangles) {

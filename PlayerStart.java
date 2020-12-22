@@ -66,8 +66,7 @@ public class PlayerStart extends CameraChange {
 		this.required = required;
 
 		if (this.required != null) {
-			// set player start
-//			game.setPlayerStart(this);
+			// start a new game with the new player
 			game.startGame();
 		}
 	}
