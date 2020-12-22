@@ -13,14 +13,14 @@ import objects.Tile;
 import processing.core.PGraphics;
 
 public class PlayerEnd extends Event {
-	private Game game;
+	//private Game game;
 	private boolean levelEnd;
 	private Tile required;
 	private Rectangle newPlayerArea;
 
 	public PlayerEnd(TextureCache texture, String name, float x, float y, Game game) {
 		super(texture, name, false, x, y, 100, 100);
-		this.game = game;
+		//this.game = game;
 		levelEnd = true;
 		newPlayerArea = new Rectangle(getX() + getWidth(), getY() - getHeight(), getWidth(), getHeight());
 
@@ -42,7 +42,7 @@ public class PlayerEnd extends Event {
 		}
 
 		if (required != null) {
-			this.game.world.remove(required);
+			game.world.remove(required);
 		}
 	}
 
