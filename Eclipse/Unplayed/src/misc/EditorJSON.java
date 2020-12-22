@@ -53,12 +53,12 @@ public class EditorJSON {
 			if (path.matches(".+.unplayed$")) {
 				file = new File(path);
 			} else {
-				//delete the file made by the file explorer
+				// delete the file made by the file explorer
 				File f = new File(path);
 				if (f.exists()) {
 					f.delete();
 				}
-				//create the file
+				// create the file
 				file = new File(path + ".unplayed");
 			}
 
@@ -99,7 +99,7 @@ public class EditorJSON {
 				object.setString("file", (((Image) r).getFile()).toString());
 			} else if (r instanceof Event) { // events
 				object.setString("name", ((Event) r).getName());
-				if (r instanceof PlayerStart) {
+				if (r instanceof PlayerStart) { // PlayerStart
 					object.setString("type", "PlayerStart");
 					object.setFloat("cameraTopLeftX", ((CameraChange) r).getCameraTopLeft().x);
 					object.setFloat("cameraTopLeftY", ((CameraChange) r).getCameraTopLeft().y);
@@ -108,13 +108,15 @@ public class EditorJSON {
 					object.setFloat("cameraZoom", ((CameraChange) r).getCameraZoom());
 					object.setFloat("edgeZoom", ((CameraChange) r).getEdgeZoom());
 					object.setInt("color", ((CameraChange) r).getColor());
-				} else if (r instanceof PlayerEnd) {
+					saveTile(values, ((PlayerStart) r).getRequired());
+				} else if (r instanceof PlayerEnd) { // PlayerEnd
 					object.setString("type", "PlayerEnd");
 					object.setBoolean("end", ((PlayerEnd) r).getLevelEnd());
 					object.setFloat("newPlayerX", ((PlayerEnd) r).getNewPlayerArea().getTopLeft().x);
 					object.setFloat("newPlayerY", ((PlayerEnd) r).getNewPlayerArea().getTopLeft().y);
 					object.setFloat("newPlayerWidth", ((PlayerEnd) r).getNewPlayerArea().getWidth());
 					object.setFloat("newPlayerHeight", ((PlayerEnd) r).getNewPlayerArea().getHeight());
+					saveTile(values, ((PlayerStart) r).getRequired());
 				} else if (r instanceof PlayerDeath) {
 					object.setString("type", "PlayerDeath");
 				} else if (r instanceof CameraChange) {
@@ -131,6 +133,23 @@ public class EditorJSON {
 
 			values.setJSONObject(values.size(), object); // add it on to the end
 		}
+	}
+
+	private void saveTile(JSONArray values, Tile tile) {
+		if (tile == null) {
+			return;
+		}
+		JSONObject object = new JSONObject();
+		object.setString("type", "tile");
+		object.setString("file", tile.getFile().toString());
+		object.setInt("pX", (int) tile.getX());
+		object.setInt("pY", (int) tile.getY());
+		object.setInt("pWidth", (int) tile.getWidth());
+		object.setInt("pHeight", (int) tile.getHeight());
+		object.setBoolean("flipH", tile.isFlippedH());
+		object.setBoolean("flipV", tile.isFlippedV());
+		object.setFloat("angle", tile.getAngle());
+		values.setJSONObject(values.size(), object); // add it on to the end
 	}
 
 	private void saveRemoved(JSONArray values, Editor editor) {
@@ -199,6 +218,7 @@ public class EditorJSON {
 			game.world.clear();
 			game.placed.clear();
 			game.removed.clear();
+			loadTiles(values, game);
 			loadWorldObjects(values, game);
 			loadViews(values, game);
 			loadPages(values, game);
@@ -209,6 +229,34 @@ public class EditorJSON {
 		}
 	}
 
+	private void loadTiles(JSONArray values, Game game) {
+		HashSet<Rectangle> worldObjects = new HashSet<Rectangle>();
+		for (int i = 0; i < values.size(); i++) {
+			JSONObject object = values.getJSONObject(i);
+			String type = object.getString("type");
+			if (type.equals("tile")) {
+				int pX = object.getInt("pX");
+				int pY = object.getInt("pY");
+				File textureFile = new File(object.getString("file"));
+				boolean flipH = object.getBoolean("flipH");
+				boolean flipV = object.getBoolean("flipV");
+				float angle = object.getFloat("angle");
+				Tile t = new Tile(texture, textureFile, pX, pY);
+				t.setAngle(angle);
+				if (flipH) {
+					t.flipH();
+				}
+				if (flipV) {
+					t.flipV();
+				}
+				worldObjects.add(t);
+			}
+		}
+		for (Rectangle r : worldObjects) {
+			game.world.insert(r);
+		}
+	}
+
 	private void loadWorldObjects(JSONArray values, Game game) {
 		HashSet<Rectangle> worldObjects = new HashSet<Rectangle>();
 
@@ -216,28 +264,29 @@ public class EditorJSON {
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
 			String type = object.getString("type");
-			if (type.equals("tile") || type.equals("image") || type.equals("PlayerStart") || type.equals("PlayerEnd")
+			if (type.equals("image") || type.equals("PlayerStart") || type.equals("PlayerEnd") // type.equals("tile") ||
 					|| type.equals("PlayerDeath") || type.equals("CameraChange")) {
 				int pX = object.getInt("pX");
 				int pY = object.getInt("pY");
 				int pWidth = object.getInt("pWidth");
 				int pHeight = object.getInt("pHeight");
 
-				if (type.equals("tile")) { // if it is a tile
-					File textureFile = new File(object.getString("file"));
-					boolean flipH = object.getBoolean("flipH");
-					boolean flipV = object.getBoolean("flipV");
-					float angle = object.getFloat("angle");
-					Tile t = new Tile(texture, textureFile, pX, pY);
-					t.setAngle(angle);
-					if (flipH) {
-						t.flipH();
-					}
-					if (flipV) {
-						t.flipV();
-					}
-					worldObjects.add(t);
-				} else if (type.equals("image")) { // if it is an image
+//				if (type.equals("tile")) { // if it is a tile
+//					File textureFile = new File(object.getString("file"));
+//					boolean flipH = object.getBoolean("flipH");
+//					boolean flipV = object.getBoolean("flipV");
+//					float angle = object.getFloat("angle");
+//					Tile t = new Tile(texture, textureFile, pX, pY);
+//					t.setAngle(angle);
+//					if (flipH) {
+//						t.flipH();
+//					}
+//					if (flipV) {
+//						t.flipV();
+//					}
+//					worldObjects.add(t);
+//				} else 
+				if (type.equals("image")) { // if it is an image
 					File textureFile = new File(object.getString("file"));
 					boolean flipH = object.getBoolean("flipH");
 					boolean flipV = object.getBoolean("flipV");
@@ -276,8 +325,9 @@ public class EditorJSON {
 				} else if (type.equals("PlayerEnd")) {
 					String name = object.getString("name");
 					boolean end = object.getBoolean("end");
-					Rectangle newPlayerArea = new Rectangle(object.getFloat("newPlayerX"), object.getFloat("newPlayerY"),
-							object.getFloat("newPlayerWidth"), object.getFloat("newPlayerHeight"));
+					Rectangle newPlayerArea = new Rectangle(object.getFloat("newPlayerX"),
+							object.getFloat("newPlayerY"), object.getFloat("newPlayerWidth"),
+							object.getFloat("newPlayerHeight"));
 					PlayerEnd pe = new PlayerEnd(texture, name, pX, pY, game);
 					pe.setLevelEnd(end);
 					pe.setNewPlayerArea(newPlayerArea);

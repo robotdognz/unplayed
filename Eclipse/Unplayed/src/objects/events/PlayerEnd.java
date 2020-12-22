@@ -52,7 +52,9 @@ public class PlayerEnd extends Event {
 
 	@Override
 	public void draw(PGraphics graphics, float scale) {
-		required.drawTransparent(graphics, scale);
+		if (required != null) {
+			required.drawTransparent(graphics, scale);
+		}
 		super.draw(graphics, scale);
 	}
 
