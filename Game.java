@@ -177,54 +177,98 @@ public class Game {
 	public void endPuzzle(Rectangle playerArea) {
 		// pause
 		p.delay(180);
-		// update the checkpoints
-		this.playerCheckpoint = playerArea.copy();
-		this.cameraAreaCheckpoint = cameraArea.copy();
-		// fill the slot with a matching tile
-		Tile newTile = new Tile(texture, player.getFile(), player.getX(), player.getY());
-		world.insert(newTile);
-		placed.add(newTile);
-		createPlayer(playerArea);
+
+		HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
+		world.retrieve(returnObjects, playerArea);
+		Tile found = null;
+		for (Rectangle r : returnObjects) {
+			if (!(r instanceof Tile)) {
+				continue;
+			}
+			if (r.getTopLeft().x > playerArea.getBottomRight().x - 1) {
+				continue;
+			}
+			if (r.getBottomRight().x < playerArea.getTopLeft().x + 1) {
+				continue;
+			}
+			if (r.getTopLeft().y > playerArea.getBottomRight().y - 1) {
+				continue;
+			}
+			if (r.getBottomRight().y < playerArea.getTopLeft().y + 1) {
+				continue;
+			}
+
+			found = ((Tile) r);
+		}
+		if (found != null) {
+			// update the checkpoints
+			this.playerCheckpoint = found.copy();
+			this.cameraAreaCheckpoint = cameraArea.copy();
+			// fill the slot with a matching tile
+			Tile newTile = new Tile(texture, player.getFile(), player.getX(), player.getY());
+			if (player.isFlippedH()) {
+				newTile.flipH();
+			}
+			if (player.isFlippedV()) {
+				newTile.flipV();
+			}
+			newTile.setAngle(player.getAngle());
+			world.insert(newTile);
+			placed.add(newTile);
+			createPlayer(found);
+		}
+
+//		// update the checkpoints
+//		this.playerCheckpoint = playerArea.copy();
+//		this.cameraAreaCheckpoint = cameraArea.copy();
+//		// fill the slot with a matching tile
+//		Tile newTile = new Tile(texture, player.getFile(), player.getX(), player.getY());
+//		world.insert(newTile);
+//		placed.add(newTile);
+//		createPlayer(playerArea);
 	}
 
 	public void createPlayer(Rectangle playerArea) {
 		if (playerArea instanceof PlayerStart) {
 			Tile current = ((PlayerStart) playerArea).getRequired();
 			player = new Player(p, texture, current, vibe);
-		} else {
-			HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
-			ArrayList<Tile> newPlayer = new ArrayList<Tile>();
-			world.retrieve(returnObjects, playerArea);
-			for (Rectangle r : returnObjects) {
-				if (!(r instanceof Tile)) {
-					continue;
-				}
-				if (r.getTopLeft().x > playerArea.getBottomRight().x - 1) {
-					continue;
-				}
-				if (r.getBottomRight().x < playerArea.getTopLeft().x + 1) {
-					continue;
-				}
-				if (r.getTopLeft().y > playerArea.getBottomRight().y - 1) {
-					continue;
-				}
-				if (r.getBottomRight().y < playerArea.getTopLeft().y + 1) {
-					continue;
-				}
-
-				newPlayer.add((Tile) r);
-			}
-			if (newPlayer.size() > 0) {
-				File file = newPlayer.get(0).getFile(); // TODO: needs to be able to do more than just one tile file
-				removed.add(newPlayer.get(0));
-				world.remove(newPlayer.get(0));
-				if (playerCheckpoint != null) {
-					player = new Player(p, texture, file, playerCheckpoint.getX(), playerCheckpoint.getY(), vibe);
-				} else if (playerStart != null) {
-					player = new Player(p, texture, file, playerStart.getX(), playerStart.getY(), vibe);
-				}
-			}
+		} else if (playerArea instanceof Tile) {
+			player = new Player(p, texture, (Tile) playerArea, vibe);
 		}
+//		else {
+//			HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
+//			ArrayList<Tile> newPlayer = new ArrayList<Tile>();
+//			world.retrieve(returnObjects, playerArea);
+//			for (Rectangle r : returnObjects) {
+//				if (!(r instanceof Tile)) {
+//					continue;
+//				}
+//				if (r.getTopLeft().x > playerArea.getBottomRight().x - 1) {
+//					continue;
+//				}
+//				if (r.getBottomRight().x < playerArea.getTopLeft().x + 1) {
+//					continue;
+//				}
+//				if (r.getTopLeft().y > playerArea.getBottomRight().y - 1) {
+//					continue;
+//				}
+//				if (r.getBottomRight().y < playerArea.getTopLeft().y + 1) {
+//					continue;
+//				}
+//
+//				newPlayer.add((Tile) r);
+//			}
+//			if (newPlayer.size() > 0) {
+//				File file = newPlayer.get(0).getFile(); // TODO: needs to be able to do more than just one tile file
+//				removed.add(newPlayer.get(0));
+//				world.remove(newPlayer.get(0));
+//				if (playerCheckpoint != null) {
+//					player = new Player(p, texture, file, playerCheckpoint.getX(), playerCheckpoint.getY(), vibe);
+//				} else if (playerStart != null) {
+//					player = new Player(p, texture, file, playerStart.getX(), playerStart.getY(), vibe);
+//				}
+//			}
+//		}
 
 	}
 
