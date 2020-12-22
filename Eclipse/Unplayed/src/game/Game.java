@@ -34,7 +34,7 @@ public class Game {
 	public HashSet<Rectangle> playerObjects;
 	private PageView pageView;
 	private PlayerStart playerStart;
-	private Rectangle playerCheckpoint;
+	private Tile playerCheckpoint;
 
 	public Camera camera;
 	public Rectangle cameraAreaStart;
@@ -202,7 +202,7 @@ public class Game {
 		}
 		if (found != null) {
 			// update the checkpoints
-			this.playerCheckpoint = found.copy();
+			this.playerCheckpoint = found;// found.copy();
 			this.cameraAreaCheckpoint = cameraArea.copy();
 			// fill the slot with a matching tile
 			Tile newTile = new Tile(texture, player.getFile(), player.getX(), player.getY());
@@ -233,11 +233,48 @@ public class Game {
 			Tile current = ((PlayerStart) playerArea).getRequired();
 			player = new Player(p, texture, current, vibe);
 		} else if (playerArea instanceof Tile) {
-			Tile current = (Tile) playerArea;
-			removed.add(current);
-			world.remove(current);
-			player = new Player(p, texture, current, vibe);
+//			Tile current = (Tile) playerArea;
+//			removed.add(current);
+//			world.remove(current);
+//			player = new Player(p, texture, current, vibe);
+			HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
+			world.retrieve(returnObjects, playerArea);
+			Tile found = null;
+			for (Rectangle r : returnObjects) {
+				if (!(r instanceof Tile)) {
+					continue;
+				}
+				if (r.getTopLeft().x > playerArea.getBottomRight().x - 1) {
+					continue;
+				}
+				if (r.getBottomRight().x < playerArea.getTopLeft().x + 1) {
+					continue;
+				}
+				if (r.getTopLeft().y > playerArea.getBottomRight().y - 1) {
+					continue;
+				}
+				if (r.getBottomRight().y < playerArea.getTopLeft().y + 1) {
+					continue;
+				}
+
+				found = ((Tile) r);
+			}
+			if (found != null) {
+				removed.add(found);
+				world.remove(found);
+				if (playerCheckpoint != null) {
+//					player = new Player(p, texture, file, playerCheckpoint.getX(), playerCheckpoint.getY(), vibe);
+					player = new Player(p, texture, playerCheckpoint, vibe);
+				} else if (playerStart != null) {
+//					player = new Player(p, texture, file, playerStart.getX(), playerStart.getY(), vibe);
+					Tile current = ((PlayerStart) playerStart).getRequired();
+					if (current != null) {
+						player = new Player(p, texture, current, vibe);
+					}
+				}
+			}
 		}
+
 //		else {
 //			HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
 //			ArrayList<Tile> newPlayer = new ArrayList<Tile>();
