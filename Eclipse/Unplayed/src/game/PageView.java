@@ -110,26 +110,11 @@ public class PageView {
 			return null;
 		}
 		for (Page page : pages) {
-			// Rectangle p = page.getAdjusted();
-//			if (page.getTopLeft().x > x) {
-//				continue;
-//			}
-//			if (page.getBottomRight().x < x) {
-//				continue;
-//			}
-//			if (page.getTopLeft().y > y) {
-//				continue;
-//			}
-//			if (page.getBottomRight().y < y) {
-//				continue;
-//			}
 			// return the first overlap
 			if (page.isInside(x, y)) {
 				return page;
 			}
 
-//			PShape border = page.getBorder();
-//			float area = border.height * border.width;
 		}
 
 		return null;

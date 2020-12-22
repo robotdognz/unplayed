@@ -20,15 +20,13 @@ public class Page extends Editable {
 	private PGraphics tiles;
 	private boolean redraw = true;
 	private PVector position; // center of the page in page view
-//	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
-//							// page is on screen and therefore should be drawn)
 
 	// Fields used for updating contents of page
 	private int worldCount = -1;
 	private int placedCount = -1;
 	private int removedCount = -1;
 
-	// Page corners, relative to center
+	// Page corners relative to center, used to check if the page is on screen
 	PVector topLeft;
 	PVector topRight;
 	PVector bottomLeft;
@@ -51,61 +49,6 @@ public class Page extends Editable {
 		updateCorners();
 	}
 
-	private void updateCorners() {
-		if (topLeft == null) {
-			// Initialize
-			topLeft = new PVector();
-			topRight = new PVector();
-			bottomLeft = new PVector();
-			bottomRight = new PVector();
-		}
-		// set values
-		topLeft.x = 0 - (getWidth() / 2) * size;
-		topLeft.y = 0 - (getHeight() / 2) * size;
-		topRight.x = 0 + (getWidth() / 2) * size;
-		topRight.y = 0 - (getHeight() / 2) * size;
-		bottomLeft.x = 0 - (getWidth() / 2) * size;
-		bottomLeft.y = 0 + (getHeight() / 2) * size;
-		bottomRight.x = 0 + (getWidth() / 2) * size;
-		bottomRight.y = 0 + (getHeight() / 2) * size;
-		// rotate
-		topLeft.rotate(PApplet.radians(angle));
-		topRight.rotate(PApplet.radians(angle));
-		bottomLeft.rotate(PApplet.radians(angle));
-		bottomRight.rotate(PApplet.radians(angle));
-		// translate
-		topLeft.x += position.x;
-		topLeft.y += position.y;
-		topRight.x += position.x;
-		topRight.y += position.y;
-		bottomLeft.x += position.x;
-		bottomLeft.y += position.y;
-		bottomRight.x += position.x;
-		bottomRight.y += position.y;
-	}
-
-	public boolean isInside(float x, float y) {
-		PVector point = new PVector(x,y);
-		point.x -= position.x;
-		point.y -= position.y;
-		point.rotate(PApplet.radians(-angle));
-		
-		if (-(getWidth()/2)*size > point.x) { //(page.getTopLeft().x > x)
-			return false;
-		}
-		if ((getWidth()/2)*size < point.x) { //page.getBottomRight().x < point.x
-			return false;
-		}
-		if (-(getHeight()/2)*size > point.y) { //page.getTopLeft().y > point.y
-			return false;
-		}
-		if ((getHeight()/2)*size < point.y) { //page.getBottomRight().y < point.y
-			return false;
-		}
-		
-		return true;
-	}
-
 	public PVector getPosition() {
 		return position;
 	}
@@ -117,35 +60,18 @@ public class Page extends Editable {
 			this.position.x = pos.x;
 			this.position.y = pos.y;
 		}
-//		doAdjustedRect();
 		updateCorners();
 	}
 
 	public void addPosition(float x, float y) {
 		this.position.x += x;
 		this.position.y += y;
-//		doAdjustedRect();
 		updateCorners();
 	}
-
-//	private void doAdjustedRect() {
-//		// TODO: needs to take into account rotation and size
-//		if (adjustedRect == null) {
-//			adjustedRect = new Rectangle(position.x - getWidth() / 2, position.y - getHeight() / 2, getWidth(),
-//					getHeight());
-//		} else {
-//			adjustedRect.setX(position.x - getWidth() / 2);
-//			adjustedRect.setY(position.y - getHeight() / 2);
-//		}
-//	}
 
 	public void exclude(Rectangle object) {
 		excludedObjects.add(object.toString());
 	}
-
-//	public Rectangle getAdjusted() {
-//		return adjustedRect;
-//	}
 
 	public void draw(float scale) {
 		if (redraw) {
@@ -174,12 +100,13 @@ public class Page extends Editable {
 		p.image(pageGraphics, 0, 0); // draw the page
 		p.popMatrix();
 
-		p.rectMode(CENTER);
-		p.fill(255, 0, 0);
-		p.rect(topLeft.x, topLeft.y, 10, 10);
-		p.rect(topRight.x, topRight.y, 10, 10);
-		p.rect(bottomLeft.x, bottomLeft.y, 10, 10);
-		p.rect(bottomRight.x, bottomRight.y, 10, 10);
+		// draw page corners
+//		p.rectMode(CENTER);
+//		p.fill(255, 0, 0);
+//		p.rect(topLeft.x, topLeft.y, 10, 10);
+//		p.rect(topRight.x, topRight.y, 10, 10);
+//		p.rect(bottomLeft.x, bottomLeft.y, 10, 10);
+//		p.rect(bottomRight.x, bottomRight.y, 10, 10);
 	}
 
 	public void step() {
@@ -197,7 +124,6 @@ public class Page extends Editable {
 		worldCount = pageObjects.size();
 		placedCount = game.placed.size();
 		removedCount = game.removed.size();
-
 	}
 
 	public void drawView() { // float scale
@@ -264,7 +190,6 @@ public class Page extends Editable {
 		g.scale(size); // size the page will appear in the page view
 		g.rotate(PApplet.radians(angle)); // angle of the page
 		g.rectMode(CENTER);
-		//g.rect(0, 0, adjustedRect.getWidth(), adjustedRect.getHeight());
 		g.rect(0, 0, getWidth(), getHeight());
 		g.popMatrix();
 	}
@@ -306,9 +231,66 @@ public class Page extends Editable {
 	public Rectangle getView() {
 		return view;
 	}
-	
-	//is this page off camera
-	
+
+	//--------------update the corner PVectors---------------
+	private void updateCorners() {
+		if (topLeft == null) {
+			// Initialize
+			topLeft = new PVector();
+			topRight = new PVector();
+			bottomLeft = new PVector();
+			bottomRight = new PVector();
+		}
+		// set values
+		topLeft.x = 0 - (getWidth() / 2) * size;
+		topLeft.y = 0 - (getHeight() / 2) * size;
+		topRight.x = 0 + (getWidth() / 2) * size;
+		topRight.y = 0 - (getHeight() / 2) * size;
+		bottomLeft.x = 0 - (getWidth() / 2) * size;
+		bottomLeft.y = 0 + (getHeight() / 2) * size;
+		bottomRight.x = 0 + (getWidth() / 2) * size;
+		bottomRight.y = 0 + (getHeight() / 2) * size;
+		// rotate
+		topLeft.rotate(PApplet.radians(angle));
+		topRight.rotate(PApplet.radians(angle));
+		bottomLeft.rotate(PApplet.radians(angle));
+		bottomRight.rotate(PApplet.radians(angle));
+		// translate
+		topLeft.x += position.x;
+		topLeft.y += position.y;
+		topRight.x += position.x;
+		topRight.y += position.y;
+		bottomLeft.x += position.x;
+		bottomLeft.y += position.y;
+		bottomRight.x += position.x;
+		bottomRight.y += position.y;
+	}
+
+	//------------is a point inside the page-------------
+	public boolean isInside(float x, float y) {
+		PVector point = new PVector(x, y);
+		point.x -= position.x;
+		point.y -= position.y;
+		point.rotate(PApplet.radians(-angle));
+
+		if (-(getWidth() / 2) * size > point.x) {
+			return false;
+		}
+		if ((getWidth() / 2) * size < point.x) {
+			return false;
+		}
+		if (-(getHeight() / 2) * size > point.y) {
+			return false;
+		}
+		if ((getHeight() / 2) * size < point.y) {
+			return false;
+		}
+
+		return true;
+	}
+
+	// ----------is this page off camera------------
+
 	public boolean leftOf(float x) {
 		if (topLeft.x > x) {
 			return false;
@@ -340,7 +322,7 @@ public class Page extends Editable {
 		}
 		return true;
 	}
-	
+
 	public boolean above(float y) {
 		if (topLeft.y > y) {
 			return false;
