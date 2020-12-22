@@ -116,7 +116,7 @@ public class EditorJSON {
 					object.setFloat("newPlayerY", ((PlayerEnd) r).getNewPlayerArea().getTopLeft().y);
 					object.setFloat("newPlayerWidth", ((PlayerEnd) r).getNewPlayerArea().getWidth());
 					object.setFloat("newPlayerHeight", ((PlayerEnd) r).getNewPlayerArea().getHeight());
-					saveTile(values, ((PlayerStart) r).getRequired());
+					saveTile(values, ((PlayerEnd) r).getRequired());
 				} else if (r instanceof PlayerDeath) {
 					object.setString("type", "PlayerDeath");
 				} else if (r instanceof CameraChange) {
