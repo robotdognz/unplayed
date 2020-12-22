@@ -7,6 +7,7 @@ import handlers.TextureCache;
 import objects.Rectangle;
 import objects.Tile;
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 public class PlayerStart extends CameraChange {
 	private Tile required;
@@ -47,6 +48,12 @@ public class PlayerStart extends CameraChange {
 
 		// set player start
 		game.setPlayerStart(this);
+	}
+	
+	@Override
+	public void draw(PGraphics graphics, float scale) {
+		required.drawTransparent(graphics, scale);
+		super.draw(graphics, scale);
 	}
 
 	public Tile getRequired() {
