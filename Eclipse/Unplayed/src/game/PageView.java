@@ -52,19 +52,19 @@ public class PageView {
 		p.image(temp, 0, 0, p.width * 5, p.width * 5 * ratio);
 
 		for (Page page : pages) {
-			
+			//TODO: use camera rectangle when camera.getGame() is true
 			PVector screenTopLeft = convert.screenToLevel(0, 0);
 			PVector screenBottomRight = convert.screenToLevel(p.width, p.height);
-			if(page.leftOf(screenTopLeft.x+20)) {
+			if(page.leftOf(screenTopLeft.x)) {
 				continue;
 			}
-			if(page.rightOf(screenBottomRight.x-20)) {
+			if(page.rightOf(screenBottomRight.x)) {
 				continue;
 			}
-			if(page.above(screenTopLeft.y+20)) {
+			if(page.above(screenTopLeft.y)) {
 				continue;
 			}
-			if(page.below(screenBottomRight.y-20)) {
+			if(page.below(screenBottomRight.y)) {
 				continue;
 			}
 			
@@ -110,17 +110,17 @@ public class PageView {
 			return null;
 		}
 		for (Page page : pages) {
-			Rectangle p = page.getAdjusted();
-			if (p.getTopLeft().x > x) {
+			//Rectangle p = page.getAdjusted();
+			if (page.getTopLeft().x > x) {
 				continue;
 			}
-			if (p.getBottomRight().x < x) {
+			if (page.getBottomRight().x < x) {
 				continue;
 			}
-			if (p.getTopLeft().y > y) {
+			if (page.getTopLeft().y > y) {
 				continue;
 			}
-			if (p.getBottomRight().y < y) {
+			if (page.getBottomRight().y < y) {
 				continue;
 			}
 			// return the first overlap

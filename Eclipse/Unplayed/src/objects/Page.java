@@ -20,10 +20,8 @@ public class Page extends Editable {
 	private PGraphics tiles;
 	private boolean redraw = true;
 	private PVector position; // center of the page in page view
-	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
-							// page is on screen and therefore should be drawn)
-
-//	private PShape border;
+//	Rectangle adjustedRect; // an axis locked rectangle that contains the rotated page (used to check if
+//							// page is on screen and therefore should be drawn)
 
 	// Fields used for updating contents of page
 	private int worldCount = -1;
@@ -50,7 +48,6 @@ public class Page extends Editable {
 		this.tiles = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 
 		setPosition(position);
-//		makeBorder();
 		updateCorners();
 	}
 
@@ -90,87 +87,6 @@ public class Page extends Editable {
 	public boolean isInside(float x, float y) {
 		return false;
 	}
-	
-	public boolean leftOf(float x) {
-		if (topLeft.x > x) {
-			return false;
-		}
-		if (topRight.x > x) {
-			return false;
-		}
-		if (bottomLeft.x > x) {
-			return false;
-		}
-		if (bottomRight.x > x) {
-			return false;
-		}
-		return true;
-	}
-
-	public boolean rightOf(float x) {
-		if (topLeft.x < x) {
-			return false;
-		}
-		if (topRight.x < x) {
-			return false;
-		}
-		if (bottomLeft.x < x) {
-			return false;
-		}
-		if (bottomRight.x < x) {
-			return false;
-		}
-		return true;
-	}
-
-	public boolean below(float y) {
-		if (topLeft.y < y) {
-			return false;
-		}
-		if (topRight.y < y) {
-			return false;
-		}
-		if (bottomLeft.y < y) {
-			return false;
-		}
-		if (bottomRight.y < y) {
-			return false;
-		}
-		return true;
-	}
-	
-	public boolean above(float y) {
-		if (topLeft.y > y) {
-			return false;
-		}
-		if (topRight.y > y) {
-			return false;
-		}
-		if (bottomLeft.y > y) {
-			return false;
-		}
-		if (bottomRight.y > y) {
-			return false;
-		}
-		return true;
-	}
-
-
-//	private void makeBorder() {
-//		// used for selecting the page
-//		border = p.createShape(RECT, 0 - (getWidth() / 2), 0 - (getHeight() / 2), getWidth(), getHeight());
-////		border.setStroke(p.color(0,255,0));
-////		border.noFill();
-////		border.setStrokeWeight(4);
-//		border.scale(size);
-//		border.rotate(PApplet.radians(angle));
-//		border.translate(position.x, position.y);
-//
-//		// TODO: try using this to make a bounding box
-//		// draw the width and height on screen and see if they correspond to the sides
-//		// of the box, or its bounding box
-//		// if it's the width and height of the bounding box, then use that
-//	}
 
 	public PVector getPosition() {
 		return position;
@@ -183,40 +99,34 @@ public class Page extends Editable {
 			this.position.x = pos.x;
 			this.position.y = pos.y;
 		}
-		doAdjustedRect();
-//		makeBorder();
+//		doAdjustedRect();
 		updateCorners();
 	}
 
 	public void addPosition(float x, float y) {
 		this.position.x += x;
 		this.position.y += y;
-		doAdjustedRect();
-//		makeBorder();
+//		doAdjustedRect();
 		updateCorners();
 	}
 
-	private void doAdjustedRect() {
-		// TODO: needs to take into account rotation and size
-		if (adjustedRect == null) {
-			adjustedRect = new Rectangle(position.x - getWidth() / 2, position.y - getHeight() / 2, getWidth(),
-					getHeight());
-		} else {
-			adjustedRect.setX(position.x - getWidth() / 2);
-			adjustedRect.setY(position.y - getHeight() / 2);
-		}
-	}
+//	private void doAdjustedRect() {
+//		// TODO: needs to take into account rotation and size
+//		if (adjustedRect == null) {
+//			adjustedRect = new Rectangle(position.x - getWidth() / 2, position.y - getHeight() / 2, getWidth(),
+//					getHeight());
+//		} else {
+//			adjustedRect.setX(position.x - getWidth() / 2);
+//			adjustedRect.setY(position.y - getHeight() / 2);
+//		}
+//	}
 
 	public void exclude(Rectangle object) {
 		excludedObjects.add(object.toString());
 	}
 
-	public Rectangle getAdjusted() {
-		return adjustedRect;
-	}
-
-//	public PShape getBorder() {
-//		return border;
+//	public Rectangle getAdjusted() {
+//		return adjustedRect;
 //	}
 
 	public void draw(float scale) {
@@ -336,27 +246,25 @@ public class Page extends Editable {
 		g.scale(size); // size the page will appear in the page view
 		g.rotate(PApplet.radians(angle)); // angle of the page
 		g.rectMode(CENTER);
-		g.rect(0, 0, adjustedRect.getWidth(), adjustedRect.getHeight());
+		//g.rect(0, 0, adjustedRect.getWidth(), adjustedRect.getHeight());
+		g.rect(0, 0, getWidth(), getHeight());
 		g.popMatrix();
 	}
 
 	@Override
 	public void setAngle(float angle) {
 		super.setAngle(angle);
-//		makeBorder();
 		updateCorners();
 	}
 
 	@Override
 	public void addAngle(float angle) {
 		super.addAngle(angle);
-//		makeBorder();
 		updateCorners();
 	}
 
 	public void setSize(float size) {
 		this.size = size;
-//		makeBorder();
 		updateCorners();
 	}
 
@@ -366,7 +274,6 @@ public class Page extends Editable {
 		} else {
 			this.size = 0.5f;
 		}
-//		makeBorder();
 		updateCorners();
 	}
 
@@ -380,5 +287,71 @@ public class Page extends Editable {
 
 	public Rectangle getView() {
 		return view;
+	}
+	
+	//is this page off camera
+	
+	public boolean leftOf(float x) {
+		if (topLeft.x > x) {
+			return false;
+		}
+		if (topRight.x > x) {
+			return false;
+		}
+		if (bottomLeft.x > x) {
+			return false;
+		}
+		if (bottomRight.x > x) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean rightOf(float x) {
+		if (topLeft.x < x) {
+			return false;
+		}
+		if (topRight.x < x) {
+			return false;
+		}
+		if (bottomLeft.x < x) {
+			return false;
+		}
+		if (bottomRight.x < x) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean above(float y) {
+		if (topLeft.y > y) {
+			return false;
+		}
+		if (topRight.y > y) {
+			return false;
+		}
+		if (bottomLeft.y > y) {
+			return false;
+		}
+		if (bottomRight.y > y) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean below(float y) {
+		if (topLeft.y < y) {
+			return false;
+		}
+		if (topRight.y < y) {
+			return false;
+		}
+		if (bottomLeft.y < y) {
+			return false;
+		}
+		if (bottomRight.y < y) {
+			return false;
+		}
+		return true;
 	}
 }
