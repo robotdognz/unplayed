@@ -111,12 +111,13 @@ public class Game {
 	}
 
 	public void setPlayerStart(PlayerStart start) {
-		// set player start
-//		playerStart = start.copy();
-		playerStart = start;
-		// set start camera
-		cameraAreaStart = start.getCameraArea();
-		createPlayer(start);
+		if (start != null) {
+			// set player start
+			playerStart = start;
+			// set start camera
+			cameraAreaStart = start.getCameraArea();
+			createPlayer(start);
+		}
 	}
 
 	public Rectangle getPlayerStart() {
@@ -188,7 +189,7 @@ public class Game {
 
 	public void createPlayer(Rectangle playerArea) {
 		if (playerArea instanceof PlayerStart) {
-			Tile current = ((PlayerStart)playerArea).getRequired();
+			Tile current = ((PlayerStart) playerArea).getRequired();
 			player = new Player(p, texture, current.getFile(), current.getX(), current.getY(), vibe);
 		} else {
 			HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();

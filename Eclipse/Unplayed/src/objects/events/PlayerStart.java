@@ -67,7 +67,8 @@ public class PlayerStart extends CameraChange {
 
 		if (this.required != null) {
 			// set player start
-			game.setPlayerStart(this);
+//			game.setPlayerStart(this);
+			game.restart();
 		}
 	}
 
