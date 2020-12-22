@@ -29,6 +29,8 @@ public class PlayerStart extends CameraChange {
 				}
 			}
 		}
+		// remove the old player
+		game.player = null;
 
 		// get tile that is at the current position
 		returnSet.clear();
