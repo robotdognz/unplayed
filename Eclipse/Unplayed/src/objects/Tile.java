@@ -28,13 +28,13 @@ public class Tile extends Editable {
 		if (hasTexture) {
 			// texture isn't missing
 			if (flipX == 0 && flipY == 0 && angle == 0) {
-				graphics.tint(0, 100);
+				graphics.tint(255, 140);
 				graphics.imageMode(CORNER);
 				graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight()); // draw the tile
 				graphics.noTint();
 			} else {
 				graphics.pushMatrix();
-				graphics.tint(0, 100);
+				graphics.tint(255, 140);
 				graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
 				if (angle != 0) {
 					graphics.rotate(PApplet.radians(angle)); // rotate the tile
