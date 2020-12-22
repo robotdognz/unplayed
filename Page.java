@@ -123,7 +123,7 @@ public class Page extends Editable {
 		return true;
 	}
 
-	public boolean above(float y) {
+	public boolean below(float y) {
 		if (topLeft.y < y) {
 			return false;
 		}
@@ -139,7 +139,7 @@ public class Page extends Editable {
 		return true;
 	}
 	
-	public boolean below(float y) {
+	public boolean above(float y) {
 		if (topLeft.y > y) {
 			return false;
 		}
