@@ -149,6 +149,7 @@ public class EventTool extends AreaTool {
 			if (p instanceof PlayerStart) {
 				Tile oldStart = ((PlayerStart) p).getRequired();
 				editor.world.insert(oldStart);
+				editor.game.player = null;
 			}
 			if (p instanceof PlayerEnd) {
 				Tile oldEnd = ((PlayerEnd) p).getRequired();
