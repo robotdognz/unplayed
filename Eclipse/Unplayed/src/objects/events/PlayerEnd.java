@@ -38,7 +38,7 @@ public class PlayerEnd extends Event {
 				continue;
 			}
 			required = (Tile) r;
-			game.world.remove(r);
+			game.world.remove(required);
 			break;
 		}
 	}

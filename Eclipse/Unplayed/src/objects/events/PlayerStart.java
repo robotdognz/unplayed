@@ -41,7 +41,7 @@ public class PlayerStart extends CameraChange {
 				continue;
 			}
 			required = (Tile) r;
-			game.world.remove(r);
+			game.world.remove(required);
 			break;
 		}
 
