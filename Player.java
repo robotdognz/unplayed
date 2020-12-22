@@ -36,7 +36,6 @@ public class Player extends Editable {
 	private final int playerJumpPower = 30;
 	private boolean left = false;
 	private boolean right = false;
-	// private PImage sprite;
 
 	// vibration
 	private Vibe vibe;
@@ -45,54 +44,6 @@ public class Player extends Editable {
 	private float vibeVelocity = 0; // extra vibration added on after max velocity
 	private float lastXPos; // x position one step back
 	private float lastLastXPos; // x position two steps back
-
-//	Player(PApplet p, TextureCache texture, float x, float y, Vibe v) {
-//		super(x, y, 100, 100);
-//		this.p = p;
-//		areaSize = 500;
-//
-//		playerArea = new Rectangle(getX() - ((areaSize - 100) / 2), getY() - ((areaSize - 100) / 2), areaSize,
-//				areaSize);
-//
-//		vibe = v;
-//		lastXPos = x;
-//		lastLastXPos = lastXPos;
-//
-//		velocity = new PVector(0, 0);
-//		playerColor = p.color(255, 94, 22);
-//		//sprite = texture.defaultBlock;
-//		hasTexture = false;
-//
-//		previousPosition = new PVector(getX(), getY()); // used to determine if the player is still
-////		event = false;
-//	}
-
-//	Player(PApplet p, TextureCache texture, File file, float x, float y, Vibe v) {
-//		super(x, y, 100, 100);
-//		this.p = p;
-//		this.file = file;
-//		areaSize = 500;
-//
-//		playerArea = new Rectangle(getX() - ((areaSize - getWidth()) / 2), getY() - ((areaSize - getHeight()) / 2),
-//				areaSize, areaSize);
-//
-//		vibe = v;
-//		lastXPos = x;
-//		lastLastXPos = lastXPos;
-//
-//		velocity = new PVector(0, 0);
-//		playerColor = p.color(255, 94, 22);
-////		sprite = texture.defaultBlock;
-//		if (file != null && texture != null && texture.getTileMap().containsKey(file)) {
-//			this.tileTexture = texture.getTileMap().get(file);
-//			hasTexture = true;
-//		} else {
-//			hasTexture = false;
-//		}
-//
-//		previousPosition = new PVector(getX(), getY()); // used to determine if the player is still
-////		event = false;
-//	}
 	
 	Player(PApplet p, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -126,7 +77,7 @@ public class Player extends Editable {
 		}
 
 		previousPosition = new PVector(getX(), getY()); // used to determine if the player is still
-//		event = false;
+//		showEvent = false;
 	}
 	
 	public File getFile() {
@@ -270,8 +221,6 @@ public class Player extends Editable {
 		// draw player
 		graphics.imageMode(CORNER);
 		if (hasTexture) {
-			// graphics.image(sprite, getTopLeft().x, getTopLeft().y, getWidth(),
-			// getHeight());
 			graphics.imageMode(CENTER);
 			graphics.pushMatrix();
 			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);

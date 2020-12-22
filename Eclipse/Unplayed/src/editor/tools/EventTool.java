@@ -80,8 +80,9 @@ public class EventTool extends AreaTool {
 		}
 	}
 
-	// TODO: can currently place events directly on top of each other, that could be
-	// fine
+	// TODO: can currently place events directly on top of each other, could be fine
+	// if changes, it will need to return the Tile inside PlayerStart and PlayerEnd
+	// before placing the new event
 	private void add(Event toInsert, HashSet<Rectangle> getRectangles) {
 
 		// find anything that directly overlaps the inserting event
