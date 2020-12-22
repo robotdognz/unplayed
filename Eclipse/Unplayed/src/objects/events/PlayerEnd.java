@@ -50,6 +50,11 @@ public class PlayerEnd extends Event {
 		return required;
 	}
 
+	@Override
+	public void draw(PGraphics graphics, float scale) {
+		required.drawTransparent(graphics, scale);
+		super.draw(graphics, scale);
+	}
 
 	private void drawNewPlayerArea(PGraphics g) {
 		g.noStroke();
