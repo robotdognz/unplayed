@@ -67,32 +67,32 @@ public class Player extends Editable {
 ////		event = false;
 //	}
 
-	Player(PApplet p, TextureCache texture, File file, float x, float y, Vibe v) {
-		super(x, y, 100, 100);
-		this.p = p;
-		this.file = file;
-		areaSize = 500;
-
-		playerArea = new Rectangle(getX() - ((areaSize - getWidth()) / 2), getY() - ((areaSize - getHeight()) / 2),
-				areaSize, areaSize);
-
-		vibe = v;
-		lastXPos = x;
-		lastLastXPos = lastXPos;
-
-		velocity = new PVector(0, 0);
-		playerColor = p.color(255, 94, 22);
-//		sprite = texture.defaultBlock;
-		if (file != null && texture != null && texture.getTileMap().containsKey(file)) {
-			this.tileTexture = texture.getTileMap().get(file);
-			hasTexture = true;
-		} else {
-			hasTexture = false;
-		}
-
-		previousPosition = new PVector(getX(), getY()); // used to determine if the player is still
-//		event = false;
-	}
+//	Player(PApplet p, TextureCache texture, File file, float x, float y, Vibe v) {
+//		super(x, y, 100, 100);
+//		this.p = p;
+//		this.file = file;
+//		areaSize = 500;
+//
+//		playerArea = new Rectangle(getX() - ((areaSize - getWidth()) / 2), getY() - ((areaSize - getHeight()) / 2),
+//				areaSize, areaSize);
+//
+//		vibe = v;
+//		lastXPos = x;
+//		lastLastXPos = lastXPos;
+//
+//		velocity = new PVector(0, 0);
+//		playerColor = p.color(255, 94, 22);
+////		sprite = texture.defaultBlock;
+//		if (file != null && texture != null && texture.getTileMap().containsKey(file)) {
+//			this.tileTexture = texture.getTileMap().get(file);
+//			hasTexture = true;
+//		} else {
+//			hasTexture = false;
+//		}
+//
+//		previousPosition = new PVector(getX(), getY()); // used to determine if the player is still
+////		event = false;
+//	}
 	
 	Player(PApplet p, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);

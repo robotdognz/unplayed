@@ -233,7 +233,10 @@ public class Game {
 			Tile current = ((PlayerStart) playerArea).getRequired();
 			player = new Player(p, texture, current, vibe);
 		} else if (playerArea instanceof Tile) {
-			player = new Player(p, texture, (Tile) playerArea, vibe);
+			Tile current = (Tile) playerArea;
+			removed.add(current);
+			world.remove(current);
+			player = new Player(p, texture, current, vibe);
 		}
 //		else {
 //			HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
