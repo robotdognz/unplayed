@@ -87,8 +87,8 @@ public class EventTool extends AreaTool {
 		// find anything that directly overlaps the inserting event
 		Event foundAtPoint = null;
 		for (Rectangle p : getRectangles) {
-			if (p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()
-					&& toInsert.getClass().equals(p.getClass())) {
+			if (toInsert.getClass().equals(p.getClass()) && p.getTopLeft().x == toInsert.getX()
+					&& p.getTopLeft().y == toInsert.getY()) {
 				foundAtPoint = (Event) p;
 			}
 		}
@@ -101,14 +101,24 @@ public class EventTool extends AreaTool {
 		}
 
 		// prevent inserting PlayerStart and PlayerEnd on empty square
-		if (toInsert instanceof PlayerStart && ((PlayerStart) toInsert).getRequired() == null) {
-			editor.world.remove(toInsert);
-			return;
+		if (toInsert instanceof PlayerStart) {
+			((PlayerStart) toInsert).init();
+			if (((PlayerStart) toInsert).getRequired() == null) {
+				editor.world.remove(toInsert);
+				return;
+			}
 		}
-		if (toInsert instanceof PlayerEnd && ((PlayerEnd) toInsert).getRequired() == null) {
-			editor.world.remove(toInsert);
-			return;
+		if (toInsert instanceof PlayerEnd) {
+			((PlayerEnd) toInsert).init();
+			if (((PlayerEnd) toInsert).getRequired() == null) {
+				editor.world.remove(toInsert);
+				return;
+			}
 		}
+//		if (toInsert instanceof PlayerEnd && ((PlayerEnd) toInsert).getRequired() == null) {
+//			editor.world.remove(toInsert);
+//			return;
+//		}
 
 		// select the newly inserted event
 		if (toInsert.getName() != null) {

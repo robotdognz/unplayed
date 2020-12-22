@@ -13,36 +13,38 @@ import objects.Tile;
 import processing.core.PGraphics;
 
 public class PlayerEnd extends Event {
-	//private Game game;
+	private Game game;
 	private boolean levelEnd;
 	private Tile required;
 	private Rectangle newPlayerArea;
 
 	public PlayerEnd(TextureCache texture, String name, float x, float y, Game game) {
 		super(texture, name, false, x, y, 100, 100);
-		//this.game = game;
+		this.game = game;
 		levelEnd = true;
 		newPlayerArea = new Rectangle(getX() + getWidth(), getY() - getHeight(), getWidth(), getHeight());
-		
-		//get tile that is at the current position
+	}
+
+	public void init() {
+		// get tile that is at the current position
 		HashSet<Rectangle> returnSet = new HashSet<Rectangle>();
 		game.world.retrieve(returnSet, this);
-		for(Rectangle r : returnSet) {
-			if(!(r instanceof Tile)) {
+		for (Rectangle r : returnSet) {
+			if (!(r instanceof Tile)) {
 				continue;
 			}
-			if(r.getX() != getX()) {
+			if (r.getX() != getX()) {
 				continue;
 			}
-			if(r.getY() != getY()) {
+			if (r.getY() != getY()) {
 				continue;
 			}
-			required = (Tile) r;
+			this.required = (Tile) r;
 			game.world.remove(required);
 			break;
 		}
 	}
-	
+
 	public Tile getRequired() {
 		return required;
 	}
