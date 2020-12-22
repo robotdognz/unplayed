@@ -33,7 +33,7 @@ public class Game {
 	public Rectangle startingWorld;
 	public HashSet<Rectangle> playerObjects;
 	private PageView pageView;
-	private Rectangle playerStart;
+	private PlayerStart playerStart;
 	private Rectangle playerCheckpoint;
 
 	public Camera camera;
@@ -112,7 +112,8 @@ public class Game {
 
 	public void setPlayerStart(PlayerStart start) {
 		// set player start
-		playerStart = start.copy();
+//		playerStart = start.copy();
+		playerStart = start;
 		// set start camera
 		cameraAreaStart = start.getCameraArea();
 		createPlayer(start);

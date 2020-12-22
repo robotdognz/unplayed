@@ -10,9 +10,11 @@ import game.Game;
 import handlers.TextureCache;
 import objects.Event;
 import objects.Rectangle;
+import objects.Tile;
 import objects.events.CameraChange;
 import objects.events.PlayerDeath;
 import objects.events.PlayerEnd;
+import objects.events.PlayerStart;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -34,7 +36,7 @@ public class EventTool extends AreaTool {
 			if (editor.point != null) {
 				if (editorSide.adjust && editor.selected instanceof PlayerEnd) { // if adjusting a PlayerEnd
 					if (!((PlayerEnd) editor.selected).getLevelEnd()) {
-						((PlayerEnd) editor.selected).setNewPlayer(editor.point.copy());
+						((PlayerEnd) editor.selected).setNewPlayerArea(editor.point.copy());
 						return;
 					}
 
@@ -81,6 +83,7 @@ public class EventTool extends AreaTool {
 	// TODO: can currently place events directly on top of each other, that could be
 	// fine
 	private void add(Event toInsert, HashSet<Rectangle> getRectangles) {
+
 		// find anything that directly overlaps the inserting event
 		Event foundAtPoint = null;
 		for (Rectangle p : getRectangles) {
@@ -95,6 +98,16 @@ public class EventTool extends AreaTool {
 				editor.world.remove(foundAtPoint);
 			}
 			editor.world.insert(toInsert);
+		}
+
+		// prevent inserting PlayerStart and PlayerEnd on empty square
+		if (toInsert instanceof PlayerStart && ((PlayerStart) toInsert).getRequired() == null) {
+			editor.world.remove(toInsert);
+			return;
+		}
+		if (toInsert instanceof PlayerEnd && ((PlayerEnd) toInsert).getRequired() == null) {
+			editor.world.remove(toInsert);
+			return;
 		}
 
 		// select the newly inserted event
@@ -122,6 +135,15 @@ public class EventTool extends AreaTool {
 			}
 			if (p.getBottomRight().y < toInsert.getTopLeft().y + 1) {
 				continue;
+			}
+
+			if (p instanceof PlayerStart) {
+				Tile oldStart = ((PlayerStart) p).getRequired();
+				editor.world.insert(oldStart);
+			}
+			if (p instanceof PlayerEnd) {
+				Tile oldEnd = ((PlayerEnd) p).getRequired();
+				editor.world.insert(oldEnd);
 			}
 			editor.world.remove(p);
 			if (p.equals(editor.selected)) {
@@ -200,11 +222,11 @@ public class EventTool extends AreaTool {
 
 	@Override
 	public void draw() {
-		//draw ui for editing camera area
+		// draw ui for editing camera area
 		if (editor.showPageView && editor.eMode == Editor.editorMode.SELECT) { // pages
 			super.draw();
 		}
-		//stop editing the camera change area if any of things aren't true
+		// stop editing the camera change area if any of things aren't true
 		if (editor.selected == null || !(editor.selected instanceof CameraChange)
 				|| editor.eMode != editorMode.SELECT) {
 			edit = null;

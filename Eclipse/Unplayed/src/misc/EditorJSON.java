@@ -111,10 +111,10 @@ public class EditorJSON {
 				} else if (r instanceof PlayerEnd) {
 					object.setString("type", "PlayerEnd");
 					object.setBoolean("end", ((PlayerEnd) r).getLevelEnd());
-					object.setFloat("newPlayerX", ((PlayerEnd) r).getNewPlayer().getTopLeft().x);
-					object.setFloat("newPlayerY", ((PlayerEnd) r).getNewPlayer().getTopLeft().y);
-					object.setFloat("newPlayerWidth", ((PlayerEnd) r).getNewPlayer().getWidth());
-					object.setFloat("newPlayerHeight", ((PlayerEnd) r).getNewPlayer().getHeight());
+					object.setFloat("newPlayerX", ((PlayerEnd) r).getNewPlayerArea().getTopLeft().x);
+					object.setFloat("newPlayerY", ((PlayerEnd) r).getNewPlayerArea().getTopLeft().y);
+					object.setFloat("newPlayerWidth", ((PlayerEnd) r).getNewPlayerArea().getWidth());
+					object.setFloat("newPlayerHeight", ((PlayerEnd) r).getNewPlayerArea().getHeight());
 				} else if (r instanceof PlayerDeath) {
 					object.setString("type", "PlayerDeath");
 				} else if (r instanceof CameraChange) {
@@ -276,11 +276,11 @@ public class EditorJSON {
 				} else if (type.equals("PlayerEnd")) {
 					String name = object.getString("name");
 					boolean end = object.getBoolean("end");
-					Rectangle newPlayer = new Rectangle(object.getFloat("newPlayerX"), object.getFloat("newPlayerY"),
+					Rectangle newPlayerArea = new Rectangle(object.getFloat("newPlayerX"), object.getFloat("newPlayerY"),
 							object.getFloat("newPlayerWidth"), object.getFloat("newPlayerHeight"));
-					PlayerEnd pe = new PlayerEnd(texture, name, pX, pY);
+					PlayerEnd pe = new PlayerEnd(texture, name, pX, pY, game);
 					pe.setLevelEnd(end);
-					pe.setNewPlayer(newPlayer);
+					pe.setNewPlayerArea(newPlayerArea);
 					worldObjects.add(pe);
 				} else if (type.equals("PlayerDeath")) {
 					String name = object.getString("name");
