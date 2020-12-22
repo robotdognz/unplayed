@@ -23,9 +23,7 @@ public class PlayerEnd extends Event {
 		this.game = game;
 		levelEnd = true;
 		newPlayerArea = new Rectangle(getX() + getWidth(), getY() - getHeight(), getWidth(), getHeight());
-	}
 
-	public void init() {
 		// get tile that is at the current position
 		HashSet<Rectangle> returnSet = new HashSet<Rectangle>();
 		game.world.retrieve(returnSet, this);
@@ -40,8 +38,11 @@ public class PlayerEnd extends Event {
 				continue;
 			}
 			this.required = (Tile) r;
-			game.world.remove(required);
 			break;
+		}
+
+		if (required != null) {
+			this.game.world.remove(required);
 		}
 	}
 

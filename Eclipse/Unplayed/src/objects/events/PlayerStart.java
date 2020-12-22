@@ -10,15 +10,12 @@ import processing.core.PApplet;
 
 public class PlayerStart extends CameraChange {
 	private Tile required;
-	private Game game;
+	// Game game;
 
 	public PlayerStart(PApplet p, TextureCache texture, String name, float x, float y, Game game) {
 		super(p, texture, name, x, y);
-		this.game = game;
+		// this.game = game;
 
-	}
-
-	public void init() {
 		// remove all other player starts
 		HashSet<Rectangle> returnSet = new HashSet<Rectangle>();
 		game.world.getAll(returnSet);
@@ -43,7 +40,7 @@ public class PlayerStart extends CameraChange {
 			if (r.getY() != getY()) {
 				continue;
 			}
-			this.required = (Tile) r;
+			required = (Tile) r;
 			game.world.remove(required);
 			break;
 		}

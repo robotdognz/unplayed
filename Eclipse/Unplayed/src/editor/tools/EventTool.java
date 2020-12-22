@@ -102,14 +102,12 @@ public class EventTool extends AreaTool {
 
 		// prevent inserting PlayerStart and PlayerEnd on empty square
 		if (toInsert instanceof PlayerStart) {
-			((PlayerStart) toInsert).init();
 			if (((PlayerStart) toInsert).getRequired() == null) {
 				editor.world.remove(toInsert);
 				return;
 			}
 		}
 		if (toInsert instanceof PlayerEnd) {
-			((PlayerEnd) toInsert).init();
 			if (((PlayerEnd) toInsert).getRequired() == null) {
 				editor.world.remove(toInsert);
 				return;
