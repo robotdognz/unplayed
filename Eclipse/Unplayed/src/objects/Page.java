@@ -90,6 +90,22 @@ public class Page extends Editable {
 	public boolean isInside(float x, float y) {
 		return false;
 	}
+	
+	public boolean leftOf(float x) {
+		if (topLeft.x > x) {
+			return false;
+		}
+		if (topRight.x > x) {
+			return false;
+		}
+		if (bottomLeft.x > x) {
+			return false;
+		}
+		if (bottomRight.x > x) {
+			return false;
+		}
+		return true;
+	}
 
 	public boolean rightOf(float x) {
 		if (topLeft.x < x) {
@@ -107,21 +123,38 @@ public class Page extends Editable {
 		return true;
 	}
 
-	public boolean leftOf(float x) {
-		if (topLeft.x > x) {
+	public boolean above(float y) {
+		if (topLeft.y < y) {
 			return false;
 		}
-		if (topRight.x > x) {
+		if (topRight.y < y) {
 			return false;
 		}
-		if (bottomLeft.x > x) {
+		if (bottomLeft.y < y) {
 			return false;
 		}
-		if (bottomRight.x > x) {
+		if (bottomRight.y < y) {
 			return false;
 		}
 		return true;
 	}
+	
+	public boolean below(float y) {
+		if (topLeft.y > y) {
+			return false;
+		}
+		if (topRight.y > y) {
+			return false;
+		}
+		if (bottomLeft.y > y) {
+			return false;
+		}
+		if (bottomRight.y > y) {
+			return false;
+		}
+		return true;
+	}
+
 
 //	private void makeBorder() {
 //		// used for selecting the page

@@ -61,6 +61,12 @@ public class PageView {
 			if(page.rightOf(screenBottomRight.x-20)) {
 				continue;
 			}
+			if(page.above(screenTopLeft.y+20)) {
+				continue;
+			}
+			if(page.below(screenBottomRight.y-20)) {
+				continue;
+			}
 			
 			page.draw(currentScale);
 		}
