@@ -105,8 +105,8 @@ public class EditorSide extends Toolbar {
 	}
 
 	public void reset() {
-		adjust = false;
 		if (editor.selected != null && previousSelected != editor.selected.getClass().toString()) {
+			adjust = false;
 			if (editor.selected instanceof Page) {
 				widgets = page;
 			} else if (editor.selected instanceof View) {
@@ -131,11 +131,12 @@ public class EditorSide extends Toolbar {
 		// elegant solution
 
 		// step - reset the side toolbar's options and abort drawing if nothing selected
-		reset();
+		
 		if (editor.selected == null) {
 //			reset();
 			return;
 		} 
+		reset();
 //		else if (editor.selected != null && previousSelected != editor.selected.getClass().toString()) {
 //			reset();
 //			previousSelected = editor.selected.getClass().toString();
