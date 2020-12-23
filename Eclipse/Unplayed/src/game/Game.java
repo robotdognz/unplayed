@@ -253,20 +253,23 @@ public class Game {
 			}
 			if (found != null) {
 				// if the player has already been the found tile
-				boolean shouldRemove = true;
-				for (int i = 0; i < removed.size(); i++) {
-					Tile current = removed.get(i);
-					if (found.getX() != current.getX()) {
-						continue;
-					}
-					if (found.getY() != current.getY()) {
-						continue;
-					}
-					shouldRemove = false;
-					break;
+				boolean shouldAddToRemoved = true;
+//				for (int i = 0; i < removed.size(); i++) {
+//					Tile current = removed.get(i);
+//					if (found.getX() != current.getX()) {
+//						continue;
+//					}
+//					if (found.getY() != current.getY()) {
+//						continue;
+//					}
+//					shouldAddToRemoved = false;
+//					break;
+//				}
+				if(placed.contains(found)) {
+					shouldAddToRemoved = false;
 				}
 
-				if (shouldRemove) {
+				if (shouldAddToRemoved) {
 					removed.add(found);
 				}
 				world.remove(found);
