@@ -19,6 +19,7 @@ import objects.events.CameraChange;
 import objects.events.PlayerDeath;
 import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
+import objects.events.Spike;
 import processing.core.*;
 import processing.data.*;
 
@@ -119,6 +120,8 @@ public class EditorJSON {
 					saveTile(values, ((PlayerEnd) r).getRequired());
 				} else if (r instanceof PlayerDeath) {
 					object.setString("type", "PlayerDeath");
+				} else if (r instanceof Spike) {
+					object.setString("type", "Spike");
 				} else if (r instanceof CameraChange) {
 					object.setString("type", "CameraChange");
 					object.setFloat("cameraTopLeftX", ((CameraChange) r).getCameraTopLeft().x);
@@ -204,7 +207,7 @@ public class EditorJSON {
 			object.setInt("pY", (int) page.getY());
 			object.setInt("pWidth", (int) page.getWidth());
 			object.setInt("pHeight", (int) page.getHeight());
-			
+
 			object.setBoolean("showPlayer", page.showPlayer);
 			object.setBoolean("showObstacles", page.showObstacles);
 			object.setBoolean("showTiles", page.showTiles);
@@ -270,27 +273,13 @@ public class EditorJSON {
 			JSONObject object = values.getJSONObject(i);
 			String type = object.getString("type");
 			if (type.equals("image") || type.equals("PlayerStart") || type.equals("PlayerEnd") // type.equals("tile") ||
-					|| type.equals("PlayerDeath") || type.equals("CameraChange")) {
+					|| type.equals("PlayerDeath") || type.equals("CameraChange") || type.equals("Spike")) {
 				int pX = object.getInt("pX");
 				int pY = object.getInt("pY");
 				int pWidth = object.getInt("pWidth");
 				int pHeight = object.getInt("pHeight");
 
-//				if (type.equals("tile")) { // if it is a tile
-//					File textureFile = new File(object.getString("file"));
-//					boolean flipH = object.getBoolean("flipH");
-//					boolean flipV = object.getBoolean("flipV");
-//					float angle = object.getFloat("angle");
-//					Tile t = new Tile(texture, textureFile, pX, pY);
-//					t.setAngle(angle);
-//					if (flipH) {
-//						t.flipH();
-//					}
-//					if (flipV) {
-//						t.flipV();
-//					}
-//					worldObjects.add(t);
-//				} else 
+
 				if (type.equals("image")) { // if it is an image
 					File textureFile = new File(object.getString("file"));
 					boolean flipH = object.getBoolean("flipH");
@@ -341,6 +330,10 @@ public class EditorJSON {
 					String name = object.getString("name");
 					PlayerDeath pd = new PlayerDeath(texture, name, pX, pY);
 					worldObjects.add(pd);
+				} else if (type.equals("Spike")) {
+					String name = object.getString("name");
+					Spike s = new Spike(texture, name, pX, pY);
+					worldObjects.add(s);
 				} else if (type.equals("CameraChange")) {
 					String name = object.getString("name");
 					PVector cameraTopLeft = new PVector(object.getFloat("cameraTopLeftX"),
@@ -420,8 +413,8 @@ public class EditorJSON {
 				}
 				page.setSize(size);
 				page.setAngle(angle);
-				
-				//exclusion booleans
+
+				// exclusion booleans
 				try {
 					page.showPlayer = object.getBoolean("showPlayer");
 					page.showObstacles = object.getBoolean("showObstacles");
@@ -430,7 +423,7 @@ public class EditorJSON {
 				} catch (Exception e) {
 
 				}
-				
+
 				pages.add(page);
 			}
 		}
