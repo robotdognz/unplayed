@@ -105,7 +105,7 @@ public class EditorSide extends Toolbar {
 	}
 
 	public void reset() {
-		if (editor.selected != null && previousSelected != editor.selected.getClass().toString()) {
+		if (editor.selected != null && !previousSelected.equals(editor.selected.getClass().toString())) {
 			adjust = false;
 			if (editor.selected instanceof Page) {
 				widgets = page;
