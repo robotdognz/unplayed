@@ -252,22 +252,12 @@ public class Game {
 				found = ((Tile) r);
 			}
 			if (found != null) {
-				// if the player has already been the found tile
+				//check if the player has already been the found tile
 				boolean shouldAddToRemoved = true;
-//				for (int i = 0; i < removed.size(); i++) {
-//					Tile current = removed.get(i);
-//					if (found.getX() != current.getX()) {
-//						continue;
-//					}
-//					if (found.getY() != current.getY()) {
-//						continue;
-//					}
-//					shouldAddToRemoved = false;
-//					break;
-//				}
 				if(placed.contains(found)) {
 					shouldAddToRemoved = false;
 				}
+				//if they have the tile shouldn't be added to removed
 
 				if (shouldAddToRemoved) {
 					removed.add(found);
