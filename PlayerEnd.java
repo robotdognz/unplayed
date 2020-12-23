@@ -63,7 +63,7 @@ public class PlayerEnd extends Event {
 		if (!levelEnd) {
 			graphics.noFill();
 			graphics.rectMode(CORNERS);
-			graphics.stroke(0, 255, 0);
+			graphics.stroke(0, 255, 0, 150);
 			graphics.strokeWeight(3);
 			graphics.rect(newPlayerArea.getTopLeft().x, newPlayerArea.getTopLeft().y, newPlayerArea.getBottomRight().x,
 					newPlayerArea.getBottomRight().y);
