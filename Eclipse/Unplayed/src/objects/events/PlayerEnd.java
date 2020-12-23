@@ -1,6 +1,6 @@
 package objects.events;
 
-import static processing.core.PConstants.CORNERS;
+import static processing.core.PConstants.*;
 
 import java.util.HashSet;
 
@@ -13,14 +13,14 @@ import objects.Tile;
 import processing.core.PGraphics;
 
 public class PlayerEnd extends Event {
-	//private Game game;
+	// private Game game;
 	private boolean levelEnd;
 	private Tile required;
 	private Rectangle newPlayerArea;
 
 	public PlayerEnd(TextureCache texture, String name, float x, float y, Game game) {
 		super(texture, name, false, x, y, 100, 100);
-		//this.game = game;
+		// this.game = game;
 		levelEnd = true;
 		newPlayerArea = new Rectangle(getX() + getWidth(), getY() - getHeight(), getWidth(), getHeight());
 
@@ -49,7 +49,7 @@ public class PlayerEnd extends Event {
 	public Tile getRequired() {
 		return required;
 	}
-	
+
 	public void setRequired(Tile required) {
 		this.required = required;
 	}
@@ -58,6 +58,18 @@ public class PlayerEnd extends Event {
 	public void draw(PGraphics graphics, float scale) {
 		if (required != null) {
 			required.drawTransparent(graphics, scale);
+		}
+
+		if (!levelEnd) {
+			graphics.noFill();
+			graphics.rectMode(CORNERS);
+			graphics.stroke(0, 255, 0);
+			graphics.strokeWeight(3);
+			graphics.rect(newPlayerArea.getTopLeft().x, newPlayerArea.getTopLeft().y, newPlayerArea.getBottomRight().x,
+					newPlayerArea.getBottomRight().y);
+			graphics.line(getX() + getWidth() / 2, getY() + getHeight() / 2,
+					newPlayerArea.getX() + newPlayerArea.getWidth() / 2,
+					newPlayerArea.getY() + newPlayerArea.getHeight() / 2);
 		}
 		super.draw(graphics, scale);
 	}
@@ -106,19 +118,19 @@ public class PlayerEnd extends Event {
 		if (player.getTopLeft().y != getTopLeft().y) {
 			return;
 		}
-		if(required == null) {
+		if (required == null) {
 			return;
 		}
-		if(!player.getFile().equals(required.getFile())) {
+		if (!player.getFile().equals(required.getFile())) {
 			return;
 		}
-		if(!(player.isFlippedH() == required.isFlippedH())) {
+		if (!(player.isFlippedH() == required.isFlippedH())) {
 			return;
 		}
-		if(!(player.isFlippedV() == required.isFlippedV())) {
+		if (!(player.isFlippedV() == required.isFlippedV())) {
 			return;
 		}
-		if(!(player.getAngle() == required.getAngle())) {
+		if (!(player.getAngle() == required.getAngle())) {
 			return;
 		}
 
