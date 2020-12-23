@@ -204,6 +204,11 @@ public class EditorJSON {
 			object.setInt("pY", (int) page.getY());
 			object.setInt("pWidth", (int) page.getWidth());
 			object.setInt("pHeight", (int) page.getHeight());
+			
+			object.setBoolean("showPlayer", page.showPlayer);
+			object.setBoolean("showObstacles", page.showObstacles);
+			object.setBoolean("showTiles", page.showTiles);
+			object.setBoolean("showImages", page.showImages);
 
 			values.setJSONObject(values.size(), object); // add it on to the end
 		}
@@ -415,6 +420,17 @@ public class EditorJSON {
 				}
 				page.setSize(size);
 				page.setAngle(angle);
+				
+				//exclusion booleans
+				try {
+					page.showPlayer = object.getBoolean("showPlayer");
+					page.showObstacles = object.getBoolean("showObstacles");
+					page.showTiles = object.getBoolean("showTiles");
+					page.showImages = object.getBoolean("showImages");
+				} catch (Exception e) {
+
+				}
+				
 				pages.add(page);
 			}
 		}
