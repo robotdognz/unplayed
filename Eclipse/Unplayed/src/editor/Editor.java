@@ -277,6 +277,7 @@ public class Editor {
 		// draw block placement selection if one exists and snapping is turned off
 		if (point != null && !snap) {
 			p.fill(0, 0, 0, 150);
+			p.noStroke();
 			p.rect(point.getX(), point.getY(), 100, 100);
 			p.fill(0);
 			p.textSize(30);
