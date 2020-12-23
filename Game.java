@@ -198,11 +198,18 @@ public class Game {
 			}
 			found = ((Tile) r);
 		}
+		// if the next block the player will become has been found
 		if (found != null) {
+			// if the player has already been the found tile
+			if (placed.contains(found)) {
+				placed.remove(found);
+			}
+
 			// update the checkpoints
-			this.playerCheckpoint = found;// found.copy();
+			this.playerCheckpoint = found;
 			this.cameraAreaCheckpoint = cameraArea.copy();
-			// fill the slot with a matching tile
+
+			// make the matching tile to fill the slot
 			Tile newTile = new Tile(texture, player.getFile(), player.getX(), player.getY());
 			if (player.isFlippedH()) {
 				newTile.flipH();
@@ -211,8 +218,11 @@ public class Game {
 				newTile.flipV();
 			}
 			newTile.setAngle(player.getAngle());
+			// insert the new tile into the world and add it to placed
 			world.insert(newTile);
 			placed.add(newTile);
+
+			// create the new player
 			createPlayer(found);
 		}
 
