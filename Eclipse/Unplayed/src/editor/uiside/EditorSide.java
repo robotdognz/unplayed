@@ -57,16 +57,19 @@ public class EditorSide extends Toolbar {
 		widgets.add(excludeW);
 
 		// widgets for editable
+		editable = new ArrayList<Widget>();
 		editable.add(deleteW);
 		editable.add(finishW);
 		editable.add(flipHW);
 		editable.add(flipVW);
 
 		// widgets for views
+		view = new ArrayList<Widget>();
 		view.add(deleteW);
 		view.add(finishW);
 
 		// widgets for pages
+		page = new ArrayList<Widget>();
 		page.add(deleteW);
 		page.add(finishW);
 		page.add(flipHW);
@@ -75,12 +78,14 @@ public class EditorSide extends Toolbar {
 		page.add(excludeW);
 
 		// widgets for playerEnd
+		playerEnd = new ArrayList<Widget>();
 		playerEnd.add(deleteW);
 		playerEnd.add(finishW);
 		playerEnd.add(adjustW);
 		playerEnd.add(levelendW);
 
 		// minimal widgets
+		minimal = new ArrayList<Widget>();
 		minimal.add(deleteW);
 		minimal.add(finishW);
 
