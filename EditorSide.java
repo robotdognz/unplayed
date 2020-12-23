@@ -109,6 +109,7 @@ public class EditorSide extends Toolbar {
 			adjust = false;
 			if (editor.selected instanceof Page) {
 				widgets = page;
+				adjust = true;
 			} else if (editor.selected instanceof View) {
 				widgets = view;
 			} else if (editor.selected instanceof Editable) {
@@ -134,6 +135,7 @@ public class EditorSide extends Toolbar {
 		
 		if (editor.selected == null) {
 //			reset();
+			adjust = false;
 			return;
 		} 
 		reset();
