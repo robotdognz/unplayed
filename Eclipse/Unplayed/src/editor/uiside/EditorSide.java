@@ -136,10 +136,10 @@ public class EditorSide extends Toolbar {
 		} else if (editor.selected != null && previousSelected != editor.selected.getClass().toString()) {
 			reset();
 			previousSelected = editor.selected.getClass().toString();
-			return;
-		} else if (!(editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
-			reset();
 		}
+//		} else if (!(editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
+//			reset();
+//		}
 
 		// step if controlling the editor and there is something selected
 		if (editor.controller instanceof EditorControl) {
