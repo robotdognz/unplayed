@@ -10,6 +10,7 @@ import editor.Toolbar;
 import objects.Editable;
 import objects.Page;
 import objects.Rectangle;
+import objects.View;
 import objects.events.PlayerEnd;
 import processing.core.PApplet;
 //import processing.core.PImage;
@@ -22,6 +23,14 @@ public class EditorSide extends Toolbar {
 //	private PImage middle;
 //	private PImage bottom;
 	public boolean adjust;
+
+	private String previousSelected = "";
+
+	private ArrayList<Widget> editable; // tiles, images
+	private ArrayList<Widget> view;
+	private ArrayList<Widget> page;
+	private ArrayList<Widget> playerEnd;
+	private ArrayList<Widget> minimal; // for things that only require cross and tick
 
 	public EditorSide(PApplet p, Editor editor) {
 		super(p, editor);
@@ -38,6 +47,7 @@ public class EditorSide extends Toolbar {
 		Widget levelendW = new WidgetLevelEnd(p, editor, this);
 		Widget excludeW = new WidgetExcludeMenu(p, editor, this);
 
+		// default widget list with everything
 		widgets.add(deleteW);
 		widgets.add(finishW);
 		widgets.add(flipHW);
@@ -46,9 +56,37 @@ public class EditorSide extends Toolbar {
 		widgets.add(levelendW);
 		widgets.add(excludeW);
 
+		// widgets for editable
+		editable.add(deleteW);
+		editable.add(finishW);
+		editable.add(flipHW);
+		editable.add(flipVW);
+
+		// widgets for views
+		view.add(deleteW);
+		view.add(finishW);
+
+		// widgets for pages
+		page.add(deleteW);
+		page.add(finishW);
+		page.add(flipHW);
+		page.add(flipVW);
+		page.add(adjustW);
+		page.add(excludeW);
+
+		// widgets for playerEnd
+		playerEnd.add(deleteW);
+		playerEnd.add(finishW);
+		playerEnd.add(adjustW);
+		playerEnd.add(levelendW);
+
+		// minimal widgets
+		minimal.add(deleteW);
+		minimal.add(finishW);
+
 		super.widgetSpacing = p.width / 8;
 
-		float height = widgetSpacing * (widgets.size()); // +1
+		float height = widgetSpacing * (widgets.size());
 
 		super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
 
@@ -63,6 +101,21 @@ public class EditorSide extends Toolbar {
 
 	public void reset() {
 		adjust = false;
+		if (editor.selected != null) {
+			if(editor.selected instanceof Editable) {
+				widgets = editable;
+			}else if(editor.selected instanceof View) {
+				widgets = view;
+			}else if(editor.selected instanceof Page) {
+				widgets = page;
+			}else if(editor.selected instanceof PlayerEnd) {
+				widgets = playerEnd;
+			}else {
+				widgets = minimal;
+			}
+			float height = widgetSpacing * (widgets.size());
+			super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
+		}
 	}
 
 	@Override
@@ -72,8 +125,10 @@ public class EditorSide extends Toolbar {
 		// elegant solution
 
 		// step - reset the side toolbar's options and abort drawing if nothing selected
-		if (editor.selected == null) {
+		if (editor.selected == null
+				|| (editor.selected != null && previousSelected != editor.selected.getClass().toString())) {
 			reset();
+			previousSelected = editor.selected.getClass().toString();
 			return;
 		} else if (!(editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
 			reset();
@@ -117,7 +172,7 @@ public class EditorSide extends Toolbar {
 				}
 			}
 			editor.controllerActive = !wMenuOpen; // if a widget menu is open, deactivate controls
-			
+
 		} else {
 			reset();
 		}
