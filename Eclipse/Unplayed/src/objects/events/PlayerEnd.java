@@ -18,6 +18,7 @@ public class PlayerEnd extends Event {
 	private boolean levelEnd;
 	private Tile required;
 	private Rectangle newPlayerArea;
+	private long lastTime = 0;
 
 	public PlayerEnd(TextureCache texture, String name, float x, float y, Game game) {
 		super(texture, name, false, x, y, 100, 100);
@@ -62,15 +63,6 @@ public class PlayerEnd extends Event {
 		}
 
 		if (!levelEnd) {
-//			graphics.noFill();
-//			graphics.rectMode(CORNERS);
-//			graphics.stroke(0, 255, 0, 100);
-//			graphics.strokeWeight(4);
-//			graphics.rect(newPlayerArea.getTopLeft().x, newPlayerArea.getTopLeft().y, newPlayerArea.getBottomRight().x,
-//					newPlayerArea.getBottomRight().y);
-//			graphics.line(getX() + getWidth() / 2, getY() + getHeight() / 2,
-//					newPlayerArea.getX() + newPlayerArea.getWidth() / 2,
-//					newPlayerArea.getY() + newPlayerArea.getHeight() / 2);
 			arrow(graphics, getX() + getWidth() / 2, getY() + getHeight() / 2,
 					newPlayerArea.getX() + newPlayerArea.getWidth() / 2,
 					newPlayerArea.getY() + newPlayerArea.getHeight() / 2);
@@ -86,8 +78,8 @@ public class PlayerEnd extends Event {
 		graphics.translate(x2, y2);
 		float a = PApplet.atan2(x1 - x2, y2 - y1);
 		graphics.rotate(a);
-		graphics.line(0, 0, -15, -15); //graphics.line(0, 0, -10, -10);
-		graphics.line(0, 0, 15, -15); //graphics.line(0, 0, 10, -10);
+		graphics.line(0, 0, -15, -15); // graphics.line(0, 0, -10, -10);
+		graphics.line(0, 0, 15, -15); // graphics.line(0, 0, 10, -10);
 		graphics.popMatrix();
 	}
 
@@ -152,10 +144,13 @@ public class PlayerEnd extends Event {
 		}
 
 		// the player is perfectly in the slot
-		if (levelEnd) { // if this is the end of the level
-			g.endGame();
-		} else { // if this is just part of the puzzle
-			g.endPuzzle(newPlayerArea);
+		if (System.currentTimeMillis() + 1000 > lastTime) {
+			lastTime = System.currentTimeMillis();
+			if (levelEnd) { // if this is the end of the level
+				g.endGame();
+			} else { // if this is just part of the puzzle
+				g.endPuzzle(newPlayerArea);
+			}
 		}
 	}
 
