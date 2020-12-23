@@ -201,8 +201,18 @@ public class Game {
 		// if the next block the player will become has been found
 		if (found != null) {
 			// if the player has already been the found tile
-			if (removed.contains(found)) {
-				removed.remove(found);
+//			if (removed.contains(found)) {
+//				removed.remove(found);
+//			}
+			for(int i = 0; i < removed.size(); i++) {
+				Tile current = removed.get(i);
+				if(found.getX() != current.getX()) {
+					continue;
+				}
+				if(found.getY() != current.getY()) {
+					continue;
+				}
+				removed.remove(i);
 			}
 
 			// update the checkpoints
