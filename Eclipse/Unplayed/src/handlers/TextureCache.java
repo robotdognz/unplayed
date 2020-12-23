@@ -13,6 +13,7 @@ import objects.events.CameraChange;
 import objects.events.PlayerDeath;
 import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
+import objects.events.Spike;
 import processing.core.*;
 //import processing.data.*;
 
@@ -197,6 +198,17 @@ public class TextureCache {
 			}
 		};
 		eventMap.put(cameraChangeString, cameraChange);
+
+		// ----------------Spike----------------
+		final String spikeString = "Spike";
+		File spikeFile = new File(eventDir + "/Event_Spikes.png");
+		EventHandler spike = new EventHandler(p, this, spikeFile) {
+			@Override
+			public Event makeEvent(int x, int y) {
+				return new Spike(texture, spikeString, x, y);
+			}
+		};
+		eventMap.put(spikeString, spike);
 
 		// make sorted list
 		eventList = new ArrayList<EventHandler>(eventMap.values());

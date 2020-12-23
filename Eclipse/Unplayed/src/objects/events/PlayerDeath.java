@@ -6,7 +6,7 @@ import objects.Event;
 
 public class PlayerDeath extends Event {
 	public PlayerDeath(TextureCache texture, String name, int x, int y) {
-		super(texture, name, true, x, y, 100, 100);
+		super(texture, name, false, x, y, 100, 100);
 	}
 
 	@Override
