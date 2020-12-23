@@ -106,13 +106,13 @@ public class EditorSide extends Toolbar {
 
 	public void reset() {
 		adjust = false;
-		if (editor.selected != null) {
-			if (editor.selected instanceof Editable) {
-				widgets = editable;
+		if (editor.selected != null && previousSelected != editor.selected.getClass().toString()) {
+			if (editor.selected instanceof Page) {
+				widgets = page;
 			} else if (editor.selected instanceof View) {
 				widgets = view;
-			} else if (editor.selected instanceof Page) {
-				widgets = page;
+			} else if (editor.selected instanceof Editable) {
+				widgets = editable;
 			} else if (editor.selected instanceof PlayerEnd) {
 				widgets = playerEnd;
 			} else {
@@ -120,6 +120,7 @@ public class EditorSide extends Toolbar {
 			}
 			float height = widgetSpacing * (widgets.size());
 			super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
+			previousSelected = editor.selected.getClass().toString();
 		}
 	}
 
@@ -130,16 +131,18 @@ public class EditorSide extends Toolbar {
 		// elegant solution
 
 		// step - reset the side toolbar's options and abort drawing if nothing selected
+		reset();
 		if (editor.selected == null) {
-			reset();
+//			reset();
 			return;
-		} else if (editor.selected != null && previousSelected != editor.selected.getClass().toString()) {
-			reset();
-			previousSelected = editor.selected.getClass().toString();
-		}
-		if (editor.selected == null && !(editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
-			reset();
-		}
+		} 
+//		else if (editor.selected != null && previousSelected != editor.selected.getClass().toString()) {
+//			reset();
+//			previousSelected = editor.selected.getClass().toString();
+//		}
+//		if (editor.selected == null && !(editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
+//			reset();
+//		}
 
 		// step if controlling the editor and there is something selected
 		if (editor.controller instanceof EditorControl) {
@@ -180,9 +183,10 @@ public class EditorSide extends Toolbar {
 			}
 			editor.controllerActive = !wMenuOpen; // if a widget menu is open, deactivate controls
 
-		} else {
-			reset();
 		}
+//		else {
+//			reset();
+//		}
 	}
 
 	@Override
