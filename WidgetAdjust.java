@@ -19,12 +19,15 @@ public class WidgetAdjust extends Widget {
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (editor.selected != null && (editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
-			available = true;
-			if (toolbar.adjust) {
-				active = true;
-			} else {
-				active = false;
+		if (editor.selected != null) { // if there is something selected
+			if (editor.selected instanceof Page // if it's a Page or a PlayerEnd that is not a level end
+					|| (editor.selected instanceof PlayerEnd && !((PlayerEnd) editor.selected).getLevelEnd())) {
+				available = true;
+				if (toolbar.adjust) {
+					active = true;
+				} else {
+					active = false;
+				}
 			}
 		} else {
 			available = false;
