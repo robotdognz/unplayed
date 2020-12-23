@@ -141,13 +141,15 @@ public class Game {
 			newCameraArea = cameraArea.copy(); // new camera area
 
 			//make sure the camera sub scale is correct
-			if ((newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y)
-					/ (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) > (float) p.height
+			if ((cameraArea.getBottomRight().y - cameraArea.getTopLeft().y)
+					/ (cameraArea.getBottomRight().x - cameraArea.getTopLeft().x) > (float) p.height
 							/ (float) p.width) {
-
+				//set the new sub scale
 				newSubScale = ((float) p.height
-						/ ((float) p.width / (float) (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x)))
-						/ (newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y);
+						/ ((float) p.width / (float) (cameraArea.getBottomRight().x - cameraArea.getTopLeft().x)))
+						/ (cameraArea.getBottomRight().y - cameraArea.getTopLeft().y);
+				
+				//set the scale
 				camera.setSubScale(newSubScale);
 			}
 		}
