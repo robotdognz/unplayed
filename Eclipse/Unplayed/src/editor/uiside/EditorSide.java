@@ -106,10 +106,8 @@ public class EditorSide extends Toolbar {
 
 	public void reset() {
 		if (editor.selected != null && !previousSelected.equals(editor.selected.getClass().toString())) {
-//			adjust = false;
 			if (editor.selected instanceof Page) {
 				widgets = page;
-//				adjust = true;
 			} else if (editor.selected instanceof View) {
 				widgets = view;
 				adjust = false;
@@ -131,7 +129,7 @@ public class EditorSide extends Toolbar {
 
 	@Override
 	public void draw(PVector touch, Menu menu) {
-		// super.draw(touch, menu);
+		 super.draw(touch, menu);
 
 		// step - reset the side toolbar's options and abort drawing if nothing selected
 		if (editor.selected == null) {
