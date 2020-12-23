@@ -1,8 +1,8 @@
 package objects;
 
-import java.util.Collections;
+//import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
+//import java.util.Set;
 
 import game.Game;
 
@@ -14,7 +14,7 @@ public class Page extends Editable {
 	private Game game;
 	private Rectangle view; // the page's view into the world
 	private HashSet<Rectangle> pageObjects;
-	private HashSet<String> excludedObjects; // a list of rectangle strings to exclude while drawing
+//	private HashSet<String> excludedObjects; // a list of rectangle strings to exclude while drawing
 
 	private PGraphics pageGraphics;
 	private PGraphics tiles;
@@ -31,6 +31,12 @@ public class Page extends Editable {
 	PVector topRight;
 	PVector bottomLeft;
 	PVector bottomRight;
+	
+	//exclusion booleans
+	public boolean showPlayer;
+	public boolean showObstacles;
+	public boolean showTiles;
+	public boolean showImages;
 
 	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
 		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
@@ -40,10 +46,16 @@ public class Page extends Editable {
 		float rHeight = bottomRight.y - topLeft.y;
 		this.view = new Rectangle(topLeft.x, topLeft.y, rWidth, rHeight);
 		this.pageObjects = new HashSet<Rectangle>();
-		this.excludedObjects = new HashSet<String>();
+//		this.excludedObjects = new HashSet<String>();
 
 		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
 		this.tiles = p.createGraphics((int) rWidth, (int) rHeight, P2D);
+		
+		//booleans
+		showPlayer = true;
+		showObstacles = true;
+		showTiles = true;
+		showImages = true;
 
 		setPosition(position);
 		updateCorners();
@@ -69,9 +81,9 @@ public class Page extends Editable {
 		updateCorners();
 	}
 
-	public void exclude(Rectangle object) {
-		excludedObjects.add(object.toString());
-	}
+//	public void exclude(Rectangle object) {
+//		excludedObjects.add(object.toString());
+//	}
 
 	public void draw(float scale) {
 		if (redraw) {
@@ -84,7 +96,7 @@ public class Page extends Editable {
 		pageGraphics.imageMode(CORNER);
 		pageGraphics.image(tiles, 0, 0); // environment
 		pageGraphics.translate(-view.getX(), -view.getY());
-		if (game.player != null) {
+		if (game.player != null && showPlayer) {
 			game.player.draw(pageGraphics, 3); // player scale/size
 		}
 		game.paper.draw(pageGraphics, view, scale / size); // paper effect
@@ -148,7 +160,7 @@ public class Page extends Editable {
 			if (r.getBottomRight().y < view.getTopLeft().y + 1) {
 				continue;
 			}
-			if (r instanceof Image) {
+			if (r instanceof Image && showImages) {
 				((Image) r).draw(tiles, 3); // scale/size
 			}
 		}
@@ -169,10 +181,10 @@ public class Page extends Editable {
 			if (r.getBottomRight().y < view.getTopLeft().y + 1) {
 				continue;
 			}
-			if (r instanceof Tile) {
+			if (r instanceof Tile && showTiles) {
 				((Tile) r).draw(tiles, 3); // scale/size
 			}
-			if (r instanceof Event && ((Event) r).visible) {
+			if (r instanceof Event && ((Event) r).visible && showObstacles) {
 				((Event) r).draw(tiles, 3); // scale/size
 			}
 		}
@@ -224,9 +236,9 @@ public class Page extends Editable {
 		return size;
 	}
 
-	public Set<String> getExcluded() {
-		return Collections.unmodifiableSet(excludedObjects);
-	}
+//	public Set<String> getExcluded() {
+//		return Collections.unmodifiableSet(excludedObjects);
+//	}
 
 	public Rectangle getView() {
 		return view;

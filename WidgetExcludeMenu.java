@@ -13,16 +13,18 @@ public class WidgetExcludeMenu extends Widget {
 		super(p, editor, parent);
 		toolbar = (EditorSide) parent;
 		icon = p.loadImage(folder + "ExcludeMenu.png");
-		
+
 		wd = widgetDirection.RIGHT;
-		
+
 		Widget w1 = new WidgetExcludePlayer(p, editor, parent);
 		Widget w2 = new WidgetExcludeObstacles(p, editor, parent);
-
+		Widget w3 = new WidgetExcludeTiles(p, editor, parent);
+		Widget w4 = new WidgetExcludeImages(p, editor, parent);
 
 		subWidgets.add(w1);
 		subWidgets.add(w2);
-
+		subWidgets.add(w3);
+		subWidgets.add(w4);
 	}
 
 	@Override

@@ -6,19 +6,19 @@ import objects.Page;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class WidgetExcludeObstacles extends Widget {
+public class WidgetExcludeImages extends Widget {
 	EditorSide toolbar;
 
-	public WidgetExcludeObstacles(PApplet p, Editor editor, Toolbar parent) {
+	public WidgetExcludeImages(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		toolbar = (EditorSide) parent;
-		icon = p.loadImage(folder + "ExcludeObstacels.png");
+		icon = p.loadImage(folder + "image.png");
 	}
 	
 	@Override
 	public void clicked() {
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-			((Page) editor.selected).showObstacles = !((Page) editor.selected).showObstacles;
+			((Page) editor.selected).showImages = !((Page) editor.selected).showImages;
 		}
 	}
 
@@ -26,7 +26,7 @@ public class WidgetExcludeObstacles extends Widget {
 	public void updateActive() {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-			if (((Page) editor.selected).showObstacles) {
+			if (((Page) editor.selected).showImages) {
 				active = true;
 			}else {
 				active = false;
