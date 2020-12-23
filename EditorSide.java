@@ -106,18 +106,22 @@ public class EditorSide extends Toolbar {
 
 	public void reset() {
 		if (editor.selected != null && !previousSelected.equals(editor.selected.getClass().toString())) {
-			adjust = false;
+//			adjust = false;
 			if (editor.selected instanceof Page) {
 				widgets = page;
-				adjust = true;
+//				adjust = true;
 			} else if (editor.selected instanceof View) {
 				widgets = view;
+				adjust = false;
 			} else if (editor.selected instanceof Editable) {
 				widgets = editable;
+				adjust = false;
 			} else if (editor.selected instanceof PlayerEnd) {
 				widgets = playerEnd;
+				adjust = false;
 			} else {
 				widgets = minimal;
+				adjust = false;
 			}
 			float height = widgetSpacing * (widgets.size());
 			super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
@@ -133,7 +137,7 @@ public class EditorSide extends Toolbar {
 		if (editor.selected == null) {
 			adjust = false;
 			return;
-		} 
+		}
 		reset();
 
 		// step if controlling the editor and there is something selected
