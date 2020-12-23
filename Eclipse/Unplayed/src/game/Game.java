@@ -140,16 +140,16 @@ public class Game {
 			cameraArea = cameraAreaStart.copy(); // camera area
 			newCameraArea = cameraArea.copy(); // new camera area
 
-			//make sure the camera sub scale is correct
+			// make sure the camera sub scale is correct
 			if ((cameraArea.getBottomRight().y - cameraArea.getTopLeft().y)
 					/ (cameraArea.getBottomRight().x - cameraArea.getTopLeft().x) > (float) p.height
 							/ (float) p.width) {
-				//set the new sub scale
+				// set the new sub scale
 				newSubScale = ((float) p.height
 						/ ((float) p.width / (float) (cameraArea.getBottomRight().x - cameraArea.getTopLeft().x)))
 						/ (cameraArea.getBottomRight().y - cameraArea.getTopLeft().y);
-				
-				//set the scale
+
+				// set the scale
 				camera.setSubScale(newSubScale);
 			}
 		}
@@ -314,6 +314,15 @@ public class Game {
 			newScale = cameraAreaCheckpoint.getWidth(); // new scale
 			newCenter = new PVector(centerX, centerY); // new centre
 			newCameraArea = cameraAreaCheckpoint.copy(); // new camera area
+			// make sure the camera sub scale is correct
+			if ((cameraArea.getBottomRight().y - cameraArea.getTopLeft().y)
+					/ (cameraArea.getBottomRight().x - cameraArea.getTopLeft().x) > (float) p.height
+							/ (float) p.width) {
+				// set the new sub scale
+				newSubScale = ((float) p.height
+						/ ((float) p.width / (float) (cameraArea.getBottomRight().x - cameraArea.getTopLeft().x)))
+						/ (cameraArea.getBottomRight().y - cameraArea.getTopLeft().y);
+			}
 		} else if (cameraAreaStart != null) { // if there is a camera start
 			// calculate values
 			PVector cameraTopLeft = cameraAreaStart.getTopLeft();
@@ -324,6 +333,15 @@ public class Game {
 			newScale = cameraAreaStart.getWidth(); // new scale
 			newCenter = new PVector(centerX, centerY); // new centre
 			newCameraArea = cameraAreaStart.copy(); // new camera area
+			// make sure the camera sub scale is correct
+			if ((cameraArea.getBottomRight().y - cameraArea.getTopLeft().y)
+					/ (cameraArea.getBottomRight().x - cameraArea.getTopLeft().x) > (float) p.height
+							/ (float) p.width) {
+				// set the new sub scale
+				newSubScale = ((float) p.height
+						/ ((float) p.width / (float) (cameraArea.getBottomRight().x - cameraArea.getTopLeft().x)))
+						/ (cameraArea.getBottomRight().y - cameraArea.getTopLeft().y);
+			}
 		}
 	}
 
