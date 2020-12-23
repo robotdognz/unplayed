@@ -123,6 +123,7 @@ public class EditorSide extends Toolbar {
 			}
 			float height = widgetSpacing * (widgets.size());
 			super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
+			super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height);
 			previousSelected = editor.selected.getClass().toString();
 		}
 	}
