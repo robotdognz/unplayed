@@ -102,15 +102,15 @@ public class EditorSide extends Toolbar {
 	public void reset() {
 		adjust = false;
 		if (editor.selected != null) {
-			if(editor.selected instanceof Editable) {
+			if (editor.selected instanceof Editable) {
 				widgets = editable;
-			}else if(editor.selected instanceof View) {
+			} else if (editor.selected instanceof View) {
 				widgets = view;
-			}else if(editor.selected instanceof Page) {
+			} else if (editor.selected instanceof Page) {
 				widgets = page;
-			}else if(editor.selected instanceof PlayerEnd) {
+			} else if (editor.selected instanceof PlayerEnd) {
 				widgets = playerEnd;
-			}else {
+			} else {
 				widgets = minimal;
 			}
 			float height = widgetSpacing * (widgets.size());
@@ -125,8 +125,10 @@ public class EditorSide extends Toolbar {
 		// elegant solution
 
 		// step - reset the side toolbar's options and abort drawing if nothing selected
-		if (editor.selected == null
-				|| (editor.selected != null && previousSelected != editor.selected.getClass().toString())) {
+		if (editor.selected == null) {
+			reset();
+			return;
+		} else if (editor.selected != null && previousSelected != editor.selected.getClass().toString()) {
 			reset();
 			previousSelected = editor.selected.getClass().toString();
 			return;
