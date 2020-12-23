@@ -43,6 +43,7 @@ public class EditorSide extends Toolbar {
 		Widget finishW = new WidgetFinish(p, editor, this);
 		Widget flipHW = new WidgetFlipH(p, editor, this);
 		Widget flipVW = new WidgetFlipV(p, editor, this);
+		Widget rotateW = new WidgetRotate(p, editor, this);
 		Widget adjustW = new WidgetAdjust(p, editor, this);
 		Widget levelendW = new WidgetLevelEnd(p, editor, this);
 		Widget excludeW = new WidgetExcludeMenu(p, editor, this);
@@ -62,6 +63,7 @@ public class EditorSide extends Toolbar {
 		editable.add(finishW);
 		editable.add(flipHW);
 		editable.add(flipVW);
+		editable.add(rotateW);
 
 		// widgets for views
 		view = new ArrayList<Widget>();
@@ -88,7 +90,7 @@ public class EditorSide extends Toolbar {
 		minimal = new ArrayList<Widget>();
 		minimal.add(deleteW);
 		minimal.add(finishW);
-		
+
 		widgets = minimal;
 
 		super.widgetSpacing = p.width / 8;
@@ -132,7 +134,7 @@ public class EditorSide extends Toolbar {
 
 	@Override
 	public void draw(PVector touch, Menu menu) {
-		 super.draw(touch, menu);
+		// super.draw(touch, menu);
 
 		// step - reset the side toolbar's options and abort drawing if nothing selected
 		if (editor.selected == null) {
@@ -205,14 +207,13 @@ public class EditorSide extends Toolbar {
 
 	// these methods are called by the widgets inside this toolbar, the toolbar then
 	// passes what they set on to the currently selected object in the editor
-
-	public void setAngle(float angle) {
-		// pass the angle straight to page if it is a page
-		// round it to the nearest 90 if it's anything else
-	}
-
-	public void setArea(PVector topLeft, PVector bottomRight) {
-
+	
+	public void addAngle() {
+		if (editor.selected != null) {
+			if (editor.selected instanceof Editable) {
+				((Editable) editor.selected).addAngle(90);
+			}
+		}
 	}
 
 	public boolean isLevelEnd() {

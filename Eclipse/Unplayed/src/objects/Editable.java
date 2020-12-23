@@ -13,18 +13,19 @@ public class Editable extends Rectangle {
 		size = 1;
 		angle = 0;
 	}
-	
-//	public void addPosition(float x, float y) {
-//		setX(getX()+x);
-//		setY(getY()+y);
-//	}
 
 	public void setAngle(float angle) {
 		this.angle = angle;
+		if (this.angle - 360 >= 0) {
+			this.angle -= 360;
+		}
 	}
 
 	public void addAngle(float angle) {
 		this.angle += angle;
+		if (this.angle - 360 >= 0) {
+			this.angle -= 360;
+		}
 	}
 
 	public float getAngle() {
