@@ -36,6 +36,7 @@ public class EditorSide extends Toolbar {
 		Widget flipVW = new WidgetFlipV(p, editor, this);
 		Widget adjustW = new WidgetAdjust(p, editor, this);
 		Widget levelendW = new WidgetLevelEnd(p, editor, this);
+		Widget excludeW = new WidgetExcludeMenu(p, editor, this);
 
 		widgets.add(deleteW);
 		widgets.add(finishW);
@@ -43,6 +44,7 @@ public class EditorSide extends Toolbar {
 		widgets.add(flipVW);
 		widgets.add(adjustW);
 		widgets.add(levelendW);
+		widgets.add(excludeW);
 
 		super.widgetSpacing = p.width / 8;
 
