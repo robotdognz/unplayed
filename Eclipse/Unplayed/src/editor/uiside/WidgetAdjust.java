@@ -28,6 +28,8 @@ public class WidgetAdjust extends Widget {
 				} else {
 					active = false;
 				}
+			}else {
+				available = false;
 			}
 		} else {
 			available = false;
