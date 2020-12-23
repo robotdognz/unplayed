@@ -145,10 +145,10 @@ public class Game {
 					/ (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) > (float) p.height
 							/ (float) p.width) {
 
-				float startSubScale = ((float) p.height
+				newSubScale = ((float) p.height
 						/ ((float) p.width / (float) (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x)))
 						/ (newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y);
-				camera.setSubScale(startSubScale);
+				camera.setSubScale(newSubScale);
 			}
 		}
 		// clear player
