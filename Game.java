@@ -139,6 +139,15 @@ public class Game {
 			newCenter = new PVector(camera.getCenter().x, camera.getCenter().y); // new centre
 			cameraArea = cameraAreaStart.copy(); // camera area
 			newCameraArea = cameraArea.copy(); // new camera area
+
+			if ((newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y)
+					/ (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) > (float) p.height
+							/ (float) p.width) {
+
+				newSubScale = ((float) p.height
+						/ ((float) p.width / (float) (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x)))
+						/ (newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y);
+			}
 		}
 		// clear player
 		player = null;
@@ -252,12 +261,12 @@ public class Game {
 				found = ((Tile) r);
 			}
 			if (found != null) {
-				//check if the player has already been the found tile
+				// check if the player has already been the found tile
 				boolean shouldAddToRemoved = true;
-				if(placed.contains(found)) {
+				if (placed.contains(found)) {
 					shouldAddToRemoved = false;
 				}
-				//if they have the tile shouldn't be added to removed
+				// if they have the tile shouldn't be added to removed
 
 				if (shouldAddToRemoved) {
 					removed.add(found);
@@ -385,6 +394,7 @@ public class Game {
 			if ((newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y)
 					/ (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) > (float) p.height
 							/ (float) p.width) {
+
 				newSubScale = ((float) p.height
 						/ ((float) p.width / (float) (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x)))
 						/ (newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y);
