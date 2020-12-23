@@ -48,13 +48,13 @@ public class EditorSide extends Toolbar {
 		Widget excludeW = new WidgetExcludeMenu(p, editor, this);
 
 		// default widget list with everything
-		widgets.add(deleteW);
-		widgets.add(finishW);
-		widgets.add(flipHW);
-		widgets.add(flipVW);
-		widgets.add(adjustW);
-		widgets.add(levelendW);
-		widgets.add(excludeW);
+//		widgets.add(deleteW);
+//		widgets.add(finishW);
+//		widgets.add(flipHW);
+//		widgets.add(flipVW);
+//		widgets.add(adjustW);
+//		widgets.add(levelendW);
+//		widgets.add(excludeW);
 
 		// widgets for editable
 		editable = new ArrayList<Widget>();
@@ -88,6 +88,8 @@ public class EditorSide extends Toolbar {
 		minimal = new ArrayList<Widget>();
 		minimal.add(deleteW);
 		minimal.add(finishW);
+		
+		widgets = minimal;
 
 		super.widgetSpacing = p.width / 8;
 
