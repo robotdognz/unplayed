@@ -144,7 +144,7 @@ public class PlayerEnd extends Event {
 		}
 
 		// the player is perfectly in the slot
-		if (System.currentTimeMillis() + 1000 > lastTime) {
+		if (System.currentTimeMillis() > lastTime + 1000) {
 			lastTime = System.currentTimeMillis();
 			if (levelEnd) { // if this is the end of the level
 				g.endGame();
