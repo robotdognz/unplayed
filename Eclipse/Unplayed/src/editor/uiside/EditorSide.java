@@ -68,13 +68,14 @@ public class EditorSide extends Toolbar {
 	@Override
 	public void draw(PVector touch, Menu menu) {
 		// super.draw(touch, menu);
-		//TODO: I've gone a bit overkill with all the reset(), these must be a more elegant solution
+		// TODO: I've gone a bit overkill with all the reset(), these must be a more
+		// elegant solution
 
-		//step - reset the side toolbar's options and abort drawing if nothing selected
+		// step - reset the side toolbar's options and abort drawing if nothing selected
 		if (editor.selected == null) {
 			reset();
 			return;
-		}else if (!(editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
+		} else if (!(editor.selected instanceof Page || editor.selected instanceof PlayerEnd)) {
 			reset();
 		}
 
@@ -83,14 +84,41 @@ public class EditorSide extends Toolbar {
 
 			p.imageMode(CENTER);
 
+			float currentWidgetHeight = 0; // used to find the right most edge of the longest open widget menu
+			boolean wMenuOpen = false;
 			for (int i = 0; i < widgets.size(); i++) {
+				if (widgets.get(i).isActive()) {
+					ArrayList<Widget> children = widgets.get(i).getChildren();
+					if (children.size() > 0) {
+						wMenuOpen = true;
+						editor.nextTouchInactive = true; // controls won't work until the touch after widget menus are
+															// closed
+						float current = children.get(children.size() - 1).getPosition().x;
+						if (current > currentWidgetHeight) {
+							currentWidgetHeight = current;
+						}
+					}
+				}
+
 				widgets.get(i).draw(80, widgetOffset + widgetSpacing * i);
 				widgets.get(i).updateActive();
 				if (menu == null) {
 					widgets.get(i).hover(touch);
 				}
 			}
-		}else {
+			currentWidgetHeight += widgets.get(0).getSize() * 1.5; // add a little padding onto the bottom
+			// if the last touch was below the longest open widget menu, close all widget
+			// menus
+			if (wMenuOpen && touch.x > currentWidgetHeight || menu != null) {
+				for (Widget w : widgets) {
+					if (w.isMenu()) {
+						w.deactivate();
+					}
+				}
+			}
+			editor.controllerActive = !wMenuOpen; // if a widget menu is open, deactivate controls
+			
+		} else {
 			reset();
 		}
 	}

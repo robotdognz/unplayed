@@ -247,7 +247,7 @@ public abstract class Widget {
 		active = newActive;
 	}
 
-	enum widgetDirection {
+	public enum widgetDirection {
 		DOWN, UP, LEFT, RIGHT
 	}
 }
