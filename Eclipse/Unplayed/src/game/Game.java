@@ -252,7 +252,23 @@ public class Game {
 				found = ((Tile) r);
 			}
 			if (found != null) {
-				removed.add(found);
+				// if the player has already been the found tile
+				boolean shouldRemove = true;
+				for (int i = 0; i < removed.size(); i++) {
+					Tile current = removed.get(i);
+					if (found.getX() != current.getX()) {
+						continue;
+					}
+					if (found.getY() != current.getY()) {
+						continue;
+					}
+					shouldRemove = false;
+					break;
+				}
+
+				if (shouldRemove) {
+					removed.add(found);
+				}
 				world.remove(found);
 				if (playerCheckpoint != null) {
 					player = new Player(p, texture, playerCheckpoint, vibe);
@@ -262,18 +278,7 @@ public class Game {
 						player = new Player(p, texture, current, vibe);
 					}
 				}
-				
-				// if the player has already been the found tile
-				for(int i = 0; i < removed.size(); i++) {
-					Tile current = removed.get(i);
-					if(found.getX() != current.getX()) {
-						continue;
-					}
-					if(found.getY() != current.getY()) {
-						continue;
-					}
-					removed.remove(i);
-				}
+
 			}
 		}
 	}
