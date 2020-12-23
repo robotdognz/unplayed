@@ -126,9 +126,9 @@ public class Game {
 	public void startGame() {
 		// only alter the camera if we're in game or play testing
 		if (playerStart != null && camera.getGame()) {
-			//setup start camera area
+			// setup start camera area
 			cameraAreaStart = playerStart.getCameraArea();
-			
+
 			// calculate values
 			PVector cameraTopLeft = cameraAreaStart.getTopLeft();
 			PVector cameraBottomRight = cameraAreaStart.getBottomRight();
@@ -152,9 +152,11 @@ public class Game {
 						/ ((float) p.width / (float) (cameraArea.getBottomRight().x - cameraArea.getTopLeft().x)))
 						/ (cameraArea.getBottomRight().y - cameraArea.getTopLeft().y);
 
-				// set the scale
-				camera.setSubScale(newSubScale);
+			} else {
+				newSubScale = 1;
 			}
+			// set the scale
+			camera.setSubScale(newSubScale);
 		}
 		// clear player
 		player = null;
