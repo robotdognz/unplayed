@@ -10,6 +10,7 @@ import handlers.TextureCache;
 import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
+import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class PlayerEnd extends Event {
@@ -63,15 +64,31 @@ public class PlayerEnd extends Event {
 		if (!levelEnd) {
 			graphics.noFill();
 			graphics.rectMode(CORNERS);
-			graphics.stroke(0, 255, 0, 150);
-			graphics.strokeWeight(3);
+			graphics.stroke(0, 255, 0, 100);
+			graphics.strokeWeight(4);
 			graphics.rect(newPlayerArea.getTopLeft().x, newPlayerArea.getTopLeft().y, newPlayerArea.getBottomRight().x,
 					newPlayerArea.getBottomRight().y);
-			graphics.line(getX() + getWidth() / 2, getY() + getHeight() / 2,
+//			graphics.line(getX() + getWidth() / 2, getY() + getHeight() / 2,
+//					newPlayerArea.getX() + newPlayerArea.getWidth() / 2,
+//					newPlayerArea.getY() + newPlayerArea.getHeight() / 2);
+			arrow(graphics, getX() + getWidth() / 2, getY() + getHeight() / 2,
 					newPlayerArea.getX() + newPlayerArea.getWidth() / 2,
 					newPlayerArea.getY() + newPlayerArea.getHeight() / 2);
 		}
 		super.draw(graphics, scale);
+	}
+
+	private void arrow(PGraphics graphics, float x1, float y1, float x2, float y2) {
+		graphics.stroke(0, 255, 0, 100);
+		graphics.strokeWeight(4);
+		graphics.line(x1, y1, x2, y2);
+		graphics.pushMatrix();
+		graphics.translate(x2, y2);
+		float a = PApplet.atan2(x1 - x2, y2 - y1);
+		graphics.rotate(a);
+		graphics.line(0, 0, -10, -10);
+		graphics.line(0, 0, 10, -10);
+		graphics.popMatrix();
 	}
 
 	private void drawNewPlayerArea(PGraphics g) {
