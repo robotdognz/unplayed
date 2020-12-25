@@ -192,9 +192,6 @@ public class Game {
 	}
 
 	public void endPuzzle(Rectangle playerArea) {
-		// pause
-		p.delay(180);
-
 		HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
 		world.retrieve(returnObjects, playerArea);
 		Tile found = null;
@@ -218,6 +215,8 @@ public class Game {
 		}
 		// if the next block the player will become has been found
 		if (found != null) {
+			// pause
+			p.delay(180);
 
 			// update the checkpoints
 			this.playerCheckpoint = found;
