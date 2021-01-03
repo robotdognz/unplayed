@@ -213,8 +213,12 @@ public abstract class Widget {
 	}
 
 	public void setPosition(float x, float y) {
-		this.position.x = x;
-		this.position.y = y;
+		if (this.position == null) {
+			this.position = new PVector(x, y);
+		} else {
+			this.position.x = x;
+			this.position.y = y;
+		}
 
 	}
 

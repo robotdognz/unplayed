@@ -118,14 +118,19 @@ public class EditorSide extends Toolbar {
 				adjust = false;
 			}
 			//reset widget positions
-			for(Widget w : widgets) {
-				w.setPosition(-50, w.getPosition().y);
-			}
+//			for(Widget w : widgets) {
+//				w.setPosition(-50, w.getPosition().y);
+//			}
 
 			float height = widgetSpacing * (widgets.size());
 			super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
 			super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height);
 			previousSelected = editor.selected.getClass().toString();
+			
+			for(int i = 0; i < widgets.size(); i++) {
+				widgets.get(i).setPosition(-50, widgetOffset + widgetSpacing * i);
+			}
+			
 		}
 	}
 
