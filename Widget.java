@@ -210,6 +210,11 @@ public abstract class Widget {
 			this.position.x = position.x;
 			this.position.y = position.y;
 		}
+		if(subWidgets != null) {
+			for(Widget w : subWidgets) {
+				w.setPosition(this.position);
+			}
+		}
 	}
 
 	public void setPosition(float x, float y) {
@@ -219,7 +224,11 @@ public abstract class Widget {
 			this.position.x = x;
 			this.position.y = y;
 		}
-
+		if(subWidgets != null) {
+			for(Widget w : subWidgets) {
+				w.setPosition(this.position);
+			}
+		}
 	}
 
 	public boolean getCloseAfter() {
