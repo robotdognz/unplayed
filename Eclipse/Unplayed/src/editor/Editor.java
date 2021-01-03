@@ -228,17 +228,51 @@ public class Editor {
 
 		p.background(240);
 
+		// find corners of camera
+		PVector currentTopLeft = convert.screenToLevel(0, 0);
+		PVector currentBottomRight = convert.screenToLevel(p.width, p.height);
+
 		// draw player and environment
 
 		for (Rectangle r : game.screenObjects) { // draw images
-			if (r instanceof Image) {
-				((Image) r).draw(p.g, currentScale);
+			if (!(r instanceof Image)) {
+				continue;
 			}
+			if (r.getTopLeft().x > currentBottomRight.x - 1) {
+				continue;
+			}
+			if (r.getBottomRight().x < currentTopLeft.x + 1) {
+				continue;
+			}
+			if (r.getTopLeft().y > currentBottomRight.y - 1) {
+				continue;
+			}
+			if (r.getBottomRight().y < currentTopLeft.y + 1) {
+				continue;
+			}
+//			if (r instanceof Image) {
+			((Image) r).draw(p.g, currentScale);
+//			}
 		}
 		for (Rectangle r : game.screenObjects) { // draw tiles on top of images
-			if (r instanceof Tile) {
-				((Tile) r).draw(p.g, currentScale);
+			if (!(r instanceof Tile)) {
+				continue;
 			}
+			if (r.getTopLeft().x > currentBottomRight.x - 1) {
+				continue;
+			}
+			if (r.getBottomRight().x < currentTopLeft.x + 1) {
+				continue;
+			}
+			if (r.getTopLeft().y > currentBottomRight.y - 1) {
+				continue;
+			}
+			if (r.getBottomRight().y < currentTopLeft.y + 1) {
+				continue;
+			}
+//			if (r instanceof Tile) {
+			((Tile) r).draw(p.g, currentScale);
+//			}
 		}
 
 		if (game.player != null) { // draw the player on top of tiles and images
@@ -393,8 +427,8 @@ public class Editor {
 			camera.setScale(pvScale);
 			camera.setSubScale(pvSubScale);
 			camera.setCenter(pvCenter);
-			
-			//force re-render of pages
+
+			// force re-render of pages
 			pageView.forceRedraw();
 		}
 	}
