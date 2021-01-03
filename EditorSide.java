@@ -82,7 +82,7 @@ public class EditorSide extends Toolbar {
 
 		widgets = minimal;
 
-		super.widgetSpacing = 165; // p.width / 8
+		super.widgetSpacing = 160; // p.width / 8
 
 		float height = widgetSpacing * (widgets.size());
 
@@ -127,6 +127,11 @@ public class EditorSide extends Toolbar {
 				widgets.get(i).setPosition(-100, widgetOffset + widgetSpacing * i);
 			}
 
+		} else if (editor.selected == null) {
+			// reset widget positions
+			for (int i = 0; i < widgets.size(); i++) {
+				widgets.get(i).setPosition(-100, widgetOffset + widgetSpacing * i);
+			}
 		}
 	}
 
@@ -135,11 +140,11 @@ public class EditorSide extends Toolbar {
 		// super.draw(touch, menu);
 
 		// step - reset the side toolbar's options and abort drawing if nothing selected
+		reset();
 		if (editor.selected == null) {
 			adjust = false;
 			return;
 		}
-		reset();
 
 		// step if controlling the editor and there is something selected
 		if (editor.controller instanceof EditorControl) {
@@ -148,9 +153,6 @@ public class EditorSide extends Toolbar {
 			boolean wMenuOpen = false;
 			for (int i = 0; i < widgets.size(); i++) {
 
-//				float widgetScale = ((float) 75 * 1.5f); // wSize*1.5 //TODO: this is messed up code, do it a better
-				// way!
-//				float backgroundScale = 170;
 				// draw editor side background
 				if (widgets.get(i).getPosition() != null) {
 					p.imageMode(CENTER);
