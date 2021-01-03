@@ -82,7 +82,7 @@ public class EditorSide extends Toolbar {
 
 		widgets = minimal;
 
-		super.widgetSpacing = 170; // p.width / 8
+		super.widgetSpacing = 165; // p.width / 8
 
 		float height = widgetSpacing * (widgets.size());
 
@@ -148,20 +148,21 @@ public class EditorSide extends Toolbar {
 			boolean wMenuOpen = false;
 			for (int i = 0; i < widgets.size(); i++) {
 
-				float widgetScale = ((float) 75 * 1.5f); // wSize*1.5 //TODO: this is messed up code, do it a better
-															// way!
+//				float widgetScale = ((float) 75 * 1.5f); // wSize*1.5 //TODO: this is messed up code, do it a better
+				// way!
+//				float backgroundScale = 170;
 				// draw editor side background
 				if (widgets.get(i).getPosition() != null) {
 					p.imageMode(CENTER);
 					if (i == 0) {
-						p.image(top, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * i,
-								widgetScale * 1.5f, widgetScale * 1.5f);
+						p.image(top, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * i, widgetSpacing,
+								widgetSpacing);
 					} else if (i == widgets.size() - 1) {
-						p.image(bottom, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * i,
-								widgetScale * 1.5f, widgetScale * 1.5f);
+						p.image(bottom, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * i, widgetSpacing,
+								widgetSpacing);
 					} else {
-						p.image(middle, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * i,
-								widgetScale * 1.5f, widgetScale * 1.5f);
+						p.image(middle, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * i, widgetSpacing,
+								widgetSpacing);
 					}
 				}
 
