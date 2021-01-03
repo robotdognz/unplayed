@@ -104,6 +104,12 @@ public class PageView {
 			p.step();
 		}
 	}
+	
+	public void forceRedraw() {
+		for(Page p : pages) {
+			p.drawView();
+		}
+	}
 
 	public void addPage(Page page) {
 		pages.add(page);

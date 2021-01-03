@@ -393,6 +393,9 @@ public class Editor {
 			camera.setScale(pvScale);
 			camera.setSubScale(pvSubScale);
 			camera.setCenter(pvCenter);
+			
+			//force re-render of pages
+			pageView.forceRedraw();
 		}
 	}
 
