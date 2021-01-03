@@ -231,6 +231,9 @@ public class Editor {
 		// find corners of camera
 		PVector currentTopLeft = convert.screenToLevel(0, 0);
 		PVector currentBottomRight = convert.screenToLevel(p.width, p.height);
+		// TODO: this system is not great, when I've merged the level view updating code
+		// from game to editor, I need to change this so it only goes eliminates things
+		// that shouldn't be drawn once
 
 		// draw player and environment
 
