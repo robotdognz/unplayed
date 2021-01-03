@@ -82,7 +82,7 @@ public class EditorSide extends Toolbar {
 
 		widgets = minimal;
 
-		super.widgetSpacing = p.width / 8;
+		super.widgetSpacing = 170; // p.width / 8
 
 		float height = widgetSpacing * (widgets.size());
 
