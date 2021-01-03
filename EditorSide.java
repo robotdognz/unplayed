@@ -156,7 +156,13 @@ public class EditorSide extends Toolbar {
 				if (widgets.get(i).getPosition() != null) {
 					if (i == 0) {
 						p.image(top, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * 0,
-								widgetScale * 4.4f, widgetScale * 1.2f);
+								widgetScale * 1.5f, widgetScale * 1.5f);
+					} else if (i == widgets.size() - 1) {
+						p.image(bottom, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * 0,
+								widgetScale * 1.5f, widgetScale * 1.5f);
+					} else {
+						p.image(middle, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * 0,
+								widgetScale * 1.5f, widgetScale * 1.5f);
 					}
 				}
 
