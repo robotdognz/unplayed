@@ -135,4 +135,8 @@ public class PageView {
 	public void setPages(ArrayList<Page> pages) {
 		this.pages = pages;
 	}
+	
+	public void clearPages() {
+		this.pages.clear();
+	}
 }
