@@ -203,6 +203,21 @@ public abstract class Widget {
 		return position;
 	}
 
+	public void setPosition(PVector position) {
+		if (this.position == null) {
+			this.position = new PVector(position.x, position.y);
+		} else {
+			this.position.x = position.x;
+			this.position.y = position.y;
+		}
+	}
+
+	public void setPosition(float x, float y) {
+		this.position.x = x;
+		this.position.y = y;
+
+	}
+
 	public boolean getCloseAfter() {
 		return closeAfterSubWidget;
 	}
@@ -219,15 +234,6 @@ public abstract class Widget {
 		return subWidgets;
 	}
 
-	public void setPosition(PVector position) {
-		if (this.position == null) {
-			this.position = new PVector(position.x, position.y);
-		} else {
-			this.position.x = position.x;
-			this.position.y = position.y;
-		}
-	}
-
 	public void updateActive() {
 		// this method should also be used to update 'available'
 		if (subWidgets.size() > 0) {
@@ -238,11 +244,11 @@ public abstract class Widget {
 				}
 			}
 		}
-		//updateActiveUser();
+		// updateActiveUser();
 	}
 
 	//
-	
+
 	public void setActive(boolean newActive) {
 		active = newActive;
 	}

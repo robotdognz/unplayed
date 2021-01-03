@@ -37,8 +37,8 @@ public class EditorSide extends Toolbar {
 		super.folder = p.dataPath("ui") + '/';
 
 		// setup widgets
-		super.widgets = new ArrayList<Widget>();
-		// add widgets
+//		super.widgets = new ArrayList<Widget>();
+		// create widgets
 		Widget deleteW = new WidgetDelete(p, editor, this);
 		Widget finishW = new WidgetFinish(p, editor, this);
 		Widget flipHW = new WidgetFlipH(p, editor, this);
@@ -47,15 +47,6 @@ public class EditorSide extends Toolbar {
 		Widget adjustW = new WidgetAdjust(p, editor, this);
 		Widget levelendW = new WidgetLevelEnd(p, editor, this);
 		Widget excludeW = new WidgetExcludeMenu(p, editor, this);
-
-		// default widget list with everything
-//		widgets.add(deleteW);
-//		widgets.add(finishW);
-//		widgets.add(flipHW);
-//		widgets.add(flipVW);
-//		widgets.add(adjustW);
-//		widgets.add(levelendW);
-//		widgets.add(excludeW);
 
 		// widgets for editable
 		editable = new ArrayList<Widget>();
@@ -110,6 +101,7 @@ public class EditorSide extends Toolbar {
 
 	public void reset() {
 		if (editor.selected != null && !previousSelected.equals(editor.selected.getClass().toString())) {
+			// select correct widget list
 			if (editor.selected instanceof Page) {
 				widgets = page;
 			} else if (editor.selected instanceof View) {
@@ -125,6 +117,11 @@ public class EditorSide extends Toolbar {
 				widgets = minimal;
 				adjust = false;
 			}
+			//reset widget positions
+			for(Widget w : widgets) {
+				w.setPosition(-50, w.getPosition().y);
+			}
+
 			float height = widgetSpacing * (widgets.size());
 			super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
 			super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height);
@@ -207,7 +204,7 @@ public class EditorSide extends Toolbar {
 
 	// these methods are called by the widgets inside this toolbar, the toolbar then
 	// passes what they set on to the currently selected object in the editor
-	
+
 	public void addAngle() {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Editable) {
