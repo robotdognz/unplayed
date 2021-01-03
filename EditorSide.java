@@ -144,8 +144,6 @@ public class EditorSide extends Toolbar {
 		// step if controlling the editor and there is something selected
 		if (editor.controller instanceof EditorControl) {
 
-			p.imageMode(CENTER);
-
 			float currentWidgetHeight = 0; // used to find the right most edge of the longest open widget menu
 			boolean wMenuOpen = false;
 			for (int i = 0; i < widgets.size(); i++) {
@@ -154,14 +152,15 @@ public class EditorSide extends Toolbar {
 															// way!
 				// draw editor side background
 				if (widgets.get(i).getPosition() != null) {
+					p.imageMode(CENTER);
 					if (i == 0) {
-						p.image(top, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * 0,
+						p.image(top, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * i,
 								widgetScale * 1.5f, widgetScale * 1.5f);
 					} else if (i == widgets.size() - 1) {
-						p.image(bottom, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * 0,
+						p.image(bottom, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * i,
 								widgetScale * 1.5f, widgetScale * 1.5f);
 					} else {
-						p.image(middle, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * 0,
+						p.image(middle, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * i,
 								widgetScale * 1.5f, widgetScale * 1.5f);
 					}
 				}
