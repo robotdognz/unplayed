@@ -13,15 +13,15 @@ import objects.Rectangle;
 import objects.View;
 import objects.events.PlayerEnd;
 import processing.core.PApplet;
-//import processing.core.PImage;
+import processing.core.PImage;
 import processing.core.PVector;
 import ui.Menu;
 import ui.Widget;
 
 public class EditorSide extends Toolbar {
-//	private PImage top;
-//	private PImage middle;
-//	private PImage bottom;
+	private PImage top;
+	private PImage middle;
+	private PImage bottom;
 	public boolean adjust;
 
 	private String previousSelected = "";
@@ -36,8 +36,6 @@ public class EditorSide extends Toolbar {
 		super(p, editor);
 		super.folder = p.dataPath("ui") + '/';
 
-		// setup widgets
-//		super.widgets = new ArrayList<Widget>();
 		// create widgets
 		Widget deleteW = new WidgetDelete(p, editor, this);
 		Widget finishW = new WidgetFinish(p, editor, this);
@@ -74,8 +72,8 @@ public class EditorSide extends Toolbar {
 		playerEnd = new ArrayList<Widget>();
 		playerEnd.add(deleteW);
 		playerEnd.add(finishW);
-		playerEnd.add(adjustW);
 		playerEnd.add(levelendW);
+		playerEnd.add(adjustW);
 
 		// minimal widgets
 		minimal = new ArrayList<Widget>();
@@ -91,10 +89,10 @@ public class EditorSide extends Toolbar {
 		super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
 
 		this.adjust = false; // are we adjusting a page?
-		// sprites
-		// this.top = p.requestImage(folder + "???.png");
-		// this.middle = p.requestImage(folder + "???.png");
-		// this.bottom = p.requestImage(folder + "???.png");
+		// load sprites
+		this.top = p.requestImage(folder + "icn_SideTabTop.png");
+		this.middle = p.requestImage(folder + "icn_SideTabMiddle.png");
+		this.bottom = p.requestImage(folder + "icn_SideTabBottum.png");
 
 		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height); // TODO: needs to scale to screen
 	}
@@ -117,20 +115,18 @@ public class EditorSide extends Toolbar {
 				widgets = minimal;
 				adjust = false;
 			}
-			//reset widget positions
-//			for(Widget w : widgets) {
-//				w.setPosition(-50, w.getPosition().y);
-//			}
 
+			// calculate widget positions and create new bounds
 			float height = widgetSpacing * (widgets.size());
 			super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
 			super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height);
 			previousSelected = editor.selected.getClass().toString();
-			
-			for(int i = 0; i < widgets.size(); i++) {
-				widgets.get(i).setPosition(-50, widgetOffset + widgetSpacing * i);
+
+			// reset widget positions
+			for (int i = 0; i < widgets.size(); i++) {
+				widgets.get(i).setPosition(-100, widgetOffset + widgetSpacing * i);
 			}
-			
+
 		}
 	}
 
@@ -153,6 +149,17 @@ public class EditorSide extends Toolbar {
 			float currentWidgetHeight = 0; // used to find the right most edge of the longest open widget menu
 			boolean wMenuOpen = false;
 			for (int i = 0; i < widgets.size(); i++) {
+
+				float widgetScale = ((float) 75 * 1.5f); // wSize*1.5 //TODO: this is messed up code, do it a better
+															// way!
+				// draw editor side background
+				if (widgets.get(i).getPosition() != null) {
+					if (i == 0) {
+						p.image(top, widgets.get(i).getPosition().x, widgetOffset + widgetSpacing * 0,
+								widgetScale * 4.4f, widgetScale * 1.2f);
+					}
+				}
+
 				if (widgets.get(i).isActive()) {
 					ArrayList<Widget> children = widgets.get(i).getChildren();
 					if (children.size() > 0) {
