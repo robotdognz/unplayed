@@ -79,8 +79,6 @@ public class PlayerEnd extends Event {
 		graphics.translate(x2, y2);
 		float a = PApplet.atan2(x1 - x2, y2 - y1);
 		graphics.rotate(a);
-//		graphics.line(0, 0, -15, -15); // graphics.line(0, 0, -10, -10);
-//		graphics.line(0, 0, 15, -15); // graphics.line(0, 0, 10, -10);
 		graphics.triangle(0, 0, -15, -15, 15, -15);
 		graphics.popMatrix();
 	}
@@ -129,21 +127,35 @@ public class PlayerEnd extends Event {
 		if (player.getTopLeft().y != getTopLeft().y) {
 			return;
 		}
-		if (required == null) {
-			return;
+//		if (required == null) {
+//			return;
+//		}
+		if (required != null) {
+			if (!player.getFile().equals(required.getFile())) {
+				return;
+			}
+			if (!(player.isFlippedH() == required.isFlippedH())) {
+				return;
+			}
+			if (!(player.isFlippedV() == required.isFlippedV())) {
+				return;
+			}
+			if (!(player.getAngle() == required.getAngle())) {
+				return;
+			}
 		}
-		if (!player.getFile().equals(required.getFile())) {
-			return;
-		}
-		if (!(player.isFlippedH() == required.isFlippedH())) {
-			return;
-		}
-		if (!(player.isFlippedV() == required.isFlippedV())) {
-			return;
-		}
-		if (!(player.getAngle() == required.getAngle())) {
-			return;
-		}
+//		if (!player.getFile().equals(required.getFile())) {
+//			return;
+//		}
+//		if (!(player.isFlippedH() == required.isFlippedH())) {
+//			return;
+//		}
+//		if (!(player.isFlippedV() == required.isFlippedV())) {
+//			return;
+//		}
+//		if (!(player.getAngle() == required.getAngle())) {
+//			return;
+//		}
 
 		// the player is perfectly in the slot
 		if (System.currentTimeMillis() > lastTime + 2000) {
