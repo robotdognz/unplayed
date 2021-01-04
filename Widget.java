@@ -257,10 +257,8 @@ public abstract class Widget {
 				}
 			}
 		}
-		// updateActiveUser();
 	}
 
-	//
 
 	public void setActive(boolean newActive) {
 		active = newActive;

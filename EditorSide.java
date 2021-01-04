@@ -12,6 +12,7 @@ import objects.Page;
 import objects.Rectangle;
 import objects.View;
 import objects.events.PlayerEnd;
+import objects.events.Spike;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -30,6 +31,7 @@ public class EditorSide extends Toolbar {
 	private ArrayList<Widget> view;
 	private ArrayList<Widget> page;
 	private ArrayList<Widget> playerEnd;
+	private ArrayList<Widget> spike;
 	private ArrayList<Widget> minimal; // for things that only require cross and tick
 
 	public EditorSide(PApplet p, Editor editor) {
@@ -74,6 +76,11 @@ public class EditorSide extends Toolbar {
 		playerEnd.add(finishW);
 		playerEnd.add(levelendW);
 		playerEnd.add(adjustW);
+		
+		// widgets for spikes
+		spike.add(deleteW);
+		spike.add(finishW);
+		spike.add(rotateW);
 
 		// minimal widgets
 		minimal = new ArrayList<Widget>();
@@ -111,6 +118,9 @@ public class EditorSide extends Toolbar {
 			} else if (editor.selected instanceof PlayerEnd) {
 				widgets = playerEnd;
 				adjust = false;
+			} else if (editor.selected instanceof Spike) {
+				widgets = spike;
+				adjust = false;
 			} else {
 				widgets = minimal;
 				adjust = false;
@@ -122,9 +132,10 @@ public class EditorSide extends Toolbar {
 			super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height);
 			previousSelected = editor.selected.getClass().toString();
 
-			// reset widget positions
+			// reset widget positions and active status
 			for (int i = 0; i < widgets.size(); i++) {
 				widgets.get(i).setPosition(-100, widgetOffset + widgetSpacing * i);
+				widgets.get(i).updateActive();
 			}
 
 		} else if (editor.selected == null) {
