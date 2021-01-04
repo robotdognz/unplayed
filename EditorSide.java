@@ -106,7 +106,7 @@ public class EditorSide extends Toolbar {
 		this.middle = p.requestImage(folder + "icn_SideTabMiddle.png");
 		this.bottom = p.requestImage(folder + "icn_SideTabBottum.png");
 
-		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, widgetSpacing, height); // TODO: needs to scale to screen
+		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, widgetSpacing, height);
 	}
 
 	public void reset() {
@@ -197,7 +197,7 @@ public class EditorSide extends Toolbar {
 					}
 				}
 
-				widgets.get(i).draw(widgetX, widgetOffset + widgetSpacing * i); //TODO
+				widgets.get(i).draw(widgetX, widgetOffset + widgetSpacing * i);
 				widgets.get(i).updateActive();
 				if (menu == null) {
 					widgets.get(i).hover(touch);

@@ -14,6 +14,10 @@ public class EditorTop extends Toolbar {
 	private PImage uiExtra;
 	public boolean saving = false;
 	public boolean loading = false;
+	
+	private int widgetY;
+	private float uiExtraWidth;
+	private float uiExtraHeight;
 
 	public EditorTop(PApplet p, Editor editor) {
 		super(p, editor);
@@ -37,11 +41,14 @@ public class EditorTop extends Toolbar {
 		widgets.add(editModeW);
 		widgets.add(extraW);
 
-		// this.eWidgetSpacing = width/(this.eWidgets.size()+1);
 		super.widgetSpacing = p.width / 8;
 		super.widgetOffset = (p.width - widgetSpacing * 5) / 2;
 		
-		super.bounds = new Rectangle(0, 0, p.width, 200); //TODO: needs to be relative to screen size
+		super.bounds = new Rectangle(0, 0, p.width, (int)(p.width/7.2));
+		
+		widgetY = p.width/12;
+		uiExtraWidth = saveW.getSize()*6.6f; //495
+		uiExtraHeight = saveW.getSize()*1.8f; //135
 	}
 
 	@Override
@@ -49,8 +56,9 @@ public class EditorTop extends Toolbar {
 		//super.draw(touch, menu);
 		// draw ui extra piece
 		p.imageMode(CENTER);
-		float widgetScale = ((float) 75 * 1.5f); // wSize*1.5 //TODO: this is messed up code, do it a better way!
-		p.image(uiExtra, widgetOffset + widgetSpacing * 3, 120, widgetScale * 4.4f, widgetScale * 1.2f);
+		//float widgetScale = ((float) 75 * 1.5f);
+		//p.image(uiExtra, widgetOffset + widgetSpacing * 3, 120, widgetScale * 4.4f, widgetScale * 1.2f);
+		p.image(uiExtra, widgetOffset + widgetSpacing * 3, widgetY, uiExtraWidth, uiExtraHeight);
 
 		// widget menus - draw them and close them if lastTouch is below longest open
 		// widget menu
@@ -70,7 +78,7 @@ public class EditorTop extends Toolbar {
 				}
 			}
 			// eWidgets.get(i).draw(eWidgetSpacing*(i+1), 120);
-			widgets.get(i).draw(widgetOffset + widgetSpacing * i, 120);
+			widgets.get(i).draw(widgetOffset + widgetSpacing * i, widgetY);
 			widgets.get(i).updateActive();
 			if (menu == null) {
 				widgets.get(i).hover(touch);
