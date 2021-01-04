@@ -13,7 +13,7 @@ public abstract class Widget {
 	protected Editor editor;
 	Toolbar parent;
 	protected PVector position; // position of the widget
-	protected float wSize = 75; // 60 //size of the widget
+	protected float wSize; // 75 //size of the widget
 	protected float touchScale = 1.2f; // 1.5
 	protected String folder;
 	protected PImage icon;
@@ -32,7 +32,7 @@ public abstract class Widget {
 	protected float animationSpeed = 0.8f; // speed of subWidget animation
 	protected widgetDirection wd = widgetDirection.DOWN; // subWidget direction, defaults to down
 	protected ArrayList<Widget> subWidgets = new ArrayList<Widget>(); // if this is not null then this widget is a menu
-	protected float subWidgetSpacing = 180; // how far apart to draw subWidgets
+	protected float subWidgetSpacing; // = 180; // how far apart to draw subWidgets
 	protected boolean iconIsCurrentSubWidget = false; // does this widget icon change depending on its sub wigets?
 	protected boolean closeAfterSubWidget = false; // does this sub widget close the sub widget menu after being clicked
 
@@ -45,6 +45,9 @@ public abstract class Widget {
 		this.editor = editor;
 		this.parent = parent;
 		defaultIcon();
+
+		this.wSize = p.width / 19.2f;
+		this.subWidgetSpacing = p.width / 8;
 
 		// TODO: should set available to false if editor == null
 		// TODO: update active and other methods that make checks against editor should
@@ -210,8 +213,8 @@ public abstract class Widget {
 			this.position.x = position.x;
 			this.position.y = position.y;
 		}
-		if(subWidgets != null) {
-			for(Widget w : subWidgets) {
+		if (subWidgets != null) {
+			for (Widget w : subWidgets) {
 				w.setPosition(this.position);
 			}
 		}
@@ -224,8 +227,8 @@ public abstract class Widget {
 			this.position.x = x;
 			this.position.y = y;
 		}
-		if(subWidgets != null) {
-			for(Widget w : subWidgets) {
+		if (subWidgets != null) {
+			for (Widget w : subWidgets) {
 				w.setPosition(this.position);
 			}
 		}
@@ -258,7 +261,6 @@ public abstract class Widget {
 			}
 		}
 	}
-
 
 	public void setActive(boolean newActive) {
 		active = newActive;

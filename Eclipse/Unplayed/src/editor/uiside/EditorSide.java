@@ -26,6 +26,8 @@ public class EditorSide extends Toolbar {
 	public boolean adjust;
 
 	private String previousSelected = "";
+	
+	private int widgetX;
 
 	private ArrayList<Widget> editable; // tiles, images
 	private ArrayList<Widget> view;
@@ -90,11 +92,13 @@ public class EditorSide extends Toolbar {
 
 		widgets = minimal;
 
-		super.widgetSpacing = 160; // p.width / 8
+		super.widgetSpacing = p.width/9;
 
 		float height = widgetSpacing * (widgets.size());
 
 		super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
+		
+		widgetX = p.width/18;
 
 		this.adjust = false; // are we adjusting a page?
 		// load sprites
@@ -102,7 +106,7 @@ public class EditorSide extends Toolbar {
 		this.middle = p.requestImage(folder + "icn_SideTabMiddle.png");
 		this.bottom = p.requestImage(folder + "icn_SideTabBottum.png");
 
-		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height); // TODO: needs to scale to screen
+		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, widgetSpacing, height); // TODO: needs to scale to screen
 	}
 
 	public void reset() {
@@ -130,19 +134,19 @@ public class EditorSide extends Toolbar {
 			// calculate widget positions and create new bounds
 			float height = widgetSpacing * (widgets.size());
 			super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
-			super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, 160, height);
+			super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, widgetSpacing, height);
 			previousSelected = editor.selected.getClass().toString();
 
 			// reset widget positions and active status
 			for (int i = 0; i < widgets.size(); i++) {
-				widgets.get(i).setPosition(-100, widgetOffset + widgetSpacing * i);
+				widgets.get(i).setPosition(-widgetSpacing, widgetOffset + widgetSpacing * i);
 				widgets.get(i).updateActive();
 			}
 
 		} else if (editor.selected == null) {
 			// reset widget positions
 			for (int i = 0; i < widgets.size(); i++) {
-				widgets.get(i).setPosition(-100, widgetOffset + widgetSpacing * i);
+				widgets.get(i).setPosition(-widgetSpacing, widgetOffset + widgetSpacing * i);
 			}
 		}
 	}
@@ -193,7 +197,7 @@ public class EditorSide extends Toolbar {
 					}
 				}
 
-				widgets.get(i).draw(80, widgetOffset + widgetSpacing * i);
+				widgets.get(i).draw(widgetX, widgetOffset + widgetSpacing * i); //TODO
 				widgets.get(i).updateActive();
 				if (menu == null) {
 					widgets.get(i).hover(touch);
