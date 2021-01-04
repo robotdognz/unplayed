@@ -78,6 +78,7 @@ public class EditorSide extends Toolbar {
 		playerEnd.add(adjustW);
 		
 		// widgets for spikes
+		spike = new ArrayList<Widget>();
 		spike.add(deleteW);
 		spike.add(finishW);
 		spike.add(rotateW);
