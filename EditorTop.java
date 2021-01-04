@@ -15,7 +15,7 @@ public class EditorTop extends Toolbar {
 	public boolean saving = false;
 	public boolean loading = false;
 	
-	private int widgetY;
+	private int widgetY; //distance from top of screen
 	private float uiExtraWidth;
 	private float uiExtraHeight;
 
@@ -56,8 +56,6 @@ public class EditorTop extends Toolbar {
 		//super.draw(touch, menu);
 		// draw ui extra piece
 		p.imageMode(CENTER);
-		//float widgetScale = ((float) 75 * 1.5f);
-		//p.image(uiExtra, widgetOffset + widgetSpacing * 3, 120, widgetScale * 4.4f, widgetScale * 1.2f);
 		p.image(uiExtra, widgetOffset + widgetSpacing * 3, widgetY, uiExtraWidth, uiExtraHeight);
 
 		// widget menus - draw them and close them if lastTouch is below longest open
@@ -77,7 +75,6 @@ public class EditorTop extends Toolbar {
 					}
 				}
 			}
-			// eWidgets.get(i).draw(eWidgetSpacing*(i+1), 120);
 			widgets.get(i).draw(widgetOffset + widgetSpacing * i, widgetY);
 			widgets.get(i).updateActive();
 			if (menu == null) {

@@ -27,7 +27,7 @@ public class EditorSide extends Toolbar {
 
 	private String previousSelected = "";
 	
-	private int widgetX;
+	private int widgetX; //distance from left edge of screen
 
 	private ArrayList<Widget> editable; // tiles, images
 	private ArrayList<Widget> view;

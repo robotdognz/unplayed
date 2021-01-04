@@ -57,25 +57,26 @@ public class EditorBottom extends Toolbar {
 		widgets.add(viewW);
 
 		super.widgetOffset = p.width * 0.65f;
-		super.widgetSpacing = 140; // TODO: needs to be relative to screen size
+		super.widgetSpacing = p.width / 10.3f;// 140; // TODO: needs to be relative to screen size
 
 		// setup toolbar
-		int objectAreaHeight = 230; // TODO: needs to be relative to screen size
+		int objectAreaHeight = (int) (p.width / 6.3f);// 230; // TODO: needs to be relative to screen size
 		this.selectionArea = new Rectangle(0, p.height - objectAreaHeight, p.width, objectAreaHeight);
 		this.toolbar = p.requestImage(folder + "icn_toolbar_bg.png");
 		this.tab = p.requestImage(folder + "icn_tab.png");
 		this.tabSize = 220;
 
-		this.widgetHeight = selectionArea.getY() - 53; // TODO: needs to be relative to screen size
+		this.widgetHeight = selectionArea.getY() - (p.width / 27);// - 53; // TODO: needs to be relative to screen size
 
 		// scroll bars
-		this.size = 150;
+		this.size = (int) (p.width / 9.6f); // 150
 		this.tiles = texture.getTileList();
 		this.images = texture.getImageList();
 		this.events = texture.getEventList();
 		this.views = editor.game.views;
 
-		super.bounds = new Rectangle(0, p.height - 350, p.width, 350); // TODO: needs to scale to screen size
+		int boundsHeight = (int) (p.width / 4.11f); // 350 // TODO: needs to scale to screen size
+		super.bounds = new Rectangle(0, p.height - boundsHeight, p.width, boundsHeight);
 	}
 
 	@Override
@@ -152,7 +153,6 @@ public class EditorBottom extends Toolbar {
 						selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
 						selectionArea.getY() + selectionArea.getHeight() / 2, size);
 			} else if (object instanceof View) {
-				// TODO: draw the view
 				((View) object).drawToolbar(
 						selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
 						selectionArea.getY() + selectionArea.getHeight() / 2, size);
