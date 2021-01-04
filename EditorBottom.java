@@ -57,16 +57,16 @@ public class EditorBottom extends Toolbar {
 		widgets.add(viewW);
 
 		super.widgetOffset = p.width * 0.65f;
-		super.widgetSpacing = p.width / 10.3f;// 140; // TODO: needs to be relative to screen size
+		super.widgetSpacing = p.width / 10.3f;// 140
 
 		// setup toolbar
-		int objectAreaHeight = (int) (p.width / 6.3f);// 230; // TODO: needs to be relative to screen size
+		int objectAreaHeight = (int) (p.width / 6.3f);// 230
 		this.selectionArea = new Rectangle(0, p.height - objectAreaHeight, p.width, objectAreaHeight);
 		this.toolbar = p.requestImage(folder + "icn_toolbar_bg.png");
 		this.tab = p.requestImage(folder + "icn_tab.png");
-		this.tabSize = 220;
+		this.tabSize = (int) (p.width / 6.55f); // 220
 
-		this.widgetHeight = selectionArea.getY() - (p.width / 27);// - 53; // TODO: needs to be relative to screen size
+		this.widgetHeight = selectionArea.getY() - (p.width / 27);// - 53
 
 		// scroll bars
 		this.size = (int) (p.width / 9.6f); // 150
@@ -75,7 +75,7 @@ public class EditorBottom extends Toolbar {
 		this.events = texture.getEventList();
 		this.views = editor.game.views;
 
-		int boundsHeight = (int) (p.width / 4.11f); // 350 // TODO: needs to scale to screen size
+		int boundsHeight = (int) (p.width / 4.11f); // 350
 		super.bounds = new Rectangle(0, p.height - boundsHeight, p.width, boundsHeight);
 	}
 
