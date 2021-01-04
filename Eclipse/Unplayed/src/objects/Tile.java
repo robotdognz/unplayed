@@ -23,7 +23,7 @@ public class Tile extends Editable {
 			hasTexture = false;
 		}
 	}
-	
+
 	public void drawTransparent(PGraphics graphics, float scale) {
 		if (hasTexture) {
 			// texture isn't missing
@@ -59,18 +59,18 @@ public class Tile extends Editable {
 	public void draw(PGraphics graphics, float scale) {
 		if (hasTexture) {
 			// texture isn't missing
-			if (flipX == 0 && flipY == 0 && angle == 0) {
+			if (angle == 0) { // flipX == 0 && flipY == 0 &&
 				graphics.imageMode(CORNER);
 				graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight()); // draw the tile
 			} else {
 				graphics.pushMatrix();
 				graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
-				if (angle != 0) {
-					graphics.rotate(PApplet.radians(angle)); // rotate the tile
-				}
-				if (flipX != 0 || flipY != 0) {
-					graphics.scale(flipX, flipY); // flip the tile
-				}
+//				if (angle != 0) {
+				graphics.rotate(PApplet.radians(angle)); // rotate the tile
+//				}
+//				if (flipX != 0 || flipY != 0) {
+//					graphics.scale(flipX, flipY); // flip the tile
+//				}
 				graphics.imageMode(CENTER);
 				graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
 				graphics.popMatrix();

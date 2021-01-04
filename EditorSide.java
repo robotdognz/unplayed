@@ -8,8 +8,10 @@ import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
 import objects.Editable;
+import objects.Image;
 import objects.Page;
 import objects.Rectangle;
+import objects.Tile;
 import objects.View;
 import objects.events.PlayerEnd;
 import objects.events.Spike;
@@ -26,10 +28,11 @@ public class EditorSide extends Toolbar {
 	public boolean adjust;
 
 	private String previousSelected = "";
-	
-	private int widgetX; //distance from left edge of screen
 
-	private ArrayList<Widget> editable; // tiles, images
+	private int widgetX; // distance from left edge of screen
+
+	private ArrayList<Widget> tile;
+	private ArrayList<Widget> image;
 	private ArrayList<Widget> view;
 	private ArrayList<Widget> page;
 	private ArrayList<Widget> playerEnd;
@@ -50,13 +53,21 @@ public class EditorSide extends Toolbar {
 		Widget levelendW = new WidgetLevelEnd(p, editor, this);
 		Widget excludeW = new WidgetExcludeMenu(p, editor, this);
 
-		// widgets for editable
-		editable = new ArrayList<Widget>();
-		editable.add(deleteW);
-		editable.add(finishW);
-		editable.add(flipHW);
-		editable.add(flipVW);
-		editable.add(rotateW);
+		// widgets for tiles
+		tile = new ArrayList<Widget>();
+		tile.add(deleteW);
+		tile.add(finishW);
+//		tile.add(flipHW);
+//		tile.add(flipVW);
+		tile.add(rotateW);
+
+		// widgets for images
+		image = new ArrayList<Widget>();
+		image.add(deleteW);
+		image.add(finishW);
+		image.add(flipHW);
+		image.add(flipVW);
+		image.add(rotateW);
 
 		// widgets for views
 		view = new ArrayList<Widget>();
@@ -78,7 +89,7 @@ public class EditorSide extends Toolbar {
 		playerEnd.add(finishW);
 		playerEnd.add(levelendW);
 		playerEnd.add(adjustW);
-		
+
 		// widgets for spikes
 		spike = new ArrayList<Widget>();
 		spike.add(deleteW);
@@ -92,13 +103,13 @@ public class EditorSide extends Toolbar {
 
 		widgets = minimal;
 
-		super.widgetSpacing = p.width/9;
+		super.widgetSpacing = p.width / 9;
 
 		float height = widgetSpacing * (widgets.size());
 
 		super.widgetOffset = p.height / 2 - (height - widgetSpacing) / 2;
-		
-		widgetX = p.width/18;
+
+		widgetX = p.width / 18;
 
 		this.adjust = false; // are we adjusting a page?
 		// load sprites
@@ -117,8 +128,11 @@ public class EditorSide extends Toolbar {
 			} else if (editor.selected instanceof View) {
 				widgets = view;
 				adjust = false;
-			} else if (editor.selected instanceof Editable) {
-				widgets = editable;
+			} else if (editor.selected instanceof Tile) {
+				widgets = tile;
+				adjust = false;
+			} else if (editor.selected instanceof Image) {
+				widgets = image;
 				adjust = false;
 			} else if (editor.selected instanceof PlayerEnd) {
 				widgets = playerEnd;

@@ -114,7 +114,7 @@ public class EditorBottom extends Toolbar {
 		// figure out what type to show
 		ArrayList<Object> objects = new ArrayList<Object>(); // current objects to draw in the scroll bar
 		Float offset = 0.0f;
-		Object currentHandler = null; // TODO: rename
+		Object currentHandler = null;
 		if (editor.currentTool instanceof TileTool) {
 			objects.addAll(tiles);
 			offset = tileOffset;
