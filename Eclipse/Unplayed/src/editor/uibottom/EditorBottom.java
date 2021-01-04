@@ -64,7 +64,7 @@ public class EditorBottom extends Toolbar {
 		this.selectionArea = new Rectangle(0, p.height - objectAreaHeight, p.width, objectAreaHeight);
 		this.toolbar = p.requestImage(folder + "icn_toolbar_bg.png");
 		this.tab = p.requestImage(folder + "icn_tab.png");
-		this.tabSize = (int) (p.width / 6.55f); // 220
+		this.tabSize = (int) (p.width / 6.54f); // 220
 
 		this.widgetHeight = selectionArea.getY() - (p.width / 27);// - 53
 
