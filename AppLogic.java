@@ -68,7 +68,7 @@ public class AppLogic {
 		
 		//String[] locales = test.getLocales();
 		try {
-			String[] files = test.list(p.sketchPath(""));
+			String[] files = test.list("ui");
 			for (String s : files) {
 				PApplet.println(s);
 			}
