@@ -49,12 +49,12 @@ public class Player extends Editable {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.p = p;
 		this.file = tile.getFile();
-		if(tile.isFlippedH()) {
-			this.flipH();
-		}
-		if(tile.isFlippedV()) {
-			this.flipV();
-		}
+//		if(tile.isFlippedH()) {
+//			this.flipH();
+//		}
+//		if(tile.isFlippedV()) {
+//			this.flipV();
+//		}
 		this.setAngle(tile.getAngle());
 				
 		areaSize = 500;
@@ -225,7 +225,7 @@ public class Player extends Editable {
 			graphics.pushMatrix();
 			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
 			graphics.rotate(PApplet.radians(angle)); // angle of the tile
-			graphics.scale(flipX, flipY); // flipping the tile
+//			graphics.scale(flipX, flipY); // flipping the tile
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile //TODO: get scale
 			graphics.popMatrix();
 		} else {

@@ -131,12 +131,12 @@ public class PlayerEnd extends Event {
 			if (!player.getFile().equals(required.getFile())) {
 				return;
 			}
-			if (!(player.isFlippedH() == required.isFlippedH())) {
-				return;
-			}
-			if (!(player.isFlippedV() == required.isFlippedV())) {
-				return;
-			}
+//			if (!(player.isFlippedH() == required.isFlippedH())) {
+//				return;
+//			}
+//			if (!(player.isFlippedV() == required.isFlippedV())) {
+//				return;
+//			}
 			if (!(player.getAngle() == required.getAngle())) {
 				return;
 			}
