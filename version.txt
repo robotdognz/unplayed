@@ -7,7 +7,7 @@
 -Types can be excluded from Pages (specific exclusion coming soon)
 -Implemented Spike object that kills the player on contact
 -Pages now have accurate selection boxes
--Advanced PlayerEnds now fully implemented
+-Advanced PlayerEnds now fully implemented, PlayerEnds can require a specific tile
 -Added new level widget to the save/load menu
 -UI now scales correctly for all phones
 -Editor side widgets are now only shown when needed for current selection

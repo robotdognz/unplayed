@@ -2,6 +2,8 @@ package game;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -81,8 +83,10 @@ public class AppLogic {
 //			e.printStackTrace();
 //		}
 //
+		Path base = Paths.get(p.sketchPath(""));
 //		File dir = new File(p.sketchPath("")); // context.getFilesDir();
-//		PApplet.println(dir.toString());
+		File f = new File(p.dataPath("tiles") + '/');
+		PApplet.println(base.relativize(f.toPath()));
 //		File[] allFiles = dir.listFiles();
 //		for (File f : allFiles) {
 //			PApplet.println(f.toString());
