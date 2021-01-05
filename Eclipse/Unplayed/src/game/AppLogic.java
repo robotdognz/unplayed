@@ -66,13 +66,14 @@ public class AppLogic {
 		File root = new File(p.dataPath("")+ '/');
 		File zippedData = new File(p.dataPath("") + '/' + "data.zip");
 		PApplet.println(zippedData.toString());
-		try {
-			unzip.unzip(zippedData.toString(), root.toString());
-			PApplet.println("Zip extracted");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			unzip.unzip(zippedData.toString(), root.toString());
+//			PApplet.println("Zip extracted");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			PApplet.println("Zip extract failed");
+//			e.printStackTrace();
+//		}
 
 		gPaused = false;
 		editorToggle = true;
