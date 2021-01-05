@@ -13,10 +13,12 @@
 -Editor side widgets are now only shown when needed for current selection
 -Editor side now has ui background
 -Tiles and Images can now be rotated in 90 degree increments from editor side
+-Removed Tile fipping to simplify puzzle creation
 -Pages now rerender whenever switching to the page view, so level changes are always visible
 -PlayerEnds now draw an arrow pointing to the next Tile the player will become
 -It is now possible to become a Tile that you have already been
 -Improved camera backend (still needs significant work)
+-Added temp app icon
 
 1.0.0:	First internal alpha build
 -levels have start and end states, it is now possible to make fully playable levels

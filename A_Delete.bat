@@ -1,1 +1,1 @@
-for /f %%F in ('dir /b /a-d ^| findstr /vile ".bat .pde .xml .txt .properties .keystore"') do del "%%F"
+for /f %%F in ('dir /b /a-d ^| findstr /vile ".bat .pde .xml .txt .png .properties .keystore"') do del "%%F"
