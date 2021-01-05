@@ -63,10 +63,14 @@ public class AppLogic {
 	public void init() {
 		// prepare data files
 		unzip = new UnzipUtility();
-		File root = new File(p.dataPath("")+ '/');
+		File root = new File(p.dataPath("") + '/');
 		File zippedData = new File(p.dataPath("") + '/' + "data.zip");
 		File[] allFiles = root.listFiles();
-		PApplet.println(allFiles.toString());
+
+		for (File f : allFiles) {
+			PApplet.println(f.toString());
+		}
+
 		PApplet.println(zippedData.toString());
 //		try {
 //			unzip.unzip(zippedData.toString(), root.toString());
