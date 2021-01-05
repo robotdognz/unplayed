@@ -85,7 +85,7 @@ public class AppLogic {
 //
 		Path base = Paths.get(p.sketchPath(""));
 //		File dir = new File(p.sketchPath("")); // context.getFilesDir();
-		File tileFolder = new File(p.dataPath("tiles") + '/');
+		File tileFolder = new File(p.sketchPath("tiles") + '/');
 		File relative = new File(base.relativize(tileFolder.toPath()).toString());
 		PApplet.println(relative);
 		
