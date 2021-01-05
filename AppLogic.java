@@ -2,7 +2,6 @@ package game;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -20,7 +19,6 @@ import misc.Converter;
 import misc.DoToast;
 import misc.FileChooser;
 import misc.KetaiGesture;
-import misc.UnzipUtility;
 import misc.Vibe;
 import processing.core.*;
 import processing.event.TouchEvent;
@@ -35,7 +33,6 @@ public class AppLogic {
 
 	public KetaiGesture gesture;
 	public FileChooser files;
-	public UnzipUtility unzip;
 	public Vibe vibe;
 	public Converter convert;
 	public TextureCache texture;
@@ -65,51 +62,30 @@ public class AppLogic {
 	public void init() {
 		// prepare data files
 
-		AssetManager test = context.getAssets();
-
-		// String[] locales = test.getLocales();
-		try {
-			String path = "ui";
-			String[] files = test.list(path);
-
-			File testFile = new File(path + '/' + files[0]);
-			PImage temp = p.loadImage(testFile.toString());//path + '/' + files[0]);
-			PApplet.println(temp + " load worked");
-			
-			String doublePath = "ui/widgets";
-			String[] widgetFiles = test.list(doublePath);
-			PApplet.println(widgetFiles.length);
-			for (String s : widgetFiles) {
-				PApplet.println(s);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		File dir = new File(p.sketchPath("")); // context.getFilesDir();
-		PApplet.println(dir.toString());
-		File[] allFiles = dir.listFiles();
-		for (File f : allFiles) {
-			PApplet.println(f.toString());
-		}
-
-//		unzip = new UnzipUtility();
-//		File root = new File(p.dataPath("") + '/');
-//		File zippedData = new File(p.dataPath("") + '/' + "data.zip");
-//		File[] allFiles = root.listFiles();
-
+//		AssetManager test = context.getAssets();
+//		try {
+//			String path = "ui";
+//			String[] files = test.list(path);
+//
+//			File testFile = new File(path + '/' + files[0]);
+//			PImage temp = p.loadImage(testFile.toString());// path + '/' + files[0]);
+//			PApplet.println(temp + " load worked");
+//
+//			String doublePath = "ui/widgets";
+//			String[] widgetFiles = test.list(doublePath);
+//			PApplet.println(widgetFiles.length);
+//			for (String s : widgetFiles) {
+//				PApplet.println(s);
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//		File dir = new File(p.sketchPath("")); // context.getFilesDir();
+//		PApplet.println(dir.toString());
+//		File[] allFiles = dir.listFiles();
 //		for (File f : allFiles) {
 //			PApplet.println(f.toString());
-//		}
-
-//		PApplet.println(zippedData.toString());
-//		try {
-//			unzip.unzip(zippedData.toString(), root.toString());
-//			PApplet.println("Zip extracted");
-//		} catch (IOException e) {
-//			PApplet.println("Zip extract failed");
-//			e.printStackTrace();
 //		}
 
 		gPaused = false;

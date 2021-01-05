@@ -103,33 +103,6 @@ void onRotate(float x, float y, float angle) {
   app.onRotate(x, y, angle);
 }
 
-@Override 
-public String sketchPath(String where) {
-  // just asking, not creating or checking permissions or existence...
-  // ... by using File dependencies with unknown side effects.
-  if (sketchPath != null&&where.length()>1)
-  {
-    // println("sp: "+where+" "+sketchPath); 
-    if ('/'==where.charAt(0))
-      return where;
-    return sketchPath+"/"+where;
-  }
-  // nonsense, bwtf...
-  return super.sketchPath(where);
-  /* which is (stinking dead code...) this:
-    // isAbsolute() could throw an access exception, but so will writing
-   // to the local disk using the sketch path, so this is safe here.
-   // for 0120, added a try/catch anyways.
-   try {
-   if (new File(where).isAbsolute()) return where;
-   } catch (Exception e) { }
-   
-   return surface.getFileStreamPath(where).getAbsolutePath();
-   
-   */
-}
-
-
 @SuppressWarnings("static-access")
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode == this.getActivity().RESULT_OK) {
