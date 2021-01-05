@@ -82,23 +82,24 @@ public class AppLogic {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-//
+
+
 		Path base = Paths.get(p.sketchPath(""));
-//		File dir = new File(p.sketchPath("")); // context.getFilesDir();
-		File tileFolder = new File(p.sketchPath("tiles") + '/');
+		File tileFolder = new File(base.toString() + "/tiles" + '/');
 		File relative = new File(base.relativize(tileFolder.toPath()).toString());
 		PApplet.println(relative);
 		
-		
 		File[] allFiles = tileFolder.listFiles();
 		for (File f : allFiles) {
-			PApplet.println(f.toString());
-			PApplet.println(base.relativize(f.toPath()));
+	 		PApplet.println(f.toString());
+   String relativePath = base.relativize(f.toPath()).toString();
+	  PApplet.println(relativePath);
+   String fullPath = base.toString() + '/' + relativePath;
+   PApplet.println(fullPath);
+   PImage temp = p.loadImage(fullPath);
 		}
-		Path image = base.relativize(allFiles[0].toPath());
-		String testPath = "tiles/";
-		PImage temp = p.loadImage(base.toString() + testPath + "tile_theme02_10.png");// path + '/' + files[0]);
-		PApplet.println("loading worked: " + image);
+	
+
 
 		gPaused = false;
 		editorToggle = true;
