@@ -65,6 +65,8 @@ public class AppLogic {
 		unzip = new UnzipUtility();
 		File root = new File(p.dataPath("")+ '/');
 		File zippedData = new File(p.dataPath("") + '/' + "data.zip");
+		File[] allFiles = root.listFiles();
+		PApplet.println(allFiles.toString());
 		PApplet.println(zippedData.toString());
 //		try {
 //			unzip.unzip(zippedData.toString(), root.toString());
