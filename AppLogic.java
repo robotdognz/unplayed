@@ -70,7 +70,7 @@ public class AppLogic {
 //			String[] files = test.list(path);
 //
 //			File testFile = new File(path + '/' + files[0]);
-//			PImage temp = p.loadImage(testFile.toString());// path + '/' + files[0]);
+//			PImage temp = p.loadImage(testFile.toString()); // path + '/' + files[0]);
 //			PApplet.println(temp + " load worked");
 //
 //			String doublePath = "ui/widgets";
@@ -97,7 +97,7 @@ public class AppLogic {
 		}
 		Path image = base.relativize(allFiles[0].toPath());
 		String testPath = "tiles/";
-		PImage temp = p.loadImage(testPath + "tile_theme02_10.png");// path + '/' + files[0]);
+		PImage temp = p.loadImage(base.toString() + testPath + "tile_theme02_10.png");// path + '/' + files[0]);
 		PApplet.println("loading worked: " + image);
 
 		gPaused = false;
