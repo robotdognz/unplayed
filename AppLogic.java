@@ -68,7 +68,11 @@ public class AppLogic {
 		
 		//String[] locales = test.getLocales();
 		try {
-			String[] files = test.list("ui");
+			String path = "ui/widgets";
+			String[] files = test.list(path);
+			PImage temp = p.loadImage(files[0]);
+			PApplet.println(temp + "load worked");
+			
 			for (String s : files) {
 				PApplet.println(s);
 			}
