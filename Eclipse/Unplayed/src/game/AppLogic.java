@@ -87,6 +87,8 @@ public class AppLogic {
 //		File dir = new File(p.sketchPath("")); // context.getFilesDir();
 		File f = new File(p.dataPath("tiles") + '/');
 		PApplet.println(base.relativize(f.toPath()));
+		File relative = new File(base.relativize(f.toPath()).toString());
+		PApplet.println(relative);
 //		File[] allFiles = dir.listFiles();
 //		for (File f : allFiles) {
 //			PApplet.println(f.toString());
