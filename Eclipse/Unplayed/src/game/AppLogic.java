@@ -95,6 +95,9 @@ public class AppLogic {
 			PApplet.println(f.toString());
 			PApplet.println(base.relativize(f.toPath()));
 		}
+		Path image = base.relativize(allFiles[0].toPath());
+		PImage temp = p.loadImage(image.toString());// path + '/' + files[0]);
+		PApplet.println("loading worked: " + image);
 
 		gPaused = false;
 		editorToggle = true;
