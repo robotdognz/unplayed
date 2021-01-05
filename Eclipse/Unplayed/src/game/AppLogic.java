@@ -77,6 +77,7 @@ public class AppLogic {
 			
 			String doublePath = "ui/widgets";
 			String[] widgetFiles = test.list(doublePath);
+			PApplet.println(widgetFiles.length);
 			for (String s : widgetFiles) {
 				PApplet.println(s);
 			}
