@@ -66,10 +66,17 @@ public class AppLogic {
 		
 		AssetManager test = context.getAssets();
 		
-		String[] locales = test.getLocales();
-		for (String s : locales) {
-			PApplet.println(s);
+		//String[] locales = test.getLocales();
+		try {
+			String[] files = test.list(p.sketchPath(""));
+			for (String s : files) {
+				PApplet.println(s);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 		
 		File dir = new File(p.sketchPath("")); // context.getFilesDir();
 		PApplet.println(dir.toString());
