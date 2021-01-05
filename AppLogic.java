@@ -1,6 +1,7 @@
 package game;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -62,8 +63,16 @@ public class AppLogic {
 	public void init() {
 		// prepare data files
 		unzip = new UnzipUtility();
+		File root = new File(p.dataPath("")+ '/');
 		File zippedData = new File(p.dataPath("") + '/' + "data.zip");
 		PApplet.println(zippedData.toString());
+		try {
+			unzip.unzip(zippedData.toString(), root.toString());
+			PApplet.println("Zip extracted");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		gPaused = false;
 		editorToggle = true;
