@@ -62,21 +62,27 @@ public class AppLogic {
 
 	public void init() {
 		// prepare data files
-		unzip = new UnzipUtility();
-		File root = new File(p.dataPath("") + '/');
-		File zippedData = new File(p.dataPath("") + '/' + "data.zip");
-		File[] allFiles = root.listFiles();
-
+		File dir = context.getFilesDir();
+		PApplet.println(dir.toString());
+		File[] allFiles = dir.listFiles();
 		for (File f : allFiles) {
 			PApplet.println(f.toString());
 		}
 
-		PApplet.println(zippedData.toString());
+//		unzip = new UnzipUtility();
+//		File root = new File(p.dataPath("") + '/');
+//		File zippedData = new File(p.dataPath("") + '/' + "data.zip");
+//		File[] allFiles = root.listFiles();
+
+//		for (File f : allFiles) {
+//			PApplet.println(f.toString());
+//		}
+
+//		PApplet.println(zippedData.toString());
 //		try {
 //			unzip.unzip(zippedData.toString(), root.toString());
 //			PApplet.println("Zip extracted");
 //		} catch (IOException e) {
-//			// TODO Auto-generated catch block
 //			PApplet.println("Zip extract failed");
 //			e.printStackTrace();
 //		}
@@ -271,6 +277,8 @@ public class AppLogic {
 	}
 
 	public void quitPurge() {
+		// TODO: update this so it deletes directories etc
+
 		// purge resources
 		// root
 		File rootDir = new File(p.dataPath("") + '/');
