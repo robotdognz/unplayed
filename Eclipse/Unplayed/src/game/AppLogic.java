@@ -2,6 +2,7 @@ package game;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -63,16 +64,17 @@ public class AppLogic {
 
 	public void init() {
 		// prepare data files
-		
+
 		AssetManager test = context.getAssets();
-		
-		//String[] locales = test.getLocales();
+
+		// String[] locales = test.getLocales();
 		try {
-			String path = "ui/widgets";
+			String path = "ui";
 			String[] files = test.list(path);
-			PImage temp = p.loadImage(files[0]);
-			PApplet.println(temp + "load worked");
-			
+
+			InputStream stream = test.open(files[0]);
+			PImage temp = p.loadImage(path + '/' + files[0]);
+			PApplet.println(temp + " load worked");
 			for (String s : files) {
 				PApplet.println(s);
 			}
@@ -80,8 +82,7 @@ public class AppLogic {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		File dir = new File(p.sketchPath("")); // context.getFilesDir();
 		PApplet.println(dir.toString());
 		File[] allFiles = dir.listFiles();
