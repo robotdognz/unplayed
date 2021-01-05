@@ -72,7 +72,8 @@ public class AppLogic {
 			String path = "ui";
 			String[] files = test.list(path);
 
-			PImage temp = p.loadImage(path + '/' + files[0]);
+			File testFile = new File(path + '/' + files[0]);
+			PImage temp = p.loadImage(testFile.toString());//path + '/' + files[0]);
 			PApplet.println(temp + " load worked");
 			
 			String doublePath = "ui/widgets";
