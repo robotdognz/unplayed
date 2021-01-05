@@ -72,10 +72,12 @@ public class AppLogic {
 			String path = "ui";
 			String[] files = test.list(path);
 
-			InputStream stream = test.open(files[0]);
 			PImage temp = p.loadImage(path + '/' + files[0]);
 			PApplet.println(temp + " load worked");
-			for (String s : files) {
+			
+			String doublePath = "ui/widgets";
+			String[] widgetFiles = test.list(doublePath);
+			for (String s : widgetFiles) {
 				PApplet.println(s);
 			}
 		} catch (IOException e) {
