@@ -62,7 +62,7 @@ public class AppLogic {
 
 	public void init() {
 		// prepare data files
-		File dir = context.getFilesDir();
+		File dir = new File(p.sketchPath("")); // context.getFilesDir();
 		PApplet.println(dir.toString());
 		File[] allFiles = dir.listFiles();
 		for (File f : allFiles) {
