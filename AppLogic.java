@@ -17,6 +17,7 @@ import misc.Converter;
 import misc.DoToast;
 import misc.FileChooser;
 import misc.KetaiGesture;
+import misc.UnzipUtility;
 import misc.Vibe;
 import processing.core.*;
 import processing.event.TouchEvent;
@@ -31,6 +32,7 @@ public class AppLogic {
 
 	public KetaiGesture gesture;
 	public FileChooser files;
+	public UnzipUtility unzip;
 	public Vibe vibe;
 	public Converter convert;
 	public TextureCache texture;
@@ -58,6 +60,11 @@ public class AppLogic {
 	}
 
 	public void init() {
+		// prepare data files
+		unzip = new UnzipUtility();
+		File zippedData = new File(p.dataPath("") + '/' + "data.zip");
+		PApplet.println(zippedData.toString());
+
 		gPaused = false;
 		editorToggle = true;
 		menu = null;
