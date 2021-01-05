@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.content.res.AssetManager;
 import camera.Camera;
 import camera.FreeCamera;
 import controllers.Controller;
@@ -62,6 +63,14 @@ public class AppLogic {
 
 	public void init() {
 		// prepare data files
+		
+		AssetManager test = context.getAssets();
+		
+		String[] locales = test.getLocales();
+		for (String s : locales) {
+			PApplet.println(s);
+		}
+		
 		File dir = new File(p.sketchPath("")); // context.getFilesDir();
 		PApplet.println(dir.toString());
 		File[] allFiles = dir.listFiles();
