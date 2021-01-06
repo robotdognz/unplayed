@@ -20,14 +20,14 @@ public class ImageHandler implements Comparable<ImageHandler>, Handler {
 		this.p = p;
 		this.texture = texture;
 		datapath = file;
-		this.pWidth = pWidth * 100; // these are turned from grid amound to draw units for the level
+		this.pWidth = pWidth * 100; // these are turned from grid amount to draw units for the level
 		this.pHeight = pHeight * 100;
-		//String path = file.getAbsolutePath();
 		String path = file.toString();
 
 		try {
 			LOD256 = p.requestImage(path);
-			LOD256.resize(256 * pWidth, 256 * pHeight);
+//			LOD256.resize(256 * pWidth, 256 * pHeight);
+			LOD256.resize((int) (p.width / 5.625) * pWidth, (int) (p.width / 5.625) * pHeight);
 		} catch (Exception e) {
 			// set sprite to file not found image
 		}
@@ -48,25 +48,29 @@ public class ImageHandler implements Comparable<ImageHandler>, Handler {
 		if (scale > texture.LOD32) {
 			if (LOD16 == null) {
 				LOD16 = LOD256.get(); // 16
-				LOD16.resize(16 * pWidth / 100, 16 * pHeight / 100);
+//				LOD16.resize(16 * pWidth / 100, 16 * pHeight / 100);
+				LOD16.resize((int) (p.width / 90) * pWidth, (int) (p.width / 90) * pHeight);
 			}
 			return LOD16;
 		} else if (scale > texture.LOD64) {
 			if (LOD32 == null) {
 				LOD32 = LOD256.get(); // 32
-				LOD32.resize(32 * pWidth / 100, 32 * pHeight / 100);
+//				LOD32.resize(32 * pWidth / 100, 32 * pHeight / 100);
+				LOD32.resize((int) (p.width / 45) * pWidth, (int) (p.width / 45) * pHeight);
 			}
 			return LOD32;
 		} else if (scale > texture.LOD128) {
 			if (LOD64 == null) {
 				LOD64 = LOD256.get(); // 64
-				LOD64.resize(64 * pWidth / 100, 64 * pHeight / 100);
+//				LOD64.resize(64 * pWidth / 100, 64 * pHeight / 100);
+				LOD64.resize((int) (p.width / 22.5) * pWidth, (int) (p.width / 22.5) * pHeight);
 			}
 			return LOD64;
 		} else if (scale > texture.LOD256) {
 			if (LOD128 == null) {
 				LOD128 = LOD256.get(); // 16
-				LOD128.resize(128 * pWidth / 100, 128 * pHeight / 100);
+//				LOD128.resize(128 * pWidth / 100, 128 * pHeight / 100);
+				LOD128.resize((int) (p.width / 11.25) * pWidth, (int) (p.width / 11.25) * pHeight);
 			}
 			return LOD128;
 		} else {
