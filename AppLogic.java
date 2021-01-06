@@ -105,6 +105,10 @@ public class AppLogic {
 			AssetManager am = context.getAssets();
 			String tilePath = "tiles";
 			String[] tileStrings = am.list(tilePath);
+			
+			if(tileStrings.length == 0) {
+				throw new IOException();
+			}
 
 			tileFiles = new File[tileStrings.length];
 			PApplet.println("Tile strings: " + tileStrings.length);
