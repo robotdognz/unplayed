@@ -106,7 +106,7 @@ public class TextureCache {
 		}
 	}
 
-	private void loadTiles() {
+	private void loadTiles() { //TODO: switch to relative file paths
 		// tiles
 		tileDir = new File(p.dataPath("tiles") + '/');
 		tilePaths = tileDir.listFiles();
@@ -121,7 +121,7 @@ public class TextureCache {
 		Collections.sort(tileList);
 	}
 
-	private void loadLevelImages() {
+	private void loadLevelImages() { //TODO: switch to relative file paths
 		// level images
 		imageDir = new File(p.dataPath("images") + '/');
 		imagePaths = imageDir.listFiles();
@@ -147,9 +147,9 @@ public class TextureCache {
 		Collections.sort(imageList);
 	}
 
-	private void loadEvents() {
-		@SuppressWarnings("unused")
-		TextureCache texture = this; // so that this can be passed to the modified event handlers below
+	private void loadEvents() { //TODO: switch to relative file paths
+		//@SuppressWarnings("unused")
+		//TextureCache texture = this; // so that this can be passed to the modified event handlers below
 
 		// get directory and make map
 		eventDir = new File(p.dataPath("events") + '/');

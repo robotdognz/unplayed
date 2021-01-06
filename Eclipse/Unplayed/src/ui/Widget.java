@@ -38,8 +38,7 @@ public abstract class Widget {
 
 	public Widget(PApplet p, Editor editor, Toolbar parent) {
 		this.p = p;
-		//folder = p.dataPath("ui") + '/' + "widgets" + '/'; // data path of widget icons
-		folder = "ui" + '/' + "widgets" + '/';
+		folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
 		imageActive = p.loadImage(folder + "active.png");
 		imageInactive = p.loadImage(folder + "inactive.png");
 		imageUnavailable = p.loadImage(folder + "unavailable.png");
