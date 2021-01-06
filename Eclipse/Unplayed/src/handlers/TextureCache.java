@@ -116,7 +116,6 @@ public class TextureCache {
 	private void loadTiles() { // TODO: switch to relative file paths
 
 		// generate all the relative file paths
-//		File[] tileFiles;
 		try {
 			// App mode
 
@@ -129,13 +128,11 @@ public class TextureCache {
 			}
 
 			tilePaths = new File[tileStrings.length];
-//			PApplet.println("Tile strings: " + tileStrings.length);
 
 			// make relative files from all of the tile strings
 			for (int i = 0; i < tileStrings.length; i++) {
 				tilePaths[i] = new File(tilePath + '/' + tileStrings[i]);
 			}
-//			PApplet.println("All tile files created using AsesetManager");
 
 		} catch (IOException e) {
 			// Preview mode
@@ -145,13 +142,11 @@ public class TextureCache {
 
 			File[] absoluteFiles = tilePath.listFiles();
 			tilePaths = new File[absoluteFiles.length];
-//			PApplet.println("Tile paths: " + absoluteFiles.length);
 
 			for (int i = 0; i < absoluteFiles.length; i++) {
 				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
 				tilePaths[i] = new File(relativeFile);
 			}
-//			PApplet.println("All tile files created using absolute file paths");
 		}
 
 		// tiles
@@ -169,9 +164,43 @@ public class TextureCache {
 	}
 
 	private void loadLevelImages() { // TODO: switch to relative file paths
+		// generate all the relative file paths
+		try {
+			// App mode
+
+			AssetManager am = context.getAssets();
+			String imagePath = "images";
+			String[] imageStrings = am.list(imagePath);
+
+			if (imageStrings.length == 0) {
+				throw new IOException();
+			}
+
+			imagePaths = new File[imageStrings.length];
+
+			// make relative files from all of the tile strings
+			for (int i = 0; i < imageStrings.length; i++) {
+				imagePaths[i] = new File(imagePath + '/' + imageStrings[i]);
+			}
+
+		} catch (IOException e) {
+			// Preview mode
+
+			Path base = Paths.get(p.sketchPath(""));
+			File imagePath = new File(base.toString() + "/images" + '/');
+
+			File[] absoluteFiles = imagePath.listFiles();
+			imagePaths = new File[absoluteFiles.length];
+
+			for (int i = 0; i < absoluteFiles.length; i++) {
+				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
+				imagePaths[i] = new File(relativeFile);
+			}
+		}
+
 		// level images
-		imageDir = new File(p.dataPath("images") + '/');
-		imagePaths = imageDir.listFiles();
+//		imageDir = new File(p.dataPath("images") + '/');
+//		imagePaths = imageDir.listFiles();
 		imageMap = new HashMap<File, ImageHandler>();
 		ArrayList<Integer> temp = new ArrayList<Integer>(); // holds the numbers found in the file name
 		for (File file : imagePaths) {
@@ -197,12 +226,13 @@ public class TextureCache {
 	private void loadEvents() { // TODO: switch to relative file paths
 
 		// get directory and make map
-		eventDir = new File(p.dataPath("events") + '/');
+		//eventDir = new File(p.dataPath("events") + '/');
+		eventDir = new File("events" + '/');
 		eventMap = new HashMap<String, EventHandler>();
 
 		// ----------------PlayerStart----------------
 		final String playerStartString = "PlayerStart";
-		File playerStartFile = new File(eventDir + "/Event_playerStart.png");
+		File playerStartFile = new File(eventDir + "Event_playerStart.png");
 		EventHandler playerStart = new EventHandler(p, this, playerStartFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
@@ -213,7 +243,7 @@ public class TextureCache {
 
 		// ----------------PlayerEnd----------------
 		final String playerEndString = "PlayerEnd";
-		File playerEndFile = new File(eventDir + "/Event_playerFinish.png");
+		File playerEndFile = new File(eventDir + "Event_playerFinish.png");
 		EventHandler playerEnd = new EventHandler(p, this, playerEndFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
@@ -224,7 +254,7 @@ public class TextureCache {
 
 		// ----------------PlayerDeath----------------
 		final String playerDeathString = "PlayerDeath";
-		File playerDeathFile = new File(eventDir + "/Event_PlayerDeath.png");
+		File playerDeathFile = new File(eventDir + "Event_PlayerDeath.png");
 		EventHandler playerDeath = new EventHandler(p, this, playerDeathFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
@@ -235,7 +265,7 @@ public class TextureCache {
 
 		// ----------------CameraChange----------------
 		final String cameraChangeString = "CameraChange";
-		File cameraChangeFile = new File(eventDir + "/Event_CameraChange.png");
+		File cameraChangeFile = new File(eventDir + "Event_CameraChange.png");
 		EventHandler cameraChange = new EventHandler(p, this, cameraChangeFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
@@ -246,7 +276,7 @@ public class TextureCache {
 
 		// ----------------Spike----------------
 		final String spikeString = "Spike";
-		File spikeFile = new File(eventDir + "/Event_Spikes.png");
+		File spikeFile = new File(eventDir + "Event_Spikes.png");
 		EventHandler spike = new EventHandler(p, this, spikeFile) {
 			@Override
 			public Event makeEvent(int x, int y) {

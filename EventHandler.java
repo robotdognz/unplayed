@@ -23,7 +23,8 @@ public class EventHandler implements Comparable<EventHandler>, Handler {
 		datapath = file;
 		this.pWidth = 100; // these are turned from grid amound to draw units for the level
 		this.pHeight = 100;
-		String path = file.getAbsolutePath();
+		//String path = file.getAbsolutePath();
+		String path = file.toString();
 
 		try {
 			LOD256 = p.requestImage(path);

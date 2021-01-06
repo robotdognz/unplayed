@@ -22,7 +22,8 @@ public class ImageHandler implements Comparable<ImageHandler>, Handler {
 		datapath = file;
 		this.pWidth = pWidth * 100; // these are turned from grid amound to draw units for the level
 		this.pHeight = pHeight * 100;
-		String path = file.getAbsolutePath();
+		//String path = file.getAbsolutePath();
+		String path = file.toString();
 
 		try {
 			LOD256 = p.requestImage(path);

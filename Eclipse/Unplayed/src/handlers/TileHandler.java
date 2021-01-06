@@ -27,7 +27,6 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 		datapath = file;
 		//String path = file.getAbsolutePath();
 		String path = file.toString();
-		PApplet.println(path);
 
 		try {
 			LOD256 = p.loadImage(path); //requestImage
