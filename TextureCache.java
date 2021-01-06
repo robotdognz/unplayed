@@ -74,17 +74,17 @@ public class TextureCache {
 //		gridLOD16 = p.requestImage("PaperGrid_64x64.png");
 //		gridLOD8 = p.requestImage("PaperGrid_32x32.png");
 
-		gridLOD256 = p.requestImage("PaperGrid_1024x1024.png");
+		gridLOD256 = p.loadImage("PaperGrid_1024x1024.png");
 		gridLOD256.resize((int) (p.width / 1.40625), (int) (p.width / 1.40625));
-		gridLOD128 = p.requestImage("PaperGrid_512x512.png");
+		gridLOD128 = p.loadImage("PaperGrid_512x512.png");
 		gridLOD128.resize((int) (p.width / 2.8125), (int) (p.width / 2.8125));
-		gridLOD64 = p.requestImage("PaperGrid_256x256.png");
+		gridLOD64 = p.loadImage("PaperGrid_256x256.png");
 		gridLOD64.resize((int) (p.width / 5.625), (int) (p.width / 5.625));
-		gridLOD32 = p.requestImage("PaperGrid_128x128.png");
+		gridLOD32 = p.loadImage("PaperGrid_128x128.png");
 		gridLOD32.resize((int) (p.width / 11.25), (int) (p.width / 11.25));
-		gridLOD16 = p.requestImage("PaperGrid_64x64.png");
+		gridLOD16 = p.loadImage("PaperGrid_64x64.png");
 		gridLOD16.resize((int) (p.width / 22.5), (int) (p.width / 22.5));
-		gridLOD8 = p.requestImage("PaperGrid_32x32.png");
+		gridLOD8 = p.loadImage("PaperGrid_32x32.png");
 		gridLOD8.resize((int) (p.width / 45), (int) (p.width / 45));
 
 		deskBehind = p.requestImage("PagesViewBackGround.png");
