@@ -129,6 +129,8 @@ public class AppLogic {
 
 			File[] absoluteFiles = tilePath.listFiles();
 			tileFiles = new File[absoluteFiles.length];
+			PApplet.println("Tile paths: " + absoluteFiles.length);
+			
 			for (int i = 0; i < absoluteFiles.length; i++) {
 				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
 				tileFiles[i] = new File(relativeFile);
