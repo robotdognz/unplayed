@@ -183,6 +183,9 @@ public class TextureCache {
 				imagePaths[i] = new File(imagePath + '/' + imageStrings[i]);
 			}
 			PApplet.println("images loaded using AssetManager");
+			for(File f : imagePaths) {
+				PApplet.println(f);
+			}
 
 		} catch (IOException e) {
 			// Preview mode
