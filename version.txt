@@ -1,6 +1,7 @@
 (Major version).(Minor version).(Revision number)
 
 1.1.0:	Quality of life patch 1
+
 -Various bug fixes
 -Performance doubled in level view by only using transformations where required
 -Performance doubled in page view by prerendering pages and only drawing them when on screen
@@ -19,6 +20,8 @@
 -It is now possible to become a Tile that you have already been
 -Improved camera backend (still needs significant work)
 -Added temp app icon
+-Rewrote asset management code so that it works in both APDE preview and exported apk
+-Exported working apk
 
 1.0.0:	First internal alpha build
 -levels have start and end states, it is now possible to make fully playable levels

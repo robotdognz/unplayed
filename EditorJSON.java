@@ -226,6 +226,7 @@ public class EditorJSON {
 			game.world.clear();
 			game.placed.clear();
 			game.removed.clear();
+			game.player = null;
 			loadTiles(values, game);
 			loadWorldObjects(values, game);
 			loadViews(values, game);
