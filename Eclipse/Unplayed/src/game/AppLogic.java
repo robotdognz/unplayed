@@ -148,7 +148,7 @@ public class AppLogic {
 		// App mode
 		for (int i = 0; i < tileFiles.length; i++) {
 			PImage temp = p.loadImage(tileFiles[i].toString());
-			PApplet.println("" + temp + tileFiles[i]);
+			PApplet.println("" + temp + " - " + tileFiles[i]);
 		}
 		
 		
