@@ -169,7 +169,7 @@ public class TextureCache {
 			// App mode
 
 			AssetManager am = context.getAssets();
-			String imagePath = "images";
+			String imagePath = "unplayed_images";
 			String[] imageStrings = am.list(imagePath);
 
 			if (imageStrings.length == 0) {
@@ -191,8 +191,7 @@ public class TextureCache {
 			// Preview mode
 
 			Path base = Paths.get(p.sketchPath(""));
-			File imagePath = new File(base.toString() + "/images" + '/');
-			PApplet.println(imagePath);
+			File imagePath = new File(base.toString() + "/unplayed_images" + '/');
 
 			File[] absoluteFiles = imagePath.listFiles();
 			imagePaths = new File[absoluteFiles.length];
@@ -200,7 +199,6 @@ public class TextureCache {
 			for (int i = 0; i < absoluteFiles.length; i++) {
 				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
 				imagePaths[i] = new File(relativeFile);
-				PApplet.println(imagePaths[i]);
 			}
 		}
 
