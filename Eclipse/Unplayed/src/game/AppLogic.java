@@ -64,40 +64,6 @@ public class AppLogic {
 	public void init() {
 		// prepare data files
 
-//		AssetManager test = context.getAssets();
-//		try {
-//			String path = "ui";
-//			String[] files = test.list(path);
-//
-//			File testFile = new File(path + '/' + files[0]);
-//			PImage temp = p.loadImage(testFile.toString()); // path + '/' + files[0]);
-//			PApplet.println(temp + " load worked");
-//
-//			String doublePath = "ui/widgets";
-//			String[] widgetFiles = test.list(doublePath);
-//			PApplet.println(widgetFiles.length);
-//			for (String s : widgetFiles) {
-//				PApplet.println(s);
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-
-//		Path base = Paths.get(p.sketchPath(""));
-//		File tileFolder = new File(base.toString() + "/tiles" + '/');
-//		File relative = new File(base.relativize(tileFolder.toPath()).toString());
-//		PApplet.println(relative);
-//
-//		File[] allFiles = tileFolder.listFiles();
-//		for (File f : allFiles) {
-//			PApplet.println(f.toString());
-//			String relativePath = base.relativize(f.toPath()).toString();
-//			PApplet.println(relativePath);
-//			String fullPath = base.toString() + '/' + relativePath;
-//			PApplet.println(fullPath);
-//			PImage temp = p.loadImage(fullPath);
-//		}
-
 		// generate all the relative file paths
 		File[] tileFiles;
 		try {
@@ -117,8 +83,6 @@ public class AppLogic {
 			// make relative files from all of the tile strings
 			for (int i = 0; i < tileStrings.length; i++) {
 				tileFiles[i] = new File(tilePath + '/' + tileStrings[i]);
-//				PImage temp = p.loadImage(tileFiles[i].toString());
-//				PApplet.println("" + temp + tileFiles[i]);
 			}
 			PApplet.println("All tile files created using AsesetManager");
 
@@ -135,15 +99,11 @@ public class AppLogic {
 			for (int i = 0; i < absoluteFiles.length; i++) {
 				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
 				tileFiles[i] = new File(relativeFile);
-
-//				String fullPath = base.toString() + '/' + relativeFile;
-//				PImage temp = p.loadImage(fullPath);
-//				PApplet.println("" + temp + tileFiles[i]);
 			}
 			PApplet.println("All tile files created using absolute file paths");
 		}
 
-		// load all the files
+		// load all the images
 		try {
 			// App mode
 
