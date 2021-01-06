@@ -1,15 +1,11 @@
 package game;
 
 import java.io.File;
-//import java.io.IOException;
-//import java.nio.file.Path;
-//import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
-//import android.content.res.AssetManager;
 import camera.Camera;
 import camera.FreeCamera;
 import controllers.Controller;
