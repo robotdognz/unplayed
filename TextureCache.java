@@ -188,6 +188,7 @@ public class TextureCache {
 
 			Path base = Paths.get(p.sketchPath(""));
 			File imagePath = new File(base.toString() + "/images" + '/');
+			PApplet.println(imagePath);
 
 			File[] absoluteFiles = imagePath.listFiles();
 			imagePaths = new File[absoluteFiles.length];
