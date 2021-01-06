@@ -232,7 +232,7 @@ public class TextureCache {
 
 		// ----------------PlayerStart----------------
 		final String playerStartString = "PlayerStart";
-		File playerStartFile = new File(eventDir + "Event_playerStart.png");
+		File playerStartFile = new File(eventDir + "/Event_playerStart.png");
 		EventHandler playerStart = new EventHandler(p, this, playerStartFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
@@ -243,7 +243,7 @@ public class TextureCache {
 
 		// ----------------PlayerEnd----------------
 		final String playerEndString = "PlayerEnd";
-		File playerEndFile = new File(eventDir + "Event_playerFinish.png");
+		File playerEndFile = new File(eventDir + "/Event_playerFinish.png");
 		EventHandler playerEnd = new EventHandler(p, this, playerEndFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
@@ -254,7 +254,7 @@ public class TextureCache {
 
 		// ----------------PlayerDeath----------------
 		final String playerDeathString = "PlayerDeath";
-		File playerDeathFile = new File(eventDir + "Event_PlayerDeath.png");
+		File playerDeathFile = new File(eventDir + "/Event_PlayerDeath.png");
 		EventHandler playerDeath = new EventHandler(p, this, playerDeathFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
@@ -265,7 +265,7 @@ public class TextureCache {
 
 		// ----------------CameraChange----------------
 		final String cameraChangeString = "CameraChange";
-		File cameraChangeFile = new File(eventDir + "Event_CameraChange.png");
+		File cameraChangeFile = new File(eventDir + "/Event_CameraChange.png");
 		EventHandler cameraChange = new EventHandler(p, this, cameraChangeFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
@@ -276,7 +276,7 @@ public class TextureCache {
 
 		// ----------------Spike----------------
 		final String spikeString = "Spike";
-		File spikeFile = new File(eventDir + "Event_Spikes.png");
+		File spikeFile = new File(eventDir + "/Event_Spikes.png");
 		EventHandler spike = new EventHandler(p, this, spikeFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
