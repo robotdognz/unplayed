@@ -120,7 +120,7 @@ public class AppLogic {
 //				PImage temp = p.loadImage(tileFiles[i].toString());
 //				PApplet.println("" + temp + tileFiles[i]);
 			}
-			PApplet.println("All tiles loaded using AsesetManager");
+			PApplet.println("All tile files created using AsesetManager");
 
 		} catch (IOException e) {
 			// Preview mode
@@ -140,18 +140,30 @@ public class AppLogic {
 //				PImage temp = p.loadImage(fullPath);
 //				PApplet.println("" + temp + tileFiles[i]);
 			}
-			PApplet.println("All tiles loaded using Absolute File Paths");
+			PApplet.println("All tile files created using absolute file paths");
 		}
 
 		// load all the files
+		try {
+			// App mode
 
-		// App mode
-		for (int i = 0; i < tileFiles.length; i++) {
-			PImage temp = p.loadImage(tileFiles[i].toString());
-			PApplet.println("" + temp + " - " + tileFiles[i]);
+			for (int i = 0; i < tileFiles.length; i++) {
+				PImage temp = p.loadImage(tileFiles[i].toString());
+				PApplet.println("" + temp + " - " + tileFiles[i]);
+			}
+			PApplet.println("All tile images loaded using relative file paths");
+
+		} catch (IllegalArgumentException e) {
+			// Preview mode
+
+			Path base = Paths.get(p.sketchPath(""));
+			for (int i = 0; i < tileFiles.length; i++) {
+				String fullPath = base.toString() + '/' + tileFiles[i].toString();
+				PImage temp = p.loadImage(fullPath);
+				PApplet.println("" + temp + " - " + tileFiles[i]);
+			}
+			PApplet.println("All tile images loaded using absolute file paths");
 		}
-		
-		
 
 		// normal code resumes
 		gPaused = false;
