@@ -133,7 +133,7 @@ public class AppLogic {
 		lastTouch = new PVector(0, 0);
 		widgets = new ArrayList<Widget>();
 
-		texture = new TextureCache(p);
+		texture = new TextureCache(p, context);
 		gesture = new KetaiGesture(p);
 		files = new FileChooser(activity);
 		vibe = new Vibe(context);

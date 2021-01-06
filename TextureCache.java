@@ -1,12 +1,17 @@
 package handlers;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import game.Game;
 import objects.Event;
 import objects.events.CameraChange;
@@ -20,6 +25,7 @@ import processing.core.*;
 public class TextureCache {
 	PApplet p;
 	Game game;
+	Context context;
 
 	// LODs
 	public int LOD256 = 4;
@@ -58,8 +64,9 @@ public class TextureCache {
 	// blocks
 	public PImage defaultBlock;
 
-	public TextureCache(PApplet p) {
+	public TextureCache(PApplet p, Context context) {
 		this.p = p;
+		this.context = context;
 		// sprite = requestImage("image.png") // this loads the image on a sperate
 		// thread
 		// you can check if it has loaded by querrying its dimentions, they will be 0 if
@@ -106,10 +113,50 @@ public class TextureCache {
 		}
 	}
 
-	private void loadTiles() { //TODO: switch to relative file paths
+	private void loadTiles() { // TODO: switch to relative file paths
+
+		// generate all the relative file paths
+//		File[] tileFiles;
+		try {
+			// App mode
+
+			AssetManager am = context.getAssets();
+			String tilePath = "tiles";
+			String[] tileStrings = am.list(tilePath);
+
+			if (tileStrings.length == 0) {
+				throw new IOException();
+			}
+
+			tilePaths = new File[tileStrings.length];
+//			PApplet.println("Tile strings: " + tileStrings.length);
+
+			// make relative files from all of the tile strings
+			for (int i = 0; i < tileStrings.length; i++) {
+				tilePaths[i] = new File(tilePath + '/' + tileStrings[i]);
+			}
+//			PApplet.println("All tile files created using AsesetManager");
+
+		} catch (IOException e) {
+			// Preview mode
+
+			Path base = Paths.get(p.sketchPath(""));
+			File tilePath = new File(base.toString() + "/tiles" + '/');
+
+			File[] absoluteFiles = tilePath.listFiles();
+			tilePaths = new File[absoluteFiles.length];
+//			PApplet.println("Tile paths: " + absoluteFiles.length);
+
+			for (int i = 0; i < absoluteFiles.length; i++) {
+				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
+				tilePaths[i] = new File(relativeFile);
+			}
+//			PApplet.println("All tile files created using absolute file paths");
+		}
+
 		// tiles
-		tileDir = new File(p.dataPath("tiles") + '/');
-		tilePaths = tileDir.listFiles();
+		// tileDir = new File(p.dataPath("tiles") + '/');
+		// tilePaths = tileDir.listFiles();
 		tileMap = new HashMap<File, TileHandler>();
 		for (File file : tilePaths) {
 			String path = file.getAbsolutePath();
@@ -121,7 +168,7 @@ public class TextureCache {
 		Collections.sort(tileList);
 	}
 
-	private void loadLevelImages() { //TODO: switch to relative file paths
+	private void loadLevelImages() { // TODO: switch to relative file paths
 		// level images
 		imageDir = new File(p.dataPath("images") + '/');
 		imagePaths = imageDir.listFiles();
@@ -147,7 +194,7 @@ public class TextureCache {
 		Collections.sort(imageList);
 	}
 
-	private void loadEvents() { //TODO: switch to relative file paths
+	private void loadEvents() { // TODO: switch to relative file paths
 
 		// get directory and make map
 		eventDir = new File(p.dataPath("events") + '/');
