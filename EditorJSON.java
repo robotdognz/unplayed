@@ -219,15 +219,16 @@ public class EditorJSON {
 
 	public void load(Game game, String path) {
 		try {
-			// File file = new File("storage/emulated/0/levels/" + "level" + ".json");
 			File file = new File(path);
 			values = PApplet.loadJSONArray(file);
 
-			game.world.clear();
-			game.placed.clear();
-			game.removed.clear();
-			game.player = null;
-			game.setPlayerStart(null);
+			// clear old level
+			game.world.clear(); // remove old world objects
+			game.placed.clear(); // removed tiles that have been inserted into slots
+			game.removed.clear(); // remove tiles that have become the player
+			game.clearPlayerStart(); // remove the player
+
+			// load new level
 			loadTiles(values, game);
 			loadWorldObjects(values, game);
 			loadViews(values, game);
@@ -280,7 +281,6 @@ public class EditorJSON {
 				int pY = object.getInt("pY");
 				int pWidth = object.getInt("pWidth");
 				int pHeight = object.getInt("pHeight");
-
 
 				if (type.equals("image")) { // if it is an image
 					File textureFile = new File(object.getString("file"));

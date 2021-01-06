@@ -119,6 +119,12 @@ public class Game {
 		}
 	}
 
+	public void clearPlayerStart() {
+		// fully remove the player
+		this.player = null;
+		this.playerStart = null;
+	}
+
 	public Rectangle getPlayerStart() {
 		return playerStart;
 	}
