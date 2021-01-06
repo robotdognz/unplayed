@@ -83,23 +83,58 @@ public class AppLogic {
 //			e.printStackTrace();
 //		}
 
+//		Path base = Paths.get(p.sketchPath(""));
+//		File tileFolder = new File(base.toString() + "/tiles" + '/');
+//		File relative = new File(base.relativize(tileFolder.toPath()).toString());
+//		PApplet.println(relative);
+//
+//		File[] allFiles = tileFolder.listFiles();
+//		for (File f : allFiles) {
+//			PApplet.println(f.toString());
+//			String relativePath = base.relativize(f.toPath()).toString();
+//			PApplet.println(relativePath);
+//			String fullPath = base.toString() + '/' + relativePath;
+//			PApplet.println(fullPath);
+//			PImage temp = p.loadImage(fullPath);
+//		}
 
-		Path base = Paths.get(p.sketchPath(""));
-		File tileFolder = new File(base.toString() + "/tiles" + '/');
-		File relative = new File(base.relativize(tileFolder.toPath()).toString());
-		PApplet.println(relative);
-		
-		File[] allFiles = tileFolder.listFiles();
-		for (File f : allFiles) {
-	 		PApplet.println(f.toString());
-   String relativePath = base.relativize(f.toPath()).toString();
-	  PApplet.println(relativePath);
-   String fullPath = base.toString() + '/' + relativePath;
-   PApplet.println(fullPath);
-   PImage temp = p.loadImage(fullPath);
+		File[] tileFiles;
+		try {
+			// App mode
+
+			AssetManager am = context.getAssets();
+			String tilePath = "tiles";
+			String[] tileStrings = am.list(tilePath);
+
+			tileFiles = new File[tileStrings.length];
+			PApplet.println("Tile strings: " + tileStrings.length);
+
+			// make relative files from all of the tile strings
+			for (int i = 0; i < tileStrings.length; i++) {
+				tileFiles[i] = new File(tilePath + '/' + tileStrings[i]);
+				PImage temp = p.loadImage(tileFiles[i].toString());
+				PApplet.println("" + temp + tileFiles[i]);
+			}
+			PApplet.println("All tiles loaded using AsesetManager");
+
+		} catch (IOException e) {
+			// Preview mode
+
+			Path base = Paths.get(p.sketchPath(""));
+			File tilePath = new File(base.toString() + "/tiles" + '/');
+
+			File[] absoluteFiles = tilePath.listFiles();
+			tileFiles = new File[absoluteFiles.length];
+			for (int i = 0; i < absoluteFiles.length; i++) {
+				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
+				tileFiles[i] = new File(relativeFile);
+
+				String fullPath = base.toString() + '/' + relativeFile;
+				PImage temp = p.loadImage(fullPath);
+				PApplet.println("" + temp + tileFiles[i]);
+			}
+			PApplet.println("All tiles loaded using Absolute File Paths");
 		}
-	
-
 
 		gPaused = false;
 		editorToggle = true;
