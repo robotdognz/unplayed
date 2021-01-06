@@ -195,6 +195,7 @@ public class TextureCache {
 			for (int i = 0; i < absoluteFiles.length; i++) {
 				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
 				imagePaths[i] = new File(relativeFile);
+				PApplet.println(imagePaths[i]);
 			}
 		}
 
