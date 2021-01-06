@@ -45,24 +45,17 @@ public class TextureCache {
 	private PImage deskBehind;
 	private PImage deskInfront;
 
-	// level image
-//	private File imageDir;
+	// level images
 	private File[] imagePaths;
 	private HashMap<File, ImageHandler> imageMap;
 	private ArrayList<ImageHandler> imageList;
 	// tiles
-//	private File tileDir;
 	private File[] tilePaths;
 	private HashMap<File, TileHandler> tileMap;
 	private ArrayList<TileHandler> tileList;
 	// events
-//	private File eventDir;
-	// private File[] eventPaths;
 	private HashMap<String, EventHandler> eventMap;
 	private ArrayList<EventHandler> eventList;
-
-	// blocks
-	public PImage defaultBlock;
 
 	public TextureCache(PApplet p, Context context) {
 		this.p = p;
@@ -88,9 +81,6 @@ public class TextureCache {
 		loadLevelImages();
 		loadTiles();
 		loadEvents();
-
-		// player TODO: get rid of this
-		defaultBlock = p.requestImage("player_main.png");
 	}
 
 	public void passGame(Game game) {
@@ -113,7 +103,7 @@ public class TextureCache {
 		}
 	}
 
-	private void loadTiles() { // TODO: switch to relative file paths
+	private void loadTiles() {
 
 		// generate all the relative file paths
 		try {
@@ -143,15 +133,13 @@ public class TextureCache {
 			File[] absoluteFiles = tilePath.listFiles();
 			tilePaths = new File[absoluteFiles.length];
 
+			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
 				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
 				tilePaths[i] = new File(relativeFile);
 			}
 		}
-
-		// tiles
-		// tileDir = new File(p.dataPath("tiles") + '/');
-		// tilePaths = tileDir.listFiles();
+		
 		tileMap = new HashMap<File, TileHandler>();
 		for (File file : tilePaths) {
 			String path = file.getAbsolutePath();
@@ -163,7 +151,7 @@ public class TextureCache {
 		Collections.sort(tileList);
 	}
 
-	private void loadLevelImages() { // TODO: switch to relative file paths
+	private void loadLevelImages() {
 		// generate all the relative file paths
 		try {
 			// App mode
@@ -192,15 +180,13 @@ public class TextureCache {
 			File[] absoluteFiles = imagePath.listFiles();
 			imagePaths = new File[absoluteFiles.length];
 
+			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
 				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
 				imagePaths[i] = new File(relativeFile);
 			}
 		}
 
-		// level images
-//		imageDir = new File(p.dataPath("images") + '/');
-//		imagePaths = imageDir.listFiles();
 		imageMap = new HashMap<File, ImageHandler>();
 		ArrayList<Integer> temp = new ArrayList<Integer>(); // holds the numbers found in the file name
 		for (File file : imagePaths) {
@@ -223,10 +209,9 @@ public class TextureCache {
 		Collections.sort(imageList);
 	}
 
-	private void loadEvents() { // TODO: switch to relative file paths
+	private void loadEvents() {
 
 		// get directory and make map
-		//eventDir = new File(p.dataPath("events") + '/');
 		File eventDir = new File("unplayed_events" + '/');
 		eventMap = new HashMap<String, EventHandler>();
 
