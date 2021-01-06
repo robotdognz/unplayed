@@ -46,17 +46,17 @@ public class TextureCache {
 	private PImage deskInfront;
 
 	// level image
-	private File imageDir;
+//	private File imageDir;
 	private File[] imagePaths;
 	private HashMap<File, ImageHandler> imageMap;
 	private ArrayList<ImageHandler> imageList;
 	// tiles
-	private File tileDir;
+//	private File tileDir;
 	private File[] tilePaths;
 	private HashMap<File, TileHandler> tileMap;
 	private ArrayList<TileHandler> tileList;
 	// events
-	private File eventDir;
+//	private File eventDir;
 	// private File[] eventPaths;
 	private HashMap<String, EventHandler> eventMap;
 	private ArrayList<EventHandler> eventList;
@@ -120,7 +120,7 @@ public class TextureCache {
 			// App mode
 
 			AssetManager am = context.getAssets();
-			String tilePath = "tiles";
+			String tilePath = "unplayed_tiles";
 			String[] tileStrings = am.list(tilePath);
 
 			if (tileStrings.length == 0) {
@@ -138,7 +138,7 @@ public class TextureCache {
 			// Preview mode
 
 			Path base = Paths.get(p.sketchPath(""));
-			File tilePath = new File(base.toString() + "/tiles" + '/');
+			File tilePath = new File(base.toString() + "/unplayed_tiles" + '/');
 
 			File[] absoluteFiles = tilePath.listFiles();
 			tilePaths = new File[absoluteFiles.length];
@@ -181,10 +181,6 @@ public class TextureCache {
 			// make relative files from all of the tile strings
 			for (int i = 0; i < imageStrings.length; i++) {
 				imagePaths[i] = new File(imagePath + '/' + imageStrings[i]);
-			}
-			PApplet.println("images loaded using AssetManager");
-			for(File f : imagePaths) {
-				PApplet.println(f);
 			}
 
 		} catch (IOException e) {
@@ -231,7 +227,7 @@ public class TextureCache {
 
 		// get directory and make map
 		//eventDir = new File(p.dataPath("events") + '/');
-		eventDir = new File("events" + '/');
+		File eventDir = new File("unplayed_events" + '/');
 		eventMap = new HashMap<String, EventHandler>();
 
 		// ----------------PlayerStart----------------
