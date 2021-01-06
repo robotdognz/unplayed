@@ -41,7 +41,7 @@ public class EditorSide extends Toolbar {
 
 	public EditorSide(PApplet p, Editor editor) {
 		super(p, editor);
-		super.folder = p.dataPath("ui") + '/';
+		super.folder = "ui" + '/'; // p.dataPath("ui") + '/';
 
 		// create widgets
 		Widget deleteW = new WidgetDelete(p, editor, this);

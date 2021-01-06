@@ -14,15 +14,16 @@ public class EditorTop extends Toolbar {
 	private PImage uiExtra;
 	public boolean saving = false;
 	public boolean loading = false;
-	
-	private int widgetY; //distance from top of screen
+
+	private int widgetY; // distance from top of screen
 	private float uiExtraWidth;
 	private float uiExtraHeight;
 
 	public EditorTop(PApplet p, Editor editor) {
 		super(p, editor);
-		super.folder = p.dataPath("ui") + '/' + "widgets" + '/';
-		this.uiExtra = p.loadImage(p.dataPath("ui") + '/' + "UI_element01.png");
+		super.folder = "ui" + '/'; // p.dataPath("ui") + '/' + "widgets" + '/';
+		this.uiExtra = p.loadImage(folder + "UI_element01.png");
+		// p.loadImage(p.dataPath("ui") + '/' + "UI_element01.png");
 
 		// setup widgets
 		super.widgets = new ArrayList<Widget>();
@@ -43,17 +44,17 @@ public class EditorTop extends Toolbar {
 
 		super.widgetSpacing = p.width / 8;
 		super.widgetOffset = (p.width - widgetSpacing * 5) / 2;
-		
-		super.bounds = new Rectangle(0, 0, p.width, (int)(p.width/7.2));
-		
-		widgetY = p.width/12;
-		uiExtraWidth = saveW.getSize()*6.6f; //495
-		uiExtraHeight = saveW.getSize()*1.8f; //135
+
+		super.bounds = new Rectangle(0, 0, p.width, (int) (p.width / 7.2));
+
+		widgetY = p.width / 12;
+		uiExtraWidth = saveW.getSize() * 6.6f; // 495
+		uiExtraHeight = saveW.getSize() * 1.8f; // 135
 	}
 
 	@Override
 	public void draw(PVector touch, Menu menu) {
-		//super.draw(touch, menu);
+		// super.draw(touch, menu);
 		// draw ui extra piece
 		p.imageMode(CENTER);
 		p.image(uiExtra, widgetOffset + widgetSpacing * 3, widgetY, uiExtraWidth, uiExtraHeight);

@@ -43,7 +43,7 @@ public class EditorBottom extends Toolbar {
 
 	public EditorBottom(PApplet p, Editor editor, TextureCache texture) {
 		super(p, editor);
-		super.folder = p.dataPath("ui") + '/';
+		super.folder = "ui" + '/'; // p.dataPath("ui") + '/';
 
 		// setup widgets
 		super.widgets = new ArrayList<Widget>();

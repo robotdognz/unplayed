@@ -148,8 +148,6 @@ public class TextureCache {
 	}
 
 	private void loadEvents() { //TODO: switch to relative file paths
-		//@SuppressWarnings("unused")
-		//TextureCache texture = this; // so that this can be passed to the modified event handlers below
 
 		// get directory and make map
 		eventDir = new File(p.dataPath("events") + '/');
