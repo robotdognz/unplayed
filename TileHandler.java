@@ -30,18 +30,18 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 			// set sprite to file not found image
 		}
 
-		LOD16 = LOD256.get(); // 16
-//		LOD16.resize(16, 16);
-		LOD16.resize((int) (p.width / 90), (int) (p.width / 90));
-		LOD32 = LOD256.get(); // 32
-//		LOD32.resize(32, 32);
-		LOD32.resize((int) (p.width / 45), (int) (p.width / 45));
-		LOD64 = LOD256.get(); // 64
-//		LOD64.resize(64, 64);
-		LOD64.resize((int) (p.width / 22.5), (int) (p.width / 22.5));
-		LOD128 = LOD256.get(); // 16
-//		LOD128.resize(128, 128);
-		LOD128.resize((int) (p.width / 11.25), (int) (p.width / 11.25));
+//		LOD16 = LOD256.get(); // 16
+////		LOD16.resize(16, 16);
+//		LOD16.resize((int) (p.width / 90), (int) (p.width / 90));
+//		LOD32 = LOD256.get(); // 32
+////		LOD32.resize(32, 32);
+//		LOD32.resize((int) (p.width / 45), (int) (p.width / 45));
+//		LOD64 = LOD256.get(); // 64
+////		LOD64.resize(64, 64);
+//		LOD64.resize((int) (p.width / 22.5), (int) (p.width / 22.5));
+//		LOD128 = LOD256.get(); // 16
+////		LOD128.resize(128, 128);
+//		LOD128.resize((int) (p.width / 11.25), (int) (p.width / 11.25));
 	}
 
 	@Override
