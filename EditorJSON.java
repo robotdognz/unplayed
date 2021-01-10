@@ -122,6 +122,7 @@ public class EditorJSON {
 					object.setString("type", "PlayerDeath");
 				} else if (r instanceof Spike) {
 					object.setString("type", "Spike");
+					object.setFloat("angle", ((Spike) r).getAngle());
 				} else if (r instanceof CameraChange) {
 					object.setString("type", "CameraChange");
 					object.setFloat("cameraTopLeftX", ((CameraChange) r).getCameraTopLeft().x);
@@ -335,6 +336,12 @@ public class EditorJSON {
 				} else if (type.equals("Spike")) {
 					String name = object.getString("name");
 					Spike s = new Spike(texture, name, pX, pY);
+					try {
+						float angle = object.getFloat("angle");
+						s.setAngle(angle);
+					} catch (Exception e) {
+
+					}
 					worldObjects.add(s);
 				} else if (type.equals("CameraChange")) {
 					String name = object.getString("name");
