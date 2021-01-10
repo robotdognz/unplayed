@@ -5,6 +5,7 @@ import game.Player;
 import handlers.TextureCache;
 import objects.Event;
 import objects.Rectangle;
+import processing.core.PGraphics;
 
 public class Spike extends Event {
 	private float angle;
@@ -13,7 +14,19 @@ public class Spike extends Event {
 	public Spike(TextureCache texture, String name, int x, int y) {
 		super(texture, name, true, x, y, 100, 100);
 		angle = 0;
-		bounds = new Rectangle(x+getWidth()/3, y+getHeight()/2, getWidth()/3, getHeight()/2);
+		createBounds();
+	}
+
+	private void createBounds() {
+		if (angle == 0) {
+			bounds = new Rectangle(getX() + getWidth() / 3, getY() + getHeight() / 2, getWidth() / 3, getHeight() / 2);
+		} else if (angle == 90) {
+			bounds = new Rectangle(getX(), getY() + getHeight() / 3, getWidth() / 2, getHeight() / 3);
+		} else if (angle == 180) {
+			bounds = new Rectangle(getX() + getWidth() / 3, getY(), getWidth() / 2, getHeight() / 3);
+		} else if (angle == 270) {
+			bounds = new Rectangle(getX() + getWidth() / 2, getY() + getHeight() / 3, getWidth() / 2, getHeight() / 3);
+		}
 	}
 
 	public void setAngle(float angle) {
@@ -23,6 +36,7 @@ public class Spike extends Event {
 		} else if (this.angle < 0) {
 			this.angle = 360 + this.angle;
 		}
+		createBounds();
 	}
 
 	public void addAngle(float angle) {
@@ -32,6 +46,7 @@ public class Spike extends Event {
 		} else if (this.angle < 0) {
 			this.angle = 360 + this.angle;
 		}
+		createBounds();
 	}
 
 	public float getAngle() {
@@ -40,9 +55,7 @@ public class Spike extends Event {
 
 	@Override
 	public void activate(Game g) {
-		//super.activate(g);
-		
-		//check if player is inside bounds
+		// check if player is inside bounds
 		Player player = g.player;
 		if (player.getTopLeft().x > bounds.getBottomRight().x - 1) {
 			return;
@@ -56,8 +69,19 @@ public class Spike extends Event {
 		if (player.getBottomRight().y < bounds.getTopLeft().y + 1) {
 			return;
 		}
-		
-		g.restart(); // TODO: this needs a custom method in game
+
+		g.restart(); // TODO: this needs a custom method in Game
+	}
+
+	@Override
+	public void draw(PGraphics graphics, float scale) {
+		super.draw(graphics, scale);
+
+		// draw bounds
+		graphics.pushMatrix();
+		graphics.translate(getX(), getY());
+		graphics.rect(0, 0, getWidth(), getHeight());
+		graphics.popMatrix();
 	}
 
 }

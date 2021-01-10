@@ -263,6 +263,8 @@ public class EditorSide extends Toolbar {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Editable) {
 				((Editable) editor.selected).addAngle(90);
+			}else if (editor.selected instanceof Spike) {
+				((Spike) editor.selected).addAngle(90);
 			}
 		}
 	}
@@ -271,6 +273,8 @@ public class EditorSide extends Toolbar {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Editable) {
 				((Editable) editor.selected).addAngle(-90);
+			}else if (editor.selected instanceof Spike) {
+				((Spike) editor.selected).addAngle(-90);
 			}
 		}
 	}
