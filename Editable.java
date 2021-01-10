@@ -18,6 +18,8 @@ public class Editable extends Rectangle {
 		this.angle = angle;
 		if (this.angle - 360 >= 0) {
 			this.angle -= 360;
+		} else if (this.angle < 0) {
+			this.angle = 360 + this.angle;
 		}
 	}
 
@@ -25,6 +27,8 @@ public class Editable extends Rectangle {
 		this.angle += angle;
 		if (this.angle - 360 >= 0) {
 			this.angle -= 360;
+		} else if (this.angle < 0) {
+			this.angle = 360 + this.angle;
 		}
 	}
 
