@@ -78,7 +78,7 @@ public class Spike extends Event {
 
 	@Override
 	public void draw(PGraphics graphics, float scale) {
-		super.draw(graphics, scale);
+		//super.draw(graphics, scale);
 
 		// draw bounds
 		graphics.pushMatrix();
@@ -86,7 +86,6 @@ public class Spike extends Event {
 		graphics.rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 		
 		graphics.imageMode(CENTER);
-		graphics.pushMatrix();
 		graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
 		graphics.rotate(PApplet.radians(angle)); // angle of the tile
 		graphics.image(eventTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
