@@ -172,10 +172,14 @@ public class Game {
 		for (Tile t : placed) {
 			world.remove(t);
 		}
-		placed.clear();
+		
 		for (Tile t : removed) {
+			if(placed.contains(t)) {
+				continue;
+			}
 			world.insert(t);
 		}
+		placed.clear();
 		removed.clear();
 
 		// initialise player
