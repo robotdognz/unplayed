@@ -1,6 +1,12 @@
 (Major version).(Minor version).(Revision number)
 
-1.1.0:	Quality of life patch 1
+1.1.1: Minor improvements patch
+
+-Added counter clockwise rotation to editor side toolbar
+-Added rotation and proper collision to Spike
+-Updated APDE prievew asset management code so it works on older devices
+
+1.1.0:	Quality of life patch
 
 -Various bug fixes
 -Performance doubled in level view by only using transformations where required
