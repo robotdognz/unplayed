@@ -158,8 +158,13 @@ public class EditorJSON {
 
 	private void saveRemoved(JSONArray values, Editor editor) {
 		ArrayList<Tile> removed = editor.game.removed;
+		ArrayList<Tile> placed = editor.game.placed;
 		if (removed != null) {
 			for (Tile t : removed) {
+				// if this tile was placed by a PlayerEnd, don't save it
+				if (placed.contains(t)) {
+					continue;
+				}
 				JSONObject object = new JSONObject();
 				object.setInt("pX", (int) t.getX());
 				object.setInt("pY", (int) t.getY());
