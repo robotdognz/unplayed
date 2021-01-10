@@ -172,9 +172,10 @@ public class Game {
 		for (Tile t : placed) {
 			world.remove(t);
 		}
-		
+
 		for (Tile t : removed) {
-			if(placed.contains(t)) {
+			// don't insert tiles that were created by PlayerEnds
+			if (placed.contains(t)) {
 				continue;
 			}
 			world.insert(t);
@@ -279,16 +280,7 @@ public class Game {
 				found = ((Tile) r);
 			}
 			if (found != null) {
-				// check if the player has already been the found tile
-//				boolean shouldAddToRemoved = true;
-//				if (placed.contains(found)) {
-//					shouldAddToRemoved = false;
-//				}
-				// if they have the tile shouldn't be added to removed
-
-//				if (shouldAddToRemoved) {
-					removed.add(found);
-//				}
+				removed.add(found);
 				world.remove(found);
 				if (playerCheckpoint != null) {
 					player = new Player(p, texture, playerCheckpoint, vibe);
