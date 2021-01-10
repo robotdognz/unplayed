@@ -142,8 +142,6 @@ public class TextureCache {
 
 			String base = p.sketchPath("");
 			File tilePath = new File(base + "/unplayed_tiles" + '/');
-//			Path base = Paths.get(p.sketchPath(""));
-//			File tilePath = new File(base.toString() + "/unplayed_tiles" + '/');
 			
 			File[] absoluteFiles = tilePath.listFiles();
 			tilePaths = new File[absoluteFiles.length];
@@ -152,7 +150,6 @@ public class TextureCache {
 			for (int i = 0; i < absoluteFiles.length; i++) {
 				String relativeFile = absoluteFiles[i].toString();
 				relativeFile = relativeFile.replace(base + '/', "");
-//				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
 				tilePaths[i] = new File(relativeFile);
 			}
 		}
@@ -191,8 +188,6 @@ public class TextureCache {
 		} catch (IOException e) {
 			// Preview mode
 
-//			Path base = Paths.get(p.sketchPath(""));
-//			File imagePath = new File(base.toString() + "/unplayed_images" + '/');
 			String base = p.sketchPath("");
 			File imagePath = new File(base + "/unplayed_images" + '/');
 
@@ -201,7 +196,6 @@ public class TextureCache {
 
 			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
-//				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
 				String relativeFile = absoluteFiles[i].toString();
 				relativeFile = relativeFile.replace(base + '/', "");
 				imagePaths[i] = new File(relativeFile);
