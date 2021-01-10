@@ -1,10 +1,13 @@
 package objects.events;
 
+import static processing.core.PConstants.CENTER;
+
 import game.Game;
 import game.Player;
 import handlers.TextureCache;
 import objects.Event;
 import objects.Rectangle;
+import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class Spike extends Event {
@@ -23,7 +26,7 @@ public class Spike extends Event {
 		} else if (angle == 90) {
 			bounds = new Rectangle(getX(), getY() + getHeight() / 3, getWidth() / 2, getHeight() / 3);
 		} else if (angle == 180) {
-			bounds = new Rectangle(getX() + getWidth() / 3, getY(), getWidth() / 2, getHeight() / 3);
+			bounds = new Rectangle(getX() + getWidth() / 3, getY(), getWidth() / 3, getHeight() / 2);
 		} else if (angle == 270) {
 			bounds = new Rectangle(getX() + getWidth() / 2, getY() + getHeight() / 3, getWidth() / 2, getHeight() / 3);
 		}
@@ -79,8 +82,17 @@ public class Spike extends Event {
 
 		// draw bounds
 		graphics.pushMatrix();
-//		graphics.translate(getX(), getY());
+		
 		graphics.rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+		
+		graphics.imageMode(CENTER);
+		graphics.pushMatrix();
+		graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
+		graphics.rotate(PApplet.radians(angle)); // angle of the tile
+		graphics.image(eventTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
+		
+
+		
 		graphics.popMatrix();
 	}
 

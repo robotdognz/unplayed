@@ -8,7 +8,7 @@ import static processing.core.PConstants.*;
 
 public abstract class Event extends Rectangle {
 	private boolean hasTexture;
-	private EventHandler eventTexture;
+	protected EventHandler eventTexture;
 	private String name;
 	public boolean visible;
 
