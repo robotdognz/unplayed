@@ -79,8 +79,8 @@ public class Spike extends Event {
 
 		// draw bounds
 		graphics.pushMatrix();
-		graphics.translate(getX(), getY());
-		graphics.rect(0, 0, getWidth(), getHeight());
+//		graphics.translate(getX(), getY());
+		graphics.rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 		graphics.popMatrix();
 	}
 
