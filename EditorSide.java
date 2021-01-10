@@ -70,6 +70,7 @@ public class EditorSide extends Toolbar {
 		image.add(flipHW);
 		image.add(flipVW);
 		image.add(clockwiseW);
+		image.add(counterClockwiseW);
 
 		// widgets for views
 		view = new ArrayList<Widget>();
@@ -97,6 +98,7 @@ public class EditorSide extends Toolbar {
 		spike.add(deleteW);
 		spike.add(finishW);
 		spike.add(clockwiseW);
+		spike.add(counterClockwiseW);
 
 		// minimal widgets
 		minimal = new ArrayList<Widget>();
