@@ -2,8 +2,8 @@ package handlers;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+//import java.nio.file.Path;
+//import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -140,15 +140,19 @@ public class TextureCache {
 		} catch (IOException e) {
 			// Preview mode
 
-			Path base = Paths.get(p.sketchPath(""));
-			File tilePath = new File(base.toString() + "/unplayed_tiles" + '/');
-
+			String base = p.sketchPath("");
+			File tilePath = new File(base + "/unplayed_tiles" + '/');
+//			Path base = Paths.get(p.sketchPath(""));
+//			File tilePath = new File(base.toString() + "/unplayed_tiles" + '/');
+			
 			File[] absoluteFiles = tilePath.listFiles();
 			tilePaths = new File[absoluteFiles.length];
 
 			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
-				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
+				String relativeFile = absoluteFiles[i].toString();
+				relativeFile.replace(base, "");
+//				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
 				tilePaths[i] = new File(relativeFile);
 			}
 		}
@@ -187,15 +191,19 @@ public class TextureCache {
 		} catch (IOException e) {
 			// Preview mode
 
-			Path base = Paths.get(p.sketchPath(""));
-			File imagePath = new File(base.toString() + "/unplayed_images" + '/');
+//			Path base = Paths.get(p.sketchPath(""));
+//			File imagePath = new File(base.toString() + "/unplayed_images" + '/');
+			String base = p.sketchPath("");
+			File imagePath = new File(base + "/unplayed_images" + '/');
 
 			File[] absoluteFiles = imagePath.listFiles();
 			imagePaths = new File[absoluteFiles.length];
 
 			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
-				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
+//				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
+				String relativeFile = absoluteFiles[i].toString();
+				relativeFile.replace(base, "");
 				imagePaths[i] = new File(relativeFile);
 			}
 		}
