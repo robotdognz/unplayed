@@ -276,15 +276,15 @@ public class Game {
 			}
 			if (found != null) {
 				// check if the player has already been the found tile
-				boolean shouldAddToRemoved = true;
-				if (placed.contains(found)) {
-					shouldAddToRemoved = false;
-				}
+//				boolean shouldAddToRemoved = true;
+//				if (placed.contains(found)) {
+//					shouldAddToRemoved = false;
+//				}
 				// if they have the tile shouldn't be added to removed
 
-				if (shouldAddToRemoved) {
+//				if (shouldAddToRemoved) {
 					removed.add(found);
-				}
+//				}
 				world.remove(found);
 				if (playerCheckpoint != null) {
 					player = new Player(p, texture, playerCheckpoint, vibe);
