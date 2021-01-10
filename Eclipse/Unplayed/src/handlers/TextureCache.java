@@ -2,8 +2,6 @@ package handlers;
 
 import java.io.File;
 import java.io.IOException;
-//import java.nio.file.Path;
-//import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,7 +18,6 @@ import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
 import objects.events.Spike;
 import processing.core.*;
-//import processing.data.*;
 
 public class TextureCache {
 	PApplet p;
@@ -67,13 +64,6 @@ public class TextureCache {
 		// and > 0 if it has loaded
 
 		// paper textures
-//		gridLOD256 = p.requestImage("PaperGrid_1024x1024.png");
-//		gridLOD128 = p.requestImage("PaperGrid_512x512.png");
-//		gridLOD64 = p.requestImage("PaperGrid_256x256.png");
-//		gridLOD32 = p.requestImage("PaperGrid_128x128.png");
-//		gridLOD16 = p.requestImage("PaperGrid_64x64.png");
-//		gridLOD8 = p.requestImage("PaperGrid_32x32.png");
-
 		gridLOD256 = p.loadImage("PaperGrid_1024x1024.png");
 		gridLOD256.resize((int) (p.width / 1.40625), (int) (p.width / 1.40625));
 		gridLOD128 = p.loadImage("PaperGrid_512x512.png");
