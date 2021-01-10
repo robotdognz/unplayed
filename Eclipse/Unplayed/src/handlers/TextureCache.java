@@ -151,7 +151,7 @@ public class TextureCache {
 			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
 				String relativeFile = absoluteFiles[i].toString();
-				relativeFile.replace(base, "");
+				relativeFile = relativeFile.replace(base, "");
 //				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
 				tilePaths[i] = new File(relativeFile);
 				PApplet.println(relativeFile);
