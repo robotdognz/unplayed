@@ -48,7 +48,8 @@ public class EditorSide extends Toolbar {
 		Widget finishW = new WidgetFinish(p, editor, this);
 		Widget flipHW = new WidgetFlipH(p, editor, this);
 		Widget flipVW = new WidgetFlipV(p, editor, this);
-		Widget rotateW = new WidgetRotateClockwise(p, editor, this);
+		Widget clockwiseW = new WidgetRotateClockwise(p, editor, this);
+		Widget counterClockwiseW = new WidgetRotateClockwise(p, editor, this);
 		Widget adjustW = new WidgetAdjust(p, editor, this);
 		Widget levelendW = new WidgetLevelEnd(p, editor, this);
 		Widget excludeW = new WidgetExcludeMenu(p, editor, this);
@@ -59,7 +60,8 @@ public class EditorSide extends Toolbar {
 		tile.add(finishW);
 //		tile.add(flipHW);
 //		tile.add(flipVW);
-		tile.add(rotateW);
+		tile.add(clockwiseW);
+		tile.add(counterClockwiseW);
 
 		// widgets for images
 		image = new ArrayList<Widget>();
@@ -67,7 +69,7 @@ public class EditorSide extends Toolbar {
 		image.add(finishW);
 		image.add(flipHW);
 		image.add(flipVW);
-		image.add(rotateW);
+		image.add(clockwiseW);
 
 		// widgets for views
 		view = new ArrayList<Widget>();
@@ -94,7 +96,7 @@ public class EditorSide extends Toolbar {
 		spike = new ArrayList<Widget>();
 		spike.add(deleteW);
 		spike.add(finishW);
-		spike.add(rotateW);
+		spike.add(clockwiseW);
 
 		// minimal widgets
 		minimal = new ArrayList<Widget>();
@@ -259,6 +261,14 @@ public class EditorSide extends Toolbar {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Editable) {
 				((Editable) editor.selected).addAngle(90);
+			}
+		}
+	}
+	
+	public void subAngle() {
+		if (editor.selected != null) {
+			if (editor.selected instanceof Editable) {
+				((Editable) editor.selected).addAngle(-90);
 			}
 		}
 	}

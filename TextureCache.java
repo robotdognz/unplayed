@@ -154,7 +154,6 @@ public class TextureCache {
 				relativeFile = relativeFile.replace(base + '/', "");
 //				String relativeFile = base.relativize(absoluteFiles[i].toPath()).toString();
 				tilePaths[i] = new File(relativeFile);
-				PApplet.println(relativeFile);
 			}
 		}
 
