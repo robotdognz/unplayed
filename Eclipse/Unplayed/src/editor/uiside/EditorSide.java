@@ -48,7 +48,7 @@ public class EditorSide extends Toolbar {
 		Widget finishW = new WidgetFinish(p, editor, this);
 		Widget flipHW = new WidgetFlipH(p, editor, this);
 		Widget flipVW = new WidgetFlipV(p, editor, this);
-		Widget rotateW = new WidgetRotate(p, editor, this);
+		Widget rotateW = new WidgetRotateClockwise(p, editor, this);
 		Widget adjustW = new WidgetAdjust(p, editor, this);
 		Widget levelendW = new WidgetLevelEnd(p, editor, this);
 		Widget excludeW = new WidgetExcludeMenu(p, editor, this);

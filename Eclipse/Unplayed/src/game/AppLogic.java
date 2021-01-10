@@ -82,6 +82,9 @@ public class AppLogic {
 		Widget menuW = new WidgetPauseMenu(p, editor, null);
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
+
+		// print android api version
+		PApplet.println(android.os.Build.VERSION.SDK_INT);
 	}
 
 	public Editor getEditor() {
