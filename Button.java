@@ -32,7 +32,8 @@ public class Button {
 		p.rect(xCenter, yCenter, bWidth, bHeight);
 		p.rectMode(CORNER);
 		p.fill(50);
-		p.textSize(60);
+		int textSize = p.width/24; //60;
+		p.textSize(textSize); 
 		p.textAlign(CENTER, CENTER);
 		p.text(text, xCenter, yCenter);
 		// text(text, bCenter.x-bWidth/2, bCenter.y-bHeight/2, bCenter.x+bWidth/2,

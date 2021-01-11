@@ -2,11 +2,13 @@ package ui;
 
 import java.util.ArrayList;
 
+import game.AppLogic;
 import processing.core.PApplet;
 import processing.core.PVector;
 
 public abstract class Menu {
 	private PApplet p;
+	protected AppLogic al;
 	protected float menuTopY = 0;
 	protected float menuCenterX = 0;
 	protected float menuWidth = 0;
@@ -15,8 +17,9 @@ public abstract class Menu {
 	protected ArrayList<Button> buttons = new ArrayList<Button>();
 	protected float menuHeight = 0;
 	
-	public Menu(PApplet p) {
+	public Menu(PApplet p, AppLogic al) {
 		this.p = p;
+		this.al = al;
 	}
 
 	protected void height() {
