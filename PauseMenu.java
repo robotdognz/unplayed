@@ -24,7 +24,7 @@ public class PauseMenu extends Menu {
 		buttonHeight = p.width / 7.2f; // 200
 		float buttonWidth = p.width / 2.88f; // 500
 		menuWidth = p.width / 2.182f; // 660
-		buttonDistance = 80;
+		buttonDistance = p.width / 18;
 		Button resumeB = new Button(p.width / 2, buttonWidth, buttonHeight, resume);
 		Button editorB = new Button(p.width / 2, buttonWidth, buttonHeight, editor);
 		Button restartB = new Button(p.width / 2, buttonWidth, buttonHeight, restart);
