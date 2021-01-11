@@ -77,8 +77,8 @@ public class AppLogic {
 		game = new Game(p, this, camera, vibe, texture, convert);
 		texture.passGame(game);
 		controller = new PlayerControl(p, game);
-		DoToast toast = new DoToast(activity);
-		editor = new Editor(p, files, texture, game, camera, convert, toast);
+//		DoToast toast = new DoToast(activity);
+//		editor = new Editor(p, files, texture, game, camera, convert, toast);
 
 		//// setup non editor widget(s)
 		Widget menuW = new WidgetPauseMenu(p, game, null);
