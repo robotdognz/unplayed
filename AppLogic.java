@@ -189,8 +189,8 @@ public class AppLogic {
 		}
 
 		// draw the game
-		if ((editor != null && !editorToggle) || (editor != null && editor.showPageView)) {
-				//|| (editor == null && runGame)) { // || editor == null
+		if ((editor != null && !editorToggle) || (editor != null && editor.showPageView)
+				|| (editor == null && runGame)) { // || editor == null
 			game.draw(); // draw the game
 		}
 

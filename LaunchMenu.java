@@ -33,7 +33,7 @@ public class LaunchMenu extends Menu {
 	public void click() {
 		for (Button b : buttons) {
 			if (b.click().equals(demo)) {
-
+				al.startGame();
 			} else if (b.click().equals(editor)) {
 
 				al.toggleEditor();
