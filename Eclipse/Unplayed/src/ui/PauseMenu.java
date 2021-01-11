@@ -22,7 +22,7 @@ public class PauseMenu extends Menu {
 		menuCenterX = p.width / 2;
 
 		buttonHeight = p.width / 7.2f; // 200
-		float buttonWidth = p.width / 7.88f; // 500
+		float buttonWidth = p.width / 2.88f; // 500
 		menuWidth = p.width / 2.182f; // 660
 		buttonDistance = 80;
 		Button resumeB = new Button(p.width / 2, buttonWidth, buttonHeight, resume);
