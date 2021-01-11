@@ -151,7 +151,7 @@ public class AppLogic {
 	public void nextLevel() {
 		currentLevel++;
 		EditorJSON json = new EditorJSON(p, texture, null);
-		if (levelPaths.length >= currentLevel) {
+		if (levelPaths.length > currentLevel) {
 			json.load(game, levelPaths[currentLevel].toString());
 		}else {
 			init();
