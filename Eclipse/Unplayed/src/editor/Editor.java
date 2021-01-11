@@ -93,8 +93,9 @@ public class Editor {
 	public EditorJSON eJSON;
 
 	// frame count and debug visualization
-	public boolean debugVis = false;
-	private int frameDelay = 100;
+	private int textSize;
+	public boolean debugVis;
+	private int frameDelay;
 	private float frame;
 
 	public Editor(PApplet p, FileChooser files, TextureCache texture, Game game, Camera camera, Converter convert,
@@ -128,6 +129,11 @@ public class Editor {
 		pvScale = camera.getScale();
 		pvSubScale = camera.getSubScale();
 		pvCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
+
+		// debug display
+		debugVis = false;
+		frameDelay = 100;
+		textSize = (int) (p.width / 28.8); // 50
 	}
 
 	public void step(ArrayList<PVector> touches) {
@@ -194,23 +200,27 @@ public class Editor {
 		// draw frame counter and other readouts
 		if (debugVis) {
 			p.fill(80);
-			p.textSize(50);
+			p.textSize(textSize);
 			p.textAlign(CENTER, CENTER);
 			if (game.placed != null) {
-				p.text("Placed: " + game.placed.size(), p.width / 2, p.height - editorBottom.getHeight() - 350);
+				p.text("Placed: " + game.placed.size(), p.width / 2,
+						p.height - editorBottom.getHeight() - textSize * 7);
 			}
 			if (game.removed != null) {
-				p.text("Removed: " + game.removed.size(), p.width / 2, p.height - editorBottom.getHeight() - 300);
+				p.text("Removed: " + game.removed.size(), p.width / 2,
+						p.height - editorBottom.getHeight() - textSize * 6);
 			}
 			if (game.player != null) {
 				p.text("Position x:" + game.player.getX() + " y:" + game.player.getY(), p.width / 2,
-						p.height - editorBottom.getHeight() - 250);
-				p.text("Still: " + game.player.isStill(), p.width / 2, p.height - editorBottom.getHeight() - 200);
+						p.height - editorBottom.getHeight() - textSize * 5);
+				p.text("Still: " + game.player.isStill(), p.width / 2,
+						p.height - editorBottom.getHeight() - textSize * 4);
 			}
-			p.text(PApplet.nf(convert.getScale(), 1, 2), p.width / 2, p.height - editorBottom.getHeight() - 150);
+			p.text(PApplet.nf(convert.getScale(), 1, 2), p.width / 2,
+					p.height - editorBottom.getHeight() - textSize * 3);
 			p.text(game.playerObjects.size() + " : " + game.screenObjects.size(), p.width / 2,
-					p.height - editorBottom.getHeight() - 100);
-			p.text("FPS: " + PApplet.nf(this.frame, 1, 2), p.width / 2, p.height - editorBottom.getHeight() - 50);
+					p.height - editorBottom.getHeight() - textSize * 2);
+			p.text("FPS: " + PApplet.nf(this.frame, 1, 2), p.width / 2, p.height - editorBottom.getHeight() - textSize);
 		}
 	}
 

@@ -140,25 +140,28 @@ public class AppLogic {
 
 	@SuppressWarnings("unused")
 	public void startGame() {
-		EditorJSON json = new EditorJSON(p, texture, null);
-		Camera camera = new GameCamera();
-		if (levels != null && levels.size() > 0) {
-			json.load(game, levels.get(0).toString());
-		}
-		game.startGame();
-
-		runGame = true;
-		menu = null;
 		currentLevel = 0;
+		EditorJSON json = new EditorJSON(p, texture, null);
+
+		if (levels != null && levels.size() > currentLevel) {
+			json.load(game, levels.get(currentLevel).toString());
+			Camera camera = new GameCamera();
+			game.startGame();
+			runGame = true;
+			menu = null;
+		}
+
 	}
 
 	public void nextLevel() {
 		currentLevel++;
 		EditorJSON json = new EditorJSON(p, texture, null);
+
 		if (levels.size() > currentLevel) {
 			json.load(game, levels.get(currentLevel).toString());
 			game.startGame();
 		} else {
+			runGame = false;
 			init();
 		}
 

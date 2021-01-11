@@ -6,7 +6,8 @@
 -Added rotation and proper collision to Spike
 -Updated APDE prievew asset management code so it works on older devices
 -Added title screen
--Implemented levels folder in game data that can be played from the title screen
+-Implemented levels folder in game data that can be played in sequence from the title screen
+-Implemented seperate menus for demo mode and editor mode
 
 1.1.0:	Quality of life patch
 
