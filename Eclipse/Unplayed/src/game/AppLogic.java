@@ -50,7 +50,8 @@ public class AppLogic {
 	public ArrayList<Widget> widgets;
 	public float widgetSpacing; // size of gap between widgets
 	public float widgetHeight;
-	
+
+	private boolean runGame;
 	private File[] levelPaths;
 
 	public AppLogic(PApplet p, Activity activity, Context context) {
@@ -84,9 +85,10 @@ public class AppLogic {
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
 		widgetHeight = p.displayWidth / 12; // 120
-		
+
 		getLevels();
 
+		runGame = false;
 		menu = new LaunchMenu(p, game, this);
 
 		// print android api version
@@ -130,12 +132,13 @@ public class AppLogic {
 			}
 		}
 	}
-	
+
 	public void startGame() {
 		EditorJSON json = new EditorJSON(p, texture, null);
-		if(levelPaths != null && levelPaths.length > 0) {
+		if (levelPaths != null && levelPaths.length > 0) {
 			json.load(game, levelPaths[0].toString());
 		}
+		runGame = true;
 	}
 
 	public void toggleEditor() {
@@ -184,7 +187,8 @@ public class AppLogic {
 		}
 
 		// draw the game
-		if (!editorToggle || editor == null || (editor != null && editor.showPageView)) {
+		if (!editorToggle || (editor != null && editor.showPageView) || (editor == null && runGame)) { // || editor ==
+																										// null
 			game.draw(); // draw the game
 		}
 
