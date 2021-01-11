@@ -53,16 +53,16 @@ public class AppLogic {
 		this.p = p;
 		this.activity = activity;
 		this.context = context;
-		gPaused = false;
+//		gPaused = true;
 		menu = null;
-		editorToggle = true;
+		editorToggle = false;
 
 	}
 
 	public void init() {
-		gPaused = false;
-		editorToggle = true;
-		menu = null;
+//		gPaused = true;
+		editorToggle = false;
+//		menu = null;
 		touches = new ArrayList<PVector>();
 		lastTouch = new PVector(0, 0);
 		widgets = new ArrayList<Widget>();
@@ -86,7 +86,7 @@ public class AppLogic {
 		widgetSpacing = p.width / (widgets.size() + 1);
 		widgetHeight = p.displayWidth / 12; // 120
 		
-//		menu = new LaunchMenu(p, game, this);
+		menu = new LaunchMenu(p, game, this);
 
 		// print android api version
 		PApplet.println(android.os.Build.VERSION.SDK_INT);
@@ -116,6 +116,13 @@ public class AppLogic {
 	}
 
 	public void draw() {
+		
+		if(menu != null) {
+			gPaused = true;
+		}else {
+			gPaused = false;
+		}
+		
 		// touch screen
 		touches.clear();
 		for (TouchEvent.Pointer t : p.touches) {
