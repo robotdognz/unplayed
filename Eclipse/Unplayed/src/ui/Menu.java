@@ -27,6 +27,7 @@ public abstract class Menu {
 	}
 
 	public void draw() {
+		p.pushMatrix();
 		p.noStroke();
 		p.fill(150);
 		p.rect(menuCenterX - menuWidth / 2, menuTopY, menuWidth, menuHeight);
@@ -35,6 +36,7 @@ public abstract class Menu {
 			float y = menuTopY + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
 			buttons.get(i).draw(p, y);
 		}
+		p.popMatrix();
 	}
 
 	public void hover(PVector lastTouch) {
