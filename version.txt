@@ -8,6 +8,7 @@
 -Added title screen
 -Implemented levels folder in game data that can be played in sequence from the title screen
 -Implemented seperate menus for demo mode and editor mode
+-Editor debug text now correctly scales to screen size
 
 1.1.0:	Quality of life patch
 

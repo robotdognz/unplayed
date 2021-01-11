@@ -202,18 +202,18 @@ public class Editor {
 			p.fill(80);
 			p.textSize(textSize);
 			p.textAlign(CENTER, CENTER);
+			if (game.player != null) {
+				p.text("Position x:" + game.player.getX() + " y:" + game.player.getY(), p.width / 2,
+						p.height - editorBottom.getHeight() - textSize * 7);
+				p.text("Still: " + game.player.isStill(), p.width / 2,
+						p.height - editorBottom.getHeight() - textSize * 6);
+			}
 			if (game.placed != null) {
 				p.text("Placed: " + game.placed.size(), p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 7);
+						p.height - editorBottom.getHeight() - textSize * 5);
 			}
 			if (game.removed != null) {
 				p.text("Removed: " + game.removed.size(), p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 6);
-			}
-			if (game.player != null) {
-				p.text("Position x:" + game.player.getX() + " y:" + game.player.getY(), p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 5);
-				p.text("Still: " + game.player.isStill(), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 4);
 			}
 			p.text(PApplet.nf(convert.getScale(), 1, 2), p.width / 2,
