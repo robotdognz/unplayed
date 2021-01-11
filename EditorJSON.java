@@ -226,7 +226,6 @@ public class EditorJSON {
 
 	public void load(Game game, String path) {
 		try {
-			//File file = new File(path);
 			values = p.loadJSONArray(path);
 
 			// clear old level

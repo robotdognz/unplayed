@@ -116,7 +116,6 @@ public class AppLogic {
 			for (int i = 0; i < levelStrings.length; i++) {
 				levelPaths[i] = new File(levelPath + '/' + levelStrings[i]);
 			}
-			
 
 		} catch (IOException e) {
 			// Preview mode
@@ -130,11 +129,13 @@ public class AppLogic {
 			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
 				String relativeFile = absoluteFiles[i].toString();
+				relativeFile = relativeFile.replace(base + '/', "");
 				levelPaths[i] = new File(relativeFile);
 			}
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public void startGame() {
 		EditorJSON json = new EditorJSON(p, texture, null);
 		if (levelPaths != null && levelPaths.length > 0) {
