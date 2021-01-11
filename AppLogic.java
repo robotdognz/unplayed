@@ -53,6 +53,7 @@ public class AppLogic {
 
 	private boolean runGame;
 	private File[] levelPaths;
+	private int currentLevel;
 
 	public AppLogic(PApplet p, Activity activity, Context context) {
 		this.p = p;
@@ -144,6 +145,18 @@ public class AppLogic {
 		Camera camera = new GameCamera();
 		runGame = true;
 		menu = null;
+		currentLevel = 0;
+	}
+	
+	public void nextLevel() {
+		currentLevel++;
+		EditorJSON json = new EditorJSON(p, texture, null);
+		if (levelPaths.length >= currentLevel) {
+			json.load(game, levelPaths[currentLevel].toString());
+		}else {
+			init();
+		}
+		
 	}
 
 	public void toggleEditor() {

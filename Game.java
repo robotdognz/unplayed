@@ -195,6 +195,7 @@ public class Game {
 
 		if (editor == null) { // in a normal game
 			// TODO: load next level, etc.
+			app.nextLevel();
 		} else { // in the editor
 			editor.toast.showToast("Level Complete");
 			p.delay(400);
