@@ -19,6 +19,7 @@ public class WidgetExcludeImages extends Widget {
 	public void clicked() {
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
 			((Page) editor.selected).showImages = !((Page) editor.selected).showImages;
+			editor.game.getPageView().forceRedraw();
 		}
 	}
 
