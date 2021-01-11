@@ -100,7 +100,7 @@ public class AppLogic {
 
 		}
 		gPaused = ((WidgetPauseMenu) widgets.get(0)).getPreviousStatus();
-		widgets.get(0).setActive(false);
+//		widgets.get(0).setActive(false);
 		menu = null;
 	}
 

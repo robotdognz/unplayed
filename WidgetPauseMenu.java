@@ -42,6 +42,8 @@ public class WidgetPauseMenu extends Widget {
 		super.updateActive();
 		if (app.menu != null) {
 			active = true;
+		}else {
+			active = false;
 		}
 	}
 	
