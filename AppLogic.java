@@ -46,6 +46,7 @@ public class AppLogic {
 
 	public ArrayList<Widget> widgets;
 	public float widgetSpacing; // size of gap between widgets
+	public float widgetHeight;
 
 	public AppLogic(PApplet p, Activity activity, Context context) {
 		this.p = p;
@@ -75,13 +76,15 @@ public class AppLogic {
 		game = new Game(p, this, camera, vibe, texture, convert);
 		texture.passGame(game);
 		controller = new PlayerControl(p, game);
+		@SuppressWarnings("unused")
 		DoToast toast = new DoToast(activity);
-		editor = new Editor(p, files, texture, game, camera, convert, toast);
+		//editor = new Editor(p, files, texture, game, camera, convert, toast);
 
 		//// setup non editor widget(s)
 		Widget menuW = new WidgetPauseMenu(p, editor, null);
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
+		widgetHeight = p.displayWidth / 12; // 120
 
 		// print android api version
 		PApplet.println(android.os.Build.VERSION.SDK_INT);
@@ -130,7 +133,7 @@ public class AppLogic {
 			editor.draw(lastTouch, menu);
 		} else {
 			for (int i = 0; i < widgets.size(); i++) {
-				widgets.get(i).draw(widgetSpacing * (i + 1), 120);
+				widgets.get(i).draw(widgetSpacing * (i + 1), widgetHeight);
 				widgets.get(i).updateActive();
 				if (menu == null) {
 					widgets.get(i).hover(lastTouch);
