@@ -45,11 +45,11 @@ public class PauseMenu extends Menu {
 				al.gPaused = m.getPreviousStatus();
 				al.menu = null; // remove pause menu
 			} else if (b.click().equals(editor)) {
-//				al.editorToggle = !al.editorToggle;
-//				m.setActive(false); // change status of widget
-//				al.gPaused = m.getPreviousStatus();
-//				al.menu = null; // remove pause menu
-				al.toggleEditor();
+				al.editorToggle = !al.editorToggle;
+				m.setActive(false); // change status of widget
+				al.gPaused = m.getPreviousStatus();
+				al.menu = null; // remove pause menu
+//				al.toggleEditor();
 				
 				
 				

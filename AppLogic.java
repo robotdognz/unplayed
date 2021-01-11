@@ -55,13 +55,13 @@ public class AppLogic {
 		this.context = context;
 		gPaused = false;
 		menu = null;
-		editorToggle = false;
+		editorToggle = true;
 
 	}
 
 	public void init() {
 		gPaused = false;
-		editorToggle = false;
+		editorToggle = true;
 		menu = null;
 		touches = new ArrayList<PVector>();
 		lastTouch = new PVector(0, 0);
@@ -77,8 +77,8 @@ public class AppLogic {
 		game = new Game(p, this, camera, vibe, texture, convert);
 		texture.passGame(game);
 		controller = new PlayerControl(p, game);
-//		DoToast toast = new DoToast(activity);
-//		editor = new Editor(p, files, texture, game, camera, convert, toast);
+		DoToast toast = new DoToast(activity);
+		editor = new Editor(p, files, texture, game, camera, convert, toast);
 
 		//// setup non editor widget(s)
 		Widget menuW = new WidgetPauseMenu(p, game, null);
@@ -86,7 +86,7 @@ public class AppLogic {
 		widgetSpacing = p.width / (widgets.size() + 1);
 		widgetHeight = p.displayWidth / 12; // 120
 		
-		menu = new LaunchMenu(p, game, this);
+//		menu = new LaunchMenu(p, game, this);
 
 		// print android api version
 		PApplet.println(android.os.Build.VERSION.SDK_INT);
