@@ -52,6 +52,7 @@ public class AppLogic {
 	public float widgetHeight;
 
 	private boolean runGame;
+	private ArrayList<File> levels;
 	private File[] levelPaths;
 	private int currentLevel;
 
@@ -99,6 +100,7 @@ public class AppLogic {
 	}
 
 	public void getLevels() {
+		levels = new ArrayList<File>();
 		// generate all the relative file paths
 		try {
 			// App mode
@@ -111,11 +113,12 @@ public class AppLogic {
 				throw new IOException();
 			}
 
-			levelPaths = new File[levelStrings.length];
+//			levelPaths = new File[levelStrings.length];
 
 			// make relative files from all of the level strings
 			for (int i = 0; i < levelStrings.length; i++) {
-				levelPaths[i] = new File(levelPath + '/' + levelStrings[i]);
+//				levelPaths[i] = new File(levelPath + '/' + levelStrings[i]);
+				levels.add(new File(levelPath + '/' + levelStrings[i]));
 			}
 
 		} catch (IOException e) {
@@ -125,13 +128,14 @@ public class AppLogic {
 			File levelPath = new File(base + "/levels" + '/');
 
 			File[] absoluteFiles = levelPath.listFiles();
-			levelPaths = new File[absoluteFiles.length];
+//			levelPaths = new File[absoluteFiles.length];
 
 			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
 				String relativeFile = absoluteFiles[i].toString();
 				relativeFile = relativeFile.replace(base + '/', "");
-				levelPaths[i] = new File(relativeFile);
+//				levelPaths[i] = new File(relativeFile);
+				levels.add(new File(relativeFile));
 			}
 		}
 	}
@@ -139,8 +143,8 @@ public class AppLogic {
 	@SuppressWarnings("unused")
 	public void startGame() {
 		EditorJSON json = new EditorJSON(p, texture, null);
-		if (levelPaths != null && levelPaths.length > 0) {
-			json.load(game, levelPaths[0].toString());
+		if (levels != null && levels.size() > 0) {
+			json.load(game, levels.get(0).toString());
 		}
 		Camera camera = new GameCamera();
 		runGame = true;
@@ -151,8 +155,8 @@ public class AppLogic {
 	public void nextLevel() {
 		currentLevel++;
 		EditorJSON json = new EditorJSON(p, texture, null);
-		if (levelPaths.length > currentLevel) {
-			json.load(game, levelPaths[currentLevel].toString());
+		if (levels.size() > currentLevel) {
+			json.load(game, levels.get(currentLevel).toString());
 		}else {
 			init();
 		}
