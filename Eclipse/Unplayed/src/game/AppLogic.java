@@ -141,10 +141,12 @@ public class AppLogic {
 	@SuppressWarnings("unused")
 	public void startGame() {
 		EditorJSON json = new EditorJSON(p, texture, null);
+		Camera camera = new GameCamera();
 		if (levels != null && levels.size() > 0) {
 			json.load(game, levels.get(0).toString());
 		}
-		Camera camera = new GameCamera();
+		game.startGame();
+
 		runGame = true;
 		menu = null;
 		currentLevel = 0;
@@ -155,6 +157,7 @@ public class AppLogic {
 		EditorJSON json = new EditorJSON(p, texture, null);
 		if (levels.size() > currentLevel) {
 			json.load(game, levels.get(currentLevel).toString());
+			game.startGame();
 		} else {
 			init();
 		}
