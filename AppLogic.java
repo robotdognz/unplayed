@@ -72,7 +72,7 @@ public class AppLogic {
 		files = new FileChooser(activity);
 		vibe = new Vibe(context);
 
-		Camera camera = new GameCamera();// new FreeCamera(); // new GameCamera();
+		Camera camera = new FreeCamera(); // new GameCamera();
 		convert = new Converter(p, camera);
 		game = new Game(p, this, camera, vibe, texture, convert);
 		texture.passGame(game);
@@ -138,6 +138,7 @@ public class AppLogic {
 		if (levelPaths != null && levelPaths.length > 0) {
 			json.load(game, levelPaths[0].toString());
 		}
+		Camera camera = new GameCamera();
 		runGame = true;
 	}
 
@@ -187,8 +188,8 @@ public class AppLogic {
 		}
 
 		// draw the game
-		if (!editorToggle || (editor != null && editor.showPageView) || (editor == null && runGame)) { // || editor ==
-																										// null
+		if ((editor != null && !editorToggle) || (editor != null && editor.showPageView)
+				|| (editor == null && runGame)) { // || editor == null
 			game.draw(); // draw the game
 		}
 
