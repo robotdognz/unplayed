@@ -31,8 +31,8 @@ public class WidgetPauseMenu extends Widget {
 	public void clicked() {
 		if (!active) {
 			active = true;
-			previousStatus = app.gPaused;
-			app.gPaused = true; // switch pause state
+//			previousStatus = app.gPaused;
+//			app.gPaused = true; // switch pause state
 			app.menu = new PauseMenu(p, game, app, this);
 		}
 	}

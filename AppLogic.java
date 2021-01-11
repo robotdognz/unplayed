@@ -36,7 +36,7 @@ public class AppLogic {
 	public Converter convert;
 	public TextureCache texture;
 
-	public boolean gPaused; // is the game paused
+//	public boolean gPaused; // is the game paused
 	public Menu menu; // current menu
 	public boolean editorToggle; // is the editor enabled
 	public Game game; // holds the game class
@@ -85,7 +85,7 @@ public class AppLogic {
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
 		widgetHeight = p.displayWidth / 12; // 120
-		
+
 		menu = new LaunchMenu(p, game, this);
 
 		// print android api version
@@ -102,8 +102,7 @@ public class AppLogic {
 			}
 
 		}
-		gPaused = ((WidgetPauseMenu) widgets.get(0)).getPreviousStatus();
-//		widgets.get(0).setActive(false);
+//		gPaused = ((WidgetPauseMenu) widgets.get(0)).getPreviousStatus();
 		menu = null;
 	}
 
@@ -116,13 +115,13 @@ public class AppLogic {
 	}
 
 	public void draw() {
-		
-		if(menu != null) {
-			gPaused = true;
-		}else {
-			gPaused = false;
-		}
-		
+
+//		if(menu != null) {
+//			gPaused = true;
+//		}else {
+//			gPaused = false;
+//		}
+
 		// touch screen
 		touches.clear();
 		for (TouchEvent.Pointer t : p.touches) {
@@ -135,7 +134,8 @@ public class AppLogic {
 		}
 
 		// step the game and editor
-		if (!gPaused) { // step the game if it is not paused
+//		if (!gPaused) { // step the game if it is not paused
+		if (menu == null) {
 			// step editor or game controller depending on editor toggle
 			if (editorToggle && editor != null) {
 				editor.step(touches);

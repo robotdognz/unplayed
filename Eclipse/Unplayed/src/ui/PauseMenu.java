@@ -12,7 +12,7 @@ public class PauseMenu extends Menu {
 	WidgetPauseMenu m; //TODO rename this
 	String resume = "Resume";
 	String editor = "Toggle Editor";
-	String restart = "Restart";
+	String restart = "Main Menu";
 	String quit = "Quit and Purge";
 
 	public PauseMenu(PApplet p, Game game, AppLogic al, WidgetPauseMenu m) {
@@ -42,12 +42,12 @@ public class PauseMenu extends Menu {
 		for (Button b : buttons) {
 			if (b.click().equals(resume)) { // resume the game if resume button pressed
 //				m.setActive(false); // change status of pause widget
-				al.gPaused = m.getPreviousStatus();
+//				al.gPaused = m.getPreviousStatus();
 				al.menu = null; // remove pause menu
 			} else if (b.click().equals(editor)) {
 				al.editorToggle = !al.editorToggle;
 //				m.setActive(false); // change status of widget
-				al.gPaused = m.getPreviousStatus();
+//				al.gPaused = m.getPreviousStatus();
 				al.menu = null; // remove pause menu
 //				al.toggleEditor();
 				

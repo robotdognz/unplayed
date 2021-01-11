@@ -6,6 +6,8 @@ import game.AppLogic;
 import processing.core.PApplet;
 import processing.core.PVector;
 
+import static processing.core.PConstants.*;
+
 public abstract class Menu {
 	private PApplet p;
 	protected AppLogic al;
@@ -27,16 +29,15 @@ public abstract class Menu {
 	}
 
 	public void draw() {
-		p.pushMatrix();
 		p.noStroke();
 		p.fill(150);
+		p.rectMode(CORNER);
 		p.rect(menuCenterX - menuWidth / 2, menuTopY, menuWidth, menuHeight);
 		// draw the buttons
 		for (int i = 0; i < buttons.size(); i++) {
 			float y = menuTopY + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
 			buttons.get(i).draw(p, y);
 		}
-		p.popMatrix();
 	}
 
 	public void hover(PVector lastTouch) {
