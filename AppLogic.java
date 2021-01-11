@@ -91,6 +91,7 @@ public class AppLogic {
 
 		runGame = false;
 		menu = new LaunchMenu(p, game, this);
+		p.background(100);
 
 		// print android api version
 		PApplet.println(android.os.Build.VERSION.SDK_INT);
@@ -329,8 +330,16 @@ public class AppLogic {
 				file.delete();
 			}
 		}
+		// levels
+		File levelDir = new File(p.dataPath("levels") + '/');
+		File[] levelPaths = levelDir.listFiles();
+		for (File file : levelPaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
 		// tiles
-		File tileDir = new File(p.dataPath("tiles") + '/');
+		File tileDir = new File(p.dataPath("unplayed_tiles") + '/');
 		File[] tilePaths = tileDir.listFiles();
 		for (File file : tilePaths) {
 			if (file.exists()) {
@@ -338,7 +347,7 @@ public class AppLogic {
 			}
 		}
 		// images
-		File imageDir = new File(p.dataPath("images") + '/');
+		File imageDir = new File(p.dataPath("unplayed_images") + '/');
 		File[] imagePaths = imageDir.listFiles();
 		for (File file : imagePaths) {
 			if (file.exists()) {
@@ -346,7 +355,7 @@ public class AppLogic {
 			}
 		}
 		// events
-		File eventDir = new File(p.dataPath("events") + '/');
+		File eventDir = new File(p.dataPath("unplayed_events") + '/');
 		File[] eventPaths = eventDir.listFiles();
 		for (File file : eventPaths) {
 			if (file.exists()) {
