@@ -3,6 +3,8 @@ package game;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -53,7 +55,7 @@ public class AppLogic {
 
 	private boolean runGame;
 	private ArrayList<File> levels;
-	private File[] levelPaths;
+//	private File[] levelPaths;
 	private int currentLevel;
 
 	public AppLogic(PApplet p, Activity activity, Context context) {
@@ -138,6 +140,8 @@ public class AppLogic {
 				levels.add(new File(relativeFile));
 			}
 		}
+
+		Collections.sort(levels);
 	}
 
 	@SuppressWarnings("unused")
@@ -151,16 +155,16 @@ public class AppLogic {
 		menu = null;
 		currentLevel = 0;
 	}
-	
+
 	public void nextLevel() {
 		currentLevel++;
 		EditorJSON json = new EditorJSON(p, texture, null);
 		if (levels.size() > currentLevel) {
 			json.load(game, levels.get(currentLevel).toString());
-		}else {
+		} else {
 			init();
 		}
-		
+
 	}
 
 	public void toggleEditor() {
