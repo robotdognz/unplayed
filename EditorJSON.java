@@ -226,8 +226,8 @@ public class EditorJSON {
 
 	public void load(Game game, String path) {
 		try {
-			File file = new File(path);
-			values = PApplet.loadJSONArray(file);
+			//File file = new File(path);
+			values = p.loadJSONArray(path);
 
 			// clear old level
 			game.world.clear(); // remove old world objects

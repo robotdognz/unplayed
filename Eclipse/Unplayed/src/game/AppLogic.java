@@ -113,13 +113,8 @@ public class AppLogic {
 			levelPaths = new File[levelStrings.length];
 
 			// make relative files from all of the level strings
-//			for (int i = 0; i < levelStrings.length; i++) {
-//				levelPaths[i] = new File(levelPath + '/' + levelStrings[i]);
-//			}
-//			
-			String base = p.sketchPath("");
 			for (int i = 0; i < levelStrings.length; i++) {
-				levelPaths[i] = new File(base + '/' + levelPath + '/' + levelStrings[i]);
+				levelPaths[i] = new File(levelPath + '/' + levelStrings[i]);
 			}
 			
 
