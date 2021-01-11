@@ -1,13 +1,15 @@
 package game;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import camera.Camera;
 import camera.FreeCamera;
+import camera.GameCamera;
 import controllers.Controller;
 import controllers.PlayerControl;
 import editor.Editor;
@@ -15,6 +17,7 @@ import editor.uitop.WidgetPauseMenu;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.DoToast;
+import misc.EditorJSON;
 import misc.FileChooser;
 import misc.KetaiGesture;
 import misc.Vibe;
@@ -36,7 +39,6 @@ public class AppLogic {
 	public Converter convert;
 	public TextureCache texture;
 
-//	public boolean gPaused; // is the game paused
 	public Menu menu; // current menu
 	public boolean editorToggle; // is the editor enabled
 	public Game game; // holds the game class
@@ -48,21 +50,18 @@ public class AppLogic {
 	public ArrayList<Widget> widgets;
 	public float widgetSpacing; // size of gap between widgets
 	public float widgetHeight;
+	
+	private File[] levelPaths;
 
 	public AppLogic(PApplet p, Activity activity, Context context) {
 		this.p = p;
 		this.activity = activity;
 		this.context = context;
-//		gPaused = true;
-		menu = null;
 		editorToggle = false;
-
 	}
 
 	public void init() {
-//		gPaused = true;
-		editorToggle = false;
-//		menu = null;
+		editorToggle = false; // editor is closed on startup
 		touches = new ArrayList<PVector>();
 		lastTouch = new PVector(0, 0);
 		widgets = new ArrayList<Widget>();
@@ -72,8 +71,8 @@ public class AppLogic {
 		files = new FileChooser(activity);
 		vibe = new Vibe(context);
 
-		Camera camera = new FreeCamera(); // new GameCamera();
-		convert = new Converter(p, camera); // camera converter
+		Camera camera = new GameCamera();// new FreeCamera(); // new GameCamera();
+		convert = new Converter(p, camera);
 		game = new Game(p, this, camera, vibe, texture, convert);
 		texture.passGame(game);
 		controller = new PlayerControl(p, game);
@@ -85,11 +84,58 @@ public class AppLogic {
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
 		widgetHeight = p.displayWidth / 12; // 120
+		
+		getLevels();
 
 		menu = new LaunchMenu(p, game, this);
 
 		// print android api version
 		PApplet.println(android.os.Build.VERSION.SDK_INT);
+	}
+
+	public void getLevels() {
+		// generate all the relative file paths
+		try {
+			// App mode
+
+			AssetManager am = context.getAssets();
+			String levelPath = "levels";
+			String[] levelStrings = am.list(levelPath);
+
+			if (levelStrings.length == 0) {
+				throw new IOException();
+			}
+
+			levelPaths = new File[levelStrings.length];
+
+			// make relative files from all of the level strings
+			for (int i = 0; i < levelStrings.length; i++) {
+				levelPaths[i] = new File(levelPath + '/' + levelStrings[i]);
+			}
+
+		} catch (IOException e) {
+			// Preview mode
+
+			String base = p.sketchPath("");
+			File levelPath = new File(base + "/levels" + '/');
+
+			File[] absoluteFiles = levelPath.listFiles();
+			levelPaths = new File[absoluteFiles.length];
+
+			// make relative files from all of the tile strings
+			for (int i = 0; i < absoluteFiles.length; i++) {
+				String relativeFile = absoluteFiles[i].toString();
+				relativeFile = relativeFile.replace(base + '/', "");
+				levelPaths[i] = new File(relativeFile);
+			}
+		}
+	}
+	
+	public void startGame() {
+		EditorJSON json = new EditorJSON(p, texture, null);
+		if(levelPaths != null && levelPaths.length > 0) {
+			json.load(game, levelPaths[0].toString());
+		}
 	}
 
 	public void toggleEditor() {
@@ -102,7 +148,6 @@ public class AppLogic {
 			}
 
 		}
-//		gPaused = ((WidgetPauseMenu) widgets.get(0)).getPreviousStatus();
 		menu = null;
 	}
 
@@ -116,12 +161,6 @@ public class AppLogic {
 
 	public void draw() {
 
-//		if(menu != null) {
-//			gPaused = true;
-//		}else {
-//			gPaused = false;
-//		}
-
 		// touch screen
 		touches.clear();
 		for (TouchEvent.Pointer t : p.touches) {
@@ -134,7 +173,6 @@ public class AppLogic {
 		}
 
 		// step the game and editor
-//		if (!gPaused) { // step the game if it is not paused
 		if (menu == null) {
 			// step editor or game controller depending on editor toggle
 			if (editorToggle && editor != null) {
@@ -145,11 +183,8 @@ public class AppLogic {
 			game.step(); // step game
 		}
 
-		// step/draw the game
+		// draw the game
 		if (!editorToggle || editor == null || (editor != null && editor.showPageView)) {
-//			if (!gPaused) {
-//				game.step(); // step game
-//			}
 			game.draw(); // draw the game
 		}
 
@@ -233,8 +268,6 @@ public class AppLogic {
 				// controller.onTap(x, y);
 			}
 		}
-
-		// gesture.
 	}
 
 	public void onDoubleTap(float x, float y) {

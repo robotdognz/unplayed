@@ -48,8 +48,6 @@ public class EditorJSON {
 			saveViews(values, editor);
 			savePages(values, editor);
 
-			// File file = new File("storage/emulated/0/levels/" + "level" + ".json");
-
 			File file;
 			if (path.matches(".+.unplayed$")) {
 				file = new File(path);
@@ -63,11 +61,14 @@ public class EditorJSON {
 				file = new File(path + ".unplayed");
 			}
 
-			// File file = new File(path);
 			p.saveJSONArray(values, file.getAbsolutePath());
-			toast.showToast("Level Saved");
+			if (toast != null) {
+				toast.showToast("Level Saved");
+			}
 		} catch (Exception e) {
-			toast.showToast(e.getMessage());
+			if (toast != null) {
+				toast.showToast(e.getMessage());
+			}
 		}
 	}
 
@@ -240,9 +241,13 @@ public class EditorJSON {
 			loadViews(values, game);
 			loadPages(values, game);
 
-			toast.showToast("Level Loaded");
+			if (toast != null) {
+				toast.showToast("Level Loaded");
+			}
 		} catch (Exception e) {
-			toast.showToast(e.getMessage());
+			if (toast != null) {
+				toast.showToast(e.getMessage());
+			}
 		}
 	}
 
