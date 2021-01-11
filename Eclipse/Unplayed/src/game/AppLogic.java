@@ -185,7 +185,6 @@ public class AppLogic {
 				controller.step(touches);
 			}
 			game.step(); // step game
-			PApplet.println("game.step()");
 		}
 
 		// draw the game
