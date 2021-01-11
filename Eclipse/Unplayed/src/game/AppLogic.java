@@ -141,6 +141,7 @@ public class AppLogic {
 		}
 		Camera camera = new GameCamera();
 		runGame = true;
+		menu = null;
 	}
 
 	public void toggleEditor() {
