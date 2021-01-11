@@ -9,7 +9,7 @@ import processing.core.PApplet;
 
 public class PauseMenu extends Menu {
 	Game game;
-	WidgetPauseMenu m;
+	WidgetPauseMenu m; //TODO rename this
 	String resume = "Resume";
 	String editor = "Toggle Editor";
 	String restart = "Restart";
@@ -45,10 +45,14 @@ public class PauseMenu extends Menu {
 				al.gPaused = m.getPreviousStatus();
 				al.menu = null; // remove pause menu
 			} else if (b.click().equals(editor)) {
-				al.editorToggle = !al.editorToggle;
-				m.setActive(false); // change status of widget
-				al.gPaused = m.getPreviousStatus();
-				al.menu = null; // remove pause menu
+//				al.editorToggle = !al.editorToggle;
+//				m.setActive(false); // change status of widget
+//				al.gPaused = m.getPreviousStatus();
+//				al.menu = null; // remove pause menu
+				al.toggleEditor();
+				
+				
+				
 //				if (!app.editorToggle) {
 //					game.camera = new GameCamera();
 //				} else {

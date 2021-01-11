@@ -54,7 +54,7 @@ public class AppLogic {
 		this.context = context;
 		gPaused = false;
 		menu = null;
-		editorToggle = true;
+		editorToggle = false;
 
 	}
 
@@ -76,9 +76,8 @@ public class AppLogic {
 		game = new Game(p, this, camera, vibe, texture, convert);
 		texture.passGame(game);
 		controller = new PlayerControl(p, game);
-		@SuppressWarnings("unused")
-		DoToast toast = new DoToast(activity);
-		//editor = new Editor(p, files, texture, game, camera, convert, toast);
+//		DoToast toast = new DoToast(activity);
+//		editor = new Editor(p, files, texture, game, camera, convert, toast);
 
 		//// setup non editor widget(s)
 		Widget menuW = new WidgetPauseMenu(p, game, null);
@@ -88,6 +87,20 @@ public class AppLogic {
 
 		// print android api version
 		PApplet.println(android.os.Build.VERSION.SDK_INT);
+	}
+
+	public void toggleEditor() {
+		editorToggle = !editorToggle;
+		if (editorToggle) {
+			if(editor == null) {
+				Camera camera = new FreeCamera();
+				DoToast toast = new DoToast(activity);
+				editor = new Editor(p, files, texture, game, camera, convert, toast);
+			}
+			gPaused = ((WidgetPauseMenu) widgets.get(0)).getPreviousStatus();
+			widgets.get(0).setActive(false);
+			menu = null;
+		}
 	}
 
 	public Editor getEditor() {
