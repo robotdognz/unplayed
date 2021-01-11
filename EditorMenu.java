@@ -7,7 +7,7 @@ import game.Game;
 import game.AppLogic;
 import processing.core.PApplet;
 
-public class PauseMenu extends Menu {
+public class EditorMenu extends Menu {
 	Game game;
 	WidgetPauseMenu m; //TODO rename this
 	String resume = "Resume";
@@ -15,7 +15,7 @@ public class PauseMenu extends Menu {
 	String restart = "Main Menu";
 	String quit = "Quit and Purge";
 
-	public PauseMenu(PApplet p, Game game, AppLogic al, WidgetPauseMenu m) {
+	public EditorMenu(PApplet p, Game game, AppLogic al, WidgetPauseMenu m) {
 		super(p, al);
 		this.game = game;
 		this.m = m;

@@ -55,7 +55,6 @@ public class AppLogic {
 
 	private boolean runGame;
 	private ArrayList<File> levels;
-//	private File[] levelPaths;
 	private int currentLevel;
 
 	public AppLogic(PApplet p, Activity activity, Context context) {
@@ -85,7 +84,7 @@ public class AppLogic {
 //		editor = new Editor(p, files, texture, game, camera, convert, toast);
 		editor = null;
 
-		//// setup non editor widget(s)
+		// setup non editor widget(s)
 		Widget menuW = new WidgetPauseMenu(p, game, null);
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
@@ -115,11 +114,8 @@ public class AppLogic {
 				throw new IOException();
 			}
 
-//			levelPaths = new File[levelStrings.length];
-
 			// make relative files from all of the level strings
 			for (int i = 0; i < levelStrings.length; i++) {
-//				levelPaths[i] = new File(levelPath + '/' + levelStrings[i]);
 				levels.add(new File(levelPath + '/' + levelStrings[i]));
 			}
 
@@ -130,13 +126,11 @@ public class AppLogic {
 			File levelPath = new File(base + "/levels" + '/');
 
 			File[] absoluteFiles = levelPath.listFiles();
-//			levelPaths = new File[absoluteFiles.length];
 
 			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
 				String relativeFile = absoluteFiles[i].toString();
 				relativeFile = relativeFile.replace(base + '/', "");
-//				levelPaths[i] = new File(relativeFile);
 				levels.add(new File(relativeFile));
 			}
 		}

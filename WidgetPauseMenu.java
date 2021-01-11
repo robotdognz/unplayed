@@ -5,7 +5,8 @@ import editor.Toolbar;
 import game.Game;
 import game.AppLogic;
 import processing.core.PApplet;
-import ui.PauseMenu;
+import ui.EditorMenu;
+import ui.GameMenu;
 import ui.Widget;
 
 public class WidgetPauseMenu extends Widget {
@@ -19,7 +20,7 @@ public class WidgetPauseMenu extends Widget {
 		game = editor.game;
 		app = game.app;
 	}
-	
+
 	public WidgetPauseMenu(PApplet p, Game game, Toolbar parent) {
 		super(p, null, parent);
 		icon = p.loadImage(folder + "exit.png");
@@ -33,7 +34,11 @@ public class WidgetPauseMenu extends Widget {
 			active = true;
 //			previousStatus = app.gPaused;
 //			app.gPaused = true; // switch pause state
-			app.menu = new PauseMenu(p, game, app, this);
+			if (app.editor != null) {
+				app.menu = new EditorMenu(p, game, app, this);
+			} else {
+				app.menu = new GameMenu(p, game, app);
+			}
 		}
 	}
 
@@ -42,11 +47,11 @@ public class WidgetPauseMenu extends Widget {
 		super.updateActive();
 		if (app.menu != null) {
 			active = true;
-		}else {
+		} else {
 			active = false;
 		}
 	}
-	
+
 	public boolean getPreviousStatus() {
 		return previousStatus;
 	}
