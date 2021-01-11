@@ -19,6 +19,13 @@ public class WidgetPauseMenu extends Widget {
 		game = editor.game;
 		app = game.app;
 	}
+	
+	public WidgetPauseMenu(PApplet p, Game game, Toolbar parent) {
+		super(p, null, parent);
+		icon = p.loadImage(folder + "exit.png");
+		this.game = game;
+		app = game.app;
+	}
 
 	@Override
 	public void clicked() {

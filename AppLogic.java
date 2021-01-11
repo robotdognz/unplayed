@@ -81,7 +81,7 @@ public class AppLogic {
 		//editor = new Editor(p, files, texture, game, camera, convert, toast);
 
 		//// setup non editor widget(s)
-		Widget menuW = new WidgetPauseMenu(p, editor, null);
+		Widget menuW = new WidgetPauseMenu(p, game, null);
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
 		widgetHeight = p.displayWidth / 12; // 120
