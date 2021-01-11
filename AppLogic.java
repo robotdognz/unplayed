@@ -20,6 +20,7 @@ import misc.KetaiGesture;
 import misc.Vibe;
 import processing.core.*;
 import processing.event.TouchEvent;
+import ui.LaunchMenu;
 import ui.Menu;
 import ui.Widget;
 
@@ -84,6 +85,8 @@ public class AppLogic {
 		widgets.add(menuW);
 		widgetSpacing = p.width / (widgets.size() + 1);
 		widgetHeight = p.displayWidth / 12; // 120
+		
+		menu = new LaunchMenu(p, game, this);
 
 		// print android api version
 		PApplet.println(android.os.Build.VERSION.SDK_INT);
