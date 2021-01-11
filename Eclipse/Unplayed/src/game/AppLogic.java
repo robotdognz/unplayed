@@ -60,7 +60,7 @@ public class AppLogic {
 
 	public void init() {
 		gPaused = false;
-		editorToggle = true;
+		editorToggle = false;
 		menu = null;
 		touches = new ArrayList<PVector>();
 		lastTouch = new PVector(0, 0);
