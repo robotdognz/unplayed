@@ -79,6 +79,7 @@ public class AppLogic {
 		controller = new PlayerControl(p, game);
 //		DoToast toast = new DoToast(activity);
 //		editor = new Editor(p, files, texture, game, camera, convert, toast);
+		editor = null;
 
 		//// setup non editor widget(s)
 		Widget menuW = new WidgetPauseMenu(p, game, null);
