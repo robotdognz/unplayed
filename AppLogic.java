@@ -92,15 +92,16 @@ public class AppLogic {
 	public void toggleEditor() {
 		editorToggle = !editorToggle;
 		if (editorToggle) {
-			if(editor == null) {
+			if (editor == null) {
 				Camera camera = new FreeCamera();
 				DoToast toast = new DoToast(activity);
 				editor = new Editor(p, files, texture, game, camera, convert, toast);
 			}
-			gPaused = ((WidgetPauseMenu) widgets.get(0)).getPreviousStatus();
-			widgets.get(0).setActive(false);
-			menu = null;
+
 		}
+		gPaused = ((WidgetPauseMenu) widgets.get(0)).getPreviousStatus();
+		widgets.get(0).setActive(false);
+		menu = null;
 	}
 
 	public Editor getEditor() {
