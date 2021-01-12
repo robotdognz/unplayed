@@ -35,7 +35,8 @@ public class EventTool extends AreaTool {
 	public void touchMoved(PVector touch) {
 		if (!editor.showPageView) { // world view
 			if (editor.point != null) {
-				if (editorSide.adjust && editor.selected instanceof PlayerEnd) { // if adjusting a PlayerEnd
+				// if adjusting a PlayerEnd
+				if (editorSide.adjust && editor.selected instanceof PlayerEnd) {
 					if (!((PlayerEnd) editor.selected).getLevelEnd()) {
 						((PlayerEnd) editor.selected).setNewPlayerArea(editor.point.copy());
 						return;
@@ -43,18 +44,20 @@ public class EventTool extends AreaTool {
 
 				}
 
-				// CameraColliders
+				// if editing CameraColliders
 				if (editor.selected instanceof CameraChange) {
-					if (((EditorSide) editor.editorSide).cameraEditMode == 1) {
+					if (editorSide.cameraEditMode == 1) {
 						// add collider
-						Event toInsert = new CameraCollider((CameraChange) editor.selected, editor.point.getX(), (int) editor.point.getY());
+						Event toInsert = new CameraCollider((CameraChange) editor.selected, editor.point.getX(),
+								(int) editor.point.getY());
 						HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 						editor.world.retrieve(getRectangles, toInsert);
 						add(toInsert, getRectangles);
 						return;
-					} else if (((EditorSide) editor.editorSide).cameraEditMode == 2) {
+					} else if (editorSide.cameraEditMode == 2) {
 						// remove collider
-						Event toInsert = new CameraCollider((CameraChange) editor.selected, editor.point.getX(), (int) editor.point.getY());
+						Event toInsert = new CameraCollider((CameraChange) editor.selected, editor.point.getX(),
+								(int) editor.point.getY());
 						HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 						editor.world.retrieve(getRectangles, toInsert);
 						erase(toInsert, getRectangles);
@@ -123,10 +126,12 @@ public class EventTool extends AreaTool {
 		}
 
 		// select the newly inserted event
-		if (toInsert.getName() != null) {
-			editor.selected = toInsert;
-		} else {
-			editor.selected = null;
+		if (!(toInsert instanceof CameraCollider)) {
+			if (toInsert.getName() != null) {
+				editor.selected = toInsert;
+			} else {
+				editor.selected = null;
+			}
 		}
 	}
 
