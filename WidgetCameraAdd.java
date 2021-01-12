@@ -21,11 +21,11 @@ public class WidgetCameraAdd extends Widget {
 		if (editor.selected != null) { // if there is something selected
 			if (editor.selected instanceof CameraChange) {
 				available = true;
-//				if (toolbar.adjust) {
-//					active = true;
-//				} else {
-//					active = false;
-//				}
+				if (toolbar.cameraEditMode == 1) {
+					active = true;
+				} else {
+					active = false;
+				}
 			}else {
 				available = false;
 			}

@@ -28,7 +28,8 @@ public class EditorSide extends Toolbar {
 	private PImage top;
 	private PImage middle;
 	private PImage bottom;
-	public boolean adjust;
+	public boolean adjust; // are we adjusting a Page or a PlayerEnd
+	public int cameraEditMode; // 0 = not editing, 1 = adding, 2 = removing
 
 	private String previousSelected = "";
 
@@ -164,6 +165,7 @@ public class EditorSide extends Toolbar {
 				widgets = minimal;
 				adjust = false;
 			}
+			cameraEditMode = 0;
 
 			// calculate widget positions and create new bounds
 			float height = widgetSpacing * (widgets.size());

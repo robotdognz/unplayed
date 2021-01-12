@@ -21,12 +21,12 @@ public class WidgetCameraSub extends Widget {
 		if (editor.selected != null) { // if there is something selected
 			if (editor.selected instanceof CameraChange) {
 				available = true;
-//				if (toolbar.adjust) {
-//					active = true;
-//				} else {
-//					active = false;
-//				}
-			}else {
+				if (toolbar.cameraEditMode == 2) {
+					active = true;
+				} else {
+					active = false;
+				}
+			} else {
 				available = false;
 			}
 		} else {
@@ -37,6 +37,7 @@ public class WidgetCameraSub extends Widget {
 
 	@Override
 	public void clicked() {
+		toolbar.cameraEditMode = 2;
 	}
 
 }
