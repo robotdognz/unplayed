@@ -48,7 +48,7 @@ public class EventTool extends AreaTool {
 				if (editor.selected instanceof CameraChange) {
 					if (editorSide.cameraEditMode == 1) {
 						// add collider
-						Event toInsert = new CameraCollider((CameraChange) editor.selected, editor.point.getX(),
+						CameraCollider toInsert = new CameraCollider((CameraChange) editor.selected, editor.point.getX(),
 								(int) editor.point.getY());
 						HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 						editor.world.retrieve(getRectangles, toInsert);
@@ -56,11 +56,11 @@ public class EventTool extends AreaTool {
 						return;
 					} else if (editorSide.cameraEditMode == 2) {
 						// remove collider
-						Event toInsert = new CameraCollider((CameraChange) editor.selected, editor.point.getX(),
+						CameraCollider toInsert = new CameraCollider((CameraChange) editor.selected, editor.point.getX(),
 								(int) editor.point.getY());
 						HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 						editor.world.retrieve(getRectangles, toInsert);
-						erase(toInsert, getRectangles);
+						eraseCollider(toInsert, getRectangles);
 						return;
 					}
 				}
@@ -133,6 +133,31 @@ public class EventTool extends AreaTool {
 				editor.selected = null;
 			}
 		}
+	}
+
+	private void eraseCollider(CameraCollider toInsert, HashSet<Rectangle> getRectangles) {
+		for (Rectangle p : getRectangles) {
+			// if the rectangle overlaps toInsert, remove it
+			if (!(p instanceof CameraCollider)) {
+				continue;
+			}
+			if (p.getTopLeft().x > toInsert.getBottomRight().x - 1) {
+				continue;
+			}
+			if (p.getBottomRight().x < toInsert.getTopLeft().x + 1) {
+				continue;
+			}
+			if (p.getTopLeft().y > toInsert.getBottomRight().y - 1) {
+				continue;
+			}
+			if (p.getBottomRight().y < toInsert.getTopLeft().y + 1) {
+				continue;
+			}
+
+			editor.world.remove(p);
+
+		}
+
 	}
 
 	private void erase(Event toInsert, HashSet<Rectangle> getRectangles) {
