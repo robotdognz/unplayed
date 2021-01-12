@@ -21,7 +21,7 @@ public class WidgetRotateClockwise extends Widget {
 
 	@Override
 	public void clicked() {
-		toolbar.addAngle();
+		toolbar.addAngle(90);
 	}
 
 }

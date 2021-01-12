@@ -261,10 +261,11 @@ public class EditorSide extends Toolbar {
 	// these methods are called by the widgets inside this toolbar, the toolbar then
 	// passes what they set on to the currently selected object in the editor
 
-	public void addAngle() {
+	public void addAngle(float angle) {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Editable) {
-				((Editable) editor.selected).addAngle(90);
+				//change the angle
+				((Editable) editor.selected).addAngle(angle);
 
 				// check if this tile is inside a player start
 				if (editor.selected instanceof Tile) {
@@ -283,29 +284,28 @@ public class EditorSide extends Toolbar {
 							continue;
 						}
 						if (editor.game.playerCheckpoint == null) {
-//							editor.game.startGame();
-							float angle = ((Editable) editor.selected).getAngle();
-							editor.game.player.setAngle(angle);
+							float tileAngle = ((Editable) editor.selected).getAngle();
+							editor.game.player.setAngle(tileAngle);
 							return;
 						}
 
 					}
 				}
 			} else if (editor.selected instanceof Spike) {
-				((Spike) editor.selected).addAngle(90);
+				((Spike) editor.selected).addAngle(angle);
 			}
 		}
 	}
 
-	public void subAngle() {
-		if (editor.selected != null) {
-			if (editor.selected instanceof Editable) {
-				((Editable) editor.selected).addAngle(-90);
-			} else if (editor.selected instanceof Spike) {
-				((Spike) editor.selected).addAngle(-90);
-			}
-		}
-	}
+//	public void subAngle() {
+//		if (editor.selected != null) {
+//			if (editor.selected instanceof Editable) {
+//				((Editable) editor.selected).addAngle(-90);
+//			} else if (editor.selected instanceof Spike) {
+//				((Spike) editor.selected).addAngle(-90);
+//			}
+//		}
+//	}
 
 	public boolean isLevelEnd() {
 		if (editor.selected != null) {
