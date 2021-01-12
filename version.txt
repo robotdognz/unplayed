@@ -1,6 +1,6 @@
 (Major version).(Minor version).(Revision number)
 
-1.1.2: Minor improvements patch
+1.1.2: Early playtester patch
 
 -Added counter clockwise rotation to editor side toolbar
 -Added rotation and proper collision to Spike
@@ -11,7 +11,7 @@
 -Editor debug text now correctly scales to screen size
 -Modifying the current PlayerStart tile will now also modify the first player
 
-1.1.0:	Quality of life patch
+1.1.0:	Christmas break patch
 
 -Various bug fixes
 -Performance doubled in level view by only using transformations where required
