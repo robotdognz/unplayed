@@ -26,7 +26,7 @@ public class CameraCollider extends Event {
 	public void draw(PGraphics graphics, float scale) {
 		graphics.rectMode(CORNER);
 		graphics.noStroke();
-		graphics.fill(255, 0, 0, 100); // TODO: make this orange
+		graphics.fill(236, 199, 159, 100);
 		graphics.rect(getX(), getY(), getWidth(), getHeight());
 	}
 }

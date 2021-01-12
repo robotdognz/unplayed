@@ -116,69 +116,20 @@ public class EventTool extends AreaTool {
 				foundAtPoint = (Event) p;
 			}
 		}
-		// remove what was found and place the new event
+		// prevent placing new event if a matching event is found at this spot
 		if (editor.currentEvent != null) {
 			if (foundAtPoint != null) {
 				return;
-				// editor.world.remove(foundAtPoint);
 			}
 			editor.world.insert(toInsert);
 		}
 
 		// select the newly inserted event
-//		if (!(toInsert instanceof CameraCollider)) {
 		if (toInsert.getName() != null) {
 			editor.selected = toInsert;
 		} else {
 			editor.selected = null;
 		}
-//		}
-	}
-
-	private void addCollider(CameraCollider toInsert, HashSet<Rectangle> getRectangles) {
-
-		// find anything that directly overlaps the inserting event
-		Event foundAtPoint = null;
-		for (Rectangle p : getRectangles) {
-			if (p instanceof CameraCollider && p.getTopLeft().x == toInsert.getX()
-					&& p.getTopLeft().y == toInsert.getY()) {
-				foundAtPoint = (Event) p;
-			}
-		}
-		// remove what was found and place the new event
-//		if (editor.currentEvent != null) {
-		if (foundAtPoint != null) {
-//				return;
-			editor.world.remove(foundAtPoint);
-		}
-		editor.world.insert(toInsert);
-//		}
-
-	}
-
-	private void eraseCollider(CameraCollider toInsert, HashSet<Rectangle> getRectangles) {
-		for (Rectangle p : getRectangles) {
-			// if the rectangle overlaps toInsert, remove it
-			if (!(p instanceof CameraCollider)) {
-				continue;
-			}
-			if (p.getTopLeft().x > toInsert.getBottomRight().x - 1) {
-				continue;
-			}
-			if (p.getBottomRight().x < toInsert.getTopLeft().x + 1) {
-				continue;
-			}
-			if (p.getTopLeft().y > toInsert.getBottomRight().y - 1) {
-				continue;
-			}
-			if (p.getBottomRight().y < toInsert.getTopLeft().y + 1) {
-				continue;
-			}
-
-			editor.world.remove(p);
-
-		}
-
 	}
 
 	private void erase(Event toInsert, HashSet<Rectangle> getRectangles) {
@@ -279,6 +230,45 @@ public class EventTool extends AreaTool {
 			}
 			// nothing was found, select nothing
 			editor.selected = null;
+		}
+	}
+
+	private void addCollider(CameraCollider toInsert, HashSet<Rectangle> getRectangles) {
+			// find overlapping colliders
+			Event foundAtPoint = null;
+			for (Rectangle p : getRectangles) {
+				if (p instanceof CameraCollider && p.getTopLeft().x == toInsert.getX()
+						&& p.getTopLeft().y == toInsert.getY()) {
+					foundAtPoint = (Event) p;
+				}
+			}
+			// remove what was found and place the new collider
+			if (foundAtPoint != null) {
+				editor.world.remove(foundAtPoint);
+			}
+			editor.world.insert(toInsert);
+		}
+
+	private void eraseCollider(CameraCollider toInsert, HashSet<Rectangle> getRectangles) {
+		for (Rectangle p : getRectangles) {
+			// if the rectangle overlaps toInsert, remove it
+			if (!(p instanceof CameraCollider)) {
+				continue;
+			}
+			if (p.getTopLeft().x > toInsert.getBottomRight().x - 1) {
+				continue;
+			}
+			if (p.getBottomRight().x < toInsert.getTopLeft().x + 1) {
+				continue;
+			}
+			if (p.getTopLeft().y > toInsert.getBottomRight().y - 1) {
+				continue;
+			}
+			if (p.getBottomRight().y < toInsert.getTopLeft().y + 1) {
+				continue;
+			}
+	
+			editor.world.remove(p);
 		}
 	}
 
