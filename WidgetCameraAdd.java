@@ -37,6 +37,7 @@ public class WidgetCameraAdd extends Widget {
 
 	@Override
 	public void clicked() {
+		toolbar.cameraEditMode = 1;
 	}
 
 }

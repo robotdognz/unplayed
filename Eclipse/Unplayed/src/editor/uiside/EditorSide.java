@@ -184,6 +184,7 @@ public class EditorSide extends Toolbar {
 			for (int i = 0; i < widgets.size(); i++) {
 				widgets.get(i).setPosition(-widgetSpacing, widgetOffset + widgetSpacing * i);
 			}
+			cameraEditMode = 0;
 		}
 	}
 
