@@ -117,9 +117,13 @@ public class EventTool extends AreaTool {
 			}
 		}
 		// prevent placing new event if a matching event is found at this spot
+		// unless it's a CameraCollider and toInsert is a CameraChange
 		if (editor.currentEvent != null) {
 			if (foundAtPoint != null) {
-				return;
+				if (!(foundAtPoint instanceof CameraCollider && toInsert instanceof CameraChange)) {
+					return;
+				}
+				editor.world.remove(foundAtPoint);
 			}
 			editor.world.insert(toInsert);
 		}
