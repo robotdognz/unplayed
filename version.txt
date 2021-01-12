@@ -2,14 +2,19 @@
 
 1.1.2: Early playtester patch
 
+-Various bug fixes
+11/01/21
 -Added counter clockwise rotation to editor side toolbar
 -Added rotation and proper collision to Spike
 -Updated APDE prievew asset management code so it works on older devices
 -Added title screen
+12/01/21
 -Implemented levels folder in game data that can be played in sequence from the title screen
 -Implemented seperate menus for demo mode and editor mode
 -Editor debug text now correctly scales to screen size
 -Modifying the current PlayerStart tile will now also modify the first player
+-Tiles now appear in alphabetical order in the editor bottom toolbar
+-There are now widgets for adding and removing camera colliders
 
 1.1.0:	Christmas break patch
 
@@ -39,5 +44,6 @@
 -fully working level editor (missing some basics, such as advanced CameraChanges and advanced PlayerEnds)
 -fully working save and load system (missing some quality of life touches)
 -level files now use .unplayed
--uses temp physics engine
--title screen and main menu(s) yet to be implemented
+-bad: physics and animation speed deturmined by frame rate
+-bad: uses temp physics engine
+-bad: title screen and main menu(s) yet to be implemented
