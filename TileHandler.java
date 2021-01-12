@@ -35,7 +35,7 @@ public class TileHandler implements Comparable<TileHandler>, Handler {
 	public int compareTo(TileHandler otherTileHandler) {
 		String otherName = otherTileHandler.getFile().toString();
 		String name = datapath.toString();
-		return otherName.compareTo(name);
+		return name.compareTo(otherName);
 	}
 
 	@Override
