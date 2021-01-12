@@ -122,14 +122,18 @@ public class QuadNode {
 			}
 		} else { // if this node doesn't have children
 			// find and remove all matching camera colliders
+			ArrayList<Rectangle> matches = new ArrayList<Rectangle>();
 			for (Rectangle r : objects) {
 				if (!(r instanceof CameraCollider)) {
 					continue;
 				}
 				CameraCollider temp = (CameraCollider) r;
 				if (temp.getCamera().equals(current)) {
-					objects.remove(r);
+					matches.add(r);
 				}
+			}
+			for (Rectangle r : matches) { // remove them
+				objects.remove(r);
 			}
 		}
 	}
