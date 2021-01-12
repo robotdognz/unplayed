@@ -14,6 +14,7 @@ import objects.Page;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
+import objects.events.CameraChange;
 import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
 import objects.events.Spike;
@@ -37,6 +38,7 @@ public class EditorSide extends Toolbar {
 	private ArrayList<Widget> image;
 	private ArrayList<Widget> view;
 	private ArrayList<Widget> page;
+	private ArrayList<Widget> cameraChange;
 	private ArrayList<Widget> playerEnd;
 	private ArrayList<Widget> spike;
 	private ArrayList<Widget> minimal; // for things that only require cross and tick
@@ -55,6 +57,8 @@ public class EditorSide extends Toolbar {
 		Widget adjustW = new WidgetAdjust(p, editor, this);
 		Widget levelendW = new WidgetLevelEnd(p, editor, this);
 		Widget excludeW = new WidgetExcludeMenu(p, editor, this);
+		Widget cameraAddW = new WidgetCameraAdd(p, editor, this);
+		Widget cameraSubW = new WidgetCameraSub(p, editor, this);
 
 		// widgets for tiles
 		tile = new ArrayList<Widget>();
@@ -87,6 +91,13 @@ public class EditorSide extends Toolbar {
 		page.add(flipVW);
 		page.add(adjustW);
 		page.add(excludeW);
+
+		// widgets for cameraChange
+		cameraChange = new ArrayList<Widget>();
+		cameraChange.add(deleteW);
+		cameraChange.add(finishW);
+		cameraChange.add(cameraAddW);
+		cameraChange.add(cameraSubW);
 
 		// widgets for playerEnd
 		playerEnd = new ArrayList<Widget>();
@@ -139,6 +150,9 @@ public class EditorSide extends Toolbar {
 				adjust = false;
 			} else if (editor.selected instanceof Image) {
 				widgets = image;
+				adjust = false;
+			} else if (editor.selected instanceof CameraChange) {
+				widgets = playerEnd;
 				adjust = false;
 			} else if (editor.selected instanceof PlayerEnd) {
 				widgets = playerEnd;
@@ -261,7 +275,7 @@ public class EditorSide extends Toolbar {
 	public void addAngle(float angle) {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Editable) {
-				//change the angle
+				// change the angle
 				((Editable) editor.selected).addAngle(angle);
 
 				// check if this tile is inside a player start
