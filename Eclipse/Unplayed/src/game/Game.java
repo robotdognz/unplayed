@@ -33,7 +33,7 @@ public class Game {
 	public HashSet<Rectangle> playerObjects;
 	private PageView pageView;
 	private PlayerStart playerStart;
-	private Tile playerCheckpoint;
+	public Tile playerCheckpoint;
 
 	public Camera camera;
 	public Rectangle cameraAreaStart;

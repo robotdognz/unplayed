@@ -3,6 +3,7 @@ package editor.uiside;
 import static processing.core.PConstants.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import controllers.EditorControl;
 import editor.Editor;
@@ -14,6 +15,7 @@ import objects.Rectangle;
 import objects.Tile;
 import objects.View;
 import objects.events.PlayerEnd;
+import objects.events.PlayerStart;
 import objects.events.Spike;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -263,17 +265,43 @@ public class EditorSide extends Toolbar {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Editable) {
 				((Editable) editor.selected).addAngle(90);
-			}else if (editor.selected instanceof Spike) {
+
+				// check if this tile is inside a player start
+				if (editor.selected instanceof Tile) {
+
+					HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
+					editor.game.world.retrieve(returnObjects, editor.selected);
+					for (Rectangle r : returnObjects) {
+						if (!(r instanceof PlayerStart)) {
+							continue;
+						}
+						PlayerStart ps = (PlayerStart) r;
+						if (ps.getX() != editor.selected.getX()) {
+							continue;
+						}
+						if (ps.getY() != editor.selected.getY()) {
+							continue;
+						}
+						if (editor.game.playerCheckpoint == null) {
+//							editor.game.startGame();
+							float angle = ((Editable) editor.selected).getAngle();
+							editor.game.player.setAngle(angle);
+							return;
+						}
+
+					}
+				}
+			} else if (editor.selected instanceof Spike) {
 				((Spike) editor.selected).addAngle(90);
 			}
 		}
 	}
-	
+
 	public void subAngle() {
 		if (editor.selected != null) {
 			if (editor.selected instanceof Editable) {
 				((Editable) editor.selected).addAngle(-90);
-			}else if (editor.selected instanceof Spike) {
+			} else if (editor.selected instanceof Spike) {
 				((Spike) editor.selected).addAngle(-90);
 			}
 		}
