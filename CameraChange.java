@@ -82,12 +82,21 @@ public class CameraChange extends Event {
 		int centerY = (int) ((camera.getTopLeft().y - camera.getBottomRight().y) / 2 + camera.getBottomRight().y);
 		return new PVector(centerX, centerY);
 	}
+	
+	@Override
+	public void draw(PGraphics graphics, float scale) {
+		graphics.rectMode(CORNER);
+		graphics.noStroke();
+		graphics.fill(color, 100);
+		graphics.rect(getX(), getY(), getWidth(), getHeight());
+		super.draw(graphics, scale);
+	}
 
 	@Override
 	public void activate(Game g) {
 		super.activate(g);
 		if (g.camera.getGame()) {
-			// change centre
+			// change center
 			PVector center = getCameraCentre();
 			if (g.newCenter != center) {
 				g.newCenter = new PVector(center.x, center.y);

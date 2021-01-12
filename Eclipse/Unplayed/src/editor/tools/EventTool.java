@@ -234,20 +234,24 @@ public class EventTool extends AreaTool {
 	}
 
 	private void addCollider(CameraCollider toInsert, HashSet<Rectangle> getRectangles) {
-			// find overlapping colliders
-			Event foundAtPoint = null;
-			for (Rectangle p : getRectangles) {
-				if (p instanceof CameraCollider && p.getTopLeft().x == toInsert.getX()
-						&& p.getTopLeft().y == toInsert.getY()) {
-					foundAtPoint = (Event) p;
-				}
+		// find overlapping colliders
+		Event foundAtPoint = null;
+		for (Rectangle p : getRectangles) {
+			if ((p instanceof CameraCollider || p instanceof CameraChange) && p.getTopLeft().x == toInsert.getX()
+					&& p.getTopLeft().y == toInsert.getY()) {
+				foundAtPoint = (Event) p;
 			}
-			// remove what was found and place the new collider
-			if (foundAtPoint != null) {
-				editor.world.remove(foundAtPoint);
-			}
-			editor.world.insert(toInsert);
 		}
+		// remove what was found and place the new collider
+		if (foundAtPoint != null) {
+			// if there is a CameraChange in this spot, return
+			if (foundAtPoint instanceof CameraChange) {
+				return;
+			}
+			editor.world.remove(foundAtPoint);
+		}
+		editor.world.insert(toInsert);
+	}
 
 	private void eraseCollider(CameraCollider toInsert, HashSet<Rectangle> getRectangles) {
 		for (Rectangle p : getRectangles) {
@@ -267,7 +271,7 @@ public class EventTool extends AreaTool {
 			if (p.getBottomRight().y < toInsert.getTopLeft().y + 1) {
 				continue;
 			}
-	
+
 			editor.world.remove(p);
 		}
 	}
