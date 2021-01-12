@@ -48,16 +48,16 @@ public class EventTool extends AreaTool {
 				if (editor.selected instanceof CameraChange) {
 					if (editorSide.cameraEditMode == 1) {
 						// add collider
-						CameraCollider toInsert = new CameraCollider((CameraChange) editor.selected, editor.point.getX(),
-								(int) editor.point.getY());
+						CameraCollider toInsert = new CameraCollider((CameraChange) editor.selected,
+								editor.point.getX(), (int) editor.point.getY());
 						HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 						editor.world.retrieve(getRectangles, toInsert);
-						add(toInsert, getRectangles);
+						addCollider(toInsert, getRectangles);
 						return;
 					} else if (editorSide.cameraEditMode == 2) {
 						// remove collider
-						CameraCollider toInsert = new CameraCollider((CameraChange) editor.selected, editor.point.getX(),
-								(int) editor.point.getY());
+						CameraCollider toInsert = new CameraCollider((CameraChange) editor.selected,
+								editor.point.getX(), (int) editor.point.getY());
 						HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 						editor.world.retrieve(getRectangles, toInsert);
 						eraseCollider(toInsert, getRectangles);
@@ -126,13 +126,34 @@ public class EventTool extends AreaTool {
 		}
 
 		// select the newly inserted event
-		if (!(toInsert instanceof CameraCollider)) {
+//		if (!(toInsert instanceof CameraCollider)) {
 			if (toInsert.getName() != null) {
 				editor.selected = toInsert;
 			} else {
 				editor.selected = null;
 			}
+//		}
+	}
+
+	private void addCollider(CameraCollider toInsert, HashSet<Rectangle> getRectangles) {
+
+		// find anything that directly overlaps the inserting event
+		Event foundAtPoint = null;
+		for (Rectangle p : getRectangles) {
+			if (p instanceof CameraCollider && p.getTopLeft().x == toInsert.getX()
+					&& p.getTopLeft().y == toInsert.getY()) {
+				foundAtPoint = (Event) p;
+			}
 		}
+		// remove what was found and place the new event
+//		if (editor.currentEvent != null) {
+//			if (foundAtPoint != null) {
+//				return;
+		editor.world.remove(foundAtPoint);
+//			}
+		editor.world.insert(toInsert);
+//		}
+
 	}
 
 	private void eraseCollider(CameraCollider toInsert, HashSet<Rectangle> getRectangles) {
