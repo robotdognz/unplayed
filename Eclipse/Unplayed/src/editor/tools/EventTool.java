@@ -127,11 +127,11 @@ public class EventTool extends AreaTool {
 
 		// select the newly inserted event
 //		if (!(toInsert instanceof CameraCollider)) {
-			if (toInsert.getName() != null) {
-				editor.selected = toInsert;
-			} else {
-				editor.selected = null;
-			}
+		if (toInsert.getName() != null) {
+			editor.selected = toInsert;
+		} else {
+			editor.selected = null;
+		}
 //		}
 	}
 
@@ -147,10 +147,10 @@ public class EventTool extends AreaTool {
 		}
 		// remove what was found and place the new event
 //		if (editor.currentEvent != null) {
-//			if (foundAtPoint != null) {
+		if (foundAtPoint != null) {
 //				return;
-		editor.world.remove(foundAtPoint);
-//			}
+			editor.world.remove(foundAtPoint);
+		}
 		editor.world.insert(toInsert);
 //		}
 
