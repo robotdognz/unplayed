@@ -152,7 +152,7 @@ public class EditorSide extends Toolbar {
 				widgets = image;
 				adjust = false;
 			} else if (editor.selected instanceof CameraChange) {
-				widgets = playerEnd;
+				widgets = cameraChange;
 				adjust = false;
 			} else if (editor.selected instanceof PlayerEnd) {
 				widgets = playerEnd;
