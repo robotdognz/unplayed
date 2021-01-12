@@ -38,6 +38,7 @@ public class Quadtree {
 		insertCount--;
 		if (current instanceof CameraChange) {
 			cameras.remove((CameraChange) current);
+			root.removeColliders((CameraChange) current);
 		}
 		root.remove(current);
 	}

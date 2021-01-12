@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import objects.Rectangle;
+import objects.events.CameraChange;
+import objects.events.CameraCollider;
 import processing.core.PApplet;
 
 public class QuadNode {
@@ -95,6 +97,39 @@ public class QuadNode {
 			// check if this is the root
 			if (parent == null) { // if it is the root, grow
 				grow(current);
+			}
+		}
+	}
+
+	public void removeColliders(CameraChange current) {
+		if (topLeft != null) { // if this node has children
+			topLeft.removeColliders(current);
+			topRight.removeColliders(current);
+			bottomLeft.removeColliders(current);
+			bottomRight.removeColliders(current);
+
+			// Shrink the tree if neccassary. This only removes inner nodes, it doesn't
+			// remove outer nodes, but that's probably fine
+			HashSet<Rectangle> allBelow = new HashSet<Rectangle>();
+			getAll(allBelow);
+			if (allBelow.size() < MAX_OBJECTS) {
+				objects.clear();
+				objects = allBelow;
+				topLeft = null;
+				topRight = null;
+				bottomLeft = null;
+				bottomRight = null;
+			}
+		} else { // if this node doesn't have children
+			// find and remove all matching camera colliders
+			for (Rectangle r : objects) {
+				if (!(r instanceof CameraCollider)) {
+					continue;
+				}
+				CameraCollider temp = (CameraCollider) r;
+				if (temp.getCamera().equals(current)) {
+					objects.remove(r);
+				}
 			}
 		}
 	}

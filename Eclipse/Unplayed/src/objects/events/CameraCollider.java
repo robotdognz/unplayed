@@ -8,8 +8,8 @@ import static processing.core.PConstants.*;
 public class CameraCollider extends Event {
 	private CameraChange camera;
 
-	public CameraCollider(CameraChange camera, float x, float y, float width, float height) {
-		super(null, "CameraCollider", false, x, y, width, height);
+	public CameraCollider(CameraChange camera, float x, float y) {
+		super(null, "CameraCollider", false, x, y, 100, 100);
 		this.camera = camera;
 	}
 

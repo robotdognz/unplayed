@@ -12,6 +12,7 @@ import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
 import objects.events.CameraChange;
+import objects.events.CameraCollider;
 import objects.events.PlayerDeath;
 import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
@@ -42,6 +43,25 @@ public class EventTool extends AreaTool {
 
 				}
 
+				// CameraColliders
+				if (editor.selected instanceof CameraChange) {
+					if (((EditorSide) editor.editorSide).cameraEditMode == 1) {
+						// add collider
+						Event toInsert = new CameraCollider((CameraChange) editor.selected, editor.point.getX(), (int) editor.point.getY());
+						HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
+						editor.world.retrieve(getRectangles, toInsert);
+						add(toInsert, getRectangles);
+						return;
+					} else if (((EditorSide) editor.editorSide).cameraEditMode == 2) {
+						// remove collider
+						Event toInsert = new CameraCollider((CameraChange) editor.selected, editor.point.getX(), (int) editor.point.getY());
+						HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
+						editor.world.retrieve(getRectangles, toInsert);
+						erase(toInsert, getRectangles);
+						return;
+					}
+				}
+
 				// figure out what to insert
 				Event toInsert = null;
 				if (editor.currentEvent != null && editor.eMode == editorMode.ADD) { // TODO: janky code to stop player
@@ -54,19 +74,19 @@ public class EventTool extends AreaTool {
 				}
 
 				// get all rectangles that overlap toInsert and pass them to the right method
-				if (editor.point != null) {
-					HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
-					editor.world.retrieve(getRectangles, toInsert);
+//				if (editor.point != null) {
+				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
+				editor.world.retrieve(getRectangles, toInsert);
 
-					if (editor.eMode == editorMode.ADD) { // adding event
-						add(toInsert, getRectangles);
-					} else if (editor.eMode == editorMode.ERASE) { // erasing event
-						erase(toInsert, getRectangles);
-					} else if (editor.eMode == editorMode.SELECT) { // selecting event
-						select(toInsert, getRectangles);
-					}
-					editor.point = null;
+				if (editor.eMode == editorMode.ADD) { // adding event
+					add(toInsert, getRectangles);
+				} else if (editor.eMode == editorMode.ERASE) { // erasing event
+					erase(toInsert, getRectangles);
+				} else if (editor.eMode == editorMode.SELECT) { // selecting event
+					select(toInsert, getRectangles);
 				}
+				editor.point = null;
+//				}
 			}
 		} else { // page view
 			if (editor.selected != null && editor.selected instanceof CameraChange
