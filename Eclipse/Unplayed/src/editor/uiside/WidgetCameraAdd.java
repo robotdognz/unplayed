@@ -26,7 +26,7 @@ public class WidgetCameraAdd extends Widget {
 				} else {
 					active = false;
 				}
-			}else {
+			} else {
 				available = false;
 			}
 		} else {
@@ -37,7 +37,11 @@ public class WidgetCameraAdd extends Widget {
 
 	@Override
 	public void clicked() {
-		toolbar.cameraEditMode = 1;
+		if (!active) {
+			toolbar.cameraEditMode = 1;
+		} else {
+			toolbar.cameraEditMode = 0;
+		}
 	}
 
 }

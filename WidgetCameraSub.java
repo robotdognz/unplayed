@@ -37,7 +37,11 @@ public class WidgetCameraSub extends Widget {
 
 	@Override
 	public void clicked() {
-		toolbar.cameraEditMode = 2;
+		if (!active) {
+			toolbar.cameraEditMode = 2;
+		} else {
+			toolbar.cameraEditMode = 0;
+		}
 	}
 
 }
