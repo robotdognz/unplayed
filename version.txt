@@ -1,6 +1,6 @@
 (Major version).(Minor version).(Revision number)
 
-1.1.2: Early playtester patch
+1.1.3: Early playtester patch
 
 -Various bug fixes
 11/01/21
@@ -17,6 +17,9 @@
 -There are now widgets for adding and removing camera colliders
 13/01/12
 -Implemented CameraChange colliders
+14/01/12
+-Pages now resize when resizing views
+-Rebuilt page saving/loading system
 
 1.1.0:	Christmas break patch
 

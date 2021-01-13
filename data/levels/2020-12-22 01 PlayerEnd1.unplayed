@@ -1,6 +1,39 @@
 [
   {
     "pHeight": 100,
+    "file": "unplayed_tiles/tile_theme02_13.png",
+    "pX": 0,
+    "pY": -100,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_theme02_06.png",
+    "pX": -100,
+    "pY": 100,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_theme02_06.png",
+    "pX": 400,
+    "pY": 0,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
     "file": "unplayed_tiles/tile_theme02_12.png",
     "pX": 100,
     "pY": 100,
@@ -13,8 +46,8 @@
   {
     "pHeight": 100,
     "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": -200,
-    "pY": 0,
+    "pX": 300,
+    "pY": 200,
     "flipV": false,
     "angle": 0,
     "flipH": false,
@@ -25,81 +58,21 @@
     "pHeight": 100,
     "pX": -600,
     "name": "PlayerDeath",
-    "pY": 300,
+    "pY": 400,
     "pWidth": 100,
     "type": "PlayerDeath"
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": -200,
-    "pY": 200,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_13.png",
-    "pX": 100,
-    "pY": 0,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "type": "tile",
-    "pWidth": 100
-  },
-  {
-    "pHeight": 100,
-    "newPlayerX": 0,
-    "pX": 100,
-    "name": "PlayerEnd",
-    "pY": 0,
-    "end": true,
-    "pWidth": 100,
-    "type": "PlayerEnd",
-    "newPlayerWidth": 100,
-    "newPlayerHeight": 100,
-    "newPlayerY": -100
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
     "pX": 0,
-    "pY": 100,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
+    "name": "PlayerDeath",
+    "pY": 500,
     "pWidth": 100,
-    "type": "tile"
+    "type": "PlayerDeath"
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": -100,
-    "pY": 200,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_12.png",
     "pX": 400,
-    "pY": -100,
-    "flipV": false,
-    "angle": 180,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": -100,
     "name": "PlayerDeath",
     "pY": 500,
     "pWidth": 100,
@@ -109,22 +82,14 @@
     "pHeight": 100,
     "pX": 800,
     "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 300,
-    "name": "PlayerDeath",
-    "pY": 500,
+    "pY": -400,
     "pWidth": 100,
     "type": "PlayerDeath"
   },
   {
     "pHeight": 100,
     "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 300,
+    "pX": -100,
     "pY": 200,
     "flipV": false,
     "angle": 0,
@@ -134,11 +99,87 @@
   },
   {
     "pHeight": 100,
-    "pX": -200,
+    "pX": -300,
     "name": "PlayerDeath",
     "pY": 500,
     "pWidth": 100,
     "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": 100,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": 0,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": -200,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_theme02_06.png",
+    "pX": -200,
+    "pY": 200,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_theme02_14.png",
+    "pX": 0,
+    "pY": 0,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": -100,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_theme02_14.png",
+    "pX": 200,
+    "pY": 0,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_theme02_06.png",
+    "pX": 100,
+    "pY": 200,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
   },
   {
     "pHeight": 100,
@@ -150,23 +191,42 @@
   },
   {
     "pHeight": 100,
-    "pX": 800,
+    "pX": -400,
     "name": "PlayerDeath",
-    "pY": 100,
+    "pY": 500,
     "pWidth": 100,
     "type": "PlayerDeath"
   },
   {
     "pHeight": 100,
-    "pX": 800,
+    "pX": 200,
     "name": "PlayerDeath",
-    "pY": 300,
+    "pY": 500,
     "pWidth": 100,
     "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_theme02_06.png",
+    "pX": 200,
+    "pY": 200,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
   },
   {
     "pHeight": 100,
     "pX": -600,
+    "name": "PlayerDeath",
+    "pY": -200,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
     "name": "PlayerDeath",
     "pY": -500,
     "pWidth": 100,
@@ -174,94 +234,8 @@
   },
   {
     "pHeight": 100,
-    "pX": 400,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": 200,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 100,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": 400,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": -200,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_14.png",
-    "pX": 0,
-    "pY": 0,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": 100,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 0,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
     "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 0,
-    "pY": 200,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": -300,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": -100,
+    "pX": 300,
     "pY": 100,
     "flipV": false,
     "angle": 0,
@@ -271,111 +245,9 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 200,
-    "pY": 100,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_12.png",
-    "pX": -200,
-    "pY": -100,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "type": "tile",
-    "pWidth": 100
-  },
-  {
-    "pHeight": 100,
-    "cameraBottomRightX": 400,
-    "cameraBottomRightY": 500,
-    "color": -2001238,
-    "pX": -200,
-    "pY": -100,
-    "pWidth": 100,
-    "type": "PlayerStart",
-    "cameraZoom": 2,
-    "edgeZoom": 2,
-    "name": "PlayerStart",
-    "cameraTopLeftY": -400,
-    "cameraTopLeftX": -300
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 200,
-    "pY": 200,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 100,
-    "pY": 200,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
     "pX": -600,
     "name": "PlayerDeath",
-    "pY": 0,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": -100,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_14.png",
-    "pX": 200,
-    "pY": 0,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 500,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": 400,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": -200,
+    "pY": 300,
     "pWidth": 100,
     "type": "PlayerDeath"
   },
@@ -405,19 +277,16 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 300,
-    "pY": 100,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
+    "pX": 600,
+    "name": "PlayerDeath",
+    "pY": 500,
     "pWidth": 100,
-    "type": "tile"
+    "type": "PlayerDeath"
   },
   {
     "pHeight": 100,
     "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 400,
+    "pX": -200,
     "pY": 0,
     "flipV": false,
     "angle": 0,
@@ -427,9 +296,47 @@
   },
   {
     "pHeight": 100,
-    "pX": 200,
+    "pX": -600,
     "name": "PlayerDeath",
-    "pY": 500,
+    "pY": 100,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_theme02_06.png",
+    "pX": 400,
+    "pY": 200,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_theme02_06.png",
+    "pX": 200,
+    "pY": 100,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": 400,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": 300,
     "pWidth": 100,
     "type": "PlayerDeath"
   },
@@ -443,7 +350,7 @@
   },
   {
     "pHeight": 100,
-    "pX": 700,
+    "pX": 500,
     "name": "PlayerDeath",
     "pY": 500,
     "pWidth": 100,
@@ -451,11 +358,14 @@
   },
   {
     "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": -500,
+    "file": "unplayed_tiles/tile_theme02_06.png",
+    "pX": 400,
+    "pY": 100,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
     "pWidth": 100,
-    "type": "PlayerDeath"
+    "type": "tile"
   },
   {
     "pHeight": 100,
@@ -467,46 +377,6 @@
     "flipH": false,
     "pWidth": 100,
     "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": -400,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": 0,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": -400,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": -300,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": -500,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
   },
   {
     "pHeight": 100,
@@ -534,8 +404,16 @@
   },
   {
     "pHeight": 100,
+    "pX": 700,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
     "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 400,
+    "pX": 0,
     "pY": 100,
     "flipV": false,
     "angle": 0,
@@ -545,7 +423,130 @@
   },
   {
     "pHeight": 100,
-    "pX": -400,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": -300,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": -500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": -400,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": 200,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_theme02_12.png",
+    "pX": 400,
+    "pY": -100,
+    "flipV": false,
+    "angle": 180,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": -100,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -100,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_theme02_13.png",
+    "pX": 100,
+    "pY": 0,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "type": "tile",
+    "pWidth": 100
+  },
+  {
+    "pHeight": 100,
+    "newPlayerX": 0,
+    "pX": 100,
+    "name": "PlayerEnd",
+    "pY": 0,
+    "end": true,
+    "pWidth": 100,
+    "type": "PlayerEnd",
+    "newPlayerWidth": 100,
+    "newPlayerHeight": 100,
+    "newPlayerY": -100
+  },
+  {
+    "pHeight": 100,
+    "pX": -500,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": 0,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -200,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 300,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
     "name": "PlayerDeath",
     "pY": 500,
     "pWidth": 100,
@@ -554,7 +555,7 @@
   {
     "pHeight": 100,
     "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 400,
+    "pX": 0,
     "pY": 200,
     "flipV": false,
     "angle": 0,
@@ -564,7 +565,7 @@
   },
   {
     "pHeight": 100,
-    "pX": -600,
+    "pX": 100,
     "name": "PlayerDeath",
     "pY": 500,
     "pWidth": 100,
@@ -572,54 +573,49 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_13.png",
-    "pX": 0,
+    "file": "unplayed_tiles/tile_theme02_12.png",
+    "pX": -200,
     "pY": -100,
     "flipV": false,
     "angle": 0,
     "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
+    "type": "tile",
+    "pWidth": 100
   },
   {
     "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
+    "cameraBottomRightX": 400,
+    "cameraBottomRightY": 500,
+    "colliders": [],
+    "color": -2001238,
+    "pX": -200,
     "pY": -100,
     "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 600,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
+    "cameraZoom": 2,
+    "type": "PlayerStart",
+    "edgeZoom": 2,
+    "name": "PlayerStart",
+    "cameraTopLeftY": -400,
+    "cameraTopLeftX": -300
   },
   {
     "pHeight": 600,
+    "pages": [{
+      "centerY": 77,
+      "size": 0.6669010519981384,
+      "centerX": 57,
+      "showTiles": true,
+      "showImages": true,
+      "showPlayer": true,
+      "angle": 357.3758850097656,
+      "flipV": false,
+      "flipH": false,
+      "showObstacles": true
+    }],
     "color": -362378,
     "pX": -300,
     "pY": -200,
     "type": "view",
     "pWidth": 900
-  },
-  {
-    "pHeight": 600,
-    "centerY": 77,
-    "centerX": 57,
-    "showTiles": true,
-    "showImages": true,
-    "pX": -300,
-    "showPlayer": true,
-    "pY": -200,
-    "flipH": false,
-    "type": "page",
-    "pWidth": 900,
-    "showObstacles": true,
-    "size": 0.6669010519981384,
-    "angle": 357.3758850097656,
-    "flipV": false
   }
 ]
