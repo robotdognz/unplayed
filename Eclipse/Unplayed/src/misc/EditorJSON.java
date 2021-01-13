@@ -99,17 +99,6 @@ public class EditorJSON {
 				object.setString("file", (((Image) r).getFile()).toString());
 			} else if (r instanceof Event) { // events
 				object.setString("name", ((Event) r).getName());
-//				if (r instanceof PlayerStart) { // PlayerStart
-//					object.setString("type", "PlayerStart");
-//					object.setFloat("cameraTopLeftX", ((CameraChange) r).getCameraTopLeft().x);
-//					object.setFloat("cameraTopLeftY", ((CameraChange) r).getCameraTopLeft().y);
-//					object.setFloat("cameraBottomRightX", ((CameraChange) r).getCameraBottomRight().x);
-//					object.setFloat("cameraBottomRightY", ((CameraChange) r).getCameraBottomRight().y);
-//					object.setFloat("cameraZoom", ((CameraChange) r).getCameraZoom());
-//					object.setFloat("edgeZoom", ((CameraChange) r).getEdgeZoom());
-//					object.setInt("color", ((CameraChange) r).getColor());
-//					saveTile(values, ((PlayerStart) r).getRequired());
-//				} else 
 				if (r instanceof CameraChange || r instanceof CameraCollider) {
 					continue;
 				}
@@ -127,16 +116,6 @@ public class EditorJSON {
 					object.setString("type", "Spike");
 					object.setFloat("angle", ((Spike) r).getAngle());
 				}
-//				else if (r instanceof CameraChange) {
-//					object.setString("type", "CameraChange");
-//					object.setFloat("cameraTopLeftX", ((CameraChange) r).getCameraTopLeft().x);
-//					object.setFloat("cameraTopLeftY", ((CameraChange) r).getCameraTopLeft().y);
-//					object.setFloat("cameraBottomRightX", ((CameraChange) r).getCameraBottomRight().x);
-//					object.setFloat("cameraBottomRightY", ((CameraChange) r).getCameraBottomRight().y);
-//					object.setFloat("cameraZoom", ((CameraChange) r).getCameraZoom());
-//					object.setFloat("edgeZoom", ((CameraChange) r).getEdgeZoom());
-//					object.setInt("color", ((CameraChange) r).getColor());
-//				}
 			}
 
 			values.setJSONObject(values.size(), object); // add it on to the end
@@ -357,28 +336,6 @@ public class EditorJSON {
 						im.flipV();
 					}
 					worldObjects.add(im);
-//				} else if (type.equals("PlayerStart")) {
-//					String name = object.getString("name");
-//					PVector cameraTopLeft = new PVector(object.getFloat("cameraTopLeftX"),
-//							object.getFloat("cameraTopLeftY"));
-//					PVector cameraBottomRight = new PVector(object.getFloat("cameraBottomRightX"),
-//							object.getFloat("cameraBottomRightY"));
-//					float cameraZoom = object.getFloat("cameraZoom");
-//					float edgeZoom = object.getFloat("edgeZoom");
-//					PlayerStart ps = new PlayerStart(p, texture, name, pX, pY, game);
-//					ps.setWidth(pWidth);
-//					ps.setHeight(pHeight);
-//					ps.setCameraTopLeft(cameraTopLeft);
-//					ps.setCameraBottomRight(cameraBottomRight);
-//					ps.setCameraZoom(cameraZoom);
-//					ps.setEdgeZoom(edgeZoom);
-//					try {
-//						int color = object.getInt("color");
-//						ps.setColor(color);
-//					} catch (Exception e) {
-//
-//					}
-//					worldObjects.add(ps);
 				} else if (type.equals("PlayerEnd")) {
 					String name = object.getString("name");
 					boolean end = object.getBoolean("end");
@@ -404,29 +361,6 @@ public class EditorJSON {
 					}
 					worldObjects.add(s);
 				}
-//				else if (type.equals("CameraChange")) {
-//					String name = object.getString("name");
-//					PVector cameraTopLeft = new PVector(object.getFloat("cameraTopLeftX"),
-//							object.getFloat("cameraTopLeftY"));
-//					PVector cameraBottomRight = new PVector(object.getFloat("cameraBottomRightX"),
-//							object.getFloat("cameraBottomRightY"));
-//					float cameraZoom = object.getFloat("cameraZoom");
-//					float edgeZoom = object.getFloat("edgeZoom");
-//					CameraChange cc = new CameraChange(p, texture, name, pX, pY);
-//					cc.setWidth(pWidth);
-//					cc.setHeight(pHeight);
-//					cc.setCameraTopLeft(cameraTopLeft);
-//					cc.setCameraBottomRight(cameraBottomRight);
-//					cc.setCameraZoom(cameraZoom);
-//					cc.setEdgeZoom(edgeZoom);
-//					try {
-//						int color = object.getInt("color");
-//						cc.setColor(color);
-//					} catch (Exception e) {
-//
-//					}
-//					worldObjects.add(cc);
-//				}
 			}
 		}
 
