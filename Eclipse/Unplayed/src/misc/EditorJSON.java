@@ -165,11 +165,14 @@ public class EditorJSON {
 				JSONArray colliders = new JSONArray();
 				for (Rectangle rr : worldObjects) {
 					// if this is a collider and it belongs to the current CameraChange
-					if (rr instanceof CameraCollider && ((CameraCollider) rr).getCamera().equals(r)) {
+					if (!(rr instanceof CameraCollider)) {
+						continue;
+					}
+					if (((CameraCollider) rr).getCamera().equals(r)) {
 						JSONObject coliderObject = new JSONObject();
 						coliderObject.setInt("pX", (int) rr.getX());
 						coliderObject.setInt("pY", (int) rr.getY());
-						colliders.setJSONObject(values.size(), coliderObject);
+						colliders.setJSONObject(coliderObject.size(), coliderObject);
 					}
 				}
 				object.setJSONArray("colliders", colliders);
