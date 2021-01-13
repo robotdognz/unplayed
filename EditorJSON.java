@@ -229,16 +229,16 @@ public class EditorJSON {
 				// if this page belongs to this view
 				if (view.equals(page.getView())) {
 					JSONObject pageObject = new JSONObject();
-					object.setInt("centerX", (int) page.getPosition().x);
-					object.setInt("centerY", (int) page.getPosition().y);
-					object.setFloat("size", page.getSize());
-					object.setFloat("angle", page.getAngle());
-					object.setBoolean("flipH", page.isFlippedH());
-					object.setBoolean("flipV", page.isFlippedV());
-					object.setBoolean("showPlayer", page.showPlayer);
-					object.setBoolean("showObstacles", page.showObstacles);
-					object.setBoolean("showTiles", page.showTiles);
-					object.setBoolean("showImages", page.showImages);
+					pageObject.setInt("centerX", (int) page.getPosition().x);
+					pageObject.setInt("centerY", (int) page.getPosition().y);
+					pageObject.setFloat("size", page.getSize());
+					pageObject.setFloat("angle", page.getAngle());
+					pageObject.setBoolean("flipH", page.isFlippedH());
+					pageObject.setBoolean("flipV", page.isFlippedV());
+					pageObject.setBoolean("showPlayer", page.showPlayer);
+					pageObject.setBoolean("showObstacles", page.showObstacles);
+					pageObject.setBoolean("showTiles", page.showTiles);
+					pageObject.setBoolean("showImages", page.showImages);
 
 					viewPages.setJSONObject(viewPages.size(), pageObject);
 				}
