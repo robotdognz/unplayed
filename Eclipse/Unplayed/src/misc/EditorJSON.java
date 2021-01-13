@@ -250,30 +250,30 @@ public class EditorJSON {
 
 	}
 
-	private void savePages(JSONArray values, Editor editor) {
-		List<Page> pages = editor.game.getPageView().getPages();
-		for (Page page : pages) {
-			JSONObject object = new JSONObject();
-			object.setString("type", "page");
-			object.setInt("centerX", (int) page.getPosition().x);
-			object.setInt("centerY", (int) page.getPosition().y);
-			object.setFloat("size", page.getSize());
-			object.setFloat("angle", page.getAngle());
-			object.setBoolean("flipH", page.isFlippedH());
-			object.setBoolean("flipV", page.isFlippedV());
-			object.setInt("pX", (int) page.getX());
-			object.setInt("pY", (int) page.getY());
-			object.setInt("pWidth", (int) page.getWidth());
-			object.setInt("pHeight", (int) page.getHeight());
-
-			object.setBoolean("showPlayer", page.showPlayer);
-			object.setBoolean("showObstacles", page.showObstacles);
-			object.setBoolean("showTiles", page.showTiles);
-			object.setBoolean("showImages", page.showImages);
-
-			values.setJSONObject(values.size(), object); // add it on to the end
-		}
-	}
+//	private void savePages(JSONArray values, Editor editor) {
+//		List<Page> pages = editor.game.getPageView().getPages();
+//		for (Page page : pages) {
+//			JSONObject object = new JSONObject();
+//			object.setString("type", "page");
+//			object.setInt("centerX", (int) page.getPosition().x);
+//			object.setInt("centerY", (int) page.getPosition().y);
+//			object.setFloat("size", page.getSize());
+//			object.setFloat("angle", page.getAngle());
+//			object.setBoolean("flipH", page.isFlippedH());
+//			object.setBoolean("flipV", page.isFlippedV());
+//			object.setInt("pX", (int) page.getX());
+//			object.setInt("pY", (int) page.getY());
+//			object.setInt("pWidth", (int) page.getWidth());
+//			object.setInt("pHeight", (int) page.getHeight());
+//
+//			object.setBoolean("showPlayer", page.showPlayer);
+//			object.setBoolean("showObstacles", page.showObstacles);
+//			object.setBoolean("showTiles", page.showTiles);
+//			object.setBoolean("showImages", page.showImages);
+//
+//			values.setJSONObject(values.size(), object); // add it on to the end
+//		}
+//	}
 
 	public void load(Game game, String path) {
 		try {
@@ -462,6 +462,7 @@ public class EditorJSON {
 				int color = object.getInt("color");
 				View v = new View(p, pX, pY, pWidth, pHeight);
 				v.setColor(color);
+				views.add(v);
 
 				JSONArray viewPages = object.getJSONArray("pages");
 				try {
@@ -470,15 +471,15 @@ public class EditorJSON {
 							JSONObject jPage = viewPages.getJSONObject(j);
 							int centerX = jPage.getInt("centerX");
 							int centerY = jPage.getInt("centerY");
-							PVector position = new PVector(centerX, centerY);
-							
+							PVector center = new PVector(centerX, centerY);
+
 							float size = jPage.getFloat("size");
 							float angle = jPage.getFloat("angle");
 							boolean flipH = jPage.getBoolean("flipH");
 							boolean flipV = jPage.getBoolean("flipV");
-							
-							Page page = new Page(p, game, v, position);
-							
+
+							Page page = new Page(p, game, v, center);
+
 							if (flipH) {
 								page.flipH();
 							}
@@ -487,7 +488,7 @@ public class EditorJSON {
 							}
 							page.setSize(size);
 							page.setAngle(angle);
-			
+
 							// exclusion booleans
 							try {
 								page.showPlayer = jPage.getBoolean("showPlayer");
@@ -495,9 +496,9 @@ public class EditorJSON {
 								page.showTiles = jPage.getBoolean("showTiles");
 								page.showImages = jPage.getBoolean("showImages");
 							} catch (Exception e) {
-			
+
 							}
-							
+
 							pages.add(page);
 						}
 					}
@@ -507,33 +508,33 @@ public class EditorJSON {
 					}
 				}
 
-				views.add(v);
 			}
 		}
 		game.setViews(views);
 		game.getPageView().setPages(pages);
+		PApplet.println(game.getPageView().getPages().size() + " : " + pages.size());
 	}
 
-	private void loadPages(JSONArray values, Game game) {
-		// list of pages
-		ArrayList<Page> pages = new ArrayList<Page>();
-		for (int i = 0; i < values.size(); i++) {
-			JSONObject object = values.getJSONObject(i);
-			String type = object.getString("type");
-			if (type.equals("page")) {
-				int centerX = object.getInt("centerX");
-				int centerY = object.getInt("centerY");
-				float size = object.getFloat("size");
-				float angle = object.getFloat("angle");
-				boolean flipH = object.getBoolean("flipH");
-				boolean flipV = object.getBoolean("flipV");
-				int pX = object.getInt("pX");
-				int pY = object.getInt("pY");
-				int pWidth = object.getInt("pWidth");
-				int pHeight = object.getInt("pHeight");
-				PVector topLeft = new PVector(pX, pY);
-				PVector bottomRight = new PVector(pX + pWidth, pY + pHeight);
-				PVector center = new PVector(centerX, centerY);
+//	private void loadPages(JSONArray values, Game game) {
+//		// list of pages
+//		ArrayList<Page> pages = new ArrayList<Page>();
+//		for (int i = 0; i < values.size(); i++) {
+//			JSONObject object = values.getJSONObject(i);
+//			String type = object.getString("type");
+//			if (type.equals("page")) {
+//				int centerX = object.getInt("centerX");
+//				int centerY = object.getInt("centerY");
+//				float size = object.getFloat("size");
+//				float angle = object.getFloat("angle");
+//				boolean flipH = object.getBoolean("flipH");
+//				boolean flipV = object.getBoolean("flipV");
+//				int pX = object.getInt("pX");
+//				int pY = object.getInt("pY");
+//				int pWidth = object.getInt("pWidth");
+//				int pHeight = object.getInt("pHeight");
+//				PVector topLeft = new PVector(pX, pY);
+//				PVector bottomRight = new PVector(pX + pWidth, pY + pHeight);
+//				PVector center = new PVector(centerX, centerY);
 //				Page page = new Page(p, game, topLeft, bottomRight, center);
 //				if (flipH) {
 //					page.flipH();
@@ -555,8 +556,8 @@ public class EditorJSON {
 //				}
 //
 //				pages.add(page);
-			}
-		}
-		game.getPageView().setPages(pages);
-	}
+//			}
+//		}
+//		game.getPageView().setPages(pages);
+//	}
 }
