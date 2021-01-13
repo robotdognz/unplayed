@@ -58,8 +58,7 @@ public class PageTool extends AreaTool {
 							float finalX = placement.x - 50;
 							float finalY = placement.y - 50;
 							PVector center = new PVector(finalX, finalY);
-							currentPage = new Page(p, game, editor.currentView.getTopLeft(),
-									editor.currentView.getBottomRight(), center);
+							currentPage = new Page(p, game, editor.currentView, center);
 						} else {
 							PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
 							// round so blocks snap to grid

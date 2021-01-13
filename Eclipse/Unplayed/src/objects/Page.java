@@ -12,7 +12,8 @@ import static processing.core.PConstants.*;
 public class Page extends Editable {
 	private PApplet p;
 	private Game game;
-	private Rectangle view; // the page's view into the world
+	//private Rectangle view; // the page's view into the world
+	private View view;
 	private HashSet<Rectangle> pageObjects;
 //	private HashSet<String> excludedObjects; // a list of rectangle strings to exclude while drawing
 
@@ -38,13 +39,14 @@ public class Page extends Editable {
 	public boolean showTiles;
 	public boolean showImages;
 
-	public Page(PApplet p, Game game, PVector topLeft, PVector bottomRight, PVector position) {
-		super(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
+	public Page(PApplet p, Game game, View view, PVector position) { //PVector topLeft, PVector bottomRight, 
+		super(view.getTopLeft().x, view.getTopLeft().y, view.getWidth(), view.getHeight());
 		this.p = p;
 		this.game = game;
 		float rWidth = bottomRight.x - topLeft.x;
 		float rHeight = bottomRight.y - topLeft.y;
-		this.view = new Rectangle(topLeft.x, topLeft.y, rWidth, rHeight);
+//		this.view = new Rectangle(topLeft.x, topLeft.y, rWidth, rHeight);
+		this.view = view;
 		this.pageObjects = new HashSet<Rectangle>();
 //		this.excludedObjects = new HashSet<String>();
 
@@ -240,7 +242,7 @@ public class Page extends Editable {
 //		return Collections.unmodifiableSet(excludedObjects);
 //	}
 
-	public Rectangle getView() {
+	public View getView() {
 		return view;
 	}
 
