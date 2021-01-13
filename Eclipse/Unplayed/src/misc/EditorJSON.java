@@ -110,6 +110,9 @@ public class EditorJSON {
 //					object.setInt("color", ((CameraChange) r).getColor());
 //					saveTile(values, ((PlayerStart) r).getRequired());
 //				} else 
+				if (r instanceof CameraChange || r instanceof CameraCollider) {
+					continue;
+				}
 				if (r instanceof PlayerEnd) { // PlayerEnd
 					object.setString("type", "PlayerEnd");
 					object.setBoolean("end", ((PlayerEnd) r).getLevelEnd());
