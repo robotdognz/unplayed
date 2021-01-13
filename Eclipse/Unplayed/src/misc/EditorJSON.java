@@ -179,6 +179,7 @@ public class EditorJSON {
 
 				if (r instanceof PlayerStart) {
 					object.setString("type", "PlayerStart");
+					saveTile(values, ((PlayerStart) r).getRequired());
 				} else {
 					object.setString("type", "CameraChange");
 				}
