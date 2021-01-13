@@ -12,7 +12,6 @@ import static processing.core.PConstants.*;
 public class Page extends Editable {
 	private PApplet p;
 	private Game game;
-//	private Rectangle view; // the page's view into the world
 	private View view;
 	private HashSet<Rectangle> pageObjects;
 	// private HashSet<String> excludedObjects; // a list of rectangle strings to
@@ -48,9 +47,6 @@ public class Page extends Editable {
 		this.pageObjects = new HashSet<Rectangle>();
 		// this.excludedObjects = new HashSet<String>();
 
-//		this.pageGraphics = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
-//		this.tiles = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
-
 		// booleans
 		showPlayer = true;
 		showObstacles = true;
@@ -59,7 +55,6 @@ public class Page extends Editable {
 
 		setPosition(position);
 		createGraphics();
-//		updateCorners();
 	}
 
 	public void createGraphics() {
