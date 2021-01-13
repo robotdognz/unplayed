@@ -84,6 +84,7 @@ public class WidgetDelete extends Widget {
 				} else if (editor.selected instanceof View) {
 					// remove matching the pages
 					List<Page> pages = game.getPageView().getPages();
+					PApplet.println("Starting: " + game.getPageView().getPages().size());
 					int count = 0;
 					for (int i = 0; i < pages.size(); i++) {
 //						if (pages.get(i).getX() != editor.selected.getX()) {
