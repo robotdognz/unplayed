@@ -1,6 +1,7 @@
 package objects.events;
 
 import game.Game;
+import handlers.EventHandler;
 import handlers.TextureCache;
 import objects.Event;
 import objects.Rectangle;
@@ -110,6 +111,10 @@ public class CameraChange extends Event {
 			g.newCameraArea.setCorners(camera.getTopLeft().x, camera.getTopLeft().y, camera.getBottomRight().x,
 					camera.getBottomRight().y);
 		}
+	}
+	
+	public EventHandler getTexture() {
+		return eventTexture;
 	}
 
 	public void drawCameraArea(PGraphics g) {

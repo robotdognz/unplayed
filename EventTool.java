@@ -120,8 +120,15 @@ public class EventTool extends AreaTool {
 		// unless it's a CameraCollider and toInsert is a CameraChange
 		if (editor.currentEvent != null) {
 			if (foundAtPoint != null) {
-				if (!(foundAtPoint instanceof CameraCollider && toInsert instanceof CameraChange)) {
+				if (!(toInsert instanceof CameraChange)) {
 					return;
+				}
+				// if inserting a CameraChange
+				for (Rectangle p : getRectangles) {
+					if (p instanceof CameraCollider && p.getTopLeft().x == toInsert.getX()
+							&& p.getTopLeft().y == toInsert.getY()) {
+						foundAtPoint = (Event) p;
+					}
 				}
 				editor.world.remove(foundAtPoint);
 			}
