@@ -466,7 +466,7 @@ public class EditorJSON {
 
 				JSONArray viewPages = object.getJSONArray("pages");
 				try {
-					if (pages.size() > 0) {
+					if (viewPages.size() > 0) {
 						for (int j = 0; j < viewPages.size(); j++) {
 							JSONObject jPage = viewPages.getJSONObject(j);
 							int centerX = jPage.getInt("centerX");
