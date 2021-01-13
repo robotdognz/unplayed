@@ -50,7 +50,6 @@ public class Page extends Editable {
 
 //		this.pageGraphics = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
 //		this.tiles = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
-		createGraphics();
 
 		// booleans
 		showPlayer = true;
@@ -59,7 +58,8 @@ public class Page extends Editable {
 		showImages = true;
 
 		setPosition(position);
-		updateCorners();
+		createGraphics();
+//		updateCorners();
 	}
 
 	public void createGraphics() {
@@ -67,6 +67,7 @@ public class Page extends Editable {
 				|| this.pageGraphics.height != view.getHeight()) {
 			this.pageGraphics = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
 			this.tiles = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
+			updateCorners();
 		}
 	}
 
