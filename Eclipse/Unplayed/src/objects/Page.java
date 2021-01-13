@@ -12,10 +12,10 @@ import static processing.core.PConstants.*;
 public class Page extends Editable {
 	private PApplet p;
 	private Game game;
-	//private Rectangle view; // the page's view into the world
+//	private Rectangle view; // the page's view into the world
 	private View view;
 	private HashSet<Rectangle> pageObjects;
-//	private HashSet<String> excludedObjects; // a list of rectangle strings to exclude while drawing
+	//private HashSet<String> excludedObjects; // a list of rectangle strings to exclude while drawing
 
 	private PGraphics pageGraphics;
 	private PGraphics tiles;
@@ -43,15 +43,17 @@ public class Page extends Editable {
 		super(view.getTopLeft().x, view.getTopLeft().y, view.getWidth(), view.getHeight());
 		this.p = p;
 		this.game = game;
-		float rWidth = bottomRight.x - topLeft.x;
-		float rHeight = bottomRight.y - topLeft.y;
+//		float rWidth = bottomRight.x - topLeft.x;
+//		float rHeight = bottomRight.y - topLeft.y;
 //		this.view = new Rectangle(topLeft.x, topLeft.y, rWidth, rHeight);
 		this.view = view;
 		this.pageObjects = new HashSet<Rectangle>();
-//		this.excludedObjects = new HashSet<String>();
+		//this.excludedObjects = new HashSet<String>();
 
-		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
-		this.tiles = p.createGraphics((int) rWidth, (int) rHeight, P2D);
+//		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
+//		this.tiles = p.createGraphics((int) rWidth, (int) rHeight, P2D);
+		this.pageGraphics = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
+		this.tiles = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
 		
 		//booleans
 		showPlayer = true;
