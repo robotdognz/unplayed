@@ -85,19 +85,22 @@ public class WidgetDelete extends Widget {
 					// remove matching the pages
 					List<Page> pages = game.getPageView().getPages();
 					for (int i = 0; i < pages.size(); i++) {
-						if (pages.get(i).getX() != editor.selected.getX()) {
-							continue;
+//						if (pages.get(i).getX() != editor.selected.getX()) {
+//							continue;
+//						}
+//						if (pages.get(i).getY() != editor.selected.getY()) {
+//							continue;
+//						}
+//						if (pages.get(i).getWidth() != editor.selected.getWidth()) {
+//							continue;
+//						}
+//						if (pages.get(i).getHeight() != editor.selected.getHeight()) {
+//							continue;
+//						}
+						if (pages.get(i).getView().equals(editor.selected)) {
+							game.getPageView().removePage(pages.get(i));
 						}
-						if (pages.get(i).getY() != editor.selected.getY()) {
-							continue;
-						}
-						if (pages.get(i).getWidth() != editor.selected.getWidth()) {
-							continue;
-						}
-						if (pages.get(i).getHeight() != editor.selected.getHeight()) {
-							continue;
-						}
-						game.getPageView().removePage(pages.get(i));
+
 					}
 					// remove the view
 					game.views.remove(editor.selected);
