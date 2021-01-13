@@ -65,8 +65,13 @@ public class Page extends Editable {
 	public void createGraphics() {
 		if (this.pageGraphics == null || this.pageGraphics.width != view.getWidth()
 				|| this.pageGraphics.height != view.getHeight()) {
+
 			this.pageGraphics = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
 			this.tiles = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
+
+			setWidth(view.getWidth());
+			setHeight(view.getHeight());
+
 			updateCorners();
 		}
 	}
