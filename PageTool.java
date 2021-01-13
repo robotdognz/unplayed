@@ -206,10 +206,15 @@ public class PageTool extends AreaTool {
 //				pageView.removePage(pages.get(i));
 //			}
 			// remove matching the pages
-			List<Page> pages = game.getPageView().getPages();
+			List<Page> pages = pageView.getPages();
 			for (int i = pages.size() - 1; i >= 0; --i) {
 
-				if (pages.get(i).getView().equals(editor.selected)) {
+				if (pages.get(i).getView().equals(found)) {
+					// deselect the page if it is selected
+					if (pages.get(i).equals(editor.selected)) {
+						editor.selected = null;
+					}
+					// remove the page
 					pages.remove(i);
 				}
 
