@@ -111,15 +111,17 @@ public class EventTool extends AreaTool {
 		// find anything that directly overlaps the inserting event
 		Event foundAtPoint = null;
 		for (Rectangle p : getRectangles) {
-			if (toInsert.getClass().equals(p.getClass()) && p.getTopLeft().x == toInsert.getX()
-					&& p.getTopLeft().y == toInsert.getY()) {
-				
-				if(toInsert instanceof CameraChange && p instanceof CameraCollider) {
+			if (p instanceof Event && p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()) {
+
+				if (toInsert.getClass().equals(p.getClass())) {
+					foundAtPoint = (Event) p;
+					continue;
+				}
+				if (toInsert instanceof CameraChange && p instanceof CameraCollider) {
 					editor.world.remove(p);
 					continue;
 				}
-				
-				foundAtPoint = (Event) p;
+
 			}
 		}
 		// prevent placing new event if a matching event is found at this spot
