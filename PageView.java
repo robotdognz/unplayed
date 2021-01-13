@@ -135,7 +135,8 @@ public class PageView {
 	}
 
 	public List<Page> getPages() {
-		return Collections.unmodifiableList(pages);
+		//return Collections.unmodifiableList(pages);
+		return pages;
 	}
 
 	public void setPages(ArrayList<Page> pages) {
