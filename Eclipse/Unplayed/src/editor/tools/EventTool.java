@@ -117,7 +117,13 @@ public class EventTool extends AreaTool {
 					foundAtPoint = (Event) p;
 					continue;
 				}
+				// remove collider when player camera change or player start
 				if (toInsert instanceof CameraChange && p instanceof CameraCollider) {
+					editor.world.remove(p);
+					continue;
+				}
+				// remove camera change when placing player start
+				if (toInsert instanceof PlayerStart && p instanceof CameraChange) {
 					editor.world.remove(p);
 					continue;
 				}
