@@ -84,6 +84,7 @@ public class WidgetDelete extends Widget {
 				} else if (editor.selected instanceof View) {
 					// remove matching the pages
 					List<Page> pages = game.getPageView().getPages();
+					int count = 0;
 					for (int i = 0; i < pages.size(); i++) {
 //						if (pages.get(i).getX() != editor.selected.getX()) {
 //							continue;
@@ -99,9 +100,12 @@ public class WidgetDelete extends Widget {
 //						}
 						if (pages.get(i).getView().equals(editor.selected)) {
 							game.getPageView().removePage(pages.get(i));
+							count++;
 						}
 
 					}
+					PApplet.println("Pages found: " + pages.size() + ", Pages removed: " + count + " Remaining: "
+							+ game.getPageView().getPages().size());
 					// remove the view
 					game.views.remove(editor.selected);
 				}

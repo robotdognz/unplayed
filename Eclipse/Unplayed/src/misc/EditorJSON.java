@@ -485,7 +485,6 @@ public class EditorJSON {
 		}
 		game.setViews(views);
 		game.getPageView().setPages(pages);
-		PApplet.println(game.getPageView().getPages().size() + " : " + pages.size());
 	}
 
 }
