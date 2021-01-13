@@ -217,6 +217,9 @@ public class EventTool extends AreaTool {
 				if (!(p instanceof Event)) {
 					continue;
 				}
+				if (p instanceof CameraCollider) {
+					continue;
+				}
 				if (p.getTopLeft().x > toInsert.getBottomRight().x - 1) {
 					continue;
 				}
