@@ -169,10 +169,10 @@ public class EditorJSON {
 						continue;
 					}
 					if (((CameraCollider) rr).getCamera().equals(r)) {
-						JSONObject coliderObject = new JSONObject();
-						coliderObject.setInt("pX", (int) rr.getX());
-						coliderObject.setInt("pY", (int) rr.getY());
-						colliders.setJSONObject(coliderObject.size(), coliderObject);
+						JSONObject colliderObject = new JSONObject();
+						colliderObject.setInt("pX", (int) rr.getX());
+						colliderObject.setInt("pY", (int) rr.getY());
+						colliders.setJSONObject(colliders.size(), colliderObject);
 					}
 				}
 				object.setJSONArray("colliders", colliders);
