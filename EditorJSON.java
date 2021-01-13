@@ -470,11 +470,13 @@ public class EditorJSON {
 							JSONObject jPage = viewPages.getJSONObject(j);
 							int centerX = jPage.getInt("centerX");
 							int centerY = jPage.getInt("centerY");
+							PVector position = new PVector(centerX, centerY);
+							
 							float size = jPage.getFloat("size");
 							float angle = jPage.getFloat("angle");
 							boolean flipH = jPage.getBoolean("flipH");
 							boolean flipV = jPage.getBoolean("flipV");
-							PVector position = new PVector(centerX, centerY);
+							
 							Page page = new Page(p, game, v, position);
 							
 							if (flipH) {
@@ -500,7 +502,9 @@ public class EditorJSON {
 						}
 					}
 				} catch (Exception e) {
-
+					if (toast != null) {
+						toast.showToast(e.getMessage());
+					}
 				}
 
 				views.add(v);
