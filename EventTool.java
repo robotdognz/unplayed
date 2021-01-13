@@ -113,6 +113,12 @@ public class EventTool extends AreaTool {
 		for (Rectangle p : getRectangles) {
 			if (toInsert.getClass().equals(p.getClass()) && p.getTopLeft().x == toInsert.getX()
 					&& p.getTopLeft().y == toInsert.getY()) {
+				
+				if(toInsert instanceof CameraChange && p instanceof CameraCollider) {
+					editor.world.remove(p);
+					continue;
+				}
+				
 				foundAtPoint = (Event) p;
 			}
 		}
@@ -120,17 +126,17 @@ public class EventTool extends AreaTool {
 		// unless it's a CameraCollider and toInsert is a CameraChange
 		if (editor.currentEvent != null) {
 			if (foundAtPoint != null) {
-				if (!(toInsert instanceof CameraChange)) {
-					return;
-				}
-				// if inserting a CameraChange
-				for (Rectangle p : getRectangles) {
-					if ((p instanceof CameraCollider || p instanceof CameraChange)
-							&& p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()) {
-						foundAtPoint = (Event) p;
-					}
-				}
-				editor.world.remove(foundAtPoint);
+//				if (!(toInsert instanceof CameraChange)) {
+				return;
+//				}
+//				// if inserting a CameraChange
+//				for (Rectangle p : getRectangles) {
+//					if ((p instanceof CameraCollider || p instanceof CameraChange)
+//							&& p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()) {
+//						foundAtPoint = (Event) p;
+//					}
+//				}
+//				editor.world.remove(foundAtPoint);
 			}
 			editor.world.insert(toInsert);
 		}

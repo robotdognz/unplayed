@@ -32,6 +32,6 @@ public class CameraCollider extends Event {
 		graphics.fill(camera.getColor(), 100);
 		graphics.rect(getX(), getY(), getWidth(), getHeight());
 		graphics.imageMode(CORNER);
-		graphics.image(cameraTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
+//		graphics.image(cameraTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
 	}
 }
