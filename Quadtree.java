@@ -30,7 +30,6 @@ public class Quadtree {
 		insertCount++;
 		if (current instanceof CameraChange) {
 			cameras.add((CameraChange) current);
-//			return;
 		}
 		root.nodeInsert(current);
 	}

@@ -1,19 +1,19 @@
 package objects.events;
 
 import game.Game;
-import handlers.EventHandler;
+//import handlers.EventHandler;
 import objects.Event;
 import processing.core.PGraphics;
 import static processing.core.PConstants.*;
 
 public class CameraCollider extends Event {
 	private CameraChange camera;
-	private EventHandler cameraTexture;
+//	private EventHandler cameraTexture;
 
 	public CameraCollider(CameraChange camera, float x, float y) {
 		super(null, "CameraCollider", false, x, y, 100, 100);
 		this.camera = camera;
-		this.cameraTexture = camera.getTexture();
+//		this.cameraTexture = camera.getTexture();
 	}
 
 	public CameraChange getCamera() {
@@ -31,7 +31,7 @@ public class CameraCollider extends Event {
 		graphics.noStroke();
 		graphics.fill(camera.getColor(), 100);
 		graphics.rect(getX(), getY(), getWidth(), getHeight());
-		graphics.imageMode(CORNER);
+//		graphics.imageMode(CORNER);
 //		graphics.image(cameraTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight());
 	}
 }

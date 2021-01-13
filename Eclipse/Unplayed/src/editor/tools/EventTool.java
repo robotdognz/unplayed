@@ -184,7 +184,6 @@ public class EventTool extends AreaTool {
 
 	}
 
-	// TODO: copied from ImageTool without adjusting
 	private void select(Event toInsert, HashSet<Rectangle> getRectangles) {
 		// if there is noting to check
 		if (getRectangles.size() < 1) {
