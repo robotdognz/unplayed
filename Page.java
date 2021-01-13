@@ -15,7 +15,8 @@ public class Page extends Editable {
 //	private Rectangle view; // the page's view into the world
 	private View view;
 	private HashSet<Rectangle> pageObjects;
-	//private HashSet<String> excludedObjects; // a list of rectangle strings to exclude while drawing
+	// private HashSet<String> excludedObjects; // a list of rectangle strings to
+	// exclude while drawing
 
 	private PGraphics pageGraphics;
 	private PGraphics tiles;
@@ -32,30 +33,26 @@ public class Page extends Editable {
 	PVector topRight;
 	PVector bottomLeft;
 	PVector bottomRight;
-	
-	//exclusion booleans
+
+	// exclusion booleans
 	public boolean showPlayer;
 	public boolean showObstacles;
 	public boolean showTiles;
 	public boolean showImages;
 
-	public Page(PApplet p, Game game, View view, PVector position) { //PVector topLeft, PVector bottomRight, 
+	public Page(PApplet p, Game game, View view, PVector position) { // PVector topLeft, PVector bottomRight,
 		super(view.getTopLeft().x, view.getTopLeft().y, view.getWidth(), view.getHeight());
 		this.p = p;
 		this.game = game;
-//		float rWidth = bottomRight.x - topLeft.x;
-//		float rHeight = bottomRight.y - topLeft.y;
-//		this.view = new Rectangle(topLeft.x, topLeft.y, rWidth, rHeight);
 		this.view = view;
 		this.pageObjects = new HashSet<Rectangle>();
-		//this.excludedObjects = new HashSet<String>();
+		// this.excludedObjects = new HashSet<String>();
 
-//		this.pageGraphics = p.createGraphics((int) rWidth, (int) rHeight, P2D);
-//		this.tiles = p.createGraphics((int) rWidth, (int) rHeight, P2D);
-		this.pageGraphics = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
-		this.tiles = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
-		
-		//booleans
+//		this.pageGraphics = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
+//		this.tiles = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
+		createGraphics();
+
+		// booleans
 		showPlayer = true;
 		showObstacles = true;
 		showTiles = true;
@@ -63,6 +60,14 @@ public class Page extends Editable {
 
 		setPosition(position);
 		updateCorners();
+	}
+
+	public void createGraphics() {
+		if (this.pageGraphics == null || this.pageGraphics.width != view.getWidth()
+				|| this.pageGraphics.height != view.getHeight()) {
+			this.pageGraphics = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
+			this.tiles = p.createGraphics((int) view.getWidth(), (int) view.getHeight(), P2D);
+		}
 	}
 
 	public PVector getPosition() {
@@ -248,7 +253,7 @@ public class Page extends Editable {
 		return view;
 	}
 
-	//--------------update the corner PVectors---------------
+	// --------------update the corner PVectors---------------
 	private void updateCorners() {
 		if (topLeft == null) {
 			// Initialize
@@ -282,7 +287,7 @@ public class Page extends Editable {
 		bottomRight.y += position.y;
 	}
 
-	//------------is a point inside the page-------------
+	// ------------is a point inside the page-------------
 	public boolean isInside(float x, float y) {
 		PVector point = new PVector(x, y);
 		point.x -= position.x;

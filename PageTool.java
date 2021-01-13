@@ -183,28 +183,7 @@ public class PageTool extends AreaTool {
 			if (found.equals(editor.selected)) {
 				editor.selected = null;
 			}
-			// find and erase all matching pages
-//			List<Page> pages = pageView.getPages();
-//			for (int i = 0; i < pages.size(); i++) {
-//				if (pages.get(i).getX() != found.getX()) {
-//					continue;
-//				}
-//				if (pages.get(i).getY() != found.getY()) {
-//					continue;
-//				}
-//				if (pages.get(i).getWidth() != found.getWidth()) {
-//					continue;
-//				}
-//				if (pages.get(i).getHeight() != found.getHeight()) {
-//					continue;
-//				}
-//
-//				// deselect the page if it is selected
-//				if (pages.get(i).equals(editor.selected)) {
-//					editor.selected = null;
-//				}
-//				pageView.removePage(pages.get(i));
-//			}
+
 			// remove matching the pages
 			List<Page> pages = pageView.getPages();
 			for (int i = pages.size() - 1; i >= 0; --i) {

@@ -50,7 +50,7 @@ public class PageView {
 		float ratio = (float) temp.height / (float) temp.width;
 		p.image(temp, 0, 0, p.width * 5, p.width * 5 * ratio);
 
-		//calculate page drawing area
+		// calculate page drawing area
 		PVector topLeft;
 		PVector bottomRight;
 		if (game.camera.getGame()) {
@@ -60,7 +60,7 @@ public class PageView {
 			topLeft = convert.screenToLevel(0, 0);
 			bottomRight = convert.screenToLevel(p.width, p.height);
 		}
-		//draw pages that are inside that area
+		// draw pages that are inside that area
 		for (Page page : pages) {
 			if (page.leftOf(topLeft.x)) {
 				continue;
@@ -103,10 +103,11 @@ public class PageView {
 			p.step();
 		}
 	}
-	
+
 	public void forceRedraw() {
-		for(Page p : pages) {
-			p.drawView();
+		for (Page p : pages) {
+			p.createGraphics(); // resize
+			p.drawView(); // redraw
 		}
 	}
 
@@ -140,7 +141,7 @@ public class PageView {
 	public void setPages(ArrayList<Page> pages) {
 		this.pages = pages;
 	}
-	
+
 	public void clearPages() {
 		this.pages.clear();
 	}
