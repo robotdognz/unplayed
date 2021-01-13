@@ -99,14 +99,14 @@ public class WidgetDelete extends Widget {
 //						if (pages.get(i).getHeight() != editor.selected.getHeight()) {
 //							continue;
 //						}
+						count++;
 						if (pages.get(i).getView().equals(editor.selected)) {
 							game.getPageView().removePage(pages.get(i));
-							count++;
+
 						}
 
 					}
-					PApplet.println("Pages found: " + pages.size() + ", Pages removed: " + count + " Remaining: "
-							+ game.getPageView().getPages().size());
+					PApplet.println("Pages found: " + pages.size() + ", Pages removed: " + count);
 					// remove the view
 					game.views.remove(editor.selected);
 				}
