@@ -125,8 +125,8 @@ public class EventTool extends AreaTool {
 				}
 				// if inserting a CameraChange
 				for (Rectangle p : getRectangles) {
-					if (p instanceof CameraCollider && p.getTopLeft().x == toInsert.getX()
-							&& p.getTopLeft().y == toInsert.getY()) {
+					if ((p instanceof CameraCollider || p instanceof CameraChange)
+							&& p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()) {
 						foundAtPoint = (Event) p;
 					}
 				}
