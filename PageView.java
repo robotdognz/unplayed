@@ -1,7 +1,6 @@
 package game;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import camera.Camera;
@@ -135,7 +134,6 @@ public class PageView {
 	}
 
 	public List<Page> getPages() {
-		//return Collections.unmodifiableList(pages);
 		return pages;
 	}
 

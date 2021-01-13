@@ -84,30 +84,14 @@ public class WidgetDelete extends Widget {
 				} else if (editor.selected instanceof View) {
 					// remove matching the pages
 					List<Page> pages = game.getPageView().getPages();
-					PApplet.println("Before: " + pages.size());
-					int count = 0;
-//					for (int i = 0; i < pages.size(); i++) {
-					for(int i = pages.size() - 1; i >= 0; --i) {
-//						if (pages.get(i).getX() != editor.selected.getX()) {
-//							continue;
-//						}
-//						if (pages.get(i).getY() != editor.selected.getY()) {
-//							continue;
-//						}
-//						if (pages.get(i).getWidth() != editor.selected.getWidth()) {
-//							continue;
-//						}
-//						if (pages.get(i).getHeight() != editor.selected.getHeight()) {
-//							continue;
-//						}
-						count++;
+					for (int i = pages.size() - 1; i >= 0; --i) {
+
 						if (pages.get(i).getView().equals(editor.selected)) {
-//							game.getPageView().removePage(pages.get(i));
 							pages.remove(i);
 						}
 
 					}
-					PApplet.println("After: " + pages.size() + ", Loops: " + count);
+
 					// remove the view
 					game.views.remove(editor.selected);
 				}

@@ -40,8 +40,7 @@ public class PageTool extends AreaTool {
 	@Override
 	public void touchMoved(PVector touch) {
 		if (!editor.showPageView) {// views
-			if (editor.selected != null && editor.selected instanceof View
-					&& editor.eMode == editorMode.SELECT) {
+			if (editor.selected != null && editor.selected instanceof View && editor.eMode == editorMode.SELECT) {
 //				edit = editor.selected;
 				super.touchMoved(touch);
 			} else {
@@ -113,10 +112,10 @@ public class PageTool extends AreaTool {
 			if (editor.selected != null && editor.selected instanceof Page) {
 				((Page) editor.selected).addSize(convert.screenToLevel(d) / 500); // TODO: figure out what the 500
 																					// should be
-				//old code
+				// old code
 				PVector center = convert.screenToLevel(x, y);
 				((Page) editor.selected).setPosition(center);
-				
+
 //				if (pX != 0 && pY != 0) {
 //					float xDist = x-pX;
 //					float yDist = y-pY;
@@ -139,7 +138,7 @@ public class PageTool extends AreaTool {
 			}
 		}
 	}
-	
+
 	private void addView(PVector touch) {
 		// get the result of the area tool
 		super.touchEnded(touch);
@@ -164,8 +163,8 @@ public class PageTool extends AreaTool {
 				editor.currentView = view;
 				return;
 			}
-			
-			//no existing match found, make a new view
+
+			// no existing match found, make a new view
 			View newView = new View(p, (int) result.getX(), (int) result.getY(), (int) result.getWidth(),
 					(int) result.getHeight());
 			game.views.add(newView); // add the view
@@ -185,26 +184,35 @@ public class PageTool extends AreaTool {
 				editor.selected = null;
 			}
 			// find and erase all matching pages
-			List<Page> pages = pageView.getPages();
-			for (int i = 0; i < pages.size(); i++) {
-				if (pages.get(i).getX() != found.getX()) {
-					continue;
-				}
-				if (pages.get(i).getY() != found.getY()) {
-					continue;
-				}
-				if (pages.get(i).getWidth() != found.getWidth()) {
-					continue;
-				}
-				if (pages.get(i).getHeight() != found.getHeight()) {
-					continue;
+//			List<Page> pages = pageView.getPages();
+//			for (int i = 0; i < pages.size(); i++) {
+//				if (pages.get(i).getX() != found.getX()) {
+//					continue;
+//				}
+//				if (pages.get(i).getY() != found.getY()) {
+//					continue;
+//				}
+//				if (pages.get(i).getWidth() != found.getWidth()) {
+//					continue;
+//				}
+//				if (pages.get(i).getHeight() != found.getHeight()) {
+//					continue;
+//				}
+//
+//				// deselect the page if it is selected
+//				if (pages.get(i).equals(editor.selected)) {
+//					editor.selected = null;
+//				}
+//				pageView.removePage(pages.get(i));
+//			}
+			// remove matching the pages
+			List<Page> pages = game.getPageView().getPages();
+			for (int i = pages.size() - 1; i >= 0; --i) {
+
+				if (pages.get(i).getView().equals(editor.selected)) {
+					pages.remove(i);
 				}
 
-				// deselect the page if it is selected
-				if (pages.get(i).equals(editor.selected)) {
-					editor.selected = null;
-				}
-				pageView.removePage(pages.get(i));
 			}
 
 		}
@@ -247,8 +255,8 @@ public class PageTool extends AreaTool {
 		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
 		Page found = pageView.getPage(mouse.x, mouse.y);
 		if (found != null) {
-			editor.selected = found; //select it
-			//set current view to corresponding view
+			editor.selected = found; // select it
+			// set current view to corresponding view
 			for (View view : game.views) {
 				if (view.getX() != found.getX()) {
 					continue;
