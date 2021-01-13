@@ -405,14 +405,18 @@ public class EditorJSON {
 				worldObjects.add(cc); // add the camera change to the world
 
 				// create and add any colliders it has
-				if (colliders.size() > 0) {
-					for (int j = 0; j < colliders.size(); j++) {
-						JSONObject jCollider = colliders.getJSONObject(j);
-						int cX = jCollider.getInt("pX");
-						int cY = jCollider.getInt("pY");
-						CameraCollider collider = new CameraCollider(cc, cX, cY);
-						worldObjects.add(collider);
+				try {
+					if (colliders.size() > 0) {
+						for (int j = 0; j < colliders.size(); j++) {
+							JSONObject jCollider = colliders.getJSONObject(j);
+							int cX = jCollider.getInt("pX");
+							int cY = jCollider.getInt("pY");
+							CameraCollider collider = new CameraCollider(cc, cX, cY);
+							worldObjects.add(collider);
+						}
 					}
+				} catch (Exception e) {
+
 				}
 			}
 		}
