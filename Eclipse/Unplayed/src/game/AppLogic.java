@@ -209,7 +209,7 @@ public class AppLogic {
 			} else {
 				controller.step(touches);
 			}
-			game.step(); // step game
+			game.step(deltaTime); // step game
 		}
 
 		// draw the game

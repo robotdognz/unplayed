@@ -374,7 +374,7 @@ public class Game {
 		p.popMatrix(); // start working at screen scale
 	}
 
-	public void step() {
+	public void step(float deltaTime) {
 		screenObjects.clear();
 		world.retrieve(screenObjects, screenSpace);
 
@@ -382,11 +382,11 @@ public class Game {
 		if (player != null) {
 			playerObjects.clear();
 			world.retrieve(playerObjects, player.getPlayerArea());
-			player.step(playerObjects, this);
+			player.step(deltaTime, playerObjects, this);
 		}
 
 		if (camera.getGame()) {
-			screenMovement();
+			screenMovement(deltaTime);
 		}
 		PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
 		float screenSpaceWidth = convert.screenToLevel(p.width + screenSpaceOffset * 2);
@@ -396,7 +396,7 @@ public class Game {
 		pageView.step(); // step the page view
 	}
 
-	void screenMovement() {
+	void screenMovement(float deltaTime) { //TODO: implement delta time
 		// tall screen space scaling
 		// uses the 'new...' versions of edge variables so that
 		// scaling happens immediately

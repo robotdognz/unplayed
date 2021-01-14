@@ -20,6 +20,7 @@
 14/01/12
 -Pages now resize when resizing views
 -Rebuilt page saving/loading system
+-Implemented delta time for UI animations
 
 1.1.0:	Christmas break patch
 

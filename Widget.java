@@ -8,7 +8,6 @@ import editor.Toolbar;
 import processing.core.*;
 
 public abstract class Widget {
-	// TODO: currently does not scale based on screen size
 	protected PApplet p;
 	protected Editor editor;
 	Toolbar parent;
@@ -49,11 +48,6 @@ public abstract class Widget {
 		this.wSize = p.width / 19.2f;
 		this.subWidgetSpacing = p.width / 8;
 
-		// TODO: should set available to false if editor == null
-		// TODO: update active and other methods that make checks against editor should
-		// also check if editor is null
-		// TODO: all widgets need to be updated to use udateAciveUser instead of
-		// updateActive
 	}
 
 	public void hover(PVector lastTouch) {
@@ -66,9 +60,8 @@ public abstract class Widget {
 		}
 
 		// subWidget hover
-		if (subWidgets.size() > 0 && ((!hasSActive && active) || (hasSActive && sActive))) { // if this widget is a menu
-																								// and it has been
-																								// opened
+		if (subWidgets.size() > 0 && ((!hasSActive && active) || (hasSActive && sActive))) {
+			// if this widget is a menu and it has been opened
 			for (Widget w : subWidgets) {
 				w.hover(lastTouch);
 			}

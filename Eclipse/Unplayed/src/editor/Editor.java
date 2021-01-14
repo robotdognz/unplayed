@@ -222,7 +222,7 @@ public class Editor {
 					p.height - editorBottom.getHeight() - textSize * 3);
 			p.text("FPS: " + PApplet.nf(this.frame, 1, 2), p.width / 2,
 					p.height - editorBottom.getHeight() - textSize * 2);
-			p.text("Delta: " + PApplet.nf(deltaTime, 1, 2), p.width / 2,
+			p.text("Delta: " + PApplet.nf(deltaTime, 1, 1), p.width / 2,
 					p.height - editorBottom.getHeight() - textSize);
 		}
 	}

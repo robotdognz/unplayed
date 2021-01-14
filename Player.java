@@ -132,7 +132,7 @@ public class Player extends Editable {
 		}
 	}
 
-	void step(HashSet<Rectangle> objects, Game g) {
+	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
 		// store previous position, used for player end
 		previousPosition.x = getX();
 		previousPosition.y = getY();
@@ -226,7 +226,7 @@ public class Player extends Editable {
 			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
 			graphics.rotate(PApplet.radians(angle)); // angle of the tile
 //			graphics.scale(flipX, flipY); // flipping the tile
-			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile //TODO: get scale
+			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
 			graphics.popMatrix();
 		} else {
 			//missing texture
