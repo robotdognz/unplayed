@@ -16,12 +16,19 @@ AppLogic app; //manages the application level game logic
 int splash; //steps through the start up stages 
 PImage splashScreen; //the splash screen to be drawn while the game is loading
 
+//delta time
+final float FPS = 60;
+final float GAMESPEED = 60;
+
+float previousMilli, deltaDiv, deltaFix;
+
 void setup() {
   //setup graphics
   fullScreen(P2D);
   background(0, 78, 83);
-  frameRate(60);
+  frameRate(FPS);
   splash = 0;
+  previousMilli = millis();
 }
 
 void init() {
@@ -41,6 +48,9 @@ void init() {
 
 //this is the only draw method that should have step logic in it
 void draw() {
+  deltaDiv = previousMilli / millis();
+  deltaFix = (GAMESPEED / FPS) * deltaDiv;
+  previousMilli = millis();
 
   //splash screen
   if (splash == 0) {  //draw black screen
@@ -63,7 +73,7 @@ void draw() {
   }
 
   //testing.draw(); //draw touch events
-  app.draw();
+  app.draw(deltaFix);
 }
 
 @Override public String sketchPath(String where) {

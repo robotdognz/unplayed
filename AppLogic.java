@@ -188,7 +188,7 @@ public class AppLogic {
 		files.setUri(uri);
 	}
 
-	public void draw() {
+	public void draw(float deltaTime) {
 
 		// touch screen
 		touches.clear();
