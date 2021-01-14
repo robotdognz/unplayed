@@ -30,7 +30,7 @@ public class Player extends Editable {
 	private TileHandler tileTexture;
 
 	private int jumpCount = 0;
-	private final int playerSpeed = 625; // 10
+	private final float playerSpeed = 2.5f; // 10
 	private final int playerGravity = 2;
 	private final int terminalVelocity = 50;
 	private final int playerJumpPower = 30;
@@ -44,6 +44,10 @@ public class Player extends Editable {
 	private float vibeVelocity = 0; // extra vibration added on after max velocity
 	private float lastXPos; // x position one step back
 	private float lastLastXPos; // x position two steps back
+
+	// delta/timestep
+	private float accumulator = 0;
+	private float stepSize = (1f / 60f) / 4f;
 
 	Player(PApplet p, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -91,49 +95,19 @@ public class Player extends Editable {
 		}
 	}
 
-	void collision(PVector platformTopLeft, PVector platformBottomRight) {
-		// if a collision is happening
-		if (platformTopLeft.y < getTopLeft().y + getHeight() + Math.max(velocity.y, 0)
-				&& platformBottomRight.y > getTopLeft().y + Math.min(velocity.y, 0)
-				&& platformTopLeft.x < getTopLeft().x + getWidth() + velocity.x
-				&& platformBottomRight.x > getTopLeft().x + velocity.x) {
+	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
+		// TODO: implement time accumulator
+		accumulator += deltaTime;
 
-			if (platformBottomRight.y < getTopLeft().y + getHeight() / 100 - Math.min(velocity.y, 0)
-					&& platformTopLeft.x < getTopLeft().x + getWidth() && platformBottomRight.x > getTopLeft().x) {
-				// player is under
-				if (velocity.y < 0) {
-					vibration = (int) Math.max((Math.exp(Math.abs(velocity.y / 13)) / 5), 1);
-				}
-				setY(platformBottomRight.y);
-				velocity.y = 0;
-			} else if (platformTopLeft.y > getTopLeft().y + (getHeight() / 20) * 19 - Math.min(velocity.y, 0)) {
-				// player is above
-				if (velocity.y > 0) {
-					vibration = (int) Math.max((Math.exp((velocity.y + vibeVelocity) / 15) / 1.7), 1);
-				}
-				setY(platformTopLeft.y - getHeight());
-				velocity.y = 0;
-				jumpCount = 2;
-			} else if (platformTopLeft.x > getTopLeft().x + (getWidth() / 3) * 2) {
-				// player is to the left
-				setX(platformTopLeft.x - getWidth());
-				velocity.x = 0;
-				wall = true;
-			} else if (platformBottomRight.x < getTopLeft().x + getWidth() / 3) {
-				// player is to the right
-				setX(platformBottomRight.x);
-				velocity.x = 0;
-				wall = true;
-			} else {
-				// fringe case where the player would fall through
-				// aka player is in a weird place
-				setY(platformTopLeft.y - getHeight());
-				velocity.y = 0;
-			}
+		while (accumulator >= stepSize) {
+			doPlayerStep(objects, g);
+			accumulator -= stepSize;
 		}
+
+//		doPlayerStep(deltaTime, objects, g);
 	}
 
-	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
+	private void doPlayerStep(HashSet<Rectangle> objects, Game g) {
 		// store previous position, used to check if player is still
 		previousPosition.x = getX();
 		previousPosition.y = getY();
@@ -154,10 +128,10 @@ public class Player extends Editable {
 		velocity.x = 0;
 
 		if (left) {
-			velocity.x = -(playerSpeed * deltaTime); // TODO
+			velocity.x = -playerSpeed; // TODO
 		}
 		if (right) {
-			velocity.x = playerSpeed * deltaTime; // TODO
+			velocity.x = playerSpeed; // TODO
 		}
 
 		// do collision
@@ -198,8 +172,50 @@ public class Player extends Editable {
 				if (getBottomRight().y < p.getTopLeft().y + 1) {
 					continue;
 				}
-//				showEvent = true;
+//						showEvent = true;
 				((Event) p).activate(g);
+			}
+		}
+	}
+
+	void collision(PVector platformTopLeft, PVector platformBottomRight) {
+		// if a collision is happening
+		if (platformTopLeft.y < getTopLeft().y + getHeight() + Math.max(velocity.y, 0)
+				&& platformBottomRight.y > getTopLeft().y + Math.min(velocity.y, 0)
+				&& platformTopLeft.x < getTopLeft().x + getWidth() + velocity.x
+				&& platformBottomRight.x > getTopLeft().x + velocity.x) {
+
+			if (platformBottomRight.y < getTopLeft().y + getHeight() / 100 - Math.min(velocity.y, 0)
+					&& platformTopLeft.x < getTopLeft().x + getWidth() && platformBottomRight.x > getTopLeft().x) {
+				// player is under
+				if (velocity.y < 0) {
+					vibration = (int) Math.max((Math.exp(Math.abs(velocity.y / 13)) / 5), 1);
+				}
+				setY(platformBottomRight.y);
+				velocity.y = 0;
+			} else if (platformTopLeft.y > getTopLeft().y + (getHeight() / 20) * 19 - Math.min(velocity.y, 0)) {
+				// player is above
+				if (velocity.y > 0) {
+					vibration = (int) Math.max((Math.exp((velocity.y + vibeVelocity) / 15) / 1.7), 1);
+				}
+				setY(platformTopLeft.y - getHeight());
+				velocity.y = 0;
+				jumpCount = 2;
+			} else if (platformTopLeft.x > getTopLeft().x + (getWidth() / 3) * 2) {
+				// player is to the left
+				setX(platformTopLeft.x - getWidth());
+				velocity.x = 0;
+				wall = true;
+			} else if (platformBottomRight.x < getTopLeft().x + getWidth() / 3) {
+				// player is to the right
+				setX(platformBottomRight.x);
+				velocity.x = 0;
+				wall = true;
+			} else {
+				// fringe case where the player would fall through
+				// aka player is in a weird place
+				setY(platformTopLeft.y - getHeight());
+				velocity.y = 0;
 			}
 		}
 	}
