@@ -207,6 +207,9 @@ public class EditorSide extends Toolbar {
 			for (int i = 0; i < widgets.size(); i++) {
 
 				// draw editor side background
+				// TODO: the UI background moves one frame behind the widgets because they
+				// update their position when drawn and the ui draws before them from their
+				// previous position.
 				if (widgets.get(i).getPosition() != null) {
 					p.imageMode(CENTER);
 					if (i == 0) {
