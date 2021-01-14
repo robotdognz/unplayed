@@ -23,7 +23,6 @@
 -Implemented delta time for UI animations
 15/01/12
 -Implemented delta time for camera movement
--
 
 1.1.0:	Christmas break patch
 

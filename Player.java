@@ -30,10 +30,10 @@ public class Player extends Editable {
 	private TileHandler tileTexture;
 
 	private int jumpCount = 0;
-	private final float playerSpeed = 2.5f; // 10
-	private final float playerGravity = 0.5f; //2
+	private final int playerSpeed = 10; // 10
+	private final int playerGravity = 2; // 2
 	private final int terminalVelocity = 50;
-	private final float playerJumpPower = 7.5f; //30
+	private final int playerJumpPower = 30; // 30
 	private boolean left = false;
 	private boolean right = false;
 
@@ -46,8 +46,8 @@ public class Player extends Editable {
 	private float lastLastXPos; // x position two steps back
 
 	// delta/timestep
-	private float accumulator = 0;
-	private float stepSize = (1f / 60f) / 4f;
+//	private float accumulator = 0;
+//	private float stepSize = (1f / 60f) / 4f;
 
 	Player(PApplet p, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -96,15 +96,15 @@ public class Player extends Editable {
 	}
 
 	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
-		// TODO: implement time accumulator
-		accumulator += deltaTime;
+//		// fixed time step
+//		accumulator += deltaTime;
+//		while (accumulator >= stepSize) {
+//			doPlayerStep(objects, g);
+//			accumulator -= stepSize;
+//		}
+//		accumulator = 0; // throw out the extra, might not be the best way
 
-		while (accumulator >= stepSize) {
-			doPlayerStep(objects, g);
-			accumulator -= stepSize;
-		}
-
-//		doPlayerStep(deltaTime, objects, g);
+		doPlayerStep(objects, g);
 	}
 
 	private void doPlayerStep(HashSet<Rectangle> objects, Game g) {
