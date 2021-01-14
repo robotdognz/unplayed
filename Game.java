@@ -396,7 +396,7 @@ public class Game {
 		pageView.step(); // step the page view
 	}
 
-	void screenMovement(float deltaTime) { //TODO: implement delta time
+	void screenMovement(float deltaTime) { // TODO: implement delta time
 		// tall screen space scaling
 		// uses the 'new...' versions of edge variables so that
 		// scaling happens immediately
@@ -415,26 +415,26 @@ public class Game {
 		}
 
 		if (camera.getSubScale() != newSubScale) {
-			camera.setSubScale(PApplet.lerp(camera.getSubScale(), newSubScale, PApplet.exp(-zoomSpeed)));
+			camera.setSubScale(PApplet.lerp(camera.getSubScale(), newSubScale, PApplet.exp(-(zoomSpeed / deltaTime)))); // -zoomSpeed
 		}
 		// main scale
 		if (camera.getScale() != newScale) {
-			camera.setScale(PApplet.lerp(camera.getScale(), newScale, PApplet.exp(-zoomSpeed)));
+			camera.setScale(PApplet.lerp(camera.getScale(), newScale, PApplet.exp(-(zoomSpeed / deltaTime))));
 		}
 		// translate
 		if (camera.getCenter() != newCenter) {
-			camera.setCenter(PVector.lerp(camera.getCenter(), newCenter, PApplet.exp(-zoomSpeed)));
+			camera.setCenter(PVector.lerp(camera.getCenter(), newCenter, PApplet.exp(-(zoomSpeed / deltaTime))));
 		}
 		// black border movement
 		if (!cameraArea.sameDimensions(newCameraArea)) {
 			float topLeftX = PApplet.lerp(cameraArea.getTopLeft().x, newCameraArea.getTopLeft().x,
-					PApplet.exp(-boarderZoomSpeed));
+					PApplet.exp(-(boarderZoomSpeed / deltaTime))); // -boarderZoomSpeed
 			float topLeftY = PApplet.lerp(cameraArea.getTopLeft().y, newCameraArea.getTopLeft().y,
-					PApplet.exp(-boarderZoomSpeed));
+					PApplet.exp(-(boarderZoomSpeed / deltaTime)));
 			float bottomRightX = PApplet.lerp(cameraArea.getBottomRight().x, newCameraArea.getBottomRight().x,
-					PApplet.exp(-boarderZoomSpeed));
+					PApplet.exp(-(boarderZoomSpeed / deltaTime)));
 			float bottomRightY = PApplet.lerp(cameraArea.getBottomRight().y, newCameraArea.getBottomRight().y,
-					PApplet.exp(-boarderZoomSpeed));
+					PApplet.exp(-(boarderZoomSpeed / deltaTime)));
 			cameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
 		}
 

@@ -384,8 +384,8 @@ public class EditorJSON {
 						object.getFloat("cameraTopLeftY"));
 				PVector cameraBottomRight = new PVector(object.getFloat("cameraBottomRightX"),
 						object.getFloat("cameraBottomRightY"));
-				float cameraZoom = object.getFloat("cameraZoom");
-				float edgeZoom = object.getFloat("edgeZoom");
+//				float cameraZoom = object.getFloat("cameraZoom");
+//				float edgeZoom = object.getFloat("edgeZoom");
 				int color = object.getInt("color");
 				JSONArray colliders = object.getJSONArray("colliders");
 				CameraChange cc;
@@ -398,8 +398,8 @@ public class EditorJSON {
 				cc.setHeight(pHeight);
 				cc.setCameraTopLeft(cameraTopLeft);
 				cc.setCameraBottomRight(cameraBottomRight);
-				cc.setCameraZoom(cameraZoom);
-				cc.setEdgeZoom(edgeZoom);
+//				cc.setCameraZoom(cameraZoom);
+//				cc.setEdgeZoom(edgeZoom);
 				cc.setColor(color);
 
 				worldObjects.add(cc); // add the camera change to the world

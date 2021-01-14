@@ -25,8 +25,8 @@ public class CameraChange extends Event {
 
 		// set default values
 		this.camera = new Rectangle(-300, -400, 700, 900);
-		this.cameraZoom = 2;
-		this.edgeZoom = 2;
+		this.cameraZoom = 32; //2
+		this.edgeZoom = 32; //2
 		// this.type = type;
 	}
 
