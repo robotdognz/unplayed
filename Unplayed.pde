@@ -57,7 +57,7 @@ void draw() {
   //previousMilli = millis();
   
   long time = System.nanoTime();
-  float delta_time = (time - last_time) / 100000000f; //1000000f
+  float delta_time = (time - last_time) / 1000000000f; //1000000f
   last_time = time;
 
   //splash screen

@@ -28,7 +28,7 @@ public abstract class Widget {
 										// work with the current tool/mode to make menus easier to navigate
 
 	// subWidget fields
-	protected float animationSpeed = 12.8f;// 0.8f; // speed of subWidget animation
+	protected float animationSpeed = 0.0128f; // 12.8f;// 0.8f; // speed of subWidget animation
 	protected widgetDirection wd = widgetDirection.DOWN; // subWidget direction, defaults to down
 	protected ArrayList<Widget> subWidgets = new ArrayList<Widget>(); // if this is not null then this widget is a menu
 	protected float subWidgetSpacing; // = 180; // how far apart to draw subWidgets
