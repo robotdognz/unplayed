@@ -30,7 +30,7 @@ public class Player extends Editable {
 	private TileHandler tileTexture;
 
 	private int jumpCount = 0;
-	private final int playerSpeed = 10;
+	private final int playerSpeed = 625; // 10
 	private final int playerGravity = 2;
 	private final int terminalVelocity = 50;
 	private final int playerJumpPower = 30;
@@ -44,7 +44,7 @@ public class Player extends Editable {
 	private float vibeVelocity = 0; // extra vibration added on after max velocity
 	private float lastXPos; // x position one step back
 	private float lastLastXPos; // x position two steps back
-	
+
 	Player(PApplet p, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.p = p;
@@ -56,7 +56,7 @@ public class Player extends Editable {
 //			this.flipV();
 //		}
 		this.setAngle(tile.getAngle());
-				
+
 		areaSize = 500;
 
 		playerArea = new Rectangle(getX() - ((areaSize - getWidth()) / 2), getY() - ((areaSize - getHeight()) / 2),
@@ -68,7 +68,7 @@ public class Player extends Editable {
 
 		velocity = new PVector(0, 0);
 		playerColor = p.color(255, 94, 22);
-		
+
 		if (file != null && texture != null && texture.getTileMap().containsKey(file)) {
 			this.tileTexture = texture.getTileMap().get(file);
 			hasTexture = true;
@@ -79,7 +79,7 @@ public class Player extends Editable {
 		previousPosition = new PVector(getX(), getY()); // used to determine if the player is still
 //		showEvent = false;
 	}
-	
+
 	public File getFile() {
 		return file;
 	}
@@ -87,7 +87,7 @@ public class Player extends Editable {
 	public void jump() {
 		if (jumpCount > 0) {
 			jumpCount--;
-			velocity.y = -playerJumpPower;
+			velocity.y = -playerJumpPower; // TODO
 		}
 	}
 
@@ -97,8 +97,8 @@ public class Player extends Editable {
 				&& platformBottomRight.y > getTopLeft().y + Math.min(velocity.y, 0)
 				&& platformTopLeft.x < getTopLeft().x + getWidth() + velocity.x
 				&& platformBottomRight.x > getTopLeft().x + velocity.x) {
-			
-			if (platformBottomRight.y < getTopLeft().y + getHeight() / 100 - Math.min(velocity.y, 0) 
+
+			if (platformBottomRight.y < getTopLeft().y + getHeight() / 100 - Math.min(velocity.y, 0)
 					&& platformTopLeft.x < getTopLeft().x + getWidth() && platformBottomRight.x > getTopLeft().x) {
 				// player is under
 				if (velocity.y < 0) {
@@ -109,12 +109,12 @@ public class Player extends Editable {
 			} else if (platformTopLeft.y > getTopLeft().y + (getHeight() / 20) * 19 - Math.min(velocity.y, 0)) {
 				// player is above
 				if (velocity.y > 0) {
-					vibration = (int) Math.max((Math.exp((velocity.y + vibeVelocity) / 15) / 1.7), 1); 
+					vibration = (int) Math.max((Math.exp((velocity.y + vibeVelocity) / 15) / 1.7), 1);
 				}
 				setY(platformTopLeft.y - getHeight());
 				velocity.y = 0;
 				jumpCount = 2;
-			} else if (platformTopLeft.x > getTopLeft().x + (getWidth() / 3) * 2) { 
+			} else if (platformTopLeft.x > getTopLeft().x + (getWidth() / 3) * 2) {
 				// player is to the left
 				setX(platformTopLeft.x - getWidth());
 				velocity.x = 0;
@@ -143,21 +143,21 @@ public class Player extends Editable {
 		vibration = 0;
 		if (velocity.y < terminalVelocity) {
 			// limit fall speed by terminalVelocity
-			velocity.y += playerGravity;
+			velocity.y += playerGravity; // TODO
 			vibeVelocity = 0;
 		} else if (velocity.y + playerGravity > terminalVelocity) {
 			// fall speed exactly terminalVelocity
-			velocity.y = terminalVelocity;
+			velocity.y = terminalVelocity; // TODO
 			vibeVelocity += playerGravity / 2;
 		}
 		setY(getY() + velocity.y); // this comes before collision so that falling through perfect holes works
 		velocity.x = 0;
 
 		if (left) {
-			velocity.x = -playerSpeed;
+			velocity.x = -(playerSpeed * deltaTime); // TODO
 		}
 		if (right) {
-			velocity.x = playerSpeed;
+			velocity.x = playerSpeed * deltaTime; // TODO
 		}
 
 		// do collision
@@ -230,13 +230,13 @@ public class Player extends Editable {
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
 			graphics.popMatrix();
 		} else {
-			//missing texture
+			// missing texture
 			graphics.noStroke();
 			graphics.fill(255, 0, 0, 150);
 			graphics.rectMode(CORNER);
 			graphics.rect(getX(), getY(), getWidth(), getHeight());
 		}
-		
+
 //		 image(img, dx, dy, dw, dh, sx, sy, sw, sh); //d is where to draw it, s is
 //		 where (in pixels) to get it from the image
 //		 image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight(), 0, 0,
