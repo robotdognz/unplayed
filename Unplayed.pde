@@ -50,8 +50,8 @@ void init() {
 void draw() {
   deltaDiv = previousMilli / millis();
   //deltaFix = (GAMESPEED / FPS) * deltaDiv;
-  deltaFix = millis() - previousMilli;
-  previousMilli = millis();
+  deltaFix = (float) millis() - previousMilli;
+  previousMilli = (float) millis();
 
   //splash screen
   if (splash == 0) {  //draw black screen
