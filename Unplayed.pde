@@ -49,7 +49,8 @@ void init() {
 //this is the only draw method that should have step logic in it
 void draw() {
   deltaDiv = previousMilli / millis();
-  deltaFix = (GAMESPEED / FPS) * deltaDiv;
+  //deltaFix = (GAMESPEED / FPS) * deltaDiv;
+  deltaFix = millis() - previousMilli;
   previousMilli = millis();
 
   //splash screen
