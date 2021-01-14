@@ -22,6 +22,8 @@ final float GAMESPEED = 60;
 
 float previousMilli, deltaDiv, deltaFix;
 
+long last_time;
+
 void setup() {
   //setup graphics
   fullScreen(P2D);
@@ -29,6 +31,7 @@ void setup() {
   frameRate(FPS);
   splash = 0;
   previousMilli = millis();
+  last_time = System.nanoTime();
 }
 
 void init() {
@@ -52,6 +55,10 @@ void draw() {
   //deltaFix = (GAMESPEED / FPS) * deltaDiv;
   deltaFix = millis() - previousMilli;
   previousMilli = millis();
+  
+  long time = System.nanoTime();
+  float delta_time = (time - last_time) / 1000000;
+  last_time = time;
 
   //splash screen
   if (splash == 0) {  //draw black screen
@@ -74,7 +81,7 @@ void draw() {
   }
 
   //testing.draw(); //draw touch events
-  app.draw(deltaFix);
+  app.draw(delta_time); //deltaFix
 }
 
 @Override public String sketchPath(String where) {
