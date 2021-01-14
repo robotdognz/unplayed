@@ -131,7 +131,7 @@ public class Editor {
 		pvCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 
 		// debug display
-		debugVis = false;
+		debugVis = true; //false
 		frameDelay = 100;
 		textSize = (int) (p.width / 28.8); // 50
 	}
@@ -222,7 +222,7 @@ public class Editor {
 					p.height - editorBottom.getHeight() - textSize * 3);
 			p.text("FPS: " + PApplet.nf(this.frame, 1, 2), p.width / 2,
 					p.height - editorBottom.getHeight() - textSize * 2);
-			p.text("Delta: " + PApplet.nf(deltaTime, 1, 1), p.width / 2,
+			p.text("Delta: " + deltaTime, p.width / 2, //PApplet.nf(deltaTime, 1, 1)
 					p.height - editorBottom.getHeight() - textSize);
 		}
 	}

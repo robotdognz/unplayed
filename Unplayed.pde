@@ -18,7 +18,7 @@ PImage splashScreen; //the splash screen to be drawn while the game is loading
 
 //delta time
 final float FPS = 60;
-final float GAMESPEED = 60;
+//final float GAMESPEED = 60;
 
 float previousMilli, deltaDiv, deltaFix;
 
@@ -53,11 +53,11 @@ void init() {
 void draw() {
   //deltaDiv = previousMilli / millis();
   //deltaFix = (GAMESPEED / FPS) * deltaDiv;
-  deltaFix = millis() - previousMilli;
-  previousMilli = millis();
+  //deltaFix = millis() - previousMilli;
+  //previousMilli = millis();
   
   long time = System.nanoTime();
-  float delta_time = (time - last_time) / 1000000;
+  float delta_time = (time - last_time) / 100000000f; //1000000f
   last_time = time;
 
   //splash screen
