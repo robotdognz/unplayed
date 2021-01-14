@@ -204,23 +204,26 @@ public class Editor {
 			p.textAlign(CENTER, CENTER);
 			if (game.player != null) {
 				p.text("Position x:" + game.player.getX() + " y:" + game.player.getY(), p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 7);
+						p.height - editorBottom.getHeight() - textSize * 8);
 				p.text("Still: " + game.player.isStill(), p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 6);
+						p.height - editorBottom.getHeight() - textSize * 7);
 			}
 			if (game.placed != null) {
 				p.text("Placed: " + game.placed.size(), p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 5);
+						p.height - editorBottom.getHeight() - textSize * 6);
 			}
 			if (game.removed != null) {
 				p.text("Removed: " + game.removed.size(), p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 4);
+						p.height - editorBottom.getHeight() - textSize * 5);
 			}
 			p.text(PApplet.nf(convert.getScale(), 1, 2), p.width / 2,
-					p.height - editorBottom.getHeight() - textSize * 3);
+					p.height - editorBottom.getHeight() - textSize * 4);
 			p.text(game.playerObjects.size() + " : " + game.screenObjects.size(), p.width / 2,
+					p.height - editorBottom.getHeight() - textSize * 3);
+			p.text("FPS: " + PApplet.nf(this.frame, 1, 2), p.width / 2,
 					p.height - editorBottom.getHeight() - textSize * 2);
-			p.text("FPS: " + PApplet.nf(this.frame, 1, 2), p.width / 2, p.height - editorBottom.getHeight() - textSize);
+			p.text("Delta: " + PApplet.nf(deltaTime, 1, 2), p.width / 2,
+					p.height - editorBottom.getHeight() - textSize);
 		}
 	}
 
