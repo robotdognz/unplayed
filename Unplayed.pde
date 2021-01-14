@@ -27,7 +27,6 @@ void setup() {
   background(0, 78, 83);
   frameRate(FPS);
   splash = 0;
-  previousMilli = millis();
   last_time = System.nanoTime();
 }
 
