@@ -97,28 +97,29 @@ public class Player extends Editable {
 				&& platformBottomRight.y > getTopLeft().y + Math.min(velocity.y, 0)
 				&& platformTopLeft.x < getTopLeft().x + getWidth() + velocity.x
 				&& platformBottomRight.x > getTopLeft().x + velocity.x) {
-			if (platformBottomRight.y < getTopLeft().y + getHeight() / 100 - Math.min(velocity.y, 0) // position.y+playerH/100-Math.min(velocity.y,0)
+			
+			if (platformBottomRight.y < getTopLeft().y + getHeight() / 100 - Math.min(velocity.y, 0) 
 					&& platformTopLeft.x < getTopLeft().x + getWidth() && platformBottomRight.x > getTopLeft().x) {
 				// player is under
 				if (velocity.y < 0) {
-					vibration = (int) Math.max((Math.exp(Math.abs(velocity.y / 13)) / 5), 1); // 8
+					vibration = (int) Math.max((Math.exp(Math.abs(velocity.y / 13)) / 5), 1);
 				}
 				setY(platformBottomRight.y);
 				velocity.y = 0;
-			} else if (platformTopLeft.y > getTopLeft().y + (getHeight() / 20) * 19 - Math.min(velocity.y, 0)) { // +(playerH/20)*19
+			} else if (platformTopLeft.y > getTopLeft().y + (getHeight() / 20) * 19 - Math.min(velocity.y, 0)) {
 				// player is above
 				if (velocity.y > 0) {
-					vibration = (int) Math.max((Math.exp((velocity.y + vibeVelocity) / 15) / 1.7), 1); // (Math.exp((velocity.y+vibeVelocity)/15)/1.7))
+					vibration = (int) Math.max((Math.exp((velocity.y + vibeVelocity) / 15) / 1.7), 1); 
 				}
 				setY(platformTopLeft.y - getHeight());
 				velocity.y = 0;
 				jumpCount = 2;
-			} else if (platformTopLeft.x > getTopLeft().x + (getWidth() / 3) * 2) { // +(playerW/3)*2
+			} else if (platformTopLeft.x > getTopLeft().x + (getWidth() / 3) * 2) { 
 				// player is to the left
 				setX(platformTopLeft.x - getWidth());
 				velocity.x = 0;
 				wall = true;
-			} else if (platformBottomRight.x < getTopLeft().x + getWidth() / 3) { // +playerW/3
+			} else if (platformBottomRight.x < getTopLeft().x + getWidth() / 3) {
 				// player is to the right
 				setX(platformBottomRight.x);
 				velocity.x = 0;
@@ -133,7 +134,7 @@ public class Player extends Editable {
 	}
 
 	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
-		// store previous position, used for player end
+		// store previous position, used to check if player is still
 		previousPosition.x = getX();
 		previousPosition.y = getY();
 
