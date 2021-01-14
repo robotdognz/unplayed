@@ -83,10 +83,10 @@ public abstract class Widget {
 		if (position == null) {
 			position = new PVector(wX, wY);
 		} else if (position.x != wX || position.y != wY) {
-//			position.x = PApplet.lerp(position.x, wX, PApplet.exp(-animationSpeed));
-//			position.y = PApplet.lerp(position.y, wY, PApplet.exp(-animationSpeed));
-			position.x = PApplet.lerp(position.x, wX, PApplet.exp(-(animationSpeed * deltaTime)));
-			position.y = PApplet.lerp(position.y, wY, PApplet.exp(-(animationSpeed * deltaTime)));
+			position.x = PApplet.lerp(position.x, wX, PApplet.exp(-animationSpeed));
+			position.y = PApplet.lerp(position.y, wY, PApplet.exp(-animationSpeed));
+//			position.x = PApplet.lerp(position.x, wX, PApplet.exp(-(animationSpeed * deltaTime)));
+//			position.y = PApplet.lerp(position.y, wY, PApplet.exp(-(animationSpeed * deltaTime)));
 		}
 
 		// subWidget draw - comes before current widget so the sub widgets slide out
