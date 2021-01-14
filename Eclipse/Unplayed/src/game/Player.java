@@ -31,7 +31,7 @@ public class Player extends Editable {
 
 	private int jumpCount = 0;
 	private final float playerSpeed = 2.5f; // 10
-	private final int playerGravity = 2;
+	private final float playerGravity = 0.5f; //2
 	private final int terminalVelocity = 50;
 	private final int playerJumpPower = 30;
 	private boolean left = false;
