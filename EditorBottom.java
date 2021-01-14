@@ -80,7 +80,7 @@ public class EditorBottom extends Toolbar {
 	}
 
 	@Override
-	public void draw(PVector touch, Menu menu) {
+	public void draw(PVector touch, Menu menu, float deltaTime) {
 		// super.draw(touch, menu);
 		for (int i = 0; i < widgets.size(); i++) {
 			// draw the two behind tabs
@@ -102,7 +102,7 @@ public class EditorBottom extends Toolbar {
 			if (widgets.get(i).isActive()) {
 				p.image(tab, widgetOffset + widgetSpacing * i, widgetHeight, tabSize, tabSize);
 			}
-			widgets.get(i).draw(widgetOffset + widgetSpacing * i, widgetHeight);
+			widgets.get(i).draw(deltaTime, widgetOffset + widgetSpacing * i, widgetHeight);
 			widgets.get(i).updateActive();
 
 			if (menu == null) {

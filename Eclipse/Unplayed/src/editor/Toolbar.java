@@ -47,7 +47,7 @@ public abstract class Toolbar {
 	public void step() {
 	}
 
-	public void draw(PVector touch, Menu menu) {
+	public void draw(PVector touch, Menu menu, float deltaTime) {
 		if (bounds != null) {
 			p.noStroke();
 			p.fill(100, 100, 100, 100);

@@ -53,7 +53,7 @@ public class EditorTop extends Toolbar {
 	}
 
 	@Override
-	public void draw(PVector touch, Menu menu) {
+	public void draw(PVector touch, Menu menu, float deltaTime) {
 		// super.draw(touch, menu);
 		// draw ui extra piece
 		p.imageMode(CENTER);
@@ -76,7 +76,7 @@ public class EditorTop extends Toolbar {
 					}
 				}
 			}
-			widgets.get(i).draw(widgetOffset + widgetSpacing * i, widgetY);
+			widgets.get(i).draw(deltaTime, widgetOffset + widgetSpacing * i, widgetY); //FIXME: send delta time
 			widgets.get(i).updateActive();
 			if (menu == null) {
 				widgets.get(i).hover(touch);

@@ -29,7 +29,7 @@ public abstract class Widget {
 										// work with the current tool/mode to make menus easier to navigate
 
 	// subWidget fields
-	protected float animationSpeed = 0.8f; // speed of subWidget animation
+	protected float animationSpeed = 0.05f;// 0.8f; // speed of subWidget animation
 	protected widgetDirection wd = widgetDirection.DOWN; // subWidget direction, defaults to down
 	protected ArrayList<Widget> subWidgets = new ArrayList<Widget>(); // if this is not null then this widget is a menu
 	protected float subWidgetSpacing; // = 180; // how far apart to draw subWidgets
@@ -75,7 +75,7 @@ public abstract class Widget {
 		}
 	}
 
-	public void draw(float wX, float wY) {
+	public void draw(float deltaTime, float wX, float wY) {
 		if (parent != null) {
 			subWidgetSpacing = parent.widgetSpacing;
 		}
@@ -83,8 +83,10 @@ public abstract class Widget {
 		if (position == null) {
 			position = new PVector(wX, wY);
 		} else if (position.x != wX || position.y != wY) {
-			position.x = PApplet.lerp(position.x, wX, PApplet.exp(-animationSpeed));
-			position.y = PApplet.lerp(position.y, wY, PApplet.exp(-animationSpeed));
+//			position.x = PApplet.lerp(position.x, wX, PApplet.exp(-animationSpeed));
+//			position.y = PApplet.lerp(position.y, wY, PApplet.exp(-animationSpeed));
+			position.x = PApplet.lerp(position.x, wX, PApplet.exp(-(animationSpeed * deltaTime)));
+			position.y = PApplet.lerp(position.y, wY, PApplet.exp(-(animationSpeed * deltaTime)));
 		}
 
 		// subWidget draw - comes before current widget so the sub widgets slide out
@@ -104,16 +106,16 @@ public abstract class Widget {
 				}
 				switch (wd) {
 				case DOWN:
-					subWidgets.get(i).draw(wX, wY + widgetOffset);
+					subWidgets.get(i).draw(deltaTime, wX, wY + widgetOffset);
 					break;
 				case UP:
-					subWidgets.get(i).draw(wX, wY - widgetOffset);
+					subWidgets.get(i).draw(deltaTime, wX, wY - widgetOffset);
 					break;
 				case LEFT:
-					subWidgets.get(i).draw(wX - widgetOffset, wY);
+					subWidgets.get(i).draw(deltaTime, wX - widgetOffset, wY);
 					break;
 				case RIGHT:
-					subWidgets.get(i).draw(wX + widgetOffset, wY);
+					subWidgets.get(i).draw(deltaTime, wX + widgetOffset, wY);
 					break;
 				}
 			}

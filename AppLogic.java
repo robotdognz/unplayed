@@ -219,10 +219,10 @@ public class AppLogic {
 		}
 
 		if (editorToggle && editor != null) {
-			editor.draw(lastTouch, menu);
+			editor.draw(deltaTime, lastTouch, menu);
 		} else {
 			for (int i = 0; i < widgets.size(); i++) {
-				widgets.get(i).draw(widgetSpacing * (i + 1), widgetHeight);
+				widgets.get(i).draw(deltaTime, widgetSpacing * (i + 1), widgetHeight);
 				widgets.get(i).updateActive();
 				if (menu == null) {
 					widgets.get(i).hover(lastTouch);

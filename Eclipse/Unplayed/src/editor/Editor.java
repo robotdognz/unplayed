@@ -162,7 +162,7 @@ public class Editor {
 
 	// a bunch of this probably needs to be moved to step, for logical consistency
 	// only drawing should be in draw
-	public void draw(PVector touch, Menu menu) {
+	public void draw(float deltaTime, PVector touch, Menu menu) {
 		// draw the level
 		if (!showPageView) {
 			drawLevel();
@@ -193,9 +193,9 @@ public class Editor {
 		}
 
 		// draw toolbars
-		editorTop.draw(touch, menu);
-		editorBottom.draw(touch, menu);
-		editorSide.draw(touch, menu);
+		editorTop.draw(touch, menu, deltaTime);
+		editorBottom.draw(touch, menu, deltaTime);
+		editorSide.draw(touch, menu, deltaTime);
 
 		// draw frame counter and other readouts
 		if (debugVis) {

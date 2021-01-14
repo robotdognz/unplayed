@@ -189,7 +189,7 @@ public class EditorSide extends Toolbar {
 	}
 
 	@Override
-	public void draw(PVector touch, Menu menu) {
+	public void draw(PVector touch, Menu menu, float deltaTime) {
 		// super.draw(touch, menu);
 
 		// step - reset the side toolbar's options and abort drawing if nothing selected
@@ -234,7 +234,7 @@ public class EditorSide extends Toolbar {
 					}
 				}
 
-				widgets.get(i).draw(widgetX, widgetOffset + widgetSpacing * i);
+				widgets.get(i).draw(deltaTime, widgetX, widgetOffset + widgetSpacing * i);
 				widgets.get(i).updateActive();
 				if (menu == null) {
 					widgets.get(i).hover(touch);
