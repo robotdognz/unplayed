@@ -69,19 +69,24 @@ public abstract class Widget {
 	}
 
 	public void draw(float deltaTime, float wX, float wY) {
-		if (parent != null) {
-			subWidgetSpacing = parent.widgetSpacing;
-		}
+		updatePosition(deltaTime, wX, wY);
+		drawWidget(deltaTime, wX, wY);
+	}
+
+	public void updatePosition(float deltaTime, float wX, float wY) {
 		// update position
 		if (position == null) {
 			position = new PVector(wX, wY);
 		} else if (position.x != wX || position.y != wY) {
-//			position.x = PApplet.lerp(position.x, wX, PApplet.exp(-animationSpeed));
-//			position.y = PApplet.lerp(position.y, wY, PApplet.exp(-animationSpeed));
 			position.x = PApplet.lerp(position.x, wX, PApplet.exp(-(animationSpeed / deltaTime)));
 			position.y = PApplet.lerp(position.y, wY, PApplet.exp(-(animationSpeed / deltaTime)));
 		}
+	}
 
+	public void drawWidget(float deltaTime, float wX, float wY) {
+		if (parent != null) {
+			subWidgetSpacing = parent.widgetSpacing;
+		}
 		// subWidget draw - comes before current widget so the sub widgets slide out
 		// from behind
 		if (subWidgets.size() > 0) { // if this widget is a menu and it has been opened

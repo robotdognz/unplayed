@@ -46,7 +46,7 @@ public class EditorSide extends Toolbar {
 
 	public EditorSide(PApplet p, Editor editor) {
 		super(p, editor);
-		super.folder = "ui" + '/'; // p.dataPath("ui") + '/';
+		super.folder = "ui" + '/';
 
 		// create widgets
 		Widget deleteW = new WidgetDelete(p, editor, this);
@@ -205,6 +205,7 @@ public class EditorSide extends Toolbar {
 			float currentWidgetHeight = 0; // used to find the right most edge of the longest open widget menu
 			boolean wMenuOpen = false;
 			for (int i = 0; i < widgets.size(); i++) {
+				widgets.get(i).updatePosition(deltaTime, widgetX, widgetOffset + widgetSpacing * i);
 
 				// draw editor side background
 				// TODO: the UI background moves one frame behind the widgets because they
@@ -237,7 +238,7 @@ public class EditorSide extends Toolbar {
 					}
 				}
 
-				widgets.get(i).draw(deltaTime, widgetX, widgetOffset + widgetSpacing * i);
+				widgets.get(i).drawWidget(deltaTime, widgetX, widgetOffset + widgetSpacing * i); //draw()
 				widgets.get(i).updateActive();
 				if (menu == null) {
 					widgets.get(i).hover(touch);
