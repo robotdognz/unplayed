@@ -24,6 +24,7 @@
 15/01/12
 -Implemented delta time for camera movement
 -Implemented fixed time step for player physics (requires new physics system)
+-Fixed editor ui animation sync issues
 
 1.1.0:	Christmas break patch
 

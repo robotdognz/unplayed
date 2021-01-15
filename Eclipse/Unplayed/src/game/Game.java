@@ -59,7 +59,6 @@ public class Game {
 
 	public Game(PApplet p, AppLogic app, Camera c, Vibe v, TextureCache texture, Converter convert) {
 		// legacy variables from level class TODO: write these out eventually
-//		playerStart = new Rectangle(0, 0, 100, 100);
 		PVector cameraTopLeft = new PVector(-400, -400);
 		PVector cameraBottomRight = new PVector(500, 600);
 		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
@@ -194,7 +193,6 @@ public class Game {
 		Editor editor = app.getEditor();
 
 		if (editor == null) { // in a normal game
-			// TODO: load next level, etc.
 			app.nextLevel();
 		} else { // in the editor
 			editor.toast.showToast("Level Complete");
@@ -396,7 +394,7 @@ public class Game {
 		pageView.step(); // step the page view
 	}
 
-	void screenMovement(float deltaTime) { // TODO: implement delta time
+	void screenMovement(float deltaTime) {
 		// tall screen space scaling
 		// uses the 'new...' versions of edge variables so that
 		// scaling happens immediately

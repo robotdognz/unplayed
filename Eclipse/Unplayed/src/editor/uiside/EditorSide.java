@@ -205,12 +205,10 @@ public class EditorSide extends Toolbar {
 			float currentWidgetHeight = 0; // used to find the right most edge of the longest open widget menu
 			boolean wMenuOpen = false;
 			for (int i = 0; i < widgets.size(); i++) {
+				// update the position of the widget
 				widgets.get(i).updatePosition(deltaTime, widgetX, widgetOffset + widgetSpacing * i);
 
 				// draw editor side background
-				// TODO: the UI background moves one frame behind the widgets because they
-				// update their position when drawn and the ui draws before them from their
-				// previous position.
 				if (widgets.get(i).getPosition() != null) {
 					p.imageMode(CENTER);
 					if (i == 0) {
@@ -238,7 +236,8 @@ public class EditorSide extends Toolbar {
 					}
 				}
 
-				widgets.get(i).drawWidget(deltaTime, widgetX, widgetOffset + widgetSpacing * i); //draw()
+				// uses drawWidget() instead of draw() so position isn't updated
+				widgets.get(i).drawWidget(deltaTime, widgetX, widgetOffset + widgetSpacing * i);
 				widgets.get(i).updateActive();
 				if (menu == null) {
 					widgets.get(i).hover(touch);

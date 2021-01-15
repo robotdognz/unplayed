@@ -69,12 +69,13 @@ public abstract class Widget {
 	}
 
 	public void draw(float deltaTime, float wX, float wY) {
+		// standard draw: draws the widget and updates in in one method
 		updatePosition(deltaTime, wX, wY);
 		drawWidget(deltaTime, wX, wY);
 	}
 
 	public void updatePosition(float deltaTime, float wX, float wY) {
-		// update position
+		// update widget position
 		if (position == null) {
 			position = new PVector(wX, wY);
 		} else if (position.x != wX || position.y != wY) {
@@ -84,6 +85,7 @@ public abstract class Widget {
 	}
 
 	public void drawWidget(float deltaTime, float wX, float wY) {
+		// draw the widget
 		if (parent != null) {
 			subWidgetSpacing = parent.widgetSpacing;
 		}
