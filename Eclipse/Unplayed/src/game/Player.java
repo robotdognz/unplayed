@@ -53,8 +53,11 @@ public class Player extends Editable {
 	// delta/timestep
 //	private float accumulator = 0;
 //	private float stepSize = (1f / 60f) / 4f;
+	
+	//box2d
+	BodyDef bodyDef;
 
-	Player(PApplet p, TextureCache texture, Tile tile, Vibe v) {
+	Player(PApplet p, World b2World, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.p = p;
 		this.file = tile.getFile();
@@ -87,6 +90,16 @@ public class Player extends Editable {
 
 		previousPosition = new PVector(getX(), getY()); // used to determine if the player is still
 //		showEvent = false;
+		
+		//box2d
+		bodyDef = new BodyDef();
+		bodyDef.type = BodyType.DYNAMIC;
+		bodyDef.position.x = getX();
+		bodyDef.position.y = getY();
+		bodyDef.angle = 0;
+		Body dynamicBody = b2World.createBody(bodyDef);
+		
+
 	}
 
 	public File getFile() {
