@@ -13,6 +13,8 @@ import objects.Tile;
 import objects.View;
 import objects.events.PlayerStart;
 import processing.core.*;
+import shiffman.box2d.Box2DProcessing;
+
 import static processing.core.PConstants.*;
 
 import org.jbox2d.dynamics.*;
@@ -63,7 +65,7 @@ public class Game {
 	public float boarderZoomSpeed = 0.1f; // 0.1 is default
 	
 	//box2d
-	public World b2World;
+	public Box2DProcessing box2d;
 
 	public Game(PApplet p, AppLogic app, Camera c, Vibe v, TextureCache texture, Converter convert) {
 		// legacy variables from level class TODO: write these out eventually
@@ -116,7 +118,8 @@ public class Game {
 		newCameraArea = cameraArea.copy();
 		
 		//box2d
-		b2World = new World(new Vec2(0, 0));
+		Box2DProcessing box2d = new Box2DProcessing(p);
+		box2d.createWorld();
 	}
 
 	public void setPlayerStart(PlayerStart start) {
@@ -265,7 +268,7 @@ public class Game {
 	public void createPlayer(Rectangle playerArea) {
 		if (playerArea instanceof PlayerStart) {
 			Tile current = ((PlayerStart) playerArea).getRequired();
-			player = new Player(p, b2World, texture, current, vibe);
+			player = new Player(p, box2d, texture, current, vibe);
 		} else if (playerArea instanceof Tile) {
 			HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
 			world.retrieve(returnObjects, playerArea);
@@ -293,11 +296,11 @@ public class Game {
 				removed.add(found);
 				world.remove(found);
 				if (playerCheckpoint != null) {
-					player = new Player(p, b2World, texture, playerCheckpoint, vibe);
+					player = new Player(p, box2d, texture, playerCheckpoint, vibe);
 				} else if (playerStart != null) {
 					Tile current = ((PlayerStart) playerStart).getRequired();
 					if (current != null) {
-						player = new Player(p, b2World, texture, current, vibe);
+						player = new Player(p, box2d, texture, current, vibe);
 					}
 				}
 

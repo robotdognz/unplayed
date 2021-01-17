@@ -11,6 +11,8 @@ import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
 import processing.core.*;
+import shiffman.box2d.Box2DProcessing;
+
 import static processing.core.PConstants.*;
 
 import org.jbox2d.dynamics.*;
@@ -53,11 +55,13 @@ public class Player extends Editable {
 	// delta/timestep
 //	private float accumulator = 0;
 //	private float stepSize = (1f / 60f) / 4f;
-	
-	//box2d
-	BodyDef bodyDef;
 
-	Player(PApplet p, World b2World, TextureCache texture, Tile tile, Vibe v) {
+	// box2d
+	Box2DProcessing box2d;
+	BodyDef bodyDef;
+	Body dynamicBody;
+
+	Player(PApplet p, Box2DProcessing box2d, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.p = p;
 		this.file = tile.getFile();
@@ -90,16 +94,26 @@ public class Player extends Editable {
 
 		previousPosition = new PVector(getX(), getY()); // used to determine if the player is still
 //		showEvent = false;
-		
-		//box2d
+
+		// box2d
+
+		this.box2d = box2d;
+
 		bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DYNAMIC;
 		bodyDef.position.x = getX();
 		bodyDef.position.y = getY();
 		bodyDef.angle = 0;
-		Body dynamicBody = b2World.createBody(bodyDef);
-		
+		dynamicBody = box2d.createBody(bodyDef);
 
+		PolygonShape boxShape = new PolygonShape();
+		boxShape.setAsBox(getWidth(), getHeight());
+
+		FixtureDef boxFixtureDef = new FixtureDef();
+		boxFixtureDef.shape = boxShape;
+		boxFixtureDef.density = 1;
+
+		Fixture playerPhysicsFixture = dynamicBody.createFixture(boxFixtureDef);
 	}
 
 	public File getFile() {
@@ -270,6 +284,18 @@ public class Player extends Editable {
 			graphics.rectMode(CORNER);
 			graphics.rect(getX(), getY(), getWidth(), getHeight());
 		}
+
+		// draw box2d
+		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
+		float a = dynamicBody.getAngle();
+		graphics.pushMatrix();
+		graphics.rectMode(CENTER);
+		graphics.translate(pos.x, pos.y);
+		graphics.rotate(-a);
+		graphics.fill(255, 0, 0);
+		graphics.noStroke();
+		graphics.rect(0, 0, getWidth(), getHeight());
+		graphics.popMatrix();
 
 //		 image(img, dx, dy, dw, dh, sx, sy, sw, sh); //d is where to draw it, s is
 //		 where (in pixels) to get it from the image
