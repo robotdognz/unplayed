@@ -267,24 +267,6 @@ public class Player extends Editable {
 	}
 
 	public void draw(PGraphics graphics, float scale) {
-		// draw player
-		graphics.imageMode(CORNER);
-		if (hasTexture) {
-			graphics.imageMode(CENTER);
-			graphics.pushMatrix();
-			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
-			graphics.rotate(PApplet.radians(angle)); // angle of the tile
-//			graphics.scale(flipX, flipY); // flipping the tile
-			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
-			graphics.popMatrix();
-		} else {
-			// missing texture
-			graphics.noStroke();
-			graphics.fill(255, 0, 0, 150);
-			graphics.rectMode(CORNER);
-			graphics.rect(getX(), getY(), getWidth(), getHeight());
-		}
-
 		// draw box2d
 		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 		float a = dynamicBody.getAngle();
@@ -296,6 +278,25 @@ public class Player extends Editable {
 		graphics.noStroke();
 		graphics.rect(0, 0, getWidth(), getHeight());
 		graphics.popMatrix();
+
+		// draw player
+		graphics.imageMode(CORNER);
+		if (hasTexture) {
+			graphics.imageMode(CENTER);
+			graphics.pushMatrix();
+			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
+			graphics.rotate(PApplet.radians(angle)); // angle of the tile
+//			graphics.scale(flipX, flipY); // flipping the tile
+			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
+			graphics.text(pos.x + " " + pos.y, getX(), getY());
+			graphics.popMatrix();
+		} else {
+			// missing texture
+			graphics.noStroke();
+			graphics.fill(255, 0, 0, 150);
+			graphics.rectMode(CORNER);
+			graphics.rect(getX(), getY(), getWidth(), getHeight());
+		}
 
 //		 image(img, dx, dy, dw, dh, sx, sy, sw, sh); //d is where to draw it, s is
 //		 where (in pixels) to get it from the image
