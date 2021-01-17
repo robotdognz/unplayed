@@ -118,7 +118,7 @@ public class Game {
 		newCameraArea = cameraArea.copy();
 		
 		//box2d
-		Box2DProcessing box2d = new Box2DProcessing(p);
+		box2d = new Box2DProcessing(p);
 		box2d.createWorld();
 	}
 
