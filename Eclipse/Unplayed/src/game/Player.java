@@ -13,6 +13,11 @@ import objects.Tile;
 import processing.core.*;
 import static processing.core.PConstants.*;
 
+import org.jbox2d.dynamics.*;
+import org.jbox2d.collision.*;
+import org.jbox2d.collision.shapes.*;
+import org.jbox2d.common.*;
+
 public class Player extends Editable {
 	private PApplet p;
 	private PVector previousPosition;
