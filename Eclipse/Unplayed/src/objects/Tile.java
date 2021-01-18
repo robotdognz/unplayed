@@ -91,17 +91,6 @@ public class Tile extends Editable {
 	}
 
 	public void draw(PGraphics graphics, float scale) {
-		// draw box2d
-		if (box2d != null) {
-			Vec2 pos = box2d.getBodyPixelCoord(staticBody);
-			graphics.pushMatrix();
-			graphics.rectMode(CENTER);
-			graphics.translate(pos.x, pos.y);
-			graphics.fill(0, 0, 255);
-			graphics.noStroke();
-			graphics.rect(0, 0, getWidth(), getHeight());
-			graphics.popMatrix();
-		}
 
 		if (hasTexture) {
 			// texture isn't missing
@@ -127,6 +116,18 @@ public class Tile extends Editable {
 			graphics.fill(255, 0, 0, 150);
 			graphics.rectMode(CORNER);
 			graphics.rect(getX(), getY(), getWidth(), getHeight());
+		}
+
+		// draw box2d
+		if (box2d != null) {
+			Vec2 pos = box2d.getBodyPixelCoord(staticBody);
+			graphics.pushMatrix();
+			graphics.rectMode(CENTER);
+			graphics.translate(pos.x, pos.y);
+			graphics.fill(0, 0, 255);
+			graphics.noStroke();
+			graphics.rect(0, 0, getWidth(), getHeight());
+			graphics.popMatrix();
 		}
 	}
 
