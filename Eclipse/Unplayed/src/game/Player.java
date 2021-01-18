@@ -130,6 +130,9 @@ public class Player extends Editable {
 	}
 
 	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
+		//box2d
+		moveBox();
+		
 //		// fixed time step
 //		accumulator += deltaTime;
 //		while (accumulator >= stepSize) {
@@ -139,6 +142,21 @@ public class Player extends Editable {
 //		accumulator = 0; // throw out the extra, might not be the best way
 
 		doPlayerStep(objects, g);
+	}
+
+	private void moveBox() {
+		Vec2 vel = dynamicBody.getLinearVelocity();
+		float desiredVel = 0;
+		if (left) {
+			desiredVel = Math.max(vel.x - 1.0f, -15.0f);
+		} else if (right) {
+			desiredVel = Math.min(vel.x + 1.0f, 15.0f);
+		} else {
+			desiredVel = vel.x * 0.999f; // *0.98f
+		}
+		float velChange = desiredVel - vel.x;
+		float impulse = dynamicBody.getMass() * velChange;
+		dynamicBody.applyLinearImpulse(new Vec2(impulse, 0), dynamicBody.getWorldCenter(), true);
 	}
 
 	private void doPlayerStep(HashSet<Rectangle> objects, Game g) {
