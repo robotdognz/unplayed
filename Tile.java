@@ -57,9 +57,11 @@ public class Tile extends Editable {
 			staticBody.createFixture(boxFixtureDef);
 		}
 	}
-	
+
 	public void destroy() {
-		box2d.destroyBody(staticBody);
+		if (box2d != null) {
+			box2d.destroyBody(staticBody);
+		}
 	}
 
 	public void drawTransparent(PGraphics graphics, float scale) {
