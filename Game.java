@@ -393,16 +393,6 @@ public class Game {
 
 	public void step(float deltaTime) {
 
-		// delta / box2d
-		accumulator += deltaTime;
-		while (accumulator >= stepSize) {
-			accumulator -= stepSize;
-
-			// TODO: figure out what to use for the two ints
-			box2d.step(stepSize, 100, 100);
-		}
-		// accumulator = 0;
-
 		// old
 		screenObjects.clear();
 		world.retrieve(screenObjects, screenSpace);
@@ -423,6 +413,16 @@ public class Game {
 		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
 
 		pageView.step(); // step the page view
+
+		// delta / box2d
+		accumulator += deltaTime;
+		while (accumulator >= stepSize) {
+			accumulator -= stepSize;
+			player.moveBox();
+			// TODO: figure out what to use for the two ints
+			box2d.step(stepSize, 100, 100);
+		}
+		// accumulator = 0;
 	}
 
 	void screenMovement(float deltaTime) {

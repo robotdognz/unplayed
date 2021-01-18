@@ -130,8 +130,6 @@ public class Player extends Editable {
 	}
 
 	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
-		//box2d
-		moveBox();
 		
 //		// fixed time step
 //		accumulator += deltaTime;
@@ -144,7 +142,7 @@ public class Player extends Editable {
 		doPlayerStep(objects, g);
 	}
 
-	private void moveBox() {
+	public void moveBox() {
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		float desiredVel = 0;
 		if (left) {
