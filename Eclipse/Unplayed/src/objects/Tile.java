@@ -35,8 +35,8 @@ public class Tile extends Editable {
 
 		if (box2d != null) {
 			// box2d
-			float box2dW = box2d.scalarPixelsToWorld((getWidth()-0.5f) / 2);
-			float box2dH = box2d.scalarPixelsToWorld((getHeight()-0.5f) / 2);
+			float box2dW = box2d.scalarPixelsToWorld(getWidth() / 2);
+			float box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
 
 			// body
 			bodyDef = new BodyDef();
