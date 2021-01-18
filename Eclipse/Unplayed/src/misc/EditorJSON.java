@@ -292,7 +292,7 @@ public class EditorJSON {
 				boolean flipH = object.getBoolean("flipH");
 				boolean flipV = object.getBoolean("flipV");
 				float angle = object.getFloat("angle");
-				Tile t = new Tile(texture, textureFile, pX, pY);
+				Tile t = new Tile(game.box2d, texture, textureFile, pX, pY);
 				t.setAngle(angle);
 				if (flipH) {
 					t.flipH();

@@ -252,7 +252,7 @@ public class Game {
 			this.cameraAreaCheckpoint = cameraArea.copy();
 
 			// make the matching tile to fill the slot
-			Tile newTile = new Tile(texture, player.getFile(), player.getX(), player.getY());
+			Tile newTile = new Tile(box2d, texture, player.getFile(), player.getX(), player.getY());
 			if (player.isFlippedH()) {
 				newTile.flipH();
 			}

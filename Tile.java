@@ -33,27 +33,29 @@ public class Tile extends Editable {
 			hasTexture = false;
 		}
 
-		// box2d
-		float box2dW = box2d.scalarPixelsToWorld(getWidth() / 2);
-		float box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
+		if (box2d != null) {
+			// box2d
+			float box2dW = box2d.scalarPixelsToWorld(getWidth() / 2);
+			float box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
 
-		// body
-		bodyDef = new BodyDef();
-		bodyDef.type = BodyType.STATIC;
-		bodyDef.position.set(box2d.coordPixelsToWorld(x, y));
-		bodyDef.angle = 0;
-		staticBody = box2d.createBody(bodyDef);
+			// body
+			bodyDef = new BodyDef();
+			bodyDef.type = BodyType.STATIC;
+			bodyDef.position.set(box2d.coordPixelsToWorld(x, y));
+			bodyDef.angle = 0;
+			staticBody = box2d.createBody(bodyDef);
 
-		// shape
-		PolygonShape boxShape = new PolygonShape();
-		boxShape.setAsBox(box2dW, box2dH);
+			// shape
+			PolygonShape boxShape = new PolygonShape();
+			boxShape.setAsBox(box2dW, box2dH);
 
-		// fixture
-		FixtureDef boxFixtureDef = new FixtureDef();
-		boxFixtureDef.shape = boxShape;
-		boxFixtureDef.density = 1;
-		boxFixtureDef.friction = 0.6f; // 0.6
-		staticBody.createFixture(boxFixtureDef);
+			// fixture
+			FixtureDef boxFixtureDef = new FixtureDef();
+			boxFixtureDef.shape = boxShape;
+			boxFixtureDef.density = 1;
+			boxFixtureDef.friction = 0.6f; // 0.6
+			staticBody.createFixture(boxFixtureDef);
+		}
 	}
 
 	public void drawTransparent(PGraphics graphics, float scale) {
@@ -90,14 +92,16 @@ public class Tile extends Editable {
 
 	public void draw(PGraphics graphics, float scale) {
 		// draw box2d
-		Vec2 pos = box2d.getBodyPixelCoord(staticBody);
-		graphics.pushMatrix();
-		graphics.rectMode(CENTER);
-		graphics.translate(pos.x, pos.y);
-		graphics.fill(0, 0, 255);
-		graphics.noStroke();
-		graphics.rect(0, 0, getWidth(), getHeight());
-		graphics.popMatrix();
+		if (box2d != null) {
+			Vec2 pos = box2d.getBodyPixelCoord(staticBody);
+			graphics.pushMatrix();
+			graphics.rectMode(CENTER);
+			graphics.translate(pos.x, pos.y);
+			graphics.fill(0, 0, 255);
+			graphics.noStroke();
+			graphics.rect(0, 0, getWidth(), getHeight());
+			graphics.popMatrix();
+		}
 
 		if (hasTexture) {
 			// texture isn't missing
