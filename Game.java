@@ -63,9 +63,13 @@ public class Game {
 	public Rectangle cameraArea;
 	public Rectangle newCameraArea;
 	public float boarderZoomSpeed = 0.1f; // 0.1 is default
-	
-	//box2d
+
+	// box2d
 	public Box2DProcessing box2d;
+
+	// delta time
+	float accumulator = 0;
+	float stepSize = (1f / 60f) / 4f;
 
 	public Game(PApplet p, AppLogic app, Camera c, Vibe v, TextureCache texture, Converter convert) {
 		// legacy variables from level class TODO: write these out eventually
@@ -116,10 +120,11 @@ public class Game {
 		float camX = camera.getCenter().x - newScale / 2;
 		cameraArea = new Rectangle(camX, bottomOfTopBar, newScale, topOfBottomBar - bottomOfTopBar);
 		newCameraArea = cameraArea.copy();
-		
-		//box2d
+
+		// box2d
 		box2d = new Box2DProcessing(p);
 		box2d.createWorld();
+		box2d.setGravity(0, -150);
 	}
 
 	public void setPlayerStart(PlayerStart start) {
@@ -387,6 +392,18 @@ public class Game {
 	}
 
 	public void step(float deltaTime) {
+
+		// delta / box2d
+		accumulator += deltaTime;
+		while (accumulator >= stepSize) {
+			accumulator -= stepSize;
+
+			// TODO: figure out what to use for the two ints
+			box2d.step(stepSize, 100, 100);
+		}
+		// accumulator = 0;
+
+		// old
 		screenObjects.clear();
 		world.retrieve(screenObjects, screenSpace);
 

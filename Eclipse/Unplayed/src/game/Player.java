@@ -52,10 +52,6 @@ public class Player extends Editable {
 	private float lastXPos; // x position one step back
 	private float lastLastXPos; // x position two steps back
 
-	// delta/timestep
-//	private float accumulator = 0;
-//	private float stepSize = (1f / 60f) / 4f;
-
 	// box2d
 	Box2DProcessing box2d;
 	BodyDef bodyDef;
@@ -99,21 +95,27 @@ public class Player extends Editable {
 
 		this.box2d = box2d;
 
+		float box2dW = box2d.scalarPixelsToWorld(getWidth() / 2);
+		float box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
+
+		// body
 		bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DYNAMIC;
-		bodyDef.position.x = getX();
-		bodyDef.position.y = getY();
+		bodyDef.position.set(box2d.coordPixelsToWorld(getX(), getY()));
 		bodyDef.angle = 0;
 		dynamicBody = box2d.createBody(bodyDef);
+		dynamicBody.setFixedRotation(true);
 
+		// shape
 		PolygonShape boxShape = new PolygonShape();
-		boxShape.setAsBox(getWidth(), getHeight());
+		boxShape.setAsBox(box2dW, box2dH);
 
+		// fixture
 		FixtureDef boxFixtureDef = new FixtureDef();
 		boxFixtureDef.shape = boxShape;
 		boxFixtureDef.density = 1;
-
-		Fixture playerPhysicsFixture = dynamicBody.createFixture(boxFixtureDef);
+		boxFixtureDef.friction = 0.6f;
+		dynamicBody.createFixture(boxFixtureDef);
 	}
 
 	public File getFile() {
@@ -288,7 +290,10 @@ public class Player extends Editable {
 			graphics.rotate(PApplet.radians(angle)); // angle of the tile
 //			graphics.scale(flipX, flipY); // flipping the tile
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
-			graphics.text(pos.x + " " + pos.y, getX(), getY());
+
+			// draw box2d position
+			graphics.text(pos.x + " " + pos.y, 0, 0);
+
 			graphics.popMatrix();
 		} else {
 			// missing texture
