@@ -126,6 +126,7 @@ public class Player extends Editable {
 		if (jumpCount > 0) {
 			jumpCount--;
 			velocity.y = -playerJumpPower; // TODO
+			boxJump();
 		}
 	}
 
@@ -155,6 +156,11 @@ public class Player extends Editable {
 		float velChange = desiredVel - vel.x;
 		float impulse = dynamicBody.getMass() * velChange;
 		dynamicBody.applyLinearImpulse(new Vec2(impulse, 0), dynamicBody.getWorldCenter(), true);
+	}
+	
+	public void boxJump() {
+		float impulse = dynamicBody.getMass() * 50;
+	    dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
 	}
 
 	private void doPlayerStep(HashSet<Rectangle> objects, Game g) {

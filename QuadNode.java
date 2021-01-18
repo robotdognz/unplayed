@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import objects.Rectangle;
+import objects.Tile;
 import objects.events.CameraChange;
 import objects.events.CameraCollider;
 import processing.core.PApplet;
@@ -169,6 +170,9 @@ public class QuadNode {
 				}
 				for (Rectangle r : matches) { // remove them
 					objects.remove(r);
+					if(r instanceof Tile) {
+						((Tile) r).destroy();
+					}
 				}
 			}
 		}
