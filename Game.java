@@ -418,7 +418,9 @@ public class Game {
 		accumulator += deltaTime;
 		while (accumulator >= stepSize) {
 			accumulator -= stepSize;
-			player.moveBox();
+			if (player != null) {
+				player.moveBox();
+			}
 			// TODO: figure out what to use for the two ints
 			box2d.step(stepSize, 100, 100);
 		}
