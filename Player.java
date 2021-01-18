@@ -95,8 +95,8 @@ public class Player extends Editable {
 
 		this.box2d = box2d;
 
-		float box2dW = box2d.scalarPixelsToWorld((getWidth()-0.5f) / 2);
-		float box2dH = box2d.scalarPixelsToWorld((getHeight()-0.5f) / 2);
+		float box2dW = box2d.scalarPixelsToWorld(getWidth() / 2);
+		float box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
 
 		// body
 		bodyDef = new BodyDef();
