@@ -159,7 +159,7 @@ public class Player extends Editable {
 	}
 	
 	public void boxJump() {
-		float impulse = dynamicBody.getMass() * 150; //50
+		float impulse = dynamicBody.getMass() * 100; //50
 	    dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
 	}
 
