@@ -36,7 +36,6 @@ public class Tile extends Editable {
 			hasTexture = false;
 		}
 
-		create();
 	}
 
 	public void create() {
@@ -145,14 +144,6 @@ public class Tile extends Editable {
 	}
 
 	public void draw(PGraphics graphics, float scale) {
-		graphics.pushMatrix();
-		graphics.rectMode(CENTER);
-	    Vec2 v1 = box2d.coordWorldToPixels(topEdge.m_vertex1);
-	    Vec2 v2 = box2d.coordWorldToPixels(topEdge.m_vertex2);
-	    graphics.stroke(0, 100, 255);
-	    graphics.strokeWeight(10);
-	    graphics.line(v1.x, v1.y, v2.x, v2.y);
-	    graphics.popMatrix();
 
 		if (hasTexture) {
 			// texture isn't missing

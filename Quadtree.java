@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import objects.Rectangle;
+import objects.Tile;
 import objects.events.CameraChange;
 import processing.core.PApplet;
 
@@ -32,6 +33,9 @@ public class Quadtree {
 			cameras.add((CameraChange) current);
 		}
 		root.nodeInsert(current);
+		if(current instanceof Tile) {
+			((Tile) current).create();
+		}
 	}
 
 	public void remove(Rectangle current) {
