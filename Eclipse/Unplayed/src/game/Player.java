@@ -147,9 +147,9 @@ public class Player extends Editable {
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		float desiredVel = 0;
 		if (left) {
-			desiredVel = Math.max(vel.x - 1.0f, -15.0f);
+			desiredVel = Math.max(vel.x - 1.0f, -30.0f); //-15
 		} else if (right) {
-			desiredVel = Math.min(vel.x + 1.0f, 15.0f);
+			desiredVel = Math.min(vel.x + 1.0f, 30.0f); //15
 		} else {
 			desiredVel = vel.x * 0.999f; // *0.98f
 		}
@@ -159,7 +159,7 @@ public class Player extends Editable {
 	}
 	
 	public void boxJump() {
-		float impulse = dynamicBody.getMass() * 50;
+		float impulse = dynamicBody.getMass() * 100; //50
 	    dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
 	}
 
