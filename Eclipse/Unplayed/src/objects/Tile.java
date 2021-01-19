@@ -20,7 +20,6 @@ public class Tile extends Editable {
 
 	// box2d
 	Box2DProcessing box2d;
-	BodyDef bodyDef;
 	Body staticBody;
 	float density;
 	float friction;
@@ -46,73 +45,66 @@ public class Tile extends Editable {
 			density = 1;
 
 			// body
-			bodyDef = new BodyDef();
+			BodyDef bodyDef = new BodyDef();
 			bodyDef.type = BodyType.STATIC;
 			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
 			bodyDef.angle = 0;
 			staticBody = box2d.createBody(bodyDef);
 
-			// shape
-			// PolygonShape boxShape = new PolygonShape();
-			// boxShape.setAsBox(box2dW, box2dH);
-
-			// half dimentions of tile
+			// half dimensions of tile
 			float box2dW = box2d.scalarPixelsToWorld(getWidth() / 2);
 			float box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
 
+			// shapes
+
 			// top edge
 			topEdge = new EdgeShape();
-//			Vec2 v1 = box2d.coordPixelsToWorld(getX(), getY());
-//			Vec2 v2 = box2d.coordPixelsToWorld(getX() + getWidth(), getY());
 			Vec2 v1 = new Vec2(-box2dW, box2dH);
 			Vec2 v2 = new Vec2(box2dW, box2dH);
 			topEdge.set(v1, v2);
-
+			// bottom edge
+			EdgeShape bottomEdge = new EdgeShape();
+			v1 = new Vec2(-box2dW, -box2dH);
+			v2 = new Vec2(box2dW, -box2dH);
+			bottomEdge.set(v1, v2);
+			// left edge
+			EdgeShape leftEdge = new EdgeShape();
+			v1 = new Vec2(-box2dW, box2dH);
+			v2 = new Vec2(-box2dW, -box2dH);
+			leftEdge.set(v1, v2);
 			// right edge
 			EdgeShape rightEdge = new EdgeShape();
 			v1 = new Vec2(box2dW, box2dH);
 			v2 = new Vec2(box2dW, -box2dH);
 			rightEdge.set(v1, v2);
 
-			// left edge
-			EdgeShape leftEdge = new EdgeShape();
-			v1 = new Vec2(-box2dW, box2dH);
-			v2 = new Vec2(-box2dW, -box2dH);
-			leftEdge.set(v1, v2);
+			// fixtures
 
-			// bottom edge
-			EdgeShape bottomEdge = new EdgeShape();
-			v1 = new Vec2(-box2dW, -box2dH);
-			v2 = new Vec2(box2dW, -box2dH);
-			bottomEdge.set(v1, v2);
-
-			// top edge fixture
+			// top edge
 			FixtureDef topEdgeDef = new FixtureDef();
 			topEdgeDef.shape = topEdge;
 			topEdgeDef.density = density;
 			topEdgeDef.friction = friction;
 			staticBody.createFixture(topEdgeDef);
-
-			// right edge fixture
+			// bottom edge
+			FixtureDef bottomEdgeDef = new FixtureDef();
+			bottomEdgeDef.shape = bottomEdge;
+			bottomEdgeDef.density = density;
+			bottomEdgeDef.friction = friction;
+			staticBody.createFixture(bottomEdgeDef);
+			// left edge
+			FixtureDef leftEdgeDef = new FixtureDef();
+			leftEdgeDef.shape = leftEdge;
+			leftEdgeDef.density = density;
+			leftEdgeDef.friction = friction;
+			staticBody.createFixture(leftEdgeDef);
+			// right edge
 			FixtureDef rightEdgeDef = new FixtureDef();
 			rightEdgeDef.shape = rightEdge;
 			rightEdgeDef.density = density;
 			rightEdgeDef.friction = friction;
 			staticBody.createFixture(rightEdgeDef);
 
-			// left edge fixture
-			FixtureDef leftEdgeDef = new FixtureDef();
-			leftEdgeDef.shape = leftEdge;
-			leftEdgeDef.density = density;
-			leftEdgeDef.friction = friction;
-			staticBody.createFixture(leftEdgeDef);
-
-			// bottom edge fixture
-			FixtureDef bottomEdgeDef = new FixtureDef();
-			bottomEdgeDef.shape = bottomEdge;
-			bottomEdgeDef.density = density;
-			bottomEdgeDef.friction = friction;
-			staticBody.createFixture(bottomEdgeDef);
 		}
 	}
 

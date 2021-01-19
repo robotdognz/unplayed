@@ -49,6 +49,9 @@ public class WidgetDelete extends Widget {
 							if (required != null && editor.selected.equals(required)) {
 								((PlayerStart) r).setRequired(null);
 							}
+							if (game.player != null) {
+								game.player.destroy();
+							}
 							game.player = null;
 						} else {
 							Tile required = ((PlayerEnd) r).getRequired();

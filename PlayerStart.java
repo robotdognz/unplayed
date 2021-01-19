@@ -30,6 +30,9 @@ public class PlayerStart extends CameraChange {
 			}
 		}
 		// remove the old player
+		if (game.player != null) {
+			game.player.destroy();
+		}
 		game.player = null;
 
 		// get tile that is at the current position

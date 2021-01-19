@@ -168,9 +168,6 @@ public class QuadNode {
 				}
 				for (Rectangle r : matches) { // remove them
 					objects.remove(r);
-//					if(r instanceof Tile) {
-//						((Tile) r).destroy();
-//					}
 				}
 			}
 		}

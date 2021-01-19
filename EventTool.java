@@ -174,6 +174,9 @@ public class EventTool extends AreaTool {
 					editor.world.insert(oldStart);
 				}
 				editor.game.setPlayerStart(null);
+				if (editor.game.player != null) {
+					editor.game.player.destroy();
+				}
 				editor.game.player = null;
 			}
 			if (p instanceof PlayerEnd) {

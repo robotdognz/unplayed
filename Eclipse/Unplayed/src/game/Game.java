@@ -139,6 +139,9 @@ public class Game {
 
 	public void clearPlayerStart() {
 		// fully remove the player
+		if (this.player != null) {
+			this.player.destroy();
+		}
 		this.player = null;
 		this.playerStart = null;
 	}
@@ -183,6 +186,9 @@ public class Game {
 			camera.setSubScale(newSubScale);
 		}
 		// clear player
+		if (this.player != null) {
+			this.player.destroy();
+		}
 		player = null;
 		// clear checkpoint
 		playerCheckpoint = null;
@@ -273,6 +279,9 @@ public class Game {
 	public void createPlayer(Rectangle playerArea) {
 		if (playerArea instanceof PlayerStart) {
 			Tile current = ((PlayerStart) playerArea).getRequired();
+			if (this.player != null) {
+				this.player.destroy();
+			}
 			player = new Player(p, box2d, texture, current, vibe);
 		} else if (playerArea instanceof Tile) {
 			HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
@@ -301,10 +310,16 @@ public class Game {
 				removed.add(found);
 				world.remove(found);
 				if (playerCheckpoint != null) {
+					if (this.player != null) {
+						this.player.destroy();
+					}
 					player = new Player(p, box2d, texture, playerCheckpoint, vibe);
 				} else if (playerStart != null) {
 					Tile current = ((PlayerStart) playerStart).getRequired();
 					if (current != null) {
+						if (this.player != null) {
+							this.player.destroy();
+						}
 						player = new Player(p, box2d, texture, current, vibe);
 					}
 				}
