@@ -258,6 +258,10 @@ public class EditorJSON {
 			game.placed.clear(); // removed tiles that have been inserted into slots
 			game.removed.clear(); // remove tiles that have become the player
 			game.clearPlayerStart(); // remove the player
+			
+			//box2d
+			game.box2d.createWorld();
+			game.box2d.setGravity(0, -150);
 
 			// load new level
 			loadTiles(values, game);

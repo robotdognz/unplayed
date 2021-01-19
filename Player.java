@@ -312,10 +312,6 @@ public class Player extends Editable {
 			graphics.rotate(PApplet.radians(angle)); // angle of the tile
 //			graphics.scale(flipX, flipY); // flipping the tile
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
-
-			// draw box2d position
-			graphics.text(pos.x + " " + pos.y, 0, 0);
-
 			graphics.popMatrix();
 		} else {
 			// missing texture
