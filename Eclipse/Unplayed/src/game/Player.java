@@ -54,8 +54,11 @@ public class Player extends Editable {
 	// box2d
 	Box2DProcessing box2d;
 	Body dynamicBody;
+	float density;
+	float friction;
+	boolean locked;
 
-	Player(PApplet p, Box2DProcessing box2d, TextureCache texture, Tile tile, Vibe v) {
+	Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.p = p;
 		this.file = tile.getFile();
@@ -91,6 +94,9 @@ public class Player extends Editable {
 
 		// box2d
 		this.box2d = box2d;
+		friction = 0.6f; // from 0 to 1
+		density = 1; // from 0 to 1
+		this.locked = locked; // is rotation locked
 		create();
 	}
 
@@ -105,7 +111,7 @@ public class Player extends Editable {
 			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
 			bodyDef.angle = 0;
 			dynamicBody = box2d.createBody(bodyDef);
-//			dynamicBody.setFixedRotation(true); //TODO: make this dynamic
+			dynamicBody.setFixedRotation(locked);
 
 			// shape
 			PolygonShape boxShape = new PolygonShape();
@@ -114,8 +120,8 @@ public class Player extends Editable {
 			// fixture
 			FixtureDef boxFixtureDef = new FixtureDef();
 			boxFixtureDef.shape = boxShape;
-			boxFixtureDef.density = 1;
-			boxFixtureDef.friction = 0.6f;
+			boxFixtureDef.density = density;
+			boxFixtureDef.friction = friction;
 			dynamicBody.createFixture(boxFixtureDef);
 		}
 	}
@@ -300,20 +306,6 @@ public class Player extends Editable {
 	}
 
 	public void draw(PGraphics graphics, float scale) {
-		// draw box2d
-		if (dynamicBody != null) {
-			Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
-			float a = dynamicBody.getAngle();
-			graphics.pushMatrix();
-			graphics.imageMode(CENTER);
-			graphics.translate(pos.x, pos.y);
-			graphics.rotate(-a);
-			graphics.tint(255, 0, 0);
-			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
-			graphics.noTint();
-			graphics.popMatrix();
-		}
-
 		// draw player
 		graphics.imageMode(CORNER);
 		if (hasTexture) {
@@ -331,12 +323,6 @@ public class Player extends Editable {
 			graphics.rectMode(CORNER);
 			graphics.rect(getX(), getY(), getWidth(), getHeight());
 		}
-
-//		 image(img, dx, dy, dw, dh, sx, sy, sw, sh); //d is where to draw it, s is
-//		 where (in pixels) to get it from the image
-//		 image(sprite, getTopLeft().x, getTopLeft().y, getWidth(), getHeight(), 0, 0,
-//		 128, 128); //sprite sheet test
-
 //		if (showEvent) {
 //			graphics.noFill();
 //			graphics.stroke(255, 0, 0);
@@ -347,6 +333,20 @@ public class Player extends Editable {
 		if (drawArea) {
 			graphics.fill(0, 0, 0, 150);
 			graphics.rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
+		}
+
+		// draw box2d
+		if (dynamicBody != null) {
+			Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
+			float a = dynamicBody.getAngle();
+			graphics.pushMatrix();
+			graphics.imageMode(CENTER);
+			graphics.translate(pos.x, pos.y);
+			graphics.rotate(-a);
+			graphics.tint(255, 0, 0);
+			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
+			graphics.noTint();
+			graphics.popMatrix();
 		}
 	}
 
