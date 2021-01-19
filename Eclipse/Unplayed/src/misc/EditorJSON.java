@@ -259,7 +259,7 @@ public class EditorJSON {
 			game.removed.clear(); // remove tiles that have become the player
 			game.clearPlayerStart(); // remove the player
 			
-			//box2d
+			//box2d TODO: move this somewhere else
 			game.box2d.createWorld();
 			game.box2d.setGravity(0, -150);
 

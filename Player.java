@@ -16,7 +16,6 @@ import shiffman.box2d.Box2DProcessing;
 import static processing.core.PConstants.*;
 
 import org.jbox2d.dynamics.*;
-import org.jbox2d.collision.*;
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 
@@ -92,30 +91,40 @@ public class Player extends Editable {
 //		showEvent = false;
 
 		// box2d
-
 		this.box2d = box2d;
+		create();
+	}
 
-		float box2dW = box2d.scalarPixelsToWorld((getWidth()-0.5f) / 2);
-		float box2dH = box2d.scalarPixelsToWorld((getHeight()-0.5f) / 2);
+	public void create() {
+		if (box2d != null) {
+			float box2dW = box2d.scalarPixelsToWorld((getWidth() - 0.5f) / 2);
+			float box2dH = box2d.scalarPixelsToWorld((getHeight() - 0.5f) / 2);
 
-		// body
-		bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DYNAMIC;
-		bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
-		bodyDef.angle = 0;
-		dynamicBody = box2d.createBody(bodyDef);
-		//dynamicBody.setFixedRotation(true);
+			// body
+			bodyDef = new BodyDef();
+			bodyDef.type = BodyType.DYNAMIC;
+			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
+			bodyDef.angle = 0;
+			dynamicBody = box2d.createBody(bodyDef);
+//			dynamicBody.setFixedRotation(true); //TODO: make this dynamic
 
-		// shape
-		PolygonShape boxShape = new PolygonShape();
-		boxShape.setAsBox(box2dW, box2dH);
+			// shape
+			PolygonShape boxShape = new PolygonShape();
+			boxShape.setAsBox(box2dW, box2dH);
 
-		// fixture
-		FixtureDef boxFixtureDef = new FixtureDef();
-		boxFixtureDef.shape = boxShape;
-		boxFixtureDef.density = 1;
-		boxFixtureDef.friction = 0.6f;
-		dynamicBody.createFixture(boxFixtureDef);
+			// fixture
+			FixtureDef boxFixtureDef = new FixtureDef();
+			boxFixtureDef.shape = boxShape;
+			boxFixtureDef.density = 1;
+			boxFixtureDef.friction = 0.6f;
+			dynamicBody.createFixture(boxFixtureDef);
+		}
+	}
+
+	public void destroy() {
+		if (box2d != null) {
+			box2d.destroyBody(dynamicBody);
+		}
 	}
 
 	public File getFile() {
@@ -131,7 +140,7 @@ public class Player extends Editable {
 	}
 
 	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
-		
+
 //		// fixed time step
 //		accumulator += deltaTime;
 //		while (accumulator >= stepSize) {
@@ -147,9 +156,9 @@ public class Player extends Editable {
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		float desiredVel = 0;
 		if (left) {
-			desiredVel = Math.max(vel.x - 1.0f, -60.0f); //-15
+			desiredVel = Math.max(vel.x - 1.0f, -60.0f); // -15
 		} else if (right) {
-			desiredVel = Math.min(vel.x + 1.0f, 60.0f); //15
+			desiredVel = Math.min(vel.x + 1.0f, 60.0f); // 15
 		} else {
 			desiredVel = vel.x * 0.999f; // *0.98f
 		}
@@ -157,10 +166,10 @@ public class Player extends Editable {
 		float impulse = dynamicBody.getMass() * velChange;
 		dynamicBody.applyLinearImpulse(new Vec2(impulse, 0), dynamicBody.getWorldCenter(), true);
 	}
-	
+
 	public void boxJump() {
-		float impulse = dynamicBody.getMass() * 100; //50
-	    dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
+		float impulse = dynamicBody.getMass() * 100; // 50
+		dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
 	}
 
 	private void doPlayerStep(HashSet<Rectangle> objects, Game g) {
@@ -295,17 +304,13 @@ public class Player extends Editable {
 		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 		float a = dynamicBody.getAngle();
 		graphics.pushMatrix();
-		graphics.rectMode(CENTER);
-  graphics.imageMode(CENTER);
+		graphics.imageMode(CENTER);
 		graphics.translate(pos.x, pos.y);
 		graphics.rotate(-a);
-		graphics.fill(255, 0, 0);
-		graphics.noStroke();
-  graphics.tint(255,0,0);
-  graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
-		//graphics.rect(0, 0, getWidth(), getHeight());
-	graphics.noTint();
-	graphics.popMatrix();
+		graphics.tint(255, 0, 0);
+		graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
+		graphics.noTint();
+		graphics.popMatrix();
 
 		// draw player
 		graphics.imageMode(CORNER);

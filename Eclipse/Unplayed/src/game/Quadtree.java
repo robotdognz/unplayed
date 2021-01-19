@@ -33,7 +33,7 @@ public class Quadtree {
 			cameras.add((CameraChange) current);
 		}
 		root.nodeInsert(current);
-		if(current instanceof Tile) {
+		if (current instanceof Tile) {
 			((Tile) current).create();
 		}
 	}
@@ -45,6 +45,9 @@ public class Quadtree {
 			root.removeColliders((CameraChange) current);
 		}
 		root.remove(current);
+		if (current instanceof Tile) {
+			((Tile) current).destroy();
+		}
 	}
 
 	public void setRoot(QuadNode newRoot) {
@@ -75,8 +78,8 @@ public class Quadtree {
 		root.getAll(returnSet);
 		return returnSet;
 	}
-	
-	public Set<CameraChange> getCameras(){
+
+	public Set<CameraChange> getCameras() {
 		return Collections.unmodifiableSet(cameras);
 	}
 }
