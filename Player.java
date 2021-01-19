@@ -104,7 +104,7 @@ public class Player extends Editable {
 		bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
 		bodyDef.angle = 0;
 		dynamicBody = box2d.createBody(bodyDef);
-		dynamicBody.setFixedRotation(true);
+		//dynamicBody.setFixedRotation(true);
 
 		// shape
 		PolygonShape boxShape = new PolygonShape();
@@ -296,12 +296,16 @@ public class Player extends Editable {
 		float a = dynamicBody.getAngle();
 		graphics.pushMatrix();
 		graphics.rectMode(CENTER);
+  graphics.imageMode(CENTER);
 		graphics.translate(pos.x, pos.y);
 		graphics.rotate(-a);
 		graphics.fill(255, 0, 0);
 		graphics.noStroke();
-		graphics.rect(0, 0, getWidth(), getHeight());
-		graphics.popMatrix();
+  graphics.tint(255,0,0);
+  graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
+		//graphics.rect(0, 0, getWidth(), getHeight());
+	graphics.noTint();
+	graphics.popMatrix();
 
 		// draw player
 		graphics.imageMode(CORNER);
