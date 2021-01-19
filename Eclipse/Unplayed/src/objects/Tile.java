@@ -22,6 +22,8 @@ public class Tile extends Editable {
 	Box2DProcessing box2d;
 	BodyDef bodyDef;
 	Body staticBody;
+	
+	EdgeShape topEdge;
 
 	public Tile(Box2DProcessing box2d, TextureCache texture, File file, float x, float y) {
 		super(x, y, 100, 100);
@@ -50,7 +52,7 @@ public class Tile extends Editable {
 			// boxShape.setAsBox(box2dW, box2dH);
 
 			// top edge
-			EdgeShape topEdge = new EdgeShape();
+			topEdge = new EdgeShape();
 			Vec2 v1 = box2d.coordPixelsToWorld(getX(), getY());
 			Vec2 v2 = box2d.coordPixelsToWorld(getX() + getWidth(), getY());
 			topEdge.set(v1, v2);
@@ -142,6 +144,14 @@ public class Tile extends Editable {
 	}
 
 	public void draw(PGraphics graphics, float scale) {
+		graphics.pushMatrix();
+		graphics.rectMode(CENTER);
+	    Vec2 v1 = box2d.coordWorldToPixels(topEdge.m_vertex1);
+	    Vec2 v2 = box2d.coordWorldToPixels(topEdge.m_vertex2);
+	    graphics.stroke(0, 100, 255);
+	    graphics.strokeWeight(10);
+	    graphics.line(v1.x, v1.y, v2.x, v2.y);
+	    graphics.popMatrix();
 
 		if (hasTexture) {
 			// texture isn't missing
@@ -167,18 +177,6 @@ public class Tile extends Editable {
 			graphics.fill(255, 0, 0, 150);
 			graphics.rectMode(CORNER);
 			graphics.rect(getX(), getY(), getWidth(), getHeight());
-		}
-
-		// draw box2d
-		if (box2d != null) {
-			Vec2 pos = box2d.getBodyPixelCoord(staticBody);
-			graphics.pushMatrix();
-			graphics.rectMode(CENTER);
-			graphics.translate(pos.x, pos.y);
-			graphics.fill(0, 0, 255);
-			graphics.noStroke();
-			graphics.rect(0, 0, getWidth(), getHeight());
-			graphics.popMatrix();
 		}
 	}
 
