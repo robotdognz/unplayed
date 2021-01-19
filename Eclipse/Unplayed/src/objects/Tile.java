@@ -27,6 +27,7 @@ public class Tile extends Editable {
 
 	public Tile(Box2DProcessing box2d, TextureCache texture, File file, float x, float y) {
 		super(x, y, 100, 100);
+		this.box2d = box2d;
 
 		if (file != null && texture != null && texture.getTileMap().containsKey(file)) {
 			this.tileTexture = texture.getTileMap().get(file);
