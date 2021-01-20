@@ -124,6 +124,7 @@ public class Player extends Editable {
 			bodyDef.type = BodyType.DYNAMIC;
 			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
 			bodyDef.angle = 0;
+			bodyDef.userData = "player body";
 			this.dynamicBody = box2d.createBody(bodyDef);
 			this.dynamicBody.setFixedRotation(locked);
 
@@ -142,10 +143,11 @@ public class Player extends Editable {
 			// sensor
 			PolygonShape sensorShape = new PolygonShape();
 			sensorShape.setAsBox(box2dW * 2, box2dH * 2);
-			FixtureDef sensorFixture = new FixtureDef();
-			sensorFixture.shape = sensorShape;
-			sensorFixture.isSensor = true;
-			this.sensor = this.dynamicBody.createFixture(sensorFixture);
+			FixtureDef sensorFixtureDef = new FixtureDef();
+			sensorFixtureDef.shape = sensorShape;
+			sensorFixtureDef.isSensor = true;
+			sensorFixtureDef.userData = "player sensor";
+			this.sensor = this.dynamicBody.createFixture(sensorFixtureDef);
 
 		}
 	}
@@ -192,11 +194,14 @@ public class Player extends Editable {
 		}
 	}
 
-	public void physicsVibrate(long amount, int level) {
+	public void physicsImpact(float[] impulses) {
 		// amount = 1 >
 		// level = 1-255
-		if (physicsPlayer) {
-			vibe.vibrate(amount, level);
+		if (impulses[0] > 400) {
+			int strength = Math.min((int) impulses[0], 255);
+			if (physicsPlayer) {
+				vibe.vibrate(2, strength);
+			}
 		}
 	}
 

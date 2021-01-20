@@ -48,6 +48,7 @@ public class Tile extends Editable {
 			bodyDef.type = BodyType.STATIC;
 			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
 			bodyDef.angle = 0;
+			bodyDef.userData = this;
 			staticBody = box2d.createBody(bodyDef);
 
 			// half dimensions of tile

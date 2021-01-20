@@ -3,6 +3,7 @@ package misc;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
+import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.contacts.Contact;
 
 import game.Player;
@@ -12,31 +13,42 @@ public class MyContactListener implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
+		Fixture fixtureA = contact.getFixtureA();
+		Fixture fixtureB = contact.getFixtureB();
+
 		Player player = null;
 		boolean ground = false;
 
-		// check if fixture A was a ball
-		Object fixtureUserData = contact.getFixtureA().getUserData();
+		// check fixture
+		Object fixtureUserData = fixtureA.getUserData();
 		if (fixtureUserData != null) {
-			if (fixtureUserData instanceof Player) {
-				player = (Player) fixtureUserData;
-				player.startContact();
-			} else if (fixtureUserData instanceof String) {
-				if (((String) fixtureUserData).contentEquals("ground")) {
+			if (fixtureUserData instanceof String) {
+				String userData = (String) fixtureUserData;
+
+				if (userData.equals("player body")) {
+					player = (Player) fixtureA.getBody().getUserData();
+					player.startContact();
+
+				} else if (userData.contentEquals("ground")) {
 					ground = true;
+
 				}
 			}
 		}
 
-		// check if fixture B was a ball
-		fixtureUserData = contact.getFixtureB().getUserData();
+		// check fixture B
+		fixtureUserData = fixtureB.getUserData();
 		if (fixtureUserData != null) {
-			if (fixtureUserData instanceof Player) {
-				player = (Player) fixtureUserData;
-				player.startContact();
-			} else if (fixtureUserData instanceof String) {
-				if (((String) fixtureUserData).contentEquals("ground")) {
+			if (fixtureUserData instanceof String) {
+				String userData = (String) fixtureUserData;
+
+				if (userData.equals("player body")) {
+					player = (Player) fixtureA.getBody().getUserData();
+					player.startContact();
+
+				} else if (userData.contentEquals("ground")) {
 					ground = true;
+
 				}
 			}
 		}
@@ -49,53 +61,71 @@ public class MyContactListener implements ContactListener {
 
 	@Override
 	public void endContact(Contact contact) {
-		// check if fixture A was a ball
-		Object fixtureUserData = contact.getFixtureA().getUserData();
+		Fixture fixtureA = contact.getFixtureA();
+		Fixture fixtureB = contact.getFixtureB();
+
+		// check fixture
+		Object fixtureUserData = fixtureA.getUserData();
 		if (fixtureUserData != null) {
-			if (fixtureUserData instanceof Player) {
-				Player player = (Player) fixtureUserData;
-				player.endContact();
+			if (fixtureUserData instanceof String) {
+				String userData = (String) fixtureUserData;
+
+				if (userData.equals("player body")) {
+					Player player = (Player) fixtureA.getBody().getUserData();
+					player.endContact();
+
+				}
 			}
 		}
 
-		// check if fixture B was a ball
-		fixtureUserData = contact.getFixtureB().getUserData();
+		// check fixture B
+		fixtureUserData = fixtureB.getUserData();
 		if (fixtureUserData != null) {
-			if (fixtureUserData instanceof Player) {
-				Player player = (Player) fixtureUserData;
-				player.endContact();
+			if (fixtureUserData instanceof String) {
+				String userData = (String) fixtureUserData;
+
+				if (userData.equals("player body")) {
+					Player player = (Player) fixtureA.getBody().getUserData();
+					player.endContact();
+
+				}
 			}
 		}
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void postSolve(Contact contact, ContactImpulse impulse) {
+		Fixture fixtureA = contact.getFixtureA();
+		Fixture fixtureB = contact.getFixtureB();
+
 		Player player = null;
 
-		// check if fixture A was a ball
-		Object fixtureUserData = contact.getFixtureA().getUserData();
+		// check fixture A
+		Object fixtureUserData = fixtureA.getUserData();
 		if (fixtureUserData != null) {
-			if (fixtureUserData instanceof Player) {
-				player = (Player) fixtureUserData;
+			if (fixtureUserData instanceof String) {
+				String userData = (String) fixtureUserData;
+
+				if (userData.equals("player body")) {
+					player = (Player) fixtureA.getBody().getUserData();
+				}
 			}
 		}
 
-		// check if fixture B was a ball
-		fixtureUserData = contact.getFixtureB().getUserData();
+		// check fixture B
+		fixtureUserData = fixtureB.getUserData();
 		if (fixtureUserData != null) {
-			if (fixtureUserData instanceof Player) {
-				player = (Player) fixtureUserData;
+			if (fixtureUserData instanceof String) {
+				String userData = (String) fixtureUserData;
+
+				if (userData.equals("player body")) {
+					player = (Player) fixtureA.getBody().getUserData();
+				}
 			}
 		}
 
-		// TODO figure out how hard the player hit something (for vibration)
 		if (player != null) {
-			float[] impulses = impulse.normalImpulses;
-			if (impulses[0] > 400) {
-				int strength = Math.min((int) impulses[0], 255);
-				player.physicsVibrate(10, strength);
-			}
+			player.physicsImpact(impulse.normalImpulses);
 		}
 	}
 
