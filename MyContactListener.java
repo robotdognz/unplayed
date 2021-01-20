@@ -17,7 +17,7 @@ public class MyContactListener implements ContactListener {
 		if (bodyUserData != null) {
 			Player player = (Player) bodyUserData;
 			player.startContact();
-			PApplet.println("test");
+//			PApplet.println("test");
 		}
 
 		// check if fixture B was a ball
@@ -25,7 +25,7 @@ public class MyContactListener implements ContactListener {
 		if (bodyUserData != null) {
 			Player player = (Player) bodyUserData;
 			player.startContact();
-			PApplet.println("test");
+//			PApplet.println("test");
 		}
 	}
 

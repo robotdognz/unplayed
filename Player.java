@@ -123,6 +123,7 @@ public class Player extends Editable {
 			bodyDef.angle = 0;
 			this.dynamicBody = box2d.createBody(bodyDef);
 			this.dynamicBody.setFixedRotation(locked);
+			dynamicBody.setUserData(this);
 
 			// shape
 			PolygonShape boxShape = new PolygonShape();
@@ -133,9 +134,7 @@ public class Player extends Editable {
 			boxFixtureDef.shape = boxShape;
 			boxFixtureDef.density = density;
 			boxFixtureDef.friction = friction;
-//			boxFixtureDef.userData = this;
 			Fixture playerBody = dynamicBody.createFixture(boxFixtureDef);
-			playerBody.setUserData(this);
 
 			// sensor
 			// add radar sensor to ship
@@ -158,12 +157,12 @@ public class Player extends Editable {
 
 	public void startContact() {
 		this.hasContact = true;
-		PApplet.println("start contact");
+//		PApplet.println("start contact");
 	}
 
 	public void endContact() {
 		this.hasContact = false;
-		PApplet.println("start contact");
+//		PApplet.println("start contact");
 	}
 
 	// ---------normal
