@@ -108,9 +108,8 @@ public class Player extends Editable {
 		this.locked = locked; // is rotation locked
 		this.contactNumber = 0; // is the player touching anything
 
-		if (physicsPlayer) {
-			create();
-		}
+		create();
+
 	}
 
 	// ---------physics
@@ -228,11 +227,11 @@ public class Player extends Editable {
 		vibration = 0;
 		if (velocity.y < terminalVelocity) {
 			// limit fall speed by terminalVelocity
-			velocity.y += playerGravity; 
+			velocity.y += playerGravity;
 			vibeVelocity = 0;
 		} else if (velocity.y + playerGravity > terminalVelocity) {
 			// fall speed exactly terminalVelocity
-			velocity.y = terminalVelocity; 
+			velocity.y = terminalVelocity;
 			vibeVelocity += playerGravity / 2;
 		}
 		setY(getY() + velocity.y); // this comes before collision so that falling through perfect holes works
