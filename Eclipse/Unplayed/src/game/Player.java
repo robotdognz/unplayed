@@ -61,7 +61,7 @@ public class Player extends Editable {
 	float friction;
 	float jumpPower;
 	boolean locked;
-	boolean hasContact;
+	int contactNumber;
 
 //	ContactListener contactListener;
 
@@ -105,7 +105,7 @@ public class Player extends Editable {
 		this.density = 1; // from 0 to 1
 		this.jumpPower = 120; // 100
 		this.locked = locked; // is rotation locked
-		this.hasContact = false; //is the player touching anything
+		this.contactNumber = 0; // is the player touching anything
 		create();
 	}
 
@@ -156,13 +156,11 @@ public class Player extends Editable {
 	}
 
 	public void startContact() {
-		this.hasContact = true;
-//		PApplet.println("start contact");
+		this.contactNumber++;
 	}
 
 	public void endContact() {
-		this.hasContact = false;
-//		PApplet.println("start contact");
+		this.contactNumber--;
 	}
 
 	// ---------normal
@@ -370,12 +368,12 @@ public class Player extends Editable {
 			graphics.imageMode(CENTER);
 			graphics.translate(pos.x, pos.y);
 			graphics.rotate(-a);
-			if(hasContact) {
+			if (contactNumber > 0) {
 				graphics.tint(255, 0, 0);
-			}else {
+			} else {
 				graphics.tint(0, 255, 0);
 			}
-			
+
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
 			graphics.noTint();
 
