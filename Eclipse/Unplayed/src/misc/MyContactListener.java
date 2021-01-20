@@ -20,6 +20,7 @@ public class MyContactListener implements ContactListener {
 		Player player = null;
 		Tile tile = null;
 		boolean playerBody = false; // one of the fixtures is the player
+		boolean playerSensor = false; // one of the fixtures is the player's sensor
 		boolean ground = false; // one of the fixtures is the ground
 
 		// check fixture
@@ -35,6 +36,7 @@ public class MyContactListener implements ContactListener {
 
 				} else if (userData.contentEquals("player sensor")) {
 					player = (Player) fixtureA.getBody().getUserData();
+					playerSensor = true;
 
 				} else if (userData.contentEquals("ground")) {
 					ground = true;
@@ -60,6 +62,7 @@ public class MyContactListener implements ContactListener {
 
 				} else if (userData.contentEquals("player sensor")) {
 					player = (Player) fixtureB.getBody().getUserData();
+					playerSensor = true;
 
 				} else if (userData.contentEquals("ground")) {
 					ground = true;
@@ -77,7 +80,8 @@ public class MyContactListener implements ContactListener {
 			player.resetJump();
 		}
 
-		if (player != null && tile != null) {
+		// if one of them is the player's sensor and one is a tile
+		if (playerSensor && tile != null) {
 			player.addTile(tile);
 		}
 	}
@@ -89,8 +93,9 @@ public class MyContactListener implements ContactListener {
 
 		Player player = null;
 		Tile tile = null;
+		boolean playerSensor = false; // one of the fixtures is the player's sensor
 
-		// check fixture
+		// check fixture A
 		Object fixtureUserData = fixtureA.getUserData();
 		if (fixtureUserData != null) {
 			if (fixtureUserData instanceof String) {
@@ -99,6 +104,10 @@ public class MyContactListener implements ContactListener {
 				if (userData.equals("player body")) {
 					player = (Player) fixtureA.getBody().getUserData();
 					player.endContact();
+
+				} else if (userData.contentEquals("player sensor")) {
+					player = (Player) fixtureA.getBody().getUserData();
+					playerSensor = true;
 
 				} else if (fixtureA.getBody().getUserData() instanceof Tile) {
 					tile = (Tile) fixtureA.getBody().getUserData();
@@ -116,13 +125,17 @@ public class MyContactListener implements ContactListener {
 					player = (Player) fixtureB.getBody().getUserData();
 					player.endContact();
 
+				} else if (userData.contentEquals("player sensor")) {
+					player = (Player) fixtureB.getBody().getUserData();
+					playerSensor = true;
+
 				} else if (fixtureB.getBody().getUserData() instanceof Tile) {
 					tile = (Tile) fixtureB.getBody().getUserData();
 				}
 			}
 		}
 
-		if (player != null && tile != null) {
+		if (playerSensor && tile != null) {
 			player.removeTile(tile);
 		}
 	}
