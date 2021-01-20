@@ -203,10 +203,12 @@ public class Player extends Editable {
 		}
 
 		if (total > 400 && !vibeFrame) {
-			int strength = Math.min((int) total, 255);
+//			int strength = Math.min((int) total, 255);
+			
+			int strength = (int) Math.max((Math.exp(Math.abs(total / 13)) / 5), 1);
 			if (physicsPlayer) {
-				vibe.vibrate(2, strength);
-				PApplet.println(total);
+				vibe.vibrate(strength);
+				PApplet.println(total + "" + strength);
 			}
 			vibeFrame = true;
 		}
