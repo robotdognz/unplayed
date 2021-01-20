@@ -202,12 +202,12 @@ public class Player extends Editable {
 			total += impulse;
 		}
 
-		if (total > 400 && !vibeFrame) {
+		if (total > 800 && !vibeFrame) { //400
 //			int strength = Math.min((int) total, 255);
 
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
-			int strength = (int) Math.max((Math.log(Math.abs(total))), 1);
+			int strength = (int) Math.max(Math.abs(total/1000), 1); //800
 			if (physicsPlayer) {
 				vibe.vibrate(strength);
 				PApplet.println(total + " " + strength);
