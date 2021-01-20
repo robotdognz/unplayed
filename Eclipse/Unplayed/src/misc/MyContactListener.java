@@ -14,15 +14,15 @@ public class MyContactListener implements ContactListener {
 	public void beginContact(Contact contact) {
 		Player player = null;
 		boolean ground = false;
-		
+
 		// check if fixture A was a ball
 		Object fixtureUserData = contact.getFixtureA().getUserData();
 		if (fixtureUserData != null) {
 			if (fixtureUserData instanceof Player) {
 				player = (Player) fixtureUserData;
 				player.startContact();
-			}else if(fixtureUserData instanceof String) {
-				if(((String) fixtureUserData).contentEquals("ground")) {
+			} else if (fixtureUserData instanceof String) {
+				if (((String) fixtureUserData).contentEquals("ground")) {
 					ground = true;
 				}
 			}
@@ -34,14 +34,15 @@ public class MyContactListener implements ContactListener {
 			if (fixtureUserData instanceof Player) {
 				player = (Player) fixtureUserData;
 				player.startContact();
-			}else if(fixtureUserData instanceof String) {
-				if(((String) fixtureUserData).contentEquals("ground")) {
+			} else if (fixtureUserData instanceof String) {
+				if (((String) fixtureUserData).contentEquals("ground")) {
 					ground = true;
 				}
 			}
 		}
-		
-		if(ground && player != null) {
+
+		// if on of them is the player and one is the ground
+		if (ground && player != null) {
 			player.resetJump();
 		}
 	}

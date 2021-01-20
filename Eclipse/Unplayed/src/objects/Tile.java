@@ -105,16 +105,16 @@ public class Tile extends Editable {
 			staticBody.createFixture(rightEdgeDef);
 
 			// sensor
-			EdgeShape sensorEdge = new EdgeShape();
-			float sBox2dW = box2d.scalarPixelsToWorld(1);
+			EdgeShape sensor = new EdgeShape();
+			float sBox2dW = box2d.scalarPixelsToWorld((getWidth() - 1) / 2);
 			v1 = new Vec2(-sBox2dW, box2dH);
 			v2 = new Vec2(sBox2dW, box2dH);
-			sensorEdge.set(v1, v2);
-			FixtureDef sensorEdgeDef = new FixtureDef();
-			sensorEdgeDef.shape = topEdge;
-			sensorEdgeDef.userData = "ground";
-			sensorEdgeDef.isSensor = true;
-			staticBody.createFixture(sensorEdgeDef);
+			sensor.set(v1, v2);
+			FixtureDef sensorDef = new FixtureDef();
+			sensorDef.shape = sensor;
+			sensorDef.userData = "ground";
+			sensorDef.isSensor = true;
+			staticBody.createFixture(sensorDef);
 		}
 	}
 
