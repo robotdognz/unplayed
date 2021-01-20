@@ -123,9 +123,13 @@ public class Game {
 		newCameraArea = cameraArea.copy();
 
 		// box2d
+		buildWorld();
+	}
+
+	public void buildWorld() {
 		box2d = new Box2DProcessing(p);
 		box2d.createWorld();
-		box2d.setGravity(0, -150);
+		box2d.setGravity(0, -250); //-150
 	}
 
 	public void setPlayerStart(PlayerStart start) {
