@@ -12,35 +12,58 @@ public class MyContactListener implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
+		Player player = null;
+		boolean ground = false;
+		
 		// check if fixture A was a ball
-		Object bodyUserData = contact.getFixtureA().getBody().getUserData();
-		if (bodyUserData != null) {
-			Player player = (Player) bodyUserData;
-			player.startContact();
+		Object fixtureUserData = contact.getFixtureA().getUserData();
+		if (fixtureUserData != null) {
+			if (fixtureUserData instanceof Player) {
+				player = (Player) fixtureUserData;
+				player.startContact();
+			}else if(fixtureUserData instanceof String) {
+				if(((String) fixtureUserData).contentEquals("ground")) {
+					ground = true;
+				}
+			}
 		}
 
 		// check if fixture B was a ball
-		bodyUserData = contact.getFixtureB().getBody().getUserData();
-		if (bodyUserData != null) {
-			Player player = (Player) bodyUserData;
-			player.startContact();
+		fixtureUserData = contact.getFixtureB().getUserData();
+		if (fixtureUserData != null) {
+			if (fixtureUserData instanceof Player) {
+				player = (Player) fixtureUserData;
+				player.startContact();
+			}else if(fixtureUserData instanceof String) {
+				if(((String) fixtureUserData).contentEquals("ground")) {
+					ground = true;
+				}
+			}
+		}
+		
+		if(ground && player != null) {
+			player.resetJump();
 		}
 	}
 
 	@Override
 	public void endContact(Contact contact) {
 		// check if fixture A was a ball
-		Object bodyUserData = contact.getFixtureA().getBody().getUserData();
-		if (bodyUserData != null) {
-			Player player = (Player) bodyUserData;
-			player.endContact();
+		Object fixtureUserData = contact.getFixtureA().getUserData();
+		if (fixtureUserData != null) {
+			if (fixtureUserData instanceof Player) {
+				Player player = (Player) fixtureUserData;
+				player.endContact();
+			}
 		}
 
 		// check if fixture B was a ball
-		bodyUserData = contact.getFixtureB().getBody().getUserData();
-		if (bodyUserData != null) {
-			Player player = (Player) bodyUserData;
-			player.endContact();
+		fixtureUserData = contact.getFixtureB().getUserData();
+		if (fixtureUserData != null) {
+			if (fixtureUserData instanceof Player) {
+				Player player = (Player) fixtureUserData;
+				player.endContact();
+			}
 		}
 	}
 

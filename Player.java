@@ -60,6 +60,7 @@ public class Player extends Editable {
 	float density;
 	float friction;
 	float jumpPower;
+	int boxJumpCount;
 	boolean locked;
 	int contactNumber;
 
@@ -104,6 +105,7 @@ public class Player extends Editable {
 		this.friction = 0.6f; // from 0 to 1
 		this.density = 1; // from 0 to 1
 		this.jumpPower = 120; // 100
+		this.boxJumpCount = 0;
 		this.locked = locked; // is rotation locked
 		this.contactNumber = 0; // is the player touching anything
 		create();
@@ -123,7 +125,6 @@ public class Player extends Editable {
 			bodyDef.angle = 0;
 			this.dynamicBody = box2d.createBody(bodyDef);
 			this.dynamicBody.setFixedRotation(locked);
-			dynamicBody.setUserData(this);
 
 			// shape
 			PolygonShape boxShape = new PolygonShape();
@@ -134,16 +135,16 @@ public class Player extends Editable {
 			boxFixtureDef.shape = boxShape;
 			boxFixtureDef.density = density;
 			boxFixtureDef.friction = friction;
-			Fixture playerBody = dynamicBody.createFixture(boxFixtureDef);
+			boxFixtureDef.userData = this;
+			dynamicBody.createFixture(boxFixtureDef);
 
 			// sensor
-			// add radar sensor to ship
-//			PolygonShape sensorShape = new PolygonShape();
-//			sensorShape.setAsBox(box2dW * 2, box2dH * 2);
-//			FixtureDef sensorFixture = new FixtureDef();
-//			sensorFixture.shape = sensorShape;
-//			sensorFixture.isSensor = true;
-//			this.sensor = this.dynamicBody.createFixture(sensorFixture);
+			PolygonShape sensorShape = new PolygonShape();
+			sensorShape.setAsBox(box2dW * 2, box2dH * 2);
+			FixtureDef sensorFixture = new FixtureDef();
+			sensorFixture.shape = sensorShape;
+			sensorFixture.isSensor = true;
+			this.sensor = this.dynamicBody.createFixture(sensorFixture);
 
 		}
 	}
@@ -155,32 +156,16 @@ public class Player extends Editable {
 		}
 	}
 
+	public void resetJump() {
+		this.boxJumpCount = 2;
+	}
+
 	public void startContact() {
 		this.contactNumber++;
 	}
 
 	public void endContact() {
 		this.contactNumber--;
-	}
-
-	// ---------normal
-
-	public File getFile() {
-		return file;
-	}
-
-	public void jump() {
-		// old jump
-		if (jumpCount > 0) {
-			jumpCount--;
-			velocity.y = -playerJumpPower; // TODO
-		}
-		// physics jump
-		boxJump();
-	}
-
-	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
-		doPlayerStep(objects, g);
 	}
 
 	public void moveBox() {
@@ -199,8 +184,31 @@ public class Player extends Editable {
 	}
 
 	public void boxJump() {
-		float impulse = dynamicBody.getMass() * jumpPower; // 50
-		dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
+		if (boxJumpCount > 0) {
+			float impulse = dynamicBody.getMass() * jumpPower; // 50
+			dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
+			boxJumpCount--;
+		}
+	}
+
+	// ---------normal-------------
+
+	public File getFile() {
+		return file;
+	}
+
+	public void jump() {
+		// old jump
+		if (jumpCount > 0) {
+			jumpCount--;
+			velocity.y = -playerJumpPower; // TODO
+		}
+		// physics jump
+		boxJump();
+	}
+
+	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
+		doPlayerStep(objects, g);
 	}
 
 	private void doPlayerStep(HashSet<Rectangle> objects, Game g) {
