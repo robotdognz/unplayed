@@ -138,12 +138,12 @@ public class Player extends Editable {
 
 			// sensor
 			// add radar sensor to ship
-			PolygonShape sensorShape = new PolygonShape();
-			sensorShape.setAsBox(box2dW * 2, box2dH * 2);
-			FixtureDef sensorFixture = new FixtureDef();
-			sensorFixture.shape = sensorShape;
-			sensorFixture.isSensor = true;
-			this.sensor = this.dynamicBody.createFixture(sensorFixture);
+//			PolygonShape sensorShape = new PolygonShape();
+//			sensorShape.setAsBox(box2dW * 2, box2dH * 2);
+//			FixtureDef sensorFixture = new FixtureDef();
+//			sensorFixture.shape = sensorShape;
+//			sensorFixture.isSensor = true;
+//			this.sensor = this.dynamicBody.createFixture(sensorFixture);
 
 		}
 	}
