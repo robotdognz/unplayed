@@ -84,7 +84,6 @@ public class Tile extends Editable {
 			topEdgeDef.shape = topEdge;
 			topEdgeDef.density = density;
 			topEdgeDef.friction = friction;
-			topEdgeDef.userData = "ground";
 			staticBody.createFixture(topEdgeDef);
 			// bottom edge
 			FixtureDef bottomEdgeDef = new FixtureDef();
@@ -105,6 +104,16 @@ public class Tile extends Editable {
 			rightEdgeDef.friction = friction;
 			staticBody.createFixture(rightEdgeDef);
 
+			// sensor
+			EdgeShape sensorEdge = new EdgeShape();
+			v1 = new Vec2(-box2dW + 0.5f, box2dH);
+			v2 = new Vec2(box2dW - 0.5f, box2dH);
+			sensorEdge.set(v1, v2);
+			FixtureDef sensorEdgeDef = new FixtureDef();
+			sensorEdgeDef.shape = topEdge;
+			sensorEdgeDef.userData = "ground";
+			sensorEdgeDef.isSensor = true;
+			staticBody.createFixture(sensorEdgeDef);
 		}
 	}
 
