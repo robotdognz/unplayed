@@ -52,17 +52,17 @@ public class Player extends Editable {
 	private float lastLastXPos; // x position two steps back
 
 	// box2d
-	public boolean physicsPlayer;
-	Box2DProcessing box2d;
-	Body dynamicBody;
-	Fixture sensor;
-	float density;
-	float friction;
-	float jumpPower;
-	int boxJumpCount;
-	boolean locked;
-	int contactNumber;
-	ArrayList<Fixture> sensorContacts;
+	private Box2DProcessing box2d; // the box2d world
+	public boolean physicsPlayer; // are we using the physics player
+	private Body dynamicBody; // the player's physics body
+	private float density; // the player's density
+	private float friction; // the player's friction
+	private float jumpPower; // the strength of the player's jump
+	private int boxJumpCount; // how many jumps the player can make before touching the ground
+	public boolean locked; // does the player have locked rotation
+	private int contactNumber; // the number of things touching the player's body
+	ArrayList<Fixture> sensorContacts; // list of all the fixtures inside the player's sensor
+	private boolean vibeFrame; // has a vibration happened yet this frame
 
 	Player(PApplet p, Box2DProcessing box2d, boolean physics, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -96,7 +96,6 @@ public class Player extends Editable {
 		}
 
 		previousPosition = new PVector(getX(), getY()); // used to determine if the player is still
-//		showEvent = false;
 
 		// box2d
 		this.physicsPlayer = physics;
@@ -147,7 +146,7 @@ public class Player extends Editable {
 			sensorFixtureDef.shape = sensorShape;
 			sensorFixtureDef.isSensor = true;
 			sensorFixtureDef.userData = "player sensor";
-			this.sensor = this.dynamicBody.createFixture(sensorFixtureDef);
+			this.dynamicBody.createFixture(sensorFixtureDef);
 
 		}
 	}
@@ -197,16 +196,19 @@ public class Player extends Editable {
 	public void physicsImpact(float[] impulses) {
 		// amount = 1 >
 		// level = 1-255
-		float total = 0;
-		for(float impulse : impulses) {
-			total += impulse;
-		}
-		
-		if (total > 400) {
-			int strength = Math.min((int) total, 255);
-			if (physicsPlayer) {
-				vibe.vibrate(2, strength);
+		if (!vibeFrame) {
+			float total = 0;
+			for (float impulse : impulses) {
+				total += impulse;
 			}
+
+			if (total > 400) {
+				int strength = Math.min((int) total, 255);
+				if (physicsPlayer) {
+					vibe.vibrate(2, strength);
+				}
+			}
+			vibeFrame = true;
 		}
 	}
 
@@ -230,6 +232,7 @@ public class Player extends Editable {
 	}
 
 	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
+		vibeFrame = false; // clear vibeFrame
 		if (!physicsPlayer) {
 			doPlayerStep(objects, g);
 		}
