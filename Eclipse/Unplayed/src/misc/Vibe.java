@@ -34,7 +34,7 @@ public class Vibe {
 		if (!deprecated) {
 			vibe.vibrate(VibrationEffect.createOneShot(amount, level));
 		} else {
-			// this is for older versions of anroid
+			// this is for older versions of android
 			// need to make a second version of vibration tuned for older systems
 			vibe.vibrate(amount);
 		}

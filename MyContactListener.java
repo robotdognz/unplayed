@@ -94,9 +94,9 @@ public class MyContactListener implements ContactListener {
 		// TODO figure out how hard the player hit something (for vibration)
 		if (player != null) {
 			float[] impulses = impulse.normalImpulses;
-			if (impulses[0] > 250) {
+			if (impulses[0] > 400) {
 				int strength = Math.min((int) impulses[0], 255);
-				player.physicsVibrate(strength, 2);
+				player.physicsVibrate(150, strength);
 			}
 		}
 	}
