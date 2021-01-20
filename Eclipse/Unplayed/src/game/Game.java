@@ -7,6 +7,7 @@ import camera.Camera;
 import editor.Editor;
 import handlers.TextureCache;
 import misc.Converter;
+import misc.MyContactListener;
 import misc.Vibe;
 import objects.Rectangle;
 import objects.Tile;
@@ -18,6 +19,7 @@ import shiffman.box2d.Box2DProcessing;
 import static processing.core.PConstants.*;
 
 import org.jbox2d.dynamics.*;
+import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.*;
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
@@ -66,6 +68,7 @@ public class Game {
 
 	// box2d
 	public Box2DProcessing box2d;
+	public ContactListener contactListener;
 	public boolean locked = false;
 
 	// delta time
@@ -130,6 +133,10 @@ public class Game {
 		box2d = new Box2DProcessing(p);
 		box2d.createWorld();
 		box2d.setGravity(0, -400); //-150
+		
+		//contact listener
+		contactListener = new MyContactListener();
+		box2d.world.setContactListener(contactListener);
 	}
 
 	public void setPlayerStart(PlayerStart start) {

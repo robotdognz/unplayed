@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import handlers.TextureCache;
 import handlers.TileHandler;
+import misc.MyContactListener;
 import misc.Vibe;
 import objects.Editable;
 import objects.Event;
@@ -16,6 +17,7 @@ import shiffman.box2d.Box2DProcessing;
 import static processing.core.PConstants.*;
 
 import org.jbox2d.dynamics.*;
+import org.jbox2d.callbacks.*;
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 
@@ -54,10 +56,14 @@ public class Player extends Editable {
 	// box2d
 	Box2DProcessing box2d;
 	Body dynamicBody;
+	Fixture sensor;
 	float density;
 	float friction;
 	float jumpPower;
 	boolean locked;
+	boolean hasContact;
+
+//	ContactListener contactListener;
 
 	Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -97,10 +103,13 @@ public class Player extends Editable {
 		this.box2d = box2d;
 		this.friction = 0.6f; // from 0 to 1
 		this.density = 1; // from 0 to 1
-		this.jumpPower = 120; //100
+		this.jumpPower = 120; // 100
 		this.locked = locked; // is rotation locked
+		this.hasContact = false; //is the player touching anything
 		create();
 	}
+
+	// ---------physics
 
 	public void create() {
 		if (box2d != null) {
@@ -112,8 +121,8 @@ public class Player extends Editable {
 			bodyDef.type = BodyType.DYNAMIC;
 			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
 			bodyDef.angle = 0;
-			dynamicBody = box2d.createBody(bodyDef);
-			dynamicBody.setFixedRotation(locked);
+			this.dynamicBody = box2d.createBody(bodyDef);
+			this.dynamicBody.setFixedRotation(locked);
 
 			// shape
 			PolygonShape boxShape = new PolygonShape();
@@ -124,7 +133,18 @@ public class Player extends Editable {
 			boxFixtureDef.shape = boxShape;
 			boxFixtureDef.density = density;
 			boxFixtureDef.friction = friction;
-			dynamicBody.createFixture(boxFixtureDef);
+			boxFixtureDef.userData = this;
+			this.dynamicBody.createFixture(boxFixtureDef);
+
+			// sensor
+			// add radar sensor to ship
+			PolygonShape sensorShape = new PolygonShape();
+			sensorShape.setAsBox(box2dW * 2, box2dH * 2);
+			FixtureDef sensorFixture = new FixtureDef();
+			sensorFixture.shape = sensorShape;
+			sensorFixture.isSensor = true;
+			this.sensor = this.dynamicBody.createFixture(sensorFixture);
+
 		}
 	}
 
@@ -135,28 +155,31 @@ public class Player extends Editable {
 		}
 	}
 
+	public void startContact() {
+		this.hasContact = true;
+	}
+
+	public void endContact() {
+		this.hasContact = false;
+	}
+
+	// ---------normal
+
 	public File getFile() {
 		return file;
 	}
 
 	public void jump() {
+		// old jump
 		if (jumpCount > 0) {
 			jumpCount--;
 			velocity.y = -playerJumpPower; // TODO
-			boxJump();
 		}
+		// physics jump
+		boxJump();
 	}
 
 	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
-
-//		// fixed time step
-//		accumulator += deltaTime;
-//		while (accumulator >= stepSize) {
-//			doPlayerStep(objects, g);
-//			accumulator -= stepSize;
-//		}
-//		accumulator = 0; // throw out the extra, might not be the best way
-
 		doPlayerStep(objects, g);
 	}
 
@@ -345,9 +368,15 @@ public class Player extends Editable {
 			graphics.imageMode(CENTER);
 			graphics.translate(pos.x, pos.y);
 			graphics.rotate(-a);
-			graphics.tint(255, 0, 0);
+			if(hasContact) {
+				graphics.tint(255, 0, 0);
+			}else {
+				graphics.tint(0, 255, 0);
+			}
+			
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
 			graphics.noTint();
+
 			graphics.popMatrix();
 		}
 	}
