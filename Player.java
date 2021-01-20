@@ -196,20 +196,20 @@ public class Player extends Editable {
 	public void physicsImpact(float[] impulses) {
 		// amount = 1 >
 		// level = 1-255
-		if (!vibeFrame) {
-			float total = 0;
-			for (float impulse : impulses) {
-				total += impulse;
-			}
 
-			if (total > 400) {
-				int strength = Math.min((int) total, 255);
-				if (physicsPlayer) {
-					vibe.vibrate(2, strength);
-				}
+		float total = 0;
+		for (float impulse : impulses) {
+			total += impulse;
+		}
+
+		if (total > 400 && !vibeFrame) {
+			int strength = Math.min((int) total, 255);
+			if (physicsPlayer) {
+				vibe.vibrate(2, strength);
 			}
 			vibeFrame = true;
 		}
+
 	}
 
 	// ---------normal-------------
