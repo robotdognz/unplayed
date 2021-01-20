@@ -106,8 +106,9 @@ public class Tile extends Editable {
 
 			// sensor
 			EdgeShape sensorEdge = new EdgeShape();
-			v1 = new Vec2(-(box2dW - 2f), box2dH);
-			v2 = new Vec2((box2dW - 2f), box2dH);
+			box2dW = box2d.scalarPixelsToWorld((getWidth() - 5) / 2);
+			v1 = new Vec2(-box2dW, box2dH);
+			v2 = new Vec2(box2dW, box2dH);
 			sensorEdge.set(v1, v2);
 			FixtureDef sensorEdgeDef = new FixtureDef();
 			sensorEdgeDef.shape = topEdge;
