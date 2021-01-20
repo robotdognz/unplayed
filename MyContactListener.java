@@ -59,7 +59,7 @@ public class MyContactListener implements ContactListener {
 					player.startContact();
 
 				} else if (userData.contentEquals("player sensor")) {
-					player = (Player) fixtureA.getBody().getUserData();
+					player = (Player) fixtureB.getBody().getUserData();
 
 				} else if (userData.contentEquals("ground")) {
 					ground = true;
