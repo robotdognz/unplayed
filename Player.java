@@ -195,7 +195,9 @@ public class Player extends Editable {
 	public void physicsVibrate(int strength, int duration) {
 		// strength = 1-255
 		// duration = 1- infinite
-		vibe.vibrate(strength, duration);
+		if (physicsPlayer) {
+			vibe.vibrate(strength, duration);
+		}
 	}
 
 	// ---------normal-------------
