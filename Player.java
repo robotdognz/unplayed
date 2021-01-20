@@ -56,6 +56,7 @@ public class Player extends Editable {
 	Body dynamicBody;
 	float density;
 	float friction;
+	float jumpPower;
 	boolean locked;
 
 	Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
@@ -94,8 +95,9 @@ public class Player extends Editable {
 
 		// box2d
 		this.box2d = box2d;
-		friction = 0.6f; // from 0 to 1
-		density = 1; // from 0 to 1
+		this.friction = 0.6f; // from 0 to 1
+		this.density = 1; // from 0 to 1
+		this.jumpPower = 150; //100
 		this.locked = locked; // is rotation locked
 		create();
 	}
@@ -174,7 +176,7 @@ public class Player extends Editable {
 	}
 
 	public void boxJump() {
-		float impulse = dynamicBody.getMass() * 100; // 50
+		float impulse = dynamicBody.getMass() * jumpPower; // 50
 		dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
 	}
 
