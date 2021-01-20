@@ -157,10 +157,12 @@ public class Player extends Editable {
 
 	public void startContact() {
 		this.hasContact = true;
+		PApplet.println("start contact");
 	}
 
 	public void endContact() {
 		this.hasContact = false;
+		PApplet.println("start contact");
 	}
 
 	// ---------normal

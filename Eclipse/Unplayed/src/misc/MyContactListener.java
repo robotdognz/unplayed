@@ -25,8 +25,6 @@ public class MyContactListener implements ContactListener {
 			Player player = (Player) bodyUserData;
 			player.startContact();
 		}
-		
-		PApplet.println("contact");
 	}
 
 	@Override
