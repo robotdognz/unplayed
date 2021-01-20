@@ -380,9 +380,9 @@ public class Player extends Editable {
 				graphics.translate(pos.x, pos.y);
 				graphics.rotate(-a);
 				if (contactNumber > 0) {
-					graphics.tint(255, 0, 0);
+					graphics.tint(100, 0, 0);
 				} else {
-					graphics.tint(0, 255, 0);
+					graphics.tint(0, 100, 0);
 				}
 
 				graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
