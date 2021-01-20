@@ -97,7 +97,7 @@ public class Player extends Editable {
 		this.box2d = box2d;
 		this.friction = 0.6f; // from 0 to 1
 		this.density = 1; // from 0 to 1
-		this.jumpPower = 150; //100
+		this.jumpPower = 120; //100
 		this.locked = locked; // is rotation locked
 		create();
 	}
@@ -164,9 +164,9 @@ public class Player extends Editable {
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		float desiredVel = 0;
 		if (left) {
-			desiredVel = Math.max(vel.x - 1.0f, -60.0f); // -15
+			desiredVel = Math.max(vel.x - 2.0f, -60.0f); // 1.0f, -60.0f
 		} else if (right) {
-			desiredVel = Math.min(vel.x + 1.0f, 60.0f); // 15
+			desiredVel = Math.min(vel.x + 2.0f, 60.0f); // 1.0f, 60.0f
 		} else {
 			desiredVel = vel.x * 0.999f; // *0.98f
 		}
