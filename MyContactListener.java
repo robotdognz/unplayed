@@ -6,6 +6,7 @@ import org.jbox2d.collision.Manifold;
 import org.jbox2d.dynamics.contacts.Contact;
 
 import game.Player;
+import processing.core.PApplet;
 
 public class MyContactListener implements ContactListener {
 
@@ -24,6 +25,8 @@ public class MyContactListener implements ContactListener {
 			Player player = (Player) bodyUserData;
 			player.startContact();
 		}
+		
+		PApplet.println("contact");
 	}
 
 	@Override
