@@ -78,7 +78,6 @@ public class MyContactListener implements ContactListener {
 		if (fixtureUserData != null) {
 			if (fixtureUserData instanceof Player) {
 				player = (Player) fixtureUserData;
-				player.startContact();
 			}
 		}
 
@@ -87,7 +86,6 @@ public class MyContactListener implements ContactListener {
 		if (fixtureUserData != null) {
 			if (fixtureUserData instanceof Player) {
 				player = (Player) fixtureUserData;
-				player.startContact();
 			}
 		}
 
@@ -96,7 +94,7 @@ public class MyContactListener implements ContactListener {
 			float[] impulses = impulse.normalImpulses;
 			if (impulses[0] > 400) {
 				int strength = Math.min((int) impulses[0], 255);
-				player.physicsVibrate(150, strength);
+				player.physicsVibrate(10, strength);
 			}
 		}
 	}
