@@ -124,7 +124,7 @@ public class Player extends Editable {
 			bodyDef.type = BodyType.DYNAMIC;
 			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
 			bodyDef.angle = 0;
-			bodyDef.userData = "player body";
+			bodyDef.userData = this;
 			this.dynamicBody = box2d.createBody(bodyDef);
 			this.dynamicBody.setFixedRotation(locked);
 
@@ -137,7 +137,7 @@ public class Player extends Editable {
 			boxFixtureDef.shape = boxShape;
 			boxFixtureDef.density = density;
 			boxFixtureDef.friction = friction;
-			boxFixtureDef.userData = this;
+			boxFixtureDef.userData = "player body";
 			dynamicBody.createFixture(boxFixtureDef);
 
 			// sensor
