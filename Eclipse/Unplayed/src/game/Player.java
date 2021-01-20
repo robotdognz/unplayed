@@ -61,7 +61,7 @@ public class Player extends Editable {
 	private int boxJumpCount; // how many jumps the player can make before touching the ground
 	public boolean locked; // does the player have locked rotation
 	private int contactNumber; // the number of things touching the player's body
-	ArrayList<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
+	HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
 	private boolean vibeFrame; // has a vibration happened yet this frame
 
 	Player(PApplet p, Box2DProcessing box2d, boolean physics, boolean locked, TextureCache texture, Tile tile, Vibe v) {
@@ -106,7 +106,7 @@ public class Player extends Editable {
 		this.boxJumpCount = 0;
 		this.locked = locked; // is rotation locked
 		this.contactNumber = 0; // is the player touching anything
-		this.sensorContacts = new ArrayList<Tile>();
+		this.sensorContacts = new HashSet<Tile>();
 		create();
 
 	}
