@@ -61,7 +61,7 @@ public class Player extends Editable {
 	private int boxJumpCount; // how many jumps the player can make before touching the ground
 	public boolean locked; // does the player have locked rotation
 	private int contactNumber; // the number of things touching the player's body
-	ArrayList<Fixture> sensorContacts; // list of all the fixtures inside the player's sensor
+	ArrayList<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
 	private boolean vibeFrame; // has a vibration happened yet this frame
 
 	Player(PApplet p, Box2DProcessing box2d, boolean physics, boolean locked, TextureCache texture, Tile tile, Vibe v) {
@@ -106,7 +106,7 @@ public class Player extends Editable {
 		this.boxJumpCount = 0;
 		this.locked = locked; // is rotation locked
 		this.contactNumber = 0; // is the player touching anything
-		this.sensorContacts = new ArrayList<Fixture>();
+		this.sensorContacts = new ArrayList<Tile>();
 		create();
 
 	}
@@ -170,6 +170,14 @@ public class Player extends Editable {
 		this.contactNumber--;
 	}
 
+	public void addTile(Tile tile) {
+		sensorContacts.add(tile);
+	}
+
+	public void removeTile(Tile tile) {
+		sensorContacts.remove(tile);
+	}
+
 	public void physicsStep() {
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		float desiredVel = 0;
@@ -194,26 +202,21 @@ public class Player extends Editable {
 	}
 
 	public void physicsImpact(float[] impulses) {
-		// amount = 1 >
-		// level = 1-255
-
 		float total = 0;
 		for (float impulse : impulses) {
 			total += impulse;
 		}
 
-		if (total > 800 && !vibeFrame) { //400
-//			int strength = Math.min((int) total, 255);
+		if (total > 800 && !vibeFrame) { // 400
 
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
-			int strength = (int) Math.max(Math.abs(total/1000), 1); //800
+			int strength = (int) Math.max(Math.abs(total / 1000), 1); // 800
 			if (physicsPlayer) {
 				vibe.vibrate(strength);
 				PApplet.println(total + " " + strength);
 			}
 			vibeFrame = true;
-
 		}
 
 	}
@@ -416,6 +419,13 @@ public class Player extends Editable {
 				graphics.noTint();
 
 				graphics.popMatrix();
+			}
+
+			for (Tile t : sensorContacts) {
+				graphics.noStroke();
+				graphics.fill(255, 0, 0, 150);
+				graphics.rectMode(CORNER);
+				graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
 			}
 		}
 	}
