@@ -207,7 +207,7 @@ public class Player extends Editable {
 
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
-			int strength = (int) Math.max((Math.log(Math.abs(total / 13)) / 5), 1);
+			int strength = (int) Math.max((Math.log(Math.abs(total))), 1);
 			if (physicsPlayer) {
 				vibe.vibrate(strength);
 				PApplet.println(total + " " + strength);
