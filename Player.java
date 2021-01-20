@@ -206,6 +206,7 @@ public class Player extends Editable {
 			int strength = Math.min((int) total, 255);
 			if (physicsPlayer) {
 				vibe.vibrate(2, strength);
+				PApplet.println(total);
 			}
 			vibeFrame = true;
 		}
