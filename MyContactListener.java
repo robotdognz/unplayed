@@ -6,7 +6,7 @@ import org.jbox2d.collision.Manifold;
 import org.jbox2d.dynamics.contacts.Contact;
 
 import game.Player;
-import processing.core.PApplet;
+//import processing.core.PApplet;
 
 public class MyContactListener implements ContactListener {
 
@@ -69,9 +69,34 @@ public class MyContactListener implements ContactListener {
 	}
 
 	@Override
-	public void postSolve(Contact contact, ContactImpulse arg1) {
-		// TODO figure out how hard the player hit something (for vibration)
+	@SuppressWarnings("unused")
+	public void postSolve(Contact contact, ContactImpulse impulse) {
+		Player player = null;
 
+		// check if fixture A was a ball
+		Object fixtureUserData = contact.getFixtureA().getUserData();
+		if (fixtureUserData != null) {
+			if (fixtureUserData instanceof Player) {
+				player = (Player) fixtureUserData;
+				player.startContact();
+			}
+		}
+
+		// check if fixture B was a ball
+		fixtureUserData = contact.getFixtureB().getUserData();
+		if (fixtureUserData != null) {
+			if (fixtureUserData instanceof Player) {
+				player = (Player) fixtureUserData;
+				player.startContact();
+			}
+		}
+
+		// TODO figure out how hard the player hit something (for vibration)
+		if (player != null) {
+			float[] impulses = impulse.normalImpulses;
+			int strength = Math.min((int) impulses[0], 255);
+			player.physicsVibrate(strength, 2);
+		}
 	}
 
 	@Override
