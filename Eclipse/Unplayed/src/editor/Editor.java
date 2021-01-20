@@ -134,6 +134,9 @@ public class Editor {
 		debugVis = true; // false
 		frameDelay = 100;
 		textSize = (int) (p.width / 28.8); // 50
+		
+		//box2d
+		game.physicsPlayer = true;
 	}
 
 	public void step(ArrayList<PVector> touches) {
