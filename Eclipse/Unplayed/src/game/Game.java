@@ -69,6 +69,7 @@ public class Game {
 	// box2d
 	public Box2DProcessing box2d;
 	public ContactListener contactListener;
+	public boolean physicsPlayer = false;
 	public boolean locked = false;
 
 	// delta time
@@ -294,7 +295,7 @@ public class Game {
 			if (this.player != null) {
 				this.player.destroy();
 			}
-			player = new Player(p, box2d, locked, texture, current, vibe);
+			player = new Player(p, box2d, physicsPlayer, locked, texture, current, vibe);
 		} else if (playerArea instanceof Tile) {
 			HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
 			world.retrieve(returnObjects, playerArea);
@@ -325,14 +326,14 @@ public class Game {
 					if (this.player != null) {
 						this.player.destroy();
 					}
-					player = new Player(p, box2d, locked, texture, playerCheckpoint, vibe);
+					player = new Player(p, box2d, physicsPlayer, locked, texture, playerCheckpoint, vibe);
 				} else if (playerStart != null) {
 					Tile current = ((PlayerStart) playerStart).getRequired();
 					if (current != null) {
 						if (this.player != null) {
 							this.player.destroy();
 						}
-						player = new Player(p, box2d, locked, texture, current, vibe);
+						player = new Player(p, box2d, physicsPlayer, locked, texture, current, vibe);
 					}
 				}
 

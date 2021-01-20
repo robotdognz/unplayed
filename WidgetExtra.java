@@ -17,7 +17,7 @@ public class WidgetExtra extends Widget {
 		Widget w5 = new WidgetSnap(p, editor, parent);
 		Widget w6 = new WidgetDebug(p, editor, parent);
 		Widget w7 = new WidgetLock(p, editor, parent);
-		Widget w8 = new WidgetQuadtree(p, editor, parent);
+		Widget w8 = new WidgetPhysicsPlayer(p, editor, parent); //WidgetQuadtree(p, editor, parent);
 		Widget w9 = new WidgetPauseMenu(p, editor, parent);
 
 		subWidgets.add(w1);

@@ -69,15 +69,13 @@ public class MyContactListener implements ContactListener {
 	}
 
 	@Override
-	public void postSolve(Contact arg0, ContactImpulse arg1) {
-		// TODO Auto-generated method stub
+	public void postSolve(Contact contact, ContactImpulse arg1) {
+		// TODO figure out how hard the player hit something (for vibration)
 
 	}
 
 	@Override
 	public void preSolve(Contact arg0, Manifold arg1) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

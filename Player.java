@@ -5,7 +5,6 @@ import java.util.HashSet;
 
 import handlers.TextureCache;
 import handlers.TileHandler;
-import misc.MyContactListener;
 import misc.Vibe;
 import objects.Editable;
 import objects.Event;
@@ -17,14 +16,12 @@ import shiffman.box2d.Box2DProcessing;
 import static processing.core.PConstants.*;
 
 import org.jbox2d.dynamics.*;
-import org.jbox2d.callbacks.*;
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 
 public class Player extends Editable {
 	private PApplet p;
 	private PVector previousPosition;
-//	private boolean showEvent; //is the player colliding with an event
 
 	// player fields
 	private Rectangle playerArea; // rectangle used for searching the level quad tree
@@ -54,6 +51,7 @@ public class Player extends Editable {
 	private float lastLastXPos; // x position two steps back
 
 	// box2d
+	public boolean physicsPlayer;
 	Box2DProcessing box2d;
 	Body dynamicBody;
 	Fixture sensor;
@@ -66,7 +64,7 @@ public class Player extends Editable {
 
 //	ContactListener contactListener;
 
-	Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
+	Player(PApplet p, Box2DProcessing box2d, boolean physics, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.p = p;
 		this.file = tile.getFile();
@@ -101,6 +99,7 @@ public class Player extends Editable {
 //		showEvent = false;
 
 		// box2d
+		this.physicsPlayer = physics;
 		this.box2d = box2d;
 		this.friction = 0.6f; // from 0 to 1
 		this.density = 1; // from 0 to 1
@@ -108,7 +107,10 @@ public class Player extends Editable {
 		this.boxJumpCount = 0;
 		this.locked = locked; // is rotation locked
 		this.contactNumber = 0; // is the player touching anything
-		create();
+
+		if (physicsPlayer) {
+			create();
+		}
 	}
 
 	// ---------physics
@@ -198,17 +200,22 @@ public class Player extends Editable {
 	}
 
 	public void jump() {
-		// old jump
-		if (jumpCount > 0) {
-			jumpCount--;
-			velocity.y = -playerJumpPower; // TODO
+		if (!physicsPlayer) {
+			// old jump
+			if (jumpCount > 0) {
+				jumpCount--;
+				velocity.y = -playerJumpPower;
+			}
+		} else {
+			// physics jump
+			boxJump();
 		}
-		// physics jump
-		boxJump();
 	}
 
 	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
-		doPlayerStep(objects, g);
+		if (!physicsPlayer) {
+			doPlayerStep(objects, g);
+		}
 	}
 
 	private void doPlayerStep(HashSet<Rectangle> objects, Game g) {
@@ -221,21 +228,21 @@ public class Player extends Editable {
 		vibration = 0;
 		if (velocity.y < terminalVelocity) {
 			// limit fall speed by terminalVelocity
-			velocity.y += playerGravity; // TODO
+			velocity.y += playerGravity; 
 			vibeVelocity = 0;
 		} else if (velocity.y + playerGravity > terminalVelocity) {
 			// fall speed exactly terminalVelocity
-			velocity.y = terminalVelocity; // TODO
+			velocity.y = terminalVelocity; 
 			vibeVelocity += playerGravity / 2;
 		}
 		setY(getY() + velocity.y); // this comes before collision so that falling through perfect holes works
 		velocity.x = 0;
 
 		if (left) {
-			velocity.x = -playerSpeed; // TODO
+			velocity.x = -playerSpeed;
 		}
 		if (right) {
-			velocity.x = playerSpeed; // TODO
+			velocity.x = playerSpeed;
 		}
 
 		// do collision
@@ -276,7 +283,6 @@ public class Player extends Editable {
 				if (getBottomRight().y < p.getTopLeft().y + 1) {
 					continue;
 				}
-//						showEvent = true;
 				((Event) p).activate(g);
 			}
 		}
@@ -339,53 +345,52 @@ public class Player extends Editable {
 	}
 
 	public void draw(PGraphics graphics, float scale) {
-		// draw player
-		graphics.imageMode(CORNER);
-		if (hasTexture) {
-			graphics.imageMode(CENTER);
-			graphics.pushMatrix();
-			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
-			graphics.rotate(PApplet.radians(angle)); // angle of the tile
-//			graphics.scale(flipX, flipY); // flipping the tile
-			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
-			graphics.popMatrix();
-		} else {
-			// missing texture
-			graphics.noStroke();
-			graphics.fill(255, 0, 0, 150);
-			graphics.rectMode(CORNER);
-			graphics.rect(getX(), getY(), getWidth(), getHeight());
-		}
-//		if (showEvent) {
-//			graphics.noFill();
-//			graphics.stroke(255, 0, 0);
-//			graphics.strokeWeight(2);
-//			graphics.rect(getTopLeft().x, getTopLeft().y, getWidth(), getHeight());
-//			showEvent = false;
-//		}
-		if (drawArea) {
-			graphics.fill(0, 0, 0, 150);
-			graphics.rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
-		}
+		if (!physicsPlayer) {
 
-		// draw box2d
-		if (dynamicBody != null) {
-			Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
-			float a = dynamicBody.getAngle();
-			graphics.pushMatrix();
-			graphics.imageMode(CENTER);
-			graphics.translate(pos.x, pos.y);
-			graphics.rotate(-a);
-			if (contactNumber > 0) {
-				graphics.tint(255, 0, 0);
+			// draw player
+			graphics.imageMode(CORNER);
+			if (hasTexture) {
+				graphics.imageMode(CENTER);
+				graphics.pushMatrix();
+				graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
+				graphics.rotate(PApplet.radians(angle)); // angle of the tile
+//				graphics.scale(flipX, flipY); // flipping the tile
+				graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
+				graphics.popMatrix();
 			} else {
-				graphics.tint(0, 255, 0);
+				// missing texture
+				graphics.noStroke();
+				graphics.fill(255, 0, 0, 150);
+				graphics.rectMode(CORNER);
+				graphics.rect(getX(), getY(), getWidth(), getHeight());
 			}
 
-			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
-			graphics.noTint();
+			if (drawArea) {
+				graphics.fill(0, 0, 0, 150);
+				graphics.rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
+			}
 
-			graphics.popMatrix();
+		} else {
+
+			// draw box2d players
+			if (dynamicBody != null) {
+				Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
+				float a = dynamicBody.getAngle();
+				graphics.pushMatrix();
+				graphics.imageMode(CENTER);
+				graphics.translate(pos.x, pos.y);
+				graphics.rotate(-a);
+				if (contactNumber > 0) {
+					graphics.tint(255, 0, 0);
+				} else {
+					graphics.tint(0, 255, 0);
+				}
+
+				graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
+				graphics.noTint();
+
+				graphics.popMatrix();
+			}
 		}
 	}
 
