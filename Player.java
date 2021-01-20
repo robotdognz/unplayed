@@ -133,8 +133,9 @@ public class Player extends Editable {
 			boxFixtureDef.shape = boxShape;
 			boxFixtureDef.density = density;
 			boxFixtureDef.friction = friction;
-			boxFixtureDef.userData = this;
-			this.dynamicBody.createFixture(boxFixtureDef);
+//			boxFixtureDef.userData = this;
+			Fixture playerBody = dynamicBody.createFixture(boxFixtureDef);
+			playerBody.setUserData(this);
 
 			// sensor
 			// add radar sensor to ship
