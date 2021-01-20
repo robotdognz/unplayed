@@ -1,6 +1,7 @@
 package game;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import handlers.TextureCache;
@@ -61,8 +62,7 @@ public class Player extends Editable {
 	int boxJumpCount;
 	boolean locked;
 	int contactNumber;
-
-//	ContactListener contactListener;
+	ArrayList<Fixture> sensorContacts;
 
 	Player(PApplet p, Box2DProcessing box2d, boolean physics, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -107,7 +107,7 @@ public class Player extends Editable {
 		this.boxJumpCount = 0;
 		this.locked = locked; // is rotation locked
 		this.contactNumber = 0; // is the player touching anything
-
+		this.sensorContacts = new ArrayList<Fixture>();
 		create();
 
 	}
@@ -171,15 +171,15 @@ public class Player extends Editable {
 		this.contactNumber--;
 	}
 
-	public void moveBox() {
+	public void physicsStep() {
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		float desiredVel = 0;
 		if (left) {
-			desiredVel = Math.max(vel.x - 2.0f, -60.0f); // 1.0f, -60.0f
+			desiredVel = Math.max(vel.x - 2.0f, -60.0f);
 		} else if (right) {
-			desiredVel = Math.min(vel.x + 2.0f, 60.0f); // 1.0f, 60.0f
+			desiredVel = Math.min(vel.x + 2.0f, 60.0f);
 		} else {
-			desiredVel = vel.x * 0.999f; // *0.98f
+			desiredVel = vel.x * 0.999f;
 		}
 		float velChange = desiredVel - vel.x;
 		float impulse = dynamicBody.getMass() * velChange;

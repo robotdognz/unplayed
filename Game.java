@@ -2,7 +2,6 @@ package game;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-
 import camera.Camera;
 import editor.Editor;
 import handlers.TextureCache;
@@ -15,14 +14,8 @@ import objects.View;
 import objects.events.PlayerStart;
 import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
-
 import static processing.core.PConstants.*;
-
-import org.jbox2d.dynamics.*;
 import org.jbox2d.callbacks.ContactListener;
-import org.jbox2d.collision.*;
-import org.jbox2d.collision.shapes.*;
-import org.jbox2d.common.*;
 
 public class Game {
 	private PApplet p;
@@ -133,9 +126,9 @@ public class Game {
 	public void buildWorld() {
 		box2d = new Box2DProcessing(p);
 		box2d.createWorld();
-		box2d.setGravity(0, -400); //-150
-		
-		//contact listener
+		box2d.setGravity(0, -400); // -150
+
+		// contact listener
 		contactListener = new MyContactListener();
 		box2d.world.setContactListener(contactListener);
 	}
@@ -447,10 +440,9 @@ public class Game {
 		while (accumulator >= stepSize) {
 			accumulator -= stepSize;
 			if (player != null) {
-				player.moveBox();
+				player.physicsStep();
 			}
-			// TODO: figure out what to use for the two ints
-			box2d.step(stepSize, 100, 100);
+			box2d.step(stepSize, 8, 3);
 		}
 		// accumulator = 0;
 	}
