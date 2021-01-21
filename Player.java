@@ -272,7 +272,7 @@ public class Player extends Editable {
 			}
 			if (Math.abs(previousX - t.getX()) == 200) {
 				conditionsMet = true;
-				this.dynamicBody.setTransform(pos, angleRounded);
+				this.dynamicBody.setTransform(box2d.coordPixelsToWorld(pos), angleRounded);
 				this.dynamicBody.setFixedRotation(true);
 				return;
 			}
