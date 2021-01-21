@@ -553,7 +553,7 @@ public class Player extends Editable {
 				graphics.translate(pos.x, pos.y);
 				graphics.rotate(-a);
 
-				if (conditionsMet) {
+				if (dynamicBody.isFixedRotation()) { // conditionsMet
 					graphics.tint(200, 255, 200);
 				}
 
