@@ -208,6 +208,7 @@ public class Player extends Editable {
 
 	private void checkTiles() {
 		conditionsMet = false;
+		checking = new ArrayList<Tile>();
 
 		// check there are tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
@@ -238,11 +239,11 @@ public class Player extends Editable {
 			Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 
 			
-			checking = new ArrayList<Tile>();
+			
 
 			for (Tile t : sensorContacts) {
 				// skip this tile if the top of it is above the player's midpoint
-				if (t.getY() > pos.y) {
+				if (t.getY() < pos.y) {
 					continue;
 				}
 
