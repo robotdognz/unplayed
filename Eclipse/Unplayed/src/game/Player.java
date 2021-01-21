@@ -253,7 +253,7 @@ public class Player extends Editable {
 					continue;
 				}
 			}
-			if (vel.x > 0) { // moving left
+			if (vel.x < 0) { // moving left
 				if (pos.x - getWidth() / 2 < t.getTopLeft().x) {
 					continue;
 				}
