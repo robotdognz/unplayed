@@ -238,19 +238,20 @@ public class Player extends Editable {
 		if (vel.x < 0) {
 			Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 
-			
-			
-
 			for (Tile t : sensorContacts) {
 				// skip this tile if the top of it is above the player's midpoint
 				if (t.getY() < pos.y) {
 					continue;
 				}
 
+				if (t.getY() > pos.y + getHeight()) {
+					continue;
+				}
+
 				checking.add(t);
 			}
 			Collections.sort(checking);
-			
+
 		}
 	}
 
@@ -485,6 +486,12 @@ public class Player extends Editable {
 			for (Tile t : sensorContacts) {
 				graphics.noStroke();
 				graphics.fill(255, 0, 0, 150);
+				graphics.rectMode(CORNER);
+				graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
+			}
+			for (Tile t : checking) {
+				graphics.noStroke();
+				graphics.fill(0, 0, 255, 200);
 				graphics.rectMode(CORNER);
 				graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
 			}
