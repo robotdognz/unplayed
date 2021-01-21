@@ -262,8 +262,6 @@ public class Player extends Editable {
 		}
 		Collections.sort(checking);
 
-//		conditionsMet = true;
-
 		// check the list of tiles for a playerWidth sized gap
 		float previousX = 0;
 		for (int i = 0; i < checking.size(); i++) {
@@ -274,6 +272,7 @@ public class Player extends Editable {
 			}
 			if (Math.abs(previousX - t.getX()) == 200) {
 				conditionsMet = true;
+				this.dynamicBody.setTransform(new Vec2(), angleRounded);
 				this.dynamicBody.setFixedRotation(true);
 				return;
 			}
