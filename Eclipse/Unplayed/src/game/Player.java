@@ -221,7 +221,7 @@ public class Player extends Editable {
 			destroyBarrier();
 			return;
 		}
-		if (!(vel.y <= 20)) { // 2 //!(Math.abs(vel.y) <= 40)
+		if (!(vel.y <= 2)) { // player is still or falling // 2 //!(Math.abs(vel.y) <= 40)
 			destroyBarrier();
 			return;
 		}
@@ -281,11 +281,11 @@ public class Player extends Editable {
 					// create the barrier
 					if (left || vel.x < 0) { // moving left
 						Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
-						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight() * 0.2f);
+						Vec2 top = new Vec2(bottom.x, bottom.y - 5);// getHeight() * 0.2f);
 						createBarrier(top, bottom);
 					} else if (right || vel.x > 0) { // moving right
 						Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
-						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight() * 0.2f);
+						Vec2 top = new Vec2(bottom.x, bottom.y - 5);// getHeight() * 0.2f);
 						createBarrier(top, bottom);
 					}
 
