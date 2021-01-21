@@ -281,11 +281,11 @@ public class Player extends Editable {
 					// create the barrier
 					if (left || vel.x < 0) { // moving left
 						Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
-						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight());
+						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight() * 0.5f);
 						createBarrier(top, bottom);
 					} else if (right || vel.x > 0) { // moving right
 						Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
-						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight());
+						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight() * 0.5f);
 						createBarrier(top, bottom);
 					}
 
@@ -316,7 +316,6 @@ public class Player extends Editable {
 		tempBarrierDef.shape = tempBarrierEdge;
 		tempBarrierDef.density = density;
 		tempBarrierDef.friction = friction;
-		tempBarrierDef.userData = "barrier";
 		tempFixture = tempBarrier.createFixture(tempBarrierDef);
 	}
 
@@ -327,10 +326,6 @@ public class Player extends Editable {
 			tempBarrier = null;
 			this.dynamicBody.setFixedRotation(locked);
 		}
-	}
-
-	public void breakX() {
-		dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 	}
 
 	public void boxJump() {
