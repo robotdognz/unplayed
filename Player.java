@@ -1,6 +1,8 @@
 package game;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import handlers.TextureCache;
 import handlers.TileHandler;
@@ -64,6 +66,7 @@ public class Player extends Editable {
 
 	// testing
 	boolean conditionsMet = false;
+	public ArrayList<Tile> checking;
 
 	Player(PApplet p, Box2DProcessing box2d, boolean physics, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -109,6 +112,7 @@ public class Player extends Editable {
 		this.contactNumber = 0; // is the player touching anything
 		this.sensorContacts = new HashSet<Tile>();
 		this.tempBarrier = null;
+		checking = new ArrayList<Tile>();
 		create();
 
 	}
@@ -204,22 +208,26 @@ public class Player extends Editable {
 
 	private void checkTiles() {
 		conditionsMet = false;
-		// get player status
-		Vec2 vel = dynamicBody.getLinearVelocity();
-		float angle = PApplet.degrees(dynamicBody.getAngle());
-		// check vertical velocity is appropriate
-		if (!(Math.abs(vel.y) <= 2)) {
+
+		// check there are tiles (need at least 2)
+		if (!(sensorContacts.size() >= 2)) {
 			return;
 		}
-		// check horizontal velocity is appropriate
+
+		// check velocity is appropriate
+		Vec2 vel = dynamicBody.getLinearVelocity();
 		if (!(Math.abs(vel.x) >= 2)) {
 			return;
 		}
-		// check angle is appropriate
-		float angleRounded = Math.round(angle / 90) * 90;
+		if (!(Math.abs(vel.y) <= 2)) {
+			return;
+		}
 
+		// check angle is appropriate
+		float angle = PApplet.degrees(dynamicBody.getAngle());
+		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
-		if (!(angleRemainder < 2 && angleRemainder > -2)) {
+		if (!(angleRemainder < 3 && angleRemainder > -3)) {
 			return;
 		}
 
@@ -228,8 +236,9 @@ public class Player extends Editable {
 		// if the player is moving to the left
 		if (vel.x < 0) {
 			Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
-			boolean gap = true;
-			boolean farTile = false;
+
+			
+			checking = new ArrayList<Tile>();
 
 			for (Tile t : sensorContacts) {
 				// skip this tile if the top of it is above the player's midpoint
@@ -237,9 +246,10 @@ public class Player extends Editable {
 					continue;
 				}
 
-				float closeEdge = t.getBottomRight().x;
-
+				checking.add(t);
 			}
+			Collections.sort(checking);
+			
 		}
 	}
 

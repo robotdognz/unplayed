@@ -14,7 +14,7 @@ import shiffman.box2d.Box2DProcessing;
 
 import static processing.core.PConstants.*;
 
-public class Tile extends Editable {
+public class Tile extends Editable implements Comparable<Tile> {
 	private boolean hasTexture;
 	private TileHandler tileTexture;
 
@@ -200,4 +200,16 @@ public class Tile extends Editable {
 		}
 	}
 
+	@Override
+	public int compareTo(Tile otherTile) {
+		float X = getX();
+		float otherX = otherTile.getX();
+		if(X > otherX) {
+			return 1;
+		}else if(X < otherX) {
+			return -1;
+		}else {
+			return 0;
+		}
+	}
 }
