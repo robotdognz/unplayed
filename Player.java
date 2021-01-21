@@ -149,7 +149,7 @@ public class Player extends Editable {
 			sensorShape.setAsBox(box2dW * 2, box2dH * 2, center, 0);
 //			sensorShape.setAsBox(box2dW * 2, box2dH * 2);
 //			CircleShape sensorShape = new CircleShape();
-			sensorShape.m_radius = box2d.scalarPixelsToWorld(getWidth() * 2);
+//			sensorShape.m_radius = box2d.scalarPixelsToWorld(getWidth() * 2);
 			FixtureDef sensorFixtureDef = new FixtureDef();
 			sensorFixtureDef.shape = sensorShape;
 			sensorFixtureDef.isSensor = true;
