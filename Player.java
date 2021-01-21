@@ -50,13 +50,13 @@ public class Player extends Editable {
 	// box2d
 	private Box2DProcessing box2d; // the box2d world
 	public boolean physicsPlayer; // are we using the physics player
-	private Body dynamicBody; // the player's physics body
+	public Body dynamicBody; // the player's physics body
 	private float density; // the player's density
 	private float friction; // the player's friction
 	private float jumpPower; // the strength of the player's jump
 	private int boxJumpCount; // how many jumps the player can make before touching the ground
 	public boolean locked; // does the player have locked rotation
-	private int contactNumber; // the number of things touching the player's body
+	int contactNumber; // the number of things touching the player's body
 	HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
 	private boolean vibeFrame; // has a vibration happened yet this frame
 	
