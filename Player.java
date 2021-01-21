@@ -59,9 +59,7 @@ public class Player extends Editable {
 	int contactNumber; // the number of things touching the player's body
 	HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
 	private boolean vibeFrame; // has a vibration happened yet this frame
-	
-	Body sensorBody; //body with all the sensors attached
-	
+
 	Body tempBarrier; // barrier used to stop the player moving past a slot
 
 	// testing
@@ -153,10 +151,6 @@ public class Player extends Editable {
 			sensorFixtureDef.isSensor = true;
 			sensorFixtureDef.userData = "player sensor";
 			this.dynamicBody.createFixture(sensorFixtureDef);
-			
-			//sensor body
-			
-//			sensorBody.
 
 		}
 	}
@@ -221,7 +215,7 @@ public class Player extends Editable {
 			return;
 		}
 		// check angle is appropriate
-		float angleRounded = (angle / 90) * 90;
+		float angleRounded = Math.round(angle / 90) * 90;
 
 		float angleRemainder = Math.abs(angle - angleRounded);
 		if (!(angleRemainder < 2 && angleRemainder > -2)) {
@@ -243,7 +237,7 @@ public class Player extends Editable {
 				}
 
 				float closeEdge = t.getBottomRight().x;
-				
+
 			}
 		}
 	}
