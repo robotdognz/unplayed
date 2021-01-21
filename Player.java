@@ -232,8 +232,6 @@ public class Player extends Editable {
 			return;
 		}
 
-		conditionsMet = true;
-
 		// create a list of relevant tiles sorted by x position
 		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 		for (Tile t : sensorContacts) {
@@ -263,8 +261,21 @@ public class Player extends Editable {
 		}
 		Collections.sort(checking);
 
-		// check the list of tiles for a playerWidth sized gap
+//		conditionsMet = true;
 
+		// check the list of tiles for a playerWidth sized gap
+		float previousX = 0;
+		for (int i = 0; i < checking.size(); i++) {
+			Tile t = checking.get(i);
+			if (i == 0) {
+				previousX = t.getX();
+				continue;
+			}
+			if(Math.abs(previousX - t.getX()) == 200) {
+				conditionsMet = true;
+				return;
+			}
+		}
 	}
 
 	public void boxJump() {
