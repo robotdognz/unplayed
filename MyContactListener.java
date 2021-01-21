@@ -88,7 +88,7 @@ public class MyContactListener implements ContactListener {
 			player.resetJump();
 		}
 
-		if (barrier && playerBody) {
+		if (barrier && playerBody) { //TODO
 			player.breakX();
 		}
 

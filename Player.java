@@ -208,7 +208,7 @@ public class Player extends Editable {
 
 	private void checkTiles() {
 		conditionsMet = false;
-		this.dynamicBody.setFixedRotation(locked);
+//		this.dynamicBody.setFixedRotation(locked);
 		checking = new ArrayList<Tile>();
 
 		// check there are tiles (need at least 2)
@@ -326,6 +326,7 @@ public class Player extends Editable {
 		if (tempBarrier != null) {
 			box2d.destroyBody(tempBarrier);
 			tempBarrier = null;
+			this.dynamicBody.setFixedRotation(locked);
 		}
 	}
 
