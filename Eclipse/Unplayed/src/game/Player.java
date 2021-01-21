@@ -66,7 +66,6 @@ public class Player extends Editable {
 	Fixture tempFixture;
 
 	// testing
-	boolean conditionsMet = false;
 	public ArrayList<Tile> checking;
 
 	Player(PApplet p, Box2DProcessing box2d, boolean physics, boolean locked, TextureCache texture, Tile tile, Vibe v) {
@@ -208,8 +207,6 @@ public class Player extends Editable {
 	}
 
 	private void checkTiles() {
-		conditionsMet = false;
-//		this.dynamicBody.setFixedRotation(locked);
 		checking = new ArrayList<Tile>();
 
 		// check there are tiles (need at least 2)
@@ -220,7 +217,7 @@ public class Player extends Editable {
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
-		if (!(left || right || (Math.abs(vel.x) >= 2))) {// !(Math.abs(vel.x) >= 2)) {
+		if (!(left || right || (Math.abs(vel.x) >= 2))) {
 			destroyBarrier();
 			return;
 		}
@@ -253,12 +250,12 @@ public class Player extends Editable {
 
 			// skip this tile if it behind the player
 			if (vel.x > 0) { // moving right
-				if (pos.x - getWidth() * 0.5f > t.getBottomRight().x) {
+				if (pos.x - getWidth() * 0.75f > t.getBottomRight().x) {
 					continue;
 				}
 			}
 			if (vel.x < 0) { // moving left
-				if (pos.x + getWidth() * 0.5f < t.getTopLeft().x) {
+				if (pos.x + getWidth() * 0.75f < t.getTopLeft().x) {
 					continue;
 				}
 			}
@@ -266,9 +263,9 @@ public class Player extends Editable {
 			checking.add(t);
 		}
 		// sort the found tiles
-		if (left || vel.x < 0) {// (vel.x < 0) { // moving left
+		if (left || vel.x < 0) { // moving left
 			Collections.sort(checking, Collections.reverseOrder());
-		} else if (right || vel.x > 0) {// (vel.x > 0) { // moving right
+		} else if (right || vel.x > 0) { // moving right
 			Collections.sort(checking);
 		}
 
@@ -279,14 +276,14 @@ public class Player extends Editable {
 			if (i > 0) {
 				// if this tile is the far side of a gap
 				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
-					conditionsMet = true;
 					this.dynamicBody.setFixedRotation(true);
 
-					if (left || vel.x < 0) {// vel.x < 0) { // moving left
+					// create the barrier
+					if (left || vel.x < 0) { // moving left
 						Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight());
 						createBarrier(top, bottom);
-					} else if (right || vel.x > 0) {// vel.x > 0) { // moving right
+					} else if (right || vel.x > 0) { // moving right
 						Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight());
 						createBarrier(top, bottom);
