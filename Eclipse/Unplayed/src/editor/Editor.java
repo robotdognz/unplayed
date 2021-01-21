@@ -209,7 +209,10 @@ public class Editor {
 			p.textAlign(CENTER, CENTER);
 			if (game.player != null) {
 				Vec2 vel = game.player.dynamicBody.getLinearVelocity();
-				p.text("Velocity x:" + PApplet.nf(vel.x, 1, 3) + " y:" + PApplet.nf(vel.y, 1, 3), p.width / 2,
+				p.text("Velocity x:" + PApplet.nf(Math.abs(vel.x), 1, 3) + " y:" + PApplet.nf(Math.abs(vel.y), 1, 3),
+						p.width / 2, p.height - editorBottom.getHeight() - textSize * 7);
+				float angle = PApplet.degrees(game.player.dynamicBody.getAngle());
+				p.text("Angle:" + PApplet.nf(angle, 1, 3), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 6);
 //				p.text("Still: " + game.player.isStill(), p.width / 2,
 //						p.height - editorBottom.getHeight() - textSize * 6);
