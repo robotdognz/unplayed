@@ -63,6 +63,7 @@ public class Player extends Editable {
 	private boolean vibeFrame; // has a vibration happened yet this frame
 
 	Body tempBarrier; // barrier used to stop the player moving past a slot
+	Fixture tempFixture;
 
 	// testing
 	boolean conditionsMet = false;
@@ -319,12 +320,13 @@ public class Player extends Editable {
 		tempBarrierDef.density = density;
 		tempBarrierDef.friction = friction;
 		tempBarrierDef.userData = "barrier";
-		tempBarrier.createFixture(tempBarrierDef);
+		tempFixture = tempBarrier.createFixture(tempBarrierDef);
 	}
 
 	private void destroyBarrier() {
 		if (tempBarrier != null) {
 			box2d.destroyBody(tempBarrier);
+			tempFixture = null;
 			tempBarrier = null;
 			this.dynamicBody.setFixedRotation(locked);
 		}
@@ -578,6 +580,13 @@ public class Player extends Editable {
 					graphics.fill(255);
 					graphics.text(i, t.getX() + t.getWidth() / 2, t.getY() + t.getHeight() / 2);
 				}
+			}
+			if (tempFixture != null) {
+				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) tempFixture.getShape()).m_vertex1);
+				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) tempFixture.getShape()).m_vertex2);
+				graphics.stroke(255, 0, 0);
+				graphics.strokeWeight(4);
+				graphics.line(v1.x, v1.y, v2.x, v2.y);
 			}
 		}
 	}
