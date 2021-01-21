@@ -248,12 +248,12 @@ public class Player extends Editable {
 
 			// skip this tile if it behind the player
 			if (vel.x > 0) { // moving right
-				if (pos.x + getWidth() / 2 > t.getBottomRight().x) {
+				if (pos.x + getWidth() > t.getBottomRight().x) { // / 2
 					continue;
 				}
 			}
 			if (vel.x < 0) { // moving left
-				if (pos.x - getWidth() / 2 < t.getTopLeft().x) {
+				if (pos.x - getWidth() < t.getTopLeft().x) { // / 2
 					continue;
 				}
 			}
@@ -272,7 +272,7 @@ public class Player extends Editable {
 			}
 			if (Math.abs(previousX - t.getX()) == 200) {
 				conditionsMet = true;
-				this.dynamicBody.setTransform(new Vec2(), angleRounded);
+				this.dynamicBody.setTransform(pos, angleRounded);
 				this.dynamicBody.setFixedRotation(true);
 				return;
 			}
