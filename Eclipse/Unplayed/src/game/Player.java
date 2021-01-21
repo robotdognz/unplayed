@@ -221,7 +221,7 @@ public class Player extends Editable {
 			destroyBarrier();
 			return;
 		}
-		if (!(vel.y <= 40)) { // 2 //!(Math.abs(vel.y) <= 40)
+		if (!(vel.y <= 20)) { // 2 //!(Math.abs(vel.y) <= 40)
 			destroyBarrier();
 			return;
 		}
