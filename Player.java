@@ -144,15 +144,21 @@ public class Player extends Editable {
 			dynamicBody.createFixture(boxFixtureDef);
 
 			// sensor
-//			PolygonShape sensorShape = new PolygonShape();
+			PolygonShape sensorShape = new PolygonShape();
+			Vec2 center = new Vec2(-3, -3);
+			sensorShape.setAsBox(box2dW * 2, box2dH * 2, center, 0);
 //			sensorShape.setAsBox(box2dW * 2, box2dH * 2);
-			CircleShape sensorShape = new CircleShape();
+//			CircleShape sensorShape = new CircleShape();
 			sensorShape.m_radius = box2d.scalarPixelsToWorld(getWidth() * 2);
 			FixtureDef sensorFixtureDef = new FixtureDef();
 			sensorFixtureDef.shape = sensorShape;
 			sensorFixtureDef.isSensor = true;
 			sensorFixtureDef.userData = "player sensor";
 			this.dynamicBody.createFixture(sensorFixtureDef);
+			
+			//sensor body
+			
+//			sensorBody.
 
 		}
 	}
