@@ -59,8 +59,8 @@ public class Player extends Editable {
 	int contactNumber; // the number of things touching the player's body
 	HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
 	private boolean vibeFrame; // has a vibration happened yet this frame
-	
-	//testing
+
+	// testing
 	boolean conditionsMet = false;
 
 	Player(PApplet p, Box2DProcessing box2d, boolean physics, boolean locked, TextureCache texture, Tile tile, Vibe v) {
@@ -204,7 +204,7 @@ public class Player extends Editable {
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		float angle = PApplet.degrees(dynamicBody.getAngle());
 		// check vertical velocity is appropriate
-		if(!(Math.abs(vel.y) <= 2)) {
+		if (!(Math.abs(vel.y) <= 2)) {
 			return;
 		}
 		// check horizontal velocity is appropriate
@@ -212,11 +212,13 @@ public class Player extends Editable {
 			return;
 		}
 		// check angle is appropriate
-		float angleRemainder = Math.abs(angle % 90);
+		float angleRounded = (angle / 90) * 90;
+
+		float angleRemainder = Math.abs(angle - angleRounded);// Math.abs(angle % 90);
 		if (!(angleRemainder < 5 && angleRemainder > -5)) {
 			return;
 		}
-		
+
 		conditionsMet = true;
 
 		// if the player is moving to the left
@@ -445,7 +447,7 @@ public class Player extends Editable {
 				graphics.imageMode(CENTER);
 				graphics.translate(pos.x, pos.y);
 				graphics.rotate(-a);
-				if (conditionsMet) { //contactNumber > 0
+				if (conditionsMet) { // contactNumber > 0
 					graphics.tint(255, 200, 200);
 				} else {
 					graphics.tint(200, 255, 200);
