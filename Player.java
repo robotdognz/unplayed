@@ -208,24 +208,23 @@ public class Player extends Editable {
 
 	private void checkTiles() {
 		conditionsMet = false;
-		destroyBarrier();
 		this.dynamicBody.setFixedRotation(locked);
 		checking = new ArrayList<Tile>();
 
 		// check there are tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
-//			destroyBarrier();
+			destroyBarrier();
 			return;
 		}
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		if (!(Math.abs(vel.x) >= 2)) {
-//			destroyBarrier();
+			destroyBarrier();
 			return;
 		}
 		if (!(Math.abs(vel.y) <= 2)) {
-//			destroyBarrier();
+			destroyBarrier();
 			return;
 		}
 
@@ -234,7 +233,7 @@ public class Player extends Editable {
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
 		if (!(angleRemainder < 3 && angleRemainder > -3)) {
-//			destroyBarrier();
+			destroyBarrier();
 			return;
 		}
 
@@ -294,10 +293,12 @@ public class Player extends Editable {
 			}
 			previousX = t.getX();
 		}
+		destroyBarrier();
 	}
 
-	@SuppressWarnings("unused")
 	private void createBarrier(Vec2 v1, Vec2 v2) {
+//		destroyBarrier();
+
 		// body
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.STATIC;
@@ -315,7 +316,6 @@ public class Player extends Editable {
 		tempBarrier.createFixture(tempBarrierDef);
 	}
 
-	@SuppressWarnings("unused")
 	private void destroyBarrier() {
 		if (tempBarrier != null) {
 			box2d.destroyBody(tempBarrier);
