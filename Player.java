@@ -234,25 +234,25 @@ public class Player extends Editable {
 
 		conditionsMet = true;
 
-		// if the player is moving to the left
+		// create a list of relevant tiles sorted by x position
 		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
-
 		for (Tile t : sensorContacts) {
 			// skip this tile if the top of it is above the player's midpoint
 			if (t.getY() < pos.y) {
 				continue;
 			}
 
+			// skip this tile if it is too far below the player
 			if (t.getY() > pos.y + getHeight()) {
 				continue;
 			}
 
+			// skip this tile if it behind the player
 			if (vel.x > 0) { // moving right
 				if (pos.x + getWidth() / 2 > t.getBottomRight().x) {
 					continue;
 				}
 			}
-
 			if (vel.x > 0) { // moving left
 				if (pos.x - getWidth() / 2 < t.getTopLeft().x) {
 					continue;
@@ -262,6 +262,8 @@ public class Player extends Editable {
 			checking.add(t);
 		}
 		Collections.sort(checking);
+
+		// check the list of tiles for a playerWidth sized gap
 
 	}
 
@@ -499,11 +501,23 @@ public class Player extends Editable {
 				graphics.rectMode(CORNER);
 				graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
 			}
-			for (Tile t : checking) {
-				graphics.noStroke();
-				graphics.fill(0, 0, 255, 200);
-				graphics.rectMode(CORNER);
-				graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
+			if (checking.size() > 0) {
+				for (int i = 0; i < checking.size(); i++) {
+					Tile t = checking.get(i);
+					graphics.noStroke();
+					graphics.fill(0, 0, 255, 200);
+					graphics.rectMode(CORNER);
+					graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
+					graphics.textMode(CENTER);
+					graphics.fill(255);
+					graphics.text(i, t.getX() + t.getWidth() / 2, t.getY() + t.getHeight() / 2);
+				}
+//				for (Tile t : checking) {
+//					graphics.noStroke();
+//					graphics.fill(0, 0, 255, 200);
+//					graphics.rectMode(CORNER);
+//					graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
+//				}
 			}
 		}
 	}
