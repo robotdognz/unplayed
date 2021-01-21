@@ -213,15 +213,18 @@ public class Player extends Editable {
 
 		// check there are tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
+			destroyBarrier();
 			return;
 		}
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		if (!(Math.abs(vel.x) >= 2)) {
+			destroyBarrier();
 			return;
 		}
 		if (!(Math.abs(vel.y) <= 2)) {
+			destroyBarrier();
 			return;
 		}
 
@@ -230,6 +233,7 @@ public class Player extends Editable {
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
 		if (!(angleRemainder < 3 && angleRemainder > -3)) {
+			destroyBarrier();
 			return;
 		}
 
@@ -262,28 +266,59 @@ public class Player extends Editable {
 		}
 		// sort the found tiles
 		if (vel.x < 0) { // moving left
-			Collections.sort(checking);
+			Collections.sort(checking, Collections.reverseOrder());
 		}
 		if (vel.x > 0) { // moving right
-			Collections.sort(checking, Collections.reverseOrder());
+			Collections.sort(checking);
 		}
 
 		// check the list of tiles for a playerWidth sized gap
 		float previousX = 0;
 		for (int i = 0; i < checking.size(); i++) {
 			Tile t = checking.get(i);
-//			if (i == 0) {
-//				previousX = t.getX();
-//				continue;
-//			}
 			if (i > 0) {
-				if (Math.abs(previousX - t.getX()) == 200) {
+				// if this tile is the far side of a gap
+				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
 					conditionsMet = true;
 					this.dynamicBody.setFixedRotation(true);
+
+					if (vel.x < 0) { // moving left
+						Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
+						Vec2 top = new Vec2(bottom.x, bottom.y + getHeight());
+						createBarrier(top, bottom);
+					}
+
 					return;
 				}
 			}
 			previousX = t.getX();
+		}
+	}
+
+	@SuppressWarnings("unused")
+	private void createBarrier(Vec2 v1, Vec2 v2) {
+		// body
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.STATIC;
+		tempBarrier = box2d.createBody(bodyDef);
+
+		// shape
+		EdgeShape tempBarrierEdge = new EdgeShape();
+		tempBarrierEdge.set(box2d.coordPixelsToWorld(v1), box2d.coordPixelsToWorld(v2));
+
+		// fixture
+		FixtureDef tempBarrierDef = new FixtureDef();
+		tempBarrierDef.shape = tempBarrierEdge;
+		tempBarrierDef.density = density;
+		tempBarrierDef.friction = friction;
+		tempBarrier.createFixture(tempBarrierDef);
+	}
+
+	@SuppressWarnings("unused")
+	private void destroyBarrier() {
+		if (tempBarrier != null) {
+			box2d.destroyBody(tempBarrier);
+			tempBarrier = null;
 		}
 	}
 
@@ -503,9 +538,8 @@ public class Player extends Editable {
 				graphics.imageMode(CENTER);
 				graphics.translate(pos.x, pos.y);
 				graphics.rotate(-a);
-				if (conditionsMet) { // contactNumber > 0
-					graphics.tint(255, 200, 200);
-				} else {
+
+				if (conditionsMet) {
 					graphics.tint(200, 255, 200);
 				}
 
@@ -532,12 +566,6 @@ public class Player extends Editable {
 					graphics.fill(255);
 					graphics.text(i, t.getX() + t.getWidth() / 2, t.getY() + t.getHeight() / 2);
 				}
-//				for (Tile t : checking) {
-//					graphics.noStroke();
-//					graphics.fill(0, 0, 255, 200);
-//					graphics.rectMode(CORNER);
-//					graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
-//				}
 			}
 		}
 	}
