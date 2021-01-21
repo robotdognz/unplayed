@@ -88,9 +88,9 @@ public class MyContactListener implements ContactListener {
 			player.resetJump();
 		}
 
-		if (barrier && playerBody) {
-			player.breakX();
-		}
+//		if (barrier && playerBody) {
+//			player.breakX();
+//		}
 
 		// if one of them is the player's sensor and one is a tile
 		if (playerSensor && tile != null) {
