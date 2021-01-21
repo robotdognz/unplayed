@@ -62,7 +62,7 @@ public class Tile extends Editable implements Comparable<Tile> {
 			Vec2 v1 = new Vec2(-box2dW, box2dH);
 			Vec2 v2 = new Vec2(box2dW, box2dH);
 			topEdge.set(v1, v2);
-			
+
 			// bottom edge
 			EdgeShape bottomEdge = new EdgeShape();
 			v1 = new Vec2(-box2dW, -box2dH);
@@ -204,12 +204,20 @@ public class Tile extends Editable implements Comparable<Tile> {
 	public int compareTo(Tile otherTile) {
 		float X = getX();
 		float otherX = otherTile.getX();
-		if(X > otherX) {
+		if (X > otherX) {
 			return 1;
-		}else if(X < otherX) {
+		} else if (X < otherX) {
 			return -1;
-		}else {
-			return 0;
+		} else {
+			float Y = getY();
+			float otherY = otherTile.getY();
+			if (Y > otherY) {
+				return 1;
+			} else if (Y < otherY) {
+				return -1;
+			} else {
+				return 0;
+			}
 		}
 	}
 }

@@ -248,33 +248,41 @@ public class Player extends Editable {
 
 			// skip this tile if it behind the player
 			if (vel.x > 0) { // moving right
-				if (pos.x - getWidth()/2 > t.getBottomRight().x) {
+				if (pos.x - getWidth() / 2 > t.getBottomRight().x) {
 					continue;
 				}
 			}
 			if (vel.x < 0) { // moving left
-				if (pos.x + getWidth()/2 < t.getTopLeft().x) {
+				if (pos.x + getWidth() / 2 < t.getTopLeft().x) {
 					continue;
 				}
 			}
 
 			checking.add(t);
 		}
-		Collections.sort(checking);
+		// sort the found tiles
+		if (vel.x < 0) { // moving left
+			Collections.sort(checking);
+		}
+		if (vel.x > 0) { // moving right
+			Collections.sort(checking, Collections.reverseOrder());
+		}
 
 		// check the list of tiles for a playerWidth sized gap
 		float previousX = 0;
 		for (int i = 0; i < checking.size(); i++) {
 			Tile t = checking.get(i);
-			if (i == 0) {
-				previousX = t.getX();
-				continue;
-			}
-			if (Math.abs(previousX - t.getX()) == 200) {
-				conditionsMet = true;
-				this.dynamicBody.setTransform(box2d.coordPixelsToWorld(pos), angleRounded);
-				this.dynamicBody.setFixedRotation(true);
-				return;
+//			if (i == 0) {
+//				previousX = t.getX();
+//				continue;
+//			}
+			if (i > 0) {
+				if (Math.abs(previousX - t.getX()) == 200) {
+					conditionsMet = true;
+					this.dynamicBody.setTransform(box2d.coordPixelsToWorld(pos), angleRounded);
+					this.dynamicBody.setFixedRotation(true);
+					return;
+				}
 			}
 			previousX = t.getX();
 		}

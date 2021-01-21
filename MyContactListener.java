@@ -43,6 +43,7 @@ public class MyContactListener implements ContactListener {
 
 				}
 
+				// TODO: having these in here means only tile top edges return tiles
 				if (fixtureA.getBody().getUserData() instanceof Tile) {
 					tile = (Tile) fixtureA.getBody().getUserData();
 				}
