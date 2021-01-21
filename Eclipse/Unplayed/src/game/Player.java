@@ -252,12 +252,12 @@ public class Player extends Editable {
 
 			// skip this tile if it behind the player
 			if (vel.x > 0) { // moving right
-				if (pos.x - getWidth() * 0.75f > t.getBottomRight().x) {
+				if (pos.x - getWidth() * 0.5f > t.getBottomRight().x) {
 					continue;
 				}
 			}
 			if (vel.x < 0) { // moving left
-				if (pos.x + getWidth() * 0.75f < t.getTopLeft().x) {
+				if (pos.x + getWidth() * 0.5f < t.getTopLeft().x) {
 					continue;
 				}
 			}
