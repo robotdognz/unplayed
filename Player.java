@@ -318,6 +318,7 @@ public class Player extends Editable {
 		tempBarrierDef.shape = tempBarrierEdge;
 		tempBarrierDef.density = density;
 		tempBarrierDef.friction = friction;
+		tempBarrierDef.userData = "barrier";
 		tempBarrier.createFixture(tempBarrierDef);
 	}
 
@@ -326,6 +327,10 @@ public class Player extends Editable {
 			box2d.destroyBody(tempBarrier);
 			tempBarrier = null;
 		}
+	}
+
+	public void breakX() {
+		dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 	}
 
 	public void boxJump() {

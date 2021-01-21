@@ -22,6 +22,7 @@ public class MyContactListener implements ContactListener {
 		boolean playerBody = false; // one of the fixtures is the player
 		boolean playerSensor = false; // one of the fixtures is the player's sensor
 		boolean ground = false; // one of the fixtures is the ground
+		boolean barrier = false; // one of the fixtures is a temp barrier
 
 		// check fixture
 		Object fixtureUserData = fixtureA.getUserData();
@@ -37,6 +38,9 @@ public class MyContactListener implements ContactListener {
 				} else if (userData.contentEquals("player sensor")) {
 					player = (Player) fixtureA.getBody().getUserData();
 					playerSensor = true;
+
+				} else if (userData.contentEquals("barrier")) {
+					barrier = true;
 
 				} else if (userData.contentEquals("ground")) {
 					ground = true;
@@ -65,6 +69,9 @@ public class MyContactListener implements ContactListener {
 					player = (Player) fixtureB.getBody().getUserData();
 					playerSensor = true;
 
+				} else if (userData.contentEquals("barrier")) {
+					barrier = true;
+
 				} else if (userData.contentEquals("ground")) {
 					ground = true;
 
@@ -79,6 +86,10 @@ public class MyContactListener implements ContactListener {
 		// if on of them is the player and one is the ground
 		if (ground && playerBody) {
 			player.resetJump();
+		}
+
+		if (barrier && playerBody) {
+			player.breakX();
 		}
 
 		// if one of them is the player's sensor and one is a tile
