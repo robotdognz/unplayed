@@ -208,6 +208,7 @@ public class Player extends Editable {
 
 	private void checkTiles() {
 		conditionsMet = false;
+		this.dynamicBody.setFixedRotation(locked);
 		checking = new ArrayList<Tile>();
 
 		// check there are tiles (need at least 2)
@@ -271,8 +272,9 @@ public class Player extends Editable {
 				previousX = t.getX();
 				continue;
 			}
-			if(Math.abs(previousX - t.getX()) == 200) {
+			if (Math.abs(previousX - t.getX()) == 200) {
 				conditionsMet = true;
+				this.dynamicBody.setFixedRotation(true);
 				return;
 			}
 			previousX = t.getX();
