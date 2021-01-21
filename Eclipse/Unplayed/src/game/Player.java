@@ -221,7 +221,7 @@ public class Player extends Editable {
 			destroyBarrier();
 			return;
 		}
-		if (!(vel.y <= 2)) { // player is still or falling // 2 //!(Math.abs(vel.y) <= 40)
+		if (!(vel.y <= 2)) { // player is still or falling
 			destroyBarrier();
 			return;
 		}
@@ -250,12 +250,12 @@ public class Player extends Editable {
 
 			// skip this tile if it behind the player
 			if (vel.x > 0) { // moving right
-				if (pos.x - getWidth() * 0.75f > t.getBottomRight().x) {
+				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) { //*0.75f
 					continue;
 				}
 			}
 			if (vel.x < 0) { // moving left
-				if (pos.x + getWidth() * 0.75f < t.getTopLeft().x) {
+				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {//*0.75f
 					continue;
 				}
 			}
@@ -281,11 +281,11 @@ public class Player extends Editable {
 					// create the barrier
 					if (left || vel.x < 0) { // moving left
 						Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
-						Vec2 top = new Vec2(bottom.x, bottom.y - 5);// getHeight() * 0.2f);
+						Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 						createBarrier(top, bottom);
 					} else if (right || vel.x > 0) { // moving right
 						Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
-						Vec2 top = new Vec2(bottom.x, bottom.y - 5);// getHeight() * 0.2f);
+						Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 						createBarrier(top, bottom);
 					}
 
@@ -324,13 +324,15 @@ public class Player extends Editable {
 			box2d.destroyBody(tempBarrier);
 			tempFixture = null;
 			tempBarrier = null;
+
+			// TODO: this will need to change when there are multiple algorithms
 			this.dynamicBody.setFixedRotation(locked);
 		}
 	}
 
 	public void boxJump() {
 		if (boxJumpCount > 0) {
-			float impulse = dynamicBody.getMass() * jumpPower; // 50
+			float impulse = dynamicBody.getMass() * jumpPower;
 			dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
 			boxJumpCount--;
 		}
