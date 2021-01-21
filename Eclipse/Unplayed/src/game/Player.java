@@ -221,7 +221,7 @@ public class Player extends Editable {
 			destroyBarrier();
 			return;
 		}
-		if (!(Math.abs(vel.y) <= 40)) { // 2
+		if (!(vel.y <= 40)) { // 2 //!(Math.abs(vel.y) <= 40)
 			destroyBarrier();
 			return;
 		}
@@ -281,11 +281,11 @@ public class Player extends Editable {
 					// create the barrier
 					if (left || vel.x < 0) { // moving left
 						Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
-						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight() * 0.5f);
+						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight() * 0.2f);
 						createBarrier(top, bottom);
 					} else if (right || vel.x > 0) { // moving right
 						Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
-						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight() * 0.5f);
+						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight() * 0.2f);
 						createBarrier(top, bottom);
 					}
 
@@ -412,7 +412,7 @@ public class Player extends Editable {
 		// do collision
 		wall = false;
 		for (Rectangle p : objects) {
-			if (p instanceof Tile) { // platform collison
+			if (p instanceof Tile) { // platform collision
 				collision(p.getTopLeft(), p.getBottomRight());
 			}
 		}
@@ -568,7 +568,7 @@ public class Player extends Editable {
 					graphics.fill(0, 0, 255, 200);
 					graphics.rectMode(CORNER);
 					graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
-					graphics.textMode(CENTER);
+//					graphics.textMode(CENTER);
 					graphics.fill(255);
 					graphics.text(i, t.getX() + t.getWidth() / 2, t.getY() + t.getHeight() / 2);
 				}
