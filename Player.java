@@ -183,6 +183,9 @@ public class Player extends Editable {
 	}
 
 	public void physicsStep() {
+		// environment checking
+		checkTiles();
+
 		// movement
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		float desiredVel = 0;
@@ -197,8 +200,6 @@ public class Player extends Editable {
 		float impulse = dynamicBody.getMass() * velChange;
 		dynamicBody.applyLinearImpulse(new Vec2(impulse, 0), dynamicBody.getWorldCenter(), true);
 
-		// environment checking
-		checkTiles();
 	}
 
 	private void checkTiles() {
