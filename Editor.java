@@ -136,8 +136,8 @@ public class Editor {
 		debugVis = true; // false
 		frameDelay = 100;
 		textSize = (int) (p.width / 28.8); // 50
-		
-		//box2d
+
+		// box2d
 		game.physicsPlayer = true;
 	}
 
@@ -209,10 +209,10 @@ public class Editor {
 			p.textAlign(CENTER, CENTER);
 			if (game.player != null) {
 				Vec2 vel = game.player.dynamicBody.getLinearVelocity();
-				p.text("Velocity x:" + vel.x + " y:" + vel.y, p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 7);
-				p.text("Still: " + game.player.isStill(), p.width / 2,
+				p.text("Velocity x:" + PApplet.nf(vel.x, 1, 3) + " y:" + PApplet.nf(vel.y, 1, 3), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 6);
+//				p.text("Still: " + game.player.isStill(), p.width / 2,
+//						p.height - editorBottom.getHeight() - textSize * 6);
 			}
 			if (game.placed != null) {
 				p.text("Placed: " + game.placed.size(), p.width / 2,
@@ -228,8 +228,7 @@ public class Editor {
 //					p.height - editorBottom.getHeight() - textSize * 3);
 			p.text("FPS: " + PApplet.nf(this.frame, 1, 2), p.width / 2,
 					p.height - editorBottom.getHeight() - textSize * 2);
-			p.text("DT: " + PApplet.nf(deltaTime, 1, 4), p.width / 2,
-					p.height - editorBottom.getHeight() - textSize);
+			p.text("DT: " + PApplet.nf(deltaTime, 1, 4), p.width / 2, p.height - editorBottom.getHeight() - textSize);
 		}
 	}
 
