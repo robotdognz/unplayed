@@ -62,6 +62,14 @@ public class Tile extends Editable {
 			Vec2 v1 = new Vec2(-box2dW, box2dH);
 			Vec2 v2 = new Vec2(box2dW, box2dH);
 			topEdge.set(v1, v2);
+			
+			Vec2 v0 = new Vec2(-box2dW, box2dH+1);
+			Vec2 v3 = new Vec2(box2dW, box2dH+1);
+			topEdge.m_vertex0.set( v0 );
+			topEdge.m_vertex3.set( v3 );
+			topEdge.m_hasVertex0 = true;
+			topEdge.m_hasVertex3 = true;
+			
 			// bottom edge
 			EdgeShape bottomEdge = new EdgeShape();
 			v1 = new Vec2(-box2dW, -box2dH);

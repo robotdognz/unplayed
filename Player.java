@@ -59,6 +59,7 @@ public class Player extends Editable {
 	int contactNumber; // the number of things touching the player's body
 	HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
 	private boolean vibeFrame; // has a vibration happened yet this frame
+	Body tempBarrier; // barrier used to stop the player moving past a slot
 
 	// testing
 	boolean conditionsMet = false;
@@ -106,6 +107,7 @@ public class Player extends Editable {
 		this.locked = locked; // is rotation locked
 		this.contactNumber = 0; // is the player touching anything
 		this.sensorContacts = new HashSet<Tile>();
+		this.tempBarrier = null;
 		create();
 
 	}
@@ -214,21 +216,29 @@ public class Player extends Editable {
 		// check angle is appropriate
 		float angleRounded = (angle / 90) * 90;
 
-		float angleRemainder = Math.abs(angle - angleRounded);// Math.abs(angle % 90);
-		if (!(angleRemainder < 5 && angleRemainder > -5)) {
+		float angleRemainder = Math.abs(angle - angleRounded);
+		if (!(angleRemainder < 2 && angleRemainder > -2)) {
 			return;
 		}
 
 		conditionsMet = true;
 
 		// if the player is moving to the left
-//		if (vel.x < 0) {
-//			boolean gap = false;
-//
-//			for (Tile t : sensorContacts) {
-//				
-//			}
-//		}
+		if (vel.x < 0) {
+			Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
+			boolean gap = true;
+			boolean farTile = false;
+
+			for (Tile t : sensorContacts) {
+				// skip this tile if the top of it is above the player's midpoint
+				if (t.getY() > pos.y) {
+					continue;
+				}
+
+				float closeEdge = t.getBottomRight().x;
+				
+			}
+		}
 	}
 
 	public void boxJump() {
@@ -252,7 +262,7 @@ public class Player extends Editable {
 			int strength = (int) Math.max(Math.abs(total / 1000), 1); // 800
 			if (physicsPlayer) {
 				vibe.vibrate(strength);
-				PApplet.println(total + " " + strength);
+//				PApplet.println(total + " " + strength);
 			}
 			vibeFrame = true;
 		}
