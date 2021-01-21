@@ -297,7 +297,9 @@ public class Player extends Editable {
 	}
 
 	private void createBarrier(Vec2 v1, Vec2 v2) {
-		destroyBarrier();
+		if(tempBarrier != null) {
+			return;
+		}
 
 		// body
 		BodyDef bodyDef = new BodyDef();
