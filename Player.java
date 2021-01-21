@@ -284,7 +284,7 @@ public class Player extends Editable {
 
 					if (vel.x < 0) { // moving left
 						Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
-						Vec2 top = new Vec2(bottom.x, bottom.y + getHeight());
+						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight());
 						createBarrier(top, bottom);
 					}
 
