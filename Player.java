@@ -59,6 +59,9 @@ public class Player extends Editable {
 	int contactNumber; // the number of things touching the player's body
 	HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
 	private boolean vibeFrame; // has a vibration happened yet this frame
+	
+	Body sensorBody; //body with all the sensors attached
+	
 	Body tempBarrier; // barrier used to stop the player moving past a slot
 
 	// testing
