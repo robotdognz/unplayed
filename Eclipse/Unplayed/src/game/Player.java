@@ -219,7 +219,7 @@ public class Player extends Editable {
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
-		if (!(left || right)) {// !(Math.abs(vel.x) >= 2)) {
+		if (!(left || right || (Math.abs(vel.x) >= 2))) {// !(Math.abs(vel.x) >= 2)) {
 			destroyBarrier();
 			return;
 		}
@@ -265,10 +265,9 @@ public class Player extends Editable {
 			checking.add(t);
 		}
 		// sort the found tiles
-		if (left) {// (vel.x < 0) { // moving left
+		if (left || vel.x < 0) {// (vel.x < 0) { // moving left
 			Collections.sort(checking, Collections.reverseOrder());
-		}
-		if (right) {// (vel.x > 0) { // moving right
+		} else if (right || vel.x > 0) {// (vel.x > 0) { // moving right
 			Collections.sort(checking);
 		}
 
@@ -282,11 +281,11 @@ public class Player extends Editable {
 					conditionsMet = true;
 					this.dynamicBody.setFixedRotation(true);
 
-					if (left) {// vel.x < 0) { // moving left
+					if (left || vel.x < 0) {// vel.x < 0) { // moving left
 						Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight());
 						createBarrier(top, bottom);
-					} else if (right) {// vel.x > 0) { // moving right
+					} else if (right || vel.x > 0) {// vel.x > 0) { // moving right
 						Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight());
 						createBarrier(top, bottom);
