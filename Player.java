@@ -235,24 +235,34 @@ public class Player extends Editable {
 		conditionsMet = true;
 
 		// if the player is moving to the left
-		if (vel.x < 0) {
-			Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
+		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 
-			for (Tile t : sensorContacts) {
-				// skip this tile if the top of it is above the player's midpoint
-				if (t.getY() < pos.y) {
-					continue;
-				}
-
-				if (t.getY() > pos.y + getHeight()) {
-					continue;
-				}
-
-				checking.add(t);
+		for (Tile t : sensorContacts) {
+			// skip this tile if the top of it is above the player's midpoint
+			if (t.getY() < pos.y) {
+				continue;
 			}
-			Collections.sort(checking);
 
+			if (t.getY() > pos.y + getHeight()) {
+				continue;
+			}
+
+			if (vel.x > 0) { // moving right
+				if (pos.x + getWidth() / 2 > t.getBottomRight().x) {
+					continue;
+				}
+			}
+
+			if (vel.x > 0) { // moving left
+				if (pos.x - getWidth() / 2 < t.getTopLeft().x) {
+					continue;
+				}
+			}
+
+			checking.add(t);
 		}
+		Collections.sort(checking);
+
 	}
 
 	public void boxJump() {
