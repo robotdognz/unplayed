@@ -279,9 +279,7 @@ public class Player extends Editable {
 			if (i > 0) {
 				if (Math.abs(previousX - t.getX()) == 200) {
 					conditionsMet = true;
-
 					this.dynamicBody.setFixedRotation(true);
-					this.dynamicBody.setTransform(dynamicBody.getPosition(), angleRounded);
 					return;
 				}
 			}
