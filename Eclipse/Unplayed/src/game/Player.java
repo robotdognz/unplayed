@@ -219,7 +219,7 @@ public class Player extends Editable {
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
-		if (left || right) {// !(Math.abs(vel.x) >= 2)) {
+		if (!(left || right)) {// !(Math.abs(vel.x) >= 2)) {
 			destroyBarrier();
 			return;
 		}
