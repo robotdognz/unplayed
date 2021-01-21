@@ -1,9 +1,7 @@
 package game;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashSet;
-
 import handlers.TextureCache;
 import handlers.TileHandler;
 import misc.Vibe;
@@ -13,9 +11,7 @@ import objects.Rectangle;
 import objects.Tile;
 import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
-
 import static processing.core.PConstants.*;
-
 import org.jbox2d.dynamics.*;
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
@@ -63,6 +59,9 @@ public class Player extends Editable {
 	private int contactNumber; // the number of things touching the player's body
 	HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
 	private boolean vibeFrame; // has a vibration happened yet this frame
+	
+	//testing
+	boolean conditionsMet = false;
 
 	Player(PApplet p, Box2DProcessing box2d, boolean physics, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -140,22 +139,15 @@ public class Player extends Editable {
 			dynamicBody.createFixture(boxFixtureDef);
 
 			// sensor
+//			PolygonShape sensorShape = new PolygonShape();
+//			sensorShape.setAsBox(box2dW * 2, box2dH * 2);
 			CircleShape sensorShape = new CircleShape();
-			sensorShape.m_radius = box2d.scalarPixelsToWorld(getWidth()*2);
+			sensorShape.m_radius = box2d.scalarPixelsToWorld(getWidth() * 2);
 			FixtureDef sensorFixtureDef = new FixtureDef();
 			sensorFixtureDef.shape = sensorShape;
 			sensorFixtureDef.isSensor = true;
 			sensorFixtureDef.userData = "player sensor";
 			this.dynamicBody.createFixture(sensorFixtureDef);
-
-//			// sensor
-//			PolygonShape sensorShape = new PolygonShape();
-//			sensorShape.setAsBox(box2dW * 2, box2dH * 2);
-//			FixtureDef sensorFixtureDef = new FixtureDef();
-//			sensorFixtureDef.shape = sensorShape;
-//			sensorFixtureDef.isSensor = true;
-//			sensorFixtureDef.userData = "player sensor";
-//			this.dynamicBody.createFixture(sensorFixtureDef);
 
 		}
 	}
@@ -188,6 +180,7 @@ public class Player extends Editable {
 	}
 
 	public void physicsStep() {
+		// movement
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		float desiredVel = 0;
 		if (left) {
@@ -200,6 +193,40 @@ public class Player extends Editable {
 		float velChange = desiredVel - vel.x;
 		float impulse = dynamicBody.getMass() * velChange;
 		dynamicBody.applyLinearImpulse(new Vec2(impulse, 0), dynamicBody.getWorldCenter(), true);
+
+		// environment checking
+		checkTiles();
+	}
+
+	private void checkTiles() {
+		conditionsMet = false;
+		// get player status
+		Vec2 vel = dynamicBody.getLinearVelocity();
+		float angle = PApplet.degrees(dynamicBody.getAngle());
+		// check vertical velocity is appropriate
+		if(!(Math.abs(vel.y) <= 2)) {
+			return;
+		}
+		// check horizontal velocity is appropriate
+		if (!(Math.abs(vel.x) >= 2)) {
+			return;
+		}
+		// check angle is appropriate
+		float angleRemainder = Math.abs(angle % 90);
+		if (!(angleRemainder < 5 && angleRemainder > -5)) {
+			return;
+		}
+		
+		conditionsMet = true;
+
+		// if the player is moving to the left
+//		if (vel.x < 0) {
+//			boolean gap = false;
+//
+//			for (Tile t : sensorContacts) {
+//				
+//			}
+//		}
 	}
 
 	public void boxJump() {
@@ -418,7 +445,7 @@ public class Player extends Editable {
 				graphics.imageMode(CENTER);
 				graphics.translate(pos.x, pos.y);
 				graphics.rotate(-a);
-				if (contactNumber > 0) {
+				if (conditionsMet) { //contactNumber > 0
 					graphics.tint(255, 200, 200);
 				} else {
 					graphics.tint(200, 255, 200);
