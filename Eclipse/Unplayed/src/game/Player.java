@@ -252,12 +252,12 @@ public class Player extends Editable {
 
 			// skip this tile if it behind the player
 			if (vel.x > 0) { // moving right
-				if (pos.x - getWidth() / 2 > t.getBottomRight().x) {
+				if (pos.x - getWidth() * 0.75f > t.getBottomRight().x) {
 					continue;
 				}
 			}
 			if (vel.x < 0) { // moving left
-				if (pos.x + getWidth() / 2 < t.getTopLeft().x) {
+				if (pos.x + getWidth() * 0.75f < t.getTopLeft().x) {
 					continue;
 				}
 			}
@@ -286,6 +286,10 @@ public class Player extends Editable {
 						Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight());
 						createBarrier(top, bottom);
+					} else if (vel.x > 0) { // moving right
+						Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
+						Vec2 top = new Vec2(bottom.x, bottom.y - getHeight());
+						createBarrier(top, bottom);
 					}
 
 					return;
@@ -297,7 +301,7 @@ public class Player extends Editable {
 	}
 
 	private void createBarrier(Vec2 v1, Vec2 v2) {
-		if(tempBarrier != null) {
+		if (tempBarrier != null) {
 			return;
 		}
 
