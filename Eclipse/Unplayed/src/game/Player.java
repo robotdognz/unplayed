@@ -275,6 +275,7 @@ public class Player extends Editable {
 				conditionsMet = true;
 				return;
 			}
+			previousX = t.getX();
 		}
 	}
 
