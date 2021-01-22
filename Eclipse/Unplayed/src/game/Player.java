@@ -546,7 +546,7 @@ public class Player extends Editable {
 				float a = dynamicBody.getAngle();
 				graphics.pushMatrix();
 				graphics.imageMode(CENTER);
-				graphics.translate(pos.x + 0.4f, pos.y + 0.4f);
+				graphics.translate(pos.x + 0.5f, pos.y + 0.5f);
 				graphics.rotate(-a);
 
 				if (showChecking && dynamicBody.isFixedRotation()) {

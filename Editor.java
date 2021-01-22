@@ -134,7 +134,7 @@ public class Editor {
 		pvCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 
 		// debug display
-		debugVis = true; // false
+		debugVis = false;
 		frameDelay = 100;
 		textSize = (int) (p.width / 28.8); // 50
 		tileSearch = false;
