@@ -43,7 +43,8 @@ public class Sweep implements Serializable {
   /** Fraction of the current time step in the range [0,1] c0 and a0 are the positions at alpha0. */
   public float alpha0;
 
-  public String toString() {
+  @Override
+	public String toString() {
     String s = "Sweep:\nlocalCenter: " + localCenter + "\n";
     s += "c0: " + c0 + ", c: " + c + "\n";
     s += "a0: " + a0 + ", a: " + a + "\n";

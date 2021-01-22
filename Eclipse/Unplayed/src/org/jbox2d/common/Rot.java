@@ -87,7 +87,8 @@ public class Rot implements Serializable {
   }
 
   // @Override // annotation omitted for GWT-compatibility
-  public Rot clone() {
+  @Override
+	public Rot clone() {
     Rot copy = new Rot();
     copy.s = s;
     copy.c = c;

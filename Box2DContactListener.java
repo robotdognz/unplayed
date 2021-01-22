@@ -62,6 +62,7 @@ public class Box2DContactListener implements ContactListener {
 		
 	}
 
+	@Override
 	public void endContact(Contact c) {
         if (endMethod != null) {
             try {
@@ -75,6 +76,7 @@ public class Box2DContactListener implements ContactListener {
 		
 	}
 
+	@Override
 	public void postSolve(Contact c, ContactImpulse ci) {
         if (postMethod != null) {
             try {
@@ -88,6 +90,7 @@ public class Box2DContactListener implements ContactListener {
 	}
 	
 
+	@Override
 	public void preSolve(Contact c, Manifold m) {
         if (preMethod != null) {
             try {

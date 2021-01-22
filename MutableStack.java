@@ -50,14 +50,16 @@ public abstract class MutableStack<E> implements IDynamicStack<E> {
     size = newStack.length;
   }
 
-  public final E pop() {
+  @Override
+	public final E pop() {
     if (index >= size) {
       extendStack(size * 2);
     }
     return stack[index++];
   }
 
-  public final void push(E argObject) {
+  @Override
+public final void push(E argObject) {
     assert (index > 0);
     stack[--index] = argObject;
   }

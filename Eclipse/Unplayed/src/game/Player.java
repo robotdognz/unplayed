@@ -62,11 +62,11 @@ public class Player extends Editable {
 	HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
 	private boolean vibeFrame; // has a vibration happened yet this frame
 
+	// slot detection
+	public boolean showChecking = false;
+	public ArrayList<Tile> checking; // list of tiles currently being checked
 	Body tempBarrier; // barrier used to stop the player moving past a slot
-	Fixture tempFixture;
-
-	// testing
-	public ArrayList<Tile> checking;
+	Fixture tempFixture; // reference to the barrier fixture
 
 	Player(PApplet p, Box2DProcessing box2d, boolean physics, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -549,7 +549,7 @@ public class Player extends Editable {
 				graphics.translate(pos.x, pos.y);
 				graphics.rotate(-a);
 
-				if (dynamicBody.isFixedRotation()) { // conditionsMet
+				if (showChecking && dynamicBody.isFixedRotation()) {
 					graphics.tint(200, 255, 200);
 				}
 
@@ -559,30 +559,31 @@ public class Player extends Editable {
 				graphics.popMatrix();
 			}
 
-			for (Tile t : sensorContacts) {
-				graphics.noStroke();
-				graphics.fill(255, 0, 0, 150);
-				graphics.rectMode(CORNER);
-				graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
-			}
-			if (checking.size() > 0) {
-				for (int i = 0; i < checking.size(); i++) {
-					Tile t = checking.get(i);
+			if (showChecking) {
+				for (Tile t : sensorContacts) {
 					graphics.noStroke();
-					graphics.fill(0, 0, 255, 200);
+					graphics.fill(255, 0, 0, 150);
 					graphics.rectMode(CORNER);
 					graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
-//					graphics.textMode(CENTER);
-					graphics.fill(255);
-					graphics.text(i, t.getX() + t.getWidth() / 2, t.getY() + t.getHeight() / 2);
 				}
-			}
-			if (tempFixture != null) {
-				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) tempFixture.getShape()).m_vertex1);
-				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) tempFixture.getShape()).m_vertex2);
-				graphics.stroke(255, 0, 0);
-				graphics.strokeWeight(4);
-				graphics.line(v1.x, v1.y, v2.x, v2.y);
+				if (checking.size() > 0) {
+					for (int i = 0; i < checking.size(); i++) {
+						Tile t = checking.get(i);
+						graphics.noStroke();
+						graphics.fill(0, 0, 255, 200);
+						graphics.rectMode(CORNER);
+						graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
+						graphics.fill(255);
+						graphics.text(i, t.getX() + t.getWidth() / 2, t.getY() + t.getHeight() / 2);
+					}
+				}
+				if (tempFixture != null) {
+					Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) tempFixture.getShape()).m_vertex1);
+					Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) tempFixture.getShape()).m_vertex2);
+					graphics.stroke(255, 0, 0);
+					graphics.strokeWeight(4);
+					graphics.line(v1.x, v1.y, v2.x, v2.y);
+				}
 			}
 		}
 	}

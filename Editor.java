@@ -99,6 +99,7 @@ public class Editor {
 	public boolean debugVis;
 	private int frameDelay;
 	private float frame;
+	public boolean tileSearch; // display the logic for searching for slots
 
 	public Editor(PApplet p, FileChooser files, TextureCache texture, Game game, Camera camera, Converter convert,
 			DoToast toast) {
@@ -136,6 +137,7 @@ public class Editor {
 		debugVis = true; // false
 		frameDelay = 100;
 		textSize = (int) (p.width / 28.8); // 50
+		tileSearch = false;
 
 		// box2d
 		game.physicsPlayer = true;
@@ -161,6 +163,15 @@ public class Editor {
 
 		if (!(controller instanceof EditorControl)) {
 			point = null;
+		}
+
+		// this is jank as hell
+		if (game.player != null) {
+			if (tileSearch) {
+				game.player.showChecking = true;
+			} else {
+				game.player.showChecking = false;
+			}
 		}
 
 	}

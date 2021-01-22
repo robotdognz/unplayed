@@ -13,13 +13,19 @@ public class WidgetQuadtree extends Widget {
 
 	@Override
 	public void clicked() {
-		editor.quadVis = !editor.quadVis;
+		editor.tileSearch = !editor.tileSearch;
+//		editor.quadVis = !editor.quadVis;
 	}
 
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (editor.quadVis) {
+//		if (editor.quadVis) {
+//			active = true;
+//		} else {
+//			active = false;
+//		}
+		if (editor.tileSearch) {
 			active = true;
 		} else {
 			active = false;
