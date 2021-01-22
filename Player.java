@@ -250,12 +250,12 @@ public class Player extends Editable {
 
 			// skip this tile if it behind the player
 			if (vel.x > 0) { // moving right
-				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) { //*0.75f
+				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) { // *0.75f
 					continue;
 				}
 			}
 			if (vel.x < 0) { // moving left
-				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {//*0.75f
+				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {// *0.75f
 					continue;
 				}
 			}
@@ -294,6 +294,8 @@ public class Player extends Editable {
 			}
 			previousX = t.getX();
 		}
+
+		// conditions wern't met, remove the barrier
 		destroyBarrier();
 	}
 

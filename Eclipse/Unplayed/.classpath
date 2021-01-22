@@ -8,7 +8,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/robot/AppData/Local/Android/Sdk/platforms/android-30/android.jar"/>
 	<classpathentry kind="lib" path="C:/Users/robot/Documents/Processing/modes/AndroidMode/processing-core.jar"/>
-	<classpathentry kind="lib" path="C:/Users/robot/Documents/GitHub/unplayed/code/box2d_processing.jar"/>
-	<classpathentry kind="lib" path="C:/Users/robot/Documents/GitHub/unplayed/code/jbox2d-library-2.2.1-ds.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
