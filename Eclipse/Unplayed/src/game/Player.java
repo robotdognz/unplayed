@@ -217,9 +217,14 @@ public class Player extends Editable {
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
+		boolean direction = true; // is the player moving left or right (true = left, false = right)
 		if (!(left || right || (Math.abs(vel.x) >= 2))) {
 			destroyBarrier();
 			return;
+		} else {
+			if (right || vel.x > 0) { // moving right
+				direction = false;
+			}
 		}
 		if (!(vel.y <= 2)) { // player is still or falling
 			destroyBarrier();
@@ -249,13 +254,12 @@ public class Player extends Editable {
 			}
 
 			// skip this tile if it behind the player
-			if (vel.x > 0) { // moving right
-				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) { // *0.75f
+			if (direction) { // vel.x < 0) { // moving left
+				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {// *0.75f
 					continue;
 				}
-			}
-			if (vel.x < 0) { // moving left
-				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {// *0.75f
+			} else {// if (vel.x > 0) { //moving right
+				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) { // *0.75f
 					continue;
 				}
 			}
@@ -263,9 +267,9 @@ public class Player extends Editable {
 			checking.add(t);
 		}
 		// sort the found tiles
-		if (left || vel.x < 0) { // moving left
+		if (direction) { // left || vel.x < 0) { // moving left
 			Collections.sort(checking, Collections.reverseOrder());
-		} else if (right || vel.x > 0) { // moving right
+		} else { // if (right || vel.x > 0) { // moving right
 			Collections.sort(checking);
 		}
 
@@ -279,11 +283,11 @@ public class Player extends Editable {
 					this.dynamicBody.setFixedRotation(true);
 
 					// create the barrier
-					if (left || vel.x < 0) { // moving left
+					if (direction) { // left || vel.x < 0) { // moving left
 						Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 						Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 						createBarrier(top, bottom);
-					} else if (right || vel.x > 0) { // moving right
+					} else { // if (right || vel.x > 0) { // moving right
 						Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 						Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 						createBarrier(top, bottom);

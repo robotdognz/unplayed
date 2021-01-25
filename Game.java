@@ -436,21 +436,8 @@ public class Game {
 
 		pageView.step(); // step the page view
 
-//		// delta / box2d
-//		accumulator += deltaTime;
-//		while (accumulator >= stepSize) {
-//			accumulator -= stepSize;
-//			if (player != null) {
-//				player.physicsStep();
-//			}
-//			box2d.step(stepSize, 8, 3);
-//		}
-//		box2d.world.clearForces();
-//		// accumulator = 0;
-
-		int steps = num_120Hz_steps(deltaTime);
 		// delta / box2d
-//		accumulator += deltaTime;
+		int steps = calculateSteps(deltaTime);
 		while (steps > 0) {
 			accumulator -= stepSize;
 			if (player != null) {
@@ -460,7 +447,6 @@ public class Game {
 			steps--;
 		}
 		box2d.world.clearForces();
-		// accumulator = 0;
 	}
 
 	void screenMovement(float deltaTime) {
@@ -559,27 +545,26 @@ public class Game {
 		}
 	}
 
-	private int num_120Hz_steps(float elapsed) {
+	private int calculateSteps(float elapsed) {
 		// Our simulation frequency is 240Hz, a (four one sixth) ms period.
-//		double e = 1 / 240.0;
 
 		// We will pretend our display sync rate is one of these:
 		if (elapsed > 7.5 * stepSize)
-			return 8; // 15 ---- 30 Hz ( .. to 32 Hz )
+			return 8; // 30 Hz ( .. to 32 Hz )
 		else if (elapsed > 6.5 * stepSize)
-			return 7; // 17.45 ---- 34.29 Hz ( 32 Hz to 36.92 Hz )
+			return 7; // 34.29 Hz ( 32 Hz to 36.92 Hz )
 		else if (elapsed > 5.5 * stepSize)
-			return 6; // 20 ---- 40 Hz ( 36.92 Hz to 43.64 Hz )
+			return 6; // 40 Hz ( 36.92 Hz to 43.64 Hz )
 		else if (elapsed > 4.5 * stepSize)
-			return 5; // 24 ---- 48 Hz ( 43.64 Hz to 53.33 Hz )
+			return 5; // 48 Hz ( 43.64 Hz to 53.33 Hz )
 		else if (elapsed > 3.5 * stepSize)
-			return 4; // 30 ---- 60 Hz ( 53.33 Hz to 68.57 Hz )
+			return 4; // 60 Hz ( 53.33 Hz to 68.57 Hz )
 		else if (elapsed > 2.5 * stepSize)
-			return 3; // 45 ---- 90 Hz ( 68.57 Hz to 96 Hz )
+			return 3; // 90 Hz ( 68.57 Hz to 96 Hz )
 		else if (elapsed > 1.5 * stepSize)
-			return 2; // 60 ---- 120 Hz ( 96 Hz to 160 Hz )
+			return 2; // 120 Hz ( 96 Hz to 160 Hz )
 		else
-			return 1; // 120 --- 240 Hz ( 160 Hz to .. )
+			return 1; // 240 Hz ( 160 Hz to .. )
 	}
 
 }
