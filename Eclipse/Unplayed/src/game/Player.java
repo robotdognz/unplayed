@@ -217,14 +217,9 @@ public class Player extends Editable {
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
-		boolean direction = true; // is the player moving left or right (true = left, false = right)
 		if (!(left || right || (Math.abs(vel.x) >= 2))) {
 			destroyBarrier();
 			return;
-		} else {
-			if (right || vel.x > 0) { // moving right
-				direction = false;
-			}
 		}
 		if (!(vel.y <= 2)) { // player is still or falling
 			destroyBarrier();
@@ -254,11 +249,11 @@ public class Player extends Editable {
 			}
 
 			// skip this tile if it behind the player
-			if (direction) { // vel.x < 0) { // moving left
+			if (vel.x < 0) { // moving left
 				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {// *0.75f
 					continue;
 				}
-			} else {// if (vel.x > 0) { //moving right
+			} else if (vel.x > 0) { // moving right
 				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) { // *0.75f
 					continue;
 				}
@@ -267,9 +262,9 @@ public class Player extends Editable {
 			checking.add(t);
 		}
 		// sort the found tiles
-		if (direction) { // left || vel.x < 0) { // moving left
+		if (left || vel.x < 0) { // moving left
 			Collections.sort(checking, Collections.reverseOrder());
-		} else { // if (right || vel.x > 0) { // moving right
+		} else if (right || vel.x > 0) { // moving right
 			Collections.sort(checking);
 		}
 
@@ -281,7 +276,8 @@ public class Player extends Editable {
 				// if this tile is the far side of a gap
 				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
 					// make sure the gap is in front of the player
-					if ((direction && t.getBottomRight().x < pos.x) || (!direction && t.getTopLeft().x > pos.x)) {
+					if (((left || vel.x < 0) && t.getBottomRight().x < pos.x)
+							|| ((right || vel.x > 0) && t.getTopLeft().x > pos.x)) {
 						this.dynamicBody.setFixedRotation(true);
 
 						// create the barrier
