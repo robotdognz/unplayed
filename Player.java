@@ -308,12 +308,17 @@ public class Player extends Editable {
 
 	private void createBarrier(Vec2 v1, Vec2 v2) {
 		if (tempBarrier != null) {
-			return;
+			if (tempBarrier.getUserData().equals(v1)) {
+				return;
+			} else {
+				destroyBarrier();
+			}
 		}
 
 		// body
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.STATIC;
+		bodyDef.userData = v1;
 		tempBarrier = box2d.createBody(bodyDef);
 
 		// shape
