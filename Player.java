@@ -285,11 +285,11 @@ public class Player extends Editable {
 						this.dynamicBody.setFixedRotation(true);
 
 						// create the barrier
-						if (direction) { // left || vel.x < 0) { // moving left
+						if (left || vel.x < 0) { // moving left
 							Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 							Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 							createBarrier(top, bottom);
-						} else { // if (right || vel.x > 0) { // moving right
+						} else if (right || vel.x > 0) { // moving right
 							Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 							Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 							createBarrier(top, bottom);
@@ -308,11 +308,7 @@ public class Player extends Editable {
 
 	private void createBarrier(Vec2 v1, Vec2 v2) {
 		if (tempBarrier != null) {
-			if (tempBarrier.getUserData().equals(v1)) {
-				return;
-			} else {
-				destroyBarrier();
-			}
+			return;
 		}
 
 		// body
