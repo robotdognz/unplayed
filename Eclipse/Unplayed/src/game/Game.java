@@ -127,6 +127,7 @@ public class Game {
 		box2d = new Box2DProcessing(p);
 		box2d.createWorld();
 		box2d.setGravity(0, -400); // -150
+		box2d.world.setAutoClearForces(false); //TODO testing
 
 		// contact listener
 		contactListener = new MyContactListener();
@@ -444,6 +445,7 @@ public class Game {
 			}
 			box2d.step(stepSize, 8, 3);
 		}
+		box2d.world.clearForces(); //TODO testing
 		// accumulator = 0;
 	}
 
