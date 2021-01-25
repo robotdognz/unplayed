@@ -67,7 +67,7 @@ public class Game {
 
 	// delta time
 	float accumulator = 0;
-	float stepSize = (1f / 60f) / 4f;
+	float stepSize = 1f / 120f; // (1f / 60f) / 4f;
 
 	public Game(PApplet p, AppLogic app, Camera c, Vibe v, TextureCache texture, Converter convert) {
 		// legacy variables from level class TODO: write these out eventually
@@ -126,8 +126,8 @@ public class Game {
 	public void buildWorld() {
 		box2d = new Box2DProcessing(p);
 		box2d.createWorld();
-		box2d.setGravity(0, -400); // -150
-		box2d.world.setAutoClearForces(false); //TODO testing
+		box2d.setGravity(0, -400);
+		box2d.world.setAutoClearForces(false);
 
 		// contact listener
 		contactListener = new MyContactListener();
@@ -436,16 +436,30 @@ public class Game {
 
 		pageView.step(); // step the page view
 
+//		// delta / box2d
+//		accumulator += deltaTime;
+//		while (accumulator >= stepSize) {
+//			accumulator -= stepSize;
+//			if (player != null) {
+//				player.physicsStep();
+//			}
+//			box2d.step(stepSize, 8, 3);
+//		}
+//		box2d.world.clearForces();
+//		// accumulator = 0;
+
+		int steps = num_120Hz_steps(deltaTime);
 		// delta / box2d
-		accumulator += deltaTime;
-		while (accumulator >= stepSize) {
+//		accumulator += deltaTime;
+		while (steps > 0) {
 			accumulator -= stepSize;
 			if (player != null) {
 				player.physicsStep();
 			}
 			box2d.step(stepSize, 8, 3);
+			steps--;
 		}
-		box2d.world.clearForces(); //TODO testing
+		box2d.world.clearForces();
 		// accumulator = 0;
 	}
 
@@ -543,6 +557,29 @@ public class Game {
 		for (View view : views) {
 			this.views.add(view);
 		}
+	}
+
+	private int num_120Hz_steps(float elapsed) {
+		// Our simulation frequency is 240Hz, a (four one sixth) ms period.
+//		double e = 1 / 240.0;
+
+		// We will pretend our display sync rate is one of these:
+		if (elapsed > 7.5 * stepSize)
+			return 8; // 15 ---- 30 Hz ( .. to 32 Hz )
+		else if (elapsed > 6.5 * stepSize)
+			return 7; // 17.45 ---- 34.29 Hz ( 32 Hz to 36.92 Hz )
+		else if (elapsed > 5.5 * stepSize)
+			return 6; // 20 ---- 40 Hz ( 36.92 Hz to 43.64 Hz )
+		else if (elapsed > 4.5 * stepSize)
+			return 5; // 24 ---- 48 Hz ( 43.64 Hz to 53.33 Hz )
+		else if (elapsed > 3.5 * stepSize)
+			return 4; // 30 ---- 60 Hz ( 53.33 Hz to 68.57 Hz )
+		else if (elapsed > 2.5 * stepSize)
+			return 3; // 45 ---- 90 Hz ( 68.57 Hz to 96 Hz )
+		else if (elapsed > 1.5 * stepSize)
+			return 2; // 60 ---- 120 Hz ( 96 Hz to 160 Hz )
+		else
+			return 1; // 120 --- 240 Hz ( 160 Hz to .. )
 	}
 
 }
