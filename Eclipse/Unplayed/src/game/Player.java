@@ -218,15 +218,15 @@ public class Player extends Editable {
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
 
-		if (!((left || right) || (Math.abs(vel.x) >= 2))) {
+		if (!((left || right) || (Math.abs(vel.x) >= 4))) {
 			destroyBarrier();
 			return;
 		}
 		boolean direction = true; // true = left, false = right
-		if (left || vel.x <= -2) {
+		if (left || vel.x <= -4) {
 			direction = true;
 		}
-		if (right || vel.x >= 2) {
+		if (right || vel.x >= 4) {
 			direction = false;
 		}
 
