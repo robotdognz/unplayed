@@ -67,7 +67,7 @@ public class Game {
 
 	// delta time
 	float accumulator = 0;
-	float stepSize = 1f / 120f; // (1f / 60f) / 4f;
+	float stepSize = 1f / 240f; // (1f / 60f) / 4f;
 
 	public Game(PApplet p, AppLogic app, Camera c, Vibe v, TextureCache texture, Converter convert) {
 		// legacy variables from level class TODO: write these out eventually
