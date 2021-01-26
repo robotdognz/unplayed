@@ -3,6 +3,7 @@ package game;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import handlers.TextureCache;
 import handlers.TileHandler;
@@ -359,10 +360,14 @@ public class Player extends Editable {
 
 	void step() {
 		vibeFrame = false; // clear vibeFrame
-		
-		//check all the events the player is colliding with
-		for(Event e: events) {
-			e.activate();
+
+		// check all the events the player is colliding with
+		try {
+			for (Event e : events) {
+				e.activate();
+			}
+		} catch (ConcurrentModificationException e) {
+
 		}
 	}
 
