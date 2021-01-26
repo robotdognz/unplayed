@@ -121,6 +121,8 @@ public class Player extends Editable {
 
 	public void create() {
 		if (box2d != null) {
+			this.dynamicBody = null;
+			
 			float box2dW = box2d.scalarPixelsToWorld((getWidth() - 0.5f) / 2);
 			float box2dH = box2d.scalarPixelsToWorld((getHeight() - 0.5f) / 2);
 
@@ -130,9 +132,9 @@ public class Player extends Editable {
 			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
 			bodyDef.angle = 0;
 			bodyDef.userData = this;
-			bodyDef.fixedRotation = locked;
+//			bodyDef.fixedRotation = locked;
 			this.dynamicBody = box2d.createBody(bodyDef);
-			//this.dynamicBody.setFixedRotation(locked);
+			this.dynamicBody.setFixedRotation(locked);
 
 			// shape
 			PolygonShape boxShape = new PolygonShape();
