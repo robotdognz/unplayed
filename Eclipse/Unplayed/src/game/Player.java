@@ -193,24 +193,55 @@ public class Player extends Editable {
 	}
 
 	private void checkTiles() {
+		// check there are enough tiles (need at least 2)
+		if (!(sensorContacts.size() >= 2)) {
+			destroyBarrier();
+			return;
+		}
+
+		// check the player isn't spinning
+		float av = dynamicBody.getAngularVelocity();
+		if (Math.abs(av) >= 2) {
+			destroyBarrier();
+			return;
+		}
+
+		// check angle is appropriate
+		float angle = PApplet.degrees(dynamicBody.getAngle());
+		float angleRounded = Math.round(angle / 90) * 90;
+		float angleRemainder = Math.abs(angle - angleRounded);
+		if (!(angleRemainder < 3 && angleRemainder > -3)) {
+			destroyBarrier();
+			return;
+		}
+
+		// run the algorithms
+		checkTunnel();
+		checkForGroundSlots();
+		// checkForWallSlots();
+		// checkForRoofSlots();
+
+	}
+
+	private void checkTunnel() {
 		checking.clear();
 
-		// if the player isn't spinning, run the checking algorithms
-		float av = dynamicBody.getAngularVelocity();
-		if (!(Math.abs(av) >= 2)) {
-			checkForGroundSlots();
-		} else {
-			destroyBarrier();
+		// create a list of relevant tiles sorted by x position
+		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
+		for (Tile t : sensorContacts) {
+
 		}
 
 	}
 
 	private void checkForGroundSlots() {
-		// check there are tiles (need at least 2)
-		if (!(sensorContacts.size() >= 2)) {
-			destroyBarrier();
-			return;
-		}
+		checking.clear();
+
+//		// check there are enough tiles (need at least 2)
+//		if (!(sensorContacts.size() >= 2)) {
+//			destroyBarrier();
+//			return;
+//		}
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
@@ -232,14 +263,14 @@ public class Player extends Editable {
 			return;
 		}
 
-		// check angle is appropriate
-		float angle = PApplet.degrees(dynamicBody.getAngle());
-		float angleRounded = Math.round(angle / 90) * 90;
-		float angleRemainder = Math.abs(angle - angleRounded);
-		if (!(angleRemainder < 3 && angleRemainder > -3)) {
-			destroyBarrier();
-			return;
-		}
+//		// check angle is appropriate
+//		float angle = PApplet.degrees(dynamicBody.getAngle());
+//		float angleRounded = Math.round(angle / 90) * 90;
+//		float angleRemainder = Math.abs(angle - angleRounded);
+//		if (!(angleRemainder < 3 && angleRemainder > -3)) {
+//			destroyBarrier();
+//			return;
+//		}
 
 		// create a list of relevant tiles sorted by x position
 		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
@@ -378,7 +409,6 @@ public class Player extends Editable {
 			previousImpulse = total;
 			return;
 		}
-//		PApplet.println(total + " skipped by vibeFrame");
 
 	}
 
