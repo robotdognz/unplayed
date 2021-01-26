@@ -66,7 +66,7 @@ public class Game {
 	public Box2DProcessing box2d;
 	public ContactListener contactListener;
 	public boolean locked = false;
-	public HashSet<Event> playerEvents;
+//	public HashSet<Event> playerEvents;
 
 	// delta time
 	float accumulator = 0;
@@ -124,7 +124,7 @@ public class Game {
 
 		// box2d
 		buildWorld();
-		playerEvents = new HashSet<Event>();
+//		playerEvents = new HashSet<Event>();
 	}
 
 	public void buildWorld() {
@@ -426,10 +426,10 @@ public class Game {
 		if (player != null) {
 			player.step();
 
-			Iterator<Event> it = playerEvents.iterator();
-			while (it.hasNext()) {
-				it.next().activate();
-			}
+//			Iterator<Event> it = playerEvents.iterator();
+//			while (it.hasNext()) {
+//				it.next().activate();
+//			}
 		}
 
 		// step physics
@@ -576,12 +576,12 @@ public class Game {
 			return 1; // 240 Hz ( 160 Hz to .. )
 	}
 
-	public void addEvent(Event event) {
-		playerEvents.add(event);
-	}
-
-	public void removeEvent(Event event) {
-		playerEvents.remove(event);
-	}
+//	public void addEvent(Event event) {
+//		playerEvents.add(event);
+//	}
+//
+//	public void removeEvent(Event event) {
+//		playerEvents.remove(event);
+//	}
 
 }

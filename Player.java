@@ -162,13 +162,13 @@ public class Player extends Editable {
 		sensorContacts.remove(tile);
 	}
 
-//	public void addEvent(Event event) {
-//		events.add(event);
-//	}
-//
-//	public void removeEvent(Event event) {
-//		events.remove(event);
-//	}
+	public void addEvent(Event event) {
+		events.add(event);
+	}
+
+	public void removeEvent(Event event) {
+		events.remove(event);
+	}
 
 	public void physicsStep() {
 		// environment checking
@@ -372,10 +372,14 @@ public class Player extends Editable {
 //
 //		}
 
-//		Iterator<Event> it = events.iterator();
-//		while (it.hasNext()) {
-//			it.next().activate();
-//		}
+		try {
+			Iterator<Event> it = events.iterator();
+			while (it.hasNext()) {
+				it.next().activate();
+			}
+		} catch (ConcurrentModificationException e) {
+
+		}
 	}
 
 	public boolean isStill() {
