@@ -264,7 +264,10 @@ public class Game {
 			this.cameraAreaCheckpoint = cameraArea.copy();
 
 			// make the matching tile to fill the slot
-			Tile newTile = new Tile(box2d, texture, player.getFile(), player.getX(), player.getY());
+//			Tile newTile = new Tile(box2d, texture, player.getFile(), player.getX(), player.getY());
+			int tileX = (int) (player.getCenter().x + player.getWidth() / 2);
+			int tileY = (int) (player.getCenter().y + player.getHeight() / 2);
+			Tile newTile = new Tile(box2d, texture, player.getFile(), tileX, tileY);
 			if (player.isFlippedH()) {
 				newTile.flipH();
 			}
@@ -424,7 +427,7 @@ public class Game {
 			steps--;
 		}
 		box2d.world.clearForces();
-		
+
 		// step player non-physics logic
 		if (player != null) {
 			player.step();
