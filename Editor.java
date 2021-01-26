@@ -137,7 +137,7 @@ public class Editor {
 		debugVis = false;
 		frameDelay = 100;
 		textSize = (int) (p.width / 28.8); // 50
-		tileSearch = false;
+		tileSearch = true; // false
 	}
 
 	public void step(ArrayList<PVector> touches) {
