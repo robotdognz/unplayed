@@ -239,7 +239,7 @@ public class Player extends Editable {
 		float bottomEdge = pos.y + getHeight() / 2;
 		for (Tile t : sensorContacts) {
 			PVector tCenter = new PVector(t.getX() + t.getWidth() / 2, t.getY() + getHeight() / 2);
-			if (pos.dist(tCenter) > t.getWidth() / 2) {
+			if (pos.dist(tCenter) > t.getWidth() * 0.6f) {
 				continue;
 			}
 
@@ -481,7 +481,7 @@ public class Player extends Editable {
 					graphics.rectMode(CORNER);
 					graphics.rect(t.getX(), t.getY(), t.getWidth() / 2, t.getHeight() / 2);
 					graphics.fill(255);
-					graphics.textSize(12);
+					graphics.textSize(18);
 					graphics.text(i, t.getX() + t.getWidth() * 0.25f, t.getY() + t.getHeight() * 0.25f);
 				}
 			}
@@ -494,7 +494,7 @@ public class Player extends Editable {
 					graphics.rectMode(CORNER);
 					graphics.rect(t.getX() + t.getWidth() / 2, t.getY(), t.getWidth() / 2, t.getHeight() / 2);
 					graphics.fill(255);
-					graphics.textSize(12);
+					graphics.textSize(18);
 					graphics.text(i, t.getX() + t.getWidth() * 0.75f, t.getY() + t.getHeight() * 0.25f);
 				}
 			}
