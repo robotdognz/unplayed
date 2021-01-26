@@ -133,10 +133,10 @@ public class PlayerEnd extends Event {
 //			return;
 //		}
 		Vec2 playerPos = player.getCenter();
-		if (Math.abs(playerPos.x - center.x) > 0.1f) {
+		if (Math.abs(playerPos.x - center.x) > 0.5f) {
 			return;
 		}
-		if (Math.abs(playerPos.y - center.y) > 0.1f) {
+		if (Math.abs(playerPos.y - center.y) > 0.5f) {
 			return;
 		}
 		if (required != null) {
