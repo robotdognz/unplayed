@@ -25,11 +25,13 @@ public abstract class Event extends Rectangle {
 	Box2DProcessing box2d;
 	Body staticBody;
 
-	public Event(Game game, TextureCache texture, String name, boolean visible, float x, float y,
-			float width, float height) {
+	public Event(Game game, TextureCache texture, String name, boolean visible, float x, float y, float width,
+			float height) {
 		super(x, y, width, height);
 		this.game = game;
-		this.box2d = game.box2d;
+		if (game != null) {
+			this.box2d = game.box2d;
+		}
 		this.name = name;
 		this.visible = visible;
 
