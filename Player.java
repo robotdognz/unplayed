@@ -52,7 +52,8 @@ public class Player extends Editable {
 
 	// slot detection
 	public boolean showChecking = false;
-	public ArrayList<Tile> checking; // list of tiles currently being checked
+	public ArrayList<Tile> tunnelChecking; // list of tiles currently being checked for tunnels
+	public ArrayList<Tile> groundChecking; // list of tiles currently being checked for ground slots
 
 	Body tempBarrier; // barrier used to stop the player moving past a slot
 	Fixture tempFixture; // reference to the barrier fixture
@@ -91,7 +92,9 @@ public class Player extends Editable {
 		this.sensorContacts = new HashSet<Tile>();
 		this.tempBarrier = null;
 		this.previousImpulse = 0;
-		checking = new ArrayList<Tile>();
+		this.tunnelChecking = new ArrayList<Tile>();
+		this.groundChecking = new ArrayList<Tile>();
+
 		events = new ArrayList<Event>();
 		create();
 
@@ -193,7 +196,8 @@ public class Player extends Editable {
 	}
 
 	private void checkTiles() {
-		checking.clear();
+		groundChecking.clear();
+		tunnelChecking.clear();
 
 		// check there are enough tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
@@ -219,7 +223,7 @@ public class Player extends Editable {
 
 		// run the algorithms
 		checkTunnel();
-//		checkForGroundSlots();
+		checkForGroundSlots();
 		// checkForWallSlots();
 		// checkForRoofSlots();
 
@@ -235,18 +239,18 @@ public class Player extends Editable {
 		float bottomEdge = pos.y + getHeight() / 2;
 		for (Tile t : sensorContacts) {
 			PVector tCenter = new PVector(t.getX() + t.getWidth() / 2, t.getY() + getHeight() / 2);
-			if(pos.dist(tCenter) > t.getWidth() / 2) {
+			if (pos.dist(tCenter) > t.getWidth() / 2) {
 				return;
 			}
-			
-			checking.add(t);
+
+			tunnelChecking.add(t);
 		}
-		Collections.sort(checking);
+//		Collections.sort(groundChecking);
 
 	}
 
 	private void checkForGroundSlots() {
-		checking.clear();
+		groundChecking.clear();
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
@@ -292,19 +296,19 @@ public class Player extends Editable {
 				}
 			}
 
-			checking.add(t);
+			groundChecking.add(t);
 		}
 		// sort the found tiles
 		if (direction) { // moving left
-			Collections.sort(checking, Collections.reverseOrder());
+			Collections.sort(groundChecking, Collections.reverseOrder());
 		} else { // moving right
-			Collections.sort(checking);
+			Collections.sort(groundChecking);
 		}
 
 		// check the list of tiles for a playerWidth sized gap
 		float previousX = 0;
-		for (int i = 0; i < checking.size(); i++) {
-			Tile t = checking.get(i);
+		for (int i = 0; i < groundChecking.size(); i++) {
+			Tile t = groundChecking.get(i);
 			if (i > 0) {
 				// if this tile is the far side of a gap
 				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
@@ -467,15 +471,29 @@ public class Player extends Editable {
 				graphics.rectMode(CORNER);
 				graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
 			}
-			if (checking.size() > 0) {
-				for (int i = 0; i < checking.size(); i++) {
-					Tile t = checking.get(i);
+
+			// tunnel checking
+			if (tunnelChecking.size() > 0) {
+				for (int i = 0; i < groundChecking.size(); i++) {
+					Tile t = groundChecking.get(i);
+					graphics.noStroke();
+					graphics.fill(0, 255, 0, 200);
+					graphics.rectMode(CORNER);
+					graphics.rect(t.getX(), t.getY(), t.getWidth() / 2, t.getHeight() / 2);
+					graphics.fill(255);
+					graphics.text(i, t.getX() + t.getWidth() * 0.25f, t.getY() + t.getHeight() * 0.25f);
+				}
+			}
+			// ground checking
+			if (groundChecking.size() > 0) {
+				for (int i = 0; i < groundChecking.size(); i++) {
+					Tile t = groundChecking.get(i);
 					graphics.noStroke();
 					graphics.fill(0, 0, 255, 200);
 					graphics.rectMode(CORNER);
-					graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
+					graphics.rect(t.getX() + t.getWidth() / 2, t.getY(), t.getWidth() / 2, t.getHeight() / 2);
 					graphics.fill(255);
-					graphics.text(i, t.getX() + t.getWidth() / 2, t.getY() + t.getHeight() / 2);
+					graphics.text(i, t.getX() + t.getWidth() * 0.75f, t.getY() + t.getHeight() * 0.25f);
 				}
 			}
 			if (tempFixture != null) {
