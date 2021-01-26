@@ -165,7 +165,8 @@ public class PlayerEnd extends Event {
 			if (levelEnd) { // if this is the end of the level
 				game.endGame();
 			} else { // if this is just part of the puzzle
-				game.endPuzzle(newPlayerArea);
+//				game.endPuzzle(newPlayerArea);
+				game.queueEndPuzzle(newPlayerArea);
 			}
 		}
 		return true;
