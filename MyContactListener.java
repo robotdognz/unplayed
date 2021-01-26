@@ -6,12 +6,18 @@ import org.jbox2d.collision.Manifold;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.contacts.Contact;
 
+import game.Game;
 import game.Player;
 import objects.Event;
 import objects.Tile;
 //import processing.core.PApplet;
 
 public class MyContactListener implements ContactListener {
+	Game game;
+	
+	public MyContactListener(Game game) {
+		this.game = game;
+	}
 
 	@Override
 	public void beginContact(Contact contact) {
@@ -89,7 +95,7 @@ public class MyContactListener implements ContactListener {
 
 		// if on of them is the player and one is an event
 		if (playerBody && event != null) {
-			player.addEvent(event);
+			game.addEvent(event);
 		}
 
 		// if one of them is the player's sensor and one is a tile
@@ -164,7 +170,7 @@ public class MyContactListener implements ContactListener {
 
 		// if on of them is the player and one is an event
 		if (playerBody && event != null) {
-			player.addEvent(event);
+			game.addEvent(event);
 		}
 	}
 

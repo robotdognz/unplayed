@@ -2,12 +2,15 @@ package game;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
+
 import camera.Camera;
 import editor.Editor;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.MyContactListener;
 import misc.Vibe;
+import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
@@ -62,9 +65,8 @@ public class Game {
 	// box2d
 	public Box2DProcessing box2d;
 	public ContactListener contactListener;
+	public HashSet<Event> playerEvents;
 	public boolean locked = false;
-
-	private boolean queuedRestart = false;
 
 	// delta time
 	float accumulator = 0;
@@ -122,6 +124,7 @@ public class Game {
 
 		// box2d
 		buildWorld();
+		playerEvents = new HashSet<Event>();
 	}
 
 	public void buildWorld() {
@@ -131,7 +134,7 @@ public class Game {
 		box2d.world.setAutoClearForces(false);
 
 		// contact listener
-		contactListener = new MyContactListener();
+		contactListener = new MyContactListener(this);
 		box2d.world.setContactListener(contactListener);
 	}
 
@@ -149,6 +152,7 @@ public class Game {
 		// fully remove the player
 		if (this.player != null) {
 			this.player.destroy();
+			this.playerEvents.clear();
 		}
 		this.player = null;
 		this.playerStart = null;
@@ -196,6 +200,7 @@ public class Game {
 		// clear player
 		if (this.player != null) {
 			this.player.destroy();
+			this.playerEvents.clear();
 		}
 		player = null;
 		// clear checkpoint
@@ -289,6 +294,7 @@ public class Game {
 			Tile current = ((PlayerStart) playerArea).getRequired();
 			if (this.player != null) {
 				this.player.destroy();
+				this.playerEvents.clear();
 			}
 			player = new Player(p, box2d, locked, texture, current, vibe);
 		} else if (playerArea instanceof Tile) {
@@ -320,6 +326,7 @@ public class Game {
 				if (playerCheckpoint != null) {
 					if (this.player != null) {
 						this.player.destroy();
+						this.playerEvents.clear();
 					}
 					player = new Player(p, box2d, locked, texture, playerCheckpoint, vibe);
 				} else if (playerStart != null) {
@@ -327,6 +334,7 @@ public class Game {
 					if (current != null) {
 						if (this.player != null) {
 							this.player.destroy();
+							this.playerEvents.clear();
 						}
 						player = new Player(p, box2d, locked, texture, current, vibe);
 					}
@@ -340,10 +348,6 @@ public class Game {
 		if (player != null) {
 			player.still();
 		}
-	}
-
-	public void queueRestart() {
-		queuedRestart = true;
 	}
 
 	public void restart() {
@@ -423,10 +427,6 @@ public class Game {
 		// step physics
 		int steps = calculateSteps(deltaTime);
 		while (steps > 0) {
-			if (queuedRestart) {
-				restart();
-				queuedRestart = false;
-			}
 			if (player != null) {
 				player.physicsStep();
 			}
@@ -438,6 +438,10 @@ public class Game {
 		// step player non-physics logic
 		if (player != null) {
 			player.step();
+			Iterator<Event> it = playerEvents.iterator();
+			while (player != null && it.hasNext()) {
+				it.next().activate();
+			}
 		}
 
 		// get objects to draw
@@ -571,6 +575,14 @@ public class Game {
 			return 2; // 120 Hz ( 96 Hz to 160 Hz )
 		else
 			return 1; // 240 Hz ( 160 Hz to .. )
+	}
+
+	public void addEvent(Event event) {
+		playerEvents.add(event);
+	}
+
+	public void removeEvent(Event event) {
+		playerEvents.remove(event);
 	}
 
 }
