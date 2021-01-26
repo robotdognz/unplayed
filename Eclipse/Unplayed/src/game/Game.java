@@ -2,15 +2,12 @@ package game;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
-
 import camera.Camera;
 import editor.Editor;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.MyContactListener;
 import misc.Vibe;
-import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
@@ -66,7 +63,6 @@ public class Game {
 	public Box2DProcessing box2d;
 	public ContactListener contactListener;
 	public boolean locked = false;
-//	public HashSet<Event> playerEvents;
 
 	// delta time
 	float accumulator = 0;
@@ -124,7 +120,6 @@ public class Game {
 
 		// box2d
 		buildWorld();
-//		playerEvents = new HashSet<Event>();
 	}
 
 	public void buildWorld() {
@@ -270,8 +265,8 @@ public class Game {
 
 			// make the matching tile to fill the slot
 //			Tile newTile = new Tile(box2d, texture, player.getFile(), player.getX(), player.getY());
-			int tileX = (int) (player.getCenter().x - player.getWidth() / 2);
-			int tileY = (int) (player.getCenter().y - player.getHeight() / 2);
+			int tileX = (int) (player.getCenter().x - player.getWidth() / 2 + 0.5f);
+			int tileY = (int) (player.getCenter().y - player.getHeight() / 2 + 0.5f);
 			Tile newTile = new Tile(box2d, texture, player.getFile(), tileX, tileY);
 			if (player.isFlippedH()) {
 				newTile.flipH();
@@ -575,13 +570,5 @@ public class Game {
 		else
 			return 1; // 240 Hz ( 160 Hz to .. )
 	}
-
-//	public void addEvent(Event event) {
-//		playerEvents.add(event);
-//	}
-//
-//	public void removeEvent(Event event) {
-//		playerEvents.remove(event);
-//	}
 
 }

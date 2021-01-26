@@ -364,14 +364,6 @@ public class Player extends Editable {
 		vibeFrame = false; // clear vibeFrame
 
 		// check all the events the player is colliding with
-//		try {
-//		for (Event e : events) {
-//			e.activate();
-//		}
-//		} catch (ConcurrentModificationException e) {
-//
-//		}
-
 		try {
 			Iterator<Event> it = events.iterator();
 			while (it.hasNext()) {
