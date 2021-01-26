@@ -90,7 +90,7 @@ public class Player extends Editable {
 		this.sensorContacts = new HashSet<Tile>();
 		this.tempBarrier = null;
 		checking = new ArrayList<Tile>();
-//		events = new ArrayList<Event>();
+		events = new ArrayList<Event>();
 		create();
 
 	}
