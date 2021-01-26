@@ -10,8 +10,9 @@ public class PlayerDeath extends Event {
 	}
 
 	@Override
-	public void activate() {
+	public boolean activate() {
 		super.activate();
 		game.restart(); // TODO: this needs a custom method in game
+		return true;
 	}
 }

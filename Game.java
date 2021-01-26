@@ -438,9 +438,13 @@ public class Game {
 		// step player non-physics logic
 		if (player != null) {
 			player.step();
+			boolean clear = false;
 			Iterator<Event> it = playerEvents.iterator();
 			while (player != null && it.hasNext()) {
-				it.next().activate();
+				if(it.next().activate()) {
+					clear  = true;
+					break;
+				}
 			}
 		}
 

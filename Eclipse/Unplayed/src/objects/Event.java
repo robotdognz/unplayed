@@ -78,7 +78,8 @@ public abstract class Event extends Rectangle {
 		return "";
 	}
 
-	public void activate() {
+	public boolean activate() {
+		return false;
 	}
 
 	public void draw(PGraphics graphics, float scale) {
