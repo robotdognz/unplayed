@@ -4,14 +4,16 @@ import game.Game;
 //import handlers.EventHandler;
 import objects.Event;
 import processing.core.PGraphics;
+import shiffman.box2d.Box2DProcessing;
+
 import static processing.core.PConstants.*;
 
 public class CameraCollider extends Event {
 	private CameraChange camera;
 //	private EventHandler cameraTexture;
 
-	public CameraCollider(CameraChange camera, float x, float y) {
-		super(null, "CameraCollider", false, x, y, 100, 100);
+	public CameraCollider(Box2DProcessing box2d, CameraChange camera, float x, float y) {
+		super(box2d, null, "CameraCollider", false, x, y, 100, 100);
 		this.camera = camera;
 //		this.cameraTexture = camera.getTexture();
 	}

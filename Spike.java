@@ -9,13 +9,14 @@ import objects.Event;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import shiffman.box2d.Box2DProcessing;
 
 public class Spike extends Event {
 	private float angle;
 	private Rectangle bounds;
 
-	public Spike(TextureCache texture, String name, int x, int y) {
-		super(texture, name, true, x, y, 100, 100);
+	public Spike(Box2DProcessing box2d, TextureCache texture, String name, int x, int y) {
+		super(box2d, texture, name, true, x, y, 100, 100);
 		angle = 0;
 		createBounds();
 	}

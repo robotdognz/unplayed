@@ -121,7 +121,7 @@ public class Tile extends Editable implements Comparable<Tile> {
 	}
 
 	public void destroy() {
-		if (box2d != null) {
+		if (box2d != null && staticBody != null) {
 			box2d.destroyBody(staticBody);
 		}
 	}

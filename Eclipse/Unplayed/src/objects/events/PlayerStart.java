@@ -8,13 +8,14 @@ import objects.Rectangle;
 import objects.Tile;
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import shiffman.box2d.Box2DProcessing;
 
 public class PlayerStart extends CameraChange {
 	private Tile required;
 	private Game game;
 
-	public PlayerStart(PApplet p, TextureCache texture, String name, float x, float y, Game game) {
-		super(p, texture, name, x, y);
+	public PlayerStart(Box2DProcessing box2d, PApplet p, TextureCache texture, String name, float x, float y, Game game) {
+		super(box2d, p, texture, name, x, y);
 		this.game = game;
 
 		// remove all other player starts

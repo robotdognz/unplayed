@@ -12,6 +12,7 @@ import objects.Rectangle;
 import objects.Tile;
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import shiffman.box2d.Box2DProcessing;
 
 public class PlayerEnd extends Event {
 	// private Game game;
@@ -20,8 +21,8 @@ public class PlayerEnd extends Event {
 	private Rectangle newPlayerArea;
 	private long lastTime = 0;
 
-	public PlayerEnd(TextureCache texture, String name, float x, float y, Game game) {
-		super(texture, name, false, x, y, 100, 100);
+	public PlayerEnd(Box2DProcessing box2d, TextureCache texture, String name, float x, float y, Game game) {
+		super(box2d, texture, name, false, x, y, 100, 100);
 		// this.game = game;
 		levelEnd = true;
 		newPlayerArea = new Rectangle(getX() + getWidth(), getY() - getHeight(), getWidth(), getHeight());

@@ -8,6 +8,8 @@ import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PVector;
+import shiffman.box2d.Box2DProcessing;
+
 import static processing.core.PConstants.*;
 
 public class CameraChange extends Event {
@@ -17,8 +19,8 @@ public class CameraChange extends Event {
 	private int color;
 	// private String type; //Strings: "Static", "Full", "Horizontal", "Vertical" //should be an enum
 
-	public CameraChange(PApplet p, TextureCache texture, String name, float x, float y) {
-		super(texture, name, false, x, y, 100, 100);
+	public CameraChange(Box2DProcessing box2d, PApplet p, TextureCache texture, String name, float x, float y) {
+		super(box2d, texture, name, false, x, y, 100, 100);
 		// I'm considering splitting both cameraZoom and edgeZoom into 'in speed' and 'out speed'
 
 		color = p.color(p.random(255), p.random(255), p.random(255));

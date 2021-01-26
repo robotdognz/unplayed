@@ -146,8 +146,6 @@ public class Player extends Editable {
 			dynamicBody.createFixture(boxFixtureDef);
 
 			// sensor
-//			PolygonShape sensorShape = new PolygonShape();
-//			sensorShape.setAsBox(box2dW * 2, box2dH * 2);
 			CircleShape sensorShape = new CircleShape();
 			sensorShape.m_radius = box2d.scalarPixelsToWorld(getWidth() * 2);
 			FixtureDef sensorFixtureDef = new FixtureDef();
@@ -217,7 +215,7 @@ public class Player extends Editable {
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
-
+		// player is moving or trying to move on the x axis
 		if (!((left || right) || (Math.abs(vel.x) >= 4))) {
 			destroyBarrier();
 			return;
@@ -229,8 +227,8 @@ public class Player extends Editable {
 		if (right || vel.x >= 4) {
 			direction = false;
 		}
-
-		if (!(vel.y <= 2)) { // player is still or falling
+		// player is still or falling on the y axis
+		if (!(vel.y <= 2)) {
 			destroyBarrier();
 			return;
 		}
@@ -258,11 +256,11 @@ public class Player extends Editable {
 			}
 
 			// skip this tile if it behind the player
-			if (direction) { // vel.x < 0) { // moving left
+			if (direction) { // moving left
 				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {
 					continue;
 				}
-			} else { // if (vel.x > 0) { // moving right
+			} else { // moving right
 				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) {
 					continue;
 				}
@@ -271,9 +269,9 @@ public class Player extends Editable {
 			checking.add(t);
 		}
 		// sort the found tiles
-		if (direction) { // left || vel.x < 0) { // moving left
+		if (direction) { // moving left
 			Collections.sort(checking, Collections.reverseOrder());
-		} else { // if (right || vel.x > 0) { // moving right
+		} else { // moving right
 			Collections.sort(checking);
 		}
 
@@ -285,16 +283,17 @@ public class Player extends Editable {
 				// if this tile is the far side of a gap
 				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
 					// make sure the gap is in front of the player
-					if ((direction && t.getBottomRight().x < pos.x) // (left || vel.x < 0)
-							|| (!direction && t.getTopLeft().x > pos.x)) { // (right || vel.x > 0)
+					if ((direction && t.getBottomRight().x < pos.x) // moving left
+							|| (!direction && t.getTopLeft().x > pos.x)) { // moving right
+						// lock rotation
 						this.dynamicBody.setFixedRotation(true);
 
 						// create the barrier
-						if (direction) {// (left || vel.x < 0) { // moving left
+						if (direction) { // moving left
 							Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 							Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 							createBarrier(top, bottom);
-						} else {// if (right || vel.x > 0) { // moving right
+						} else { // moving right
 							Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 							Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 							createBarrier(top, bottom);
