@@ -4,6 +4,8 @@ import static processing.core.PConstants.*;
 
 import java.util.HashSet;
 
+import org.jbox2d.common.Vec2;
+
 import game.Game;
 import game.Player;
 import handlers.TextureCache;
@@ -12,6 +14,7 @@ import objects.Rectangle;
 import objects.Tile;
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import processing.core.PVector;
 
 public class PlayerEnd extends Event {
 	private boolean levelEnd;
@@ -19,10 +22,14 @@ public class PlayerEnd extends Event {
 	private Rectangle newPlayerArea;
 	private long lastTime = 0;
 
+	private PVector center;
+
 	public PlayerEnd(Game game, TextureCache texture, String name, float x, float y) {
 		super(game, texture, name, false, x, y, 100, 100);
 		levelEnd = true;
 		newPlayerArea = new Rectangle(getX() + getWidth(), getY() - getHeight(), getWidth(), getHeight());
+
+		this.center = new PVector(getX() + getWidth() / 2, getY() + getHeight() / 2);
 
 		// get tile that is at the current position
 		HashSet<Rectangle> returnSet = new HashSet<Rectangle>();
@@ -119,22 +126,29 @@ public class PlayerEnd extends Event {
 		if (!player.isStill()) {
 			return;
 		}
-		if (player.getTopLeft().x != getTopLeft().x) {
+//		if (player.getTopLeft().x != getTopLeft().x) {
+//			return;
+//		}
+//		if (player.getTopLeft().y != getTopLeft().y) {
+//			return;
+//		}
+		Vec2 playerPos = player.getPosition();
+		if (Math.abs(playerPos.x - center.x) > 2) {
 			return;
 		}
-		if (player.getTopLeft().y != getTopLeft().y) {
+		if (Math.abs(playerPos.y - center.y) > 2) {
 			return;
 		}
 		if (required != null) {
 			if (!player.getFile().equals(required.getFile())) {
 				return;
 			}
-//			if (!(player.isFlippedH() == required.isFlippedH())) {
-//				return;
-//			}
-//			if (!(player.isFlippedV() == required.isFlippedV())) {
-//				return;
-//			}
+			// if (!(player.isFlippedH() == required.isFlippedH())) {
+			// return;
+			// }
+			// if (!(player.isFlippedV() == required.isFlippedV())) {
+			// return;
+			// }
 			if (!(player.getAngle() == required.getAngle())) {
 				return;
 			}

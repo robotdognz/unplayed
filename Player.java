@@ -439,6 +439,10 @@ public class Player extends Editable {
 //		}
 		// need to add corner arrows
 	}
+	
+	public Vec2 getPosition() {
+		return box2d.getBodyPixelCoord(dynamicBody);
+	}
 
 	public void left() {
 		left = true;
