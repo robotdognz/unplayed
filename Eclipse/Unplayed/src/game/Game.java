@@ -14,6 +14,7 @@ import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
+import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
 import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
@@ -441,10 +442,14 @@ public class Game {
 			boolean clear = false;
 			Iterator<Event> it = playerEvents.iterator();
 			while (player != null && it.hasNext()) {
-				if(it.next().activate()) {
+				Event e = it.next();
+				if(e.activate() && (e instanceof PlayerEnd)) {
 					clear  = true;
 					break;
 				}
+			}
+			if(clear) {
+				playerEvents.clear();
 			}
 		}
 
