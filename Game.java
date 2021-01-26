@@ -64,6 +64,8 @@ public class Game {
 	public ContactListener contactListener;
 	public boolean physicsPlayer = false;
 	public boolean locked = false;
+	
+	private boolean queuedRestart = false;
 
 	// delta time
 	float accumulator = 0;
@@ -340,6 +342,10 @@ public class Game {
 			player.still();
 		}
 	}
+	
+	public void queueRestart() {
+		queuedRestart = true;
+	}
 
 	public void restart() {
 		if (playerCheckpoint != null) { // if there is a player checkpoint
@@ -439,7 +445,10 @@ public class Game {
 		// delta / box2d
 		int steps = calculateSteps(deltaTime);
 		while (steps > 0) {
-			accumulator -= stepSize;
+			if(queuedRestart) {
+				restart();
+				queuedRestart = false;
+			}
 			if (player != null) {
 				player.physicsStep();
 			}
