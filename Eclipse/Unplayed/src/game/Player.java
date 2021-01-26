@@ -193,6 +193,8 @@ public class Player extends Editable {
 	}
 
 	private void checkTiles() {
+		checking.clear();
+
 		// check there are enough tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
 			destroyBarrier();
@@ -217,31 +219,34 @@ public class Player extends Editable {
 
 		// run the algorithms
 		checkTunnel();
-		checkForGroundSlots();
+//		checkForGroundSlots();
 		// checkForWallSlots();
 		// checkForRoofSlots();
 
 	}
 
 	private void checkTunnel() {
-		checking.clear();
 
 		// create a list of relevant tiles sorted by x position
-		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
+		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
+		float leftEdge = pos.x - getWidth() / 2;
+		float rightEdge = pos.x + getWidth() / 2;
+		float topEdge = pos.y - getHeight() / 2;
+		float bottomEdge = pos.y + getHeight() / 2;
 		for (Tile t : sensorContacts) {
-
+			PVector tCenter = new PVector(t.getX() + t.getWidth() / 2, t.getY() + getHeight() / 2);
+			if(pos.dist(tCenter) > t.getWidth() / 2) {
+				return;
+			}
+			
+			checking.add(t);
 		}
+		Collections.sort(checking);
 
 	}
 
 	private void checkForGroundSlots() {
 		checking.clear();
-
-//		// check there are enough tiles (need at least 2)
-//		if (!(sensorContacts.size() >= 2)) {
-//			destroyBarrier();
-//			return;
-//		}
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
@@ -262,15 +267,6 @@ public class Player extends Editable {
 			destroyBarrier();
 			return;
 		}
-
-//		// check angle is appropriate
-//		float angle = PApplet.degrees(dynamicBody.getAngle());
-//		float angleRounded = Math.round(angle / 90) * 90;
-//		float angleRemainder = Math.abs(angle - angleRounded);
-//		if (!(angleRemainder < 3 && angleRemainder > -3)) {
-//			destroyBarrier();
-//			return;
-//		}
 
 		// create a list of relevant tiles sorted by x position
 		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
