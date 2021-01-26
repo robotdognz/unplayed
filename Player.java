@@ -358,10 +358,8 @@ public class Player extends Editable {
 			total += impulse;
 		}
 
-		
-
 		// check if we already did one like this
-		if (Math.round(total) == Math.round(previousImpulse)) {
+		if (previousImpulse != 0 && Math.round(total) == Math.round(previousImpulse)) {
 			PApplet.println(total + " skipped by previousImpulse");
 			return;
 		} else {
