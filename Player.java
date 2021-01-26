@@ -359,7 +359,7 @@ public class Player extends Editable {
 		}
 
 		// check if we already did one like this
-		if (total == previousImpulse) {
+		if ((int) total == (int) previousImpulse) {
 			return;
 		} else {
 			previousImpulse = total;
