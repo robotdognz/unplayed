@@ -290,7 +290,7 @@ public class Game {
 			Tile current = ((PlayerStart) playerArea).getRequired();
 			if (this.player != null) {
 				this.player.destroy();
-				
+
 			}
 			player = new Player(p, box2d, locked, texture, current, vibe);
 		} else if (playerArea instanceof Tile) {
@@ -417,6 +417,10 @@ public class Game {
 	}
 
 	public void step(float deltaTime) {
+		// step player non-physics logic
+		if (player != null) {
+			player.step();
+		}
 
 		// step physics
 		int steps = calculateSteps(deltaTime);
@@ -428,11 +432,6 @@ public class Game {
 			steps--;
 		}
 		box2d.world.clearForces();
-
-		// step player non-physics logic
-		if (player != null) {
-			player.step();
-		}
 
 		// get objects to draw
 		screenObjects.clear();
