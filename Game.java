@@ -2,12 +2,15 @@ package game;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
+
 import camera.Camera;
 import editor.Editor;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.MyContactListener;
 import misc.Vibe;
+import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
@@ -63,10 +66,11 @@ public class Game {
 	public Box2DProcessing box2d;
 	public ContactListener contactListener;
 	public boolean locked = false;
+	public HashSet<Event> playerEvents;
 
 	// delta time
 	float accumulator = 0;
-	float stepSize = 1f / 240f; // (1f / 60f) / 4f;
+	float stepSize = 1f / 240f;
 
 	public Game(PApplet p, AppLogic app, Camera c, Vibe v, TextureCache texture, Converter convert) {
 		// legacy variables from level class TODO: write these out eventually
@@ -120,6 +124,7 @@ public class Game {
 
 		// box2d
 		buildWorld();
+		playerEvents = new HashSet<Event>();
 	}
 
 	public void buildWorld() {
@@ -420,6 +425,11 @@ public class Game {
 		// step player non-physics logic
 		if (player != null) {
 			player.step();
+
+			Iterator<Event> it = playerEvents.iterator();
+			while (it.hasNext()) {
+				it.next().activate();
+			}
 		}
 
 		// step physics
@@ -566,12 +576,12 @@ public class Game {
 			return 1; // 240 Hz ( 160 Hz to .. )
 	}
 
-//	public void addEvent(Event event) {
-//		playerEvents.add(event);
-//	}
-//
-//	public void removeEvent(Event event) {
-//		playerEvents.remove(event);
-//	}
+	public void addEvent(Event event) {
+		playerEvents.add(event);
+	}
+
+	public void removeEvent(Event event) {
+		playerEvents.remove(event);
+	}
 
 }
