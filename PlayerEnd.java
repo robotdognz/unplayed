@@ -124,6 +124,7 @@ public class PlayerEnd extends Event {
 	public void activate() {
 		Player player = game.player;
 		if (!player.isStill()) {
+			PApplet.println("failed isStill");
 			return;
 		}
 //		if (player.getTopLeft().x != getTopLeft().x) {
@@ -134,9 +135,11 @@ public class PlayerEnd extends Event {
 //		}
 		Vec2 playerPos = player.getPosition();
 		if (Math.abs(playerPos.x - center.x) > 2) {
+			PApplet.println("failed x pos");
 			return;
 		}
 		if (Math.abs(playerPos.y - center.y) > 2) {
+			PApplet.println("failed y pos");
 			return;
 		}
 		if (required != null) {
@@ -153,6 +156,8 @@ public class PlayerEnd extends Event {
 				return;
 			}
 		}
+		
+		PApplet.println("made it");
 
 		// the player is perfectly in the slot
 		if (System.currentTimeMillis() > lastTime + 2000) {
