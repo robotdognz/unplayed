@@ -380,10 +380,10 @@ public class Player extends Editable {
 
 	public boolean isStill() {
 		Vec2 vel = dynamicBody.getLinearVelocity();
-		if (Math.abs(vel.x) >= 2) {
+		if (Math.abs(vel.x) >= 0.1f) {
 			return false;
 		}
-		if (Math.abs(vel.y) >= 2) {
+		if (Math.abs(vel.y) >= 0.1f) {
 			return false;
 		}
 		return true;
@@ -466,7 +466,7 @@ public class Player extends Editable {
 		// need to add corner arrows
 	}
 
-	public Vec2 getPosition() {
+	public Vec2 getCenter() {
 		return box2d.getBodyPixelCoord(dynamicBody);
 	}
 

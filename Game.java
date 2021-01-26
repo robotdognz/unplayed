@@ -2,19 +2,15 @@ package game;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
-
 import camera.Camera;
 import editor.Editor;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.MyContactListener;
 import misc.Vibe;
-import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
-import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
 import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
@@ -151,7 +147,6 @@ public class Game {
 		// fully remove the player
 		if (this.player != null) {
 			this.player.destroy();
-//			this.playerEvents.clear();
 		}
 		this.player = null;
 		this.playerStart = null;
@@ -199,7 +194,6 @@ public class Game {
 		// clear player
 		if (this.player != null) {
 			this.player.destroy();
-//			this.playerEvents.clear();
 		}
 		player = null;
 		// clear checkpoint
@@ -293,7 +287,6 @@ public class Game {
 			Tile current = ((PlayerStart) playerArea).getRequired();
 			if (this.player != null) {
 				this.player.destroy();
-//				this.playerEvents.clear();
 			}
 			player = new Player(p, box2d, locked, texture, current, vibe);
 		} else if (playerArea instanceof Tile) {
@@ -325,7 +318,6 @@ public class Game {
 				if (playerCheckpoint != null) {
 					if (this.player != null) {
 						this.player.destroy();
-//						this.playerEvents.clear();
 					}
 					player = new Player(p, box2d, locked, texture, playerCheckpoint, vibe);
 				} else if (playerStart != null) {
@@ -333,7 +325,6 @@ public class Game {
 					if (current != null) {
 						if (this.player != null) {
 							this.player.destroy();
-//							this.playerEvents.clear();
 						}
 						player = new Player(p, box2d, locked, texture, current, vibe);
 					}
