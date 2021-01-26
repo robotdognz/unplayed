@@ -48,7 +48,7 @@ public class EventTool extends AreaTool {
 				if (editor.selected instanceof CameraChange) {
 					if (editorSide.cameraEditMode == 1) {
 						// add collider
-						CameraCollider toInsert = new CameraCollider(game.box2d, (CameraChange) editor.selected,
+						CameraCollider toInsert = new CameraCollider(game, (CameraChange) editor.selected,
 								editor.point.getX(), (int) editor.point.getY());
 						HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 						editor.world.retrieve(getRectangles, toInsert);
@@ -56,7 +56,7 @@ public class EventTool extends AreaTool {
 						return;
 					} else if (editorSide.cameraEditMode == 2) {
 						// remove collider
-						CameraCollider toInsert = new CameraCollider(game.box2d, (CameraChange) editor.selected,
+						CameraCollider toInsert = new CameraCollider(game, (CameraChange) editor.selected,
 								editor.point.getX(), (int) editor.point.getY());
 						HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 						editor.world.retrieve(getRectangles, toInsert);

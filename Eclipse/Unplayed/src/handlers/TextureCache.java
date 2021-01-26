@@ -226,7 +226,7 @@ public class TextureCache {
 		EventHandler playerStart = new EventHandler(p, this, playerStartFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				return new PlayerStart(game.box2d, p, texture, playerStartString, x, y, game);
+				return new PlayerStart(game, p, texture, playerStartString, x, y);
 			}
 		};
 		eventMap.put(playerStartString, playerStart);
@@ -237,7 +237,7 @@ public class TextureCache {
 		EventHandler playerEnd = new EventHandler(p, this, playerEndFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				return new PlayerEnd(game.box2d, texture, playerEndString, x, y, game);
+				return new PlayerEnd(game, texture, playerEndString, x, y);
 			}
 		};
 		eventMap.put(playerEndString, playerEnd);
@@ -248,7 +248,7 @@ public class TextureCache {
 		EventHandler playerDeath = new EventHandler(p, this, playerDeathFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				return new PlayerDeath(game.box2d, texture, playerDeathString, x, y);
+				return new PlayerDeath(game, texture, playerDeathString, x, y);
 			}
 		};
 		eventMap.put(playerDeathString, playerDeath);
@@ -259,7 +259,7 @@ public class TextureCache {
 		EventHandler cameraChange = new EventHandler(p, this, cameraChangeFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				return new CameraChange(game.box2d, p, texture, cameraChangeString, x, y);
+				return new CameraChange(game, p, texture, cameraChangeString, x, y);
 			}
 		};
 		eventMap.put(cameraChangeString, cameraChange);
@@ -270,7 +270,7 @@ public class TextureCache {
 		EventHandler spike = new EventHandler(p, this, spikeFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				return new Spike(game.box2d, texture, spikeString, x, y);
+				return new Spike(game, texture, spikeString, x, y);
 			}
 		};
 		eventMap.put(spikeString, spike);

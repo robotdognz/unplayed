@@ -9,14 +9,13 @@ import objects.Event;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import shiffman.box2d.Box2DProcessing;
 
 public class Spike extends Event {
 	private float angle;
 	private Rectangle bounds;
 
-	public Spike(Box2DProcessing box2d, TextureCache texture, String name, int x, int y) {
-		super(box2d, texture, name, true, x, y, 100, 100);
+	public Spike(Game game, TextureCache texture, String name, int x, int y) {
+		super(game, texture, name, true, x, y, 100, 100);
 		angle = 0;
 		createBounds();
 	}
@@ -58,9 +57,9 @@ public class Spike extends Event {
 	}
 
 	@Override
-	public void activate(Game g) {
+	public void activate() {
 		// check if player is inside bounds
-		Player player = g.player;
+		Player player = game.player;
 		if (player.getTopLeft().x > bounds.getBottomRight().x - 1) {
 			return;
 		}
@@ -74,7 +73,7 @@ public class Spike extends Event {
 			return;
 		}
 
-		g.restart(); // TODO: this needs a custom method in Game
+		game.restart(); // TODO: this needs a custom method in Game
 	}
 
 	@Override

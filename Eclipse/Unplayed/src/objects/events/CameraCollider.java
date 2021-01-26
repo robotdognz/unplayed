@@ -1,21 +1,17 @@
 package objects.events;
 
 import game.Game;
-//import handlers.EventHandler;
 import objects.Event;
 import processing.core.PGraphics;
-import shiffman.box2d.Box2DProcessing;
 
 import static processing.core.PConstants.*;
 
 public class CameraCollider extends Event {
 	private CameraChange camera;
-//	private EventHandler cameraTexture;
 
-	public CameraCollider(Box2DProcessing box2d, CameraChange camera, float x, float y) {
-		super(box2d, null, "CameraCollider", false, x, y, 100, 100);
+	public CameraCollider(Game game, CameraChange camera, float x, float y) {
+		super(game, null, "CameraCollider", false, x, y, 100, 100);
 		this.camera = camera;
-//		this.cameraTexture = camera.getTexture();
 	}
 
 	public CameraChange getCamera() {
@@ -23,8 +19,8 @@ public class CameraCollider extends Event {
 	}
 
 	@Override
-	public void activate(Game g) {
-		camera.activate(g);
+	public void activate() {
+		camera.activate();
 	}
 
 	@Override

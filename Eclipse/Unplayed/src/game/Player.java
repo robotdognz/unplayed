@@ -463,7 +463,7 @@ public class Player extends Editable {
 				if (getBottomRight().y < p.getTopLeft().y + 1) {
 					continue;
 				}
-				((Event) p).activate(g);
+				((Event) p).activate();
 			}
 		}
 	}

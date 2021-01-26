@@ -7,6 +7,7 @@ import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.contacts.Contact;
 
 import game.Player;
+import objects.Event;
 import objects.Tile;
 //import processing.core.PApplet;
 
@@ -19,6 +20,7 @@ public class MyContactListener implements ContactListener {
 
 		Player player = null;
 		Tile tile = null;
+		Event event = null;
 		boolean playerBody = false; // one of the fixtures is the player
 		boolean playerSensor = false; // one of the fixtures is the player's sensor
 		boolean ground = false; // one of the fixtures is the ground
@@ -41,6 +43,8 @@ public class MyContactListener implements ContactListener {
 				} else if (userData.contentEquals("ground")) {
 					ground = true;
 
+				} else if (userData.contentEquals("event")) {
+					event = (Event) fixtureA.getBody().getUserData();
 				}
 
 				// TODO: having these in here means only tile top edges return tiles
@@ -68,6 +72,8 @@ public class MyContactListener implements ContactListener {
 				} else if (userData.contentEquals("ground")) {
 					ground = true;
 
+				} else if (userData.contentEquals("event")) {
+					event = (Event) fixtureB.getBody().getUserData();
 				}
 
 				if (fixtureB.getBody().getUserData() instanceof Tile) {
@@ -79,6 +85,11 @@ public class MyContactListener implements ContactListener {
 		// if on of them is the player and one is the ground
 		if (ground && playerBody) {
 			player.resetJump();
+		}
+
+		// if on of them is the player and one is an event
+		if (playerBody && event != null) {
+			event.activate();
 		}
 
 		// if one of them is the player's sensor and one is a tile

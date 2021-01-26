@@ -15,6 +15,7 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
 public abstract class Event extends Rectangle {
+	protected Game game;
 	private boolean hasTexture;
 	protected EventHandler eventTexture;
 	private String name;
@@ -24,10 +25,11 @@ public abstract class Event extends Rectangle {
 	Box2DProcessing box2d;
 	Body staticBody;
 
-	public Event(Box2DProcessing box2d, TextureCache texture, String name, boolean visible, float x, float y,
+	public Event(Game game, TextureCache texture, String name, boolean visible, float x, float y,
 			float width, float height) {
 		super(x, y, width, height);
-		this.box2d = box2d;
+		this.game = game;
+		this.box2d = game.box2d;
 		this.name = name;
 		this.visible = visible;
 
@@ -76,7 +78,7 @@ public abstract class Event extends Rectangle {
 		return "";
 	}
 
-	public void activate(Game g) {
+	public void activate() {
 	}
 
 	public void draw(PGraphics graphics, float scale) {

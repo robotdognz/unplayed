@@ -345,17 +345,17 @@ public class EditorJSON {
 					Rectangle newPlayerArea = new Rectangle(object.getFloat("newPlayerX"),
 							object.getFloat("newPlayerY"), object.getFloat("newPlayerWidth"),
 							object.getFloat("newPlayerHeight"));
-					PlayerEnd pe = new PlayerEnd(game.box2d, texture, name, pX, pY, game);
+					PlayerEnd pe = new PlayerEnd(game, texture, name, pX, pY);
 					pe.setLevelEnd(end);
 					pe.setNewPlayerArea(newPlayerArea);
 					worldObjects.add(pe);
 				} else if (type.equals("PlayerDeath")) {
 					String name = object.getString("name");
-					PlayerDeath pd = new PlayerDeath(game.box2d, texture, name, pX, pY);
+					PlayerDeath pd = new PlayerDeath(game, texture, name, pX, pY);
 					worldObjects.add(pd);
 				} else if (type.equals("Spike")) {
 					String name = object.getString("name");
-					Spike s = new Spike(game.box2d, texture, name, pX, pY);
+					Spike s = new Spike(game, texture, name, pX, pY);
 					try {
 						float angle = object.getFloat("angle");
 						s.setAngle(angle);
@@ -393,9 +393,9 @@ public class EditorJSON {
 				JSONArray colliders = object.getJSONArray("colliders");
 				CameraChange cc;
 				if (type.equals("PlayerStart")) {
-					cc = new PlayerStart(game.box2d, p, texture, name, pX, pY, game);
+					cc = new PlayerStart(game, p, texture, name, pX, pY);
 				} else {
-					cc = new CameraChange(game.box2d, p, texture, name, pX, pY);
+					cc = new CameraChange(game, p, texture, name, pX, pY);
 				}
 				cc.setWidth(pWidth);
 				cc.setHeight(pHeight);
@@ -414,7 +414,7 @@ public class EditorJSON {
 							JSONObject jCollider = colliders.getJSONObject(j);
 							int cX = jCollider.getInt("pX");
 							int cY = jCollider.getInt("pY");
-							CameraCollider collider = new CameraCollider(game.box2d, cc, cX, cY);
+							CameraCollider collider = new CameraCollider(game, cc, cX, cY);
 							worldObjects.add(collider);
 						}
 					}

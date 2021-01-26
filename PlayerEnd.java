@@ -12,18 +12,15 @@ import objects.Rectangle;
 import objects.Tile;
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import shiffman.box2d.Box2DProcessing;
 
 public class PlayerEnd extends Event {
-	// private Game game;
 	private boolean levelEnd;
 	private Tile required;
 	private Rectangle newPlayerArea;
 	private long lastTime = 0;
 
-	public PlayerEnd(Box2DProcessing box2d, TextureCache texture, String name, float x, float y, Game game) {
-		super(box2d, texture, name, false, x, y, 100, 100);
-		// this.game = game;
+	public PlayerEnd(Game game, TextureCache texture, String name, float x, float y) {
+		super(game, texture, name, false, x, y, 100, 100);
 		levelEnd = true;
 		newPlayerArea = new Rectangle(getX() + getWidth(), getY() - getHeight(), getWidth(), getHeight());
 
@@ -117,8 +114,8 @@ public class PlayerEnd extends Event {
 	}
 
 	@Override
-	public void activate(Game g) {
-		Player player = g.player;
+	public void activate() {
+		Player player = game.player;
 		if (!player.isStill()) {
 			return;
 		}
@@ -147,9 +144,9 @@ public class PlayerEnd extends Event {
 		if (System.currentTimeMillis() > lastTime + 2000) {
 			lastTime = System.currentTimeMillis();
 			if (levelEnd) { // if this is the end of the level
-				g.endGame();
+				game.endGame();
 			} else { // if this is just part of the puzzle
-				g.endPuzzle(newPlayerArea);
+				game.endPuzzle(newPlayerArea);
 			}
 		}
 	}

@@ -8,7 +8,6 @@ import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PVector;
-import shiffman.box2d.Box2DProcessing;
 
 import static processing.core.PConstants.*;
 
@@ -17,18 +16,20 @@ public class CameraChange extends Event {
 	private float cameraZoom;
 	private float edgeZoom;
 	private int color;
-	// private String type; //Strings: "Static", "Full", "Horizontal", "Vertical" //should be an enum
+	// private String type; //Strings: "Static", "Full", "Horizontal", "Vertical"
+	// //should be an enum
 
-	public CameraChange(Box2DProcessing box2d, PApplet p, TextureCache texture, String name, float x, float y) {
-		super(box2d, texture, name, false, x, y, 100, 100);
-		// I'm considering splitting both cameraZoom and edgeZoom into 'in speed' and 'out speed'
+	public CameraChange(Game game, PApplet p, TextureCache texture, String name, float x, float y) {
+		super(game, texture, name, false, x, y, 100, 100);
+		// I'm considering splitting both cameraZoom and edgeZoom into 'in speed' and
+		// 'out speed'
 
 		color = p.color(p.random(255), p.random(255), p.random(255));
 
 		// set default values
 		this.camera = new Rectangle(-300, -400, 700, 900);
-		this.cameraZoom = 0.032f; //2
-		this.edgeZoom = 0.032f; //2
+		this.cameraZoom = 0.032f; // 2
+		this.edgeZoom = 0.032f; // 2
 		// this.type = type;
 	}
 
@@ -75,7 +76,7 @@ public class CameraChange extends Event {
 	public int getColor() {
 		return color;
 	}
-	
+
 	public void setColor(int color) {
 		this.color = color;
 	}
@@ -85,7 +86,7 @@ public class CameraChange extends Event {
 		int centerY = (int) ((camera.getTopLeft().y - camera.getBottomRight().y) / 2 + camera.getBottomRight().y);
 		return new PVector(centerX, centerY);
 	}
-	
+
 	@Override
 	public void draw(PGraphics graphics, float scale) {
 		graphics.rectMode(CORNER);
@@ -96,25 +97,25 @@ public class CameraChange extends Event {
 	}
 
 	@Override
-	public void activate(Game g) {
-		super.activate(g);
-		if (g.camera.getGame()) {
+	public void activate() {
+		super.activate();
+		if (game.camera.getGame()) {
 			// change center
 			PVector center = getCameraCentre();
-			if (g.newCenter != center) {
-				g.newCenter = new PVector(center.x, center.y);
+			if (game.newCenter != center) {
+				game.newCenter = new PVector(center.x, center.y);
 			}
 			// change scale
-			if (g.newScale != this.camera.getWidth()) {
-				g.newScale = this.camera.getWidth();
+			if (game.newScale != this.camera.getWidth()) {
+				game.newScale = this.camera.getWidth();
 			}
-			g.zoomSpeed = cameraZoom;
-			g.boarderZoomSpeed = edgeZoom;
-			g.newCameraArea.setCorners(camera.getTopLeft().x, camera.getTopLeft().y, camera.getBottomRight().x,
+			game.zoomSpeed = cameraZoom;
+			game.boarderZoomSpeed = edgeZoom;
+			game.newCameraArea.setCorners(camera.getTopLeft().x, camera.getTopLeft().y, camera.getBottomRight().x,
 					camera.getBottomRight().y);
 		}
 	}
-	
+
 	public EventHandler getTexture() {
 		return eventTexture;
 	}
