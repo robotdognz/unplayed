@@ -168,9 +168,9 @@ public class MyContactListener implements ContactListener {
 			player.removeTile(tile);
 		}
 
-		// if on of them is the player and one is an event
+		// if one of them is the player and one is an event
 		if (playerBody && event != null) {
-			player.addEvent(event);
+			player.removeEvent(event);
 		}
 	}
 
