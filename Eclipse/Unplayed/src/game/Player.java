@@ -359,7 +359,8 @@ public class Player extends Editable {
 		}
 
 		// check if we already did one like this
-		if (previousImpulse != 0 && (int)total == (int) previousImpulse) {
+		float impulseDifference = Math.abs(total - previousImpulse);
+		if (previousImpulse != 0 && impulseDifference < 4) {
 			PApplet.println(total + " skipped by previousImpulse");
 			return;
 		} else {
@@ -377,7 +378,7 @@ public class Player extends Editable {
 			previousImpulse = total;
 			return;
 		}
-		PApplet.println(total + " skipped by vibeFrame");
+//		PApplet.println(total + " skipped by vibeFrame");
 
 	}
 
