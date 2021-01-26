@@ -12,6 +12,7 @@ public class PlayerDeath extends Event {
 	@Override
 	public void activate() {
 		super.activate();
-		game.queueRestart(); // TODO: this needs a custom method in game
+		game.restart();
+//		game.queueRestart(); // TODO: this needs a custom method in game
 	}
 }

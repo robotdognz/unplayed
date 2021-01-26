@@ -63,7 +63,7 @@ public class Game {
 	public Box2DProcessing box2d;
 	public ContactListener contactListener;
 	public boolean locked = false;
-	
+
 	private boolean queuedRestart = false;
 
 	// delta time
@@ -341,7 +341,7 @@ public class Game {
 			player.still();
 		}
 	}
-	
+
 	public void queueRestart() {
 		queuedRestart = true;
 	}
@@ -420,31 +420,10 @@ public class Game {
 
 	public void step(float deltaTime) {
 
-		// old
-		screenObjects.clear();
-		world.retrieve(screenObjects, screenSpace);
-
-		// find platforms near the player
-		if (player != null) {
-//			playerObjects.clear();
-//			world.retrieve(playerObjects, player.getPlayerArea());
-			player.step(); //deltaTime, playerObjects, this
-		}
-
-		if (camera.getGame()) {
-			screenMovement(deltaTime);
-		}
-		PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
-		float screenSpaceWidth = convert.screenToLevel(p.width + screenSpaceOffset * 2);
-		float screenSpaceHeight = convert.screenToLevel(p.height + screenSpaceOffset * 2);
-		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
-
-		pageView.step(); // step the page view
-
-		// delta / box2d
+		// step physics
 		int steps = calculateSteps(deltaTime);
 		while (steps > 0) {
-			if(queuedRestart) {
+			if (queuedRestart) {
 				restart();
 				queuedRestart = false;
 			}
@@ -455,6 +434,25 @@ public class Game {
 			steps--;
 		}
 		box2d.world.clearForces();
+
+		// step player non-physics logic
+		if (player != null) {
+			player.step();
+		}
+
+		// get objects to draw
+		screenObjects.clear();
+		world.retrieve(screenObjects, screenSpace);
+
+		if (camera.getGame()) {
+			screenMovement(deltaTime);
+		}
+		PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
+		float screenSpaceWidth = convert.screenToLevel(p.width + screenSpaceOffset * 2);
+		float screenSpaceHeight = convert.screenToLevel(p.height + screenSpaceOffset * 2);
+		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
+
+		pageView.step(); // step the page view
 	}
 
 	void screenMovement(float deltaTime) {

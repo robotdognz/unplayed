@@ -89,7 +89,7 @@ public class MyContactListener implements ContactListener {
 
 		// if on of them is the player and one is an event
 		if (playerBody && event != null) {
-			event.activate();
+			player.addEvent(event);
 		}
 
 		// if one of them is the player's sensor and one is a tile
@@ -105,6 +105,8 @@ public class MyContactListener implements ContactListener {
 
 		Player player = null;
 		Tile tile = null;
+		Event event = null;
+		boolean playerBody = false; // one of the fixtures is the player
 		boolean playerSensor = false; // one of the fixtures is the player's sensor
 
 		// check fixture A
@@ -115,11 +117,15 @@ public class MyContactListener implements ContactListener {
 
 				if (userData.equals("player body")) {
 					player = (Player) fixtureA.getBody().getUserData();
+					playerBody = true;
 					player.endContact();
 
 				} else if (userData.contentEquals("player sensor")) {
 					player = (Player) fixtureA.getBody().getUserData();
 					playerSensor = true;
+
+				} else if (userData.contentEquals("event")) {
+					event = (Event) fixtureA.getBody().getUserData();
 
 				} else if (fixtureA.getBody().getUserData() instanceof Tile) {
 					tile = (Tile) fixtureA.getBody().getUserData();
@@ -135,11 +141,15 @@ public class MyContactListener implements ContactListener {
 
 				if (userData.equals("player body")) {
 					player = (Player) fixtureB.getBody().getUserData();
+					playerBody = true;
 					player.endContact();
 
 				} else if (userData.contentEquals("player sensor")) {
 					player = (Player) fixtureB.getBody().getUserData();
 					playerSensor = true;
+
+				} else if (userData.contentEquals("event")) {
+					event = (Event) fixtureB.getBody().getUserData();
 
 				} else if (fixtureB.getBody().getUserData() instanceof Tile) {
 					tile = (Tile) fixtureB.getBody().getUserData();
@@ -147,8 +157,14 @@ public class MyContactListener implements ContactListener {
 			}
 		}
 
+		// if one of them is the player and one is a tile
 		if (playerSensor && tile != null) {
 			player.removeTile(tile);
+		}
+
+		// if on of them is the player and one is an event
+		if (playerBody && event != null) {
+			player.addEvent(event);
 		}
 	}
 

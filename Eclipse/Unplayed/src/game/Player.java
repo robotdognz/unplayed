@@ -8,6 +8,7 @@ import handlers.TextureCache;
 import handlers.TileHandler;
 import misc.Vibe;
 import objects.Editable;
+import objects.Event;
 import objects.Tile;
 import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
@@ -41,12 +42,14 @@ public class Player extends Editable {
 	private int boxJumpCount; // how many jumps the player can make before touching the ground
 	public boolean locked; // does the player have locked rotation
 	int contactNumber; // the number of things touching the player's body
-	HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
+	private HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
+	private ArrayList<Event> events; // list of events touching the player
 	private boolean vibeFrame; // has a vibration happened yet this frame
 
 	// slot detection
 	public boolean showChecking = false;
 	public ArrayList<Tile> checking; // list of tiles currently being checked
+
 	Body tempBarrier; // barrier used to stop the player moving past a slot
 	Fixture tempFixture; // reference to the barrier fixture
 
@@ -73,9 +76,7 @@ public class Player extends Editable {
 			hasTexture = false;
 		}
 
-
 		// box2d
-//		this.physicsPlayer = physics;
 		this.box2d = box2d;
 		this.friction = 0.6f; // from 0 to 1
 		this.density = 1; // from 0 to 1
@@ -86,6 +87,7 @@ public class Player extends Editable {
 		this.sensorContacts = new HashSet<Tile>();
 		this.tempBarrier = null;
 		checking = new ArrayList<Tile>();
+		events = new ArrayList<Event>();
 		create();
 
 	}
@@ -155,6 +157,14 @@ public class Player extends Editable {
 
 	public void removeTile(Tile tile) {
 		sensorContacts.remove(tile);
+	}
+
+	public void addEvent(Event event) {
+		events.add(event);
+	}
+
+	public void removeEvent(Event event) {
+		events.remove(event);
 	}
 
 	public void physicsStep() {
@@ -349,7 +359,11 @@ public class Player extends Editable {
 
 	void step() {
 		vibeFrame = false; // clear vibeFrame
-
+		
+		//check all the events the player is colliding with
+		for(Event e: events) {
+			e.activate();
+		}
 	}
 
 	public boolean isStill() {
@@ -439,7 +453,7 @@ public class Player extends Editable {
 //		}
 		// need to add corner arrows
 	}
-	
+
 	public Vec2 getPosition() {
 		return box2d.getBodyPixelCoord(dynamicBody);
 	}
