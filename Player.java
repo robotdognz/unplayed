@@ -48,6 +48,7 @@ public class Player extends Editable {
 	private HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
 	private ArrayList<Event> events; // list of events touching the player
 	private boolean vibeFrame; // has a vibration happened yet this frame
+	private float previousImpulse; // strenght of last collision impulse
 
 	// slot detection
 	public boolean showChecking = false;
@@ -89,6 +90,7 @@ public class Player extends Editable {
 		this.contactNumber = 0; // is the player touching anything
 		this.sensorContacts = new HashSet<Tile>();
 		this.tempBarrier = null;
+		this.previousImpulse = 0;
 		checking = new ArrayList<Tile>();
 		events = new ArrayList<Event>();
 		create();
@@ -191,15 +193,19 @@ public class Player extends Editable {
 	}
 
 	private void checkTiles() {
-//		checking = new ArrayList<Tile>();
+		checking.clear();
 
-		// check the player isn't spinning
+		// if the player isn't spinning, run the checking algorithms
 		float av = dynamicBody.getAngularVelocity();
-		if (Math.abs(av) >= 2) {
+		if (!(Math.abs(av) >= 2)) {
+			checkForGroundSlots();
+		} else {
 			destroyBarrier();
-			return;
 		}
 
+	}
+
+	private void checkForGroundSlots() {
 		// check there are tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
 			destroyBarrier();
@@ -237,7 +243,6 @@ public class Player extends Editable {
 
 		// create a list of relevant tiles sorted by x position
 		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
-		checking = new ArrayList<Tile>();
 		for (Tile t : sensorContacts) {
 			// skip this tile if the top of it is above the player's midpoint
 			if (t.getY() < pos.y) {
@@ -333,7 +338,7 @@ public class Player extends Editable {
 			tempFixture = null;
 			tempBarrier = null;
 
-			// TODO: this will need to change when there are multiple algorithms
+			// TODO: this will might need to change when there are multiple algorithms
 			this.dynamicBody.setFixedRotation(locked);
 		}
 	}
@@ -347,9 +352,17 @@ public class Player extends Editable {
 	}
 
 	public void physicsImpact(float[] impulses) {
+		// find total impulse power
 		float total = 0;
 		for (float impulse : impulses) {
 			total += impulse;
+		}
+
+		// check if we already did one like this
+		if (total == previousImpulse) {
+			return;
+		} else {
+			previousImpulse = total;
 		}
 
 		if (total > 800 && !vibeFrame) { // 400
