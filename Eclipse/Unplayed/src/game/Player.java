@@ -363,7 +363,7 @@ public class Player extends Editable {
 			PApplet.println(total + " skipped by previousImpulse");
 			return;
 		} else {
-			previousImpulse = total;
+//			previousImpulse = total;
 		}
 
 		if (total > 800 && !vibeFrame) { // 400
@@ -374,6 +374,7 @@ public class Player extends Editable {
 			vibe.vibrate(strength);
 			PApplet.println(total + " " + strength);
 			vibeFrame = true;
+			previousImpulse = total;
 			return;
 		}
 		PApplet.println(total + " skipped by vibeFrame");
