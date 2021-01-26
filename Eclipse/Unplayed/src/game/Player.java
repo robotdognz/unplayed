@@ -106,7 +106,7 @@ public class Player extends Editable {
 			BodyDef bodyDef = new BodyDef();
 			bodyDef.type = BodyType.DYNAMIC;
 			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
-			bodyDef.angle = 0;
+			bodyDef.angle = PApplet.radians(angle);
 			bodyDef.userData = this;
 			this.dynamicBody = box2d.createBody(bodyDef);
 			this.dynamicBody.setFixedRotation(locked);
@@ -393,8 +393,8 @@ public class Player extends Editable {
 			float a = dynamicBody.getAngle();
 			graphics.pushMatrix();
 			graphics.imageMode(CENTER);
-			graphics.translate(pos.x, pos.y); //pos.x + 0.5f, pos.y + 0.5f
-			graphics.rotate(PApplet.radians(angle));
+			graphics.translate(pos.x, pos.y); // pos.x + 0.5f, pos.y + 0.5f
+//			graphics.rotate(PApplet.radians(angle));
 			graphics.rotate(-a);
 
 			if (showChecking && dynamicBody.isFixedRotation()) {
