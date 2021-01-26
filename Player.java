@@ -358,8 +358,11 @@ public class Player extends Editable {
 			total += impulse;
 		}
 
+		
+
 		// check if we already did one like this
-		if ((int) total == (int) previousImpulse) {
+		if (Math.round(total) == Math.round(previousImpulse)) {
+			PApplet.println(total + " skipped by previousImpulse");
 			return;
 		} else {
 			previousImpulse = total;
@@ -373,7 +376,9 @@ public class Player extends Editable {
 			vibe.vibrate(strength);
 			PApplet.println(total + " " + strength);
 			vibeFrame = true;
+			return;
 		}
+		PApplet.println(total + " skipped by vibeFrame");
 
 	}
 
