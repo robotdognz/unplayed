@@ -191,7 +191,14 @@ public class Player extends Editable {
 	}
 
 	private void checkTiles() {
-		checking = new ArrayList<Tile>();
+//		checking = new ArrayList<Tile>();
+
+		// check the player isn't spinning
+		float av = dynamicBody.getAngularVelocity();
+		if (Math.abs(av) >= 2) {
+			destroyBarrier();
+			return;
+		}
 
 		// check there are tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
@@ -230,6 +237,7 @@ public class Player extends Editable {
 
 		// create a list of relevant tiles sorted by x position
 		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
+		checking = new ArrayList<Tile>();
 		for (Tile t : sensorContacts) {
 			// skip this tile if the top of it is above the player's midpoint
 			if (t.getY() < pos.y) {
