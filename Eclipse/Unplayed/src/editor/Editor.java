@@ -339,8 +339,8 @@ public class Editor {
 			for (Rectangle r : game.playerObjects) {
 				p.rect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
 			}
-			p.rect(game.player.getPlayerArea().getX(), game.player.getPlayerArea().getY(),
-					game.player.getPlayerArea().getWidth(), game.player.getPlayerArea().getHeight());
+//			p.rect(game.player.getPlayerArea().getX(), game.player.getPlayerArea().getY(),
+//					game.player.getPlayerArea().getWidth(), game.player.getPlayerArea().getHeight());
 		}
 
 		// draw block placement selection if one exists and snapping is turned off

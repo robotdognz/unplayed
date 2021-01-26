@@ -73,7 +73,7 @@ public class Spike extends Event {
 			return;
 		}
 
-		game.restart(); // TODO: this needs a custom method in Game
+		game.queueRestart(); // TODO: this needs a custom method in Game
 	}
 
 	@Override

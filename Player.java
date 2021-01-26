@@ -121,8 +121,6 @@ public class Player extends Editable {
 
 	public void create() {
 		if (box2d != null) {
-//			this.dynamicBody = null;
-			
 			float box2dW = box2d.scalarPixelsToWorld((getWidth() - 0.5f) / 2);
 			float box2dH = box2d.scalarPixelsToWorld((getHeight() - 0.5f) / 2);
 
@@ -381,226 +379,233 @@ public class Player extends Editable {
 	}
 
 	public void jump() {
-		if (!physicsPlayer) {
-			// old jump
-			if (jumpCount > 0) {
-				jumpCount--;
-				velocity.y = -playerJumpPower;
-			}
-		} else {
-			// physics jump
-			boxJump();
-		}
+//		if (!physicsPlayer) {
+//			// old jump
+//			if (jumpCount > 0) {
+//				jumpCount--;
+//				velocity.y = -playerJumpPower;
+//			}
+//		} else {
+		// physics jump
+		boxJump();
+//		}
 	}
+//
+//	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
+//		vibeFrame = false; // clear vibeFrame
+//		if (!physicsPlayer) {
+//			doPlayerStep(objects, g);
+//		}
+//	}
+//
+//	private void doPlayerStep(HashSet<Rectangle> objects, Game g) {
+//		// store previous position, used to check if player is still
+//		previousPosition.x = getX();
+//		previousPosition.y = getY();
+//
+//		// code starts here
+//		float previousY = getTopLeft().y;
+//		vibration = 0;
+//		if (velocity.y < terminalVelocity) {
+//			// limit fall speed by terminalVelocity
+//			velocity.y += playerGravity;
+//			vibeVelocity = 0;
+//		} else if (velocity.y + playerGravity > terminalVelocity) {
+//			// fall speed exactly terminalVelocity
+//			velocity.y = terminalVelocity;
+//			vibeVelocity += playerGravity / 2;
+//		}
+//		setY(getY() + velocity.y); // this comes before collision so that falling through perfect holes works
+//		velocity.x = 0;
+//
+//		if (left) {
+//			velocity.x = -playerSpeed;
+//		}
+//		if (right) {
+//			velocity.x = playerSpeed;
+//		}
+//
+//		// do collision
+//		wall = false;
+//		for (Rectangle p : objects) {
+//			if (p instanceof Tile) { // platform collision
+//				collision(p.getTopLeft(), p.getBottomRight());
+//			}
+//		}
+//
+//		setX(getX() + velocity.x);
+//
+//		// ground and roof vibration
+//		if (getTopLeft().y != previousY && vibration > 0) {
+//			vibe.vibrate(vibration);
+//		}
+//		// wall vibration
+//		if (wall && lastLastXPos != getTopLeft().x) {
+//			vibe.vibrate(1, 160);
+//		}
+//
+//		// stores previous positions for wall vibration
+//		lastLastXPos = lastXPos;
+//		lastXPos = getTopLeft().x;
+//
+//		// do event collision
+//		for (Rectangle p : objects) {
+//			if (p instanceof Event) { // event collision
+//				if (getTopLeft().x > p.getBottomRight().x - 1) {
+//					continue;
+//				}
+//				if (getBottomRight().x < p.getTopLeft().x + 1) {
+//					continue;
+//				}
+//				if (getTopLeft().y > p.getBottomRight().y - 1) {
+//					continue;
+//				}
+//				if (getBottomRight().y < p.getTopLeft().y + 1) {
+//					continue;
+//				}
+//				((Event) p).activate();
+//			}
+//		}
+//	}
+//
+//	void collision(PVector platformTopLeft, PVector platformBottomRight) {
+//		// if a collision is happening
+//		if (platformTopLeft.y < getTopLeft().y + getHeight() + Math.max(velocity.y, 0)
+//				&& platformBottomRight.y > getTopLeft().y + Math.min(velocity.y, 0)
+//				&& platformTopLeft.x < getTopLeft().x + getWidth() + velocity.x
+//				&& platformBottomRight.x > getTopLeft().x + velocity.x) {
+//
+//			if (platformBottomRight.y < getTopLeft().y + getHeight() / 100 - Math.min(velocity.y, 0)
+//					&& platformTopLeft.x < getTopLeft().x + getWidth() && platformBottomRight.x > getTopLeft().x) {
+//				// player is under
+//				if (velocity.y < 0) {
+//					vibration = (int) Math.max((Math.exp(Math.abs(velocity.y / 13)) / 5), 1);
+//				}
+//				setY(platformBottomRight.y);
+//				velocity.y = 0;
+//			} else if (platformTopLeft.y > getTopLeft().y + (getHeight() / 20) * 19 - Math.min(velocity.y, 0)) {
+//				// player is above
+//				if (velocity.y > 0) {
+//					vibration = (int) Math.max((Math.exp((velocity.y + vibeVelocity) / 15) / 1.7), 1);
+//				}
+//				setY(platformTopLeft.y - getHeight());
+//				velocity.y = 0;
+//				jumpCount = 2;
+//			} else if (platformTopLeft.x > getTopLeft().x + (getWidth() / 3) * 2) {
+//				// player is to the left
+//				setX(platformTopLeft.x - getWidth());
+//				velocity.x = 0;
+//				wall = true;
+//			} else if (platformBottomRight.x < getTopLeft().x + getWidth() / 3) {
+//				// player is to the right
+//				setX(platformBottomRight.x);
+//				velocity.x = 0;
+//				wall = true;
+//			} else {
+//				// fringe case where the player would fall through
+//				// aka player is in a weird place
+//				setY(platformTopLeft.y - getHeight());
+//				velocity.y = 0;
+//			}
+//		}
+//	}
 
-	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
-		vibeFrame = false; // clear vibeFrame
-		if (!physicsPlayer) {
-			doPlayerStep(objects, g);
-		}
-	}
-
-	private void doPlayerStep(HashSet<Rectangle> objects, Game g) {
-		// store previous position, used to check if player is still
-		previousPosition.x = getX();
-		previousPosition.y = getY();
-
-		// code starts here
-		float previousY = getTopLeft().y;
-		vibration = 0;
-		if (velocity.y < terminalVelocity) {
-			// limit fall speed by terminalVelocity
-			velocity.y += playerGravity;
-			vibeVelocity = 0;
-		} else if (velocity.y + playerGravity > terminalVelocity) {
-			// fall speed exactly terminalVelocity
-			velocity.y = terminalVelocity;
-			vibeVelocity += playerGravity / 2;
-		}
-		setY(getY() + velocity.y); // this comes before collision so that falling through perfect holes works
-		velocity.x = 0;
-
-		if (left) {
-			velocity.x = -playerSpeed;
-		}
-		if (right) {
-			velocity.x = playerSpeed;
-		}
-
-		// do collision
-		wall = false;
-		for (Rectangle p : objects) {
-			if (p instanceof Tile) { // platform collision
-				collision(p.getTopLeft(), p.getBottomRight());
-			}
-		}
-
-		setX(getX() + velocity.x);
-
-		// ground and roof vibration
-		if (getTopLeft().y != previousY && vibration > 0) {
-			vibe.vibrate(vibration);
-		}
-		// wall vibration
-		if (wall && lastLastXPos != getTopLeft().x) {
-			vibe.vibrate(1, 160);
-		}
-
-		// stores previous positions for wall vibration
-		lastLastXPos = lastXPos;
-		lastXPos = getTopLeft().x;
-
-		// do event collision
-		for (Rectangle p : objects) {
-			if (p instanceof Event) { // event collision
-				if (getTopLeft().x > p.getBottomRight().x - 1) {
-					continue;
-				}
-				if (getBottomRight().x < p.getTopLeft().x + 1) {
-					continue;
-				}
-				if (getTopLeft().y > p.getBottomRight().y - 1) {
-					continue;
-				}
-				if (getBottomRight().y < p.getTopLeft().y + 1) {
-					continue;
-				}
-				((Event) p).activate();
-			}
-		}
-	}
-
-	void collision(PVector platformTopLeft, PVector platformBottomRight) {
-		// if a collision is happening
-		if (platformTopLeft.y < getTopLeft().y + getHeight() + Math.max(velocity.y, 0)
-				&& platformBottomRight.y > getTopLeft().y + Math.min(velocity.y, 0)
-				&& platformTopLeft.x < getTopLeft().x + getWidth() + velocity.x
-				&& platformBottomRight.x > getTopLeft().x + velocity.x) {
-
-			if (platformBottomRight.y < getTopLeft().y + getHeight() / 100 - Math.min(velocity.y, 0)
-					&& platformTopLeft.x < getTopLeft().x + getWidth() && platformBottomRight.x > getTopLeft().x) {
-				// player is under
-				if (velocity.y < 0) {
-					vibration = (int) Math.max((Math.exp(Math.abs(velocity.y / 13)) / 5), 1);
-				}
-				setY(platformBottomRight.y);
-				velocity.y = 0;
-			} else if (platformTopLeft.y > getTopLeft().y + (getHeight() / 20) * 19 - Math.min(velocity.y, 0)) {
-				// player is above
-				if (velocity.y > 0) {
-					vibration = (int) Math.max((Math.exp((velocity.y + vibeVelocity) / 15) / 1.7), 1);
-				}
-				setY(platformTopLeft.y - getHeight());
-				velocity.y = 0;
-				jumpCount = 2;
-			} else if (platformTopLeft.x > getTopLeft().x + (getWidth() / 3) * 2) {
-				// player is to the left
-				setX(platformTopLeft.x - getWidth());
-				velocity.x = 0;
-				wall = true;
-			} else if (platformBottomRight.x < getTopLeft().x + getWidth() / 3) {
-				// player is to the right
-				setX(platformBottomRight.x);
-				velocity.x = 0;
-				wall = true;
-			} else {
-				// fringe case where the player would fall through
-				// aka player is in a weird place
-				setY(platformTopLeft.y - getHeight());
-				velocity.y = 0;
-			}
-		}
-	}
-
-	public PVector getVelocity() {
-		return velocity;
-	}
+//	public PVector getVelocity() {
+//		return velocity;
+//	}
 
 	public boolean isStill() {
-		if (previousPosition.x != getX()) {
+		Vec2 vel = dynamicBody.getLinearVelocity();
+		if (Math.abs(vel.x) >= 2) {
 			return false;
 		}
-		if (previousPosition.y != getY()) {
+		if (Math.abs(vel.y) >= 2) {
 			return false;
 		}
+//		if (previousPosition.x != getX()) {
+//			return false;
+//		}
+//		if (previousPosition.y != getY()) {
+//			return false;
+//		}
 		return true;
 	}
 
 	public void draw(PGraphics graphics, float scale) {
-		if (!physicsPlayer) {
+//		if (!physicsPlayer) {
+//
+//			// draw player
+//			graphics.imageMode(CORNER);
+//			if (hasTexture) {
+//				graphics.imageMode(CENTER);
+//				graphics.pushMatrix();
+//				graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
+//				graphics.rotate(PApplet.radians(angle)); // angle of the tile
+////				graphics.scale(flipX, flipY); // flipping the tile
+//				graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
+//				graphics.popMatrix();
+//			} else {
+//				// missing texture
+//				graphics.noStroke();
+//				graphics.fill(255, 0, 0, 150);
+//				graphics.rectMode(CORNER);
+//				graphics.rect(getX(), getY(), getWidth(), getHeight());
+//			}
+//
+//			if (drawArea) {
+//				graphics.fill(0, 0, 0, 150);
+//				graphics.rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
+//			}
+//
+//		} else {
 
-			// draw player
-			graphics.imageMode(CORNER);
-			if (hasTexture) {
-				graphics.imageMode(CENTER);
-				graphics.pushMatrix();
-				graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
-				graphics.rotate(PApplet.radians(angle)); // angle of the tile
-//				graphics.scale(flipX, flipY); // flipping the tile
-				graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
-				graphics.popMatrix();
-			} else {
-				// missing texture
+		// draw box2d players
+		if (dynamicBody != null) {
+			Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
+			float a = dynamicBody.getAngle();
+			graphics.pushMatrix();
+			graphics.imageMode(CENTER);
+			graphics.translate(pos.x + 0.5f, pos.y + 0.5f);
+			graphics.rotate(-a);
+
+			if (showChecking && dynamicBody.isFixedRotation()) {
+				graphics.tint(200, 255, 200);
+			}
+
+			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
+			graphics.noTint();
+
+			graphics.popMatrix();
+		}
+
+		// draw tile checking logic
+		if (showChecking) {
+			for (Tile t : sensorContacts) {
 				graphics.noStroke();
 				graphics.fill(255, 0, 0, 150);
 				graphics.rectMode(CORNER);
-				graphics.rect(getX(), getY(), getWidth(), getHeight());
+				graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
 			}
-
-			if (drawArea) {
-				graphics.fill(0, 0, 0, 150);
-				graphics.rect(playerArea.getX(), playerArea.getY(), playerArea.getWidth(), playerArea.getHeight());
-			}
-
-		} else {
-
-			// draw box2d players
-			if (dynamicBody != null) {
-				Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
-				float a = dynamicBody.getAngle();
-				graphics.pushMatrix();
-				graphics.imageMode(CENTER);
-				graphics.translate(pos.x + 0.5f, pos.y + 0.5f);
-				graphics.rotate(-a);
-
-				if (showChecking && dynamicBody.isFixedRotation()) {
-					graphics.tint(200, 255, 200);
-				}
-
-				graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
-				graphics.noTint();
-
-				graphics.popMatrix();
-			}
-
-			// draw tile checking logic
-			if (showChecking) {
-				for (Tile t : sensorContacts) {
+			if (checking.size() > 0) {
+				for (int i = 0; i < checking.size(); i++) {
+					Tile t = checking.get(i);
 					graphics.noStroke();
-					graphics.fill(255, 0, 0, 150);
+					graphics.fill(0, 0, 255, 200);
 					graphics.rectMode(CORNER);
 					graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
-				}
-				if (checking.size() > 0) {
-					for (int i = 0; i < checking.size(); i++) {
-						Tile t = checking.get(i);
-						graphics.noStroke();
-						graphics.fill(0, 0, 255, 200);
-						graphics.rectMode(CORNER);
-						graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
-						graphics.fill(255);
-						graphics.text(i, t.getX() + t.getWidth() / 2, t.getY() + t.getHeight() / 2);
-					}
-				}
-				if (tempFixture != null) {
-					Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) tempFixture.getShape()).m_vertex1);
-					Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) tempFixture.getShape()).m_vertex2);
-					graphics.stroke(255, 0, 0);
-					graphics.strokeWeight(4);
-					graphics.line(v1.x, v1.y, v2.x, v2.y);
+					graphics.fill(255);
+					graphics.text(i, t.getX() + t.getWidth() / 2, t.getY() + t.getHeight() / 2);
 				}
 			}
+			if (tempFixture != null) {
+				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) tempFixture.getShape()).m_vertex1);
+				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) tempFixture.getShape()).m_vertex2);
+				graphics.stroke(255, 0, 0);
+				graphics.strokeWeight(4);
+				graphics.line(v1.x, v1.y, v2.x, v2.y);
+			}
 		}
+//		}
 	}
 
 	public void drawArrows(Game g) {
@@ -629,16 +634,16 @@ public class Player extends Editable {
 		// need to add corner arrows
 	}
 
-	public Rectangle getPlayerArea() {
-		playerArea.setX(getX() - (areaSize - 100) / 2);
-		playerArea.setY(getY() - (areaSize - 100) / 2);
-		return playerArea;
-	}
+//	public Rectangle getPlayerArea() {
+//		playerArea.setX(getX() - (areaSize - 100) / 2);
+//		playerArea.setY(getY() - (areaSize - 100) / 2);
+//		return playerArea;
+//	}
 
-	public void resetVelocity() {
-		velocity.x = 0;
-		velocity.y = 0;
-	}
+//	public void resetVelocity() {
+//		velocity.x = 0;
+//		velocity.y = 0;
+//	}
 
 	public void left() {
 		left = true;

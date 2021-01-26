@@ -426,11 +426,11 @@ public class Game {
 		world.retrieve(screenObjects, screenSpace);
 
 		// find platforms near the player
-		if (player != null) {
-			playerObjects.clear();
-			world.retrieve(playerObjects, player.getPlayerArea());
-			player.step(deltaTime, playerObjects, this);
-		}
+//		if (player != null) {
+//			playerObjects.clear();
+//			world.retrieve(playerObjects, player.getPlayerArea());
+//			player.step(deltaTime, playerObjects, this);
+//		}
 
 		if (camera.getGame()) {
 			screenMovement(deltaTime);
