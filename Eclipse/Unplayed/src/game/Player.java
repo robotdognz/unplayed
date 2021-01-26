@@ -130,8 +130,9 @@ public class Player extends Editable {
 			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
 			bodyDef.angle = 0;
 			bodyDef.userData = this;
+			bodyDef.fixedRotation = locked;
 			this.dynamicBody = box2d.createBody(bodyDef);
-			this.dynamicBody.setFixedRotation(locked);
+			//this.dynamicBody.setFixedRotation(locked);
 
 			// shape
 			PolygonShape boxShape = new PolygonShape();
