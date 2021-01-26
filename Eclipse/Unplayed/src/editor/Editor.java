@@ -138,9 +138,6 @@ public class Editor {
 		frameDelay = 100;
 		textSize = (int) (p.width / 28.8); // 50
 		tileSearch = false;
-
-		// box2d
-		game.physicsPlayer = true;
 	}
 
 	public void step(ArrayList<PVector> touches) {

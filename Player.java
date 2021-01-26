@@ -51,7 +51,7 @@ public class Player extends Editable {
 
 	// box2d
 	private Box2DProcessing box2d; // the box2d world
-	public boolean physicsPlayer; // are we using the physics player
+//	public boolean physicsPlayer; // are we using the physics player
 	public Body dynamicBody; // the player's physics body
 	private float density; // the player's density
 	private float friction; // the player's friction
@@ -68,7 +68,7 @@ public class Player extends Editable {
 	Body tempBarrier; // barrier used to stop the player moving past a slot
 	Fixture tempFixture; // reference to the barrier fixture
 
-	Player(PApplet p, Box2DProcessing box2d, boolean physics, boolean locked, TextureCache texture, Tile tile, Vibe v) {
+	Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.p = p;
 		this.file = tile.getFile();
@@ -102,7 +102,7 @@ public class Player extends Editable {
 		previousPosition = new PVector(getX(), getY()); // used to determine if the player is still
 
 		// box2d
-		this.physicsPlayer = physics;
+//		this.physicsPlayer = physics;
 		this.box2d = box2d;
 		this.friction = 0.6f; // from 0 to 1
 		this.density = 1; // from 0 to 1
@@ -363,10 +363,8 @@ public class Player extends Editable {
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
 			int strength = (int) Math.max(Math.abs(total / 1000), 1); // 800
-			if (physicsPlayer) {
-				vibe.vibrate(strength);
-//				PApplet.println(total + " " + strength);
-			}
+			vibe.vibrate(strength);
+//			PApplet.println(total + " " + strength);
 			vibeFrame = true;
 		}
 
@@ -390,8 +388,9 @@ public class Player extends Editable {
 		boxJump();
 //		}
 	}
+
 //
-	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
+	void step() { // float deltaTime, HashSet<Rectangle> objects, Game g
 		vibeFrame = false; // clear vibeFrame
 //		if (!physicsPlayer) {
 //			doPlayerStep(objects, g);
@@ -560,7 +559,7 @@ public class Player extends Editable {
 //		} else {
 
 		// draw box2d players
-		if (dynamicBody != null) {
+		if (hasTexture) {
 			Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 			float a = dynamicBody.getAngle();
 			graphics.pushMatrix();
