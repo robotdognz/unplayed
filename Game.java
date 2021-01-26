@@ -67,9 +67,9 @@ public class Game {
 	public Box2DProcessing box2d;
 	public ContactListener contactListener;
 //	public HashSet<Event> playerEvents;
-	public boolean queueRestart = false;
-	public boolean queueEndPuzzle = false;
-	public Rectangle queueEndPuzzleRect = null;
+//	public boolean queueRestart = false;
+//	public boolean queueEndPuzzle = false;
+//	public Rectangle queueEndPuzzleRect = null;
 	public boolean locked = false;
 
 	// delta time
@@ -243,10 +243,10 @@ public class Game {
 		}
 	}
 	
-	public void queueEndPuzzle(Rectangle playerArea) {
-		queueEndPuzzle = true;
-		queueEndPuzzleRect = playerArea;
-	}
+//	public void queueEndPuzzle(Rectangle playerArea) {
+//		queueEndPuzzle = true;
+//		queueEndPuzzleRect = playerArea;
+//	}
 
 	public void endPuzzle(Rectangle playerArea) {
 		HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
@@ -359,9 +359,9 @@ public class Game {
 		}
 	}
 	
-	public void queueRestart() {
-		queueRestart = true;
-	}
+//	public void queueRestart() {
+//		queueRestart = true;
+//	}
 
 	public void restart() {
 		if (playerCheckpoint != null) { // if there is a player checkpoint
@@ -448,14 +448,14 @@ public class Game {
 		}
 		box2d.world.clearForces();
 		
-		if(queueRestart) {
-			restart();
-			queueRestart = false;
-		}else if(queueEndPuzzle) {
-			endPuzzle(queueEndPuzzleRect);
-			queueEndPuzzle = false;
-			queueEndPuzzleRect = null;
-		}
+//		if(queueRestart) {
+//			restart();
+//			queueRestart = false;
+//		}else if(queueEndPuzzle) {
+//			endPuzzle(queueEndPuzzleRect);
+//			queueEndPuzzle = false;
+//			queueEndPuzzleRect = null;
+//		}
 
 		// step player non-physics logic
 		if (player != null) {

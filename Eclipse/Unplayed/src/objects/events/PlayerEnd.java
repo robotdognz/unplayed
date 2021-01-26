@@ -166,7 +166,6 @@ public class PlayerEnd extends Event {
 				game.endGame();
 			} else { // if this is just part of the puzzle
 				game.endPuzzle(newPlayerArea);
-//				game.queueEndPuzzle(newPlayerArea);
 			}
 		}
 		return true;
