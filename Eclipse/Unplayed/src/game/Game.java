@@ -152,7 +152,7 @@ public class Game {
 		// fully remove the player
 		if (this.player != null) {
 			this.player.destroy();
-			this.playerEvents.clear();
+//			this.playerEvents.clear();
 		}
 		this.player = null;
 		this.playerStart = null;
@@ -200,7 +200,7 @@ public class Game {
 		// clear player
 		if (this.player != null) {
 			this.player.destroy();
-			this.playerEvents.clear();
+//			this.playerEvents.clear();
 		}
 		player = null;
 		// clear checkpoint
@@ -294,7 +294,7 @@ public class Game {
 			Tile current = ((PlayerStart) playerArea).getRequired();
 			if (this.player != null) {
 				this.player.destroy();
-				this.playerEvents.clear();
+//				this.playerEvents.clear();
 			}
 			player = new Player(p, box2d, locked, texture, current, vibe);
 		} else if (playerArea instanceof Tile) {
@@ -326,7 +326,7 @@ public class Game {
 				if (playerCheckpoint != null) {
 					if (this.player != null) {
 						this.player.destroy();
-						this.playerEvents.clear();
+//						this.playerEvents.clear();
 					}
 					player = new Player(p, box2d, locked, texture, playerCheckpoint, vibe);
 				} else if (playerStart != null) {
@@ -334,7 +334,7 @@ public class Game {
 					if (current != null) {
 						if (this.player != null) {
 							this.player.destroy();
-							this.playerEvents.clear();
+//							this.playerEvents.clear();
 						}
 						player = new Player(p, box2d, locked, texture, current, vibe);
 					}
