@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
 import objects.events.CameraChange;
@@ -35,6 +36,8 @@ public class Quadtree {
 		root.nodeInsert(current);
 		if (current instanceof Tile) {
 			((Tile) current).create();
+		} else if (current instanceof Event) {
+			((Event) current).create();
 		}
 	}
 
@@ -47,6 +50,8 @@ public class Quadtree {
 		root.remove(current);
 		if (current instanceof Tile) {
 			((Tile) current).destroy();
+		} else if (current instanceof Event) {
+			((Event) current).destroy();
 		}
 	}
 
