@@ -371,7 +371,7 @@ public class Player extends Editable {
 			// Math.log returns the log of the number it is given
 			int strength = (int) Math.max(Math.abs(total / 1000), 1); // 800
 			vibe.vibrate(strength);
-//			PApplet.println(total + " " + strength);
+			PApplet.println(total + " " + strength);
 			vibeFrame = true;
 		}
 
