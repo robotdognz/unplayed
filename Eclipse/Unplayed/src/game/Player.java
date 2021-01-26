@@ -391,12 +391,12 @@ public class Player extends Editable {
 //		}
 	}
 //
-//	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
-//		vibeFrame = false; // clear vibeFrame
+	void step(float deltaTime, HashSet<Rectangle> objects, Game g) {
+		vibeFrame = false; // clear vibeFrame
 //		if (!physicsPlayer) {
 //			doPlayerStep(objects, g);
 //		}
-//	}
+	}
 //
 //	private void doPlayerStep(HashSet<Rectangle> objects, Game g) {
 //		// store previous position, used to check if player is still
