@@ -474,8 +474,8 @@ public class Player extends Editable {
 
 			// tunnel checking
 			if (tunnelChecking.size() > 0) {
-				for (int i = 0; i < groundChecking.size(); i++) {
-					Tile t = groundChecking.get(i);
+				for (int i = 0; i < tunnelChecking.size(); i++) {
+					Tile t = tunnelChecking.get(i);
 					graphics.noStroke();
 					graphics.fill(0, 255, 0, 200);
 					graphics.rectMode(CORNER);
