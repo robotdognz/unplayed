@@ -121,11 +121,10 @@ public class PlayerEnd extends Event {
 	}
 
 	@Override
-	public boolean activate() {
+	public void activate() {
 		Player player = game.player;
 		if (!player.isStill()) {
-			PApplet.println("failed isStill");
-			return false;
+			return;
 		}
 //		if (player.getTopLeft().x != getTopLeft().x) {
 //			return;
@@ -135,16 +134,14 @@ public class PlayerEnd extends Event {
 //		}
 		Vec2 playerPos = player.getPosition();
 		if (Math.abs(playerPos.x - center.x) > 2) {
-			PApplet.println("failed x pos");
-			return false;
+			return;
 		}
 		if (Math.abs(playerPos.y - center.y) > 2) {
-			PApplet.println("failed y pos");
-			return false;
+			return;
 		}
 		if (required != null) {
 			if (!player.getFile().equals(required.getFile())) {
-				return false;
+				return;
 			}
 			// if (!(player.isFlippedH() == required.isFlippedH())) {
 			// return;
@@ -153,11 +150,9 @@ public class PlayerEnd extends Event {
 			// return;
 			// }
 			if (!(player.getAngle() == required.getAngle())) {
-				return false;
+				return;
 			}
 		}
-
-		PApplet.println("made it");
 
 		// the player is perfectly in the slot
 		if (System.currentTimeMillis() > lastTime + 2000) {
@@ -168,7 +163,6 @@ public class PlayerEnd extends Event {
 				game.endPuzzle(newPlayerArea);
 			}
 		}
-		return true;
 	}
 
 }

@@ -19,8 +19,8 @@ public class CameraCollider extends Event {
 	}
 
 	@Override
-	public boolean activate() {
-		return camera.activate();
+	public void activate() {
+		camera.activate();
 	}
 
 	@Override

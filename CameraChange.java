@@ -97,7 +97,7 @@ public class CameraChange extends Event {
 	}
 
 	@Override
-	public boolean activate() {
+	public void activate() {
 		super.activate();
 		if (game.camera.getGame()) {
 			// change center
@@ -113,9 +113,7 @@ public class CameraChange extends Event {
 			game.boarderZoomSpeed = edgeZoom;
 			game.newCameraArea.setCorners(camera.getTopLeft().x, camera.getTopLeft().y, camera.getBottomRight().x,
 					camera.getBottomRight().y);
-			return true;
 		}
-		return false;
 	}
 
 	public EventHandler getTexture() {

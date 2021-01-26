@@ -66,10 +66,6 @@ public class Game {
 	// box2d
 	public Box2DProcessing box2d;
 	public ContactListener contactListener;
-//	public HashSet<Event> playerEvents;
-//	public boolean queueRestart = false;
-//	public boolean queueEndPuzzle = false;
-//	public Rectangle queueEndPuzzleRect = null;
 	public boolean locked = false;
 
 	// delta time
@@ -128,7 +124,6 @@ public class Game {
 
 		// box2d
 		buildWorld();
-//		playerEvents = new HashSet<Event>();
 	}
 
 	public void buildWorld() {
@@ -242,11 +237,6 @@ public class Game {
 			startGame();
 		}
 	}
-	
-//	public void queueEndPuzzle(Rectangle playerArea) {
-//		queueEndPuzzle = true;
-//		queueEndPuzzleRect = playerArea;
-//	}
 
 	public void endPuzzle(Rectangle playerArea) {
 		HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
@@ -358,10 +348,6 @@ public class Game {
 			player.still();
 		}
 	}
-	
-//	public void queueRestart() {
-//		queueRestart = true;
-//	}
 
 	public void restart() {
 		if (playerCheckpoint != null) { // if there is a player checkpoint
@@ -448,30 +434,9 @@ public class Game {
 		}
 		box2d.world.clearForces();
 		
-//		if(queueRestart) {
-//			restart();
-//			queueRestart = false;
-//		}else if(queueEndPuzzle) {
-//			endPuzzle(queueEndPuzzleRect);
-//			queueEndPuzzle = false;
-//			queueEndPuzzleRect = null;
-//		}
-
 		// step player non-physics logic
 		if (player != null) {
 			player.step();
-//			boolean clear = false;
-//			Iterator<Event> it = playerEvents.iterator();
-//			while (player != null && it.hasNext()) {
-//				Event e = it.next();
-//				if(e.activate() && (e instanceof PlayerEnd)) {
-//					clear  = true;
-//					break;
-//				}
-//			}
-//			if(clear) {
-//				playerEvents.clear();
-//			}
 		}
 
 		// get objects to draw

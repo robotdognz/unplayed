@@ -57,29 +57,28 @@ public class Spike extends Event {
 	}
 
 	@Override
-	public boolean activate() {
+	public void activate() {
 		// check if player is inside bounds
 		Player player = game.player;
 		if (player.getTopLeft().x > bounds.getBottomRight().x - 1) {
-			return false;
+			return;
 		}
 		if (player.getBottomRight().x < bounds.getTopLeft().x + 1) {
-			return false;
+			return;
 		}
 		if (player.getTopLeft().y > bounds.getBottomRight().y - 1) {
-			return false;
+			return;
 		}
 		if (player.getBottomRight().y < bounds.getTopLeft().y + 1) {
-			return false;
+			return;
 		}
 
 		game.restart(); // TODO: this needs a custom method in Game
-		return true;
 	}
 
 	@Override
 	public void draw(PGraphics graphics, float scale) {
-		//super.draw(graphics, scale);
+		// super.draw(graphics, scale);
 
 		// draw bounds
 		graphics.pushMatrix();
