@@ -290,6 +290,7 @@ public class Game {
 			Tile current = ((PlayerStart) playerArea).getRequired();
 			if (this.player != null) {
 				this.player.destroy();
+				
 			}
 			player = new Player(p, box2d, locked, texture, current, vibe);
 		} else if (playerArea instanceof Tile) {
@@ -360,7 +361,7 @@ public class Game {
 			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 			// apply values
 			newScale = cameraAreaCheckpoint.getWidth(); // new scale
-			newCenter = new PVector(centerX, centerY); // new centre
+			newCenter = new PVector(centerX, centerY); // new center
 			newCameraArea = cameraAreaCheckpoint.copy(); // new camera area
 		} else if (cameraAreaStart != null) { // if there is a camera start
 			// calculate values
@@ -370,7 +371,7 @@ public class Game {
 			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 			// apply values
 			newScale = cameraAreaStart.getWidth(); // new scale
-			newCenter = new PVector(centerX, centerY); // new centre
+			newCenter = new PVector(centerX, centerY); // new center
 			newCameraArea = cameraAreaStart.copy(); // new camera area
 		}
 	}

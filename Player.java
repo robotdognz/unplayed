@@ -365,17 +365,17 @@ public class Player extends Editable {
 
 		// check all the events the player is colliding with
 //		try {
-		for (Event e : events) {
-			e.activate();
-		}
+//		for (Event e : events) {
+//			e.activate();
+//		}
 //		} catch (ConcurrentModificationException e) {
 //
 //		}
 
-//		Iterator<Event> it = events.iterator();
-//		while (it.hasNext()) {
-//			it.next().activate();
-//		}
+		Iterator<Event> it = events.iterator();
+		while (it.hasNext()) {
+			it.next().activate();
+		}
 	}
 
 	public boolean isStill() {
