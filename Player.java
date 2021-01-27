@@ -246,8 +246,8 @@ public class Player extends Editable {
 		// create a list of relevant tiles sorted by x position
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		// edges of player
-		float leftEdge = pos.x - getWidth() / 2 - 0.5f;
-		float rightEdge = pos.x + getWidth() / 2 + 0.5f;
+		float leftEdge = pos.x - getWidth() / 2;
+		float rightEdge = pos.x + getWidth() / 2;
 		float topEdge = pos.y - getHeight() / 2 - 0.5f;
 		float bottomEdge = pos.y + getHeight() / 2 + 0.5f;
 		// booleans for found tiles
@@ -283,30 +283,47 @@ public class Player extends Editable {
 		}
 
 		Collections.sort(tunnelChecking);
+
+//		float previousX = 0.5f;
+//		float previousY = 0.5f;
 		if (tunnelChecking.size() >= 2) {
 			for (Tile t : tunnelChecking) {
-				float tLeftEdge = t.getTopLeft().x;
-				float tRightEdge = t.getBottomRight().x;
-				float tTopEdge = t.getTopLeft().y;
-				float tBottomEdge = t.getBottomRight().y;
+				float tileLeftEdge = t.getTopLeft().x;
+				float tileRightEdge = t.getBottomRight().x;
+				float tileTopEdge = t.getTopLeft().y;
+				float tileBottomEdge = t.getBottomRight().y;
 
-				if (tTopEdge <= bottomEdge && tBottomEdge >= topEdge) {
-					if (tLeftEdge < rightEdge + 5 && tLeftEdge > pos.x) {
+				if (tileTopEdge <= bottomEdge && tileBottomEdge >= topEdge) {
+					if (tileLeftEdge < rightEdge + 5 && tileLeftEdge > pos.x) {
 						rightSide = true;
 					}
-					if (tRightEdge > leftEdge - 5 && tRightEdge < pos.x) {
+					if (tileRightEdge > leftEdge - 5 && tileRightEdge < pos.x) {
 						leftSide = true;
 					}
 				}
 
-				if (tLeftEdge <= rightEdge && tRightEdge >= leftEdge) {
-					if (tTopEdge < bottomEdge + 5 && tTopEdge > pos.x) {
+				if (tileLeftEdge <= rightEdge && tileRightEdge >= leftEdge) {
+					if (tileTopEdge < bottomEdge + 5 && tileTopEdge > pos.x) {
 						below = true;
 					}
-					if (tBottomEdge > topEdge - 5 && tBottomEdge < pos.x) {
+					if (tileBottomEdge > topEdge - 5 && tileBottomEdge < pos.x) {
 						above = true;
 					}
 				}
+
+//				if (previousX == 0.5f && previousY == 0.5f) {
+//					previousX = t.getX();
+//					previousY = t.getY();
+//					continue;
+//				}
+//
+//				if (t.getX() == previousX) {
+//
+//				}
+//
+//				if (t.getY() == previousY) {
+//
+//				}
 			}
 
 			if (above && below) {
