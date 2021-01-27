@@ -308,7 +308,7 @@ public class Player extends Editable {
 					continue;
 				}
 
-				if (Math.abs(previousY - topEdge) <= 2 && Math.abs(t.getBottomRight().y - bottomEdge) <= 2) {
+				if (Math.abs(previousY - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
 					vertical = true;
 					PApplet.println(previous.getY() + " : " + t.getY());
 					break;
