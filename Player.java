@@ -230,6 +230,7 @@ public class Player extends Editable {
 				jumpResetCounter++;
 			}
 		}else {
+			jumpResetCounter = 0;
 			resetJump();
 		}
 
