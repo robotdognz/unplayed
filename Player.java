@@ -245,10 +245,16 @@ public class Player extends Editable {
 
 		// create a list of relevant tiles sorted by x position
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
-		float leftEdge = pos.x - getWidth() / 2 - 3;
-		float rightEdge = pos.x + getWidth() / 2 + 3;
-		float topEdge = pos.y - getHeight() / 2 - 3;
-		float bottomEdge = pos.y + getHeight() / 2 + 3;
+		// edges of player
+		float leftEdge = pos.x - getWidth() / 2 - 1;
+		float rightEdge = pos.x + getWidth() / 2 + 1;
+		float topEdge = pos.y - getHeight() / 2 - 1;
+		float bottomEdge = pos.y + getHeight() / 2 + 1;
+		// booleans for found tiles
+		boolean above = false;
+		boolean below = false;
+		boolean leftSide = false;
+		boolean rightSide = false;
 		for (Tile t : sensorContacts) {
 			PVector tCenter = new PVector(t.getX() + t.getWidth() / 2, t.getY() + getHeight() / 2);
 			if (pos.dist(tCenter) > centerToCenter) {
@@ -273,7 +279,30 @@ public class Player extends Editable {
 			}
 
 			tunnelChecking.add(t);
+
+			if (tCenter.x < pos.x) {
+				leftSide = true;
+			}
+			if (tCenter.x > pos.x) {
+				rightSide = true;
+			}
+			if (tCenter.y < pos.y) {
+				above = true;
+			}
+			if (tCenter.y > pos.y) {
+				below = true;
+			}
+
 		}
+
+		if (above && below) {
+			this.dynamicBody.setFixedRotation(true);
+		} else if (leftSide && rightSide) {
+			this.dynamicBody.setFixedRotation(true);
+		} else {
+			this.dynamicBody.setFixedRotation(locked);
+		}
+
 //		Collections.sort(groundChecking);
 
 	}
@@ -418,14 +447,16 @@ public class Player extends Editable {
 			total += impulse;
 		}
 
-		// check if we already did one like this
-		float impulseDifference = Math.abs(total - previousImpulse);
-		if (previousImpulse != 0 && impulseDifference < 4) {
-			PApplet.println(total + " skipped by previousImpulse");
-			return;
-		} else {
-//			previousImpulse = total;
-		}
+		// TODO: this doesn't work because if you jump in one spot at the same height,
+		// it stops the vibration
+//		// check if we already did one like this
+//		float impulseDifference = Math.abs(total - previousImpulse);
+//		if (previousImpulse != 0 && impulseDifference < 4) {
+//			PApplet.println(total + " skipped by previousImpulse");
+//			return;
+//		} else {
+////			previousImpulse = total;
+//		}
 
 		if (total > 800 && !vibeFrame) { // 400
 
@@ -433,9 +464,9 @@ public class Player extends Editable {
 			// Math.log returns the log of the number it is given
 			int strength = (int) Math.max(Math.abs(total / 1000), 1); // 800
 			vibe.vibrate(strength);
-			PApplet.println(total + " " + strength);
+//			PApplet.println(total + " " + strength);
 			vibeFrame = true;
-			previousImpulse = total;
+//			previousImpulse = total;
 			return;
 		}
 
