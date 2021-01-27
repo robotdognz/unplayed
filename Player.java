@@ -213,14 +213,14 @@ public class Player extends Editable {
 
 		// check there are enough tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
-			destroyBarrier();
+			destroyBarrier(true);
 			return;
 		}
 
 		// check the player isn't spinning
 		float av = dynamicBody.getAngularVelocity();
 		if (Math.abs(av) >= 2) {
-			destroyBarrier();
+			destroyBarrier(true);
 			return;
 		}
 
@@ -229,19 +229,19 @@ public class Player extends Editable {
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
 		if (!(angleRemainder < 3 && angleRemainder > -3)) {
-			destroyBarrier();
+			destroyBarrier(true);
 			return;
 		}
 
 		// run the algorithms
-		checkTunnel();
-		checkForGroundSlots();
+		boolean resetRotation = checkTunnel();
+		checkForGroundSlots(resetRotation);
 		// checkForWallSlots();
 		// checkForRoofSlots();
 
 	}
 
-	private void checkTunnel() {
+	private boolean checkTunnel() {
 		// create a list of relevant tiles sorted by x position
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		// edges of player
@@ -279,8 +279,7 @@ public class Player extends Editable {
 
 		if (tunnelChecking.size() >= 2) {
 
-			// check for top/bottom
-//			float previousY = 0.5f;
+			// ----- check for top/bottom
 			float previousTop = 0.5f;
 			float previousBottom = 0.5f;
 			Collections.sort(tunnelChecking);
@@ -288,22 +287,6 @@ public class Player extends Editable {
 			String output = "top/bottom";
 
 			for (Tile t : tunnelChecking) {
-
-//				if (previousY == 0.5f) {
-//					previousY = t.getBottomRight().y;
-//					continue;
-//				}
-//				
-//				if (Math.abs(previousY - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
-//					this.dynamicBody.setFixedRotation(true);
-//					if (!lastOutput.equals(output)) {
-//						PApplet.println(output);
-//						lastOutput = output;
-//					}
-//					return;
-//				}
-//
-//				previousY = t.getBottomRight().y;
 
 				if (previousTop == 0.5f) {
 					previousTop = t.getTopLeft().y;
@@ -317,7 +300,7 @@ public class Player extends Editable {
 						PApplet.println(output);
 						lastOutput = output;
 					}
-					return;
+					return false;
 				}
 
 				if (Math.abs(previousTop - bottomEdge) <= 2 && Math.abs(t.getBottomRight().y - topEdge) <= 2) {
@@ -326,14 +309,14 @@ public class Player extends Editable {
 						PApplet.println(output);
 						lastOutput = output;
 					}
-					return;
+					return false;
 				}
 
 				previousTop = t.getTopLeft().y;
 				previousBottom = t.getBottomRight().y;
 			}
 
-			// check for left/right
+			// ----- check for left/right
 			float previousX = 0.5f;
 			Collections.sort(tunnelChecking, new PlayerTileXComparator());
 
@@ -352,7 +335,7 @@ public class Player extends Editable {
 						PApplet.println(output);
 						lastOutput = output;
 					}
-					return;
+					return false;
 				}
 
 				previousX = t.getBottomRight().x;
@@ -366,15 +349,16 @@ public class Player extends Editable {
 
 		// no tunnel found
 		this.dynamicBody.setFixedRotation(locked);
+		return true;
 
 	}
 
-	private void checkForGroundSlots() {
+	private void checkForGroundSlots(boolean resetRotation) {
 		groundChecking.clear();
 
 		// check the player isn't jumping
 		if (jumping) {
-			destroyBarrier();
+			destroyBarrier(resetRotation);
 			return;
 		}
 
@@ -382,7 +366,7 @@ public class Player extends Editable {
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		// player is moving or trying to move on the x axis
 		if (!((left || right) || (Math.abs(vel.x) >= 4))) {
-			destroyBarrier();
+			destroyBarrier(resetRotation);
 			return;
 		}
 		boolean direction = true; // true = left, false = right
@@ -394,7 +378,7 @@ public class Player extends Editable {
 		}
 		// player is still or falling on the y axis
 		if (!(vel.y <= 2)) {
-			destroyBarrier();
+			destroyBarrier(resetRotation);
 			return;
 		}
 
@@ -463,7 +447,7 @@ public class Player extends Editable {
 		}
 
 		// conditions wern't met, remove the barrier
-		destroyBarrier();
+		destroyBarrier(resetRotation);
 	}
 
 	private void createBarrier(Vec2 v1, Vec2 v2) {
@@ -489,14 +473,16 @@ public class Player extends Editable {
 		tempFixture = tempBarrier.createFixture(tempBarrierDef);
 	}
 
-	private void destroyBarrier() {
+	private void destroyBarrier(boolean resetRotation) {
 		if (tempBarrier != null) {
 			box2d.destroyBody(tempBarrier);
 			tempFixture = null;
 			tempBarrier = null;
 
 			// TODO: this will might need to change when there are multiple algorithms
-			this.dynamicBody.setFixedRotation(locked);
+			if (resetRotation) {
+				this.dynamicBody.setFixedRotation(locked);
+			}
 		}
 	}
 
