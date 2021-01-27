@@ -284,8 +284,6 @@ public class Player extends Editable {
 			float previousBottom = 0.5f;
 			Collections.sort(tunnelChecking);
 
-			String output = "top/bottom";
-
 			for (Tile t : tunnelChecking) {
 
 				if (previousTop == 0.5f) {
@@ -296,19 +294,11 @@ public class Player extends Editable {
 
 				if (Math.abs(previousBottom - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
-					if (!lastOutput.equals(output)) {
-						PApplet.println(output);
-						lastOutput = output;
-					}
 					return false;
 				}
 
 				if (Math.abs(previousTop - bottomEdge) <= 2 && Math.abs(t.getBottomRight().y - topEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
-					if (!lastOutput.equals(output)) {
-						PApplet.println(output);
-						lastOutput = output;
-					}
 					return false;
 				}
 
@@ -317,34 +307,49 @@ public class Player extends Editable {
 			}
 
 			// ----- check for left/right
-			float previousX = 0.5f;
+//			float previousX = 0.5f;
+			float previousLeft = 0.5f;
+			float previousRight = 0.5f;
 			Collections.sort(tunnelChecking, new PlayerTileXComparator());
-
-			output = "left/right";
 
 			for (Tile t : tunnelChecking) {
 
-				if (previousX == 0.5f) {
-					previousX = t.getBottomRight().x;
+//				if (previousX == 0.5f) {
+//					previousX = t.getBottomRight().x;
+//					continue;
+//				}
+//
+//				if (Math.abs(previousX - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
+//					this.dynamicBody.setFixedRotation(true);
+//					if (!lastOutput.equals(output)) {
+//						PApplet.println(output);
+//						lastOutput = output;
+//					}
+//					return false;
+//				}
+//
+//				previousX = t.getBottomRight().x;
+
+				if (previousLeft == 0.5f) {
+					previousLeft = t.getTopLeft().x;
+					previousRight = t.getBottomRight().x;
 					continue;
 				}
 
-				if (Math.abs(previousX - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
+				if (Math.abs(previousRight - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
-					if (!lastOutput.equals(output)) {
-						PApplet.println(output);
-						lastOutput = output;
-					}
 					return false;
 				}
 
-				previousX = t.getBottomRight().x;
+				if (Math.abs(previousLeft - rightEdge) <= 2 && Math.abs(t.getBottomRight().x - leftEdge) <= 2) {
+					this.dynamicBody.setFixedRotation(true);
+					return false;
+				}
+
+				previousLeft = t.getTopLeft().x;
+				previousRight = t.getBottomRight().x;
 			}
 
-			if (!lastOutput.equals(output)) {
-				PApplet.println(output);
-				lastOutput = output;
-			}
 		}
 
 		// no tunnel found
