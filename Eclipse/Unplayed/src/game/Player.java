@@ -289,6 +289,7 @@ public class Player extends Editable {
 
 				if (Math.abs(previousY - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
+					PApplet.println("above/below" + previousY + " " + t.getTopLeft().y);
 					return;
 				}
 
@@ -307,6 +308,7 @@ public class Player extends Editable {
 
 				if (Math.abs(previousX - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
+					PApplet.println("left/right" + previousX + " " + t.getTopLeft().x);
 					return;
 				}
 
