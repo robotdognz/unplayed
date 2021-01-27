@@ -111,7 +111,7 @@ public class Player extends Editable {
 
 		// jumping
 		this.jumpResetCounter = 0; // how many steps the player has been still
-		this.jumpResetLimit = 60; // how many steps it takes the jump to reset
+		this.jumpResetLimit = 180; // how many steps it takes the jump to reset
 
 		create();
 
