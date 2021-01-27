@@ -40,7 +40,7 @@ public class MyContactListener implements ContactListener {
 				if (userData.equals("player body")) {
 					player = (Player) fixtureA.getBody().getUserData();
 					playerBody = true;
-					player.startContact();
+//					player.startContact();
 
 				} else if (userData.contentEquals("player sensor")) {
 					player = (Player) fixtureA.getBody().getUserData();
@@ -69,7 +69,7 @@ public class MyContactListener implements ContactListener {
 				if (userData.equals("player body")) {
 					player = (Player) fixtureB.getBody().getUserData();
 					playerBody = true;
-					player.startContact();
+//					player.startContact();
 
 				} else if (userData.contentEquals("player sensor")) {
 					player = (Player) fixtureB.getBody().getUserData();
@@ -129,7 +129,7 @@ public class MyContactListener implements ContactListener {
 				if (userData.equals("player body")) {
 					player = (Player) fixtureA.getBody().getUserData();
 					playerBody = true;
-					player.endContact();
+//					player.endContact();
 
 				} else if (userData.contentEquals("player sensor")) {
 					player = (Player) fixtureA.getBody().getUserData();
@@ -153,7 +153,7 @@ public class MyContactListener implements ContactListener {
 				if (userData.equals("player body")) {
 					player = (Player) fixtureB.getBody().getUserData();
 					playerBody = true;
-					player.endContact();
+//					player.endContact();
 
 				} else if (userData.contentEquals("player sensor")) {
 					player = (Player) fixtureB.getBody().getUserData();

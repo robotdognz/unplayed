@@ -22,11 +22,8 @@ import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 
 public class Player extends Editable {
-	private PApplet p;
 
 	// player fields
-	private int playerColor;
-
 	private File file;
 	private boolean hasTexture;
 	private TileHandler tileTexture;
@@ -38,35 +35,42 @@ public class Player extends Editable {
 	// vibration
 	private Vibe vibe;
 
-	// box2d
+	// box2d player
 	private Box2DProcessing box2d; // the box2d world
 	public Body dynamicBody; // the player's physics body
 	private float density; // the player's density
 	private float friction; // the player's friction
-	private float jumpPower; // the strength of the player's jump
-	private int boxJumpCount; // how many jumps the player can make before touching the ground
+
 	public boolean locked; // does the player have locked rotation
-	int contactNumber; // the number of things touching the player's body
-	private HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
-//	private HashSet<Tile> playerContacts; // list of all the fixtures touching the player
+//	int contactNumber; // the number of things touching the player's body
+
 	private ArrayList<Event> events; // list of events touching the player
 	private boolean vibeFrame; // has a vibration happened yet this frame
 
-	// slot detection
+	// environment checking
 	public boolean showChecking = false;
-	private PlayerTileXComparator xCompare;
-	private float centerToCenter; // distance from center of player to center of diagonal tile
+	private HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
+//	private HashSet<Tile> playerContacts; // list of all the fixtures touching the player
+
+	// tunnel checking
 	private ArrayList<Tile> tunnelChecking; // list of tiles currently being checked for tunnels
+	private PlayerTileXComparator xCompare; // comparator used for x axis tunnel checking
+	private float centerToCenter; // distance from center of player to center of diagonal tile
+
+	// ground slot checking
 	private ArrayList<Tile> groundChecking; // list of tiles currently being checked for ground slots
+	private Body tempBarrier; // barrier used to stop the player moving past a slot
+	private Fixture tempFixture; // reference to the barrier fixture
 
-	String lastOutput = "";
-
-	Body tempBarrier; // barrier used to stop the player moving past a slot
-	Fixture tempFixture; // reference to the barrier fixture
+	// jumping
+	private float jumpPower; // the strength of the player's jump
+	private int boxJumpCount; // how many jumps the player can make before touching the ground
+	private Vec2 previousPosition; // last player location
+	private int jumpResetCounter; // how many steps the player has been still
+	private int jumpResetLimit; // how many steps it takes the jump to reset
 
 	Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
-		this.p = p;
 		this.file = tile.getFile();
 //		if(tile.isFlippedH()) {
 //			this.flipH();
@@ -77,8 +81,6 @@ public class Player extends Editable {
 		this.setAngle(tile.getAngle());
 
 		vibe = v;
-
-		playerColor = p.color(255, 94, 22);
 
 		if (file != null && texture != null && texture.getTileMap().containsKey(file)) {
 			this.tileTexture = texture.getTileMap().get(file);
@@ -94,7 +96,9 @@ public class Player extends Editable {
 		this.jumpPower = 120;
 		this.boxJumpCount = 0;
 		this.locked = locked; // is rotation locked
-		this.contactNumber = 0; // is the player touching anything
+//		this.contactNumber = 0; // is the player touching anything
+
+		// environment checking
 		this.sensorContacts = new HashSet<Tile>();
 //		this.playerContacts = new HashSet<Tile>();
 		this.tempBarrier = null;
@@ -103,7 +107,12 @@ public class Player extends Editable {
 		this.tunnelChecking = new ArrayList<Tile>();
 		this.groundChecking = new ArrayList<Tile>();
 
-		events = new ArrayList<Event>();
+		this.events = new ArrayList<Event>();
+
+		// jumping
+		this.jumpResetCounter = 0; // how many steps the player has been still
+		this.jumpResetLimit = 60; // how many steps it takes the jump to reset
+
 		create();
 
 	}
@@ -143,6 +152,7 @@ public class Player extends Editable {
 			sensorFixtureDef.userData = "player sensor";
 			this.dynamicBody.createFixture(sensorFixtureDef);
 
+			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
 		}
 	}
 
@@ -157,13 +167,13 @@ public class Player extends Editable {
 		this.boxJumpCount = 2;
 	}
 
-	public void startContact() {
-		this.contactNumber++;
-	}
-
-	public void endContact() {
-		this.contactNumber--;
-	}
+//	public void startContact() {
+//		this.contactNumber++;
+//	}
+//
+//	public void endContact() {
+//		this.contactNumber--;
+//	}
 
 	public void addTile(Tile tile) {
 		sensorContacts.add(tile);
@@ -190,10 +200,11 @@ public class Player extends Editable {
 	}
 
 	public void physicsStep() {
-		// environment checking
+		// run checks
+		checkStill();
 		checkTiles();
 
-		// movement
+		// do movement
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		float desiredVel = 0;
 		if (left) {
@@ -209,7 +220,25 @@ public class Player extends Editable {
 
 	}
 
+	private void checkStill() {
+		Vec2 currentPosition = box2d.getBodyPixelCoord(dynamicBody);
+
+		if (jumpResetCounter < jumpResetLimit) {
+			// check if the player is still
+			if (Math.abs(currentPosition.x - previousPosition.x) < 2
+					&& Math.abs(currentPosition.y - previousPosition.y) < 2) {
+				jumpResetCounter++;
+			}
+		}else {
+			resetJump();
+		}
+
+		previousPosition = currentPosition;
+	}
+
 	private void checkTiles() {
+		// environment checking
+
 		groundChecking.clear();
 		tunnelChecking.clear();
 
@@ -615,7 +644,7 @@ public class Player extends Editable {
 	}
 
 	public void drawArrows(Game g) {
-		p.fill(playerColor);
+//		p.fill(playerColor);
 		// draw player-off-screen arrows
 //		if (getTopLeft().x + getWidth() - 10 <= g.leftEdge) {
 //			// left edge
