@@ -246,10 +246,10 @@ public class Player extends Editable {
 		// create a list of relevant tiles sorted by x position
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		// edges of player
-		float leftEdge = pos.x - getWidth() / 2 - 1;
-		float rightEdge = pos.x + getWidth() / 2 + 1;
-		float topEdge = pos.y - getHeight() / 2 - 1;
-		float bottomEdge = pos.y + getHeight() / 2 + 1;
+		float leftEdge = pos.x - getWidth() / 2;// - 1;
+		float rightEdge = pos.x + getWidth() / 2;// + 1;
+		float topEdge = pos.y - getHeight() / 2;// - 1;
+		float bottomEdge = pos.y + getHeight() / 2;// + 1;
 		// booleans for found tiles
 		boolean above = false;
 		boolean below = false;
@@ -280,17 +280,22 @@ public class Player extends Editable {
 
 			tunnelChecking.add(t);
 
-			if (tLeftEdge < rightEdge + 5 && tLeftEdge > rightEdge) {
-				rightSide = true;
+			if (Math.abs(tCenter.y - pos.y) < getHeight() / 2) {
+				if (tLeftEdge < rightEdge + 5) {
+					rightSide = true;
+				}
+				if (tRightEdge > leftEdge - 5) {
+					leftSide = true;
+				}
 			}
-			if (tRightEdge > leftEdge - 5 && tRightEdge < leftEdge) {
-				leftSide = true;
-			}
-			if (tTopEdge < bottomEdge + 5 && tTopEdge > bottomEdge) {
-				below = true;
-			}
-			if (tBottomEdge > topEdge - 5 && tBottomEdge < topEdge) {
-				above = true;
+
+			if (Math.abs(tCenter.x - pos.x) < getWidth() / 2) {
+				if (tTopEdge < bottomEdge + 5 && tTopEdge > bottomEdge) {
+					below = true;
+				}
+				if (tBottomEdge > topEdge - 5 && tBottomEdge < topEdge) {
+					above = true;
+				}
 			}
 
 		}
