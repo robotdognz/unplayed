@@ -307,28 +307,11 @@ public class Player extends Editable {
 			}
 
 			// ----- check for left/right
-//			float previousX = 0.5f;
 			float previousLeft = 0.5f;
 			float previousRight = 0.5f;
 			Collections.sort(tunnelChecking, new PlayerTileXComparator());
 
 			for (Tile t : tunnelChecking) {
-
-//				if (previousX == 0.5f) {
-//					previousX = t.getBottomRight().x;
-//					continue;
-//				}
-//
-//				if (Math.abs(previousX - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
-//					this.dynamicBody.setFixedRotation(true);
-//					if (!lastOutput.equals(output)) {
-//						PApplet.println(output);
-//						lastOutput = output;
-//					}
-//					return false;
-//				}
-//
-//				previousX = t.getBottomRight().x;
 
 				if (previousLeft == 0.5f) {
 					previousLeft = t.getTopLeft().x;
