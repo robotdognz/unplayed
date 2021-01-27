@@ -58,6 +58,8 @@ public class Player extends Editable {
 	private ArrayList<Tile> tunnelChecking; // list of tiles currently being checked for tunnels
 	private ArrayList<Tile> groundChecking; // list of tiles currently being checked for ground slots
 
+	String lastOutput = "";
+
 	Body tempBarrier; // barrier used to stop the player moving past a slot
 	Fixture tempFixture; // reference to the barrier fixture
 
@@ -243,7 +245,7 @@ public class Player extends Editable {
 		// create a list of relevant tiles sorted by x position
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		// edges of player
-		float leftEdge = pos.x - getWidth() / 2 - 0.25f; //0.5f
+		float leftEdge = pos.x - getWidth() / 2 - 0.25f; // 0.5f
 		float rightEdge = pos.x + getWidth() / 2 + 0.25f;
 		float topEdge = pos.y - getHeight() / 2 - 0.25f;
 		float bottomEdge = pos.y + getHeight() / 2 + 0.25f;
@@ -289,7 +291,11 @@ public class Player extends Editable {
 
 				if (Math.abs(previousY - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
-					PApplet.println("above/below" + previousY + " " + t.getTopLeft().y);
+					String output = "above/below " + previousY + " " + t.getTopLeft().y;
+					if (!lastOutput.equals(output)) {
+						PApplet.println(output);
+						lastOutput = output;
+					}
 					return;
 				}
 
@@ -308,7 +314,11 @@ public class Player extends Editable {
 
 				if (Math.abs(previousX - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
-					PApplet.println("left/right" + previousX + " " + t.getTopLeft().x);
+					String output = "left/right " + previousX + " " + t.getTopLeft().x;
+					if (!lastOutput.equals(output)) {
+						PApplet.println(output);
+						lastOutput = output;
+					}
 					return;
 				}
 
