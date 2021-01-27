@@ -242,7 +242,6 @@ public class Player extends Editable {
 	}
 
 	private void checkTunnel() {
-
 		// create a list of relevant tiles sorted by x position
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		// edges of player
@@ -281,17 +280,9 @@ public class Player extends Editable {
 		Collections.sort(tunnelChecking);
 
 		if (tunnelChecking.size() >= 2) {
-			// booleans for found tiles
-//			boolean above = false;
-//			boolean below = false;
-//			boolean leftSide = false;
-//			boolean rightSide = false;
-
-//			
 
 			float previousX = 0.5f;
 			float previousY = 0.5f;
-			Tile previous = null;
 
 			// check for above/below
 			boolean vertical = false;
@@ -299,18 +290,15 @@ public class Player extends Editable {
 
 				if (previousY == 0.5f) {
 					previousY = t.getBottomRight().y;
-					previous = t;
 					continue;
 				}
 
 				if (Math.abs(previousY - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
 					vertical = true;
-//					PApplet.println(previous.getY() + " : " + t.getY());
 					break;
 				}
 
 				previousY = t.getBottomRight().y;
-				previous = t;
 
 			}
 			if (vertical) {
@@ -324,18 +312,20 @@ public class Player extends Editable {
 
 				if (previousX == 0.5f) {
 					previousX = t.getBottomRight().x;
-					previous = t;
+					previousY = t.getBottomRight().y;
 					continue;
 				}
 
 				if (Math.abs(previousX - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
 					horazontal = true;
-//					PApplet.println(previous.getX() + " : " + t.getX());
 					break;
 				}
 
-				previousX = t.getBottomRight().x;
-				previous = t;
+				// this is needed because the tiles are sorted in columns by x
+				if (previousY != t.getBottomRight().y) {
+					previousX = t.getBottomRight().x;
+					previousY = t.getBottomRight().y;
+				}
 
 			}
 			if (horazontal) {
