@@ -243,10 +243,10 @@ public class Player extends Editable {
 		// create a list of relevant tiles sorted by x position
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		// edges of player
-		float leftEdge = pos.x - getWidth() / 2 - 0.5f;
-		float rightEdge = pos.x + getWidth() / 2 + 0.5f;
-		float topEdge = pos.y - getHeight() / 2 - 0.5f;
-		float bottomEdge = pos.y + getHeight() / 2 + 0.5f;
+		float leftEdge = pos.x - getWidth() / 2 - 0.25f; //0.5f
+		float rightEdge = pos.x + getWidth() / 2 + 0.25f;
+		float topEdge = pos.y - getHeight() / 2 - 0.25f;
+		float bottomEdge = pos.y + getHeight() / 2 + 0.25f;
 
 		for (Tile t : sensorContacts) {
 			PVector tCenter = new PVector(t.getX() + t.getWidth() / 2, t.getY() + getHeight() / 2);
