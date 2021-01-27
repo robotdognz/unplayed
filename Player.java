@@ -327,11 +327,13 @@ public class Player extends Editable {
 				}
 
 				if (Math.abs(previousBottom - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
+					this.dynamicBody.setAngularVelocity(0);
 					this.dynamicBody.setFixedRotation(true);
 					return false;
 				}
 
 				if (Math.abs(previousTop - bottomEdge) <= 2 && Math.abs(t.getBottomRight().y - topEdge) <= 2) {
+					this.dynamicBody.setAngularVelocity(0);
 					this.dynamicBody.setFixedRotation(true);
 					return false;
 				}
@@ -354,11 +356,13 @@ public class Player extends Editable {
 				}
 
 				if (Math.abs(previousRight - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
+					this.dynamicBody.setAngularVelocity(0);
 					this.dynamicBody.setFixedRotation(true);
 					return false;
 				}
 
 				if (Math.abs(previousLeft - rightEdge) <= 2 && Math.abs(t.getBottomRight().x - leftEdge) <= 2) {
+					this.dynamicBody.setAngularVelocity(0);
 					this.dynamicBody.setFixedRotation(true);
 					return false;
 				}
@@ -448,6 +452,7 @@ public class Player extends Editable {
 					if ((direction && t.getBottomRight().x < pos.x) // moving left
 							|| (!direction && t.getTopLeft().x > pos.x)) { // moving right
 						// lock rotation
+						this.dynamicBody.setAngularVelocity(0);
 						this.dynamicBody.setFixedRotation(true);
 
 						// create the barrier
