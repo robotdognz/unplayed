@@ -286,23 +286,18 @@ public class Player extends Editable {
 //			boolean below = false;
 //			boolean leftSide = false;
 //			boolean rightSide = false;
-			boolean vertical = false;
 
 //			
 
-			// check for above/below
 			float previousX = 0.5f;
 			float previousY = 0.5f;
 			Tile previous = null;
 
+			// check for above/below
+			boolean vertical = false;
 			for (Tile t : tunnelChecking) {
-//				float tileLeftEdge = t.getTopLeft().x;
-//				float tileRightEdge = t.getBottomRight().x;
-//				float tileTopEdge = t.getTopLeft().y;
-//				float tileBottomEdge = t.getBottomRight().y;
 
-				if (previousX == 0.5f) {
-					previousX = t.getBottomRight().x;
+				if (previousY == 0.5f) {
 					previousY = t.getBottomRight().y;
 					previous = t;
 					continue;
@@ -310,11 +305,10 @@ public class Player extends Editable {
 
 				if (Math.abs(previousY - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
 					vertical = true;
-					PApplet.println(previous.getY() + " : " + t.getY());
+//					PApplet.println(previous.getY() + " : " + t.getY());
 					break;
 				}
 
-				previousX = t.getBottomRight().x;
 				previousY = t.getBottomRight().y;
 				previous = t;
 
@@ -323,6 +317,32 @@ public class Player extends Editable {
 				this.dynamicBody.setFixedRotation(true);
 				return;
 			}
+
+			// check for left/right
+			boolean horazontal = false;
+			for (Tile t : tunnelChecking) {
+
+				if (previousX == 0.5f) {
+					previousX = t.getBottomRight().x;
+					previous = t;
+					continue;
+				}
+
+				if (Math.abs(previousX - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
+					horazontal = true;
+//					PApplet.println(previous.getX() + " : " + t.getX());
+					break;
+				}
+
+				previousX = t.getBottomRight().x;
+				previous = t;
+
+			}
+			if (horazontal) {
+				this.dynamicBody.setFixedRotation(true);
+				return;
+			}
+
 		}
 		this.dynamicBody.setFixedRotation(locked);
 
