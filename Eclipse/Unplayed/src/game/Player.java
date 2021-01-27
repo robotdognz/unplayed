@@ -53,8 +53,9 @@ public class Player extends Editable {
 
 	// slot detection
 	public boolean showChecking = false;
-	public ArrayList<Tile> tunnelChecking; // list of tiles currently being checked for tunnels
-	public ArrayList<Tile> groundChecking; // list of tiles currently being checked for ground slots
+	private float centerToCenter;
+	private ArrayList<Tile> tunnelChecking; // list of tiles currently being checked for tunnels
+	private ArrayList<Tile> groundChecking; // list of tiles currently being checked for ground slots
 
 	Body tempBarrier; // barrier used to stop the player moving past a slot
 	Fixture tempFixture; // reference to the barrier fixture
@@ -94,6 +95,7 @@ public class Player extends Editable {
 //		this.playerContacts = new HashSet<Tile>();
 		this.tempBarrier = null;
 		this.previousImpulse = 0;
+		this.centerToCenter = (float) Math.hypot(getWidth(), getHeight());
 		this.tunnelChecking = new ArrayList<Tile>();
 		this.groundChecking = new ArrayList<Tile>();
 
@@ -249,7 +251,7 @@ public class Player extends Editable {
 		float bottomEdge = pos.y + getHeight() / 2;
 		for (Tile t : sensorContacts) {
 			PVector tCenter = new PVector(t.getX() + t.getWidth() / 2, t.getY() + getHeight() / 2);
-			if (pos.dist(tCenter) > t.getWidth()) {
+			if (pos.dist(tCenter) > centerToCenter+1) {
 				continue;
 			}
 
