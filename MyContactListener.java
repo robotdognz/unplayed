@@ -14,7 +14,7 @@ import objects.Tile;
 
 public class MyContactListener implements ContactListener {
 	Game game;
-	
+
 	public MyContactListener(Game game) {
 		this.game = game;
 	}
@@ -93,6 +93,11 @@ public class MyContactListener implements ContactListener {
 			player.resetJump();
 		}
 
+		// if one of them is the player and one is a tile
+		if (playerBody && tile != null) {
+			player.addPlayerTile(tile);
+		}
+
 		// if on of them is the player and one is an event
 		if (playerBody && event != null) {
 			player.addEvent(event);
@@ -163,9 +168,14 @@ public class MyContactListener implements ContactListener {
 			}
 		}
 
-		// if one of them is the player and one is a tile
+		// if one of them is the player sensor and one is a tile
 		if (playerSensor && tile != null) {
 			player.removeTile(tile);
+		}
+
+		// if one of them is the player and one is a tile
+		if (playerBody && tile != null) {
+			player.removePlayerTile(tile);
 		}
 
 		// if one of them is the player and one is an event
