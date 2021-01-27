@@ -293,6 +293,7 @@ public class Player extends Editable {
 			// check for above/below
 			float previousX = 0.5f;
 			float previousY = 0.5f;
+			Tile previous = null;
 
 			for (Tile t : tunnelChecking) {
 //				float tileLeftEdge = t.getTopLeft().x;
@@ -303,16 +304,19 @@ public class Player extends Editable {
 				if (previousX == 0.5f) {
 					previousX = t.getBottomRight().x;
 					previousY = t.getBottomRight().y;
+					previous = t;
 					continue;
 				}
 
 				if (Math.abs(previousY - topEdge) <= 2 && Math.abs(t.getBottomRight().y - bottomEdge) <= 2) {
 					vertical = true;
+					PApplet.println(previous.getY() + " : " + t.getY());
 					break;
 				}
-				
+
 				previousX = t.getBottomRight().x;
 				previousY = t.getBottomRight().y;
+				previous = t;
 
 			}
 			if (vertical) {
