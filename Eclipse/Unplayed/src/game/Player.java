@@ -280,19 +280,38 @@ public class Player extends Editable {
 		if (tunnelChecking.size() >= 2) {
 
 			// check for top/bottom
-			float previousY = 0.5f;
+//			float previousY = 0.5f;
+			float previousTop = 0.5f;
+			float previousBottom = 0.5f;
 			Collections.sort(tunnelChecking);
 
 			String output = "top/bottom";
 
 			for (Tile t : tunnelChecking) {
 
-				if (previousY == 0.5f) {
-					previousY = t.getBottomRight().y;
+//				if (previousY == 0.5f) {
+//					previousY = t.getBottomRight().y;
+//					continue;
+//				}
+//				
+//				if (Math.abs(previousY - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
+//					this.dynamicBody.setFixedRotation(true);
+//					if (!lastOutput.equals(output)) {
+//						PApplet.println(output);
+//						lastOutput = output;
+//					}
+//					return;
+//				}
+//
+//				previousY = t.getBottomRight().y;
+
+				if (previousTop == 0.5f) {
+					previousTop = t.getTopLeft().y;
+					previousBottom = t.getBottomRight().y;
 					continue;
 				}
 
-				if (Math.abs(previousY - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
+				if (Math.abs(previousBottom - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
 					if (!lastOutput.equals(output)) {
 						PApplet.println(output);
@@ -301,7 +320,17 @@ public class Player extends Editable {
 					return;
 				}
 
-				previousY = t.getBottomRight().y;
+				if (Math.abs(previousTop - bottomEdge) <= 2 && Math.abs(t.getBottomRight().y - topEdge) <= 2) {
+					this.dynamicBody.setFixedRotation(true);
+					if (!lastOutput.equals(output)) {
+						PApplet.println(output);
+						lastOutput = output;
+					}
+					return;
+				}
+
+				previousTop = t.getTopLeft().y;
+				previousBottom = t.getBottomRight().y;
 			}
 
 			// check for left/right
