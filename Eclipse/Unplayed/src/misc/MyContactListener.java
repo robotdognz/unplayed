@@ -93,10 +93,10 @@ public class MyContactListener implements ContactListener {
 			player.resetJump();
 		}
 
-		// if one of them is the player and one is a tile
-		if (playerBody && tile != null) {
-			player.addPlayerTile(tile);
-		}
+//		// if one of them is the player and one is a tile
+//		if (playerBody && tile != null) {
+//			player.addPlayerTile(tile);
+//		}
 
 		// if on of them is the player and one is an event
 		if (playerBody && event != null) {
@@ -173,10 +173,10 @@ public class MyContactListener implements ContactListener {
 			player.removeTile(tile);
 		}
 
-		// if one of them is the player and one is a tile
-		if (playerBody && tile != null) {
-			player.removePlayerTile(tile);
-		}
+//		// if one of them is the player and one is a tile
+//		if (playerBody && tile != null) {
+//			player.removePlayerTile(tile);
+//		}
 
 		// if one of them is the player and one is an event
 		if (playerBody && event != null) {

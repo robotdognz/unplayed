@@ -46,7 +46,7 @@ public class Player extends Editable {
 	public boolean locked; // does the player have locked rotation
 	int contactNumber; // the number of things touching the player's body
 	private HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
-	private HashSet<Tile> playerContacts; // list of all the fixtures inside the player's sensor
+//	private HashSet<Tile> playerContacts; // list of all the fixtures touching the player
 	private ArrayList<Event> events; // list of events touching the player
 	private boolean vibeFrame; // has a vibration happened yet this frame
 	private float previousImpulse; // strenght of last collision impulse
@@ -91,7 +91,7 @@ public class Player extends Editable {
 		this.locked = locked; // is rotation locked
 		this.contactNumber = 0; // is the player touching anything
 		this.sensorContacts = new HashSet<Tile>();
-		this.playerContacts = new HashSet<Tile>();
+//		this.playerContacts = new HashSet<Tile>();
 		this.tempBarrier = null;
 		this.previousImpulse = 0;
 		this.tunnelChecking = new ArrayList<Tile>();
@@ -169,13 +169,13 @@ public class Player extends Editable {
 		sensorContacts.remove(tile);
 	}
 
-	public void addPlayerTile(Tile tile) {
-		playerContacts.add(tile);
-	}
-
-	public void removePlayerTile(Tile tile) {
-		playerContacts.remove(tile);
-	}
+//	public void addPlayerTile(Tile tile) {
+//		playerContacts.add(tile);
+//	}
+//
+//	public void removePlayerTile(Tile tile) {
+//		playerContacts.remove(tile);
+//	}
 
 	public void addEvent(Event event) {
 		events.add(event);
@@ -247,10 +247,10 @@ public class Player extends Editable {
 		float rightEdge = pos.x + getWidth() / 2;
 		float topEdge = pos.y - getHeight() / 2;
 		float bottomEdge = pos.y + getHeight() / 2;
-		for (Tile t : playerContacts) {
+		for (Tile t : sensorContacts) {
 			PVector tCenter = new PVector(t.getX() + t.getWidth() / 2, t.getY() + getHeight() / 2);
-			if (pos.dist(tCenter) > t.getWidth() * 0.6f) {
-//				continue;
+			if (pos.dist(tCenter) > t.getWidth()) {
+				continue;
 			}
 
 			tunnelChecking.add(t);
