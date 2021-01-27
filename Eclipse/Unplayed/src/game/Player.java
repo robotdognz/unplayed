@@ -234,6 +234,8 @@ public class Player extends Editable {
 		}
 
 		// run the algorithms
+		// if tunnel checking locks the player's rotation, the other algorithms
+		// shouldn't unlock it, that's what this variable is for
 		boolean resetRotation = checkTunnel();
 		checkForGroundSlots(resetRotation);
 		// checkForWallSlots();
