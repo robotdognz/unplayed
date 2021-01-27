@@ -95,7 +95,7 @@ public class Player extends Editable {
 //		this.playerContacts = new HashSet<Tile>();
 		this.tempBarrier = null;
 		this.previousImpulse = 0;
-		this.centerToCenter = (float) Math.hypot(getWidth(), getHeight());
+		this.centerToCenter = (float) Math.hypot(getWidth(), getHeight()) + 1;
 		this.tunnelChecking = new ArrayList<Tile>();
 		this.groundChecking = new ArrayList<Tile>();
 
@@ -251,7 +251,24 @@ public class Player extends Editable {
 		float bottomEdge = pos.y + getHeight() / 2;
 		for (Tile t : sensorContacts) {
 			PVector tCenter = new PVector(t.getX() + t.getWidth() / 2, t.getY() + getHeight() / 2);
-			if (pos.dist(tCenter) > centerToCenter+1) {
+			if (pos.dist(tCenter) > centerToCenter) {
+				continue;
+			}
+
+			float tLeftEdge = t.getTopLeft().x;
+			if (tLeftEdge < leftEdge) {
+				continue;
+			}
+			float tRightEdge = t.getBottomRight().x;
+			if (tRightEdge > rightEdge) {
+				continue;
+			}
+			float tTopEdge = t.getTopLeft().y;
+			if (tTopEdge < topEdge) {
+				continue;
+			}
+			float tBottomEdge = t.getBottomRight().y;
+			if (tBottomEdge > bottomEdge) {
 				continue;
 			}
 
