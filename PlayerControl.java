@@ -19,13 +19,16 @@ public class PlayerControl implements Controller {
 		if (game.player != null) {
 			int left = 0;
 			int right = 0;
-			for (PVector t : touch) { // TODO: check if this works, it used to directly access the touch screen
-										// touches array
+			int middle = 0; // used for jumps
+			for (PVector t : touch) {
 				// if (t.y >= height/3) {
-				if (t.x < p.width / 4) {
+				if (t.x > p.width * 0.25f && t.x < p.width * 0.75f) { // middle chunk of screen
+					middle++;
+				}
+				if (t.x < p.width * 0.25f) { // / 4) { // left chunk of screen
 					left++;
 				}
-				if (t.x > (p.width / 4) * 3) {
+				if (t.x > p.width * 0.75f) { // (p.width / 4) * 3) { // right chunk of screen
 					right++;
 				}
 				// }
@@ -36,6 +39,12 @@ public class PlayerControl implements Controller {
 				game.player.right();
 			} else {
 				game.player.still();
+			}
+
+			if (middle > 0) {
+				game.player.jumping();
+			} else {
+				game.player.notJumping();
 			}
 		}
 	}

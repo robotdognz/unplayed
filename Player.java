@@ -33,6 +33,7 @@ public class Player extends Editable {
 
 	private boolean left = false;
 	private boolean right = false;
+	private boolean jumping = false;
 
 	// vibration
 	private Vibe vibe;
@@ -50,7 +51,6 @@ public class Player extends Editable {
 //	private HashSet<Tile> playerContacts; // list of all the fixtures touching the player
 	private ArrayList<Event> events; // list of events touching the player
 	private boolean vibeFrame; // has a vibration happened yet this frame
-	private float previousImpulse; // strenght of last collision impulse
 
 	// slot detection
 	public boolean showChecking = false;
@@ -88,14 +88,13 @@ public class Player extends Editable {
 		this.box2d = box2d;
 		this.friction = 0.6f; // from 0 to 1
 		this.density = 1; // from 0 to 1
-		this.jumpPower = 120; // 100
+		this.jumpPower = 120;
 		this.boxJumpCount = 0;
 		this.locked = locked; // is rotation locked
 		this.contactNumber = 0; // is the player touching anything
 		this.sensorContacts = new HashSet<Tile>();
 //		this.playerContacts = new HashSet<Tile>();
 		this.tempBarrier = null;
-		this.previousImpulse = 0;
 		this.centerToCenter = (float) Math.hypot(getWidth(), getHeight()) + 1;
 		this.tunnelChecking = new ArrayList<Tile>();
 		this.groundChecking = new ArrayList<Tile>();
@@ -104,8 +103,6 @@ public class Player extends Editable {
 		create();
 
 	}
-
-	// ---------physics
 
 	public void create() {
 		if (box2d != null) {
@@ -236,7 +233,9 @@ public class Player extends Editable {
 
 		// run the algorithms
 		checkTunnel();
-		checkForGroundSlots();
+		if (!jumping) {
+			checkForGroundSlots();
+		}
 		// checkForWallSlots();
 		// checkForRoofSlots();
 
@@ -296,7 +295,6 @@ public class Player extends Editable {
 				}
 
 				previousY = t.getBottomRight().y;
-
 			}
 
 			// check for left/right
@@ -306,7 +304,6 @@ public class Player extends Editable {
 
 				if (previousX == 0.5f) {
 					previousX = t.getBottomRight().x;
-//					previousY = t.getBottomRight().y;
 					continue;
 				}
 
@@ -315,16 +312,12 @@ public class Player extends Editable {
 					return;
 				}
 
-				// this is needed because the tiles are sorted in columns by x
-//				if (previousY != t.getBottomRight().y) {
 				previousX = t.getBottomRight().x;
-//
-//				}
-//				previousY = t.getBottomRight().y;
-
 			}
 
 		}
+
+		// no tunnel found
 		this.dynamicBody.setFixedRotation(locked);
 
 	}
@@ -633,5 +626,13 @@ public class Player extends Editable {
 	public void still() {
 		left = false;
 		right = false;
+	}
+
+	public void jumping() {
+		jumping = true;
+	}
+
+	public void notJumping() {
+		jumping = false;
 	}
 }
