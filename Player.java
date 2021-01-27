@@ -111,7 +111,7 @@ public class Player extends Editable {
 
 		// jumping
 		this.jumpResetCounter = 0; // how many steps the player has been still
-		this.jumpResetLimit = 240; // how many steps it takes the jump to reset
+		this.jumpResetLimit = 480; // how many steps it takes the jump to reset
 
 		create();
 
@@ -454,6 +454,8 @@ public class Player extends Editable {
 						// try create the barrier
 						if (direction) { // moving left
 							// final position check (stops barriers being made under player)
+							// this works because it failing doesn't remove an existing barrier
+							// so it only prevents barriers being made when you're already in the slot
 							if (t.getBottomRight().x <= pos.x - getWidth() / 2) {
 								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
@@ -462,6 +464,8 @@ public class Player extends Editable {
 
 						} else { // moving right
 							// final position check (stops barriers being made under player)
+							// this works because it failing doesn't remove an existing barrier
+							// so it only prevents barriers being made when you're already in the slot
 							if (t.getTopLeft().x >= pos.x + getWidth() / 2) {
 								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
@@ -470,6 +474,9 @@ public class Player extends Editable {
 						}
 
 						return;
+					} else {
+						// destroy barriers that are behind the player
+						destroyBarrier(resetRotation);
 					}
 				}
 			}
