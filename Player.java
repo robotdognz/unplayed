@@ -279,9 +279,15 @@ public class Player extends Editable {
 
 		if (tunnelChecking.size() >= 2) {
 
-			// check for above/below
+			// check for top/bottom
 			float previousY = 0.5f;
 			Collections.sort(tunnelChecking);
+			String output = "top/bottom";
+			if (!lastOutput.equals(output)) {
+				PApplet.println(output);
+				lastOutput = output;
+			}
+
 			for (Tile t : tunnelChecking) {
 
 				if (previousY == 0.5f) {
@@ -291,11 +297,11 @@ public class Player extends Editable {
 
 				if (Math.abs(previousY - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
-					String output = "above/below " + previousY + " " + t.getTopLeft().y;
-					if (!lastOutput.equals(output)) {
-						PApplet.println(output);
-						lastOutput = output;
-					}
+//					String output = "above/below " + previousY + " " + t.getTopLeft().y;
+//					if (!lastOutput.equals(output)) {
+//						PApplet.println(output);
+//						lastOutput = output;
+//					}
 					return;
 				}
 
@@ -305,6 +311,13 @@ public class Player extends Editable {
 			// check for left/right
 			float previousX = 0.5f;
 			Collections.sort(tunnelChecking, new PlayerTileXComparator());
+
+			output = "left/right";
+			if (!lastOutput.equals(output)) {
+				PApplet.println(output);
+				lastOutput = output;
+			}
+
 			for (Tile t : tunnelChecking) {
 
 				if (previousX == 0.5f) {
@@ -314,11 +327,11 @@ public class Player extends Editable {
 
 				if (Math.abs(previousX - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
-					String output = "left/right " + previousX + " " + t.getTopLeft().x;
-					if (!lastOutput.equals(output)) {
-						PApplet.println(output);
-						lastOutput = output;
-					}
+//					String output = "left/right " + previousX + " " + t.getTopLeft().x;
+//					if (!lastOutput.equals(output)) {
+//						PApplet.println(output);
+//						lastOutput = output;
+//					}
 					return;
 				}
 
