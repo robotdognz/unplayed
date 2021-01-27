@@ -280,16 +280,16 @@ public class Player extends Editable {
 
 			tunnelChecking.add(t);
 
-			if (tLeftEdge < rightEdge + 5) {
+			if (tLeftEdge < rightEdge + 5 && tLeftEdge > rightEdge) {
 				rightSide = true;
 			}
-			if (tRightEdge > leftEdge - 5) {
+			if (tRightEdge > leftEdge - 5 && tRightEdge < leftEdge) {
 				leftSide = true;
 			}
-			if (tTopEdge < bottomEdge + 5) {
+			if (tTopEdge < bottomEdge + 5 && tTopEdge > bottomEdge) {
 				below = true;
 			}
-			if (tBottomEdge > topEdge - 5) {
+			if (tBottomEdge > topEdge - 5 && tBottomEdge < topEdge) {
 				above = true;
 			}
 
