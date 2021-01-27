@@ -280,35 +280,45 @@ public class Player extends Editable {
 
 			tunnelChecking.add(t);
 
-			if (tTopEdge <= bottomEdge && tBottomEdge >= topEdge) {
-				if (tLeftEdge < rightEdge + 5) {
-					rightSide = true;
+		}
+
+		Collections.sort(tunnelChecking);
+		if (tunnelChecking.size() >= 2) {
+			for (Tile t : tunnelChecking) {
+				float tLeftEdge = t.getTopLeft().x;
+				float tRightEdge = t.getBottomRight().x;
+				float tTopEdge = t.getTopLeft().y;
+				float tBottomEdge = t.getBottomRight().y;
+
+				if (tTopEdge <= bottomEdge && tBottomEdge >= topEdge) {
+					if (tLeftEdge < rightEdge + 5 && tLeftEdge > pos.x) {
+						rightSide = true;
+					}
+					if (tRightEdge > leftEdge - 5 && tRightEdge < pos.x) {
+						leftSide = true;
+					}
 				}
-				if (tRightEdge > leftEdge - 5) {
-					leftSide = true;
+
+				if (tLeftEdge <= rightEdge && tRightEdge >= leftEdge) {
+					if (tTopEdge < bottomEdge + 5 && tTopEdge > pos.x) {
+						below = true;
+					}
+					if (tBottomEdge > topEdge - 5 && tBottomEdge < pos.x) {
+						above = true;
+					}
 				}
 			}
 
-			if (tLeftEdge <= rightEdge && tRightEdge >= leftEdge) {
-				if (tTopEdge < bottomEdge + 5) {
-					below = true;
-				}
-				if (tBottomEdge > topEdge - 5) {
-					above = true;
-				}
+			if (above && below) {
+				this.dynamicBody.setFixedRotation(true);
+			} else if (leftSide && rightSide) {
+				this.dynamicBody.setFixedRotation(true);
+			} else {
+				this.dynamicBody.setFixedRotation(locked);
 			}
-
 		}
 
-		if (above && below) {
-			this.dynamicBody.setFixedRotation(true);
-		} else if (leftSide && rightSide) {
-			this.dynamicBody.setFixedRotation(true);
-		} else {
-			this.dynamicBody.setFixedRotation(locked);
-		}
-
-//		Collections.sort(groundChecking);
+//		
 
 	}
 
