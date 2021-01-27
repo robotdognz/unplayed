@@ -310,6 +310,9 @@ public class Player extends Editable {
 					vertical = true;
 					break;
 				}
+				
+				previousX = t.getBottomRight().x;
+				previousY = t.getBottomRight().y;
 
 			}
 			if (vertical) {
