@@ -285,7 +285,7 @@ public class Player extends Editable {
 			float previousY = 0.5f;
 
 			// check for above/below
-			boolean vertical = false;
+//			boolean vertical = false;
 			for (Tile t : tunnelChecking) {
 
 				if (previousY == 0.5f) {
@@ -294,20 +294,22 @@ public class Player extends Editable {
 				}
 
 				if (Math.abs(previousY - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
-					vertical = true;
-					break;
+//					vertical = true;
+//					break;
+					this.dynamicBody.setFixedRotation(true);
+					return;
 				}
 
 				previousY = t.getBottomRight().y;
 
 			}
-			if (vertical) {
-				this.dynamicBody.setFixedRotation(true);
-				return;
-			}
+//			if (vertical) {
+//				this.dynamicBody.setFixedRotation(true);
+//				return;
+//			}
 
 			// check for left/right
-			boolean horazontal = false;
+//			boolean horazontal = false;
 			for (Tile t : tunnelChecking) {
 
 				if (previousX == 0.5f) {
@@ -317,8 +319,10 @@ public class Player extends Editable {
 				}
 
 				if (Math.abs(previousX - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
-					horazontal = true;
-					break;
+//					horazontal = true;
+//					break;
+					this.dynamicBody.setFixedRotation(true);
+					return;
 				}
 
 				// this is needed because the tiles are sorted in columns by x
@@ -328,10 +332,10 @@ public class Player extends Editable {
 				}
 
 			}
-			if (horazontal) {
-				this.dynamicBody.setFixedRotation(true);
-				return;
-			}
+//			if (horazontal) {
+//				this.dynamicBody.setFixedRotation(true);
+//				return;
+//			}
 
 		}
 		this.dynamicBody.setFixedRotation(locked);
