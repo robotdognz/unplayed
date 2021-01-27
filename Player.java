@@ -290,10 +290,10 @@ public class Player extends Editable {
 			}
 
 			if (Math.abs(tCenter.x - pos.x) < getWidth() / 2) {
-				if (tTopEdge < bottomEdge + 5 && tTopEdge > bottomEdge) {
+				if (tTopEdge < bottomEdge + 5) {
 					below = true;
 				}
-				if (tBottomEdge > topEdge - 5 && tBottomEdge < topEdge) {
+				if (tBottomEdge > topEdge - 5) {
 					above = true;
 				}
 			}
