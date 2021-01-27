@@ -251,7 +251,7 @@ public class Player extends Editable {
 
 		// check the player isn't spinning
 		float av = dynamicBody.getAngularVelocity();
-		if (Math.abs(av) >= 2) { //>= 2
+		if (Math.abs(av) >= 2) {
 			destroyBarrier(true);
 			return;
 		}
@@ -260,7 +260,7 @@ public class Player extends Editable {
 		float angle = PApplet.degrees(dynamicBody.getAngle());
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
-		if (angleRemainder >= 2) {// !(angleRemainder < 3 && angleRemainder > -3)) {
+		if (angleRemainder >= 3) {
 			destroyBarrier(true);
 			return;
 		}
@@ -279,10 +279,10 @@ public class Player extends Editable {
 		// create a list of relevant tiles sorted by x position
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		// edges of player
-		float leftEdge = pos.x - getWidth() / 2 - 0.25f; // 0.5f
-		float rightEdge = pos.x + getWidth() / 2 + 0.25f;
-		float topEdge = pos.y - getHeight() / 2 - 0.25f;
-		float bottomEdge = pos.y + getHeight() / 2 + 0.25f;
+		float leftEdge = pos.x - getWidth() / 2 - 0.5f; // 0.25f
+		float rightEdge = pos.x + getWidth() / 2 + 0.5f;
+		float topEdge = pos.y - getHeight() / 2 - 0.5f;
+		float bottomEdge = pos.y + getHeight() / 2 + 0.5f;
 
 		for (Tile t : sensorContacts) {
 			PVector tCenter = new PVector(t.getX() + t.getWidth() / 2, t.getY() + getHeight() / 2);
