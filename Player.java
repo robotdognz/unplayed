@@ -246,15 +246,11 @@ public class Player extends Editable {
 		// create a list of relevant tiles sorted by x position
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		// edges of player
-		float leftEdge = pos.x - getWidth() / 2;
-		float rightEdge = pos.x + getWidth() / 2;
+		float leftEdge = pos.x - getWidth() / 2 - 0.5f;
+		float rightEdge = pos.x + getWidth() / 2 - 0.5f;
 		float topEdge = pos.y - getHeight() / 2 - 0.5f;
 		float bottomEdge = pos.y + getHeight() / 2 + 0.5f;
-		// booleans for found tiles
-		boolean above = false;
-		boolean below = false;
-		boolean leftSide = false;
-		boolean rightSide = false;
+
 		for (Tile t : sensorContacts) {
 			PVector tCenter = new PVector(t.getX() + t.getWidth() / 2, t.getY() + getHeight() / 2);
 			if (pos.dist(tCenter) > centerToCenter) {
@@ -284,9 +280,14 @@ public class Player extends Editable {
 
 		Collections.sort(tunnelChecking);
 
-//		float previousX = 0.5f;
-//		float previousY = 0.5f;
 		if (tunnelChecking.size() >= 2) {
+			// booleans for found tiles
+			boolean above = false;
+			boolean below = false;
+			boolean leftSide = false;
+			boolean rightSide = false;
+
+			// check for left/right
 			for (Tile t : tunnelChecking) {
 				float tileLeftEdge = t.getTopLeft().x;
 				float tileRightEdge = t.getBottomRight().x;
@@ -301,6 +302,18 @@ public class Player extends Editable {
 						leftSide = true;
 					}
 				}
+			}
+			if (leftSide && rightSide) {
+				this.dynamicBody.setFixedRotation(true);
+				return;
+			}
+
+			// check for above/below
+			for (Tile t : tunnelChecking) {
+				float tileLeftEdge = t.getTopLeft().x;
+				float tileRightEdge = t.getBottomRight().x;
+				float tileTopEdge = t.getTopLeft().y;
+				float tileBottomEdge = t.getBottomRight().y;
 
 				if (tileLeftEdge <= rightEdge && tileRightEdge >= leftEdge) {
 					if (tileTopEdge < bottomEdge + 5 && tileTopEdge > pos.x) {
@@ -310,32 +323,13 @@ public class Player extends Editable {
 						above = true;
 					}
 				}
-
-//				if (previousX == 0.5f && previousY == 0.5f) {
-//					previousX = t.getX();
-//					previousY = t.getY();
-//					continue;
-//				}
-//
-//				if (t.getX() == previousX) {
-//
-//				}
-//
-//				if (t.getY() == previousY) {
-//
-//				}
 			}
-
 			if (above && below) {
 				this.dynamicBody.setFixedRotation(true);
-			} else if (leftSide && rightSide) {
-				this.dynamicBody.setFixedRotation(true);
-			} else {
-				this.dynamicBody.setFixedRotation(locked);
+				return;
 			}
 		}
-
-//		
+		this.dynamicBody.setFixedRotation(locked);
 
 	}
 
