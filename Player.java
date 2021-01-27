@@ -111,7 +111,7 @@ public class Player extends Editable {
 
 		// jumping
 		this.jumpResetCounter = 0; // how many steps the player has been still
-		this.jumpResetLimit = 180; // how many steps it takes the jump to reset
+		this.jumpResetLimit = 240; // how many steps it takes the jump to reset
 
 		create();
 
@@ -251,7 +251,7 @@ public class Player extends Editable {
 
 		// check the player isn't spinning
 		float av = dynamicBody.getAngularVelocity();
-		if (Math.abs(av) > 2) { //>= 2
+		if (Math.abs(av) >= 2) { //>= 2
 			destroyBarrier(true);
 			return;
 		}
@@ -260,7 +260,7 @@ public class Player extends Editable {
 		float angle = PApplet.degrees(dynamicBody.getAngle());
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
-		if (angleRemainder > 2) {// !(angleRemainder < 3 && angleRemainder > -3)) {
+		if (angleRemainder >= 2) {// !(angleRemainder < 3 && angleRemainder > -3)) {
 			destroyBarrier(true);
 			return;
 		}
