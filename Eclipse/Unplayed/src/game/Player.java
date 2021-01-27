@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import handlers.TextureCache;
 import handlers.TileHandler;
+import misc.PlayerTileXComparator;
 import misc.Vibe;
 import objects.Editable;
 import objects.Event;
@@ -277,14 +278,11 @@ public class Player extends Editable {
 
 		}
 
-		Collections.sort(tunnelChecking);
-
 		if (tunnelChecking.size() >= 2) {
 
-			float previousX = 0.5f;
-			float previousY = 0.5f;
-
 			// check for above/below
+			float previousY = 0.5f;
+			Collections.sort(tunnelChecking);
 			for (Tile t : tunnelChecking) {
 
 				if (previousY == 0.5f) {
@@ -302,11 +300,13 @@ public class Player extends Editable {
 			}
 
 			// check for left/right
+			float previousX = 0.5f;
+			Collections.sort(tunnelChecking, new PlayerTileXComparator());
 			for (Tile t : tunnelChecking) {
 
 				if (previousX == 0.5f) {
 					previousX = t.getBottomRight().x;
-					previousY = t.getBottomRight().y;
+//					previousY = t.getBottomRight().y;
 					continue;
 				}
 
@@ -316,11 +316,11 @@ public class Player extends Editable {
 				}
 
 				// this is needed because the tiles are sorted in columns by x
-				if (previousY != t.getBottomRight().y) {
-					previousX = t.getBottomRight().x;
-
-				}
-				previousY = t.getBottomRight().y;
+//				if (previousY != t.getBottomRight().y) {
+				previousX = t.getBottomRight().x;
+//
+//				}
+//				previousY = t.getBottomRight().y;
 
 			}
 
