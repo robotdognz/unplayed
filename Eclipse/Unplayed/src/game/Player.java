@@ -54,7 +54,8 @@ public class Player extends Editable {
 
 	// slot detection
 	public boolean showChecking = false;
-	private float centerToCenter;
+	private PlayerTileXComparator xCompare;
+	private float centerToCenter; // distance from center of player to center of diagonal tile
 	private ArrayList<Tile> tunnelChecking; // list of tiles currently being checked for tunnels
 	private ArrayList<Tile> groundChecking; // list of tiles currently being checked for ground slots
 
@@ -97,6 +98,7 @@ public class Player extends Editable {
 		this.sensorContacts = new HashSet<Tile>();
 //		this.playerContacts = new HashSet<Tile>();
 		this.tempBarrier = null;
+		this.xCompare = new PlayerTileXComparator();
 		this.centerToCenter = (float) Math.hypot(getWidth(), getHeight()) + 1;
 		this.tunnelChecking = new ArrayList<Tile>();
 		this.groundChecking = new ArrayList<Tile>();
@@ -311,7 +313,7 @@ public class Player extends Editable {
 			// ----- check for left/right
 			float previousLeft = 0.5f;
 			float previousRight = 0.5f;
-			Collections.sort(tunnelChecking, new PlayerTileXComparator());
+			Collections.sort(tunnelChecking, xCompare);
 
 			for (Tile t : tunnelChecking) {
 
@@ -571,7 +573,7 @@ public class Player extends Editable {
 		if (showChecking) {
 			for (Tile t : sensorContacts) {
 				graphics.noStroke();
-				graphics.fill(255, 0, 0, 150);
+				graphics.fill(150, 150, 150, 150); // 255, 0, 0, 150
 				graphics.rectMode(CORNER);
 				graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
 			}
