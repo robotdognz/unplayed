@@ -256,19 +256,19 @@ public class Player extends Editable {
 			}
 
 			float tLeftEdge = t.getTopLeft().x;
-			if (tLeftEdge < leftEdge) {
+			if (tLeftEdge > rightEdge) {
 				continue;
 			}
 			float tRightEdge = t.getBottomRight().x;
-			if (tRightEdge > rightEdge) {
+			if (tRightEdge < leftEdge) {
 				continue;
 			}
 			float tTopEdge = t.getTopLeft().y;
-			if (tTopEdge < topEdge) {
+			if (tTopEdge > bottomEdge) {
 				continue;
 			}
 			float tBottomEdge = t.getBottomRight().y;
-			if (tBottomEdge > bottomEdge) {
+			if (tBottomEdge < topEdge) {
 				continue;
 			}
 
