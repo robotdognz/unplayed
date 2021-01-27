@@ -229,7 +229,7 @@ public class Player extends Editable {
 					&& Math.abs(currentPosition.y - previousPosition.y) < 2) {
 				jumpResetCounter++;
 			}
-		}else {
+		} else {
 			jumpResetCounter = 0;
 			resetJump();
 		}
@@ -251,7 +251,7 @@ public class Player extends Editable {
 
 		// check the player isn't spinning
 		float av = dynamicBody.getAngularVelocity();
-		if (Math.abs(av) >= 2) {
+		if (Math.abs(av) > 2) { //>= 2
 			destroyBarrier(true);
 			return;
 		}
@@ -260,7 +260,7 @@ public class Player extends Editable {
 		float angle = PApplet.degrees(dynamicBody.getAngle());
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
-		if (!(angleRemainder < 3 && angleRemainder > -3)) {
+		if (angleRemainder > 2) {// !(angleRemainder < 3 && angleRemainder > -3)) {
 			destroyBarrier(true);
 			return;
 		}
@@ -327,13 +327,11 @@ public class Player extends Editable {
 				}
 
 				if (Math.abs(previousBottom - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
-					this.dynamicBody.setAngularVelocity(0);
 					this.dynamicBody.setFixedRotation(true);
 					return false;
 				}
 
 				if (Math.abs(previousTop - bottomEdge) <= 2 && Math.abs(t.getBottomRight().y - topEdge) <= 2) {
-					this.dynamicBody.setAngularVelocity(0);
 					this.dynamicBody.setFixedRotation(true);
 					return false;
 				}
@@ -356,13 +354,11 @@ public class Player extends Editable {
 				}
 
 				if (Math.abs(previousRight - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
-					this.dynamicBody.setAngularVelocity(0);
 					this.dynamicBody.setFixedRotation(true);
 					return false;
 				}
 
 				if (Math.abs(previousLeft - rightEdge) <= 2 && Math.abs(t.getBottomRight().x - leftEdge) <= 2) {
-					this.dynamicBody.setAngularVelocity(0);
 					this.dynamicBody.setFixedRotation(true);
 					return false;
 				}
@@ -452,7 +448,6 @@ public class Player extends Editable {
 					if ((direction && t.getBottomRight().x < pos.x) // moving left
 							|| (!direction && t.getTopLeft().x > pos.x)) { // moving right
 						// lock rotation
-						this.dynamicBody.setAngularVelocity(0);
 						this.dynamicBody.setFixedRotation(true);
 
 						// create the barrier
