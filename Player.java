@@ -64,7 +64,7 @@ public class Player extends Editable {
 
 	// jumping
 	private float jumpPower; // the strength of the player's jump
-	private int boxJumpCount; // how many jumps the player can make before touching the ground
+	public int boxJumpCount; // how many jumps the player can make before touching the ground
 	private Vec2 previousPosition; // last player location
 	private int jumpResetCounter; // how many steps the player has been still
 	private int jumpResetLimit; // how many steps it takes the jump to reset

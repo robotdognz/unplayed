@@ -218,12 +218,12 @@ public class Editor {
 			if (game.player != null) {
 				Vec2 vel = game.player.dynamicBody.getLinearVelocity();
 				p.text("Velocity x:" + PApplet.nf(Math.abs(vel.x), 1, 2) + " y:" + PApplet.nf(Math.abs(vel.y), 1, 2),
-						p.width / 2, p.height - editorBottom.getHeight() - textSize * 7);
+						p.width / 2, p.height - editorBottom.getHeight() - textSize * 8);
 				float angle = PApplet.degrees(game.player.dynamicBody.getAngle());
 				p.text("Angle:" + PApplet.nf(angle, 1, 2), p.width / 2,
+						p.height - editorBottom.getHeight() - textSize * 7);
+				p.text("Jumps: " + game.player.boxJumpCount, p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 6);
-//				p.text("Still: " + game.player.isStill(), p.width / 2,
-//						p.height - editorBottom.getHeight() - textSize * 6);
 			}
 			if (game.placed != null) {
 				p.text("Placed: " + game.placed.size(), p.width / 2,
