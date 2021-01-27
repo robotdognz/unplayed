@@ -233,9 +233,7 @@ public class Player extends Editable {
 
 		// run the algorithms
 		checkTunnel();
-		if (!jumping) {
-			checkForGroundSlots();
-		}
+		checkForGroundSlots();
 		// checkForWallSlots();
 		// checkForRoofSlots();
 
@@ -324,6 +322,12 @@ public class Player extends Editable {
 
 	private void checkForGroundSlots() {
 		groundChecking.clear();
+
+		// check the player isn't jumping
+		if (jumping) {
+			destroyBarrier();
+			return;
+		}
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();

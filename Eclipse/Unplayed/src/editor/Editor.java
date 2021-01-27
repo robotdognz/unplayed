@@ -135,7 +135,7 @@ public class Editor {
 
 		// debug display
 		debugVis = false;
-		frameDelay = 100;
+		frameDelay = 60; //100
 		textSize = (int) (p.width / 28.8); // 50
 		tileSearch = true; // false
 	}
