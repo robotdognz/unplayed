@@ -247,7 +247,7 @@ public class Player extends Editable {
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		// edges of player
 		float leftEdge = pos.x - getWidth() / 2 - 0.5f;
-		float rightEdge = pos.x + getWidth() / 2 - 0.5f;
+		float rightEdge = pos.x + getWidth() / 2 + 0.5f;
 		float topEdge = pos.y - getHeight() / 2 - 0.5f;
 		float bottomEdge = pos.y + getHeight() / 2 + 0.5f;
 
@@ -282,49 +282,37 @@ public class Player extends Editable {
 
 		if (tunnelChecking.size() >= 2) {
 			// booleans for found tiles
-			boolean above = false;
-			boolean below = false;
-			boolean leftSide = false;
-			boolean rightSide = false;
+//			boolean above = false;
+//			boolean below = false;
+//			boolean leftSide = false;
+//			boolean rightSide = false;
+			boolean vertical = false;
 
-			// check for left/right
-			for (Tile t : tunnelChecking) {
-				float tileLeftEdge = t.getTopLeft().x;
-				float tileRightEdge = t.getBottomRight().x;
-				float tileTopEdge = t.getTopLeft().y;
-				float tileBottomEdge = t.getBottomRight().y;
-
-				if (tileTopEdge <= bottomEdge && tileBottomEdge >= topEdge) {
-					if (tileLeftEdge < rightEdge + 5 && tileLeftEdge > pos.x) {
-						rightSide = true;
-					}
-					if (tileRightEdge > leftEdge - 5 && tileRightEdge < pos.x) {
-						leftSide = true;
-					}
-				}
-			}
-			if (leftSide && rightSide) {
-				this.dynamicBody.setFixedRotation(true);
-				return;
-			}
+//			
 
 			// check for above/below
-			for (Tile t : tunnelChecking) {
-				float tileLeftEdge = t.getTopLeft().x;
-				float tileRightEdge = t.getBottomRight().x;
-				float tileTopEdge = t.getTopLeft().y;
-				float tileBottomEdge = t.getBottomRight().y;
+			float previousX = 0.5f;
+			float previousY = 0.5f;
 
-				if (tileLeftEdge <= rightEdge && tileRightEdge >= leftEdge) {
-					if (tileTopEdge < bottomEdge + 5 && tileTopEdge > pos.x) {
-						below = true;
-					}
-					if (tileBottomEdge > topEdge - 5 && tileBottomEdge < pos.x) {
-						above = true;
-					}
+			for (Tile t : tunnelChecking) {
+//				float tileLeftEdge = t.getTopLeft().x;
+//				float tileRightEdge = t.getBottomRight().x;
+//				float tileTopEdge = t.getTopLeft().y;
+//				float tileBottomEdge = t.getBottomRight().y;
+
+				if (previousX == 0.5f) {
+					previousX = t.getBottomRight().x;
+					previousY = t.getBottomRight().y;
+					continue;
 				}
+
+				if (Math.abs(previousY - topEdge) <= 2 && Math.abs(t.getBottomRight().y - bottomEdge) <= 2) {
+					vertical = true;
+					break;
+				}
+
 			}
-			if (above && below) {
+			if (vertical) {
 				this.dynamicBody.setFixedRotation(true);
 				return;
 			}
