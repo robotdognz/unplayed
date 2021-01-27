@@ -445,33 +445,32 @@ public class Player extends Editable {
 				// if this tile is the far side of a gap
 				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
 					// make sure the gap is in front of the player
-//					if ((direction && t.getBottomRight().x < pos.x) // moving left
-//							|| (!direction && t.getTopLeft().x > pos.x)) { // moving right
-						// lock rotation
-//						this.dynamicBody.setFixedRotation(true);
+					if ((direction && t.getBottomRight().x < pos.x) // moving left
+							|| (!direction && t.getTopLeft().x > pos.x)) { // moving right
 
-						// create the barrier
+						// lock rotation
+						this.dynamicBody.setFixedRotation(true);
+
+						// try create the barrier
 						if (direction) { // moving left
+							// final position check (stops barriers being made under player)
 							if (t.getBottomRight().x <= pos.x - getWidth() / 2) {
-								this.dynamicBody.setFixedRotation(true);
 								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createBarrier(top, bottom);
-								return;
 							}
 
 						} else { // moving right
+							// final position check (stops barriers being made under player)
 							if (t.getTopLeft().x >= pos.x + getWidth() / 2) {
-								this.dynamicBody.setFixedRotation(true);
 								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createBarrier(top, bottom);
-								return;
 							}
 						}
 
-//						return;
-//					}
+						return;
+					}
 				}
 			}
 			previousX = t.getX();
