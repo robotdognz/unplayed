@@ -244,8 +244,9 @@ public class Player extends Editable {
 	private void checkTiles() {
 		// environment checking
 
-		groundChecking.clear();
 		tunnelChecking.clear();
+		groundChecking.clear();
+		wallChecking.clear();
 
 		// check there are enough tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
@@ -380,7 +381,7 @@ public class Player extends Editable {
 	}
 
 	private void checkForGroundSlots(boolean resetRotation) {
-		groundChecking.clear();
+//		groundChecking.clear();
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
@@ -483,24 +484,24 @@ public class Player extends Editable {
 	}
 
 	private void checkForWallSlots(boolean resetRotation) {
-		wallChecking.clear();
+//		wallChecking.clear();
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
-		// player is moving or trying to move on the x axis
-		if (!((left || right) || (Math.abs(vel.x) >= 4))) {
+		// player is trying to move on the x axis
+		if (!(left || right)) {
 			destroyBarrier(resetRotation);
 			return;
 		}
 		boolean direction = true; // true = left, false = right
-		if (left || vel.x <= -4) {
+		if (left) {
 			direction = true;
 		}
-		if (right || vel.x >= 4) {
+		if (right) {
 			direction = false;
 		}
-		// player is still or falling on the y axis
-		if (!(vel.y <= 2)) {
+		// player is moving on the y axis
+		if (Math.abs(vel.y) <= 2) {
 			destroyBarrier(resetRotation);
 			return;
 		}
@@ -509,34 +510,45 @@ public class Player extends Editable {
 		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 		for (Tile t : sensorContacts) {
 			// skip this tile if the top of it is above the player's midpoint
-			if (t.getY() < pos.y) {
+//			if (t.getY() < pos.y) {
+//				continue;
+//			}
+
+			// skip this tile if it is too far from the player
+			if (Math.abs(t.getX() - pos.x) > getWidth()) {
 				continue;
 			}
 
-			// skip this tile if it is too far below the player
-			if (t.getY() > pos.y + getHeight()) {
-				continue;
-			}
-
-			// skip this tile if it behind the player
+			// if the tile is behind the player
 			if (direction) { // moving left
-				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {
+				if (t.getX() > pos.x) {
 					continue;
 				}
 			} else { // moving right
-				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) {
+				if (t.getBottomRight().x < pos.x) {
 					continue;
 				}
 			}
+
+//			// skip this tile if it behind the player
+//			if (direction) { // moving left
+//				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {
+//					continue;
+//				}
+//			} else { // moving right
+//				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) {
+//					continue;
+//				}
+//			}
 
 			wallChecking.add(t);
 		}
 		// sort the found tiles
-		if (direction) { // moving left
-			Collections.sort(wallChecking, Collections.reverseOrder());
-		} else { // moving right
-			Collections.sort(wallChecking);
-		}
+//		if (direction) { // moving left
+//			Collections.sort(wallChecking, Collections.reverseOrder());
+//		} else { // moving right
+		Collections.sort(wallChecking);
+//		}
 
 //		// check the list of tiles for a playerWidth sized gap
 //		float previousX = 0;
