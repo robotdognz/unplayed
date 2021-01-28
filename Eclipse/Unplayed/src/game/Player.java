@@ -491,8 +491,6 @@ public class Player extends Editable {
 
 	private void checkForWallSlots(boolean resetRotation) {
 
-		// check velocity is appropriate
-		Vec2 vel = dynamicBody.getLinearVelocity();
 		// player is trying to move on the x axis
 		if (!(left || right)) {
 			destroyWallBarrier(resetRotation);
@@ -505,11 +503,9 @@ public class Player extends Editable {
 		if (right) {
 			direction = false;
 		}
-//		// player is moving on the y axis
-//		if (Math.abs(vel.y) <= 2) {
-//			destroyWallBarrier(resetRotation);
-//			return;
-//		}
+
+		// remember that this will be positive for up
+		float yVelocity = dynamicBody.getLinearVelocity().y;
 
 		// create a list of relevant tiles sorted by x position
 		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
@@ -532,19 +528,43 @@ public class Player extends Editable {
 				}
 			}
 
+			if (yVelocity > 0) { // moving up
+				if (pos.y + getHeight() * 0.60f > t.getTopLeft().y) {
+					continue;
+				}
+			} else { // moving down
+				if (pos.y - getHeight() * 0.60f < t.getBottomRight().y) {
+					continue;
+				}
+			}
+			
+//			if (direction) { // moving left
+//				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {
+//					continue;
+//				}
+//			} else { // moving right
+//				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) {
+//					continue;
+//				}
+//			}
+
 			wallChecking.add(t);
 		}
 
 		// sort the found tiles
-		Collections.sort(wallChecking);
+		if (yVelocity > 0) { // moving up
+			Collections.sort(groundChecking, Collections.reverseOrder());
+		} else { // moving down
+			Collections.sort(groundChecking);
+		}
 
 //		// check the list of tiles for a playerWidth sized gap
-//		float previousX = 0;
+//		float previousY = 0;
 //		for (int i = 0; i < wallChecking.size(); i++) {
 //			Tile t = wallChecking.get(i);
 //			if (i > 0) {
 //				// if this tile is the far side of a gap
-//				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
+//				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
 //					// make sure the gap is in front of the player
 //					if ((direction && t.getBottomRight().x < pos.x) // moving left
 //							|| (!direction && t.getTopLeft().x > pos.x)) { // moving right
@@ -560,7 +580,7 @@ public class Player extends Editable {
 //							if (t.getBottomRight().x <= pos.x - getWidth() / 2) {
 //								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 //								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
-//								createBarrier(top, bottom);
+//								createWallBarrier(top, bottom);
 //							}
 //
 //						} else { // moving right
@@ -570,7 +590,7 @@ public class Player extends Editable {
 //							if (t.getTopLeft().x >= pos.x + getWidth() / 2) {
 //								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 //								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
-//								createBarrier(top, bottom);
+//								createWallBarrier(top, bottom);
 //							}
 //						}
 //
@@ -578,11 +598,11 @@ public class Player extends Editable {
 //					}
 //				}
 //			}
-//			previousX = t.getX();
+//			previousY = t.getX();
 //		}
 //
 //		// conditions wern't met, remove the barrier
-//		destroyBarrier(resetRotation);
+//		destroyWallBarrier(resetRotation);
 	}
 
 	private void createGroundBarrier(Vec2 v1, Vec2 v2) {
