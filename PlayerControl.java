@@ -19,12 +19,12 @@ public class PlayerControl implements Controller {
 		if (game.player != null) {
 			int left = 0;
 			int right = 0;
-			int middle = 0; // used for jumps
+//			int middle = 0; // used for jumps
 			for (PVector t : touch) {
 				// if (t.y >= height/3) {
-				if (t.x > p.width * 0.25f && t.x < p.width * 0.75f) { // middle chunk of screen
-					middle++;
-				}
+//				if (t.x > p.width * 0.25f && t.x < p.width * 0.75f) { // middle chunk of screen
+//					middle++;
+//				}
 				if (t.x < p.width * 0.25f) { // / 4) { // left chunk of screen
 					left++;
 				}
@@ -41,11 +41,11 @@ public class PlayerControl implements Controller {
 				game.player.still();
 			}
 
-			if (middle > 0) {
-				game.player.jumping();
-			} else {
-				game.player.notJumping();
-			}
+//			if (middle > 0) {
+//				game.player.jumping();
+//			} else {
+//				game.player.notJumping();
+//			}
 		}
 	}
 

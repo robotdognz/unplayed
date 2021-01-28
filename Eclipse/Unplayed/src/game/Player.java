@@ -30,7 +30,7 @@ public class Player extends Editable {
 
 	private boolean left = false;
 	private boolean right = false;
-	private boolean jumping = false;
+//	private boolean jumping = false;
 
 	// vibration
 	private Vibe vibe;
@@ -61,6 +61,9 @@ public class Player extends Editable {
 	private ArrayList<Tile> groundChecking; // list of tiles currently being checked for ground slots
 	private Body tempBarrier; // barrier used to stop the player moving past a slot
 	private Fixture tempFixture; // reference to the barrier fixture
+
+	// wall slot checking
+	private ArrayList<Tile> wallChecking; // list of tiles currently being checked for ground slots
 
 	// jumping
 	private float jumpPower; // the strength of the player's jump
@@ -106,6 +109,7 @@ public class Player extends Editable {
 		this.centerToCenter = (float) Math.hypot(getWidth(), getHeight()) + 1;
 		this.tunnelChecking = new ArrayList<Tile>();
 		this.groundChecking = new ArrayList<Tile>();
+		this.wallChecking = new ArrayList<Tile>();
 
 		this.events = new ArrayList<Event>();
 
@@ -270,7 +274,7 @@ public class Player extends Editable {
 		// shouldn't unlock it, that's what this variable is for
 		boolean resetRotation = checkTunnel();
 		checkForGroundSlots(resetRotation);
-		// checkForWallSlots();
+		checkForWallSlots(resetRotation);
 		// checkForRoofSlots();
 
 	}
@@ -378,12 +382,6 @@ public class Player extends Editable {
 	private void checkForGroundSlots(boolean resetRotation) {
 		groundChecking.clear();
 
-		// check the player isn't jumping
-//		if (jumping) {
-//			destroyBarrier(resetRotation);
-//			return;
-//		}
-
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		// player is moving or trying to move on the x axis
@@ -474,9 +472,6 @@ public class Player extends Editable {
 						}
 
 						return;
-					} else {
-						// destroy barriers that are behind the player
-						destroyBarrier(resetRotation);
 					}
 				}
 			}
@@ -485,6 +480,109 @@ public class Player extends Editable {
 
 		// conditions wern't met, remove the barrier
 		destroyBarrier(resetRotation);
+	}
+
+	private void checkForWallSlots(boolean resetRotation) {
+		wallChecking.clear();
+
+		// check velocity is appropriate
+		Vec2 vel = dynamicBody.getLinearVelocity();
+		// player is moving or trying to move on the x axis
+		if (!((left || right) || (Math.abs(vel.x) >= 4))) {
+			destroyBarrier(resetRotation);
+			return;
+		}
+		boolean direction = true; // true = left, false = right
+		if (left || vel.x <= -4) {
+			direction = true;
+		}
+		if (right || vel.x >= 4) {
+			direction = false;
+		}
+		// player is still or falling on the y axis
+		if (!(vel.y <= 2)) {
+			destroyBarrier(resetRotation);
+			return;
+		}
+
+		// create a list of relevant tiles sorted by x position
+		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
+		for (Tile t : sensorContacts) {
+			// skip this tile if the top of it is above the player's midpoint
+			if (t.getY() < pos.y) {
+				continue;
+			}
+
+			// skip this tile if it is too far below the player
+			if (t.getY() > pos.y + getHeight()) {
+				continue;
+			}
+
+			// skip this tile if it behind the player
+			if (direction) { // moving left
+				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {
+					continue;
+				}
+			} else { // moving right
+				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) {
+					continue;
+				}
+			}
+
+			wallChecking.add(t);
+		}
+		// sort the found tiles
+		if (direction) { // moving left
+			Collections.sort(wallChecking, Collections.reverseOrder());
+		} else { // moving right
+			Collections.sort(wallChecking);
+		}
+
+//		// check the list of tiles for a playerWidth sized gap
+//		float previousX = 0;
+//		for (int i = 0; i < wallChecking.size(); i++) {
+//			Tile t = wallChecking.get(i);
+//			if (i > 0) {
+//				// if this tile is the far side of a gap
+//				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
+//					// make sure the gap is in front of the player
+//					if ((direction && t.getBottomRight().x < pos.x) // moving left
+//							|| (!direction && t.getTopLeft().x > pos.x)) { // moving right
+//
+//						// lock rotation
+//						this.dynamicBody.setFixedRotation(true);
+//
+//						// try create the barrier
+//						if (direction) { // moving left
+//							// final position check (stops barriers being made under player)
+//							// this works because it failing doesn't remove an existing barrier
+//							// so it only prevents barriers being made when you're already in the slot
+//							if (t.getBottomRight().x <= pos.x - getWidth() / 2) {
+//								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
+//								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
+//								createBarrier(top, bottom);
+//							}
+//
+//						} else { // moving right
+//							// final position check (stops barriers being made under player)
+//							// this works because it failing doesn't remove an existing barrier
+//							// so it only prevents barriers being made when you're already in the slot
+//							if (t.getTopLeft().x >= pos.x + getWidth() / 2) {
+//								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
+//								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
+//								createBarrier(top, bottom);
+//							}
+//						}
+//
+//						return;
+//					}
+//				}
+//			}
+//			previousX = t.getX();
+//		}
+//
+//		// conditions wern't met, remove the barrier
+//		destroyBarrier(resetRotation);
 	}
 
 	private void createBarrier(Vec2 v1, Vec2 v2) {
@@ -600,8 +698,7 @@ public class Player extends Editable {
 			float a = dynamicBody.getAngle();
 			graphics.pushMatrix();
 			graphics.imageMode(CENTER);
-			graphics.translate(pos.x, pos.y); // pos.x + 0.5f, pos.y + 0.5f
-//			graphics.rotate(PApplet.radians(angle));
+			graphics.translate(pos.x, pos.y);
 			graphics.rotate(-a);
 
 			if (showChecking && dynamicBody.isFixedRotation()) {
@@ -647,6 +744,19 @@ public class Player extends Editable {
 					graphics.fill(255);
 					graphics.textSize(25);
 					graphics.text(i, t.getX() + t.getWidth() * 0.75f, t.getY() + t.getHeight() * 0.25f);
+				}
+			}
+			// wall checking
+			if (wallChecking.size() > 0) {
+				for (int i = 0; i < wallChecking.size(); i++) {
+					Tile t = wallChecking.get(i);
+					graphics.noStroke();
+					graphics.fill(255, 0, 0, 200);
+					graphics.rectMode(CORNER);
+					graphics.rect(t.getX(), t.getY() + t.getHeight() / 2, t.getWidth() / 2, t.getHeight() / 2);
+					graphics.fill(255);
+					graphics.textSize(25);
+					graphics.text(i, t.getX() + t.getWidth() * 0.25f, t.getY() + t.getHeight() * 0.75f);
 				}
 			}
 			if (tempFixture != null) {
@@ -704,11 +814,11 @@ public class Player extends Editable {
 		right = false;
 	}
 
-	public void jumping() {
-		jumping = true;
-	}
-
-	public void notJumping() {
-		jumping = false;
-	}
+//	public void jumping() {
+//		jumping = true;
+//	}
+//
+//	public void notJumping() {
+//		jumping = false;
+//	}
 }
