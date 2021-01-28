@@ -48,8 +48,8 @@ public class Spike extends Event {
 
 			Vec2 vertices[] = new Vec2[3];
 			vertices[0] = new Vec2(0, 0);
-			vertices[1] = new Vec2(-box2dW, -box2dH);
-			vertices[2] = new Vec2(box2dW, -box2dH);
+			vertices[1] = new Vec2(-box2dW / 2, -box2dH);
+			vertices[2] = new Vec2(box2dW / 2, -box2dH);
 			spikeShape.set(vertices, 3);
 
 //			spikeShape.setAsBox(box2dW, box2dH);
@@ -134,17 +134,17 @@ public class Spike extends Event {
 		graphics.popMatrix();
 
 		if (spikeFixture != null) {
-			graphics.pushMatrix();
-			Vec2 pos = box2d.getBodyPixelCoord(staticBody);
-			graphics.translate(pos.x, pos.y);
+//			graphics.pushMatrix();
+//			Vec2 pos = box2d.getBodyPixelCoord(staticBody);
+//			graphics.translate(pos.x, pos.y);
 			Vec2 v1 = box2d.coordWorldToPixels(((PolygonShape) spikeFixture.getShape()).getVertex(0));
 			Vec2 v2 = box2d.coordWorldToPixels(((PolygonShape) spikeFixture.getShape()).getVertex(1));
 			Vec2 v3 = box2d.coordWorldToPixels(((PolygonShape) spikeFixture.getShape()).getVertex(2));
 			graphics.stroke(0, 0, 255);
 			graphics.strokeWeight(4);
 			graphics.triangle(v1.x, v1.y, v2.x, v2.y, v3.x, v3.y);
-			graphics.popMatrix();
-		}else {
+//			graphics.popMatrix();
+		} else {
 			PApplet.println("weird");
 		}
 	}
