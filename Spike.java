@@ -144,10 +144,9 @@ public class Spike extends Event {
 			graphics.strokeWeight(4);
 			graphics.triangle(v1.x, v1.y, v2.x, v2.y, v3.x, v3.y);
 			graphics.popMatrix();
+		}else {
+			PApplet.println("weird");
 		}
-//		else {
-//			PApplet.println("weird");
-//		}
 	}
 
 }
