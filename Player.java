@@ -543,9 +543,9 @@ public class Player extends Editable {
 
 		// sort the found tiles
 		if (yVelocity > 0) { // moving up
-			Collections.sort(groundChecking, Collections.reverseOrder());
+			Collections.sort(wallChecking, Collections.reverseOrder());
 		} else { // moving down
-			Collections.sort(groundChecking);
+			Collections.sort(wallChecking);
 		}
 
 		// check the list of tiles for a playerWidth sized gap
