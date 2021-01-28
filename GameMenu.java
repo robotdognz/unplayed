@@ -7,6 +7,7 @@ import processing.core.PApplet;
 public class GameMenu extends Menu {
 	Game game;
 	String resume = "Resume";
+	String checkpoint = "Reload Checkpoint";
 	String restart = "Main Menu";
 	String quit = "Quit";
 
@@ -20,9 +21,11 @@ public class GameMenu extends Menu {
 		menuWidth = p.width / 2.182f; // 660
 		buttonDistance = p.width / 18; // 80
 		Button resumeB = new Button(p.width / 2, buttonWidth, buttonHeight, resume);
+		Button checkpointB = new Button(p.width / 2, buttonWidth, buttonHeight, checkpoint);
 		Button restartB = new Button(p.width / 2, buttonWidth, buttonHeight, restart);
 		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
 		buttons.add(resumeB);
+		buttons.add(checkpointB);
 		buttons.add(restartB);
 		buttons.add(quitB);
 		height();
@@ -34,6 +37,9 @@ public class GameMenu extends Menu {
 		for (Button b : buttons) {
 			if (b.click().equals(resume)) {
 				al.menu = null; // remove pause menu
+
+			} else if (b.click().equals(checkpoint)) {
+				al.game.restart();; // return to last checkpoint
 
 			} else if (b.click().equals(restart)) {
 				al.init(); // rebuild the game
