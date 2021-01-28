@@ -555,7 +555,7 @@ public class Player extends Editable {
 			if (i > 0) {
 				// if this tile is the far side of a gap
 				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
-					PApplet.println("conditions met");
+					
 					// make sure the gap is in front of the player
 					if ((yVelocity > 0 && t.getBottomRight().y < pos.y) // moving up
 							|| (yVelocity < 0 && t.getTopLeft().y > pos.y)) { // moving down
@@ -580,7 +580,7 @@ public class Player extends Editable {
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							if (t.getTopLeft().x >= pos.x + getWidth() / 2) {
+							if (t.getTopLeft().y >= pos.y + getHeight() / 2) {
 								if (direction) { //moving left
 									Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 									Vec2 top = new Vec2(bottom.x + 5, bottom.y);
