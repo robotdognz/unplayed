@@ -34,8 +34,8 @@ public class Spike extends Event {
 	@Override
 	public void create() {
 		if (box2d != null) {
-//			float box2dW = box2d.scalarPixelsToWorld(getWidth() / 2);
-//			float box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
+			float box2dW = box2d.scalarPixelsToWorld(getWidth() / 2);
+			float box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
 
 			// body
 			BodyDef bodyDef = new BodyDef();
@@ -45,22 +45,22 @@ public class Spike extends Event {
 			bodyDef.angle = PApplet.radians(angle);
 			this.staticBody = box2d.createBody(bodyDef);
 
-//			// shape
-//			PolygonShape spikeShape = new PolygonShape();
-//
-//			Vec2 vertices[] = new Vec2[3];
-//			vertices[0] = new Vec2(0, 0);
-//			vertices[1] = new Vec2(-box2dW / 2, -box2dH);
-//			vertices[2] = new Vec2(box2dW / 2, -box2dH);
-//			spikeShape.set(vertices, 3);
-//
-//			// fixture
-//			spikeDef = new FixtureDef();
-//			spikeDef.shape = spikeShape;
-////			spikeFixtureDef.isSensor = true;
-//			spikeDef.userData = "event";
+			// shape
+			PolygonShape spikeShape = new PolygonShape();
+
+			Vec2 vertices[] = new Vec2[3];
+			vertices[0] = new Vec2(0, 0);
+			vertices[1] = new Vec2(-box2dW / 2, -box2dH);
+			vertices[2] = new Vec2(box2dW / 2, -box2dH);
+			spikeShape.set(vertices, 3);
+
+			// fixture
+			spikeDef = new FixtureDef();
+			spikeDef.shape = spikeShape;
+//			spikeFixtureDef.isSensor = true;
+			spikeDef.userData = "event";
 			
-			createBounds();
+//			createBounds();
 			
 			spikeFixture = staticBody.createFixture(spikeDef);
 
@@ -68,57 +68,57 @@ public class Spike extends Event {
 
 	}
 
-	private void createBounds() {
-		float box2dW = box2d.scalarPixelsToWorld(getWidth() / 2);
-		float box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
-		PolygonShape spikeShape;
-
-		if (angle == 0) {
-			// shape
-			spikeShape = new PolygonShape();
-			Vec2 vertices[] = new Vec2[3];
-			vertices[0] = new Vec2(0, 0);
-			vertices[1] = new Vec2(-box2dW / 2, -box2dH);
-			vertices[2] = new Vec2(box2dW / 2, -box2dH);
-			spikeShape.set(vertices, 3);
-
-		} else if (angle == 90) {
-			// shape
-			spikeShape = new PolygonShape();
-			Vec2 vertices[] = new Vec2[3];
-			vertices[0] = new Vec2(0, 0);
-			vertices[1] = new Vec2(-box2dW, box2dH / 2);
-			vertices[2] = new Vec2(-box2dW, -box2dH / 2);
-			spikeShape.set(vertices, 3);
-
-		} else if (angle == 180) {
-			// shape
-			spikeShape = new PolygonShape();
-			Vec2 vertices[] = new Vec2[3];
-			vertices[0] = new Vec2(0, 0);
-			vertices[1] = new Vec2(-box2dW / 2, box2dH);
-			vertices[2] = new Vec2(box2dW / 2, box2dH);
-			spikeShape.set(vertices, 3);
-
-		} else if (angle == 270) {
-			// shape
-			spikeShape = new PolygonShape();
-			Vec2 vertices[] = new Vec2[3];
-			vertices[0] = new Vec2(0, 0);
-			vertices[1] = new Vec2(box2dW, box2dH / 2);
-			vertices[2] = new Vec2(box2dW, -box2dH / 2);
-			spikeShape.set(vertices, 3);
-
-		} else {
-			return;
-		}
-
-		// fixture
-		spikeDef = new FixtureDef();
-		spikeDef.shape = spikeShape;
-//		spikeFixtureDef.isSensor = true;
-		spikeDef.userData = "event";
-	}
+//	private void createBounds() {
+//		float box2dW = box2d.scalarPixelsToWorld(getWidth() / 2);
+//		float box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
+//		PolygonShape spikeShape;
+//
+//		if (angle == 0) {
+//			// shape
+//			spikeShape = new PolygonShape();
+//			Vec2 vertices[] = new Vec2[3];
+//			vertices[0] = new Vec2(0, 0);
+//			vertices[1] = new Vec2(-box2dW / 2, -box2dH);
+//			vertices[2] = new Vec2(box2dW / 2, -box2dH);
+//			spikeShape.set(vertices, 3);
+//
+//		} else if (angle == 90) {
+//			// shape
+//			spikeShape = new PolygonShape();
+//			Vec2 vertices[] = new Vec2[3];
+//			vertices[0] = new Vec2(0, 0);
+//			vertices[1] = new Vec2(-box2dW, box2dH / 2);
+//			vertices[2] = new Vec2(-box2dW, -box2dH / 2);
+//			spikeShape.set(vertices, 3);
+//
+//		} else if (angle == 180) {
+//			// shape
+//			spikeShape = new PolygonShape();
+//			Vec2 vertices[] = new Vec2[3];
+//			vertices[0] = new Vec2(0, 0);
+//			vertices[1] = new Vec2(-box2dW / 2, box2dH);
+//			vertices[2] = new Vec2(box2dW / 2, box2dH);
+//			spikeShape.set(vertices, 3);
+//
+//		} else if (angle == 270) {
+//			// shape
+//			spikeShape = new PolygonShape();
+//			Vec2 vertices[] = new Vec2[3];
+//			vertices[0] = new Vec2(0, 0);
+//			vertices[1] = new Vec2(box2dW, box2dH / 2);
+//			vertices[2] = new Vec2(box2dW, -box2dH / 2);
+//			spikeShape.set(vertices, 3);
+//
+//		} else {
+//			return;
+//		}
+//
+//		// fixture
+//		spikeDef = new FixtureDef();
+//		spikeDef.shape = spikeShape;
+////		spikeFixtureDef.isSensor = true;
+//		spikeDef.userData = "event";
+//	}
 
 //	private void createBounds() {
 //		if (angle == 0) {
@@ -143,7 +143,7 @@ public class Spike extends Event {
 //			destroy();
 //			create();
 //		}
-		createBounds();
+//		createBounds();
 	}
 
 	public void addAngle(float angle) {
@@ -154,7 +154,7 @@ public class Spike extends Event {
 			this.angle = 360 + this.angle;
 		}
 		if (staticBody != null) {
-			createBounds();
+//			createBounds();
 			destroy();
 			create();
 		}
