@@ -529,24 +529,14 @@ public class Player extends Editable {
 			}
 
 			if (yVelocity > 0) { // moving up
-				if (pos.y - getHeight() * 0.60f > t.getTopLeft().y) {
+				if (pos.y + getHeight() * 0.60f < t.getTopLeft().y) {
 					continue;
 				}
 			} else { // moving down
-				if (pos.y + getHeight() * 0.60f < t.getBottomRight().y) {
+				if (pos.y - getHeight() * 0.60f > t.getBottomRight().y) {
 					continue;
 				}
 			}
-			
-//			if (direction) { // moving left
-//				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {
-//					continue;
-//				}
-//			} else { // moving right
-//				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) {
-//					continue;
-//				}
-//			}
 
 			wallChecking.add(t);
 		}
@@ -558,51 +548,55 @@ public class Player extends Editable {
 			Collections.sort(groundChecking);
 		}
 
-//		// check the list of tiles for a playerWidth sized gap
-//		float previousY = 0;
-//		for (int i = 0; i < wallChecking.size(); i++) {
-//			Tile t = wallChecking.get(i);
-//			if (i > 0) {
-//				// if this tile is the far side of a gap
-//				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
-//					// make sure the gap is in front of the player
-//					if ((direction && t.getBottomRight().x < pos.x) // moving left
-//							|| (!direction && t.getTopLeft().x > pos.x)) { // moving right
-//
-//						// lock rotation
-//						this.dynamicBody.setFixedRotation(true);
-//
-//						// try create the barrier
-//						if (direction) { // moving left
+		// check the list of tiles for a playerWidth sized gap
+		float previousY = 0;
+		for (int i = 0; i < wallChecking.size(); i++) {
+			Tile t = wallChecking.get(i);
+			if (i > 0) {
+				// if this tile is the far side of a gap
+				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
+					// make sure the gap is in front of the player
+					if ((yVelocity > 0 && t.getBottomRight().y < pos.y) // moving up
+							|| (yVelocity < 0 && t.getTopLeft().y > pos.y)) { // moving down
+
+						// lock rotation
+						this.dynamicBody.setFixedRotation(true);
+
+						// try create the barrier
+						if (yVelocity > 0) { // moving up
 //							// final position check (stops barriers being made under player)
 //							// this works because it failing doesn't remove an existing barrier
 //							// so it only prevents barriers being made when you're already in the slot
-//							if (t.getBottomRight().x <= pos.x - getWidth() / 2) {
-//								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
+//							if (t.getBottomRight().y <= pos.y - getHeight() / 2) {
+//								if(direction) { //moving left
+//								Vec2 bottom = new Vec2(t.getBottomRight().y, t.getTopLeft().x);
 //								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 //								createWallBarrier(top, bottom);
+//								}
 //							}
-//
-//						} else { // moving right
-//							// final position check (stops barriers being made under player)
-//							// this works because it failing doesn't remove an existing barrier
-//							// so it only prevents barriers being made when you're already in the slot
-//							if (t.getTopLeft().x >= pos.x + getWidth() / 2) {
-//								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
-//								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
-//								createWallBarrier(top, bottom);
-//							}
-//						}
-//
-//						return;
-//					}
-//				}
-//			}
-//			previousY = t.getX();
-//		}
-//
-//		// conditions wern't met, remove the barrier
-//		destroyWallBarrier(resetRotation);
+
+						} else { // moving down
+							// final position check (stops barriers being made under player)
+							// this works because it failing doesn't remove an existing barrier
+							// so it only prevents barriers being made when you're already in the slot
+							if (t.getTopLeft().x >= pos.x + getWidth() / 2) {
+								if (direction) { //moving left
+									Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
+									Vec2 top = new Vec2(bottom.x + 5, bottom.y);
+									createWallBarrier(top, bottom);
+								}
+							}
+						}
+
+						return;
+					}
+				}
+			}
+			previousY = t.getX();
+		}
+
+		// conditions wern't met, remove the barrier
+		destroyWallBarrier(resetRotation);
 	}
 
 	private void createGroundBarrier(Vec2 v1, Vec2 v2) {
