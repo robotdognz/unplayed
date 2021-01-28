@@ -381,7 +381,7 @@ public class Player extends Editable {
 	}
 
 	private void checkForGroundSlots(boolean resetRotation) {
-//		groundChecking.clear();
+		groundChecking.clear();
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
@@ -484,7 +484,7 @@ public class Player extends Editable {
 	}
 
 	private void checkForWallSlots(boolean resetRotation) {
-//		wallChecking.clear();
+		wallChecking.clear();
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
