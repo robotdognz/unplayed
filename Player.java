@@ -168,6 +168,7 @@ public class Player extends Editable {
 
 	public void destroy() {
 		if (box2d != null) {
+			destroyAllBarriers(false);
 			box2d.destroyBody(dynamicBody);
 			dynamicBody = null;
 		}
