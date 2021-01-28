@@ -2,6 +2,12 @@ package objects.events;
 
 import static processing.core.PConstants.CENTER;
 
+import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
+
 import game.Game;
 import game.Player;
 import handlers.TextureCache;
@@ -18,6 +24,40 @@ public class Spike extends Event {
 		super(game, texture, name, true, x, y, 100, 100);
 		angle = 0;
 		createBounds();
+	}
+
+	@Override
+	public void create() {
+		if (box2d != null) {
+			float box2dW = box2d.scalarPixelsToWorld(getWidth() / 2);
+			float box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
+
+			// body
+			BodyDef bodyDef = new BodyDef();
+			bodyDef.type = BodyType.STATIC;
+			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
+			bodyDef.userData = this;
+			this.staticBody = box2d.createBody(bodyDef);
+
+			// shape
+			PolygonShape spikeShape = new PolygonShape();
+
+			Vec2 vertices[] = new Vec2[3];
+			vertices[0] = new Vec2(0, 0);
+			vertices[1] = new Vec2(-box2dW, -box2dH);
+			vertices[2] = new Vec2(box2dW, -box2dH);
+			spikeShape.set(vertices, 3);
+
+//			spikeShape.setAsBox(box2dW, box2dH);
+
+			// fixture
+			FixtureDef spikeFixtureDef = new FixtureDef();
+			spikeFixtureDef.shape = spikeShape;
+//			spikeFixtureDef.isSensor = true;
+			spikeFixtureDef.userData = "event";
+			staticBody.createFixture(spikeFixtureDef);
+		}
+
 	}
 
 	private void createBounds() {
@@ -59,19 +99,19 @@ public class Spike extends Event {
 	@Override
 	public void activate() {
 		// check if player is inside bounds
-		Player player = game.player;
-		if (player.getTopLeft().x > bounds.getBottomRight().x - 1) {
-			return;
-		}
-		if (player.getBottomRight().x < bounds.getTopLeft().x + 1) {
-			return;
-		}
-		if (player.getTopLeft().y > bounds.getBottomRight().y - 1) {
-			return;
-		}
-		if (player.getBottomRight().y < bounds.getTopLeft().y + 1) {
-			return;
-		}
+//		Player player = game.player;
+//		if (player.getTopLeft().x > bounds.getBottomRight().x - 1) {
+//			return;
+//		}
+//		if (player.getBottomRight().x < bounds.getTopLeft().x + 1) {
+//			return;
+//		}
+//		if (player.getTopLeft().y > bounds.getBottomRight().y - 1) {
+//			return;
+//		}
+//		if (player.getBottomRight().y < bounds.getTopLeft().y + 1) {
+//			return;
+//		}
 
 		game.restart(); // TODO: this needs a custom method in Game
 	}

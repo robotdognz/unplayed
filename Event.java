@@ -22,8 +22,8 @@ public abstract class Event extends Rectangle {
 	public boolean visible;
 
 	// box2d
-	Box2DProcessing box2d;
-	Body staticBody;
+	protected Box2DProcessing box2d;
+	protected Body staticBody;
 
 	public Event(Game game, TextureCache texture, String name, boolean visible, float x, float y, float width,
 			float height) {
