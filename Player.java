@@ -555,6 +555,7 @@ public class Player extends Editable {
 			if (i > 0) {
 				// if this tile is the far side of a gap
 				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
+					PApplet.println("conditions met");
 					// make sure the gap is in front of the player
 					if ((yVelocity > 0 && t.getBottomRight().y < pos.y) // moving up
 							|| (yVelocity < 0 && t.getTopLeft().y > pos.y)) { // moving down
