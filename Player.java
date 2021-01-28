@@ -506,24 +506,21 @@ public class Player extends Editable {
 		if (right) {
 			direction = false;
 		}
-		// player is moving on the y axis
-		if (Math.abs(vel.y) <= 2) {
-			destroyWallBarrier(resetRotation);
-			return;
-		}
+//		// player is moving on the y axis
+//		if (Math.abs(vel.y) <= 2) {
+//			destroyWallBarrier(resetRotation);
+//			return;
+//		}
 
 		// create a list of relevant tiles sorted by x position
 		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 		for (Tile t : sensorContacts) {
-			// skip this tile if the top of it is above the player's midpoint
-//			if (t.getY() < pos.y) {
+
+
+//			// skip this tile if it is too far from the player
+//			if (Math.abs(t.getX() - pos.x) > getWidth()) {
 //				continue;
 //			}
-
-			// skip this tile if it is too far from the player
-			if (Math.abs(t.getX() - pos.x) > getWidth()) {
-				continue;
-			}
 
 			// if the tile is behind the player
 			if (direction) { // moving left
@@ -536,25 +533,13 @@ public class Player extends Editable {
 				}
 			}
 
-//			// skip this tile if it behind the player
-//			if (direction) { // moving left
-//				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {
-//					continue;
-//				}
-//			} else { // moving right
-//				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) {
-//					continue;
-//				}
-//			}
 
 			wallChecking.add(t);
 		}
+		
 		// sort the found tiles
-//		if (direction) { // moving left
-//			Collections.sort(wallChecking, Collections.reverseOrder());
-//		} else { // moving right
 		Collections.sort(wallChecking);
-//		}
+
 
 //		// check the list of tiles for a playerWidth sized gap
 //		float previousX = 0;
@@ -773,7 +758,7 @@ public class Player extends Editable {
 		if (showChecking) {
 			for (Tile t : sensorContacts) {
 				graphics.noStroke();
-				graphics.fill(150, 150, 150, 150); // 255, 0, 0, 150
+				graphics.fill(150, 150, 150, 150);
 				graphics.rectMode(CORNER);
 				graphics.rect(t.getX(), t.getY(), t.getWidth(), t.getHeight());
 			}
@@ -791,6 +776,7 @@ public class Player extends Editable {
 					graphics.text(i, t.getX() + t.getWidth() * 0.25f, t.getY() + t.getHeight() * 0.25f);
 				}
 			}
+			
 			// ground checking
 			if (groundChecking.size() > 0) {
 				for (int i = 0; i < groundChecking.size(); i++) {
@@ -804,6 +790,14 @@ public class Player extends Editable {
 					graphics.text(i, t.getX() + t.getWidth() * 0.75f, t.getY() + t.getHeight() * 0.25f);
 				}
 			}
+			if (groundFixture != null) {
+				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) groundFixture.getShape()).m_vertex1);
+				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) groundFixture.getShape()).m_vertex2);
+				graphics.stroke(0, 0, 255);
+				graphics.strokeWeight(4);
+				graphics.line(v1.x, v1.y, v2.x, v2.y);
+			}
+			
 			// wall checking
 			if (wallChecking.size() > 0) {
 				for (int i = 0; i < wallChecking.size(); i++) {
@@ -816,13 +810,6 @@ public class Player extends Editable {
 					graphics.textSize(25);
 					graphics.text(i, t.getX() + t.getWidth() * 0.25f, t.getY() + t.getHeight() * 0.75f);
 				}
-			}
-			if (groundFixture != null) {
-				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) groundFixture.getShape()).m_vertex1);
-				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) groundFixture.getShape()).m_vertex2);
-				graphics.stroke(255, 0, 0);
-				graphics.strokeWeight(4);
-				graphics.line(v1.x, v1.y, v2.x, v2.y);
 			}
 			if (wallFixture != null) {
 				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) wallFixture.getShape()).m_vertex1);
