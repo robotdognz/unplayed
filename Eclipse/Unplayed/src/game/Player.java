@@ -528,12 +528,12 @@ public class Player extends Editable {
 				}
 			}
 
-			if (yVelocity < 0) { // moving up
-				if (pos.y + getHeight() * 0.60f > t.getTopLeft().y) {
+			if (yVelocity > 0) { // moving up
+				if (pos.y - getHeight() * 0.60f > t.getTopLeft().y) {
 					continue;
 				}
 			} else { // moving down
-				if (pos.y - getHeight() * 0.60f < t.getBottomRight().y) {
+				if (pos.y + getHeight() * 0.60f < t.getBottomRight().y) {
 					continue;
 				}
 			}
