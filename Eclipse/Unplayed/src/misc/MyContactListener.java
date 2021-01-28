@@ -54,7 +54,7 @@ public class MyContactListener implements ContactListener {
 				}
 
 				// TODO: having these in here means only tile top edges return tiles
-				if (fixtureA.getBody().getUserData() instanceof Tile) {
+				if (userData.equals("tile")) {// fixtureA.getBody().getUserData() instanceof Tile) {
 					tile = (Tile) fixtureA.getBody().getUserData();
 				}
 			}
@@ -82,7 +82,7 @@ public class MyContactListener implements ContactListener {
 					event = (Event) fixtureB.getBody().getUserData();
 				}
 
-				if (fixtureB.getBody().getUserData() instanceof Tile) {
+				if (userData.equals("tile")) {// fixtureB.getBody().getUserData() instanceof Tile) {
 					tile = (Tile) fixtureB.getBody().getUserData();
 				}
 			}
@@ -138,7 +138,7 @@ public class MyContactListener implements ContactListener {
 				} else if (userData.contentEquals("event")) {
 					event = (Event) fixtureA.getBody().getUserData();
 
-				} else if (fixtureA.getBody().getUserData() instanceof Tile) {
+				} else if (userData.equals("tile")) {// fixtureA.getBody().getUserData() instanceof Tile) {
 					tile = (Tile) fixtureA.getBody().getUserData();
 				}
 			}
@@ -162,7 +162,7 @@ public class MyContactListener implements ContactListener {
 				} else if (userData.contentEquals("event")) {
 					event = (Event) fixtureB.getBody().getUserData();
 
-				} else if (fixtureB.getBody().getUserData() instanceof Tile) {
+				} else if (userData.equals("tile")) {// fixtureB.getBody().getUserData() instanceof Tile) {
 					tile = (Tile) fixtureB.getBody().getUserData();
 				}
 			}

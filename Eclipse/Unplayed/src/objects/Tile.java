@@ -106,7 +106,7 @@ public class Tile extends Editable implements Comparable<Tile> {
 			rightEdgeDef.friction = friction;
 			staticBody.createFixture(rightEdgeDef);
 
-			// sensor
+			// ground sensor
 			EdgeShape sensor = new EdgeShape();
 			float sBox2dW = box2d.scalarPixelsToWorld((getWidth() - 1) / 2);
 			v1 = new Vec2(-sBox2dW, box2dH);
@@ -117,6 +117,18 @@ public class Tile extends Editable implements Comparable<Tile> {
 			sensorDef.userData = "ground";
 			sensorDef.isSensor = true;
 			staticBody.createFixture(sensorDef);
+
+			// player sensor sensor
+
+			// shape
+			PolygonShape boxShape = new PolygonShape();
+			boxShape.setAsBox(box2dW, box2dH);
+			// fixture
+			FixtureDef boxFixtureDef = new FixtureDef();
+			boxFixtureDef.shape = boxShape;
+			boxFixtureDef.userData = "tile";
+			sensorDef.isSensor = true;
+			staticBody.createFixture(boxFixtureDef);
 		}
 	}
 
