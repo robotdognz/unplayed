@@ -42,7 +42,7 @@ public class Spike extends Event {
 			bodyDef.type = BodyType.STATIC;
 			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
 			bodyDef.userData = this;
-			bodyDef.angle = PApplet.radians(angle);
+			bodyDef.angle = -PApplet.radians(angle);
 			this.staticBody = box2d.createBody(bodyDef);
 
 			// shape
@@ -59,9 +59,9 @@ public class Spike extends Event {
 			spikeDef.shape = spikeShape;
 //			spikeFixtureDef.isSensor = true;
 			spikeDef.userData = "event";
-			
+
 //			createBounds();
-			
+
 			spikeFixture = staticBody.createFixture(spikeDef);
 
 		}
@@ -202,6 +202,7 @@ public class Spike extends Event {
 			graphics.pushMatrix();
 //			Vec2 pos = box2d.getBodyPixelCoord(staticBody);
 			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
+			graphics.rotate(staticBody.getAngle()); // angle of the spike
 			Vec2 v1 = box2d.coordWorldToPixels(((PolygonShape) spikeFixture.getShape()).getVertex(0));
 			Vec2 v2 = box2d.coordWorldToPixels(((PolygonShape) spikeFixture.getShape()).getVertex(1));
 			Vec2 v3 = box2d.coordWorldToPixels(((PolygonShape) spikeFixture.getShape()).getVertex(2));
