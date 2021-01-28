@@ -1,4 +1,4 @@
-import game.*;
+import game.AppLogic; //import game.*;
 
 import android.content.Context;
 import android.app.Activity;

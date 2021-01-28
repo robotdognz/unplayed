@@ -121,7 +121,7 @@ public class Player extends Editable {
 
 		// jumping
 		this.jumpResetCounter = 0; // how many steps the player has been still
-		this.jumpResetLimit = 480; // how many steps it takes the jump to reset
+		this.jumpResetLimit = 300; // how many steps it takes the jump to reset
 
 		create();
 
@@ -168,7 +168,7 @@ public class Player extends Editable {
 
 	public void destroy() {
 		if (box2d != null) {
-			destroyAllBarriers(false);
+			destroyAllBarriers(false); // get rid of barriers so they don't mess with the next player
 			box2d.destroyBody(dynamicBody);
 			dynamicBody = null;
 		}
@@ -505,14 +505,15 @@ public class Player extends Editable {
 			direction = false;
 		}
 
-		// remember that this will be positive for up
+		// velocity, used to figure out if moving up or down
+		// (remember that this will be positive for up)
 		float yVelocity = dynamicBody.getLinearVelocity().y;
 
 		// create a list of relevant tiles sorted by x position
 		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 		for (Tile t : sensorContacts) {
 
-			// if the tile is behind the player
+			// skip the tile if it is to the back of the player
 			if (direction) { // moving left
 				if (t.getX() > pos.x - getWidth() / 2) {
 					continue;
@@ -529,6 +530,7 @@ public class Player extends Editable {
 				}
 			}
 
+			// skip the tile if it is behind the player
 			if (yVelocity > 0) { // moving up
 				if (pos.y + getHeight() * 0.60f < t.getTopLeft().y) {
 					continue;
