@@ -59,11 +59,13 @@ public class Player extends Editable {
 
 	// ground slot checking
 	private ArrayList<Tile> groundChecking; // list of tiles currently being checked for ground slots
-	private Body tempBarrier; // barrier used to stop the player moving past a slot
-	private Fixture tempFixture; // reference to the barrier fixture
+	private Body groundBarrier; // barrier used to stop the player moving past a slot
+	private Fixture groundFixture; // reference to the barrier fixture
 
 	// wall slot checking
 	private ArrayList<Tile> wallChecking; // list of tiles currently being checked for ground slots
+	private Body wallBarrier; // barrier used to stop the player moving past a slot
+	private Fixture wallFixture; // reference to the barrier fixture
 
 	// jumping
 	private float jumpPower; // the strength of the player's jump
@@ -92,6 +94,8 @@ public class Player extends Editable {
 			hasTexture = false;
 		}
 
+		this.events = new ArrayList<Event>();
+
 		// box2d
 		this.box2d = box2d;
 		this.friction = 0.6f; // from 0 to 1
@@ -104,14 +108,16 @@ public class Player extends Editable {
 		// environment checking
 		this.sensorContacts = new HashSet<Tile>();
 //		this.playerContacts = new HashSet<Tile>();
-		this.tempBarrier = null;
+
+		this.tunnelChecking = new ArrayList<Tile>();
 		this.xCompare = new PlayerTileXComparator();
 		this.centerToCenter = (float) Math.hypot(getWidth(), getHeight()) + 1;
-		this.tunnelChecking = new ArrayList<Tile>();
-		this.groundChecking = new ArrayList<Tile>();
-		this.wallChecking = new ArrayList<Tile>();
 
-		this.events = new ArrayList<Event>();
+		this.groundChecking = new ArrayList<Tile>();
+		this.groundBarrier = null;
+
+		this.wallChecking = new ArrayList<Tile>();
+		this.wallBarrier = null;
 
 		// jumping
 		this.jumpResetCounter = 0; // how many steps the player has been still
@@ -250,14 +256,14 @@ public class Player extends Editable {
 
 		// check there are enough tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
-			destroyBarrier(true);
+			destroyAllBarriers(true);
 			return;
 		}
 
 		// check the player isn't spinning
 		float av = dynamicBody.getAngularVelocity();
 		if (Math.abs(av) >= 2) {
-			destroyBarrier(true);
+			destroyAllBarriers(true);
 			return;
 		}
 
@@ -266,7 +272,7 @@ public class Player extends Editable {
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
 		if (angleRemainder >= 3) {
-			destroyBarrier(true);
+			destroyAllBarriers(true);
 			return;
 		}
 
@@ -381,13 +387,13 @@ public class Player extends Editable {
 	}
 
 	private void checkForGroundSlots(boolean resetRotation) {
-		groundChecking.clear();
+//		groundChecking.clear();
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		// player is moving or trying to move on the x axis
 		if (!((left || right) || (Math.abs(vel.x) >= 4))) {
-			destroyBarrier(resetRotation);
+			destroyGroundBarrier(resetRotation);
 			return;
 		}
 		boolean direction = true; // true = left, false = right
@@ -399,7 +405,7 @@ public class Player extends Editable {
 		}
 		// player is still or falling on the y axis
 		if (!(vel.y <= 2)) {
-			destroyBarrier(resetRotation);
+			destroyGroundBarrier(resetRotation);
 			return;
 		}
 
@@ -458,7 +464,7 @@ public class Player extends Editable {
 							if (t.getBottomRight().x <= pos.x - getWidth() / 2) {
 								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
-								createBarrier(top, bottom);
+								createGroundBarrier(top, bottom);
 							}
 
 						} else { // moving right
@@ -468,7 +474,7 @@ public class Player extends Editable {
 							if (t.getTopLeft().x >= pos.x + getWidth() / 2) {
 								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
-								createBarrier(top, bottom);
+								createGroundBarrier(top, bottom);
 							}
 						}
 
@@ -480,7 +486,7 @@ public class Player extends Editable {
 		}
 
 		// conditions wern't met, remove the barrier
-		destroyBarrier(resetRotation);
+		destroyGroundBarrier(resetRotation);
 	}
 
 	private void checkForWallSlots(boolean resetRotation) {
@@ -490,7 +496,7 @@ public class Player extends Editable {
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		// player is trying to move on the x axis
 		if (!(left || right)) {
-			destroyBarrier(resetRotation);
+			destroyWallBarrier(resetRotation);
 			return;
 		}
 		boolean direction = true; // true = left, false = right
@@ -502,7 +508,7 @@ public class Player extends Editable {
 		}
 		// player is moving on the y axis
 		if (Math.abs(vel.y) <= 2) {
-			destroyBarrier(resetRotation);
+			destroyWallBarrier(resetRotation);
 			return;
 		}
 
@@ -597,8 +603,8 @@ public class Player extends Editable {
 //		destroyBarrier(resetRotation);
 	}
 
-	private void createBarrier(Vec2 v1, Vec2 v2) {
-		if (tempBarrier != null) {
+	private void createGroundBarrier(Vec2 v1, Vec2 v2) {
+		if (groundBarrier != null) {
 			return;
 		}
 
@@ -606,7 +612,7 @@ public class Player extends Editable {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.STATIC;
 		bodyDef.userData = v1;
-		tempBarrier = box2d.createBody(bodyDef);
+		groundBarrier = box2d.createBody(bodyDef);
 
 		// shape
 		EdgeShape tempBarrierEdge = new EdgeShape();
@@ -617,20 +623,60 @@ public class Player extends Editable {
 		tempBarrierDef.shape = tempBarrierEdge;
 		tempBarrierDef.density = density;
 		tempBarrierDef.friction = friction;
-		tempFixture = tempBarrier.createFixture(tempBarrierDef);
+		groundFixture = groundBarrier.createFixture(tempBarrierDef);
 	}
 
-	private void destroyBarrier(boolean resetRotation) {
-		if (tempBarrier != null) {
-			box2d.destroyBody(tempBarrier);
-			tempFixture = null;
-			tempBarrier = null;
+	private void createWallBarrier(Vec2 v1, Vec2 v2) {
+		if (wallBarrier != null) {
+			return;
+		}
 
-			// TODO: this will might need to change when there are multiple algorithms
+		// body
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.STATIC;
+		bodyDef.userData = v1;
+		wallBarrier = box2d.createBody(bodyDef);
+
+		// shape
+		EdgeShape tempBarrierEdge = new EdgeShape();
+		tempBarrierEdge.set(box2d.coordPixelsToWorld(v1), box2d.coordPixelsToWorld(v2));
+
+		// fixture
+		FixtureDef tempBarrierDef = new FixtureDef();
+		tempBarrierDef.shape = tempBarrierEdge;
+		tempBarrierDef.density = density;
+		tempBarrierDef.friction = friction;
+		wallFixture = wallBarrier.createFixture(tempBarrierDef);
+	}
+
+	private void destroyGroundBarrier(boolean resetRotation) {
+		if (groundBarrier != null) {
+			box2d.destroyBody(groundBarrier);
+			groundFixture = null;
+			groundBarrier = null;
+
 			if (resetRotation) {
 				this.dynamicBody.setFixedRotation(locked);
 			}
 		}
+	}
+
+	private void destroyWallBarrier(boolean resetRotation) {
+		if (wallBarrier != null) {
+			box2d.destroyBody(wallBarrier);
+			wallFixture = null;
+			wallBarrier = null;
+
+			if (resetRotation) {
+				this.dynamicBody.setFixedRotation(locked);
+			}
+		}
+	}
+
+	private void destroyAllBarriers(boolean resetRotation) {
+		destroyGroundBarrier(resetRotation);
+		destroyWallBarrier(resetRotation);
+		// destroyRoofBarrier(resetRotation);
 	}
 
 	public void jump() {
@@ -771,9 +817,16 @@ public class Player extends Editable {
 					graphics.text(i, t.getX() + t.getWidth() * 0.25f, t.getY() + t.getHeight() * 0.75f);
 				}
 			}
-			if (tempFixture != null) {
-				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) tempFixture.getShape()).m_vertex1);
-				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) tempFixture.getShape()).m_vertex2);
+			if (groundFixture != null) {
+				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) groundFixture.getShape()).m_vertex1);
+				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) groundFixture.getShape()).m_vertex2);
+				graphics.stroke(255, 0, 0);
+				graphics.strokeWeight(4);
+				graphics.line(v1.x, v1.y, v2.x, v2.y);
+			}
+			if (wallFixture != null) {
+				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) wallFixture.getShape()).m_vertex1);
+				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) wallFixture.getShape()).m_vertex2);
 				graphics.stroke(255, 0, 0);
 				graphics.strokeWeight(4);
 				graphics.line(v1.x, v1.y, v2.x, v2.y);
