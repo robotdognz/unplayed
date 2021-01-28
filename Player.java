@@ -593,7 +593,7 @@ public class Player extends Editable {
 					}
 				}
 			}
-			previousY = t.getX();
+			previousY = t.getY();
 		}
 
 		// conditions wern't met, remove the barrier
