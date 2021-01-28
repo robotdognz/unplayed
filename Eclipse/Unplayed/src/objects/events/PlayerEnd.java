@@ -126,12 +126,7 @@ public class PlayerEnd extends Event {
 		if (!player.isStill()) {
 			return;
 		}
-//		if (player.getTopLeft().x != getTopLeft().x) {
-//			return;
-//		}
-//		if (player.getTopLeft().y != getTopLeft().y) {
-//			return;
-//		}
+
 		Vec2 playerPos = player.getCenter();
 		if (Math.abs(playerPos.x - center.x) > 0.5f) {
 			return;
@@ -149,9 +144,15 @@ public class PlayerEnd extends Event {
 			// if (!(player.isFlippedV() == required.isFlippedV())) {
 			// return;
 			// }
+			float playerAngle = player.dynamicBody.getAngle();
+			playerAngle = PApplet.degrees(playerAngle);
+			playerAngle = Math.round(playerAngle / 90) * 90;
+
 			if (!(player.getAngle() == required.getAngle())) {
 				return;
 			}
+
+			PApplet.println("Required Angle: " + required.getAngle() + "Actual Angle: " + playerAngle);
 		}
 
 		// the player is perfectly in the slot
