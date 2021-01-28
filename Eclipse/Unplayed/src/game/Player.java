@@ -520,14 +520,14 @@ public class Player extends Editable {
 				if (t.getX() > pos.x - getWidth() / 2) {
 					continue;
 				}
-				if (t.getX() < pos.x - getWidth() + 5) {
+				if (t.getX() < pos.x - getWidth() - 5) {
 					continue;
 				}
 			} else { // moving right
 				if (t.getBottomRight().x < pos.x + getWidth() / 2) {
 					continue;
 				}
-				if (t.getBottomRight().x > pos.x + getWidth() - 5) {
+				if (t.getBottomRight().x > pos.x + getWidth() + 5) {
 					continue;
 				}
 			}
