@@ -122,6 +122,8 @@ public class Tile extends Editable implements Comparable<Tile> {
 
 			// shape
 			PolygonShape boxShape = new PolygonShape();
+			box2dW = box2d.scalarPixelsToWorld(getWidth() / 2 - 5);
+			box2dH = box2d.scalarPixelsToWorld(getHeight() / 2 - 5);
 			boxShape.setAsBox(box2dW, box2dH);
 			// fixture
 			FixtureDef boxFixtureDef = new FixtureDef();
