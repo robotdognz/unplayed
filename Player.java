@@ -253,6 +253,7 @@ public class Player extends Editable {
 		tunnelChecking.clear();
 		groundChecking.clear();
 		wallChecking.clear();
+		// roofChecking.clear();
 
 		// check there are enough tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
@@ -387,7 +388,6 @@ public class Player extends Editable {
 	}
 
 	private void checkForGroundSlots(boolean resetRotation) {
-//		groundChecking.clear();
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
@@ -490,7 +490,6 @@ public class Player extends Editable {
 	}
 
 	private void checkForWallSlots(boolean resetRotation) {
-		wallChecking.clear();
 
 		// check velocity is appropriate
 		Vec2 vel = dynamicBody.getLinearVelocity();
@@ -516,30 +515,28 @@ public class Player extends Editable {
 		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 		for (Tile t : sensorContacts) {
 
-
-//			// skip this tile if it is too far from the player
-//			if (Math.abs(t.getX() - pos.x) > getWidth()) {
-//				continue;
-//			}
-
 			// if the tile is behind the player
 			if (direction) { // moving left
-				if (t.getX() > pos.x) {
+				if (t.getX() > pos.x - getWidth() / 2) {
+					continue;
+				}
+				if (t.getX() < pos.x - getWidth()) {
 					continue;
 				}
 			} else { // moving right
-				if (t.getBottomRight().x < pos.x) {
+				if (t.getBottomRight().x < pos.x + getWidth() / 2) {
+					continue;
+				}
+				if (t.getBottomRight().x < pos.x + getWidth()) {
 					continue;
 				}
 			}
 
-
 			wallChecking.add(t);
 		}
-		
+
 		// sort the found tiles
 		Collections.sort(wallChecking);
-
 
 //		// check the list of tiles for a playerWidth sized gap
 //		float previousX = 0;
@@ -776,7 +773,7 @@ public class Player extends Editable {
 					graphics.text(i, t.getX() + t.getWidth() * 0.25f, t.getY() + t.getHeight() * 0.25f);
 				}
 			}
-			
+
 			// ground checking
 			if (groundChecking.size() > 0) {
 				for (int i = 0; i < groundChecking.size(); i++) {
@@ -797,7 +794,7 @@ public class Player extends Editable {
 				graphics.strokeWeight(4);
 				graphics.line(v1.x, v1.y, v2.x, v2.y);
 			}
-			
+
 			// wall checking
 			if (wallChecking.size() > 0) {
 				for (int i = 0; i < wallChecking.size(); i++) {
