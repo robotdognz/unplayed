@@ -135,8 +135,8 @@ public class Spike extends Event {
 
 		if (spikeFixture != null) {
 			graphics.pushMatrix();
-			Vec2 pos = box2d.getBodyPixelCoord(staticBody);
-			graphics.translate(-pos.x, -pos.y);
+//			Vec2 pos = box2d.getBodyPixelCoord(staticBody);
+			graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
 			Vec2 v1 = box2d.coordWorldToPixels(((PolygonShape) spikeFixture.getShape()).getVertex(0));
 			Vec2 v2 = box2d.coordWorldToPixels(((PolygonShape) spikeFixture.getShape()).getVertex(1));
 			Vec2 v3 = box2d.coordWorldToPixels(((PolygonShape) spikeFixture.getShape()).getVertex(2));
