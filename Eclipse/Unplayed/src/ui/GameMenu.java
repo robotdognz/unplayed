@@ -7,7 +7,7 @@ import processing.core.PApplet;
 public class GameMenu extends Menu {
 	Game game;
 	String resume = "Resume";
-	String checkpoint = "Reload Checkpoint";
+	String checkpoint = "Checkpoint";
 	String restart = "Main Menu";
 	String quit = "Quit";
 
@@ -40,6 +40,7 @@ public class GameMenu extends Menu {
 
 			} else if (b.click().equals(checkpoint)) {
 				al.game.restart();; // return to last checkpoint
+				al.menu = null; // remove pause menu
 
 			} else if (b.click().equals(restart)) {
 				al.init(); // rebuild the game
