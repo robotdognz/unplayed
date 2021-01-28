@@ -41,6 +41,7 @@ public class Spike extends Event {
 			bodyDef.type = BodyType.STATIC;
 			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
 			bodyDef.userData = this;
+			bodyDef.angle = PApplet.radians(angle);
 			this.staticBody = box2d.createBody(bodyDef);
 
 			// shape
@@ -52,14 +53,13 @@ public class Spike extends Event {
 			vertices[2] = new Vec2(box2dW / 2, -box2dH);
 			spikeShape.set(vertices, 3);
 
-//			spikeShape.setAsBox(box2dW, box2dH);
-
 			// fixture
 			FixtureDef spikeFixtureDef = new FixtureDef();
 			spikeFixtureDef.shape = spikeShape;
 //			spikeFixtureDef.isSensor = true;
 			spikeFixtureDef.userData = "event";
 			spikeFixture = staticBody.createFixture(spikeFixtureDef);
+
 		}
 
 	}
@@ -83,6 +83,10 @@ public class Spike extends Event {
 		} else if (this.angle < 0) {
 			this.angle = 360 + this.angle;
 		}
+		if (spikeFixture != null) {
+			destroy();
+			create();
+		}
 //		createBounds();
 	}
 
@@ -92,6 +96,10 @@ public class Spike extends Event {
 			this.angle -= 360;
 		} else if (this.angle < 0) {
 			this.angle = 360 + this.angle;
+		}
+		if (spikeFixture != null) {
+			destroy();
+			create();
 		}
 //		createBounds();
 	}
@@ -144,8 +152,6 @@ public class Spike extends Event {
 			graphics.strokeWeight(4);
 			graphics.triangle(v1.x, v1.y, v2.x, v2.y, v3.x, v3.y);
 			graphics.popMatrix();
-		} else {
-			PApplet.println("weird");
 		}
 	}
 
