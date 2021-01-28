@@ -83,10 +83,13 @@ public class Spike extends Event {
 		} else if (this.angle < 0) {
 			this.angle = 360 + this.angle;
 		}
-		if (spikeFixture != null) {
-			destroy();
-			create();
+		if (staticBody != null) {
+			staticBody.setTransform(staticBody.getLocalCenter(), PApplet.radians(angle));
 		}
+//		if (spikeFixture != null) {
+//			destroy();
+//			create();
+//		}
 //		createBounds();
 	}
 
@@ -97,10 +100,13 @@ public class Spike extends Event {
 		} else if (this.angle < 0) {
 			this.angle = 360 + this.angle;
 		}
-		if (spikeFixture != null) {
-			destroy();
-			create();
+		if (staticBody != null) {
+			staticBody.setTransform(staticBody.getLocalCenter(), PApplet.radians(angle));
 		}
+//		if (spikeFixture != null) {
+//			destroy();
+//			create();
+//		}
 //		createBounds();
 	}
 
