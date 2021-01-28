@@ -572,7 +572,7 @@ public class Player extends Editable {
 							if (t.getBottomRight().y <= pos.y - getHeight() / 2) {
 
 								if (direction) { // moving left
-									Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().x);
+									Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
 									Vec2 top = new Vec2(bottom.x + 5, bottom.y);
 									createWallBarrier(top, bottom);
 									PApplet.println("wall created");
