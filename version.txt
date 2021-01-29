@@ -1,5 +1,21 @@
 (Major version).(Minor version).(Revision number)
 
+1.2.0: Physics build
+
+-Rebuilt entire physics system from the ground up
+-Physics now runs correctly independant of frame rate
+-It is now possible to rotate the player by bouncing off the environment
+-Player now has inerta and will take a moment to change direction/speed up
+-Player now has friction, pushing into walls will slow down falling or jumping
+-Player no longer gets stuck on walls
+-There are no longer sometimes slots the player can't jump up into
+-Previous checkpoint button added to pause menu (there are bugs with the physics that sometimes require a restart)
+-PlayerEnds now require the correct orientation of player by default
+-There are now orientation settings for PlayerEnds
+-Quadtree visualisation has been removed and replaced with physics assist visualisation
+-Spikes now have pixel perfect hitboxes
+-Levels will now automatically end if all slots are filled
+
 1.1.3: Early playtester patch
 
 -Various bug fixes
