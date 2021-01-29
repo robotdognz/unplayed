@@ -218,7 +218,7 @@ public class Game {
 		if (playerStart != null) {
 			createPlayer(playerStart);
 		}
-		
+
 		puzzlesCompleted = 0;
 
 	}
@@ -277,7 +277,7 @@ public class Game {
 			placed.add(newTile);
 
 			// create the new player
-			puzzlesCompleted ++;
+			puzzlesCompleted++;
 			createPlayer(found);
 		}
 
@@ -415,10 +415,10 @@ public class Game {
 	}
 
 	public void step(float deltaTime) {
-		if(puzzlesCompleted == world.playerEndCount()) {
+		if (world.playerEndCount() > 0 && puzzlesCompleted == world.playerEndCount()) {
 			endGame();
 		}
-		
+
 		// step player non-physics logic
 		if (player != null) {
 			player.step();
