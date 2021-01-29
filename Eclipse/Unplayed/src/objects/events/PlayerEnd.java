@@ -150,7 +150,7 @@ public class PlayerEnd extends Event {
 			playerAngle = Math.round(playerAngle / 90) * 90; //round to nearest 90
 			
 			//get it into the 360 range
-			while (Math.abs(playerAngle) > 270) {
+			while (Math.abs(playerAngle) > 360) {
 				if (playerAngle > 0) {
 					playerAngle -= 90;
 				} else {
@@ -161,9 +161,9 @@ public class PlayerEnd extends Event {
 				playerAngle += 360;
 			}
 //
-//			if (playerAngle == 360) {
-//				playerAngle = 0;
-//			}
+			if (playerAngle == 360) {
+				playerAngle = 0;
+			}
 
 			if (!(player.getAngle() == required.getAngle())) {
 				return;
