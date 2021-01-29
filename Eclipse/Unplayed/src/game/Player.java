@@ -77,12 +77,6 @@ public class Player extends Editable {
 	Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.file = tile.getFile();
-//		if(tile.isFlippedH()) {
-//			this.flipH();
-//		}
-//		if(tile.isFlippedV()) {
-//			this.flipV();
-//		}
 		this.setAngle(tile.getAngle());
 
 		vibe = v;
