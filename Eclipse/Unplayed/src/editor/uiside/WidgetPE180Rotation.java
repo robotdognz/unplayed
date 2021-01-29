@@ -14,14 +14,18 @@ public class WidgetPE180Rotation extends Widget {
 		toolbar = (EditorSide) parent;
 		icon = p.loadImage(folder + "LevelEnd_180sensitive.png");
 	}
-	
+
 	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof PlayerEnd) {
 			available = true;
-			
-			
+			if (((PlayerEnd) editor.selected).getRotationMode() == 1) {
+				active = true;
+			} else {
+				active = false;
+			}
+
 		} else {
 			available = false;
 		}
@@ -30,7 +34,9 @@ public class WidgetPE180Rotation extends Widget {
 
 	@Override
 	public void clicked() {
-
+		if (editor.selected != null && editor.selected instanceof PlayerEnd) {
+			((PlayerEnd) editor.selected).setRotationMode(1);
+		}
 	}
 
 }
