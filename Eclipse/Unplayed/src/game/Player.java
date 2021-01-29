@@ -892,6 +892,28 @@ public class Player extends Editable {
 		right = false;
 	}
 
+	public float getAdjustedAngle() {
+		float playerAngle = -dynamicBody.getAngle(); // get angle
+		playerAngle = PApplet.degrees(playerAngle); // convert to degrees
+		playerAngle = Math.round(playerAngle / 90) * 90; // round to nearest 90
+
+		// get it into the 360 range
+		while (Math.abs(playerAngle) > 270) {
+			if (playerAngle > 0) {
+				playerAngle -= 360;
+			} else {
+				playerAngle += 360;
+			}
+		}
+
+		// make sure it's positive
+		if (playerAngle < 0) {
+			playerAngle += 360;
+		}
+
+		return playerAngle;
+	}
+
 //	public void jumping() {
 //		jumping = true;
 //	}
