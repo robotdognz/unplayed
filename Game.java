@@ -224,6 +224,7 @@ public class Game {
 		Editor editor = app.getEditor();
 
 		if (editor == null) { // in a normal game
+			p.delay(400);
 			app.nextLevel();
 		} else { // in the editor
 			editor.toast.showToast("Level Complete");
