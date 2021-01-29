@@ -421,10 +421,10 @@ public class Game {
 	}
 
 	public void step(float deltaTime) {
-		// check if the level is complete
-		if (world.playerEndCount() > 0 && puzzlesCompleted == world.playerEndCount()) {
-			endGame();
-		}
+//		// check if the level is complete
+//		if (world.playerEndCount() > 0 && puzzlesCompleted == world.playerEndCount()) {
+//			endGame();
+//		}
 
 		// step player non-physics logic
 		if (player != null) {
