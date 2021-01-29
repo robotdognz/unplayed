@@ -8,12 +8,15 @@ import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
 import objects.events.CameraChange;
+import objects.events.PlayerEnd;
 import processing.core.PApplet;
 
 public class Quadtree {
 	private Rectangle bounds;
 	public QuadNode root;
 	private int insertCount = 0;
+	
+	private int playerEndCount = 0;
 
 	private HashSet<CameraChange> cameras; // easily accessible cameras
 
@@ -39,6 +42,10 @@ public class Quadtree {
 		} else if (current instanceof Event) {
 			((Event) current).create();
 		}
+		
+		if(current instanceof PlayerEnd) {
+			playerEndCount++;
+		}
 	}
 
 	public void remove(Rectangle current) {
@@ -53,6 +60,10 @@ public class Quadtree {
 		} else if (current instanceof Event) {
 			((Event) current).destroy();
 		}
+		
+		if(current instanceof PlayerEnd) {
+			playerEndCount--;
+		}
 	}
 
 	public void setRoot(QuadNode newRoot) {
@@ -65,6 +76,7 @@ public class Quadtree {
 
 	public void clear() {
 		insertCount = 0;
+		playerEndCount = 0;
 		root = new QuadNode(bounds, null, this);
 		cameras.clear();
 	}
@@ -77,6 +89,10 @@ public class Quadtree {
 
 	public int insertCount() {
 		return insertCount;
+	}
+	
+	public int playerEndCount() {
+		return playerEndCount;
 	}
 
 	public HashSet<Rectangle> getAll(HashSet<Rectangle> returnSet) {

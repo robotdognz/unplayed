@@ -30,6 +30,7 @@ public class Game {
 	public ArrayList<Tile> removed; // holds the tiles that the player has become and have been removed from the
 									// world
 	public ArrayList<Tile> placed; // holds the tiles the player has left behind after slotting in
+	public int puzzlesCompleted;
 	public ArrayList<View> views;
 	public Rectangle startingWorld;
 	public HashSet<Rectangle> playerObjects;
@@ -217,6 +218,8 @@ public class Game {
 		if (playerStart != null) {
 			createPlayer(playerStart);
 		}
+		
+		puzzlesCompleted = 0;
 
 	}
 
@@ -224,7 +227,7 @@ public class Game {
 		Editor editor = app.getEditor();
 
 		if (editor == null) { // in a normal game
-			p.delay(400);
+			p.delay(180);
 			app.nextLevel();
 		} else { // in the editor
 			editor.toast.showToast("Level Complete");
@@ -274,6 +277,7 @@ public class Game {
 			placed.add(newTile);
 
 			// create the new player
+			puzzlesCompleted ++;
 			createPlayer(found);
 		}
 
@@ -411,6 +415,10 @@ public class Game {
 	}
 
 	public void step(float deltaTime) {
+		if(puzzlesCompleted == world.playerEndCount()) {
+			endGame();
+		}
+		
 		// step player non-physics logic
 		if (player != null) {
 			player.step();
