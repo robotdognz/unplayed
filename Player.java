@@ -456,7 +456,7 @@ public class Player extends Editable {
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							if (t.getBottomRight().x <= pos.x - getWidth() / 2) {
+							if (t.getBottomRight().x <= pos.x - getWidth() / 2 -0.25f) {
 								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createGroundBarrier(top, bottom);
@@ -466,7 +466,8 @@ public class Player extends Editable {
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							if (t.getTopLeft().x >= pos.x + getWidth() / 2) {
+							// 0.25 is added to stop a barrier being constructed when you're up against the edge of the gap
+    if (t.getTopLeft().x >= pos.x + getWidth() / 2 +0.25f) {
 								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createGroundBarrier(top, bottom);
