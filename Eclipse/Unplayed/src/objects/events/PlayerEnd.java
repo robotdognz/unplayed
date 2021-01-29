@@ -145,12 +145,12 @@ public class PlayerEnd extends Event {
 			// return;
 			// }
 
-			float playerAngle = -player.dynamicBody.getAngle();
-			playerAngle = PApplet.degrees(playerAngle);
-			playerAngle = Math.round(playerAngle / 90) * 90;
+			float playerAngle = -player.dynamicBody.getAngle(); //get angle
+			playerAngle = PApplet.degrees(playerAngle); //convert to degrees
+			playerAngle = Math.round(playerAngle / 90) * 90; //round to nearest 90
 			
 			//get it into the 360 range
-			while (Math.abs(playerAngle) >= 270) {
+			while (Math.abs(playerAngle) > 270) {
 				if (playerAngle > 0) {
 					playerAngle -= 90;
 				} else {
