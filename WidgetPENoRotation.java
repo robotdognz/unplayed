@@ -36,9 +36,9 @@ public class WidgetPENoRotation extends Widget {
 	public void clicked() {
 		if (editor.selected != null && editor.selected instanceof PlayerEnd) {
 			if (active) {
-				((PlayerEnd) editor.selected).setRotationMode(2);
-			} else {
 				((PlayerEnd) editor.selected).setRotationMode(0);
+			} else {
+				((PlayerEnd) editor.selected).setRotationMode(2);
 			}
 		}
 	}
