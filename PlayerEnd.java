@@ -144,10 +144,13 @@ public class PlayerEnd extends Event {
 			// if (!(player.isFlippedV() == required.isFlippedV())) {
 			// return;
 			// }
-			
+
 			float playerAngle = -player.dynamicBody.getAngle();
 			playerAngle = PApplet.degrees(playerAngle);
-			while (Math.abs(playerAngle) >= 360) {
+			playerAngle = Math.round(playerAngle / 90) * 90;
+			
+			//get it into the 360 range
+			while (Math.abs(playerAngle) >= 270) {
 				if (playerAngle > 0) {
 					playerAngle -= 90;
 				} else {
@@ -157,7 +160,10 @@ public class PlayerEnd extends Event {
 			if (playerAngle < 0) {
 				playerAngle += 360;
 			}
-			playerAngle = Math.round(playerAngle / 90) * 90;
+//
+//			if (playerAngle == 360) {
+//				playerAngle = 0;
+//			}
 
 			if (!(player.getAngle() == required.getAngle())) {
 				return;
