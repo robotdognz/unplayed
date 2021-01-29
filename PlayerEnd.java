@@ -148,14 +148,14 @@ public class PlayerEnd extends Event {
 			if (!player.getFile().equals(required.getFile())) {
 				return;
 			}
-			
+
 			// if (!(player.isFlippedH() == required.isFlippedH())) {
 			// return;
 			// }
 			// if (!(player.isFlippedV() == required.isFlippedV())) {
 			// return;
 			// }
-			
+
 			if (rotationMode == 0) { // rotation matters
 				float playerAngle = player.getAdjustedAngle();
 
@@ -163,8 +163,11 @@ public class PlayerEnd extends Event {
 					return;
 				}
 			} else if (rotationMode == 1) { // only 180 degree rotation matters
-//				float playerAngle = player.getAdjustedAngle();
-				
+				float playerAngle = player.getAdjustedAngle();
+
+				if (!(playerAngle == required.getAngle() || playerAngle - 180 == required.getAngle())) {
+					return;
+				}
 			}
 
 		}
