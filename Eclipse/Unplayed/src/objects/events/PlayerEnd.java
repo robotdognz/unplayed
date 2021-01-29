@@ -145,27 +145,9 @@ public class PlayerEnd extends Event {
 			// return;
 			// }
 
-			float playerAngle = -player.dynamicBody.getAngle(); //get angle
-			playerAngle = PApplet.degrees(playerAngle); //convert to degrees
-			playerAngle = Math.round(playerAngle / 90) * 90; //round to nearest 90
-			
-			//get it into the 360 range
-			while (Math.abs(playerAngle) > 270) {
-				if (playerAngle > 0) {
-					playerAngle -= 360;
-				} else {
-					playerAngle += 360;
-				}
-			}
-			if (playerAngle < 0) {
-				playerAngle += 360;
-			}
-//
-//			if (playerAngle == 360) {
-//				playerAngle = 0;
-//			}
+			float playerAngle = getAdjustedAngle(player);
 
-			if (!(player.getAngle() == required.getAngle())) {
+			if (!(playerAngle == required.getAngle())) { //!(player.getAngle() == required.getAngle())
 				return;
 			}
 
@@ -181,6 +163,28 @@ public class PlayerEnd extends Event {
 				game.endPuzzle(newPlayerArea);
 			}
 		}
+	}
+	
+	private float getAdjustedAngle(Player player) {
+		float playerAngle = -player.dynamicBody.getAngle(); // get angle
+		playerAngle = PApplet.degrees(playerAngle); // convert to degrees
+		playerAngle = Math.round(playerAngle / 90) * 90; // round to nearest 90
+
+		// get it into the 360 range
+		while (Math.abs(playerAngle) > 270) {
+			if (playerAngle > 0) {
+				playerAngle -= 360;
+			} else {
+				playerAngle += 360;
+			}
+		}
+
+		// make sure it's positive
+		if (playerAngle < 0) {
+			playerAngle += 360;
+		}
+		
+		return playerAngle;
 	}
 
 }
