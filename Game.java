@@ -237,6 +237,12 @@ public class Game {
 	}
 
 	public void endPuzzle(Rectangle playerArea) {
+		
+		if(world.playerEndCount() - puzzlesCompleted == 1) {
+			endGame();
+			return;
+		}
+		
 		HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
 		world.retrieve(returnObjects, playerArea);
 		Tile found = null;
@@ -415,6 +421,7 @@ public class Game {
 	}
 
 	public void step(float deltaTime) {
+		// check if the level is complete
 		if (world.playerEndCount() > 0 && puzzlesCompleted == world.playerEndCount()) {
 			endGame();
 		}
@@ -572,5 +579,9 @@ public class Game {
 		else
 			return 1; // 240 Hz ( 160 Hz to .. )
 	}
+
+//	public int getRemainingPuzzles() {
+//		return world.playerEndCount() - puzzlesCompleted;
+//	}
 
 }
