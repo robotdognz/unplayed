@@ -21,13 +21,15 @@ public class PlayerEnd extends Event {
 	private Tile required;
 	private Rectangle newPlayerArea;
 	private long lastTime = 0;
-
-	private PVector center;
+	private PVector center; // used for checking against player position
+	private int rotationMode; // what kind of rotation does this player end care about
 
 	public PlayerEnd(Game game, TextureCache texture, String name, float x, float y) {
 		super(game, texture, name, false, x, y, 100, 100);
-		levelEnd = true;
-		newPlayerArea = new Rectangle(getX() + getWidth(), getY() - getHeight(), getWidth(), getHeight());
+		this.rotationMode = 0;
+		// 0 = cares about rotation, 1 = ignore 180 rotation, 2 = ignore all rotation
+		this.levelEnd = true;
+		this.newPlayerArea = new Rectangle(getX() + getWidth(), getY() - getHeight(), getWidth(), getHeight());
 
 		this.center = new PVector(getX() + getWidth() / 2, getY() + getHeight() / 2);
 
@@ -51,14 +53,6 @@ public class PlayerEnd extends Event {
 		if (required != null) {
 			game.world.remove(required);
 		}
-	}
-
-	public Tile getRequired() {
-		return required;
-	}
-
-	public void setRequired(Tile required) {
-		this.required = required;
 	}
 
 	@Override
@@ -112,12 +106,28 @@ public class PlayerEnd extends Event {
 		this.newPlayerArea = newPlayerArea;
 	}
 
+	public Tile getRequired() {
+		return required;
+	}
+
+	public void setRequired(Tile required) {
+		this.required = required;
+	}
+
 	public boolean getLevelEnd() {
 		return levelEnd;
 	}
 
 	public void setLevelEnd(boolean levelEnd) {
 		this.levelEnd = levelEnd;
+	}
+
+	public int getRotationMode() {
+		return rotationMode;
+	}
+
+	public void setRotationMode(int newRotationMode) {
+		this.rotationMode = newRotationMode;
 	}
 
 	@Override
@@ -138,17 +148,23 @@ public class PlayerEnd extends Event {
 			if (!player.getFile().equals(required.getFile())) {
 				return;
 			}
+			
 			// if (!(player.isFlippedH() == required.isFlippedH())) {
 			// return;
 			// }
 			// if (!(player.isFlippedV() == required.isFlippedV())) {
 			// return;
 			// }
+			
+			if (rotationMode == 0) { // rotation matters
+				float playerAngle = player.getAdjustedAngle();
 
-			float playerAngle = player.getAdjustedAngle();
-
-			if (!(playerAngle == required.getAngle())) { //!(player.getAngle() == required.getAngle())
-				return;
+				if (!(playerAngle == required.getAngle())) {
+					return;
+				}
+			} else if (rotationMode == 1) { // only 180 degree rotation matters
+//				float playerAngle = player.getAdjustedAngle();
+				
 			}
 
 		}
@@ -163,7 +179,7 @@ public class PlayerEnd extends Event {
 			}
 		}
 	}
-	
+
 //	private float getAdjustedAngle(Player player) {
 //		float playerAngle = -player.dynamicBody.getAngle(); // get angle
 //		playerAngle = PApplet.degrees(playerAngle); // convert to degrees

@@ -108,6 +108,7 @@ public class EditorJSON {
 					object.setFloat("newPlayerY", ((PlayerEnd) r).getNewPlayerArea().getTopLeft().y);
 					object.setFloat("newPlayerWidth", ((PlayerEnd) r).getNewPlayerArea().getWidth());
 					object.setFloat("newPlayerHeight", ((PlayerEnd) r).getNewPlayerArea().getHeight());
+					object.setInt("rotationMode", ((PlayerEnd) r).getRotationMode());
 					saveTile(values, ((PlayerEnd) r).getRequired());
 				} else if (r instanceof PlayerDeath) {
 					object.setString("type", "PlayerDeath");
@@ -348,6 +349,12 @@ public class EditorJSON {
 					PlayerEnd pe = new PlayerEnd(game, texture, name, pX, pY);
 					pe.setLevelEnd(end);
 					pe.setNewPlayerArea(newPlayerArea);
+					try {
+						int rotationMode = object.getInt("rotationMode");
+						pe.setRotationMode(rotationMode);
+					} catch (Exception e) {
+
+					}
 					worldObjects.add(pe);
 				} else if (type.equals("PlayerDeath")) {
 					String name = object.getString("name");

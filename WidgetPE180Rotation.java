@@ -6,13 +6,13 @@ import objects.events.PlayerEnd;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class WidgetLevelEnd extends Widget {
+public class WidgetPE180Rotation extends Widget {
 	EditorSide toolbar;
 
-	public WidgetLevelEnd(PApplet p, Editor editor, Toolbar parent) {
+	public WidgetPE180Rotation(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		toolbar = (EditorSide) parent;
-		icon = p.loadImage(folder + "LevelEnd.png");
+		icon = p.loadImage(folder + "LevelEnd_180sensitive.png");
 	}
 	
 	@Override
@@ -20,11 +20,8 @@ public class WidgetLevelEnd extends Widget {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof PlayerEnd) {
 			available = true;
-			if (toolbar.isLevelEnd()) {
-				active = true;
-			} else {
-				active = false;
-			}
+			
+			
 		} else {
 			available = false;
 		}
@@ -33,7 +30,7 @@ public class WidgetLevelEnd extends Widget {
 
 	@Override
 	public void clicked() {
-		toolbar.levelEnd(!toolbar.isLevelEnd());
+
 	}
 
 }
