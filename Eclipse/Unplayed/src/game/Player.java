@@ -456,7 +456,7 @@ public class Player extends Editable {
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							if (t.getBottomRight().x <= pos.x - getWidth() / 2) {
+							if (t.getBottomRight().x <= pos.x - getWidth() / 2 - 0.25f) {
 								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createGroundBarrier(top, bottom);
@@ -466,7 +466,9 @@ public class Player extends Editable {
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							if (t.getTopLeft().x >= pos.x + getWidth() / 2) {
+							// 0.25 is added to stop a barrier being constructed when you're up against the
+							// edge of the gap
+							if (t.getTopLeft().x >= pos.x + getWidth() / 2 + 0.25f) {
 								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createGroundBarrier(top, bottom);
@@ -525,7 +527,7 @@ public class Player extends Editable {
 			}
 
 			// skip the tile if it is behind the player
-			if (yVelocity > 0) { // moving up
+			if (yVelocity > 1) { // moving up
 				if (pos.y + getHeight() * 0.60f < t.getTopLeft().y) {
 					continue;
 				}
@@ -539,7 +541,7 @@ public class Player extends Editable {
 		}
 
 		// sort the found tiles
-		if (yVelocity > 0) { // moving up
+		if (yVelocity > 1) { // moving up
 			Collections.sort(wallChecking, Collections.reverseOrder());
 		} else { // moving down
 			Collections.sort(wallChecking);
@@ -554,14 +556,14 @@ public class Player extends Editable {
 				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
 
 					// make sure the gap is in front of the player
-					if ((yVelocity > 0 && t.getBottomRight().y < pos.y) // moving up
-							|| (yVelocity < 0 && t.getTopLeft().y > pos.y)) { // moving down
+					if ((yVelocity > 1 && t.getBottomRight().y < pos.y) // moving up
+							|| (yVelocity < 1 && t.getTopLeft().y > pos.y)) { // moving down
 
 						// lock rotation
 						this.dynamicBody.setFixedRotation(true);
 
 						// try create the barrier
-						if (yVelocity > 0) { // moving up
+						if (yVelocity > 1) { // moving up
 
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
@@ -679,8 +681,11 @@ public class Player extends Editable {
 	}
 
 	private void destroyAllBarriers(boolean resetRotation) {
-		destroyGroundBarrier(resetRotation);
-		destroyWallBarrier(resetRotation);
+		if (resetRotation) {
+			this.dynamicBody.setFixedRotation(locked);
+		}
+		destroyGroundBarrier(false);
+		destroyWallBarrier(false);
 		// destroyRoofBarrier(resetRotation);
 	}
 
