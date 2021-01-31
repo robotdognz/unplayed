@@ -692,8 +692,10 @@ public class Player extends Editable {
 	public void jump() {
 		if (boxJumpCount > 0) {
 			float impulse = dynamicBody.getMass() * jumpPower;
+			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0)); //testing
 			dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
 			boxJumpCount--;
+
 		}
 	}
 

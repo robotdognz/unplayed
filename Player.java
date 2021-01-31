@@ -456,7 +456,7 @@ public class Player extends Editable {
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							if (t.getBottomRight().x <= pos.x - getWidth() / 2 -0.25f) {
+							if (t.getBottomRight().x <= pos.x - getWidth() / 2 - 0.25f) {
 								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createGroundBarrier(top, bottom);
@@ -466,8 +466,9 @@ public class Player extends Editable {
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							// 0.25 is added to stop a barrier being constructed when you're up against the edge of the gap
-    if (t.getTopLeft().x >= pos.x + getWidth() / 2 +0.25f) {
+							// 0.25 is added to stop a barrier being constructed when you're up against the
+							// edge of the gap
+							if (t.getTopLeft().x >= pos.x + getWidth() / 2 + 0.25f) {
 								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createGroundBarrier(top, bottom);
@@ -681,9 +682,9 @@ public class Player extends Editable {
 
 	private void destroyAllBarriers(boolean resetRotation) {
 		if (resetRotation) {
-				this.dynamicBody.setFixedRotation(locked);
-			}
-destroyGroundBarrier(false);
+			this.dynamicBody.setFixedRotation(locked);
+		}
+		destroyGroundBarrier(false);
 		destroyWallBarrier(false);
 		// destroyRoofBarrier(resetRotation);
 	}
@@ -691,8 +692,10 @@ destroyGroundBarrier(false);
 	public void jump() {
 		if (boxJumpCount > 0) {
 			float impulse = dynamicBody.getMass() * jumpPower;
+			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0)); //testing
 			dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
 			boxJumpCount--;
+
 		}
 	}
 
