@@ -42,7 +42,9 @@ public class Player extends Editable {
 	private float friction; // the player's friction
 
 	public boolean locked; // does the player have locked rotation
-//	int contactNumber; // the number of things touching the player's body
+	int contactNumber; // the number of things touching the player's body
+	int groundContacts; // the number of grounds touching the player's body
+	int wallContacts; // the number of walls touching the player's body
 
 	private ArrayList<Event> events; // list of events touching the player
 	private boolean vibeFrame; // has a vibration happened yet this frame
@@ -69,7 +71,9 @@ public class Player extends Editable {
 
 	// jumping
 	private float jumpPower; // the strength of the player's jump
-	public int boxJumpCount; // how many jumps the player can make before touching the ground
+	private boolean surfaceJump;
+	private boolean extraJump;
+	public int jumpCount; // how many jumps the player can make before touching the ground
 	private Vec2 previousPosition; // last player location
 	private int jumpResetCounter; // how many steps the player has been still
 	private int jumpResetLimit; // how many steps it takes the jump to reset
@@ -94,8 +98,7 @@ public class Player extends Editable {
 		this.box2d = box2d;
 		this.friction = 0.6f; // from 0 to 1
 		this.density = 1; // from 0 to 1
-		this.jumpPower = 120;
-		this.boxJumpCount = 0;
+
 		this.locked = locked; // is rotation locked
 //		this.contactNumber = 0; // is the player touching anything
 
@@ -114,6 +117,12 @@ public class Player extends Editable {
 		this.wallBarrier = null;
 
 		// jumping
+		this.jumpPower = 120;
+		this.groundContacts = 0;
+		this.wallContacts = 0;
+		this.surfaceJump = false;
+		this.extraJump = false;
+		this.jumpCount = 0;
 		this.jumpResetCounter = 0; // how many steps the player has been still
 		this.jumpResetLimit = 300; // how many steps it takes the jump to reset
 
@@ -169,16 +178,28 @@ public class Player extends Editable {
 	}
 
 	public void resetJump() {
-		this.boxJumpCount = 2;
+		this.jumpCount = 2;
+		this.surfaceJump = true;
+		this.extraJump = true;
 	}
 
-//	public void startContact() {
+	public void startGroundContact() {
+		this.groundContacts++;
 //		this.contactNumber++;
-//	}
-//
-//	public void endContact() {
+	}
+
+	public void endGroundContact() {
+		this.groundContacts--;
 //		this.contactNumber--;
-//	}
+	}
+
+	public void startWallContact() {
+		this.wallContacts++;
+	}
+
+	public void endWallContact() {
+		this.wallContacts--;
+	}
 
 	public void addTile(Tile tile) {
 		sensorContacts.add(tile);
@@ -206,7 +227,8 @@ public class Player extends Editable {
 
 	public void physicsStep() {
 		// run checks
-		checkStill();
+		checkJumps();
+//		checkStill(); // TODO used for jump resetting, hopefully can get rid of this
 		checkTiles();
 
 		// do movement
@@ -225,22 +247,33 @@ public class Player extends Editable {
 
 	}
 
-	private void checkStill() {
-		Vec2 currentPosition = box2d.getBodyPixelCoord(dynamicBody);
-
-		if (jumpResetCounter < jumpResetLimit) {
-			// check if the player is still
-			if (Math.abs(currentPosition.x - previousPosition.x) < 2
-					&& Math.abs(currentPosition.y - previousPosition.y) < 2) {
-				jumpResetCounter++;
-			}
+	private void checkJumps() {
+		if (groundContacts > 0) {
+			surfaceJump = true;
+			extraJump = true;
+		} else if (wallContacts > 0) {
+			surfaceJump = true;
 		} else {
-			jumpResetCounter = 0;
-			resetJump();
+			surfaceJump = false;
 		}
-
-		previousPosition = currentPosition;
 	}
+
+//	private void checkStill() {
+//		Vec2 currentPosition = box2d.getBodyPixelCoord(dynamicBody);
+//
+//		if (jumpResetCounter < jumpResetLimit) {
+//			// check if the player is still
+//			if (Math.abs(currentPosition.x - previousPosition.x) < 2
+//					&& Math.abs(currentPosition.y - previousPosition.y) < 2) {
+//				jumpResetCounter++;
+//			}
+//		} else {
+//			jumpResetCounter = 0;
+//			resetJump();
+//		}
+//
+//		previousPosition = currentPosition;
+//	}
 
 	private void checkTiles() {
 		// environment checking
@@ -690,13 +723,19 @@ public class Player extends Editable {
 	}
 
 	public void jump() {
-		if (boxJumpCount > 0) {
-			float impulse = dynamicBody.getMass() * jumpPower;
-			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0)); //testing
-			dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
-			boxJumpCount--;
+//		if (jumpCount > 0) {
 
+		if (surfaceJump || extraJump) { // if the player has a jump
+			if (!surfaceJump) { // if it was an extra jump
+				extraJump = false;
+			}
+
+			float impulse = dynamicBody.getMass() * jumpPower;
+			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0)); // testing
+			dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
+			jumpCount--;
 		}
+//		}
 	}
 
 	public void physicsImpact(float[] impulses) {

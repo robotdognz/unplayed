@@ -30,6 +30,7 @@ public class MyContactListener implements ContactListener {
 		boolean playerBody = false; // one of the fixtures is the player
 		boolean playerSensor = false; // one of the fixtures is the player's sensor
 		boolean ground = false; // one of the fixtures is the ground
+		boolean wall = false; // one of the fixtures is a wall
 
 		// check fixture
 		Object fixtureUserData = fixtureA.getUserData();
@@ -42,6 +43,9 @@ public class MyContactListener implements ContactListener {
 					playerBody = true;
 //					player.startContact();
 
+				} else if (userData.equals("tile")) {
+					tile = (Tile) fixtureA.getBody().getUserData();
+
 				} else if (userData.contentEquals("player sensor")) {
 					player = (Player) fixtureA.getBody().getUserData();
 					playerSensor = true;
@@ -49,14 +53,13 @@ public class MyContactListener implements ContactListener {
 				} else if (userData.contentEquals("ground")) {
 					ground = true;
 
+				} else if (userData.contentEquals("wall")) {
+					wall = true;
+
 				} else if (userData.contentEquals("event")) {
 					event = (Event) fixtureA.getBody().getUserData();
 				}
 
-				// TODO: having these in here means only tile top edges return tiles
-				if (userData.equals("tile")) {// fixtureA.getBody().getUserData() instanceof Tile) {
-					tile = (Tile) fixtureA.getBody().getUserData();
-				}
 			}
 		}
 
@@ -71,6 +74,9 @@ public class MyContactListener implements ContactListener {
 					playerBody = true;
 //					player.startContact();
 
+				} else if (userData.equals("tile")) {
+					tile = (Tile) fixtureB.getBody().getUserData();
+					
 				} else if (userData.contentEquals("player sensor")) {
 					player = (Player) fixtureB.getBody().getUserData();
 					playerSensor = true;
@@ -78,19 +84,26 @@ public class MyContactListener implements ContactListener {
 				} else if (userData.contentEquals("ground")) {
 					ground = true;
 
+				} else if (userData.contentEquals("wall")) {
+					wall = true;
+
 				} else if (userData.contentEquals("event")) {
 					event = (Event) fixtureB.getBody().getUserData();
 				}
 
-				if (userData.equals("tile")) {// fixtureB.getBody().getUserData() instanceof Tile) {
-					tile = (Tile) fixtureB.getBody().getUserData();
-				}
 			}
 		}
 
 		// if on of them is the player and one is the ground
 		if (ground && playerBody) {
-			player.resetJump();
+//			player.resetJump();
+			player.startGroundContact();
+		}
+		
+		// if on of them is the player and one is a wall
+		if (wall && playerBody) {
+//			player.resetJump();
+			player.startWallContact();
 		}
 
 //		// if one of them is the player and one is a tile
@@ -119,6 +132,8 @@ public class MyContactListener implements ContactListener {
 		Event event = null;
 		boolean playerBody = false; // one of the fixtures is the player
 		boolean playerSensor = false; // one of the fixtures is the player's sensor
+		boolean ground = false; // one of the fixtures is the ground
+		boolean wall = false; // one of the fixtures is a wall
 
 		// check fixture A
 		Object fixtureUserData = fixtureA.getUserData();
@@ -138,8 +153,15 @@ public class MyContactListener implements ContactListener {
 				} else if (userData.contentEquals("event")) {
 					event = (Event) fixtureA.getBody().getUserData();
 
-				} else if (userData.equals("tile")) {// fixtureA.getBody().getUserData() instanceof Tile) {
+				} else if (userData.equals("tile")) {
 					tile = (Tile) fixtureA.getBody().getUserData();
+					
+				} else if (userData.contentEquals("ground")) {
+					ground = true;
+
+				} else if (userData.contentEquals("wall")) {
+					wall = true;
+
 				}
 			}
 		}
@@ -162,8 +184,15 @@ public class MyContactListener implements ContactListener {
 				} else if (userData.contentEquals("event")) {
 					event = (Event) fixtureB.getBody().getUserData();
 
-				} else if (userData.equals("tile")) {// fixtureB.getBody().getUserData() instanceof Tile) {
+				} else if (userData.equals("tile")) {
 					tile = (Tile) fixtureB.getBody().getUserData();
+					
+				} else if (userData.contentEquals("ground")) {
+					ground = true;
+
+				} else if (userData.contentEquals("wall")) {
+					wall = true;
+
 				}
 			}
 		}
@@ -171,6 +200,16 @@ public class MyContactListener implements ContactListener {
 		// if one of them is the player sensor and one is a tile
 		if (playerSensor && tile != null) {
 			player.removeTile(tile);
+		}
+		
+		// if on of them is the player and one is the ground
+		if (ground && playerBody) {
+			player.endGroundContact();
+		}
+		
+		// if on of them is the player and one is a wall
+		if (wall && playerBody) {
+			player.endWallContact();
 		}
 
 //		// if one of them is the player and one is a tile
