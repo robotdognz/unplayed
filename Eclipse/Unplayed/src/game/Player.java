@@ -731,13 +731,19 @@ public class Player extends Editable {
 //		if (jumpCount > 0) {
 
 		if (groundJump || wallJump || extraJump) { // if the player has a jump
+			float yImpulse = 0;
 			if (!(groundJump)) { // if it was a wall jump or an extra jump
 				extraJump = false;
+				if (left) {
+					yImpulse = (dynamicBody.getMass() * jumpPower / 2);
+				} else if (right) {
+					yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
+				}
 			}
 
-			float impulse = dynamicBody.getMass() * jumpPower;
+			float xImpulse = dynamicBody.getMass() * jumpPower;
 			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0)); // testing
-			dynamicBody.applyLinearImpulse(new Vec2(0, impulse), dynamicBody.getWorldCenter(), true);
+			dynamicBody.applyLinearImpulse(new Vec2(yImpulse, xImpulse), dynamicBody.getWorldCenter(), true);
 			jumpCount--;
 		}
 //		}
