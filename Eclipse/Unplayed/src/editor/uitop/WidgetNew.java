@@ -34,6 +34,9 @@ public class WidgetNew extends Widget {
 		game.world.clear();
 		game.views.clear();
 		game.getPageView().clearPages();
+		// clear box2d
+		game.buildWorld();
+		// clear selected
 		editor.selected = null;
 	}
 

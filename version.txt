@@ -1,5 +1,12 @@
 (Major version).(Minor version).(Revision number)
 
+1.2.1: Improving physics
+
+01/02/21
+-Fixed an issue where the player would sometimes slide past wall slots when entering from above
+-Fixed an issue where the player could get caught between a wall and floor slot
+-Returned double jump to its pre physics update behaviour
+
 1.2.0: Physics build
 
 -Rebuilt entire physics system from the ground up
