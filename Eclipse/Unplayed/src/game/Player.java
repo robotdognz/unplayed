@@ -257,7 +257,6 @@ public class Player extends Editable {
 		} else if (wallContacts > 0) {
 			groundJump = false;
 			wallJump = true;
-			extraJump = false;
 		} else {
 			groundJump = false;
 			wallJump = false;
