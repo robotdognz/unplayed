@@ -71,12 +71,13 @@ public class Player extends Editable {
 
 	// jumping
 	private float jumpPower; // the strength of the player's jump
-	private boolean surfaceJump;
+	private boolean groundJump;
+	private boolean wallJump;
 	private boolean extraJump;
 	public int jumpCount; // how many jumps the player can make before touching the ground
 	private Vec2 previousPosition; // last player location
-	private int jumpResetCounter; // how many steps the player has been still
-	private int jumpResetLimit; // how many steps it takes the jump to reset
+//	private int jumpResetCounter; // how many steps the player has been still
+//	private int jumpResetLimit; // how many steps it takes the jump to reset
 
 	Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -120,11 +121,12 @@ public class Player extends Editable {
 		this.jumpPower = 120;
 		this.groundContacts = 0;
 		this.wallContacts = 0;
-		this.surfaceJump = false;
+		this.groundJump = false;
+		this.wallJump = false;
 		this.extraJump = false;
 		this.jumpCount = 0;
-		this.jumpResetCounter = 0; // how many steps the player has been still
-		this.jumpResetLimit = 300; // how many steps it takes the jump to reset
+//		this.jumpResetCounter = 0; // how many steps the player has been still
+//		this.jumpResetLimit = 300; // how many steps it takes the jump to reset
 
 		create();
 
@@ -177,11 +179,11 @@ public class Player extends Editable {
 		}
 	}
 
-	public void resetJump() {
-		this.jumpCount = 2;
-		this.surfaceJump = true;
-		this.extraJump = true;
-	}
+//	public void resetJump() {
+//		this.jumpCount = 2;
+//		this.surfaceJump = true;
+//		this.extraJump = true;
+//	}
 
 	public void startGroundContact() {
 		this.groundContacts++;
@@ -249,13 +251,16 @@ public class Player extends Editable {
 
 	private void checkJumps() {
 		if (groundContacts > 0) {
-			surfaceJump = true;
+			groundJump = true;
+			wallJump = false;
 			extraJump = true;
 		} else if (wallContacts > 0) {
-			surfaceJump = true;
+			groundJump = false;
+			wallJump = true;
 			extraJump = false;
 		} else {
-			surfaceJump = false;
+			groundJump = false;
+			wallJump = false;
 		}
 	}
 
@@ -726,8 +731,8 @@ public class Player extends Editable {
 	public void jump() {
 //		if (jumpCount > 0) {
 
-		if (surfaceJump || extraJump) { // if the player has a jump
-			if (!surfaceJump) { // if it was an extra jump
+		if (groundJump || wallJump || extraJump) { // if the player has a jump
+			if (!(groundJump)) { // if it was a wall jump or an extra jump
 				extraJump = false;
 			}
 
