@@ -253,6 +253,7 @@ public class Player extends Editable {
 			extraJump = true;
 		} else if (wallContacts > 0) {
 			surfaceJump = true;
+			extraJump = false;
 		} else {
 			surfaceJump = false;
 		}
