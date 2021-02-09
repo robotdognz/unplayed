@@ -740,7 +740,7 @@ public class Player extends Editable {
 		if (groundJump || wallJump || extraJump) { // if the player has a jump
 			float yImpulse = 0;
 
-			if (wallJump) { // if touching walls and pushing
+			if (wallJump) { // if wall jump
 
 				if (left) { // pushing to the left
 					if (!verticalTunnel) { // not in a tunnel
@@ -752,12 +752,13 @@ public class Player extends Editable {
 						yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 					}
 
-				} else if (!extraJump) { // pushing in no direction with no extra jump
+				} else { //if (!extraJump) { // pushing in no direction with no extra jump
 					return;
 
-				} else { // there is an extra jump
-					extraJump = false;
-				}
+				} 
+//				else { // there is an extra jump
+//					extraJump = false;
+//				}
 
 			} else if (groundJump) {
 
