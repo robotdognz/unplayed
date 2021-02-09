@@ -250,13 +250,13 @@ public class Player extends Editable {
 	}
 
 	private void checkJumps() {
-		if (groundContacts > 0) {
-			groundJump = true;
-			wallJump = false;
-			extraJump = true;
-		} else if (wallContacts > 0) {
+		if (wallContacts > 0) {
 			groundJump = false;
 			wallJump = true;
+			extraJump = true;
+		} else if (groundContacts > 0) {
+			groundJump = true;
+			wallJump = false;
 			extraJump = true;
 		} else {
 			groundJump = false;
