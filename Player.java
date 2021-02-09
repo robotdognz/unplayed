@@ -43,8 +43,8 @@ public class Player extends Editable {
 
 	public boolean locked; // does the player have locked rotation
 	int contactNumber; // the number of things touching the player's body
-	int groundContacts; // the number of grounds touching the player's body
-	int wallContacts; // the number of walls touching the player's body
+	public int groundContacts; // the number of grounds touching the player's body
+	public int wallContacts; // the number of walls touching the player's body
 
 	private ArrayList<Event> events; // list of events touching the player
 	private boolean vibeFrame; // has a vibration happened yet this frame
