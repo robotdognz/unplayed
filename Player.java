@@ -735,46 +735,77 @@ public class Player extends Editable {
 	}
 
 	public void jump() {
-//		if (jumpCount > 0) {
+		float xImpulse = 0;
+		float yImpulse = 0;
 
-		if (groundJump || wallJump || extraJump) { // if the player has a jump
-			float yImpulse = 0;
-			if (!(groundJump)) { // if it was a wall jump or an extra jump
+		if (groundContacts > 0) { // touching the ground
 
-				if (wallJump) { // if touching walls
-					if (left) { // pushing to the left
-						if (!verticalTunnel) { // not in a tunnel
-							yImpulse = (dynamicBody.getMass() * jumpPower / 2);
-						}
+			yImpulse = dynamicBody.getMass() * jumpPower;
+			extraJump = true;
 
-					} else if (right) { // pushing to the right
-						if (!verticalTunnel) { // not in a tunnel
-							yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
-						}
+		} else if (wallContacts > 0) { // touching a wall
 
-					} else { // if (!extraJump) { // pushing in no direction with no extra jump
-						return;
-
-					}
-//					else {
-//						extraJump = false;
-//					}
-
-				} else {
-					extraJump = false;
+			if (left) {
+				if (!verticalTunnel) { // not in a tunnel
+					yImpulse = dynamicBody.getMass() * jumpPower;
+					xImpulse = (dynamicBody.getMass() * jumpPower / 2);
 				}
-
+			} else if (right) {
+				if (!verticalTunnel) { // not in a tunnel
+					yImpulse = dynamicBody.getMass() * jumpPower;
+					xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
+				}
+			} else if (extraJump) {
+				yImpulse = dynamicBody.getMass() * jumpPower;
 			}
 
-			float xImpulse = dynamicBody.getMass() * jumpPower;
+		} else { // touching nothing
+			if (extraJump) {
+				yImpulse = dynamicBody.getMass() * jumpPower;
+				extraJump = false;
+			}
+		}
+
+		if (yImpulse > 0) {
 			// reset vertical speed
 			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 			// apply impulse
-			dynamicBody.applyLinearImpulse(new Vec2(yImpulse, xImpulse), dynamicBody.getWorldCenter(), true);
-//			jumpCount--;
+			dynamicBody.applyLinearImpulse(new Vec2(xImpulse, yImpulse), dynamicBody.getWorldCenter(), true);
 		}
 
+//		if (groundJump || wallJump || extraJump) { // if the player has a jump
+//			float yImpulse = 0;
+//			if (!(groundJump)) { // if it was a wall jump or an extra jump
+//
+//				if (wallJump) { // if touching walls
+//					if (left) { // pushing to the left
+//						if (!verticalTunnel) { // not in a tunnel
+//							yImpulse = (dynamicBody.getMass() * jumpPower / 2);
+//						}
+//
+//					} else if (right) { // pushing to the right
+//						if (!verticalTunnel) { // not in a tunnel
+//							yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
+//						}
+//
+//					} else {
+//						return;
+//
+//					}
+//
+//				} else {
+//					extraJump = false;
+//				}
+//
+//			}
+//
+//			xImpulse = dynamicBody.getMass() * jumpPower;
+//			// reset vertical speed
+//			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
+//			// apply impulse
+//			dynamicBody.applyLinearImpulse(new Vec2(yImpulse, xImpulse), dynamicBody.getWorldCenter(), true);
 //		}
+
 	}
 
 	public void physicsImpact(float[] impulses) {
