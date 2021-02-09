@@ -746,13 +746,13 @@ public class Player extends Editable {
 		} else if (wallContacts > 0) { // touching a wall
 
 			if (left) {
+				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
-					yImpulse = dynamicBody.getMass() * jumpPower;
 					xImpulse = (dynamicBody.getMass() * jumpPower / 2);
 				}
 			} else if (right) {
+				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
-					yImpulse = dynamicBody.getMass() * jumpPower;
 					xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 				}
 			} else if (extraJump) {
