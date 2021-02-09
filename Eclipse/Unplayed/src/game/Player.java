@@ -389,7 +389,7 @@ public class Player extends Editable {
 				previousLeft = t.getTopLeft().x;
 				previousRight = t.getBottomRight().x;
 			}
-			
+
 			verticalTunnel = false;
 
 			// ----- check for top/bottom
@@ -740,21 +740,26 @@ public class Player extends Editable {
 		if (groundJump || wallJump || extraJump) { // if the player has a jump
 			float yImpulse = 0;
 
-			if (wallJump) { // if touching walls
-				if (left && !verticalTunnel) { // pushing to the left
-					yImpulse = (dynamicBody.getMass() * jumpPower / 2);
+			if (wallJump) { // if touching walls and pushing
 
-				} else if (right && !verticalTunnel) { // pushing to the right
-					yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
+				if (!verticalTunnel) { // not in a tunnel
+					if (left) { // && !verticalTunnel) { // pushing to the left
+						yImpulse = (dynamicBody.getMass() * jumpPower / 2);
 
-				} else if (!extraJump) { // pushing in no direction with no extra jump
-					return;
+					} else if (right) { // && !verticalTunnel) { // pushing to the right
+						yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 
-				} else {
-					extraJump = false;
+					} else if (!extraJump) { // pushing in no direction with no extra jump
+						return;
+
+					} else { // there is an extra jump
+						extraJump = false;
+					}
 				}
 
-			} else if (!groundJump) {
+			} else if (groundJump) {
+
+			} else {
 				extraJump = false;
 			}
 
