@@ -231,7 +231,7 @@ public class Player extends Editable {
 
 	public void physicsStep() {
 		// run checks
-//		checkJumps();
+		checkJumps();
 //		checkStill(); // TODO used for jump resetting, hopefully can get rid of this
 		checkTiles();
 
@@ -251,12 +251,13 @@ public class Player extends Editable {
 
 	}
 
-//	private void checkJumps() {
-//		if (groundContacts > 0) {
+	private void checkJumps() {
+		if (groundContacts > 0) {
 //			groundJump = true;
 //			wallJump = false;
-//			extraJump = true;
-//		} else if (wallContacts > 0) {
+			extraJump = true;
+		}
+//		else if (wallContacts > 0) {
 //			groundJump = false;
 //			wallJump = true;
 //			extraJump = true;
@@ -264,7 +265,7 @@ public class Player extends Editable {
 //			groundJump = false;
 //			wallJump = false;
 //		}
-//	}
+	}
 
 //	private void checkStill() {
 //		Vec2 currentPosition = box2d.getBodyPixelCoord(dynamicBody);
