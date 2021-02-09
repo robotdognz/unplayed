@@ -250,18 +250,16 @@ public class Player extends Editable {
 	}
 
 	private void checkJumps() {
-//		if (groundContacts > 0) {
-//			groundJump = true;
-//			wallJump = false;
-//			extraJump = true;
-//		} else if 
-
-		if (wallContacts > 0) {
-//			groundJump = false;
+		if (groundContacts > 0) {
+			groundJump = true;
+			wallJump = false;
+			extraJump = true;
+		} else if (wallContacts > 0) {
+			groundJump = false;
 			wallJump = true;
 			extraJump = true;
 		} else {
-//			groundJump = false;
+			groundJump = false;
 			wallJump = false;
 		}
 	}
@@ -733,7 +731,7 @@ public class Player extends Editable {
 	public void jump() {
 //		if (jumpCount > 0) {
 
-		if (wallJump || extraJump) { // if the player has a jump
+		if (groundJump || wallJump || extraJump) { // if the player has a jump
 			float yImpulse = 0;
 
 			if (wallJump) { // if touching walls
@@ -750,7 +748,7 @@ public class Player extends Editable {
 					extraJump = false;
 				}
 
-			} else {
+			} else if (!groundJump) {
 				extraJump = false;
 			}
 

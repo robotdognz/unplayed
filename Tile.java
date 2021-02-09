@@ -86,7 +86,7 @@ public class Tile extends Editable implements Comparable<Tile> {
 			topEdgeDef.shape = topEdge;
 			topEdgeDef.density = density;
 			topEdgeDef.friction = friction;
-			topEdgeDef.userData = "wall";
+			topEdgeDef.userData = "ground";
 			staticBody.createFixture(topEdgeDef);
 			// bottom edge
 			FixtureDef bottomEdgeDef = new FixtureDef();
@@ -99,27 +99,50 @@ public class Tile extends Editable implements Comparable<Tile> {
 			leftEdgeDef.shape = leftEdge;
 			leftEdgeDef.density = density;
 			leftEdgeDef.friction = friction;
-			leftEdgeDef.userData = "wall";
+//			leftEdgeDef.userData = "wall";
 			staticBody.createFixture(leftEdgeDef);
 			// right edge
 			FixtureDef rightEdgeDef = new FixtureDef();
 			rightEdgeDef.shape = rightEdge;
 			rightEdgeDef.density = density;
 			rightEdgeDef.friction = friction;
-			rightEdgeDef.userData = "wall";
+//			rightEdgeDef.userData = "wall";
 			staticBody.createFixture(rightEdgeDef);
 
-			// ground sensor
-			EdgeShape sensor = new EdgeShape();
-			float sBox2dW = box2d.scalarPixelsToWorld((getWidth() - 1) / 2);
-			v1 = new Vec2(-sBox2dW, box2dH);
-			v2 = new Vec2(sBox2dW, box2dH);
-			sensor.set(v1, v2);
+			// left wall sensor
+			EdgeShape leftSensor = new EdgeShape();
+			float sBox2dH = box2d.scalarPixelsToWorld((getHeight() - 1) / 2);
+			v1 = new Vec2(-box2dW, sBox2dH);
+			v2 = new Vec2(-box2dW, -sBox2dH);
+			leftSensor.set(v1, v2);
 			FixtureDef sensorDef = new FixtureDef();
-			sensorDef.shape = sensor;
-			sensorDef.userData = "ground";
+			sensorDef.shape = leftSensor;
+			sensorDef.userData = "wall";
 			sensorDef.isSensor = true;
 			staticBody.createFixture(sensorDef);
+
+			// right wall sensor
+			EdgeShape sensor = new EdgeShape();
+			v1 = new Vec2(box2dW, sBox2dH);
+			v2 = new Vec2(box2dW, -sBox2dH);
+			sensor.set(v1, v2);
+			FixtureDef rightSensorDef = new FixtureDef();
+			rightSensorDef.shape = sensor;
+			rightSensorDef.userData = "wall";
+			rightSensorDef.isSensor = true;
+			staticBody.createFixture(rightSensorDef);
+
+//			// ground sensor
+//			EdgeShape sensor = new EdgeShape();
+//			float sBox2dW = box2d.scalarPixelsToWorld((getWidth() - 1) / 2);
+//			v1 = new Vec2(-sBox2dW, box2dH);
+//			v2 = new Vec2(sBox2dW, box2dH);
+//			sensor.set(v1, v2);
+//			FixtureDef sensorDef = new FixtureDef();
+//			sensorDef.shape = sensor;
+//			sensorDef.userData = "ground";
+//			sensorDef.isSensor = true;
+//			staticBody.createFixture(sensorDef);
 
 			// player sensor sensor
 
