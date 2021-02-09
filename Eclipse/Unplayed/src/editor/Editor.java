@@ -222,8 +222,8 @@ public class Editor {
 				float angle = PApplet.degrees(game.player.dynamicBody.getAngle());
 				p.text("Angle:" + PApplet.nf(angle, 1, 2), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 7);
-				p.text("Jumps: " + game.player.jumpCount, p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 6);
+//				p.text("Jumps: " + game.player.jumpCount, p.width / 2,
+//						p.height - editorBottom.getHeight() - textSize * 6);
 			}
 			if (game.placed != null) {
 				p.text("Placed: " + game.placed.size(), p.width / 2,

@@ -74,7 +74,7 @@ public class Player extends Editable {
 	private boolean groundJump;
 	private boolean wallJump;
 	private boolean extraJump;
-	public int jumpCount; // how many jumps the player can make before touching the ground
+//	public int jumpCount; // how many jumps the player can make before touching the ground
 	private Vec2 previousPosition; // last player location
 //	private int jumpResetCounter; // how many steps the player has been still
 //	private int jumpResetLimit; // how many steps it takes the jump to reset
@@ -124,7 +124,7 @@ public class Player extends Editable {
 		this.groundJump = false;
 		this.wallJump = false;
 		this.extraJump = false;
-		this.jumpCount = 0;
+//		this.jumpCount = 0;
 //		this.jumpResetCounter = 0; // how many steps the player has been still
 //		this.jumpResetLimit = 300; // how many steps it takes the jump to reset
 
@@ -734,27 +734,32 @@ public class Player extends Editable {
 			float yImpulse = 0;
 			if (!(groundJump)) { // if it was a wall jump or an extra jump
 
-				if (!extraJump) { // wallJump) { // if touching walls
+				if (wallJump) { // if touching walls
 					if (left) { // pushing to the left
 						yImpulse = (dynamicBody.getMass() * jumpPower / 2);
 
 					} else if (right) { // pushing to the right
 						yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 
-					} else {// if (!extraJump) { // pushing in no direction with no extra jump
+					} else if (!extraJump) { // pushing in no direction with no extra jump
 						return;
 
+					} else {
+						extraJump = false;
 					}
 
+				} else {
+					extraJump = false;
 				}
-				extraJump = false;
 
 			}
 
 			float xImpulse = dynamicBody.getMass() * jumpPower;
-			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0)); // testing
+			// reset vertical speed
+			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
+			// apply impulse
 			dynamicBody.applyLinearImpulse(new Vec2(yImpulse, xImpulse), dynamicBody.getWorldCenter(), true);
-			jumpCount--;
+//			jumpCount--;
 		}
 
 //		}
