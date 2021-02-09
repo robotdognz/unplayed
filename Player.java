@@ -742,19 +742,21 @@ public class Player extends Editable {
 
 			if (wallJump) { // if touching walls and pushing
 
-				if (!verticalTunnel) { // not in a tunnel
-					if (left) { // && !verticalTunnel) { // pushing to the left
+				if (left) { // pushing to the left
+					if (!verticalTunnel) { // not in a tunnel
 						yImpulse = (dynamicBody.getMass() * jumpPower / 2);
-
-					} else if (right) { // && !verticalTunnel) { // pushing to the right
-						yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
-
-					} else if (!extraJump) { // pushing in no direction with no extra jump
-						return;
-
-					} else { // there is an extra jump
-						extraJump = false;
 					}
+
+				} else if (right) { // pushing to the right
+					if (!verticalTunnel) { // not in a tunnel
+						yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
+					}
+
+				} else if (!extraJump) { // pushing in no direction with no extra jump
+					return;
+
+				} else { // there is an extra jump
+					extraJump = false;
 				}
 
 			} else if (groundJump) {
