@@ -86,6 +86,7 @@ public class Tile extends Editable implements Comparable<Tile> {
 			topEdgeDef.shape = topEdge;
 			topEdgeDef.density = density;
 			topEdgeDef.friction = friction;
+			topEdgeDef.userData = "wall";
 			staticBody.createFixture(topEdgeDef);
 			// bottom edge
 			FixtureDef bottomEdgeDef = new FixtureDef();
