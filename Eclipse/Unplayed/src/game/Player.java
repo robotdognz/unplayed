@@ -748,12 +748,13 @@ public class Player extends Editable {
 					} else if (right) { // pushing to the right
 						yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 
-					} else if (!extraJump) { // pushing in no direction with no extra jump
+					} else { //if (!extraJump) { // pushing in no direction with no extra jump
 						return;
 
-					} else {
-						extraJump = false;
-					}
+					} 
+//					else {
+//						extraJump = false;
+//					}
 
 				} else {
 					extraJump = false;
