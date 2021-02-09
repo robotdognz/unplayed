@@ -734,17 +734,16 @@ public class Player extends Editable {
 			float yImpulse = 0;
 			if (!(groundJump)) { // if it was a wall jump or an extra jump
 
-//				if(wallJump) {
-//					
-//				}
-
-				if (!extraJump) { // wallJump) {
-					if (left) {
+				if (wallJump) { // if touching walls
+					if (left) { // pushing to the left
 						yImpulse = (dynamicBody.getMass() * jumpPower / 2);
-					} else if (right) {
+
+					} else if (right) { // pushing to the right
 						yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
-					} else {
+
+					} else if (!extraJump) { // pushing in no direction with no extra jump
 						return;
+
 					}
 
 				}
