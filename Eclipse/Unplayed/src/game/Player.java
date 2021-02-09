@@ -74,6 +74,7 @@ public class Player extends Editable {
 	private boolean groundJump;
 	private boolean wallJump;
 	private boolean extraJump;
+	private boolean verticalTunnel;
 //	public int jumpCount; // how many jumps the player can make before touching the ground
 	private Vec2 previousPosition; // last player location
 //	private int jumpResetCounter; // how many steps the player has been still
@@ -124,6 +125,7 @@ public class Player extends Editable {
 		this.groundJump = false;
 		this.wallJump = false;
 		this.extraJump = false;
+		this.verticalTunnel = false;
 //		this.jumpCount = 0;
 //		this.jumpResetCounter = 0; // how many steps the player has been still
 //		this.jumpResetLimit = 300; // how many steps it takes the jump to reset
@@ -359,6 +361,37 @@ public class Player extends Editable {
 
 		if (tunnelChecking.size() >= 2) {
 
+			// ----- check for left/right
+			float previousLeft = 0.5f;
+			float previousRight = 0.5f;
+			Collections.sort(tunnelChecking, xCompare);
+
+			for (Tile t : tunnelChecking) {
+
+				if (previousLeft == 0.5f) {
+					previousLeft = t.getTopLeft().x;
+					previousRight = t.getBottomRight().x;
+					continue;
+				}
+
+				if (Math.abs(previousRight - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
+					this.dynamicBody.setFixedRotation(true);
+					verticalTunnel = true;
+					return false;
+				}
+
+				if (Math.abs(previousLeft - rightEdge) <= 2 && Math.abs(t.getBottomRight().x - leftEdge) <= 2) {
+					this.dynamicBody.setFixedRotation(true);
+					verticalTunnel = true;
+					return false;
+				}
+
+				previousLeft = t.getTopLeft().x;
+				previousRight = t.getBottomRight().x;
+			}
+			
+			verticalTunnel = false;
+
 			// ----- check for top/bottom
 			float previousTop = 0.5f;
 			float previousBottom = 0.5f;
@@ -384,33 +417,6 @@ public class Player extends Editable {
 
 				previousTop = t.getTopLeft().y;
 				previousBottom = t.getBottomRight().y;
-			}
-
-			// ----- check for left/right
-			float previousLeft = 0.5f;
-			float previousRight = 0.5f;
-			Collections.sort(tunnelChecking, xCompare);
-
-			for (Tile t : tunnelChecking) {
-
-				if (previousLeft == 0.5f) {
-					previousLeft = t.getTopLeft().x;
-					previousRight = t.getBottomRight().x;
-					continue;
-				}
-
-				if (Math.abs(previousRight - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
-					this.dynamicBody.setFixedRotation(true);
-					return false;
-				}
-
-				if (Math.abs(previousLeft - rightEdge) <= 2 && Math.abs(t.getBottomRight().x - leftEdge) <= 2) {
-					this.dynamicBody.setFixedRotation(true);
-					return false;
-				}
-
-				previousLeft = t.getTopLeft().x;
-				previousRight = t.getBottomRight().x;
 			}
 
 		}
@@ -735,10 +741,10 @@ public class Player extends Editable {
 			float yImpulse = 0;
 
 			if (wallJump) { // if touching walls
-				if (left) { // pushing to the left
+				if (left && !verticalTunnel) { // pushing to the left
 					yImpulse = (dynamicBody.getMass() * jumpPower / 2);
 
-				} else if (right) { // pushing to the right
+				} else if (right && !verticalTunnel) { // pushing to the right
 					yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 
 				} else if (!extraJump) { // pushing in no direction with no extra jump
