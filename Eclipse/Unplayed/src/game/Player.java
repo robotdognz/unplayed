@@ -75,7 +75,6 @@ public class Player extends Editable {
 //	private boolean wallJump;
 	private boolean extraJump;
 	private boolean verticalTunnel;
-	private boolean horizontalTunnel;
 //	public int jumpCount; // how many jumps the player can make before touching the ground
 	private Vec2 previousPosition; // last player location
 //	private int jumpResetCounter; // how many steps the player has been still
@@ -127,7 +126,6 @@ public class Player extends Editable {
 //		this.wallJump = false;
 		this.extraJump = false;
 		this.verticalTunnel = false;
-		this.horizontalTunnel = false;
 //		this.jumpCount = 0;
 //		this.jumpResetCounter = 0; // how many steps the player has been still
 //		this.jumpResetLimit = 300; // how many steps it takes the jump to reset
@@ -410,13 +408,11 @@ public class Player extends Editable {
 
 				if (Math.abs(previousBottom - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
-					horizontalTunnel = true;
 					return false;
 				}
 
 				if (Math.abs(previousTop - bottomEdge) <= 2 && Math.abs(t.getBottomRight().y - topEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
-					horizontalTunnel = true;
 					return false;
 				}
 
@@ -424,7 +420,6 @@ public class Player extends Editable {
 				previousBottom = t.getBottomRight().y;
 			}
 			
-			horizontalTunnel = false;
 
 		}
 
@@ -742,9 +737,6 @@ public class Player extends Editable {
 	}
 
 	public void jump() {
-		if(horizontalTunnel) {
-			return;
-		}
 		
 		float xImpulse = 0;
 		float yImpulse = 0;
