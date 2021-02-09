@@ -252,7 +252,7 @@ public class Player extends Editable {
 	}
 
 	private void checkJumps() {
-		if (wallContacts > 0 && wallContacts >= groundContacts) {
+		if (wallContacts > 0 && wallContacts > groundContacts) {
 			groundJump = false;
 			wallJump = true;
 			extraJump = true;
