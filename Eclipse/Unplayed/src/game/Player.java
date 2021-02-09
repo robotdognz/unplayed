@@ -738,7 +738,7 @@ public class Player extends Editable {
 //					
 //				}
 
-				if (wallJump) {
+				if (!extraJump) { // wallJump) {
 					if (left) {
 						yImpulse = (dynamicBody.getMass() * jumpPower / 2);
 					} else if (right) {
