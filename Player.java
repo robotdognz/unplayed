@@ -71,8 +71,8 @@ public class Player extends Editable {
 
 	// jumping
 	private float jumpPower; // the strength of the player's jump
-	private boolean groundJump;
-	private boolean wallJump;
+//	private boolean groundJump;
+//	private boolean wallJump;
 	private boolean extraJump;
 	private boolean verticalTunnel;
 //	public int jumpCount; // how many jumps the player can make before touching the ground
@@ -122,8 +122,8 @@ public class Player extends Editable {
 		this.jumpPower = 120;
 		this.groundContacts = 0;
 		this.wallContacts = 0;
-		this.groundJump = false;
-		this.wallJump = false;
+//		this.groundJump = false;
+//		this.wallJump = false;
 		this.extraJump = false;
 		this.verticalTunnel = false;
 //		this.jumpCount = 0;
@@ -739,7 +739,6 @@ public class Player extends Editable {
 		float yImpulse = 0;
 
 		if (groundContacts > 0) { // touching the ground
-
 			yImpulse = dynamicBody.getMass() * jumpPower;
 			extraJump = true;
 
@@ -750,11 +749,15 @@ public class Player extends Editable {
 				if (!verticalTunnel) { // not in a tunnel
 					xImpulse = (dynamicBody.getMass() * jumpPower / 2);
 				}
+				extraJump = true;
+
 			} else if (right) { // pushing into a wall right
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
 					xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 				}
+				extraJump = true;
+
 			} else if (extraJump) { // not pushing into the wall
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				extraJump = false;
