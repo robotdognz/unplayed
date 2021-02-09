@@ -252,13 +252,13 @@ public class Player extends Editable {
 	}
 
 	private void checkJumps() {
-		if (wallContacts > 0 && wallContacts > groundContacts) {
-			groundJump = false;
-			wallJump = true;
-			extraJump = true;
-		} else if (groundContacts > 0) {
+		if (groundContacts > 0) {
 			groundJump = true;
 			wallJump = false;
+			extraJump = true;
+		} else if (wallContacts > 0) {
+			groundJump = false;
+			wallJump = true;
 			extraJump = true;
 		} else {
 			groundJump = false;
@@ -739,31 +739,23 @@ public class Player extends Editable {
 
 		if (groundJump || wallJump || extraJump) { // if the player has a jump
 			float yImpulse = 0;
+			if (!(groundJump)) { // if it was a wall jump or an extra jump
 
-			if (wallJump) { // if wall jump
-
-				if (left) { // pushing to the left
-					if (!verticalTunnel) { // not in a tunnel
+				if (!extraJump) { // wallJump) { // if touching walls
+					if (left) { // pushing to the left
 						yImpulse = (dynamicBody.getMass() * jumpPower / 2);
-					}
 
-				} else if (right) { // pushing to the right
-					if (!verticalTunnel) { // not in a tunnel
+					} else if (right) { // pushing to the right
 						yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
-					}
 
-				} else { // if (!extraJump) { // pushing in no direction with no extra jump
-					return;
+					} else {// if (!extraJump) { // pushing in no direction with no extra jump
+						return;
+
+					}
 
 				}
-//				else { // there is an extra jump
-//					extraJump = false;
-//				}
-
-			} else if (groundJump) {
-
-			} else {
 				extraJump = false;
+
 			}
 
 			float xImpulse = dynamicBody.getMass() * jumpPower;
