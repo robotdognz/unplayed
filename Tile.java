@@ -111,7 +111,7 @@ public class Tile extends Editable implements Comparable<Tile> {
 
 			// left wall sensor
 			EdgeShape leftSensor = new EdgeShape();
-			float sBox2dH = box2d.scalarPixelsToWorld((getHeight() - 4) / 2);
+			float sBox2dH = box2d.scalarPixelsToWorld((getHeight() - 1) / 2);
 			v1 = new Vec2(-box2dW, sBox2dH);
 			v2 = new Vec2(-box2dW, -sBox2dH);
 			leftSensor.set(v1, v2);

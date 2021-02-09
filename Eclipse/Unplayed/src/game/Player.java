@@ -252,7 +252,7 @@ public class Player extends Editable {
 	}
 
 	private void checkJumps() {
-		if (wallContacts > 0) {
+		if (wallContacts > 0 && wallContacts >= groundContacts) {
 			groundJump = false;
 			wallJump = true;
 			extraJump = true;
@@ -752,10 +752,10 @@ public class Player extends Editable {
 						yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 					}
 
-				} else { //if (!extraJump) { // pushing in no direction with no extra jump
+				} else { // if (!extraJump) { // pushing in no direction with no extra jump
 					return;
 
-				} 
+				}
 //				else { // there is an extra jump
 //					extraJump = false;
 //				}
