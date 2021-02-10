@@ -27,6 +27,7 @@ public class CountdownTimer {
 				intTimer++;
 			} else {
 				running = false;
+				intTimer = 0;
 			}
 		}
 	}
@@ -37,6 +38,7 @@ public class CountdownTimer {
 				deltaTimer += delta;
 			} else {
 				running = false;
+				deltaTimer = 0;
 			}
 		}
 	}
