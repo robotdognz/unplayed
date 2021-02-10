@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import handlers.TextureCache;
 import handlers.TileHandler;
+import misc.CountdownTimer;
 import misc.PlayerTileXComparator;
 import misc.Vibe;
 import objects.Editable;
@@ -30,7 +31,6 @@ public class Player extends Editable {
 
 	private boolean left = false;
 	private boolean right = false;
-//	private boolean jumping = false;
 
 	// vibration
 	private Vibe vibe;
@@ -45,6 +45,7 @@ public class Player extends Editable {
 	int contactNumber; // the number of things touching the player's body
 	public int groundContacts; // the number of grounds touching the player's body
 	public int wallContacts; // the number of walls touching the player's body
+	private CountdownTimer groundTimer; // used to make ground collision more forgiving
 
 	private ArrayList<Event> events; // list of events touching the player
 	private boolean vibeFrame; // has a vibration happened yet this frame
@@ -74,8 +75,6 @@ public class Player extends Editable {
 	private boolean extraJump;
 	private boolean verticalTunnel;
 //	private Vec2 previousPosition; // last player location
-//	private int jumpResetCounter; // how many steps the player has been still
-//	private int jumpResetLimit; // how many steps it takes the jump to reset
 
 	Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -119,10 +118,9 @@ public class Player extends Editable {
 		this.jumpPower = 120;
 		this.groundContacts = 0;
 		this.wallContacts = 0;
+		this.groundTimer = new CountdownTimer(0.016f);
 		this.extraJump = false;
 		this.verticalTunnel = false;
-//		this.jumpResetCounter = 0; // how many steps the player has been still
-//		this.jumpResetLimit = 300; // how many steps it takes the jump to reset
 
 		create();
 
@@ -175,20 +173,15 @@ public class Player extends Editable {
 		}
 	}
 
-//	public void resetJump() {
-//		this.jumpCount = 2;
-//		this.surfaceJump = true;
-//		this.extraJump = true;
-//	}
-
 	public void startGroundContact() {
 		this.groundContacts++;
-//		this.contactNumber++;
 	}
 
 	public void endGroundContact() {
 		this.groundContacts--;
-//		this.contactNumber--;
+		if(this.groundContacts == 0) {
+			groundTimer.start();
+		}
 	}
 
 	public void startWallContact() {
@@ -223,10 +216,12 @@ public class Player extends Editable {
 		events.remove(event);
 	}
 
-	public void physicsStep() {
+	public void physicsStep(float delta) {
+		//step timers
+		groundTimer.deltaStep(delta);
+		
 		// run checks
 		checkJumps();
-//		checkStill(); // TODO used for jump resetting, hopefully can get rid of this
 		checkTiles();
 
 		// do movement
@@ -247,36 +242,9 @@ public class Player extends Editable {
 
 	private void checkJumps() {
 		if (groundContacts > 0) {
-//			groundJump = true;
-//			wallJump = false;
 			extraJump = true;
 		}
-//		else if (wallContacts > 0) {
-//			groundJump = false;
-//			wallJump = true;
-//			extraJump = true;
-//		} else {
-//			groundJump = false;
-//			wallJump = false;
-//		}
 	}
-
-//	private void checkStill() {
-//		Vec2 currentPosition = box2d.getBodyPixelCoord(dynamicBody);
-//
-//		if (jumpResetCounter < jumpResetLimit) {
-//			// check if the player is still
-//			if (Math.abs(currentPosition.x - previousPosition.x) < 2
-//					&& Math.abs(currentPosition.y - previousPosition.y) < 2) {
-//				jumpResetCounter++;
-//			}
-//		} else {
-//			jumpResetCounter = 0;
-//			resetJump();
-//		}
-//
-//		previousPosition = currentPosition;
-//	}
 
 	private void checkTiles() {
 		// environment checking
@@ -413,7 +381,6 @@ public class Player extends Editable {
 				previousTop = t.getTopLeft().y;
 				previousBottom = t.getBottomRight().y;
 			}
-			
 
 		}
 
@@ -731,11 +698,11 @@ public class Player extends Editable {
 	}
 
 	public void jump() {
-		
+
 		float xImpulse = 0;
 		float yImpulse = 0;
 
-		if (groundContacts > 0) { // touching the ground
+		if (groundContacts > 0 || groundTimer.isRunning()) { // touching the ground
 			yImpulse = dynamicBody.getMass() * jumpPower;
 			extraJump = true;
 
