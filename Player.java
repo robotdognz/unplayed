@@ -734,9 +734,9 @@ public class Player extends Editable {
 			Vec2 vel = dynamicBody.getLinearVelocity();
 			if (horizontalTunnel && Math.abs(vel.x) > 0.5f) {
 				if (vel.x > 0) {
-					xImpulse = dynamicBody.getMass() * (jumpPower * 5);
+					xImpulse = dynamicBody.getMass() * (jumpPower * 10);
 				} else {
-					xImpulse = -(dynamicBody.getMass() * (jumpPower * 5));
+					xImpulse = -(dynamicBody.getMass() * (jumpPower * 10));
 				}
 			} else {
 				yImpulse = dynamicBody.getMass() * jumpPower;
@@ -771,7 +771,7 @@ public class Player extends Editable {
 			}
 		}
 
-		if (yImpulse > 0 || Math.abs(xImpulse) > 0) {
+		if (yImpulse > 0 || xImpulse != 0) {
 			// reset vertical speed
 			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 			// apply impulse
