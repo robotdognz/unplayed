@@ -738,9 +738,9 @@ public class Player extends Editable {
 			Vec2 vel = dynamicBody.getLinearVelocity();
 			if (horizontalTunnel && Math.abs(vel.x) > 0.5f) {
 				if (vel.x > 0) {
-					xImpulse = dynamicBody.getMass() * (jumpPower * 5);
+					xImpulse = dynamicBody.getMass() * (jumpPower);
 				} else {
-					xImpulse = -(dynamicBody.getMass() * (jumpPower * 5));
+					xImpulse = -(dynamicBody.getMass() * (jumpPower));
 				}
 			} else {
 				yImpulse = dynamicBody.getMass() * jumpPower;
