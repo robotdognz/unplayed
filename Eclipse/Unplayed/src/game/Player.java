@@ -251,7 +251,7 @@ public class Player extends Editable {
 	private void checkTiles() {
 		// environment checking
 
-		// clear fields
+		// reset fields
 		tunnelChecking.clear();
 		verticalTunnel = false;
 		horizontalTunnel = false;
@@ -723,7 +723,12 @@ public class Player extends Editable {
 		float yImpulse = 0;
 
 		if (groundContacts > 0 || groundTimer.isRunning()) { // touching the ground
-			yImpulse = dynamicBody.getMass() * jumpPower;
+			// check if in a hTunnel and moving
+			if (horizontalTunnel && Math.abs(dynamicBody.getLinearVelocity().x) > 0.5f) {
+				xImpulse = dynamicBody.getMass() * jumpPower;
+			} else {
+				yImpulse = dynamicBody.getMass() * jumpPower;
+			}
 			extraJump = true;
 
 		} else if (wallContacts > 0) { // touching a wall
@@ -754,7 +759,7 @@ public class Player extends Editable {
 			}
 		}
 
-		if (yImpulse > 0) {
+		if (yImpulse > 0 || xImpulse > 0) {
 			// reset vertical speed
 			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 			// apply impulse
