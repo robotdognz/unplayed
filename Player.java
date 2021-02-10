@@ -771,7 +771,7 @@ public class Player extends Editable {
 			}
 		}
 
-		if (yImpulse > 0 || xImpulse > 0) {
+		if (yImpulse > 0 || Math.abs(xImpulse) > 0) {
 			// reset vertical speed
 			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 			// apply impulse
