@@ -118,7 +118,7 @@ public class Player extends Editable {
 		this.jumpPower = 120;
 		this.groundContacts = 0;
 		this.wallContacts = 0;
-		this.groundTimer = new CountdownTimer(0.256f); //0.064f
+		this.groundTimer = new CountdownTimer(0.128f); //0.064f
 		this.extraJump = false;
 		this.verticalTunnel = false;
 
