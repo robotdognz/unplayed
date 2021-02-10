@@ -135,7 +135,7 @@ public class Editor {
 
 		// debug display
 		debugVis = false;
-		frameDelay = 60; //100
+		frameDelay = 60; // 100
 		textSize = (int) (p.width / 28.8); // 50
 		tileSearch = true; // false
 	}
@@ -218,12 +218,14 @@ public class Editor {
 			if (game.player != null) {
 				Vec2 vel = game.player.dynamicBody.getLinearVelocity();
 				p.text("Velocity x:" + PApplet.nf(Math.abs(vel.x), 1, 2) + " y:" + PApplet.nf(Math.abs(vel.y), 1, 2),
-						p.width / 2, p.height - editorBottom.getHeight() - textSize * 8);
+						p.width / 2, p.height - editorBottom.getHeight() - textSize * 9);
 				float angle = PApplet.degrees(game.player.dynamicBody.getAngle());
 				p.text("Angle:" + PApplet.nf(angle, 1, 2), p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 7);
+						p.height - editorBottom.getHeight() - textSize * 8);
 				p.text("ground: " + game.player.groundContacts + " wall: " + game.player.wallContacts, p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 6);
+						p.height - editorBottom.getHeight() - textSize * 7);
+				p.text("gt: " + PApplet.nf(game.player.groundTimer.deltaRemaining(), 1, 4), p.width / 2,
+						p.height - editorBottom.getHeight() - textSize * 7);
 			}
 			if (game.placed != null) {
 				p.text("Placed: " + game.placed.size(), p.width / 2,

@@ -45,7 +45,7 @@ public class Player extends Editable {
 	int contactNumber; // the number of things touching the player's body
 	public int groundContacts; // the number of grounds touching the player's body
 	public int wallContacts; // the number of walls touching the player's body
-	private CountdownTimer groundTimer; // used to make ground collision more forgiving
+	public CountdownTimer groundTimer; // used to make ground collision more forgiving
 
 	private ArrayList<Event> events; // list of events touching the player
 	private boolean vibeFrame; // has a vibration happened yet this frame
@@ -118,7 +118,7 @@ public class Player extends Editable {
 		this.jumpPower = 120;
 		this.groundContacts = 0;
 		this.wallContacts = 0;
-		this.groundTimer = new CountdownTimer(0.016f);
+		this.groundTimer = new CountdownTimer(0.064f); //0.016f
 		this.extraJump = false;
 		this.verticalTunnel = false;
 
