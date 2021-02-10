@@ -251,7 +251,10 @@ public class Player extends Editable {
 	private void checkTiles() {
 		// environment checking
 
+		// clear fields
 		tunnelChecking.clear();
+		verticalTunnel = false;
+		horizontalTunnel = false;
 		groundChecking.clear();
 		wallChecking.clear();
 		// roofChecking.clear();
@@ -289,6 +292,7 @@ public class Player extends Editable {
 	}
 
 	private boolean checkTunnel() {
+
 		// create a list of relevant tiles sorted by x position
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		// edges of player
@@ -328,7 +332,6 @@ public class Player extends Editable {
 			boolean returnBoolean = true; // true if nothing found
 
 			// ----- check for left/right
-			verticalTunnel = false;
 			float previousLeft = 0.5f;
 			float previousRight = 0.5f;
 			Collections.sort(tunnelChecking, xCompare);
@@ -362,7 +365,6 @@ public class Player extends Editable {
 			}
 
 			// ----- check for top/bottom
-			horizontalTunnel = false;
 			float previousTop = 0.5f;
 			float previousBottom = 0.5f;
 			Collections.sort(tunnelChecking);
