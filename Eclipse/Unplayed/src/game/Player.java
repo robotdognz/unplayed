@@ -71,12 +71,9 @@ public class Player extends Editable {
 
 	// jumping
 	private float jumpPower; // the strength of the player's jump
-//	private boolean groundJump;
-//	private boolean wallJump;
 	private boolean extraJump;
 	private boolean verticalTunnel;
-//	public int jumpCount; // how many jumps the player can make before touching the ground
-	private Vec2 previousPosition; // last player location
+//	private Vec2 previousPosition; // last player location
 //	private int jumpResetCounter; // how many steps the player has been still
 //	private int jumpResetLimit; // how many steps it takes the jump to reset
 
@@ -122,11 +119,8 @@ public class Player extends Editable {
 		this.jumpPower = 120;
 		this.groundContacts = 0;
 		this.wallContacts = 0;
-//		this.groundJump = false;
-//		this.wallJump = false;
 		this.extraJump = false;
 		this.verticalTunnel = false;
-//		this.jumpCount = 0;
 //		this.jumpResetCounter = 0; // how many steps the player has been still
 //		this.jumpResetLimit = 300; // how many steps it takes the jump to reset
 
@@ -169,7 +163,7 @@ public class Player extends Editable {
 			sensorFixtureDef.userData = "player sensor";
 			this.dynamicBody.createFixture(sensorFixtureDef);
 
-			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
+//			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
 		}
 	}
 
