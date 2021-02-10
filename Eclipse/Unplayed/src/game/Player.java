@@ -73,7 +73,8 @@ public class Player extends Editable {
 	// jumping
 	private float jumpPower; // the strength of the player's jump
 	private boolean extraJump;
-	private boolean verticalTunnel;
+	private boolean verticalTunnel; // used to check if player should jump away from the wall or not
+	private boolean horizontalTunnel;
 //	private Vec2 previousPosition; // last player location
 
 	Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
@@ -118,9 +119,10 @@ public class Player extends Editable {
 		this.jumpPower = 120;
 		this.groundContacts = 0;
 		this.wallContacts = 0;
-		this.groundTimer = new CountdownTimer(0.128f); //how long to pad leaving the ground
+		this.groundTimer = new CountdownTimer(0.128f); // how long to pad leaving the ground
 		this.extraJump = false;
 		this.verticalTunnel = false;
+		this.horizontalTunnel = false;
 
 		create();
 
@@ -179,7 +181,7 @@ public class Player extends Editable {
 
 	public void endGroundContact() {
 		this.groundContacts--;
-		if(this.groundContacts == 0) {
+		if (this.groundContacts == 0) {
 			groundTimer.start();
 		}
 	}
@@ -217,9 +219,9 @@ public class Player extends Editable {
 	}
 
 	public void physicsStep(float delta) {
-		//step timers
+		// step timers
 		groundTimer.deltaStep(delta);
-		
+
 		// run checks
 		checkJumps();
 		checkTiles();
@@ -323,8 +325,10 @@ public class Player extends Editable {
 		}
 
 		if (tunnelChecking.size() >= 2) {
+			boolean returnBoolean = true; // true if nothing found
 
 			// ----- check for left/right
+			verticalTunnel = false;
 			float previousLeft = 0.5f;
 			float previousRight = 0.5f;
 			Collections.sort(tunnelChecking, xCompare);
@@ -340,22 +344,25 @@ public class Player extends Editable {
 				if (Math.abs(previousRight - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
 					verticalTunnel = true;
-					return false;
+//					return false;
+					returnBoolean = false;
+					break;
 				}
 
 				if (Math.abs(previousLeft - rightEdge) <= 2 && Math.abs(t.getBottomRight().x - leftEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
 					verticalTunnel = true;
-					return false;
+//					return false;
+					returnBoolean = false;
+					break;
 				}
 
 				previousLeft = t.getTopLeft().x;
 				previousRight = t.getBottomRight().x;
 			}
 
-			verticalTunnel = false;
-
 			// ----- check for top/bottom
+			horizontalTunnel = false;
 			float previousTop = 0.5f;
 			float previousBottom = 0.5f;
 			Collections.sort(tunnelChecking);
@@ -370,16 +377,27 @@ public class Player extends Editable {
 
 				if (Math.abs(previousBottom - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
-					return false;
+					horizontalTunnel = true;
+//					return false;
+					returnBoolean = false;
+					break;
 				}
 
 				if (Math.abs(previousTop - bottomEdge) <= 2 && Math.abs(t.getBottomRight().y - topEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
-					return false;
+					horizontalTunnel = true;
+//					return false;
+					returnBoolean = false;
+					break;
 				}
 
 				previousTop = t.getTopLeft().y;
 				previousBottom = t.getBottomRight().y;
+			}
+
+			// return if subsequent algorithms can unlock the player
+			if (returnBoolean == false) {
+				return false;
 			}
 
 		}
@@ -820,6 +838,19 @@ public class Player extends Editable {
 
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
 			graphics.noTint();
+
+			if (verticalTunnel) {
+				graphics.noStroke();
+				graphics.fill(0, 255, 0, 100);
+				graphics.rectMode(CORNER);
+				graphics.rect(-getWidth() / 2, -getHeight() / 2, getWidth() / 2, getHeight());
+			}
+			if (horizontalTunnel) {
+				graphics.noStroke();
+				graphics.fill(0, 255, 0, 100);
+				graphics.rectMode(CORNER);
+				graphics.rect(0, -getHeight() / 2, getWidth() / 2, getHeight());
+			}
 
 			graphics.popMatrix();
 		}
