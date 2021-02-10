@@ -224,7 +224,7 @@ public class Editor {
 						p.height - editorBottom.getHeight() - textSize * 8);
 				p.text("ground: " + game.player.groundContacts + " wall: " + game.player.wallContacts, p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 7);
-				p.text("gt: " + PApplet.nf(game.player.groundTimer.deltaRemaining(), 1, 4), p.width / 2,
+				p.text("Timer: " + game.player.groundTimer.isRunning(), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 6);
 			}
 			if (game.placed != null) {
