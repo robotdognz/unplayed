@@ -233,11 +233,15 @@ public class Player extends Editable {
 		if (left) {
 			if (vel.x >= -60) {
 				desiredVel = Math.max(vel.x - 2.0f, -60.0f);
+			} else {
+				return;
 			}
 
 		} else if (right) {
 			if (vel.x <= 60) {
 				desiredVel = Math.min(vel.x + 2.0f, 60.0f);
+			} else {
+				return;
 			}
 		} else {
 			desiredVel = vel.x * 0.999f;
@@ -734,9 +738,9 @@ public class Player extends Editable {
 			Vec2 vel = dynamicBody.getLinearVelocity();
 			if (horizontalTunnel && Math.abs(vel.x) > 0.5f) {
 				if (vel.x > 0) {
-					xImpulse = dynamicBody.getMass() * (jumpPower * 10);
+					xImpulse = dynamicBody.getMass() * (jumpPower * 5);
 				} else {
-					xImpulse = -(dynamicBody.getMass() * (jumpPower * 10));
+					xImpulse = -(dynamicBody.getMass() * (jumpPower * 5));
 				}
 			} else {
 				yImpulse = dynamicBody.getMass() * jumpPower;
