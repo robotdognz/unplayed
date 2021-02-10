@@ -118,7 +118,7 @@ public class Player extends Editable {
 		this.jumpPower = 120;
 		this.groundContacts = 0;
 		this.wallContacts = 0;
-		this.groundTimer = new CountdownTimer(0.128f); //0.064f
+		this.groundTimer = new CountdownTimer(0.128f); //how long to pad leaving the ground
 		this.extraJump = false;
 		this.verticalTunnel = false;
 
@@ -740,40 +740,6 @@ public class Player extends Editable {
 			// apply impulse
 			dynamicBody.applyLinearImpulse(new Vec2(xImpulse, yImpulse), dynamicBody.getWorldCenter(), true);
 		}
-
-//		if (groundJump || wallJump || extraJump) { // if the player has a jump
-//			float yImpulse = 0;
-//			if (!(groundJump)) { // if it was a wall jump or an extra jump
-//
-//				if (wallJump) { // if touching walls
-//					if (left) { // pushing to the left
-//						if (!verticalTunnel) { // not in a tunnel
-//							yImpulse = (dynamicBody.getMass() * jumpPower / 2);
-//						}
-//
-//					} else if (right) { // pushing to the right
-//						if (!verticalTunnel) { // not in a tunnel
-//							yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
-//						}
-//
-//					} else {
-//						return;
-//
-//					}
-//
-//				} else {
-//					extraJump = false;
-//				}
-//
-//			}
-//
-//			xImpulse = dynamicBody.getMass() * jumpPower;
-//			// reset vertical speed
-//			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
-//			// apply impulse
-//			dynamicBody.applyLinearImpulse(new Vec2(yImpulse, xImpulse), dynamicBody.getWorldCenter(), true);
-//		}
-
 	}
 
 	public void physicsImpact(float[] impulses) {
@@ -992,11 +958,4 @@ public class Player extends Editable {
 		return playerAngle;
 	}
 
-//	public void jumping() {
-//		jumping = true;
-//	}
-//
-//	public void notJumping() {
-//		jumping = false;
-//	}
 }
