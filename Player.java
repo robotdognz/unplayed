@@ -723,9 +723,14 @@ public class Player extends Editable {
 		float yImpulse = 0;
 
 		if (groundContacts > 0 || groundTimer.isRunning()) { // touching the ground
-			// check if in a hTunnel and moving
-			if (horizontalTunnel && Math.abs(dynamicBody.getLinearVelocity().x) > 0.5f) {
-				xImpulse = dynamicBody.getMass() * jumpPower;
+			// check if jumping while moving in a tunnel
+			Vec2 vel = dynamicBody.getLinearVelocity();
+			if (horizontalTunnel && Math.abs(vel.x) > 0.5f) {
+				if (vel.x > 0) {
+					xImpulse = dynamicBody.getMass() * jumpPower * 2;
+				} else {
+					xImpulse = -(dynamicBody.getMass() * jumpPower * 2);
+				}
 			} else {
 				yImpulse = dynamicBody.getMass() * jumpPower;
 			}
