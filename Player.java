@@ -229,13 +229,20 @@ public class Player extends Editable {
 		// do movement
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		float desiredVel = 0;
+
 		if (left) {
-			desiredVel = Math.max(vel.x - 2.0f, -60.0f);
+			if (vel.x >= -60) {
+				desiredVel = Math.max(vel.x - 2.0f, -60.0f);
+			}
+
 		} else if (right) {
-			desiredVel = Math.min(vel.x + 2.0f, 60.0f);
+			if (vel.x <= 60) {
+				desiredVel = Math.min(vel.x + 2.0f, 60.0f);
+			}
 		} else {
 			desiredVel = vel.x * 0.999f;
 		}
+
 		float velChange = desiredVel - vel.x;
 		float impulse = dynamicBody.getMass() * velChange;
 		dynamicBody.applyLinearImpulse(new Vec2(impulse, 0), dynamicBody.getWorldCenter(), true);
@@ -727,9 +734,9 @@ public class Player extends Editable {
 			Vec2 vel = dynamicBody.getLinearVelocity();
 			if (horizontalTunnel && Math.abs(vel.x) > 0.5f) {
 				if (vel.x > 0) {
-					xImpulse = dynamicBody.getMass() * (jumpPower * 10);
+					xImpulse = dynamicBody.getMass() * (jumpPower * 5);
 				} else {
-					xImpulse = -(dynamicBody.getMass() * (jumpPower * 10));
+					xImpulse = -(dynamicBody.getMass() * (jumpPower * 5));
 				}
 			} else {
 				yImpulse = dynamicBody.getMass() * jumpPower;
