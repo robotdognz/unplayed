@@ -255,6 +255,11 @@ public class Player extends Editable {
 
 		// do movement
 		Vec2 vel = dynamicBody.getLinearVelocity();
+
+		if (boostTimer.isRunning() && Math.abs(vel.x) < 0.2f) {
+			jump();
+		}
+
 		float desiredVel = 0;
 
 		if (left) {
@@ -895,7 +900,7 @@ public class Player extends Editable {
 		if (groundContacts > 0 || groundTimer.isRunning()) { // touching the ground
 			// check if jumping while moving in a tunnel
 			Vec2 vel = dynamicBody.getLinearVelocity();
-			if (horizontalTunnel && Math.abs(vel.x) > 0.5f) {
+			if (horizontalTunnel && Math.abs(vel.x) > 0.1f) { // 0.5f
 				if (vel.x > 0) {
 					xImpulse = dynamicBody.getMass() * (jumpPower / 2);
 					boostTimer.start();
