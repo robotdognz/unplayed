@@ -256,7 +256,7 @@ public class Player extends Editable {
 		Vec2 vel = dynamicBody.getLinearVelocity();
 
 		// tunnel boost roof slot
-		if (boostTimer.isRunning() && Math.abs(vel.x) < 0.2f) {
+		if (boostTimer.isRunning() && roofFixture != null && Math.abs(vel.x) < 0.2f) {
 			jumpTimer.start();
 			extraJump = false;
 			// reset vertical speed
@@ -565,11 +565,11 @@ public class Player extends Editable {
 	}
 
 	private void checkForWallSlots(boolean resetRotation) {
-		// only check for wall slots when not boosting
-		if (boostTimer.isRunning()) {
-			destroyWallBarrier(resetRotation);
-			return;
-		}
+//		// only check for wall slots when not boosting
+//		if (boostTimer.isRunning()) {
+//			destroyWallBarrier(resetRotation);
+//			return;
+//		}
 
 		// player is trying to move on the x axis
 		if (!(left || right)) {
