@@ -253,13 +253,19 @@ public class Player extends Editable {
 		checkJumps();
 		checkTiles();
 
-		// do movement
 		Vec2 vel = dynamicBody.getLinearVelocity();
 
+		// tunnel boost roof slot
 		if (boostTimer.isRunning() && Math.abs(vel.x) < 0.2f) {
-			jump();
+			jumpTimer.start();
+			// reset vertical speed
+			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
+			// apply impulse
+			float yImpulse = dynamicBody.getMass() * jumpPower;
+			dynamicBody.applyLinearImpulse(new Vec2(0, yImpulse), dynamicBody.getWorldCenter(), true);
 		}
 
+		// do movement
 		float desiredVel = 0;
 
 		if (left) {
