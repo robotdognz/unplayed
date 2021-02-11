@@ -256,8 +256,8 @@ public class Player extends Editable {
 		Vec2 vel = dynamicBody.getLinearVelocity();
 
 		// tunnel boost roof slot
-		if (boostTimer.isRunning() && roofFixture != null && Math.abs(vel.x) < 0.2f) {
-			if (((EdgeShape) roofFixture.getShape()).m_vertex1.x - dynamicBody.getPosition().x < getWidth() / 4) {
+		if (boostTimer.isRunning() && roofFixture != null && Math.abs(vel.x) < 0.01f) { // 0.2f
+			if (((EdgeShape) roofFixture.getShape()).m_vertex1.x - dynamicBody.getPosition().x < getWidth() * 0.1) {
 				jumpTimer.start();
 				extraJump = false;
 				// reset vertical speed
