@@ -430,7 +430,7 @@ public class Game {
 		int steps = calculateSteps(deltaTime);
 		while (steps > 0) {
 			if (player != null) {
-				player.physicsStep(stepSize);
+				player.physicsStep();
 			}
 			box2d.step(stepSize, 8, 3);
 			steps--;
