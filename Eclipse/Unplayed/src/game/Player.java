@@ -46,6 +46,7 @@ public class Player extends Editable {
 	public int groundContacts; // the number of grounds touching the player's body
 	public int wallContacts; // the number of walls touching the player's body
 	public CountdownTimer groundTimer; // used to make ground collision more forgiving
+	public CountdownTimer jumpTimer; // used to correct the ground timer
 
 	private ArrayList<Event> events; // list of events touching the player
 	private boolean vibeFrame; // has a vibration happened yet this frame
@@ -120,6 +121,8 @@ public class Player extends Editable {
 		this.groundContacts = 0;
 		this.wallContacts = 0;
 		this.groundTimer = new CountdownTimer(0.128f); // how long to pad leaving the ground
+		// how long after a jump before the ground a wall timers can be started
+		this.jumpTimer = new CountdownTimer(0.064f);
 		this.extraJump = false;
 		this.verticalTunnel = false;
 		this.horizontalTunnel = false;
@@ -181,7 +184,8 @@ public class Player extends Editable {
 
 	public void endGroundContact() {
 		this.groundContacts--;
-		if (this.groundContacts == 0) {
+		// if the player has just left the ground and it wasn't because of a jump
+		if (this.groundContacts == 0 && !this.jumpTimer.isRunning()) {
 			groundTimer.start();
 		}
 	}
@@ -220,6 +224,7 @@ public class Player extends Editable {
 
 	public void physicsStep(float delta) {
 		// step timers
+		jumpTimer.deltaStep(delta);
 		groundTimer.deltaStep(delta);
 
 		// run checks
@@ -776,6 +781,7 @@ public class Player extends Editable {
 		}
 
 		if (yImpulse > 0 || xImpulse != 0) {
+			jumpTimer.start();
 			// reset vertical speed
 			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 			// apply impulse
