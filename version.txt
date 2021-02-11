@@ -1,22 +1,11 @@
 (Major version).(Minor version).(Revision number)
 
-1.2.1: Improving physics and tuning player 'feel'
+1.2.1: Improving physics
 
--Various bug fixes
 01/02/21
 -Fixed an issue where the player would sometimes slide past wall slots when entering from above
 -Fixed an issue where the player could get caught between a wall and floor slot
 -Returned double jump to its pre physics update behaviour
-09/02/21
--Completely rebuilt the jumping system
-10/02/21
--There is now wall jumping that correctly pushes you away from the wall
--Jumping or falling off a surface removes the first jump, so you only ever have one jump in mid air
--Wall jumping in a vertical tunnel will boost you straight up instead of away from the wall
-11/02/21
--Built a system that makes jumping off objects more forgiving by delaying collision end events where neccassary
--Jumping while moving in a horizontal tunnel now bosts you forward
--Implemented jumping up through slots above the player
 
 1.2.0: Physics build
 

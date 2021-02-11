@@ -9,7 +9,6 @@ import java.util.Iterator;
 
 import handlers.TextureCache;
 import handlers.TileHandler;
-import misc.CountdownTimer;
 import misc.PlayerTileXComparator;
 import misc.Vibe;
 import objects.Editable;
@@ -31,6 +30,7 @@ public class Player extends Editable {
 
 	private boolean left = false;
 	private boolean right = false;
+//	private boolean jumping = false;
 
 	// vibration
 	private Vibe vibe;
@@ -45,10 +45,6 @@ public class Player extends Editable {
 	int contactNumber; // the number of things touching the player's body
 	public int groundContacts; // the number of grounds touching the player's body
 	public int wallContacts; // the number of walls touching the player's body
-	public CountdownTimer groundTimer; // used to make ground collision more forgiving
-	public CountdownTimer wallTimer; // used to make wall collision more forgiving
-	public CountdownTimer jumpTimer; // used to correct the ground timer
-	public CountdownTimer boostTimer; // used to correct the ground timer
 
 	private ArrayList<Event> events; // list of events touching the player
 	private boolean vibeFrame; // has a vibration happened yet this frame
@@ -69,23 +65,20 @@ public class Player extends Editable {
 	private Fixture groundFixture; // reference to the barrier fixture
 
 	// wall slot checking
-	private ArrayList<Tile> wallChecking; // list of tiles currently being checked for wall slots
+	private ArrayList<Tile> wallChecking; // list of tiles currently being checked for ground slots
 	private Body wallBarrier; // barrier used to stop the player moving past a slot
 	private Fixture wallFixture; // reference to the barrier fixture
 
-	// roof slot checking
-	private ArrayList<Tile> roofChecking; // list of tiles currently being checked for roof slots
-	private Body roofBarrier; // barrier used to stop the player moving past a slot
-	private Fixture roofFixture; // reference to the barrier fixture
-	public boolean touchingRoofBarrier; // is the player touching a roof barrier
-
-	// movement / jumping
-	private float movementSpeed;
+	// jumping
 	private float jumpPower; // the strength of the player's jump
+	private boolean groundJump;
+	private boolean wallJump;
 	private boolean extraJump;
-	private boolean verticalTunnel; // used to check if player should jump away from the wall or not
-	private boolean horizontalTunnel;
-//	private Vec2 previousPosition; // last player location
+	private boolean verticalTunnel;
+//	public int jumpCount; // how many jumps the player can make before touching the ground
+	private Vec2 previousPosition; // last player location
+//	private int jumpResetCounter; // how many steps the player has been still
+//	private int jumpResetLimit; // how many steps it takes the jump to reset
 
 	Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -125,26 +118,17 @@ public class Player extends Editable {
 		this.wallChecking = new ArrayList<Tile>();
 		this.wallBarrier = null;
 
-		this.roofChecking = new ArrayList<Tile>();
-		this.roofBarrier = null;
-		this.touchingRoofBarrier = false;
-
-		// movement / jumping
-		this.movementSpeed = 60.0f;
+		// jumping
 		this.jumpPower = 120;
 		this.groundContacts = 0;
 		this.wallContacts = 0;
-		// how long to pad leaving the ground
-		this.groundTimer = new CountdownTimer(0.128f);
-		// how long to pad leaving the ground
-		this.wallTimer = new CountdownTimer(0.064f);
-		// how long after a jump before the ground a wall timers can be started
-		this.jumpTimer = new CountdownTimer(0.064f);
-		// how long after boosting to keep checking for roof slots
-		this.boostTimer = new CountdownTimer(0.256f);
+		this.groundJump = false;
+		this.wallJump = false;
 		this.extraJump = false;
 		this.verticalTunnel = false;
-		this.horizontalTunnel = false;
+//		this.jumpCount = 0;
+//		this.jumpResetCounter = 0; // how many steps the player has been still
+//		this.jumpResetLimit = 300; // how many steps it takes the jump to reset
 
 		create();
 
@@ -185,7 +169,7 @@ public class Player extends Editable {
 			sensorFixtureDef.userData = "player sensor";
 			this.dynamicBody.createFixture(sensorFixtureDef);
 
-//			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
+			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
 		}
 	}
 
@@ -197,16 +181,20 @@ public class Player extends Editable {
 		}
 	}
 
+//	public void resetJump() {
+//		this.jumpCount = 2;
+//		this.surfaceJump = true;
+//		this.extraJump = true;
+//	}
+
 	public void startGroundContact() {
 		this.groundContacts++;
+//		this.contactNumber++;
 	}
 
 	public void endGroundContact() {
 		this.groundContacts--;
-		// if the player has just left the ground and it wasn't because of a jump
-		if (this.groundContacts == 0 && !this.jumpTimer.isRunning()) {
-			groundTimer.start();
-		}
+//		this.contactNumber--;
 	}
 
 	public void startWallContact() {
@@ -215,9 +203,6 @@ public class Player extends Editable {
 
 	public void endWallContact() {
 		this.wallContacts--;
-		if (this.wallContacts == 0 && !this.jumpTimer.isRunning()) {
-			wallTimer.start();
-		}
 	}
 
 	public void addTile(Tile tile) {
@@ -244,51 +229,22 @@ public class Player extends Editable {
 		events.remove(event);
 	}
 
-	public void physicsStep(float delta) {
-		// step timers
-		jumpTimer.deltaStep(delta);
-		groundTimer.deltaStep(delta);
-		wallTimer.deltaStep(delta);
-		boostTimer.deltaStep(delta);
-
+	public void physicsStep() {
 		// run checks
 		checkJumps();
+//		checkStill(); // TODO used for jump resetting, hopefully can get rid of this
 		checkTiles();
 
-		Vec2 vel = dynamicBody.getLinearVelocity();
-
-		// boost up if touching roof barrier
-		if (touchingRoofBarrier) {
-			jumpTimer.start();
-			extraJump = false;
-			// reset vertical speed
-			dynamicBody.setLinearVelocity(new Vec2(0, 0)); // dynamicBody.getLinearVelocity().x
-			// apply impulse
-			float ratio = 1 - boostTimer.deltaRemainingRatio();
-			float yImpulse = dynamicBody.getMass() * (jumpPower * ratio);
-			dynamicBody.applyLinearImpulse(new Vec2(0, yImpulse), dynamicBody.getWorldCenter(), true);
-		}
-
 		// do movement
+		Vec2 vel = dynamicBody.getLinearVelocity();
 		float desiredVel = 0;
-
 		if (left) {
-			if (vel.x >= -movementSpeed) {
-				desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
-			} else {
-				return;
-			}
-
+			desiredVel = Math.max(vel.x - 2.0f, -60.0f);
 		} else if (right) {
-			if (vel.x <= movementSpeed) {
-				desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
-			} else {
-				return;
-			}
+			desiredVel = Math.min(vel.x + 2.0f, 60.0f);
 		} else {
 			desiredVel = vel.x * 0.999f;
 		}
-
 		float velChange = desiredVel - vel.x;
 		float impulse = dynamicBody.getMass() * velChange;
 		dynamicBody.applyLinearImpulse(new Vec2(impulse, 0), dynamicBody.getWorldCenter(), true);
@@ -297,20 +253,43 @@ public class Player extends Editable {
 
 	private void checkJumps() {
 		if (groundContacts > 0) {
+			groundJump = true;
+			wallJump = false;
 			extraJump = true;
+		} else if (wallContacts > 0) {
+			groundJump = false;
+			wallJump = true;
+			extraJump = true;
+		} else {
+			groundJump = false;
+			wallJump = false;
 		}
 	}
+
+//	private void checkStill() {
+//		Vec2 currentPosition = box2d.getBodyPixelCoord(dynamicBody);
+//
+//		if (jumpResetCounter < jumpResetLimit) {
+//			// check if the player is still
+//			if (Math.abs(currentPosition.x - previousPosition.x) < 2
+//					&& Math.abs(currentPosition.y - previousPosition.y) < 2) {
+//				jumpResetCounter++;
+//			}
+//		} else {
+//			jumpResetCounter = 0;
+//			resetJump();
+//		}
+//
+//		previousPosition = currentPosition;
+//	}
 
 	private void checkTiles() {
 		// environment checking
 
-		// reset fields
 		tunnelChecking.clear();
-		verticalTunnel = false;
-		horizontalTunnel = false;
 		groundChecking.clear();
 		wallChecking.clear();
-		roofChecking.clear();
+		// roofChecking.clear();
 
 		// check there are enough tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
@@ -340,12 +319,11 @@ public class Player extends Editable {
 		boolean resetRotation = checkTunnel();
 		checkForGroundSlots(resetRotation);
 		checkForWallSlots(resetRotation);
-		checkForRoofSlots();
+		// checkForRoofSlots();
 
 	}
 
 	private boolean checkTunnel() {
-
 		// create a list of relevant tiles sorted by x position
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		// edges of player
@@ -382,7 +360,6 @@ public class Player extends Editable {
 		}
 
 		if (tunnelChecking.size() >= 2) {
-			boolean returnBoolean = true; // true if nothing found
 
 			// ----- check for left/right
 			float previousLeft = 0.5f;
@@ -400,22 +377,20 @@ public class Player extends Editable {
 				if (Math.abs(previousRight - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
 					verticalTunnel = true;
-//					return false;
-					returnBoolean = false;
-					break;
+					return false;
 				}
 
 				if (Math.abs(previousLeft - rightEdge) <= 2 && Math.abs(t.getBottomRight().x - leftEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
 					verticalTunnel = true;
-//					return false;
-					returnBoolean = false;
-					break;
+					return false;
 				}
 
 				previousLeft = t.getTopLeft().x;
 				previousRight = t.getBottomRight().x;
 			}
+
+			verticalTunnel = false;
 
 			// ----- check for top/bottom
 			float previousTop = 0.5f;
@@ -432,27 +407,16 @@ public class Player extends Editable {
 
 				if (Math.abs(previousBottom - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
-					horizontalTunnel = true;
-//					return false;
-					returnBoolean = false;
-					break;
+					return false;
 				}
 
 				if (Math.abs(previousTop - bottomEdge) <= 2 && Math.abs(t.getBottomRight().y - topEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
-					horizontalTunnel = true;
-//					return false;
-					returnBoolean = false;
-					break;
+					return false;
 				}
 
 				previousTop = t.getTopLeft().y;
 				previousBottom = t.getBottomRight().y;
-			}
-
-			// return if subsequent algorithms can unlock the player
-			if (returnBoolean == false) {
-				return false;
 			}
 
 		}
@@ -568,11 +532,6 @@ public class Player extends Editable {
 	}
 
 	private void checkForWallSlots(boolean resetRotation) {
-//		// only check for wall slots when not boosting
-//		if (boostTimer.isRunning()) {
-//			destroyWallBarrier(resetRotation);
-//			return;
-//		}
 
 		// player is trying to move on the x axis
 		if (!(left || right)) {
@@ -696,106 +655,6 @@ public class Player extends Editable {
 		destroyWallBarrier(resetRotation);
 	}
 
-	private void checkForRoofSlots() {
-		float xVelocity = dynamicBody.getLinearVelocity().x;
-
-		// check the player is boosting
-//		if (!(Math.abs(xVelocity) > movementSpeed)) {
-		if (!boostTimer.isRunning()) {
-			destroyRoofBarrier();
-			return;
-		}
-
-		boolean direction = true; // true = left, false = right
-		if (xVelocity <= -4) {
-			direction = true;
-		}
-		if (xVelocity >= 4) {
-			direction = false;
-		}
-
-		// create a list of relevant tiles sorted by x position
-		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
-		for (Tile t : sensorContacts) {
-			// skip this tile if the bottom of it is below the player's midpoint
-			if (t.getBottomRight().y > pos.y) {
-				continue;
-			}
-
-			// skip this tile if it is too far above the player
-			if (t.getBottomRight().y < pos.y - getHeight()) {
-				continue;
-			}
-
-			// skip this tile if it behind the player
-			if (direction) { // moving left
-				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {
-					continue;
-				}
-			} else { // moving right
-				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) {
-					continue;
-				}
-			}
-
-			roofChecking.add(t);
-		}
-		// sort the found tiles
-		if (direction) { // moving left
-			Collections.sort(roofChecking, Collections.reverseOrder());
-		} else { // moving right
-			Collections.sort(roofChecking);
-		}
-
-		// check the list of tiles for a playerWidth sized gap
-		float previousX = 0;
-		for (int i = 0; i < roofChecking.size(); i++) {
-			Tile t = roofChecking.get(i);
-			if (i > 0) {
-				// if this tile is the far side of a gap
-				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
-					// make sure the gap is in front of the player
-					if ((direction && t.getBottomRight().x < pos.x) // moving left
-							|| (!direction && t.getTopLeft().x > pos.x)) { // moving right
-
-						// lock rotation
-						this.dynamicBody.setFixedRotation(true);
-
-						// try create the barrier
-						if (direction) { // moving left
-							// final position check (stops barriers being made under player)
-							// this works because it failing doesn't remove an existing barrier
-							// so it only prevents barriers being made when you're already in the slot
-							if (t.getBottomRight().x <= pos.x - getWidth() / 2 - 0.25f) {
-								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
-								Vec2 top = new Vec2(bottom.x, bottom.y + 5);
-								createRoofBarrier(top, bottom);
-							}
-
-						} else { // moving right
-							// final position check (stops barriers being made under player)
-							// this works because it failing doesn't remove an existing barrier
-							// so it only prevents barriers being made when you're already in the slot
-							// 0.25 is added to stop a barrier being constructed when you're up against the
-							// edge of the gap
-							if (t.getTopLeft().x >= pos.x + getWidth() / 2 + 0.25f) {
-								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getBottomRight().y);
-								Vec2 top = new Vec2(bottom.x, bottom.y + 5);
-								createRoofBarrier(top, bottom);
-							}
-						}
-
-						return;
-					}
-				}
-			}
-			previousX = t.getX();
-		}
-
-		// conditions wern't met, remove the barrier
-		destroyRoofBarrier();
-	}
-
 	private void createGroundBarrier(Vec2 v1, Vec2 v2) {
 		if (groundBarrier != null) {
 			return;
@@ -842,30 +701,6 @@ public class Player extends Editable {
 		wallFixture = wallBarrier.createFixture(tempBarrierDef);
 	}
 
-	private void createRoofBarrier(Vec2 v1, Vec2 v2) {
-		if (roofBarrier != null) {
-			return;
-		}
-
-		// body
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.STATIC;
-		bodyDef.userData = v1;
-		roofBarrier = box2d.createBody(bodyDef);
-
-		// shape
-		EdgeShape tempBarrierEdge = new EdgeShape();
-		tempBarrierEdge.set(box2d.coordPixelsToWorld(v1), box2d.coordPixelsToWorld(v2));
-
-		// fixture
-		FixtureDef tempBarrierDef = new FixtureDef();
-		tempBarrierDef.shape = tempBarrierEdge;
-		tempBarrierDef.density = density;
-		tempBarrierDef.friction = friction;
-		tempBarrierDef.userData = "roof";
-		roofFixture = roofBarrier.createFixture(tempBarrierDef);
-	}
-
 	private void destroyGroundBarrier(boolean resetRotation) {
 		if (groundBarrier != null) {
 			box2d.destroyBody(groundBarrier);
@@ -890,79 +725,56 @@ public class Player extends Editable {
 		}
 	}
 
-	private void destroyRoofBarrier() {
-		if (roofBarrier != null) {
-			box2d.destroyBody(roofBarrier);
-			roofFixture = null;
-			roofBarrier = null;
-		}
-	}
-
 	private void destroyAllBarriers(boolean resetRotation) {
 		if (resetRotation) {
 			this.dynamicBody.setFixedRotation(locked);
 		}
 		destroyGroundBarrier(false);
 		destroyWallBarrier(false);
-		destroyRoofBarrier();
+		// destroyRoofBarrier(resetRotation);
 	}
 
 	public void jump() {
+//		if (jumpCount > 0) {
 
-		float xImpulse = 0;
-		float yImpulse = 0;
+		if (groundJump || wallJump || extraJump) { // if the player has a jump
+			float yImpulse = 0;
+			if (!(groundJump)) { // if it was a wall jump or an extra jump
 
-		if (groundContacts > 0 || groundTimer.isRunning()) { // touching the ground
-			// check if jumping while moving in a tunnel
-			Vec2 vel = dynamicBody.getLinearVelocity();
-			if (horizontalTunnel && Math.abs(vel.x) > 0.1f) { // 0.5f
-				if (vel.x > 0) {
-					xImpulse = dynamicBody.getMass() * (jumpPower / 2);
-					boostTimer.start();
+				if (wallJump) { // if touching walls
+					if (left) { // pushing to the left
+						if (!verticalTunnel) { // not in a tunnel
+							yImpulse = (dynamicBody.getMass() * jumpPower / 2);
+						}
+
+					} else if (right) { // pushing to the right
+						if (!verticalTunnel) { // not in a tunnel
+							yImpulse = -(dynamicBody.getMass() * jumpPower / 2);
+						}
+
+					} else { // if (!extraJump) { // pushing in no direction with no extra jump
+						return;
+
+					}
+//					else {
+//						extraJump = false;
+//					}
+
 				} else {
-					xImpulse = -(dynamicBody.getMass() * (jumpPower / 2));
-					boostTimer.start();
+					extraJump = false;
 				}
-			} else {
-				yImpulse = dynamicBody.getMass() * jumpPower;
-			}
-			extraJump = true;
 
-		} else if (wallContacts > 0 || wallTimer.isRunning()) { // touching a wall
-
-			if (left) { // pushing into a wall left
-				yImpulse = dynamicBody.getMass() * jumpPower;
-				if (!verticalTunnel) { // not in a tunnel
-					xImpulse = (dynamicBody.getMass() * jumpPower / 2);
-				}
-				extraJump = true;
-
-			} else if (right) { // pushing into a wall right
-				yImpulse = dynamicBody.getMass() * jumpPower;
-				if (!verticalTunnel) { // not in a tunnel
-					xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
-				}
-				extraJump = true;
-
-			} else if (extraJump) { // not pushing into the wall
-				yImpulse = dynamicBody.getMass() * jumpPower;
-				extraJump = false;
 			}
 
-		} else { // touching nothing
-			if (extraJump) {
-				yImpulse = dynamicBody.getMass() * jumpPower;
-				extraJump = false;
-			}
-		}
-
-		if (yImpulse > 0 || xImpulse != 0) {
-			jumpTimer.start();
+			float xImpulse = dynamicBody.getMass() * jumpPower;
 			// reset vertical speed
 			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 			// apply impulse
-			dynamicBody.applyLinearImpulse(new Vec2(xImpulse, yImpulse), dynamicBody.getWorldCenter(), true);
+			dynamicBody.applyLinearImpulse(new Vec2(yImpulse, xImpulse), dynamicBody.getWorldCenter(), true);
+//			jumpCount--;
 		}
+
+//		}
 	}
 
 	public void physicsImpact(float[] impulses) {
@@ -1044,19 +856,6 @@ public class Player extends Editable {
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
 			graphics.noTint();
 
-			if (showChecking && verticalTunnel) {
-				graphics.noStroke();
-				graphics.fill(0, 255, 0, 100);
-				graphics.rectMode(CORNER);
-				graphics.rect(-getWidth() / 2, -getHeight() / 2, getWidth() / 2, getHeight());
-			}
-			if (showChecking && horizontalTunnel) {
-				graphics.noStroke();
-				graphics.fill(0, 255, 0, 100);
-				graphics.rectMode(CORNER);
-				graphics.rect(0, -getHeight() / 2, getWidth() / 2, getHeight());
-			}
-
 			graphics.popMatrix();
 		}
 
@@ -1074,7 +873,7 @@ public class Player extends Editable {
 				for (int i = 0; i < tunnelChecking.size(); i++) {
 					Tile t = tunnelChecking.get(i);
 					graphics.noStroke();
-					graphics.fill(0, 255, 0, 200); // green
+					graphics.fill(0, 255, 0, 200);
 					graphics.rectMode(CORNER);
 					graphics.rect(t.getX(), t.getY(), t.getWidth() / 2, t.getHeight() / 2);
 					graphics.fill(255);
@@ -1088,7 +887,7 @@ public class Player extends Editable {
 				for (int i = 0; i < groundChecking.size(); i++) {
 					Tile t = groundChecking.get(i);
 					graphics.noStroke();
-					graphics.fill(0, 0, 255, 200); // blue
+					graphics.fill(0, 0, 255, 200);
 					graphics.rectMode(CORNER);
 					graphics.rect(t.getX() + t.getWidth() / 2, t.getY(), t.getWidth() / 2, t.getHeight() / 2);
 					graphics.fill(255);
@@ -1099,7 +898,7 @@ public class Player extends Editable {
 			if (groundFixture != null) {
 				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) groundFixture.getShape()).m_vertex1);
 				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) groundFixture.getShape()).m_vertex2);
-				graphics.stroke(0, 0, 255); // blue
+				graphics.stroke(0, 0, 255);
 				graphics.strokeWeight(4);
 				graphics.line(v1.x, v1.y, v2.x, v2.y);
 			}
@@ -1109,7 +908,7 @@ public class Player extends Editable {
 				for (int i = 0; i < wallChecking.size(); i++) {
 					Tile t = wallChecking.get(i);
 					graphics.noStroke();
-					graphics.fill(255, 0, 0, 200); // red
+					graphics.fill(255, 0, 0, 200);
 					graphics.rectMode(CORNER);
 					graphics.rect(t.getX(), t.getY() + t.getHeight() / 2, t.getWidth() / 2, t.getHeight() / 2);
 					graphics.fill(255);
@@ -1120,29 +919,7 @@ public class Player extends Editable {
 			if (wallFixture != null) {
 				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) wallFixture.getShape()).m_vertex1);
 				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) wallFixture.getShape()).m_vertex2);
-				graphics.stroke(255, 0, 0); // red
-				graphics.strokeWeight(4);
-				graphics.line(v1.x, v1.y, v2.x, v2.y);
-			}
-
-			// roof checking
-			if (roofChecking.size() > 0) {
-				for (int i = 0; i < roofChecking.size(); i++) {
-					Tile t = roofChecking.get(i);
-					graphics.noStroke();
-					graphics.fill(255, 255, 0, 200); // yellow
-					graphics.rectMode(CORNER);
-					graphics.rect(t.getX() + t.getWidth() / 2, t.getY() + t.getHeight() / 2, t.getWidth() / 2,
-							t.getHeight() / 2);
-					graphics.fill(255);
-					graphics.textSize(25);
-					graphics.text(i, t.getX() + t.getWidth() * 0.75f, t.getY() + t.getHeight() * 0.75f);
-				}
-			}
-			if (roofFixture != null) {
-				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) roofFixture.getShape()).m_vertex1);
-				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) roofFixture.getShape()).m_vertex2);
-				graphics.stroke(255, 255, 0); // yellow
+				graphics.stroke(255, 0, 0);
 				graphics.strokeWeight(4);
 				graphics.line(v1.x, v1.y, v2.x, v2.y);
 			}
@@ -1216,4 +993,11 @@ public class Player extends Editable {
 		return playerAngle;
 	}
 
+//	public void jumping() {
+//		jumping = true;
+//	}
+//
+//	public void notJumping() {
+//		jumping = false;
+//	}
 }
