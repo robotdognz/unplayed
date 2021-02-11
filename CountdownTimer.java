@@ -55,6 +55,14 @@ public class CountdownTimer {
 		return deltaLimit - deltaTimer;
 	}
 
+	public float intRemainingRatio() {
+		return (float) intTimer / (float) intLimit;
+	}
+
+	public float deltaRemainingRatio() {
+		return deltaTimer / deltaLimit;
+	}
+
 	public void start() {
 		intTimer = 0;
 		deltaTimer = 0;

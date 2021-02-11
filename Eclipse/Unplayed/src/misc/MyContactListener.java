@@ -10,7 +10,6 @@ import game.Game;
 import game.Player;
 import objects.Event;
 import objects.Tile;
-//import processing.core.PApplet;
 
 public class MyContactListener implements ContactListener {
 	Game game;
@@ -42,7 +41,6 @@ public class MyContactListener implements ContactListener {
 				if (userData.equals("player body")) {
 					player = (Player) fixtureA.getBody().getUserData();
 					playerBody = true;
-//					player.startContact();
 
 				} else if (userData.equals("tile")) {
 					tile = (Tile) fixtureA.getBody().getUserData();
@@ -77,7 +75,6 @@ public class MyContactListener implements ContactListener {
 				if (userData.equals("player body")) {
 					player = (Player) fixtureB.getBody().getUserData();
 					playerBody = true;
-//					player.startContact();
 
 				} else if (userData.equals("tile")) {
 					tile = (Tile) fixtureB.getBody().getUserData();
@@ -118,11 +115,6 @@ public class MyContactListener implements ContactListener {
 			player.startWallContact();
 		}
 
-//		// if one of them is the player and one is a tile
-//		if (playerBody && tile != null) {
-//			player.addPlayerTile(tile);
-//		}
-
 		// if on of them is the player and one is an event
 		if (playerBody && event != null) {
 			player.addEvent(event);
@@ -157,7 +149,6 @@ public class MyContactListener implements ContactListener {
 				if (userData.equals("player body")) {
 					player = (Player) fixtureA.getBody().getUserData();
 					playerBody = true;
-//					player.endContact();
 
 				} else if (userData.contentEquals("player sensor")) {
 					player = (Player) fixtureA.getBody().getUserData();
@@ -191,7 +182,6 @@ public class MyContactListener implements ContactListener {
 				if (userData.equals("player body")) {
 					player = (Player) fixtureB.getBody().getUserData();
 					playerBody = true;
-//					player.endContact();
 
 				} else if (userData.contentEquals("player sensor")) {
 					player = (Player) fixtureB.getBody().getUserData();
@@ -235,11 +225,6 @@ public class MyContactListener implements ContactListener {
 		if (wall && playerBody) {
 			player.endWallContact();
 		}
-
-//		// if one of them is the player and one is a tile
-//		if (playerBody && tile != null) {
-//			player.removePlayerTile(tile);
-//		}
 
 		// if one of them is the player and one is an event
 		if (playerBody && event != null) {

@@ -77,7 +77,7 @@ public class Player extends Editable {
 	private ArrayList<Tile> roofChecking; // list of tiles currently being checked for roof slots
 	private Body roofBarrier; // barrier used to stop the player moving past a slot
 	private Fixture roofFixture; // reference to the barrier fixture
-	public boolean touchingRoofBarrier;
+	public boolean touchingRoofBarrier; // is the player touching a roof barrier
 
 	// movement / jumping
 	private float movementSpeed;
@@ -257,20 +257,16 @@ public class Player extends Editable {
 
 		Vec2 vel = dynamicBody.getLinearVelocity();
 
-		// tunnel boost roof slot
-//		if (boostTimer.isRunning() && roofFixture != null && Math.abs(vel.x) < 0.01f) { // 0.2f
-//			Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) roofFixture.getShape()).m_vertex1);
-//			float playerX = box2d.getBodyPixelCoord(dynamicBody).x;
-//			if (v1.x - playerX < getWidth() * 0.55) {
+		// boost up if touching roof barrier
 		if (touchingRoofBarrier) {
 			jumpTimer.start();
 			extraJump = false;
 			// reset vertical speed
 			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 			// apply impulse
-			float yImpulse = dynamicBody.getMass() * jumpPower / 2;
+			float ratio = boostTimer.deltaRemainingRatio();
+			float yImpulse = dynamicBody.getMass() * (jumpPower * ratio);
 			dynamicBody.applyLinearImpulse(new Vec2(0, yImpulse), dynamicBody.getWorldCenter(), true);
-//			}
 		}
 
 		// do movement
