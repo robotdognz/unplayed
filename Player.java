@@ -261,7 +261,7 @@ public class Player extends Editable {
 			// reset vertical speed
 			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 			// apply impulse
-			float yImpulse = dynamicBody.getMass() * jumpPower;
+			float yImpulse = dynamicBody.getMass() * jumpPower / 2;
 			dynamicBody.applyLinearImpulse(new Vec2(0, yImpulse), dynamicBody.getWorldCenter(), true);
 		}
 

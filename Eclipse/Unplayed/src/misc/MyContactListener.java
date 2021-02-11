@@ -31,7 +31,7 @@ public class MyContactListener implements ContactListener {
 		boolean playerSensor = false; // one of the fixtures is the player's sensor
 		boolean ground = false; // one of the fixtures is the ground
 		boolean wall = false; // one of the fixtures is a wall
-		boolean roofBarrier = false; // one of the fixtures is a roof barrier
+//		boolean roofBarrier = false; // one of the fixtures is a roof barrier
 
 		// check fixture
 		Object fixtureUserData = fixtureA.getUserData();
@@ -60,10 +60,11 @@ public class MyContactListener implements ContactListener {
 				} else if (userData.contentEquals("event")) {
 					event = (Event) fixtureA.getBody().getUserData();
 
-				} else if (userData.contentEquals("roof")) {
-					roofBarrier = true;
-
-				}
+				} 
+//				else if (userData.contentEquals("roof")) {
+//					roofBarrier = true;
+//
+//				}
 
 			}
 		}
@@ -95,10 +96,11 @@ public class MyContactListener implements ContactListener {
 				} else if (userData.contentEquals("event")) {
 					event = (Event) fixtureB.getBody().getUserData();
 
-				} else if (userData.contentEquals("roof")) {
-					roofBarrier = true;
-
-				}
+				} 
+//				else if (userData.contentEquals("roof")) {
+//					roofBarrier = true;
+//
+//				}
 
 			}
 		}
