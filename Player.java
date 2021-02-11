@@ -678,6 +678,92 @@ public class Player extends Editable {
 			return;
 		}
 
+		boolean direction = true; // true = left, false = right
+		if (xVelocity <= -4) {
+			direction = true;
+		}
+		if (xVelocity >= 4) {
+			direction = false;
+		}
+
+		// create a list of relevant tiles sorted by x position
+		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
+		for (Tile t : sensorContacts) {
+			// skip this tile if the bottom of it is below the player's midpoint
+			if (t.getBottomRight().y > pos.y) {
+				continue;
+			}
+
+			// skip this tile if it is too far above the player
+			if (t.getBottomRight().y < pos.y - getHeight()) {
+				continue;
+			}
+
+			// skip this tile if it behind the player
+			if (direction) { // moving left
+				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {
+					continue;
+				}
+			} else { // moving right
+				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) {
+					continue;
+				}
+			}
+
+			roofChecking.add(t);
+		}
+		// sort the found tiles
+		if (direction) { // moving left
+			Collections.sort(roofChecking, Collections.reverseOrder());
+		} else { // moving right
+			Collections.sort(roofChecking);
+		}
+
+		// check the list of tiles for a playerWidth sized gap
+		float previousX = 0;
+		for (int i = 0; i < roofChecking.size(); i++) {
+			Tile t = roofChecking.get(i);
+			if (i > 0) {
+				// if this tile is the far side of a gap
+				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
+					// make sure the gap is in front of the player
+					if ((direction && t.getBottomRight().x < pos.x) // moving left
+							|| (!direction && t.getTopLeft().x > pos.x)) { // moving right
+
+						// lock rotation
+						this.dynamicBody.setFixedRotation(true);
+
+						// try create the barrier
+						if (direction) { // moving left
+							// final position check (stops barriers being made under player)
+							// this works because it failing doesn't remove an existing barrier
+							// so it only prevents barriers being made when you're already in the slot
+							if (t.getBottomRight().x <= pos.x - getWidth() / 2 - 0.25f) {
+								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
+								Vec2 top = new Vec2(bottom.x, bottom.y + 5);
+								createRoofBarrier(top, bottom);
+							}
+
+						} else { // moving right
+							// final position check (stops barriers being made under player)
+							// this works because it failing doesn't remove an existing barrier
+							// so it only prevents barriers being made when you're already in the slot
+							// 0.25 is added to stop a barrier being constructed when you're up against the
+							// edge of the gap
+							if (t.getTopLeft().x >= pos.x + getWidth() / 2 + 0.25f) {
+								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getBottomRight().y);
+								Vec2 top = new Vec2(bottom.x, bottom.y + 5);
+								createRoofBarrier(top, bottom);
+							}
+						}
+
+						return;
+					}
+				}
+			}
+			previousX = t.getX();
+		}
+
 		// conditions wern't met, remove the barrier
 		destroyRoofBarrier();
 	}
