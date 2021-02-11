@@ -134,7 +134,7 @@ public class Tile extends Editable implements Comparable<Tile> {
 
 			// ground sensor
 			EdgeShape sensor = new EdgeShape();
-			float sBox2dW = box2d.scalarPixelsToWorld((getWidth() - 1) / 2);
+			float sBox2dW = box2d.scalarPixelsToWorld((getWidth() - 0.2f) / 2);
 			v1 = new Vec2(-sBox2dW, box2dH);
 			v2 = new Vec2(sBox2dW, box2dH);
 			sensor.set(v1, v2);
