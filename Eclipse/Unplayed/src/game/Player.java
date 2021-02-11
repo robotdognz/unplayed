@@ -68,11 +68,17 @@ public class Player extends Editable {
 	private Fixture groundFixture; // reference to the barrier fixture
 
 	// wall slot checking
-	private ArrayList<Tile> wallChecking; // list of tiles currently being checked for ground slots
+	private ArrayList<Tile> wallChecking; // list of tiles currently being checked for wall slots
 	private Body wallBarrier; // barrier used to stop the player moving past a slot
 	private Fixture wallFixture; // reference to the barrier fixture
 
-	// jumping
+	// roof slot checking
+	private ArrayList<Tile> roofChecking; // list of tiles currently being checked for roof slots
+	private Body roofBarrier; // barrier used to stop the player moving past a slot
+	private Fixture roofFixture; // reference to the barrier fixture
+
+	// movement / jumping
+	private float movementSpeed;
 	private float jumpPower; // the strength of the player's jump
 	private boolean extraJump;
 	private boolean verticalTunnel; // used to check if player should jump away from the wall or not
@@ -117,7 +123,8 @@ public class Player extends Editable {
 		this.wallChecking = new ArrayList<Tile>();
 		this.wallBarrier = null;
 
-		// jumping
+		// movement / jumping
+		this.movementSpeed = 60.0f;
 		this.jumpPower = 120;
 		this.groundContacts = 0;
 		this.wallContacts = 0;
@@ -242,15 +249,15 @@ public class Player extends Editable {
 		float desiredVel = 0;
 
 		if (left) {
-			if (vel.x >= -60) {
-				desiredVel = Math.max(vel.x - 2.0f, -60.0f);
+			if (vel.x >= -movementSpeed) {
+				desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
 			} else {
 				return;
 			}
 
 		} else if (right) {
-			if (vel.x <= 60) {
-				desiredVel = Math.min(vel.x + 2.0f, 60.0f);
+			if (vel.x <= movementSpeed) {
+				desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
 			} else {
 				return;
 			}
@@ -267,10 +274,7 @@ public class Player extends Editable {
 	private void checkJumps() {
 		if (groundContacts > 0) {
 			extraJump = true;
-		} 
-//		else if (wallContacts > 0) {
-//			extraJump = true;
-//		}
+		}
 	}
 
 	private void checkTiles() {
@@ -282,7 +286,7 @@ public class Player extends Editable {
 		horizontalTunnel = false;
 		groundChecking.clear();
 		wallChecking.clear();
-		// roofChecking.clear();
+		roofChecking.clear();
 
 		// check there are enough tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
@@ -312,7 +316,7 @@ public class Player extends Editable {
 		boolean resetRotation = checkTunnel();
 		checkForGroundSlots(resetRotation);
 		checkForWallSlots(resetRotation);
-		// checkForRoofSlots();
+		checkForRoofSlots();
 
 	}
 
@@ -663,6 +667,18 @@ public class Player extends Editable {
 		destroyWallBarrier(resetRotation);
 	}
 
+	private void checkForRoofSlots() {
+		float xVelocity = dynamicBody.getLinearVelocity().x;
+
+		// check the player is boosting
+		if (!(Math.abs(xVelocity) > movementSpeed)) {
+			return;
+		}
+
+		// conditions wern't met, remove the barrier
+		destroyRoofBarrier();
+	}
+
 	private void createGroundBarrier(Vec2 v1, Vec2 v2) {
 		if (groundBarrier != null) {
 			return;
@@ -709,6 +725,29 @@ public class Player extends Editable {
 		wallFixture = wallBarrier.createFixture(tempBarrierDef);
 	}
 
+	private void createRoofBarrier(Vec2 v1, Vec2 v2) {
+		if (roofBarrier != null) {
+			return;
+		}
+
+		// body
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.STATIC;
+		bodyDef.userData = v1;
+		roofBarrier = box2d.createBody(bodyDef);
+
+		// shape
+		EdgeShape tempBarrierEdge = new EdgeShape();
+		tempBarrierEdge.set(box2d.coordPixelsToWorld(v1), box2d.coordPixelsToWorld(v2));
+
+		// fixture
+		FixtureDef tempBarrierDef = new FixtureDef();
+		tempBarrierDef.shape = tempBarrierEdge;
+		tempBarrierDef.density = density;
+		tempBarrierDef.friction = friction;
+		roofFixture = roofBarrier.createFixture(tempBarrierDef);
+	}
+
 	private void destroyGroundBarrier(boolean resetRotation) {
 		if (groundBarrier != null) {
 			box2d.destroyBody(groundBarrier);
@@ -733,13 +772,21 @@ public class Player extends Editable {
 		}
 	}
 
+	private void destroyRoofBarrier() {
+		if (roofBarrier != null) {
+			box2d.destroyBody(roofBarrier);
+			roofFixture = null;
+			roofBarrier = null;
+		}
+	}
+
 	private void destroyAllBarriers(boolean resetRotation) {
 		if (resetRotation) {
 			this.dynamicBody.setFixedRotation(locked);
 		}
 		destroyGroundBarrier(false);
 		destroyWallBarrier(false);
-		// destroyRoofBarrier(resetRotation);
+		destroyRoofBarrier();
 	}
 
 	public void jump() {
@@ -907,7 +954,7 @@ public class Player extends Editable {
 				for (int i = 0; i < tunnelChecking.size(); i++) {
 					Tile t = tunnelChecking.get(i);
 					graphics.noStroke();
-					graphics.fill(0, 255, 0, 200);
+					graphics.fill(0, 255, 0, 200); // green
 					graphics.rectMode(CORNER);
 					graphics.rect(t.getX(), t.getY(), t.getWidth() / 2, t.getHeight() / 2);
 					graphics.fill(255);
@@ -921,7 +968,7 @@ public class Player extends Editable {
 				for (int i = 0; i < groundChecking.size(); i++) {
 					Tile t = groundChecking.get(i);
 					graphics.noStroke();
-					graphics.fill(0, 0, 255, 200);
+					graphics.fill(0, 0, 255, 200); // blue
 					graphics.rectMode(CORNER);
 					graphics.rect(t.getX() + t.getWidth() / 2, t.getY(), t.getWidth() / 2, t.getHeight() / 2);
 					graphics.fill(255);
@@ -932,7 +979,7 @@ public class Player extends Editable {
 			if (groundFixture != null) {
 				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) groundFixture.getShape()).m_vertex1);
 				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) groundFixture.getShape()).m_vertex2);
-				graphics.stroke(0, 0, 255);
+				graphics.stroke(0, 0, 255); // blue
 				graphics.strokeWeight(4);
 				graphics.line(v1.x, v1.y, v2.x, v2.y);
 			}
@@ -942,7 +989,7 @@ public class Player extends Editable {
 				for (int i = 0; i < wallChecking.size(); i++) {
 					Tile t = wallChecking.get(i);
 					graphics.noStroke();
-					graphics.fill(255, 0, 0, 200);
+					graphics.fill(255, 0, 0, 200); // red
 					graphics.rectMode(CORNER);
 					graphics.rect(t.getX(), t.getY() + t.getHeight() / 2, t.getWidth() / 2, t.getHeight() / 2);
 					graphics.fill(255);
@@ -953,7 +1000,29 @@ public class Player extends Editable {
 			if (wallFixture != null) {
 				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) wallFixture.getShape()).m_vertex1);
 				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) wallFixture.getShape()).m_vertex2);
-				graphics.stroke(255, 0, 0);
+				graphics.stroke(255, 0, 0); // red
+				graphics.strokeWeight(4);
+				graphics.line(v1.x, v1.y, v2.x, v2.y);
+			}
+
+			// roof checking
+			if (roofChecking.size() > 0) {
+				for (int i = 0; i < roofChecking.size(); i++) {
+					Tile t = roofChecking.get(i);
+					graphics.noStroke();
+					graphics.fill(255, 255, 0, 200); // yellow
+					graphics.rectMode(CORNER);
+					graphics.rect(t.getX() + t.getWidth() / 2, t.getY() + t.getHeight() / 2, t.getWidth() / 2,
+							t.getHeight() / 2);
+					graphics.fill(255);
+					graphics.textSize(25);
+					graphics.text(i, t.getX() + t.getWidth() * 0.25f, t.getY() + t.getHeight() * 0.75f);
+				}
+			}
+			if (roofFixture != null) {
+				Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) roofFixture.getShape()).m_vertex1);
+				Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) roofFixture.getShape()).m_vertex2);
+				graphics.stroke(255, 255, 0); // yellow
 				graphics.strokeWeight(4);
 				graphics.line(v1.x, v1.y, v2.x, v2.y);
 			}
