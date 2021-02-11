@@ -257,13 +257,15 @@ public class Player extends Editable {
 
 		// tunnel boost roof slot
 		if (boostTimer.isRunning() && roofFixture != null && Math.abs(vel.x) < 0.2f) {
-			jumpTimer.start();
-			extraJump = false;
-			// reset vertical speed
-			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
-			// apply impulse
-			float yImpulse = dynamicBody.getMass() * jumpPower / 2;
-			dynamicBody.applyLinearImpulse(new Vec2(0, yImpulse), dynamicBody.getWorldCenter(), true);
+			if (((EdgeShape) roofFixture.getShape()).m_vertex1.x - dynamicBody.getPosition().x < 100) {
+				jumpTimer.start();
+				extraJump = false;
+				// reset vertical speed
+				dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
+				// apply impulse
+				float yImpulse = dynamicBody.getMass() * jumpPower / 2;
+				dynamicBody.applyLinearImpulse(new Vec2(0, yImpulse), dynamicBody.getWorldCenter(), true);
+			}
 		}
 
 		// do movement
