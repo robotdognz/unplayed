@@ -105,19 +105,16 @@ public class MyContactListener implements ContactListener {
 
 		// if on of them is the player and one is the ground
 		if (ground && playerBody) {
-//			player.resetJump();
 			player.startGroundContact();
 		}
 
-		// if on of them is the player and one is a roof barrier
-		if (roofBarrier && playerBody) {
-//			player.startGroundContact();
-			player.jump();
-		}
+//		// if on of them is the player and one is a roof barrier
+//		if (roofBarrier && playerBody) {
+//			player.jump();
+//		}
 
 		// if on of them is the player and one is a wall
 		if (wall && playerBody) {
-//			player.resetJump();
 			player.startWallContact();
 		}
 

@@ -48,6 +48,7 @@ public class Player extends Editable {
 	public CountdownTimer groundTimer; // used to make ground collision more forgiving
 	public CountdownTimer wallTimer; // used to make wall collision more forgiving
 	public CountdownTimer jumpTimer; // used to correct the ground timer
+	public CountdownTimer boostTimer; // used to correct the ground timer
 
 	private ArrayList<Event> events; // list of events touching the player
 	private boolean vibeFrame; // has a vibration happened yet this frame
@@ -131,10 +132,14 @@ public class Player extends Editable {
 		this.jumpPower = 120;
 		this.groundContacts = 0;
 		this.wallContacts = 0;
-		this.groundTimer = new CountdownTimer(0.128f); // how long to pad leaving the ground
-		this.wallTimer = new CountdownTimer(0.064f); // how long to pad leaving the ground
+		// how long to pad leaving the ground
+		this.groundTimer = new CountdownTimer(0.128f);
+		// how long to pad leaving the ground
+		this.wallTimer = new CountdownTimer(0.064f);
 		// how long after a jump before the ground a wall timers can be started
 		this.jumpTimer = new CountdownTimer(0.064f);
+		// how long after boosting to keep checking for roof slots
+		this.boostTimer = new CountdownTimer(0.256f);
 		this.extraJump = false;
 		this.verticalTunnel = false;
 		this.horizontalTunnel = false;
@@ -242,6 +247,7 @@ public class Player extends Editable {
 		jumpTimer.deltaStep(delta);
 		groundTimer.deltaStep(delta);
 		wallTimer.deltaStep(delta);
+		boostTimer.deltaStep(delta);
 
 		// run checks
 		checkJumps();
@@ -674,7 +680,8 @@ public class Player extends Editable {
 		float xVelocity = dynamicBody.getLinearVelocity().x;
 
 		// check the player is boosting
-		if (!(Math.abs(xVelocity) > movementSpeed)) {
+//		if (!(Math.abs(xVelocity) > movementSpeed)) {
+		if (!boostTimer.isRunning()) {
 			destroyRoofBarrier();
 			return;
 		}
@@ -891,8 +898,10 @@ public class Player extends Editable {
 			if (horizontalTunnel && Math.abs(vel.x) > 0.5f) {
 				if (vel.x > 0) {
 					xImpulse = dynamicBody.getMass() * (jumpPower / 2);
+					boostTimer.start();
 				} else {
 					xImpulse = -(dynamicBody.getMass() * (jumpPower / 2));
+					boostTimer.start();
 				}
 			} else {
 				yImpulse = dynamicBody.getMass() * jumpPower;
