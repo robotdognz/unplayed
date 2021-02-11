@@ -258,6 +258,7 @@ public class Player extends Editable {
 		// tunnel boost roof slot
 		if (boostTimer.isRunning() && Math.abs(vel.x) < 0.2f) {
 			jumpTimer.start();
+			extraJump = false;
 			// reset vertical speed
 			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 			// apply impulse
@@ -564,6 +565,11 @@ public class Player extends Editable {
 	}
 
 	private void checkForWallSlots(boolean resetRotation) {
+		// only check for wall slots when not boosting
+		if (boostTimer.isRunning()) {
+			destroyWallBarrier(resetRotation);
+			return;
+		}
 
 		// player is trying to move on the x axis
 		if (!(left || right)) {
