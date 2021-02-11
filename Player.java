@@ -46,6 +46,7 @@ public class Player extends Editable {
 	public int groundContacts; // the number of grounds touching the player's body
 	public int wallContacts; // the number of walls touching the player's body
 	public CountdownTimer groundTimer; // used to make ground collision more forgiving
+	public CountdownTimer wallTimer; // used to make wall collision more forgiving
 	public CountdownTimer jumpTimer; // used to correct the ground timer
 
 	private ArrayList<Event> events; // list of events touching the player
@@ -121,6 +122,7 @@ public class Player extends Editable {
 		this.groundContacts = 0;
 		this.wallContacts = 0;
 		this.groundTimer = new CountdownTimer(0.128f); // how long to pad leaving the ground
+		this.wallTimer = new CountdownTimer(0.064f); // how long to pad leaving the ground
 		// how long after a jump before the ground a wall timers can be started
 		this.jumpTimer = new CountdownTimer(0.064f);
 		this.extraJump = false;
@@ -196,6 +198,9 @@ public class Player extends Editable {
 
 	public void endWallContact() {
 		this.wallContacts--;
+		if (this.wallContacts == 0 && !this.jumpTimer.isRunning()) {
+			wallTimer.start();
+		}
 	}
 
 	public void addTile(Tile tile) {
@@ -226,6 +231,7 @@ public class Player extends Editable {
 		// step timers
 		jumpTimer.deltaStep(delta);
 		groundTimer.deltaStep(delta);
+		wallTimer.deltaStep(delta);
 
 		// run checks
 		checkJumps();
@@ -752,7 +758,7 @@ public class Player extends Editable {
 			}
 			extraJump = true;
 
-		} else if (wallContacts > 0) { // touching a wall
+		} else if (wallContacts > 0 || wallTimer.isRunning()) { // touching a wall
 
 			if (left) { // pushing into a wall left
 				yImpulse = dynamicBody.getMass() * jumpPower;
