@@ -835,6 +835,7 @@ public class Player extends Editable {
 		tempBarrierDef.shape = tempBarrierEdge;
 		tempBarrierDef.density = density;
 		tempBarrierDef.friction = friction;
+		tempBarrierDef.userData = "roof";
 		roofFixture = roofBarrier.createFixture(tempBarrierDef);
 	}
 
@@ -1104,9 +1105,9 @@ public class Player extends Editable {
 					graphics.rectMode(CORNER);
 					graphics.rect(t.getX() + t.getWidth() / 2, t.getY() + t.getHeight() / 2, t.getWidth() / 2,
 							t.getHeight() / 2);
-					graphics.fill(0);
+					graphics.fill(255);
 					graphics.textSize(25);
-					graphics.text(i, t.getX() + t.getWidth() * 0.25f, t.getY() + t.getHeight() * 0.75f);
+					graphics.text(i, t.getX() + t.getWidth() * 0.75f, t.getY() + t.getHeight() * 0.75f);
 				}
 			}
 			if (roofFixture != null) {
