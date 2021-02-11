@@ -874,13 +874,13 @@ public class Player extends Editable {
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
 			graphics.noTint();
 
-			if (verticalTunnel) {
+			if (showChecking && verticalTunnel) {
 				graphics.noStroke();
 				graphics.fill(0, 255, 0, 100);
 				graphics.rectMode(CORNER);
 				graphics.rect(-getWidth() / 2, -getHeight() / 2, getWidth() / 2, getHeight());
 			}
-			if (horizontalTunnel) {
+			if (showChecking && horizontalTunnel) {
 				graphics.noStroke();
 				graphics.fill(0, 255, 0, 100);
 				graphics.rectMode(CORNER);
