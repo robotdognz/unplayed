@@ -262,10 +262,10 @@ public class Player extends Editable {
 			jumpTimer.start();
 			extraJump = false;
 			// reset vertical speed
-			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
+			dynamicBody.setLinearVelocity(new Vec2(0, 0)); // dynamicBody.getLinearVelocity().x
 			// apply impulse
 			float ratio = 1 - boostTimer.deltaRemainingRatio();
-			float yImpulse = dynamicBody.getMass() * (jumpPower * ratio);
+			float yImpulse = dynamicBody.getMass() * ((jumpPower * 2) * ratio);
 			dynamicBody.applyLinearImpulse(new Vec2(0, yImpulse), dynamicBody.getWorldCenter(), true);
 		}
 
