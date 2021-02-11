@@ -123,6 +123,9 @@ public class Player extends Editable {
 		this.wallChecking = new ArrayList<Tile>();
 		this.wallBarrier = null;
 
+		this.roofChecking = new ArrayList<Tile>();
+		this.roofBarrier = null;
+
 		// movement / jumping
 		this.movementSpeed = 60.0f;
 		this.jumpPower = 120;
