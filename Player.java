@@ -418,7 +418,7 @@ public class Player extends Editable {
 			// ----- check for top/bottom
 			float previousTop = 0.5f;
 			float previousBottom = 0.5f;
-			Collections.sort(tunnelChecking);
+			Collections.sort(tunnelChecking, xCompare);
 
 			for (Tile t : tunnelChecking) {
 
@@ -427,6 +427,7 @@ public class Player extends Editable {
 					previousBottom = t.getBottomRight().y;
 					continue;
 				}
+				
 				if (Math.abs(previousBottom - t.getY()) == getHeight()) {
 					this.dynamicBody.setFixedRotation(true);
 					horizontalTunnel = true;
