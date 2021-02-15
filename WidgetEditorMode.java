@@ -27,7 +27,8 @@ public class WidgetEditorMode extends Widget {
 			active = true;
 			editor.controller = new EditorControl(p, editor);
 		} else {
-//			sActive = !sActive;
+//			sActive = !sActive; //old code for opening widget menu
+
 			for (int i = 0; i < subWidgets.size(); i++) {
 				Widget w = subWidgets.get(i);
 

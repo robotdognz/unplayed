@@ -19,6 +19,8 @@
 -Implemented jumping up through slots above the player
 15/02/21
 -Improved player physics performance
+-PlayerEnds no longer default to level end mode
+-Editor mode widget now cycles through tools instead of opening a submenu
 
 1.2.0: Physics build
 
