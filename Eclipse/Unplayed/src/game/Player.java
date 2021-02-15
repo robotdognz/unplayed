@@ -355,25 +355,25 @@ public class Player extends Editable {
 		float bottomEdge = pos.y + getHeight() / 2 + 0.5f;
 
 		for (Tile t : sensorContacts) {
-			PVector tCenter = new PVector(t.getX() + t.getWidth() / 2, t.getY() + getHeight() / 2);
-			if (pos.dist(tCenter) > centerToCenter) {
-				continue;
-			}
+//			PVector tCenter = new PVector(t.getX() + t.getWidth() / 2, t.getY() + getHeight() / 2);
+//			if (pos.dist(tCenter) > centerToCenter) {
+//				continue;
+//			}
 
-			float tLeftEdge = t.getTopLeft().x;
-			if (tLeftEdge > rightEdge) {
+//			float tLeftEdge = t.getTopLeft().x;
+			if (t.getTopLeft().x > rightEdge) {
 				continue;
 			}
-			float tRightEdge = t.getBottomRight().x;
-			if (tRightEdge < leftEdge) {
+//			float tRightEdge = t.getBottomRight().x;
+			if (t.getBottomRight().x < leftEdge) {
 				continue;
 			}
-			float tTopEdge = t.getTopLeft().y;
-			if (tTopEdge > bottomEdge) {
+//			float tTopEdge = t.getTopLeft().y;
+			if (t.getTopLeft().y > bottomEdge) {
 				continue;
 			}
-			float tBottomEdge = t.getBottomRight().y;
-			if (tBottomEdge < topEdge) {
+//			float tBottomEdge = t.getBottomRight().y;
+			if (t.getBottomRight().y < topEdge) {
 				continue;
 			}
 
@@ -385,68 +385,33 @@ public class Player extends Editable {
 			boolean returnBoolean = true; // true if nothing found
 
 			// ----- check for left/right (vertical tunnel)
-//			float previousLeft = 0.5f;
-//			float previousRight = 0.5f;
 			float previousX = 0;
 			Collections.sort(tunnelChecking, xCompare);
 
-//			for (Tile t : tunnelChecking) {
 			for (int i = 0; i < tunnelChecking.size(); i++) {
 				Tile t = tunnelChecking.get(i);
 
-//				if (previousLeft == 0.5f) {
-//					previousLeft = t.getTopLeft().x;
-//					previousRight = t.getBottomRight().x;
-//					continue;
-//				}
-
 				if (i > 0) {
-
 					if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
 						this.dynamicBody.setFixedRotation(true);
 						verticalTunnel = true;
 						returnBoolean = false;
 						break;
 					}
-
-//					if (Math.abs(previousRight - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
-//						this.dynamicBody.setFixedRotation(true);
-//						verticalTunnel = true;
-//						returnBoolean = false;
-//						break;
-//					}
-//
-//					if (Math.abs(previousLeft - rightEdge) <= 2 && Math.abs(t.getBottomRight().x - leftEdge) <= 2) {
-//						this.dynamicBody.setFixedRotation(true);
-//						verticalTunnel = true;
-//						returnBoolean = false;
-//						break;
-//					}
 				}
 
 				previousX = t.getTopLeft().x;
-//				previousLeft = t.getTopLeft().x;
-//				previousRight = t.getBottomRight().x;
 
 			}
 
 			// ----- check for top/bottom (horizontal tunnel)
-			float previousY = 0; // 0.5f;
-//			float previousBottom = 0.5f;
-			Collections.sort(tunnelChecking); // , xCompare
+			float previousY = 0;
+			Collections.sort(tunnelChecking);
 
-//			for (Tile t : tunnelChecking) {
 			for (int i = 0; i < tunnelChecking.size(); i++) {
 				Tile t = tunnelChecking.get(i);
 
-//				if (previousY == 0.5f) {
-//					previousY = t.getTopLeft().y;
-////					previousBottom = t.getBottomRight().y;
-//					continue;
-//				}
-
 				if (i > 0) {
-
 					if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
 						this.dynamicBody.setFixedRotation(true);
 						horizontalTunnel = true;
@@ -455,25 +420,10 @@ public class Player extends Editable {
 					}
 				}
 
-//				if (Math.abs(previousBottom - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
-//					this.dynamicBody.setFixedRotation(true);
-//					horizontalTunnel = true;
-//					returnBoolean = false;
-//					break;
-//				}
-//
-//				if (Math.abs(previousTop - bottomEdge) <= 2 && Math.abs(t.getBottomRight().y - topEdge) <= 2) {
-//					this.dynamicBody.setFixedRotation(true);
-//					horizontalTunnel = true;
-//					returnBoolean = false;
-//					break;
-//				}
-
 				previousY = t.getTopLeft().y;
-//				previousBottom = t.getBottomRight().y;
 			}
 
-			// return if subsequent algorithms can unlock the player
+			// return boolean telling subsequent algorithms if they can unlock the player
 			if (returnBoolean == false) {
 				return false;
 			}
