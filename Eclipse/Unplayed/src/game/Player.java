@@ -427,7 +427,7 @@ public class Player extends Editable {
 					previousBottom = t.getBottomRight().y;
 					continue;
 				}
-				if (Math.abs(previousBottom - t.getX()) == getWidth()) {
+				if (Math.abs(previousBottom - t.getY()) == getHeight()) {
 					this.dynamicBody.setFixedRotation(true);
 					horizontalTunnel = true;
 					returnBoolean = false;
