@@ -885,6 +885,7 @@ public class Player extends Editable {
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
 					xImpulse = (dynamicBody.getMass() * jumpPower / 2);
+					destroyWallBarrier(false); // remove wall barrier while wall jumping
 				}
 				extraJump = true;
 
@@ -892,6 +893,7 @@ public class Player extends Editable {
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
 					xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
+					destroyWallBarrier(false); // remove wall barrier while wall jumping
 				}
 				extraJump = true;
 
