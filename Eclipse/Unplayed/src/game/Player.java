@@ -883,17 +883,17 @@ public class Player extends Editable {
 
 			if (left) { // pushing into a wall left
 				yImpulse = dynamicBody.getMass() * jumpPower;
-				if (!verticalTunnel) { // not in a tunnel
+				if (!verticalTunnel && wallBarrier == null) { // not in a tunnel
 					xImpulse = (dynamicBody.getMass() * jumpPower / 2);
-					destroyWallBarrier(false); // remove wall barrier while wall jumping
+//					destroyWallBarrier(false); // remove wall barrier while wall jumping
 				}
 				extraJump = true;
 
 			} else if (right) { // pushing into a wall right
 				yImpulse = dynamicBody.getMass() * jumpPower;
-				if (!verticalTunnel) { // not in a tunnel
+				if (!verticalTunnel && wallBarrier == null) { // not in a tunnel
 					xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
-					destroyWallBarrier(false); // remove wall barrier while wall jumping
+//					destroyWallBarrier(false); // remove wall barrier while wall jumping
 				}
 				extraJump = true;
 
