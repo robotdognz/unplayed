@@ -22,7 +22,7 @@ public abstract class Widget {
 	protected boolean hover = false; // is the mouse over the widget
 	protected boolean active = false; // is the widget active
 	protected boolean hasSActive = false; // should active be used decoupled from widget menu opening
-	protected boolean sActive = false; // secondary active that replaces the origonal for opening menus etc allowing
+	protected boolean sActive = false; // secondary active that replaces the original for opening menus etc allowing
 										// the user to do whatever with 'active'
 	protected boolean available = true; // is this a fully working widget? Could be used to disable widgets that don't
 										// work with the current tool/mode to make menus easier to navigate

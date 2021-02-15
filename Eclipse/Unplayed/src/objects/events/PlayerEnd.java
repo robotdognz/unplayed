@@ -28,7 +28,7 @@ public class PlayerEnd extends Event {
 		super(game, texture, name, false, x, y, 100, 100);
 		this.rotationMode = 0;
 		// 0 = cares about rotation, 1 = ignore 180 rotation, 2 = ignore all rotation
-		this.levelEnd = true;
+		this.levelEnd = false; // true;
 		this.newPlayerArea = new Rectangle(getX() + getWidth(), getY() - getHeight(), getWidth(), getHeight());
 
 		this.center = new PVector(getX() + getWidth() / 2, getY() + getHeight() / 2);

@@ -17,6 +17,8 @@
 -Built a system that makes jumping off objects more forgiving by delaying collision end events where neccassary
 -Jumping while moving in a horizontal tunnel now bosts you forward
 -Implemented jumping up through slots above the player
+15/02/21
+-Improved player physics performance
 
 1.2.0: Physics build
 

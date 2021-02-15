@@ -27,7 +27,21 @@ public class WidgetEditorMode extends Widget {
 			active = true;
 			editor.controller = new EditorControl(p, editor);
 		} else {
-			sActive = !sActive;
+//			sActive = !sActive;
+			for (int i = 0; i < subWidgets.size(); i++) {
+				Widget w = subWidgets.get(i);
+
+				// found active widget
+				if (w.isActive()) {
+					if (i + 1 < subWidgets.size()) {
+						subWidgets.get(i + 1).clicked();
+						return;
+					} else {
+						subWidgets.get(0).clicked();
+						return;
+					}
+				}
+			}
 		}
 	}
 
