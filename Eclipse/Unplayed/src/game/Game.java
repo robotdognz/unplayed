@@ -394,9 +394,6 @@ public class Game {
 
 		// draw black bars
 		if (camera.getGame()) {
-			if (player != null) {
-				player.drawArrows(this);
-			}
 			p.fill(20, 255); // 10, 255
 			int barSize = 1000000;
 			p.rectMode(CORNERS);

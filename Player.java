@@ -883,17 +883,15 @@ public class Player extends Editable {
 
 			if (left) { // pushing into a wall left
 				yImpulse = dynamicBody.getMass() * jumpPower;
-				if (!verticalTunnel && wallBarrier == null) { // not in a tunnel
+				if (!verticalTunnel) { // not in a tunnel
 					xImpulse = (dynamicBody.getMass() * jumpPower / 2);
-//					destroyWallBarrier(false); // remove wall barrier while wall jumping
 				}
 				extraJump = true;
 
 			} else if (right) { // pushing into a wall right
 				yImpulse = dynamicBody.getMass() * jumpPower;
-				if (!verticalTunnel && wallBarrier == null) { // not in a tunnel
+				if (!verticalTunnel) { // not in a tunnel
 					xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
-//					destroyWallBarrier(false); // remove wall barrier while wall jumping
 				}
 				extraJump = true;
 
@@ -1100,32 +1098,6 @@ public class Player extends Editable {
 				graphics.line(v1.x, v1.y, v2.x, v2.y);
 			}
 		}
-	}
-
-	public void drawArrows(Game g) {
-//		p.fill(playerColor);
-		// draw player-off-screen arrows
-//		if (getTopLeft().x + getWidth() - 10 <= g.leftEdge) {
-//			// left edge
-//			p.triangle(g.leftEdge + 20, getTopLeft().y + getHeight() / 2, g.leftEdge + 60,
-//					getTopLeft().y + getHeight() / 2 - 40, g.leftEdge + 60, getTopLeft().y + getHeight() / 2 + 40);
-//		}
-//		if (getTopLeft().x + 10 >= g.rightEdge) {
-//			// right edge
-//			p.triangle(g.rightEdge - 20, getTopLeft().y + getHeight() / 2, g.rightEdge - 60,
-//					getTopLeft().y + getHeight() / 2 - 40, g.rightEdge - 60, getTopLeft().y + getHeight() / 2 + 40);
-//		}
-//		if (getTopLeft().y + getHeight() - 10 <= g.topEdge) {
-//			// top edge
-//			p.triangle(getTopLeft().x + getWidth() / 2, g.topEdge + 20, getTopLeft().x + 40 + getWidth() / 2,
-//					g.topEdge + 60, getTopLeft().x - 40 + getWidth() / 2, g.topEdge + 60);
-//		}
-//		if (getTopLeft().y + 10 >= g.bottomEdge) {
-//			// top edge
-//			p.triangle(getTopLeft().x + getWidth() / 2, g.bottomEdge - 20, getTopLeft().x + 40 + getWidth() / 2,
-//					g.bottomEdge - 60, getTopLeft().x - 40 + getWidth() / 2, g.bottomEdge - 60);
-//		}
-		// need to add corner arrows
 	}
 
 	public Vec2 getCenter() {
