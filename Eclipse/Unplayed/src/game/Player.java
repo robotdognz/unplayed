@@ -61,7 +61,6 @@ public class Player extends Editable {
 	// tunnel checking
 	private ArrayList<Tile> tunnelChecking; // list of tiles currently being checked for tunnels
 	private PlayerTileXComparator xCompare; // comparator used for x axis tunnel checking
-	private float centerToCenter; // distance from center of player to center of diagonal tile
 
 	// ground slot checking
 	private ArrayList<Tile> groundChecking; // list of tiles currently being checked for ground slots
@@ -82,7 +81,7 @@ public class Player extends Editable {
 	// movement / jumping
 	private float movementSpeed;
 	private float jumpPower; // the strength of the player's jump
-	private boolean extraJump;
+	private boolean extraJump; // does the player have an extra jump
 	private boolean verticalTunnel; // used to check if player should jump away from the wall or not
 	private boolean horizontalTunnel;
 //	private Vec2 previousPosition; // last player location
@@ -117,7 +116,6 @@ public class Player extends Editable {
 
 		this.tunnelChecking = new ArrayList<Tile>();
 		this.xCompare = new PlayerTileXComparator();
-		this.centerToCenter = (float) Math.hypot(getWidth(), getHeight()) + 1;
 
 		this.groundChecking = new ArrayList<Tile>();
 		this.groundBarrier = null;
@@ -337,17 +335,18 @@ public class Player extends Editable {
 		// run the algorithms
 		// if tunnel checking locks the player's rotation, the other algorithms
 		// shouldn't unlock it, that's what this variable is for
-		boolean resetRotation = checkTunnel();
-		checkForGroundSlots(resetRotation);
-		checkForWallSlots(resetRotation);
-		checkForRoofSlots();
+		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
+		Vec2 vel = dynamicBody.getLinearVelocity();
+		boolean resetRotation = checkTunnel(pos);
+		checkForGroundSlots(pos, vel, resetRotation);
+		checkForWallSlots(pos, vel, resetRotation);
+		checkForRoofSlots(pos, vel);
 
 	}
 
-	private boolean checkTunnel() {
+	private boolean checkTunnel(PVector pos) {
 
-		// create a list of relevant tiles sorted by x position
-		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
+		// create a list of relevant tiles
 		// edges of player
 		float leftEdge = pos.x - getWidth() / 2 - 0.5f; // 0.25f
 		float rightEdge = pos.x + getWidth() / 2 + 0.5f;
@@ -355,30 +354,24 @@ public class Player extends Editable {
 		float bottomEdge = pos.y + getHeight() / 2 + 0.5f;
 
 		for (Tile t : sensorContacts) {
-//			PVector tCenter = new PVector(t.getX() + t.getWidth() / 2, t.getY() + getHeight() / 2);
-//			if (pos.dist(tCenter) > centerToCenter) {
-//				continue;
-//			}
-
-//			float tLeftEdge = t.getTopLeft().x;
+			// tile left edge larger than player right edge
 			if (t.getTopLeft().x > rightEdge) {
 				continue;
 			}
-//			float tRightEdge = t.getBottomRight().x;
+			// tile right edge small than player left edge
 			if (t.getBottomRight().x < leftEdge) {
 				continue;
 			}
-//			float tTopEdge = t.getTopLeft().y;
+			// tile top edge larger than player bottom edge
 			if (t.getTopLeft().y > bottomEdge) {
 				continue;
 			}
-//			float tBottomEdge = t.getBottomRight().y;
+			// tile bottom edge smaller than player top edge
 			if (t.getBottomRight().y < topEdge) {
 				continue;
 			}
 
 			tunnelChecking.add(t);
-
 		}
 
 		if (tunnelChecking.size() >= 2) {
@@ -436,10 +429,9 @@ public class Player extends Editable {
 
 	}
 
-	private void checkForGroundSlots(boolean resetRotation) {
+	private void checkForGroundSlots(PVector pos, Vec2 vel, boolean resetRotation) {
 
 		// check velocity is appropriate
-		Vec2 vel = dynamicBody.getLinearVelocity();
 		// player is moving or trying to move on the x axis
 		if (!((left || right) || (Math.abs(vel.x) >= 4))) {
 			destroyGroundBarrier(resetRotation);
@@ -459,7 +451,6 @@ public class Player extends Editable {
 		}
 
 		// create a list of relevant tiles sorted by x position
-		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 		for (Tile t : sensorContacts) {
 			// skip this tile if the top of it is above the player's midpoint
 			if (t.getY() < pos.y) {
@@ -540,12 +531,7 @@ public class Player extends Editable {
 		destroyGroundBarrier(resetRotation);
 	}
 
-	private void checkForWallSlots(boolean resetRotation) {
-//		// only check for wall slots when not boosting
-//		if (boostTimer.isRunning()) {
-//			destroyWallBarrier(resetRotation);
-//			return;
-//		}
+	private void checkForWallSlots(PVector pos, Vec2 vel, boolean resetRotation) {
 
 		// player is trying to move on the x axis
 		if (!(left || right)) {
@@ -560,12 +546,7 @@ public class Player extends Editable {
 			direction = false;
 		}
 
-		// velocity, used to figure out if moving up or down
-		// (remember that this will be positive for up)
-		float yVelocity = dynamicBody.getLinearVelocity().y;
-
 		// create a list of relevant tiles sorted by x position
-		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 		for (Tile t : sensorContacts) {
 
 			// skip the tile if it is to the back of the player
@@ -586,7 +567,7 @@ public class Player extends Editable {
 			}
 
 			// skip the tile if it is behind the player
-			if (yVelocity > 1) { // moving up
+			if (vel.y > 1) { // moving up
 				if (pos.y + getHeight() * 0.60f < t.getTopLeft().y) {
 					continue;
 				}
@@ -600,7 +581,7 @@ public class Player extends Editable {
 		}
 
 		// sort the found tiles
-		if (yVelocity > 1) { // moving up
+		if (vel.y > 1) { // moving up
 			Collections.sort(wallChecking, Collections.reverseOrder());
 		} else { // moving down
 			Collections.sort(wallChecking);
@@ -615,14 +596,14 @@ public class Player extends Editable {
 				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
 
 					// make sure the gap is in front of the player
-					if ((yVelocity > 1 && t.getBottomRight().y < pos.y) // moving up
-							|| (yVelocity < 1 && t.getTopLeft().y > pos.y)) { // moving down
+					if ((vel.y > 1 && t.getBottomRight().y < pos.y) // moving up
+							|| (vel.y < 1 && t.getTopLeft().y > pos.y)) { // moving down
 
 						// lock rotation
 						this.dynamicBody.setFixedRotation(true);
 
 						// try create the barrier
-						if (yVelocity > 1) { // moving up
+						if (vel.y > 1) { // moving up
 
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
@@ -669,26 +650,23 @@ public class Player extends Editable {
 		destroyWallBarrier(resetRotation);
 	}
 
-	private void checkForRoofSlots() {
-		float xVelocity = dynamicBody.getLinearVelocity().x;
+	private void checkForRoofSlots(PVector pos, Vec2 vel) {
 
 		// check the player is boosting
-//		if (!(Math.abs(xVelocity) > movementSpeed)) {
 		if (!boostTimer.isRunning()) {
 			destroyRoofBarrier();
 			return;
 		}
 
 		boolean direction = true; // true = left, false = right
-		if (xVelocity <= -4) {
+		if (vel.x <= -4) {
 			direction = true;
 		}
-		if (xVelocity >= 4) {
+		if (vel.x >= 4) {
 			direction = false;
 		}
 
 		// create a list of relevant tiles sorted by x position
-		Vec2 pos = box2d.getBodyPixelCoord(dynamicBody);
 		for (Tile t : sensorContacts) {
 			// skip this tile if the bottom of it is below the player's midpoint
 			if (t.getBottomRight().y > pos.y) {
