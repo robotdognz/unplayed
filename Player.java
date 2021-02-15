@@ -400,7 +400,6 @@ public class Player extends Editable {
 				if (Math.abs(previousRight - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
 					verticalTunnel = true;
-//					return false;
 					returnBoolean = false;
 					break;
 				}
@@ -408,7 +407,6 @@ public class Player extends Editable {
 				if (Math.abs(previousLeft - rightEdge) <= 2 && Math.abs(t.getBottomRight().x - leftEdge) <= 2) {
 					this.dynamicBody.setFixedRotation(true);
 					verticalTunnel = true;
-//					return false;
 					returnBoolean = false;
 					break;
 				}
@@ -429,22 +427,26 @@ public class Player extends Editable {
 					previousBottom = t.getBottomRight().y;
 					continue;
 				}
-
-				if (Math.abs(previousBottom - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
+				if (Math.abs(previousBottom - t.getX()) == getWidth()) {
 					this.dynamicBody.setFixedRotation(true);
 					horizontalTunnel = true;
-//					return false;
 					returnBoolean = false;
 					break;
 				}
 
-				if (Math.abs(previousTop - bottomEdge) <= 2 && Math.abs(t.getBottomRight().y - topEdge) <= 2) {
-					this.dynamicBody.setFixedRotation(true);
-					horizontalTunnel = true;
-//					return false;
-					returnBoolean = false;
-					break;
-				}
+//				if (Math.abs(previousBottom - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
+//					this.dynamicBody.setFixedRotation(true);
+//					horizontalTunnel = true;
+//					returnBoolean = false;
+//					break;
+//				}
+//
+//				if (Math.abs(previousTop - bottomEdge) <= 2 && Math.abs(t.getBottomRight().y - topEdge) <= 2) {
+//					this.dynamicBody.setFixedRotation(true);
+//					horizontalTunnel = true;
+//					returnBoolean = false;
+//					break;
+//				}
 
 				previousTop = t.getTopLeft().y;
 				previousBottom = t.getBottomRight().y;
