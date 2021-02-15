@@ -392,7 +392,7 @@ public class Player extends Editable {
 
 //			for (Tile t : tunnelChecking) {
 			for (int i = 0; i < tunnelChecking.size(); i++) {
-				Tile t = groundChecking.get(i);
+				Tile t = tunnelChecking.get(i);
 
 //				if (previousLeft == 0.5f) {
 //					previousLeft = t.getTopLeft().x;
@@ -437,7 +437,7 @@ public class Player extends Editable {
 
 //			for (Tile t : tunnelChecking) {
 			for (int i = 0; i < tunnelChecking.size(); i++) {
-				Tile t = groundChecking.get(i);
+				Tile t = tunnelChecking.get(i);
 
 //				if (previousY == 0.5f) {
 //					previousY = t.getTopLeft().y;
