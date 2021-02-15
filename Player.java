@@ -384,55 +384,75 @@ public class Player extends Editable {
 		if (tunnelChecking.size() >= 2) {
 			boolean returnBoolean = true; // true if nothing found
 
-			// ----- check for left/right
-			float previousLeft = 0.5f;
-			float previousRight = 0.5f;
+			// ----- check for left/right (vertical tunnel)
+//			float previousLeft = 0.5f;
+//			float previousRight = 0.5f;
+			float previousX = 0;
 			Collections.sort(tunnelChecking, xCompare);
 
-			for (Tile t : tunnelChecking) {
+//			for (Tile t : tunnelChecking) {
+			for (int i = 0; i < tunnelChecking.size(); i++) {
+				Tile t = groundChecking.get(i);
 
-				if (previousLeft == 0.5f) {
-					previousLeft = t.getTopLeft().x;
-					previousRight = t.getBottomRight().x;
-					continue;
+//				if (previousLeft == 0.5f) {
+//					previousLeft = t.getTopLeft().x;
+//					previousRight = t.getBottomRight().x;
+//					continue;
+//				}
+
+				if (i > 0) {
+
+					if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
+						this.dynamicBody.setFixedRotation(true);
+						verticalTunnel = true;
+						returnBoolean = false;
+						break;
+					}
+
+//					if (Math.abs(previousRight - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
+//						this.dynamicBody.setFixedRotation(true);
+//						verticalTunnel = true;
+//						returnBoolean = false;
+//						break;
+//					}
+//
+//					if (Math.abs(previousLeft - rightEdge) <= 2 && Math.abs(t.getBottomRight().x - leftEdge) <= 2) {
+//						this.dynamicBody.setFixedRotation(true);
+//						verticalTunnel = true;
+//						returnBoolean = false;
+//						break;
+//					}
 				}
 
-				if (Math.abs(previousRight - leftEdge) <= 2 && Math.abs(t.getTopLeft().x - rightEdge) <= 2) {
-					this.dynamicBody.setFixedRotation(true);
-					verticalTunnel = true;
-					returnBoolean = false;
-					break;
-				}
+				previousX = t.getTopLeft().x;
+//				previousLeft = t.getTopLeft().x;
+//				previousRight = t.getBottomRight().x;
 
-				if (Math.abs(previousLeft - rightEdge) <= 2 && Math.abs(t.getBottomRight().x - leftEdge) <= 2) {
-					this.dynamicBody.setFixedRotation(true);
-					verticalTunnel = true;
-					returnBoolean = false;
-					break;
-				}
-
-				previousLeft = t.getTopLeft().x;
-				previousRight = t.getBottomRight().x;
 			}
 
-			// ----- check for top/bottom
-			float previousTop = 0.5f;
+			// ----- check for top/bottom (horizontal tunnel)
+			float previousY = 0; // 0.5f;
 //			float previousBottom = 0.5f;
-			Collections.sort(tunnelChecking); //, xCompare
+			Collections.sort(tunnelChecking); // , xCompare
 
-			for (Tile t : tunnelChecking) {
+//			for (Tile t : tunnelChecking) {
+			for (int i = 0; i < tunnelChecking.size(); i++) {
+				Tile t = groundChecking.get(i);
 
-				if (previousTop == 0.5f) {
-					previousTop = t.getTopLeft().y;
-//					previousBottom = t.getBottomRight().y;
-					continue;
-				}
+//				if (previousY == 0.5f) {
+//					previousY = t.getTopLeft().y;
+////					previousBottom = t.getBottomRight().y;
+//					continue;
+//				}
 
-				if (Math.abs(previousTop - t.getY()) == t.getHeight() + getHeight()) {
-					this.dynamicBody.setFixedRotation(true);
-					horizontalTunnel = true;
-					returnBoolean = false;
-					break;
+				if (i > 0) {
+
+					if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
+						this.dynamicBody.setFixedRotation(true);
+						horizontalTunnel = true;
+						returnBoolean = false;
+						break;
+					}
 				}
 
 //				if (Math.abs(previousBottom - topEdge) <= 2 && Math.abs(t.getTopLeft().y - bottomEdge) <= 2) {
@@ -449,7 +469,7 @@ public class Player extends Editable {
 //					break;
 //				}
 
-				previousTop = t.getTopLeft().y;
+				previousY = t.getTopLeft().y;
 //				previousBottom = t.getBottomRight().y;
 			}
 
