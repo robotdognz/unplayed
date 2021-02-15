@@ -418,7 +418,7 @@ public class Player extends Editable {
 			// ----- check for top/bottom
 			float previousTop = 0.5f;
 //			float previousBottom = 0.5f;
-			Collections.sort(tunnelChecking, xCompare);
+			Collections.sort(tunnelChecking); //, xCompare
 
 			for (Tile t : tunnelChecking) {
 
@@ -449,9 +449,7 @@ public class Player extends Editable {
 //					break;
 //				}
 
-				if (t.getTopLeft().y < previousTop) {
-					previousTop = t.getTopLeft().y;
-				}
+				previousTop = t.getTopLeft().y;
 //				previousBottom = t.getBottomRight().y;
 			}
 
