@@ -417,18 +417,18 @@ public class Player extends Editable {
 
 			// ----- check for top/bottom
 			float previousTop = 0.5f;
-			float previousBottom = 0.5f;
+//			float previousBottom = 0.5f;
 			Collections.sort(tunnelChecking, xCompare);
 
 			for (Tile t : tunnelChecking) {
 
 				if (previousTop == 0.5f) {
 					previousTop = t.getTopLeft().y;
-					previousBottom = t.getBottomRight().y;
+//					previousBottom = t.getBottomRight().y;
 					continue;
 				}
 				
-				if (previousBottom - t.getY() == getHeight()) {
+				if (Math.abs(previousTop - t.getY()) == t.getHeight() + getHeight()) {
 					this.dynamicBody.setFixedRotation(true);
 					horizontalTunnel = true;
 					returnBoolean = false;
@@ -450,7 +450,7 @@ public class Player extends Editable {
 //				}
 
 				previousTop = t.getTopLeft().y;
-				previousBottom = t.getBottomRight().y;
+//				previousBottom = t.getBottomRight().y;
 			}
 
 			// return if subsequent algorithms can unlock the player
