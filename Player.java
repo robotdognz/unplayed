@@ -133,9 +133,9 @@ public class Player extends Editable {
 		this.groundContacts = 0;
 		this.wallContacts = 0;
 		// how long to pad leaving the ground
-		this.groundTimer = new CountdownTimer(0.200f); //0.128
+		this.groundTimer = new CountdownTimer(0.200f); // 0.128
 		// how long to pad leaving the ground
-		this.wallTimer = new CountdownTimer(0.128f); //0.064
+		this.wallTimer = new CountdownTimer(0.128f); // 0.064
 		// how long after a jump before the ground a wall timers can be started
 		this.jumpTimer = new CountdownTimer(0.064f);
 		// how long after boosting to keep checking for roof slots
@@ -886,14 +886,16 @@ public class Player extends Editable {
 				if (!verticalTunnel) { // not in a tunnel
 					xImpulse = (dynamicBody.getMass() * jumpPower / 2);
 				}
-				//extraJump = true;
+				// extraJump = true;
+				extraJump = false; // TODO: testing
 
 			} else if (right) { // pushing into a wall right
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
 					xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 				}
-				//extraJump = true;
+				// extraJump = true;
+				extraJump = false; // TODO: testing
 
 			} else if (extraJump) { // not pushing into the wall
 				yImpulse = dynamicBody.getMass() * jumpPower;
