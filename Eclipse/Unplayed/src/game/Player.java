@@ -551,11 +551,11 @@ public class Player extends Editable {
 			}
 
 			// skip this tile if it behind the player
-			if (pos.x + getWidth() * 1.00f < t.getTopLeft().x) {
+			if (pos.x + getWidth() * 1.10f < t.getTopLeft().x) {
 				continue;
 			}
 
-			if (pos.x - getWidth() * 1.00f > t.getBottomRight().x) {
+			if (pos.x - getWidth() * 1.10f > t.getBottomRight().x) {
 				continue;
 			}
 
