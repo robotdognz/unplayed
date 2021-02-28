@@ -463,15 +463,15 @@ public class Player extends Editable {
 			}
 
 			// skip this tile if it behind the player
-			if (direction) { // moving left
-				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {
-					continue;
-				}
-			} else { // moving right
-				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) {
-					continue;
-				}
-			}
+//			if (direction) { // moving left
+//				if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {
+//					continue;
+//				}
+//			} else { // moving right
+//				if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) {
+//					continue;
+//				}
+//			}
 
 			groundChecking.add(t);
 		}
