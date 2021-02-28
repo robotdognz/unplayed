@@ -202,7 +202,7 @@ public class Player extends Editable {
 	public void endGroundContact() {
 		this.groundContacts--;
 		// if the player has just left the ground and it wasn't because of a jump
-		if (this.groundContacts == 0 && !this.jumpTimer.isRunning()) {
+		if (this.groundContacts == 0) { // && !this.jumpTimer.isRunning()) {
 			groundTimer.start();
 		}
 	}
@@ -213,7 +213,7 @@ public class Player extends Editable {
 
 	public void endWallContact() {
 		this.wallContacts--;
-		if (this.wallContacts == 0 && !this.jumpTimer.isRunning()) {
+		if (this.wallContacts == 0) { // && !this.jumpTimer.isRunning()) {
 			wallTimer.start();
 		}
 	}
