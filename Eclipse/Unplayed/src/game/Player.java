@@ -440,9 +440,11 @@ public class Player extends Editable {
 		boolean direction = true; // true = left, false = right
 		if (left || vel.x <= -4) {
 			direction = true;
-		}
-		if (right || vel.x >= 4) {
+		} else if (right || vel.x >= 4) {
 			direction = false;
+		} else { // if (!(left || right) && Math.abs(vel.x) < 4) {
+			staticGroundSlots(pos, vel, resetRotation);
+			return;
 		}
 		// player is still or falling on the y axis
 		if (!(vel.y <= 2)) {
@@ -523,6 +525,89 @@ public class Player extends Editable {
 						return;
 					}
 				}
+			}
+			previousX = t.getX();
+		}
+
+		// conditions wern't met, remove the barrier
+		destroyGroundBarrier(resetRotation);
+	}
+
+	private void staticGroundSlots(PVector pos, Vec2 vel, boolean resetRotation) {
+		// player is still or falling on the y axis
+		if (!(vel.y <= 2)) {
+			destroyGroundBarrier(resetRotation);
+			return;
+		}
+
+		// create a list of relevant tiles sorted by x position
+		for (Tile t : sensorContacts) {
+			// skip this tile if the top of it is above the player's midpoint
+			if (t.getY() < pos.y) {
+				continue;
+			}
+
+			// skip this tile if it is too far below the player
+			if (t.getY() > pos.y + getHeight()) {
+				continue;
+			}
+
+			// skip this tile if it behind the player
+			if (pos.x + getWidth() * 0.60f < t.getTopLeft().x) {
+				continue;
+			}
+
+			if (pos.x - getWidth() * 0.60f > t.getBottomRight().x) {
+				continue;
+			}
+
+			groundChecking.add(t);
+		}
+		// sort the found tiles
+
+		Collections.sort(groundChecking);
+
+		// check the list of tiles for a playerWidth sized gap
+		float previousX = 0;
+		for (int i = 0; i < groundChecking.size(); i++) {
+			Tile t = groundChecking.get(i);
+			if (i > 0) {
+				// if this tile is the far side of a gap
+				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
+					// make sure the gap is in front of the player
+//					if ((direction && t.getBottomRight().x < pos.x) // moving left
+//							|| (!direction && t.getTopLeft().x > pos.x)) { // moving right
+
+					// lock rotation
+					this.dynamicBody.setFixedRotation(true);
+
+					// try create the barrier
+//						if (direction) { // moving left
+//							// final position check (stops barriers being made under player)
+//							// this works because it failing doesn't remove an existing barrier
+//							// so it only prevents barriers being made when you're already in the slot
+//							if (t.getBottomRight().x <= pos.x - getWidth() / 2 - 0.25f) {
+//								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
+//								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
+//								createGroundBarrier(top, bottom);
+//							}
+//
+//						} else { // moving right
+//							// final position check (stops barriers being made under player)
+//							// this works because it failing doesn't remove an existing barrier
+//							// so it only prevents barriers being made when you're already in the slot
+//							// 0.25 is added to stop a barrier being constructed when you're up against the
+//							// edge of the gap
+//							if (t.getTopLeft().x >= pos.x + getWidth() / 2 + 0.25f) {
+//								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
+//								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
+//								createGroundBarrier(top, bottom);
+//							}
+//						}
+
+					return;
+				}
+//				}
 			}
 			previousX = t.getX();
 		}
