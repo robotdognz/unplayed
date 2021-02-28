@@ -495,6 +495,7 @@ public class Player extends Editable {
 
 						// lock rotation
 						this.dynamicBody.setFixedRotation(true);
+						this.dynamicBody.setAngularVelocity(0);
 
 						// try create the barrier
 						if (direction) { // moving left
@@ -575,6 +576,7 @@ public class Player extends Editable {
 
 					// lock rotation
 					this.dynamicBody.setFixedRotation(true);
+					this.dynamicBody.setAngularVelocity(0);
 
 					return;
 				}
