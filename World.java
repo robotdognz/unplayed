@@ -1558,7 +1558,7 @@ public class World {
 
 	// NOTE this corresponds to the liquid test, so the debugdraw can draw
 	// the liquid particles correctly. They should be the same.
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings("removal")
 	private static Integer LIQUID_INT = new Integer(1234598372);
 	private float liquidLength = .12f;
 	private float averageLinearVel = -1;
