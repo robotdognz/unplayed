@@ -31,8 +31,13 @@ public class ImageTool implements Tool {
 			Image toInsert = null;
 			if (editor.currentImage != null) {
 				// create correct image
+
+				// TODO: textures are stored in grid amounts 1x1 etc, whereas actual world
+				// objects are stored as 100x100 etc. This should be fixed so everything uses
+				// the 1x1 system. Then remove the * 100 from the below line
 				toInsert = new Image(texture, editor.currentImage.getFile(), (int) editor.point.getX(),
-						(int) editor.point.getY(), editor.currentImage.getWidth(), editor.currentImage.getHeight());
+						(int) editor.point.getY(), editor.currentImage.getWidth() * 100,
+						editor.currentImage.getHeight() * 100);
 			} else {
 				// use blank image
 				toInsert = new Image(null, null, (int) editor.point.getX(), (int) editor.point.getY(), 100, 100);

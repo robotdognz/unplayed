@@ -18,8 +18,12 @@ public class Image extends Editable {
 
 		if (file != null && texture != null && texture.getImageMap().containsKey(file)) {
 			this.imageTexture = texture.getImageMap().get(file);
-			setWidth(imageTexture.getWidth());
-			setHeight(imageTexture.getHeight());
+
+			// TODO: textures are stored in grid amounts 1x1 etc, whereas actual world
+			// objects are stored as 100x100 etc. This should be fixed so everything uses
+			// the 1x1 system. Then remove the * 100 from the two below lines
+			setWidth(imageTexture.getWidth() * 100);
+			setHeight(imageTexture.getHeight() * 100);
 			hasTexture = true;
 		} else {
 			hasTexture = false;
