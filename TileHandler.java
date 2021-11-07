@@ -15,9 +15,4 @@ public class TileHandler extends Handler implements Comparable<TileHandler> {
 		String name = datapath.toString();
 		return name.compareTo(otherName);
 	}
-
-//	public void draw(float pX, float pY, float size) {
-//		// draw the scaled image
-//		p.image(getSprite(6), pX, pY, size, size);
-//	}
 }

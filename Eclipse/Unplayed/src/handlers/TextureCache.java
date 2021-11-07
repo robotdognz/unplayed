@@ -20,9 +20,9 @@ import objects.events.Spike;
 import processing.core.*;
 
 public class TextureCache {
-	PApplet p;
-	Game game;
-	Context context;
+	private PApplet p;
+	private Game game;
+	private Context context;
 
 	// LODs
 	public int LOD256 = 4;
@@ -57,26 +57,21 @@ public class TextureCache {
 	public TextureCache(PApplet p, Context context) {
 		this.p = p;
 		this.context = context;
-		// sprite = requestImage("image.png") // this loads the image on a sperate
+		// sprite = requestImage("image.png") // this loads the image on a separate
 		// thread
-		// you can check if it has loaded by querrying its dimentions, they will be 0 if
+		// you can check if it has loaded by querying its dimensions, they will be 0 if
 		// loading, -1 if failed to load
 		// and > 0 if it has loaded
 
 		// paper textures
 		gridLOD256 = p.loadImage("PaperGrid_1024x1024.png");
-		//gridLOD256.resize((int) (p.width / 1.40625), (int) (p.width / 1.40625));
 		gridLOD128 = p.loadImage("PaperGrid_512x512.png");
-		//gridLOD128.resize((int) (p.width / 2.8125), (int) (p.width / 2.8125));
 		gridLOD64 = p.loadImage("PaperGrid_256x256.png");
-		//gridLOD64.resize((int) (p.width / 5.625), (int) (p.width / 5.625));
 		gridLOD32 = p.loadImage("PaperGrid_128x128.png");
-		//gridLOD32.resize((int) (p.width / 11.25), (int) (p.width / 11.25));
 		gridLOD16 = p.loadImage("PaperGrid_64x64.png");
-		//gridLOD16.resize((int) (p.width / 22.5), (int) (p.width / 22.5));
 		gridLOD8 = p.loadImage("PaperGrid_32x32.png");
-		//gridLOD8.resize((int) (p.width / 45), (int) (p.width / 45));
 
+		// page view background textures
 		deskBehind = p.requestImage("PagesViewBackGround.png");
 		deskInfront = p.requestImage("PagesViewBackGround_shading.png");
 

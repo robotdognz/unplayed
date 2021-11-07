@@ -16,22 +16,22 @@ public abstract class Handler {
 	private PImage LOD32 = null;
 	private PImage LOD16 = null;
 
-	private int pWidth;
-	private int pHeight;
+	private int width;
+	private int height;
 
-	public Handler(PApplet p, TextureCache texture, File file, int pWidth, int pHeight) {
+	public Handler(PApplet p, TextureCache texture, File file, int width, int height) {
 		this.p = p;
 		this.texture = texture;
 		this.datapath = file;
 
-		this.pWidth = pWidth;
-		this.pHeight = pHeight;
+		this.width = width;
+		this.height = height;
 
 		String path = file.toString();
 
 		try {
 			LOD256 = p.requestImage(path);
-			LOD256.resize(256 * pWidth, 256 * pHeight);
+			LOD256.resize(256 * width, 256 * height);
 		} catch (Exception e) {
 			// set sprite to file not found image
 		}
@@ -41,25 +41,25 @@ public abstract class Handler {
 		if (scale > texture.LOD32) {
 			if (LOD16 == null) {
 				LOD16 = LOD256.get(); // 16
-				LOD16.resize(16 * pWidth, 16 * pHeight);
+				LOD16.resize(16 * width, 16 * height);
 			}
 			return LOD16;
 		} else if (scale > texture.LOD64) {
 			if (LOD32 == null) {
 				LOD32 = LOD256.get(); // 32
-				LOD32.resize(32 * pWidth, 32 * pHeight);
+				LOD32.resize(32 * width, 32 * height);
 			}
 			return LOD32;
 		} else if (scale > texture.LOD128) {
 			if (LOD64 == null) {
 				LOD64 = LOD256.get(); // 64
-				LOD64.resize(64 * pWidth, 64 * pHeight);
+				LOD64.resize(64 * width, 64 * height);
 			}
 			return LOD64;
 		} else if (scale > texture.LOD256) {
 			if (LOD128 == null) {
 				LOD128 = LOD256.get(); // 16
-				LOD128.resize(128 * pWidth, 128 * pHeight);
+				LOD128.resize(128 * width, 128 * height);
 			}
 			return LOD128;
 		} else {
@@ -72,42 +72,16 @@ public abstract class Handler {
 	}
 
 	public int getWidth() {
-		return pWidth; // TODO: find an correct places where the *100 is needed and clean this up
+		return width;
 	}
 
 	public int getHeight() {
-		return pHeight;
+		return height;
 	}
 
 	public void draw(float pX, float pY, float size) {
-
 		// calculate how to scale the image so it appears in the scroll bar correctly
 		// and draw the scaled image
-		p.image(getSprite(6), pX, pY, getWidth() * size, getHeight() * size);
-
-//		// calculate how to scale the image so it appears in the scroll bar correctly
-//		float scaleFactor;
-//		if (getWidth() >= getHeight()) {
-//			scaleFactor = size / getWidth();
-//		} else {
-//			scaleFactor = size / getHeight();
-//		}
-//		// draw the scaled image
-//		p.image(getSprite(6), pX, pY, getWidth() * scaleFactor, getHeight() * scaleFactor);
-
-		// Legacy code from 2020 development, unknown use
-		// if (LOD128 != null) {
-		// float scaleFactor;
-		// if (getWidth() >= getHeight()) {
-		// scaleFactor = size / getWidth();
-		// } else {
-		// scaleFactor = size / getHeight();
-		// }
-		//
-		// //draw the scaled image
-		// image(getSprite(6), pX, pY, pWidth*scaleFactor, pHeight*scaleFactor);
-		// } else {
-		// showToast("Failed to load: " + datapath);
-		// }
+		p.image(getSprite(6), pX, pY, width * size, height * size);
 	}
 }

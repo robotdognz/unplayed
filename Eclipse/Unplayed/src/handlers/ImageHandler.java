@@ -6,8 +6,8 @@ import processing.core.*;
 
 public class ImageHandler extends Handler implements Comparable<ImageHandler> {
 
-	public ImageHandler(PApplet p, TextureCache texture, File file, int pWidth, int pHeight) {
-		super(p, texture, file, pWidth, pHeight);
+	public ImageHandler(PApplet p, TextureCache texture, File file, int width, int height) {
+		super(p, texture, file, width, height);
 	}
 
 	@Override
