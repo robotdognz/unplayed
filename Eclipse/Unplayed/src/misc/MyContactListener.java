@@ -256,7 +256,7 @@ public class MyContactListener implements ContactListener {
 		// check fixture B
 		fixtureUserData = fixtureB.getUserData();
 		if (fixtureUserData != null) {
-			if (fixtureUserData instanceof String) {
+			if (fixtureUserData instanceof CollisionEnum) {
 				CollisionEnum userData = (CollisionEnum) fixtureUserData;
 
 				if (userData == CollisionEnum.PLAYER_BODY) {
