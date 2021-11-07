@@ -121,8 +121,6 @@ public class MyContactListener implements ContactListener {
 		// if on of them is the player and one is an event
 		if (playerBody && event != null) {
 			player.addEvent(event);
-			
-			PApplet.print(event);
 		}
 
 		// if one of them is the player's sensor and one is a tile

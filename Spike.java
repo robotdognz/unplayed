@@ -11,6 +11,7 @@ import org.jbox2d.dynamics.FixtureDef;
 
 import game.Game;
 import handlers.TextureCache;
+import misc.CollisionEnum;
 import objects.Event;
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -53,7 +54,7 @@ public class Spike extends Event {
 			spikeDef = new FixtureDef();
 			spikeDef.shape = spikeShape;
 //			spikeFixtureDef.isSensor = true;
-			spikeDef.userData = "event";
+			spikeDef.userData = CollisionEnum.EVENT;
 
 //			spikeFixure = staticBody.createFixture(spikeDef);
 			staticBody.createFixture(spikeDef);

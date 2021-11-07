@@ -237,6 +237,7 @@ public class Player extends Editable {
 //	}
 
 	public void addEvent(Event event) {
+		//PApplet.print(event);
 		events.add(event);
 	}
 
