@@ -64,7 +64,7 @@ public abstract class Event extends Rectangle {
 			FixtureDef boxFixtureDef = new FixtureDef();
 			boxFixtureDef.shape = boxShape;
 			boxFixtureDef.isSensor = true;
-			boxFixtureDef.userData = CollisionEnum.EVENT;
+			boxFixtureDef.userData = CollisionEnum.EVENT; //"event";
 			staticBody.createFixture(boxFixtureDef);
 		}
 
