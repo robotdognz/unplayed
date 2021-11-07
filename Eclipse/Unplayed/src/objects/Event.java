@@ -3,6 +3,7 @@ package objects;
 import game.Game;
 import handlers.EventHandler;
 import handlers.TextureCache;
+import misc.CollisionEnum;
 import processing.core.PGraphics;
 import shiffman.box2d.Box2DProcessing;
 
@@ -63,7 +64,7 @@ public abstract class Event extends Rectangle {
 			FixtureDef boxFixtureDef = new FixtureDef();
 			boxFixtureDef.shape = boxShape;
 			boxFixtureDef.isSensor = true;
-			boxFixtureDef.userData = "event";
+			boxFixtureDef.userData = CollisionEnum.EVENT;
 			staticBody.createFixture(boxFixtureDef);
 		}
 

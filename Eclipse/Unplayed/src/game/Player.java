@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import handlers.TextureCache;
 import handlers.TileHandler;
+import misc.CollisionEnum;
 import misc.CountdownTimer;
 import misc.PlayerTileXComparator;
 import misc.Vibe;
@@ -171,7 +172,7 @@ public class Player extends Editable {
 			boxFixtureDef.shape = boxShape;
 			boxFixtureDef.density = density;
 			boxFixtureDef.friction = friction;
-			boxFixtureDef.userData = "player body";
+			boxFixtureDef.userData = CollisionEnum.PLAYER_BODY; //"player body";
 			dynamicBody.createFixture(boxFixtureDef);
 
 			// sensor
@@ -180,7 +181,7 @@ public class Player extends Editable {
 			FixtureDef sensorFixtureDef = new FixtureDef();
 			sensorFixtureDef.shape = sensorShape;
 			sensorFixtureDef.isSensor = true;
-			sensorFixtureDef.userData = "player sensor";
+			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR; //"player sensor";
 			this.dynamicBody.createFixture(sensorFixtureDef);
 
 //			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
@@ -986,6 +987,8 @@ public class Player extends Editable {
 
 		// TODO: this doesn't work because if you jump in one spot at the same height,
 		// it stops the vibration
+		// could be improved by adding a short timer to it
+		
 //		// check if we already did one like this
 //		float impulseDifference = Math.abs(total - previousImpulse);
 //		if (previousImpulse != 0 && impulseDifference < 4) {

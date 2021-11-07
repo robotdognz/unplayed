@@ -8,6 +8,7 @@ import org.jbox2d.dynamics.*;
 
 import handlers.TextureCache;
 import handlers.TileHandler;
+import misc.CollisionEnum;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import shiffman.box2d.Box2DProcessing;
@@ -99,14 +100,14 @@ public class Tile extends Editable implements Comparable<Tile> {
 			leftEdgeDef.shape = leftEdge;
 			leftEdgeDef.density = density;
 			leftEdgeDef.friction = friction;
-			leftEdgeDef.userData = "wall";
+			leftEdgeDef.userData = CollisionEnum.WALL;
 			staticBody.createFixture(leftEdgeDef);
 			// right edge
 			FixtureDef rightEdgeDef = new FixtureDef();
 			rightEdgeDef.shape = rightEdge;
 			rightEdgeDef.density = density;
 			rightEdgeDef.friction = friction;
-			rightEdgeDef.userData = "wall";
+			rightEdgeDef.userData = CollisionEnum.WALL;
 			staticBody.createFixture(rightEdgeDef);
 
 //			// left wall sensor
@@ -140,7 +141,7 @@ public class Tile extends Editable implements Comparable<Tile> {
 			sensor.set(v1, v2);
 			FixtureDef sensorDef = new FixtureDef();
 			sensorDef.shape = sensor;
-			sensorDef.userData = "ground";
+			sensorDef.userData = CollisionEnum.GROUND;
 			sensorDef.isSensor = true;
 			staticBody.createFixture(sensorDef);
 
@@ -154,7 +155,7 @@ public class Tile extends Editable implements Comparable<Tile> {
 			// fixture
 			FixtureDef boxFixtureDef = new FixtureDef();
 			boxFixtureDef.shape = boxShape;
-			boxFixtureDef.userData = "tile";
+			boxFixtureDef.userData = CollisionEnum.TILE;
 			sensorDef.isSensor = true;
 			staticBody.createFixture(boxFixtureDef);
 		}

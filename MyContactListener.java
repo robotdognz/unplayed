@@ -17,6 +17,8 @@ public class MyContactListener implements ContactListener {
 	public MyContactListener(Game game) {
 		this.game = game;
 	}
+	
+	// TODO: change these if else chains to switch cases
 
 	@Override
 	public void beginContact(Contact contact) {
@@ -35,30 +37,30 @@ public class MyContactListener implements ContactListener {
 		// check fixture
 		Object fixtureUserData = fixtureA.getUserData();
 		if (fixtureUserData != null) {
-			if (fixtureUserData instanceof String) {
-				String userData = (String) fixtureUserData;
+			if (fixtureUserData instanceof CollisionEnum) {
+				CollisionEnum userData = (CollisionEnum) fixtureUserData;
 
-				if (userData.equals("player body")) {
+				if (userData == CollisionEnum.PLAYER_BODY) {
 					player = (Player) fixtureA.getBody().getUserData();
 					playerBody = true;
 
-				} else if (userData.equals("tile")) {
+				} else if (userData == CollisionEnum.TILE) {
 					tile = (Tile) fixtureA.getBody().getUserData();
 
-				} else if (userData.contentEquals("player sensor")) {
+				} else if (userData == CollisionEnum.PLAYER_SENSOR) {
 					player = (Player) fixtureA.getBody().getUserData();
 					playerSensor = true;
 
-				} else if (userData.contentEquals("ground")) {
+				} else if (userData == CollisionEnum.GROUND) { 
 					ground = true;
 
-				} else if (userData.contentEquals("wall")) {
+				} else if (userData == CollisionEnum.WALL) {
 					wall = true;
 
-				} else if (userData.contentEquals("event")) {
+				} else if (userData == CollisionEnum.EVENT) { 
 					event = (Event) fixtureA.getBody().getUserData();
 
-				} else if (userData.contentEquals("roof")) {
+				} else if (userData == CollisionEnum.ROOF) { 
 					roofBarrier = true;
 
 				}
@@ -69,30 +71,30 @@ public class MyContactListener implements ContactListener {
 		// check fixture B
 		fixtureUserData = fixtureB.getUserData();
 		if (fixtureUserData != null) {
-			if (fixtureUserData instanceof String) {
-				String userData = (String) fixtureUserData;
+			if (fixtureUserData instanceof CollisionEnum) {
+				CollisionEnum userData = (CollisionEnum) fixtureUserData;
 
-				if (userData.equals("player body")) {
+				if (userData == CollisionEnum.PLAYER_BODY) {
 					player = (Player) fixtureB.getBody().getUserData();
 					playerBody = true;
 
-				} else if (userData.equals("tile")) {
+				} else if (userData == CollisionEnum.TILE) {
 					tile = (Tile) fixtureB.getBody().getUserData();
 
-				} else if (userData.contentEquals("player sensor")) {
+				} else if (userData == CollisionEnum.PLAYER_SENSOR) {
 					player = (Player) fixtureB.getBody().getUserData();
 					playerSensor = true;
 
-				} else if (userData.contentEquals("ground")) {
+				} else if (userData == CollisionEnum.GROUND) {
 					ground = true;
 
-				} else if (userData.contentEquals("wall")) {
+				} else if (userData == CollisionEnum.WALL) {
 					wall = true;
 
-				} else if (userData.contentEquals("event")) {
+				} else if (userData == CollisionEnum.EVENT) {
 					event = (Event) fixtureB.getBody().getUserData();
 
-				} else if (userData.contentEquals("roof")) {
+				} else if (userData == CollisionEnum.ROOF) {
 					roofBarrier = true;
 
 				}
@@ -143,30 +145,30 @@ public class MyContactListener implements ContactListener {
 		// check fixture A
 		Object fixtureUserData = fixtureA.getUserData();
 		if (fixtureUserData != null) {
-			if (fixtureUserData instanceof String) {
-				String userData = (String) fixtureUserData;
+			if (fixtureUserData instanceof CollisionEnum) {
+				CollisionEnum userData = (CollisionEnum) fixtureUserData;
 
-				if (userData.equals("player body")) {
+				if (userData == CollisionEnum.PLAYER_BODY) {
 					player = (Player) fixtureA.getBody().getUserData();
 					playerBody = true;
 
-				} else if (userData.contentEquals("player sensor")) {
+				} else if (userData == CollisionEnum.PLAYER_SENSOR) {
 					player = (Player) fixtureA.getBody().getUserData();
 					playerSensor = true;
 
-				} else if (userData.contentEquals("event")) {
+				} else if (userData == CollisionEnum.EVENT) {
 					event = (Event) fixtureA.getBody().getUserData();
 
-				} else if (userData.equals("tile")) {
+				} else if (userData == CollisionEnum.TILE) {
 					tile = (Tile) fixtureA.getBody().getUserData();
 
-				} else if (userData.contentEquals("ground")) {
+				} else if (userData == CollisionEnum.GROUND) {
 					ground = true;
 
-				} else if (userData.contentEquals("wall")) {
+				} else if (userData == CollisionEnum.WALL) {
 					wall = true;
 
-				} else if (userData.contentEquals("roof")) {
+				} else if (userData == CollisionEnum.ROOF) {
 					roofBarrier = true;
 
 				}
@@ -176,30 +178,30 @@ public class MyContactListener implements ContactListener {
 		// check fixture B
 		fixtureUserData = fixtureB.getUserData();
 		if (fixtureUserData != null) {
-			if (fixtureUserData instanceof String) {
-				String userData = (String) fixtureUserData;
+			if (fixtureUserData instanceof CollisionEnum) {
+				CollisionEnum userData = (CollisionEnum) fixtureUserData;
 
-				if (userData.equals("player body")) {
+				if (userData == CollisionEnum.PLAYER_BODY) {
 					player = (Player) fixtureB.getBody().getUserData();
 					playerBody = true;
 
-				} else if (userData.contentEquals("player sensor")) {
+				} else if (userData == CollisionEnum.PLAYER_SENSOR) {
 					player = (Player) fixtureB.getBody().getUserData();
 					playerSensor = true;
 
-				} else if (userData.contentEquals("event")) {
+				} else if (userData == CollisionEnum.EVENT) {
 					event = (Event) fixtureB.getBody().getUserData();
 
-				} else if (userData.equals("tile")) {
+				} else if (userData == CollisionEnum.TILE) {
 					tile = (Tile) fixtureB.getBody().getUserData();
 
-				} else if (userData.contentEquals("ground")) {
+				} else if (userData == CollisionEnum.GROUND) {
 					ground = true;
 
-				} else if (userData.contentEquals("wall")) {
+				} else if (userData == CollisionEnum.WALL) {
 					wall = true;
 
-				} else if (userData.contentEquals("roof")) {
+				} else if (userData == CollisionEnum.ROOF) {
 					roofBarrier = true;
 
 				}
@@ -242,10 +244,10 @@ public class MyContactListener implements ContactListener {
 		// check fixture A
 		Object fixtureUserData = fixtureA.getUserData();
 		if (fixtureUserData != null) {
-			if (fixtureUserData instanceof String) {
-				String userData = (String) fixtureUserData;
+			if (fixtureUserData instanceof CollisionEnum) {
+				CollisionEnum userData = (CollisionEnum) fixtureUserData;
 
-				if (userData.equals("player body")) {
+				if (userData == CollisionEnum.PLAYER_BODY) {
 					player = (Player) fixtureA.getBody().getUserData();
 				}
 			}
@@ -255,9 +257,9 @@ public class MyContactListener implements ContactListener {
 		fixtureUserData = fixtureB.getUserData();
 		if (fixtureUserData != null) {
 			if (fixtureUserData instanceof String) {
-				String userData = (String) fixtureUserData;
+				CollisionEnum userData = (CollisionEnum) fixtureUserData;
 
-				if (userData.equals("player body")) {
+				if (userData == CollisionEnum.PLAYER_BODY) {
 					player = (Player) fixtureB.getBody().getUserData();
 				}
 			}
