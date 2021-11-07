@@ -88,6 +88,6 @@ public abstract class Handler {
 			scaleFactor = size / getHeight();
 		}
 		// draw the scaled image
-		p.image(getSprite(6), pX, pY, pWidth * scaleFactor, pHeight * scaleFactor);
+		p.image(getSprite(6), pX, pY, getWidth() * scaleFactor, getHeight() * scaleFactor);
 	}
 }
