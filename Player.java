@@ -24,9 +24,6 @@ import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 
 public class Player extends Editable {
-	
-	//FIXME: temp
-	PApplet p;
 
 	// player fields
 	private File file;
@@ -149,10 +146,6 @@ public class Player extends Editable {
 		this.horizontalTunnel = false;
 
 		create();
-		
-		//FIXME: temp
-		this.p = p;
-
 	}
 
 	public void create() {
@@ -985,8 +978,6 @@ public class Player extends Editable {
 	}
 
 	public void physicsImpact(float[] impulses) {
-		p.print("impact");
-		
 		// find total impulse power
 		float total = 0;
 		for (float impulse : impulses) {

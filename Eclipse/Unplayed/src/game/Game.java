@@ -567,6 +567,7 @@ public class Game {
 			return 1; // 240 Hz ( 160 Hz to .. )
 	}
 
+
 //	public int getRemainingPuzzles() {
 //		return world.playerEndCount() - puzzlesCompleted;
 //	}
