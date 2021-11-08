@@ -393,7 +393,7 @@ public class Player extends Editable {
 		checkForGroundSlots(pos, vel, resetRotation);
 		checkForWallSlots(pos, vel, resetRotation);
 		checkForRoofSlots(pos, vel);
-		
+
 		if (av < 0.1) {
 			fixRotationOffset(angle, angleRounded, angleRemainder);
 		}
@@ -413,14 +413,13 @@ public class Player extends Editable {
 //			Vec2 physicsPosition = dynamicBody.getLocalCenter();
 
 //			destroy();
-			
+
+			float adjustedAngle = getAdjustedAngle(); // fitted into the 0-360 range
+
 			box2d.destroyBody(dynamicBody);
 			dynamicBody = null;
-			
-			createBody(newPos, getAdjustedAngle()); //-angleRounded);
-			
-			
-			
+
+			createBody(newPos, adjustedAngle); // -angleRounded);
 
 			PApplet.print("Angle: " + angle + ", Angle Rounded: " + angleRounded + ", New Angle: "
 					+ PApplet.degrees(dynamicBody.getAngle()) + "\n");
