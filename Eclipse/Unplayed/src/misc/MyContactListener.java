@@ -30,7 +30,7 @@ public class MyContactListener implements ContactListener {
 	@Override
 	public void beginContact(Contact contact) {
 
-		// reset variables
+		// reset fields
 		this.player = null;
 		this.tile = null;
 		this.event = null;
@@ -72,7 +72,7 @@ public class MyContactListener implements ContactListener {
 	@Override
 	public void endContact(Contact contact) {
 
-		// reset variables
+		// reset fields
 		this.player = null;
 		this.tile = null;
 		this.event = null;

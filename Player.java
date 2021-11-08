@@ -312,12 +312,14 @@ public class Player extends Editable {
 		// environment checking
 
 		// reset fields
-		tunnelChecking.clear();
-		verticalTunnel = false;
-		horizontalTunnel = false;
-		groundChecking.clear();
-		wallChecking.clear();
-		roofChecking.clear();
+		this.tunnelChecking.clear();
+		this.verticalTunnel = false;
+		this.horizontalTunnel = false;
+		this.groundChecking.clear();
+		this.wallChecking.clear();
+		this.roofChecking.clear();
+
+		this.stuck = false;
 
 		// check there are enough tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
@@ -351,6 +353,16 @@ public class Player extends Editable {
 		checkForWallSlots(pos, vel, resetRotation);
 		checkForRoofSlots(pos, vel);
 
+		if (resetRotation) {
+			fixRotationOffset(angle, angleRounded);
+		}
+
+	}
+
+	private void fixRotationOffset(float angle, float angleRounded) {
+		Vec2 newPos = getCenter();
+		newPos.x -= 0.25;
+		dynamicBody.setTransform(newPos, angleRounded);
 	}
 
 	private boolean checkTunnel(PVector pos) {
@@ -1078,7 +1090,7 @@ public class Player extends Editable {
 				graphics.rect(0, -getHeight() / 2, getWidth() / 2, getHeight());
 			}
 
-			if (showChecking) {// && stuck) {
+			if (showChecking && stuck) {
 				graphics.noStroke();
 				graphics.fill(255, 0, 0, 100);
 				graphics.rectMode(CENTER);
@@ -1088,7 +1100,7 @@ public class Player extends Editable {
 			graphics.popMatrix();
 		}
 
-		// draw tile checking logic
+		// draw tile checking logic, for debugging slots
 		if (showChecking) {
 			for (Tile t : sensorContacts) {
 				graphics.noStroke();
