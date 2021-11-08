@@ -353,14 +353,14 @@ public class Player extends Editable {
 		checkForWallSlots(pos, vel, resetRotation);
 		checkForRoofSlots(pos, vel);
 
-		if (resetRotation) {
-			fixRotationOffset(angle, angleRounded, angleRemainder);
-		}
+//		if (resetRotation) {
+		fixRotationOffset(angle, angleRounded, angleRemainder);
+//		}
 
 	}
 
 	private void fixRotationOffset(float angle, float angleRounded, float angleRemainder) {
-		if (angleRemainder > 0.001) {
+		if (dynamicBody.isFixedRotation() && angleRemainder > 0.001) {
 			Vec2 newPos = dynamicBody.getPosition();
 			newPos.y -= 0.25;
 			dynamicBody.setAngularVelocity(0);
