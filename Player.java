@@ -412,12 +412,12 @@ public class Player extends Editable {
 //
 //			Vec2 physicsPosition = dynamicBody.getLocalCenter();
 
-//			destroy();
+			destroy();
 			
-			box2d.destroyBody(dynamicBody);
-			dynamicBody = null;
+//			box2d.destroyBody(dynamicBody);
+//			dynamicBody = null;
 			
-			createBody(newPos, angleRounded+90);
+			createBody(newPos, angleRounded);
 			
 			
 			
