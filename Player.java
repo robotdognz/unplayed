@@ -78,6 +78,9 @@ public class Player extends Editable {
 	private Fixture roofFixture; // reference to the barrier fixture
 	public boolean touchingRoofBarrier; // is the player touching a roof barrier
 
+	// stuck checking
+	private boolean stuck; // is the player stuck in the environment
+
 	// movement / jumping
 	private float movementSpeed;
 	private float jumpPower; // the strength of the player's jump
@@ -144,6 +147,8 @@ public class Player extends Editable {
 		this.verticalTunnel = false;
 		this.horizontalTunnel = false;
 
+		this.stuck = false;
+
 		create();
 	}
 
@@ -170,7 +175,7 @@ public class Player extends Editable {
 			boxFixtureDef.shape = boxShape;
 			boxFixtureDef.density = density;
 			boxFixtureDef.friction = friction;
-			boxFixtureDef.userData = CollisionEnum.PLAYER_BODY; //"player body";
+			boxFixtureDef.userData = CollisionEnum.PLAYER_BODY; // "player body";
 			dynamicBody.createFixture(boxFixtureDef);
 
 			// sensor
@@ -179,7 +184,7 @@ public class Player extends Editable {
 			FixtureDef sensorFixtureDef = new FixtureDef();
 			sensorFixtureDef.shape = sensorShape;
 			sensorFixtureDef.isSensor = true;
-			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR; //"player sensor";
+			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR; // "player sensor";
 			this.dynamicBody.createFixture(sensorFixtureDef);
 
 //			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
@@ -201,7 +206,8 @@ public class Player extends Editable {
 	public void endGroundContact() {
 		this.groundContacts--;
 		// if the player has just left the ground and it wasn't because of a jump
-		//if (this.groundContacts == 0) { // alternate version from 2020 development, unknown purpose
+		// if (this.groundContacts == 0) { // alternate version from 2020 development,
+		// unknown purpose
 		if (this.groundContacts == 0 && !this.jumpTimer.isRunning()) {
 			groundTimer.start();
 		}
@@ -213,7 +219,8 @@ public class Player extends Editable {
 
 	public void endWallContact() {
 		this.wallContacts--;
-		//if (this.wallContacts == 0) { // alternate version from 2020 development, unknown purpose
+		// if (this.wallContacts == 0) { // alternate version from 2020 development,
+		// unknown purpose
 		if (this.wallContacts == 0 && !this.jumpTimer.isRunning()) {
 			wallTimer.start();
 		}
@@ -236,7 +243,7 @@ public class Player extends Editable {
 //	}
 
 	public void addEvent(Event event) {
-		//PApplet.print(event);
+		// PApplet.print(event);
 		events.add(event);
 	}
 
@@ -987,7 +994,7 @@ public class Player extends Editable {
 		// TODO: this doesn't work because if you jump in one spot at the same height,
 		// it stops the vibration
 		// could be improved by adding a short timer to it
-		
+
 //		// check if we already did one like this
 //		float impulseDifference = Math.abs(total - previousImpulse);
 //		if (previousImpulse != 0 && impulseDifference < 4) {
@@ -1069,6 +1076,13 @@ public class Player extends Editable {
 				graphics.fill(0, 255, 0, 100);
 				graphics.rectMode(CORNER);
 				graphics.rect(0, -getHeight() / 2, getWidth() / 2, getHeight());
+			}
+
+			if (showChecking) {// && stuck) {
+				graphics.noStroke();
+				graphics.fill(255, 0, 0, 100);
+				graphics.rectMode(CENTER);
+				graphics.rect(0, 0, getWidth() / 2, getHeight() / 2);
 			}
 
 			graphics.popMatrix();
