@@ -417,7 +417,7 @@ public class Player extends Editable {
 			box2d.destroyBody(dynamicBody);
 			dynamicBody = null;
 			
-			createBody(newPos, angle);
+			createBody(newPos, angleRounded+90);
 			
 			
 			
