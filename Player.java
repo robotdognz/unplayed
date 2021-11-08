@@ -79,7 +79,7 @@ public class Player extends Editable {
 	public boolean touchingRoofBarrier; // is the player touching a roof barrier
 
 	// stuck checking
-	private boolean stuck; // is the player stuck in the environment
+	private boolean stuck; // is the player stuck in the environment TODO: might not be needed
 
 	// movement / jumping
 	private float movementSpeed;
@@ -153,6 +153,47 @@ public class Player extends Editable {
 	}
 
 	public void create() {
+//		if (box2d != null) {
+//			float box2dW = box2d.scalarPixelsToWorld((getWidth() - 0.5f) / 2);
+//			float box2dH = box2d.scalarPixelsToWorld((getHeight() - 0.5f) / 2);
+//
+//			// body
+//			BodyDef bodyDef = new BodyDef();
+//			bodyDef.type = BodyType.DYNAMIC;
+//			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
+//			bodyDef.angle = -PApplet.radians(angle);
+//			bodyDef.userData = this;
+//			this.dynamicBody = box2d.createBody(bodyDef);
+//			this.dynamicBody.setFixedRotation(locked);
+//
+//			// shape
+//			PolygonShape boxShape = new PolygonShape();
+//			boxShape.setAsBox(box2dW, box2dH);
+//
+//			// fixture
+//			FixtureDef boxFixtureDef = new FixtureDef();
+//			boxFixtureDef.shape = boxShape;
+//			boxFixtureDef.density = density;
+//			boxFixtureDef.friction = friction;
+//			boxFixtureDef.userData = CollisionEnum.PLAYER_BODY; // "player body";
+//			dynamicBody.createFixture(boxFixtureDef);
+//
+//			// sensor
+//			CircleShape sensorShape = new CircleShape();
+//			sensorShape.m_radius = box2d.scalarPixelsToWorld(getWidth() * 2);
+//			FixtureDef sensorFixtureDef = new FixtureDef();
+//			sensorFixtureDef.shape = sensorShape;
+//			sensorFixtureDef.isSensor = true;
+//			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR; // "player sensor";
+//			this.dynamicBody.createFixture(sensorFixtureDef);
+//
+////			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
+//		}
+
+		createBody(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
+	}
+
+	private void createBody(Vec2 physicsPosition) {
 		if (box2d != null) {
 			float box2dW = box2d.scalarPixelsToWorld((getWidth() - 0.5f) / 2);
 			float box2dH = box2d.scalarPixelsToWorld((getHeight() - 0.5f) / 2);
@@ -160,7 +201,7 @@ public class Player extends Editable {
 			// body
 			BodyDef bodyDef = new BodyDef();
 			bodyDef.type = BodyType.DYNAMIC;
-			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
+			bodyDef.position.set(physicsPosition);
 			bodyDef.angle = -PApplet.radians(angle);
 			bodyDef.userData = this;
 			this.dynamicBody = box2d.createBody(bodyDef);
@@ -360,16 +401,25 @@ public class Player extends Editable {
 	}
 
 	private void fixRotationOffset(float angle, float angleRounded, float angleRemainder) {
+		if (dynamicBody.getLinearVelocity().x > 0.01 || dynamicBody.getLinearVelocity().y > 0.01) {
+			return;
+		}
 		if (dynamicBody.isFixedRotation() && angleRemainder > 0.001) {
 			Vec2 newPos = dynamicBody.getPosition();
 			newPos.y += 0.25; // positive values are upwards
 			dynamicBody.setAngularVelocity(0);
 			dynamicBody.setTransform(newPos, angleRounded);
 
+			Vec2 physicsPosition = dynamicBody.getLocalCenter();
+
+			destroy();
+			createBody(physicsPosition);
+
 			PApplet.print("Angle: " + angle + ", Angle Rounded: " + angleRounded + ", New Angle: "
 					+ dynamicBody.getAngle() + "\n");
 
-			// TODO: A lot of the problems I'm having could be caused by breaking the simulation.
+			// TODO: A lot of the problems I'm having could be caused by breaking the
+			// simulation.
 			// A recommended way to solve this is to destroy the body and make a new one at
 			// the same location. There are a few things to try here:
 			// Make the new body with the same position and velocity as the old one
