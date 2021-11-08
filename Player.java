@@ -384,19 +384,19 @@ public class Player extends Editable {
 			return;
 		}
 
-		if (av < 0.1) {
-			fixRotationOffset(angle, angleRounded, angleRemainder);
-		}
-
 		// run the algorithms
 		// if tunnel checking locks the player's rotation, the other algorithms
-		// shouldn't unlock it, that's what this variable is for
+		// shouldn't unlock it, that's what the resetRotation variable is for
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		boolean resetRotation = checkTunnel(pos);
 		checkForGroundSlots(pos, vel, resetRotation);
 		checkForWallSlots(pos, vel, resetRotation);
 		checkForRoofSlots(pos, vel);
+		
+		if (av < 0.1) {
+			fixRotationOffset(angle, angleRounded, angleRemainder);
+		}
 
 	}
 
