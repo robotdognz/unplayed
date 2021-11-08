@@ -354,15 +354,19 @@ public class Player extends Editable {
 		checkForRoofSlots(pos, vel);
 
 		if (resetRotation) {
-			fixRotationOffset(angle, angleRounded);
+			fixRotationOffset(angle, angleRounded, angleRemainder);
 		}
 
 	}
 
-	private void fixRotationOffset(float angle, float angleRounded) {
-		Vec2 newPos = getCenter();
-		newPos.x -= 0.25;
-		dynamicBody.setTransform(newPos, angleRounded);
+	private void fixRotationOffset(float angle, float angleRounded, float angleRemainder) {
+		if (angleRemainder > 0.001) {
+			Vec2 newPos = dynamicBody.getPosition();
+			newPos.x -= 0.25;
+			dynamicBody.setAngularVelocity(0);
+			dynamicBody.setLinearVelocity(new Vec2(0, 0));
+			dynamicBody.setTransform(newPos, angleRounded);
+		}
 	}
 
 	private boolean checkTunnel(PVector pos) {
