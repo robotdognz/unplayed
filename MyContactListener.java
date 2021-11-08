@@ -10,7 +10,6 @@ import game.Game;
 import game.Player;
 import objects.Event;
 import objects.Tile;
-import processing.core.PApplet;
 
 public class MyContactListener implements ContactListener {
 	Game game;
@@ -61,7 +60,7 @@ public class MyContactListener implements ContactListener {
 				} else if (userData == CollisionEnum.EVENT) { 
 					event = (Event) fixtureA.getBody().getUserData();
 
-				} else if (userData == CollisionEnum.ROOF) { 
+				} else if (userData == CollisionEnum.ROOF_BARRIER) { 
 					roofBarrier = true;
 
 				}
@@ -95,7 +94,7 @@ public class MyContactListener implements ContactListener {
 				} else if (userData == CollisionEnum.EVENT) {
 					event = (Event) fixtureB.getBody().getUserData();
 
-				} else if (userData == CollisionEnum.ROOF) {
+				} else if (userData == CollisionEnum.ROOF_BARRIER) {
 					roofBarrier = true;
 
 				}
@@ -169,7 +168,7 @@ public class MyContactListener implements ContactListener {
 				} else if (userData == CollisionEnum.WALL) {
 					wall = true;
 
-				} else if (userData == CollisionEnum.ROOF) {
+				} else if (userData == CollisionEnum.ROOF_BARRIER) {
 					roofBarrier = true;
 
 				}
@@ -202,7 +201,7 @@ public class MyContactListener implements ContactListener {
 				} else if (userData == CollisionEnum.WALL) {
 					wall = true;
 
-				} else if (userData == CollisionEnum.ROOF) {
+				} else if (userData == CollisionEnum.ROOF_BARRIER) {
 					roofBarrier = true;
 
 				}

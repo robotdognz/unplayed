@@ -873,7 +873,7 @@ public class Player extends Editable {
 		tempBarrierDef.shape = tempBarrierEdge;
 		tempBarrierDef.density = density;
 		tempBarrierDef.friction = friction;
-		tempBarrierDef.userData = "roof";
+		tempBarrierDef.userData = CollisionEnum.ROOF_BARRIER;
 		roofFixture = roofBarrier.createFixture(tempBarrierDef);
 	}
 
