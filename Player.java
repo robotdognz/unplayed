@@ -342,6 +342,8 @@ public class Player extends Editable {
 			destroyAllBarriers(true);
 			return;
 		}
+		
+		fixRotationOffset(angle, angleRounded, angleRemainder);
 
 		// run the algorithms
 		// if tunnel checking locks the player's rotation, the other algorithms
@@ -353,9 +355,6 @@ public class Player extends Editable {
 		checkForWallSlots(pos, vel, resetRotation);
 		checkForRoofSlots(pos, vel);
 
-//		if (resetRotation) {
-		fixRotationOffset(angle, angleRounded, angleRemainder);
-//		}
 
 	}
 

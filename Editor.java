@@ -220,7 +220,7 @@ public class Editor {
 				p.text("Velocity x:" + PApplet.nf(Math.abs(vel.x), 1, 2) + " y:" + PApplet.nf(Math.abs(vel.y), 1, 2),
 						p.width / 2, p.height - editorBottom.getHeight() - textSize * 9);
 				float angle = PApplet.degrees(game.player.dynamicBody.getAngle());
-				p.text("Angle:" + PApplet.nf(angle, 1, 2), p.width / 2,
+				p.text("Angle:" + PApplet.nf(angle, 1, 4), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 8);
 				p.text("ground: " + game.player.groundContacts + " wall: " + game.player.wallContacts, p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 7);
