@@ -406,14 +406,14 @@ public class Player extends Editable {
 		}
 		if (dynamicBody.isFixedRotation() && angleRemainder > 0.001) {
 			Vec2 newPos = dynamicBody.getPosition();
-			newPos.y += 0.25; // positive values are upwards
-			dynamicBody.setAngularVelocity(0);
-			dynamicBody.setTransform(newPos, angleRounded);
-
-			Vec2 physicsPosition = dynamicBody.getLocalCenter();
+//			newPos.y += 0.25; // positive values are upwards
+//			dynamicBody.setAngularVelocity(0);
+//			dynamicBody.setTransform(newPos, angleRounded);
+//
+//			Vec2 physicsPosition = dynamicBody.getLocalCenter();
 
 			destroy();
-			createBody(physicsPosition);
+			createBody(newPos);
 
 			PApplet.print("Angle: " + angle + ", Angle Rounded: " + angleRounded + ", New Angle: "
 					+ dynamicBody.getAngle() + "\n");
