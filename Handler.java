@@ -6,7 +6,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public abstract class Handler {
-	private PApplet p;
+	protected PApplet p;
 	protected TextureCache texture;
 	protected File datapath;
 
@@ -16,8 +16,11 @@ public abstract class Handler {
 	private PImage LOD32 = null;
 	private PImage LOD16 = null;
 
-	private int width;
-	private int height;
+	protected int width;
+	protected int height;
+
+	private float widthRenderRatio;
+	private float heightRenderRatio;
 
 	public Handler(PApplet p, TextureCache texture, File file, int width, int height) {
 		this.p = p;
@@ -34,6 +37,18 @@ public abstract class Handler {
 			LOD256.resize(256 * width, 256 * height);
 		} catch (Exception e) {
 			// set sprite to file not found image
+		}
+
+		// setup rendering ratios for use in the editor bottom scroll bar
+		if (width > height) {
+			heightRenderRatio = 1 / width;
+			widthRenderRatio = 1;
+		} else if (width < height) {
+			heightRenderRatio = 1;
+			widthRenderRatio = 1 / height;
+		} else {
+			widthRenderRatio = width;
+			heightRenderRatio = height;
 		}
 	}
 
@@ -80,8 +95,8 @@ public abstract class Handler {
 	}
 
 	public void draw(float pX, float pY, float size) {
-		// calculate how to scale the image so it appears in the scroll bar correctly
-		// and draw the scaled image
-		p.image(getSprite(6), pX, pY, width * size, height * size);
+		// calculate how to scale the image so it appears in the editor bottom scroll
+		// bar correctly and draw the scaled image
+		p.image(getSprite(6), pX, pY, widthRenderRatio * size, heightRenderRatio * size);
 	}
 }

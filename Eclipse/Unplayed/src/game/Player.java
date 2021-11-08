@@ -362,12 +362,18 @@ public class Player extends Editable {
 	private void fixRotationOffset(float angle, float angleRounded, float angleRemainder) {
 		if (dynamicBody.isFixedRotation() && angleRemainder > 0.001) {
 			Vec2 newPos = dynamicBody.getPosition();
-			newPos.y -= 0.25;
+			newPos.y += 0.25; // positive values are upwards
 			dynamicBody.setAngularVelocity(0);
-//			dynamicBody.setLinearVelocity(new Vec2(0, 0));
 			dynamicBody.setTransform(newPos, angleRounded);
-			
-			PApplet.print("Angle: " + angle + ", Angle Rounded: " + angleRounded + "New Angle: " + dynamicBody.getAngle());
+
+			PApplet.print("Angle: " + angle + ", Angle Rounded: " + angleRounded + ", New Angle: "
+					+ dynamicBody.getAngle() + "\n");
+
+			// TODO: A lot of the problems I'm having could be caused by breaking the simulation.
+			// A recommended way to solve this is to destroy the body and make a new one at
+			// the same location. There are a few things to try here:
+			// Make the new body with the same position and velocity as the old one
+			// Only make a new body when the player isn't moving
 		}
 	}
 
