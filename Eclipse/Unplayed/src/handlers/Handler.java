@@ -47,8 +47,8 @@ public abstract class Handler {
 			heightRenderRatio = 1;
 			widthRenderRatio = width / height;
 		} else {
-			widthRenderRatio = width;
-			heightRenderRatio = height;
+			widthRenderRatio = 1;
+			heightRenderRatio = 1;
 		}
 	}
 
