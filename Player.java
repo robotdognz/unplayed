@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.Iterator;
-
 import handlers.TextureCache;
 import handlers.TileHandler;
 import misc.CollisionEnum;

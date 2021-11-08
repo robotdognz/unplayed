@@ -3,7 +3,9 @@ package misc;
 public enum CollisionEnum {
 	PLAYER_BODY, PLAYER_SENSOR,
 
-	TILE, GROUND, WALL, ROOF_BARRIER,
+	TILE, GROUND, WALL, 
 	
-	EVENT
+	EVENT,
+	
+	ROOF_BARRIER
 }
