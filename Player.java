@@ -366,6 +366,8 @@ public class Player extends Editable {
 			dynamicBody.setAngularVelocity(0);
 //			dynamicBody.setLinearVelocity(new Vec2(0, 0));
 			dynamicBody.setTransform(newPos, angleRounded);
+			
+			PApplet.print("Angel: " + angle + ", Angle Rounded: " + angleRounded);
 		}
 	}
 
