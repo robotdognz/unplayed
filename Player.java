@@ -190,10 +190,10 @@ public class Player extends Editable {
 ////			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
 //		}
 
-		createBody(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
+		createBody(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2), angle);
 	}
 
-	private void createBody(Vec2 physicsPosition) {
+	private void createBody(Vec2 physicsPosition, float physicsAngle) {
 		if (box2d != null) {
 			float box2dW = box2d.scalarPixelsToWorld((getWidth() - 0.5f) / 2);
 			float box2dH = box2d.scalarPixelsToWorld((getHeight() - 0.5f) / 2);
@@ -202,7 +202,7 @@ public class Player extends Editable {
 			BodyDef bodyDef = new BodyDef();
 			bodyDef.type = BodyType.DYNAMIC;
 			bodyDef.position.set(physicsPosition);
-			bodyDef.angle = -PApplet.radians(angle);
+			bodyDef.angle = -PApplet.radians(physicsAngle);
 			bodyDef.userData = this;
 			this.dynamicBody = box2d.createBody(bodyDef);
 			this.dynamicBody.setFixedRotation(locked);
@@ -401,7 +401,7 @@ public class Player extends Editable {
 	}
 
 	private void fixRotationOffset(float angle, float angleRounded, float angleRemainder) {
-		if (dynamicBody.getLinearVelocity().x > 0.01 || dynamicBody.getLinearVelocity().y > 0.01) {
+		if (Math.abs(dynamicBody.getLinearVelocity().x) > 0.01 || Math.abs(dynamicBody.getLinearVelocity().y) > 0.01) {
 			return;
 		}
 		if (dynamicBody.isFixedRotation() && angleRemainder > 0.001) {
@@ -412,8 +412,15 @@ public class Player extends Editable {
 //
 //			Vec2 physicsPosition = dynamicBody.getLocalCenter();
 
-			destroy();
-			createBody(newPos);
+//			destroy();
+			
+			box2d.destroyBody(dynamicBody);
+			dynamicBody = null;
+			
+			createBody(newPos, angle);
+			
+			
+			
 
 			PApplet.print("Angle: " + angle + ", Angle Rounded: " + angleRounded + ", New Angle: "
 					+ dynamicBody.getAngle() + "\n");
