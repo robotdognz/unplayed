@@ -404,9 +404,9 @@ public class Player extends Editable {
 		if (Math.abs(dynamicBody.getLinearVelocity().x) > 0.01 || Math.abs(dynamicBody.getLinearVelocity().y) > 0.01) {
 			return;
 		}
-		if (dynamicBody.isFixedRotation() && angleRemainder > 0.001) {
+		if (dynamicBody.isFixedRotation() && angleRemainder > 0.01) {
 			Vec2 newPos = dynamicBody.getPosition();
-			Vec2 vel = dynamicBody.getLinearVelocity();
+//			Vec2 vel = dynamicBody.getLinearVelocity();
 //			newPos.y += 0.25; // positive values are upwards
 //			dynamicBody.setAngularVelocity(0);
 //			dynamicBody.setTransform(newPos, angleRounded);
@@ -421,7 +421,7 @@ public class Player extends Editable {
 			dynamicBody = null;
 
 			createBody(newPos, -angleRounded);
-			dynamicBody.setLinearVelocity(vel);
+//			dynamicBody.setLinearVelocity(vel);
 
 			PApplet.print("Angle: " + angle + ", Angle Rounded: " + angleRounded + ", New Angle: "
 					+ PApplet.degrees(dynamicBody.getAngle()) + "\n");
