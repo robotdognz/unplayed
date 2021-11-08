@@ -342,8 +342,10 @@ public class Player extends Editable {
 			destroyAllBarriers(true);
 			return;
 		}
-		
-		fixRotationOffset(angle, angleRounded, angleRemainder);
+
+		if (av < 0.1) {
+			fixRotationOffset(angle, angleRounded, angleRemainder);
+		}
 
 		// run the algorithms
 		// if tunnel checking locks the player's rotation, the other algorithms
@@ -355,7 +357,6 @@ public class Player extends Editable {
 		checkForWallSlots(pos, vel, resetRotation);
 		checkForRoofSlots(pos, vel);
 
-
 	}
 
 	private void fixRotationOffset(float angle, float angleRounded, float angleRemainder) {
@@ -363,7 +364,7 @@ public class Player extends Editable {
 			Vec2 newPos = dynamicBody.getPosition();
 			newPos.y -= 0.25;
 			dynamicBody.setAngularVelocity(0);
-			dynamicBody.setLinearVelocity(new Vec2(0, 0));
+//			dynamicBody.setLinearVelocity(new Vec2(0, 0));
 			dynamicBody.setTransform(newPos, angleRounded);
 		}
 	}
