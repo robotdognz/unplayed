@@ -417,13 +417,13 @@ public class Player extends Editable {
 			box2d.destroyBody(dynamicBody);
 			dynamicBody = null;
 			
-			createBody(newPos, angleRounded);
+			createBody(newPos, getAdjustedAngle()); //-angleRounded);
 			
 			
 			
 
 			PApplet.print("Angle: " + angle + ", Angle Rounded: " + angleRounded + ", New Angle: "
-					+ dynamicBody.getAngle() + "\n");
+					+ PApplet.degrees(dynamicBody.getAngle()) + "\n");
 
 			// TODO: A lot of the problems I'm having could be caused by breaking the
 			// simulation.
