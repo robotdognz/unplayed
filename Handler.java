@@ -41,11 +41,11 @@ public abstract class Handler {
 
 		// setup rendering ratios for use in the editor bottom scroll bar
 		if (width > height) {
-			heightRenderRatio = height / width;
+			heightRenderRatio = (float) height / width;
 			widthRenderRatio = 1;
 		} else if (width < height) {
 			heightRenderRatio = 1;
-			widthRenderRatio = width / height;
+			widthRenderRatio = (float) width / height;
 		} else {
 			widthRenderRatio = 1;
 			heightRenderRatio = 1;
