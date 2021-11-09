@@ -7,7 +7,7 @@ import java.util.HashSet;
 import org.jbox2d.common.Vec2;
 
 import game.Game;
-import game.Player;
+import game.player.Player;
 import handlers.TextureCache;
 import objects.Event;
 import objects.Rectangle;

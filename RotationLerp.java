@@ -1,0 +1,30 @@
+package game.player;
+
+import processing.core.PApplet;
+
+public class RotationLerp {
+	private float oldAngle;
+	private float newAngle;
+
+	private boolean isFinished = false;
+	private float lerpAmount;
+
+	public RotationLerp(float oldAngle, float newAngle) {
+		this.oldAngle = oldAngle;
+		this.newAngle = newAngle;
+
+		this.lerpAmount = 0.5f;
+	}
+
+	public float getAngle() {
+		oldAngle = PApplet.lerp(oldAngle, newAngle, lerpAmount);
+		if (oldAngle == newAngle) {
+			this.isFinished = true;
+		}
+		return oldAngle;
+	}
+
+	public boolean isFinished() {
+		return isFinished;
+	}
+}

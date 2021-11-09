@@ -1,4 +1,4 @@
-package game;
+package game.player;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -81,6 +81,9 @@ public class Player extends Editable {
 	// stuck checking
 	private boolean stuck; // is the player stuck in the environment TODO: might not be needed
 
+	// rotation snapping
+	private RotationLerp rotationLerp;
+
 	// movement / jumping
 	private float movementSpeed;
 	private float jumpPower; // the strength of the player's jump
@@ -89,7 +92,7 @@ public class Player extends Editable {
 	private boolean horizontalTunnel;
 //	private Vec2 previousPosition; // last player location
 
-	Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
+	public Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.file = tile.getFile();
 		this.setAngle(tile.getAngle());
@@ -153,43 +156,6 @@ public class Player extends Editable {
 	}
 
 	public void create() {
-//		if (box2d != null) {
-//			float box2dW = box2d.scalarPixelsToWorld((getWidth() - 0.5f) / 2);
-//			float box2dH = box2d.scalarPixelsToWorld((getHeight() - 0.5f) / 2);
-//
-//			// body
-//			BodyDef bodyDef = new BodyDef();
-//			bodyDef.type = BodyType.DYNAMIC;
-//			bodyDef.position.set(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2));
-//			bodyDef.angle = -PApplet.radians(angle);
-//			bodyDef.userData = this;
-//			this.dynamicBody = box2d.createBody(bodyDef);
-//			this.dynamicBody.setFixedRotation(locked);
-//
-//			// shape
-//			PolygonShape boxShape = new PolygonShape();
-//			boxShape.setAsBox(box2dW, box2dH);
-//
-//			// fixture
-//			FixtureDef boxFixtureDef = new FixtureDef();
-//			boxFixtureDef.shape = boxShape;
-//			boxFixtureDef.density = density;
-//			boxFixtureDef.friction = friction;
-//			boxFixtureDef.userData = CollisionEnum.PLAYER_BODY; // "player body";
-//			dynamicBody.createFixture(boxFixtureDef);
-//
-//			// sensor
-//			CircleShape sensorShape = new CircleShape();
-//			sensorShape.m_radius = box2d.scalarPixelsToWorld(getWidth() * 2);
-//			FixtureDef sensorFixtureDef = new FixtureDef();
-//			sensorFixtureDef.shape = sensorShape;
-//			sensorFixtureDef.isSensor = true;
-//			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR; // "player sensor";
-//			this.dynamicBody.createFixture(sensorFixtureDef);
-//
-////			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
-//		}
-
 		createBody(box2d.coordPixelsToWorld(getX() + getWidth() / 2, getY() + getHeight() / 2), angle);
 	}
 
@@ -216,7 +182,7 @@ public class Player extends Editable {
 			boxFixtureDef.shape = boxShape;
 			boxFixtureDef.density = density;
 			boxFixtureDef.friction = friction;
-			boxFixtureDef.userData = CollisionEnum.PLAYER_BODY; // "player body";
+			boxFixtureDef.userData = CollisionEnum.PLAYER_BODY;
 			dynamicBody.createFixture(boxFixtureDef);
 
 			// sensor
@@ -225,7 +191,7 @@ public class Player extends Editable {
 			FixtureDef sensorFixtureDef = new FixtureDef();
 			sensorFixtureDef.shape = sensorShape;
 			sensorFixtureDef.isSensor = true;
-			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR; // "player sensor";
+			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR;
 			this.dynamicBody.createFixture(sensorFixtureDef);
 
 //			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
@@ -379,7 +345,7 @@ public class Player extends Editable {
 		float angle = PApplet.degrees(dynamicBody.getAngle());
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
-		if (angleRemainder >= 3) {
+		if (angleRemainder >= 45) { // 3 TODO: play with this value
 			destroyAllBarriers(true);
 			return;
 		}
@@ -394,33 +360,31 @@ public class Player extends Editable {
 		checkForWallSlots(pos, vel, resetRotation);
 		checkForRoofSlots(pos, vel);
 
-//		if (av < 0.1) {
-		fixRotationOffset(angle, angleRounded, angleRemainder);
-//		}
-
+		fixRotationOffset(angle, angleRemainder);
 	}
 
-	private void fixRotationOffset(float angle, float angleRounded, float angleRemainder) {
-//		if (Math.abs(dynamicBody.getLinearVelocity().x) > 0.01 || Math.abs(dynamicBody.getLinearVelocity().y) > 0.01) {
-//			return;
-//		}
+	private void fixRotationOffset(float angle, float angleRemainder) {
+
 		if (dynamicBody.isFixedRotation() && angleRemainder > 0.0001) {
 			Vec2 newPos = dynamicBody.getPosition();
 			Vec2 vel = dynamicBody.getLinearVelocity();
 
-			float adjustedAngle = getAdjustedAngle(); // fitted into the 0-360 range
+			float adjustedAngle = getAdjustedAngle(); // fitted into the 0-360 range to prevent large values
 
 			// destroy the old player
 			box2d.destroyBody(dynamicBody);
 			dynamicBody = null;
 
 			// create a new one with the same attributes and the correct angle
-			createBody(newPos, adjustedAngle); //-angleRounded);
+			createBody(newPos, adjustedAngle);
 			dynamicBody.setAngularVelocity(0);
 			dynamicBody.setFixedRotation(true);
 			dynamicBody.setLinearVelocity(vel);
 
-			PApplet.print("Angle: " + angle + ", Angle Rounded: " + angleRounded + ", New Angle: "
+			rotationLerp = new RotationLerp(angle, adjustedAngle);
+
+			// TODO: remove this
+			PApplet.print("Angle: " + angle + ", Angle Rounded: " + adjustedAngle + ", New Angle: "
 					+ PApplet.degrees(dynamicBody.getAngle()) + "\n");
 
 		}
@@ -1095,7 +1059,7 @@ public class Player extends Editable {
 		return file;
 	}
 
-	void step() {
+	public void step() {
 		vibeFrame = false; // clear vibeFrame
 
 		// check all the events the player is colliding with
@@ -1129,6 +1093,14 @@ public class Player extends Editable {
 			graphics.pushMatrix();
 			graphics.imageMode(CENTER);
 			graphics.translate(pos.x, pos.y);
+
+			if (rotationLerp != null) {
+				a = rotationLerp.getAngle();
+				if(rotationLerp.isFinished()) {
+					rotationLerp = null;
+				}
+			}
+
 			graphics.rotate(-a);
 
 			if (showChecking && dynamicBody.isFixedRotation()) {

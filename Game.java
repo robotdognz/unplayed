@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import camera.Camera;
 import editor.Editor;
+import game.player.Player;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.MyContactListener;

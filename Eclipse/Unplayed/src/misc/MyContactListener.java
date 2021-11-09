@@ -6,7 +6,7 @@ import org.jbox2d.collision.Manifold;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.contacts.Contact;
 import game.Game;
-import game.Player;
+import game.player.Player;
 import objects.Event;
 import objects.Tile;
 
