@@ -387,6 +387,7 @@ public class Player extends Editable {
 			// TODO: remove this
 			PApplet.print("Angle: " + angle + ", Angle Rounded: " + adjustedAngle + ", New Angle: "
 					+ PApplet.degrees(dynamicBody.getAngle()) + "\n");
+			PApplet.print("AngleOld: " + adjustedAngleNR + ", AngleNew: " + adjustedAngle + "\n");
 
 		}
 	}
@@ -1097,7 +1098,7 @@ public class Player extends Editable {
 
 			if (rotationLerp != null) {
 				a = -PApplet.radians(rotationLerp.getAngle());
-				if(rotationLerp.isFinished()) {
+				if (rotationLerp.isFinished()) {
 					rotationLerp = null;
 				}
 			}
@@ -1263,7 +1264,7 @@ public class Player extends Editable {
 
 		return playerAngle;
 	}
-	
+
 	public float getAdjustedAngleNonRounded() {
 		float playerAngle = -dynamicBody.getAngle(); // get angle
 		playerAngle = PApplet.degrees(playerAngle); // convert to degrees
