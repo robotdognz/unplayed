@@ -381,7 +381,7 @@ public class Player extends Editable {
 			dynamicBody.setFixedRotation(true);
 			dynamicBody.setLinearVelocity(vel);
 
-			rotationLerp = new RotationLerp(angle, adjustedAngle);
+			rotationLerp = new RotationLerp(-angle, adjustedAngle);
 
 			// TODO: remove this
 			PApplet.print("Angle: " + angle + ", Angle Rounded: " + adjustedAngle + ", New Angle: "
