@@ -371,6 +371,7 @@ public class Player extends Editable {
 
 			float oldAngle = -dynamicBody.getAngle(); // get angle
 			oldAngle = PApplet.degrees(oldAngle); // convert to degrees
+			oldAngle = getAdjustedAngleBasic(false);
 
 			float adjustedAngle = getAdjustedAngle(); // fitted into the 0-360 range to prevent large values
 //			float adjustedAngleNR = getAdjustedAngleNonRounded();
@@ -388,8 +389,8 @@ public class Player extends Editable {
 //			float newAngle = -dynamicBody.getAngle(); // get angle
 //			newAngle = PApplet.degrees(newAngle); // convert to degrees
 //			newAngle = Math.round(newAngle / 90) * 90; // round to nearest 90
-			
-			float newAngle = getAdjustedAngleBasic();
+
+			float newAngle = getAdjustedAngleBasic(true);
 
 //			if (oldAngle < 0 && newAngle > 0) {
 //				newAngle = -newAngle; // hacky shit TODO: make this whole system better
@@ -1278,10 +1279,12 @@ public class Player extends Editable {
 		return playerAngle;
 	}
 
-	public float getAdjustedAngleBasic() {
+	public float getAdjustedAngleBasic(boolean round) {
 		float playerAngle = -dynamicBody.getAngle(); // get angle
 		playerAngle = PApplet.degrees(playerAngle); // convert to degrees
-		playerAngle = Math.round(playerAngle / 90) * 90; // round to nearest 90
+		if (round) {
+			playerAngle = Math.round(playerAngle / 90) * 90; // round to nearest 90
+		}
 
 		// get it into the 360 range
 		while (Math.abs(playerAngle) > 270) {
