@@ -417,6 +417,7 @@ public class Player extends Editable {
 			// create a new one with the same attributes and the correct angle
 			createBody(newPos, -angleRounded);
 			dynamicBody.setAngularVelocity(0);
+			dynamicBody.setFixedRotation(true);
 			dynamicBody.setLinearVelocity(vel);
 
 			PApplet.print("Angle: " + angle + ", Angle Rounded: " + angleRounded + ", New Angle: "
