@@ -394,44 +394,34 @@ public class Player extends Editable {
 		checkForWallSlots(pos, vel, resetRotation);
 		checkForRoofSlots(pos, vel);
 
-		if (av < 0.1) {
-			fixRotationOffset(angle, angleRounded, angleRemainder);
-		}
+//		if (av < 0.1) {
+		fixRotationOffset(angle, angleRounded, angleRemainder);
+//		}
 
 	}
 
 	private void fixRotationOffset(float angle, float angleRounded, float angleRemainder) {
-		if (Math.abs(dynamicBody.getLinearVelocity().x) > 0.01 || Math.abs(dynamicBody.getLinearVelocity().y) > 0.01) {
-			return;
-		}
-		if (dynamicBody.isFixedRotation() && angleRemainder > 0.01) {
+//		if (Math.abs(dynamicBody.getLinearVelocity().x) > 0.01 || Math.abs(dynamicBody.getLinearVelocity().y) > 0.01) {
+//			return;
+//		}
+		if (dynamicBody.isFixedRotation() && angleRemainder > 0.0001) {
 			Vec2 newPos = dynamicBody.getPosition();
-//			Vec2 vel = dynamicBody.getLinearVelocity();
-//			newPos.y += 0.25; // positive values are upwards
-//			dynamicBody.setAngularVelocity(0);
-//			dynamicBody.setTransform(newPos, angleRounded);
-//
-//			Vec2 physicsPosition = dynamicBody.getLocalCenter();
-
-//			destroy();
+			Vec2 vel = dynamicBody.getLinearVelocity();
 
 //			float adjustedAngle = getAdjustedAngle(); // fitted into the 0-360 range
 
+			// destroy the old player
 			box2d.destroyBody(dynamicBody);
 			dynamicBody = null;
 
+			// create a new one with the same attributes and the correct angle
 			createBody(newPos, -angleRounded);
-//			dynamicBody.setLinearVelocity(vel);
+			dynamicBody.setAngularVelocity(0);
+			dynamicBody.setLinearVelocity(vel);
 
 			PApplet.print("Angle: " + angle + ", Angle Rounded: " + angleRounded + ", New Angle: "
 					+ PApplet.degrees(dynamicBody.getAngle()) + "\n");
 
-			// TODO: A lot of the problems I'm having could be caused by breaking the
-			// simulation.
-			// A recommended way to solve this is to destroy the body and make a new one at
-			// the same location. There are a few things to try here:
-			// Make the new body with the same position and velocity as the old one
-			// Only make a new body when the player isn't moving
 		}
 	}
 
