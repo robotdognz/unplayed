@@ -388,7 +388,7 @@ public class Player extends Editable {
 			newAngle = PApplet.degrees(newAngle); // convert to degrees
 			newAngle = Math.round(newAngle / 90) * 90; // round to nearest 90
 
-			rotationLerp = new RotationLerp(-angle, newAngle);
+			rotationLerp = new RotationLerp(angle, newAngle);
 
 			// TODO: remove this
 			PApplet.print("Angle: " + -angle + ", Angle Rounded: " + adjustedAngle + ", New Angle: "
