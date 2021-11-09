@@ -399,7 +399,7 @@ public class Player extends Editable {
 			rotationLerp = new RotationLerp(oldAngle, newAngle);
 
 			// TODO: remove this
-			PApplet.print("Angle: " + oldAngle + ", Angle Rounded: " + adjustedAngle + ", New Angle: "
+			PApplet.print("Angle: " + angle + ", Angle Rounded: " + adjustedAngle + ", New Angle: "
 					+ PApplet.degrees(dynamicBody.getAngle()) + "\n");
 			PApplet.print("AngleOld: " + oldAngle + ", AngleNew: " + newAngle + "\n");
 
@@ -1293,6 +1293,11 @@ public class Player extends Editable {
 			} else {
 				playerAngle += 360;
 			}
+		}
+
+		// make sure it's positive
+		if (playerAngle < 0) {
+			playerAngle += 360;
 		}
 
 		return playerAngle;
