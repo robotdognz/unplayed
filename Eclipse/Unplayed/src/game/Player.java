@@ -408,14 +408,14 @@ public class Player extends Editable {
 			Vec2 newPos = dynamicBody.getPosition();
 			Vec2 vel = dynamicBody.getLinearVelocity();
 
-//			float adjustedAngle = getAdjustedAngle(); // fitted into the 0-360 range
+			float adjustedAngle = getAdjustedAngle(); // fitted into the 0-360 range
 
 			// destroy the old player
 			box2d.destroyBody(dynamicBody);
 			dynamicBody = null;
 
 			// create a new one with the same attributes and the correct angle
-			createBody(newPos, -angleRounded);
+			createBody(newPos, adjustedAngle); //-angleRounded);
 			dynamicBody.setAngularVelocity(0);
 			dynamicBody.setFixedRotation(true);
 			dynamicBody.setLinearVelocity(vel);
