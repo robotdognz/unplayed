@@ -385,6 +385,9 @@ public class Player extends Editable {
 
 
 			float newAngle = getAdjustedAngleBasic(true);
+			if(oldAngle > 180 && newAngle < 180) {
+				newAngle += 360;
+			}
 
 
 			rotationLerp = new RotationLerp(oldAngle, newAngle);
@@ -1287,7 +1290,7 @@ public class Player extends Editable {
 		}
 
 		// make sure it's positive
-		if (playerAngle <= 0) {
+		if (playerAngle < 0) {
 			playerAngle += 360;
 		}
 
