@@ -385,13 +385,15 @@ public class Player extends Editable {
 			dynamicBody.setFixedRotation(true);
 			dynamicBody.setLinearVelocity(vel);
 
-			float newAngle = -dynamicBody.getAngle(); // get angle
-			newAngle = PApplet.degrees(newAngle); // convert to degrees
-			newAngle = Math.round(newAngle / 90) * 90; // round to nearest 90
+//			float newAngle = -dynamicBody.getAngle(); // get angle
+//			newAngle = PApplet.degrees(newAngle); // convert to degrees
+//			newAngle = Math.round(newAngle / 90) * 90; // round to nearest 90
+			
+			float newAngle = getAdjustedAngleBasic();
 
-			if (oldAngle < 0 && newAngle > 0) {
-				newAngle = -newAngle; // hacky shit TODO: make this whole system better
-			}
+//			if (oldAngle < 0 && newAngle > 0) {
+//				newAngle = -newAngle; // hacky shit TODO: make this whole system better
+//			}
 
 			rotationLerp = new RotationLerp(oldAngle, newAngle);
 
@@ -1276,10 +1278,10 @@ public class Player extends Editable {
 		return playerAngle;
 	}
 
-	public float getAdjustedAngleNonRounded() {
+	public float getAdjustedAngleBasic() {
 		float playerAngle = -dynamicBody.getAngle(); // get angle
 		playerAngle = PApplet.degrees(playerAngle); // convert to degrees
-//		playerAngle = Math.round(playerAngle / 90) * 90; // round to nearest 90
+		playerAngle = Math.round(playerAngle / 90) * 90; // round to nearest 90
 
 		// get it into the 360 range
 		while (Math.abs(playerAngle) > 270) {
@@ -1288,11 +1290,6 @@ public class Player extends Editable {
 			} else {
 				playerAngle += 360;
 			}
-		}
-
-		// make sure it's positive
-		if (playerAngle < 0) {
-			playerAngle += 360;
 		}
 
 		return playerAngle;
