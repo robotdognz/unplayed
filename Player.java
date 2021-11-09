@@ -370,6 +370,7 @@ public class Player extends Editable {
 			Vec2 vel = dynamicBody.getLinearVelocity();
 
 			float adjustedAngle = getAdjustedAngle(); // fitted into the 0-360 range to prevent large values
+			float adjustedAngleNR = getAdjustedAngleNonRounded();
 
 			// destroy the old player
 			box2d.destroyBody(dynamicBody);
@@ -381,7 +382,7 @@ public class Player extends Editable {
 			dynamicBody.setFixedRotation(true);
 			dynamicBody.setLinearVelocity(vel);
 
-			rotationLerp = new RotationLerp(-angle, adjustedAngle);
+			rotationLerp = new RotationLerp(adjustedAngleNR, adjustedAngle);
 
 			// TODO: remove this
 			PApplet.print("Angle: " + angle + ", Angle Rounded: " + adjustedAngle + ", New Angle: "
@@ -1245,6 +1246,28 @@ public class Player extends Editable {
 		float playerAngle = -dynamicBody.getAngle(); // get angle
 		playerAngle = PApplet.degrees(playerAngle); // convert to degrees
 		playerAngle = Math.round(playerAngle / 90) * 90; // round to nearest 90
+
+		// get it into the 360 range
+		while (Math.abs(playerAngle) > 270) {
+			if (playerAngle > 0) {
+				playerAngle -= 360;
+			} else {
+				playerAngle += 360;
+			}
+		}
+
+		// make sure it's positive
+		if (playerAngle < 0) {
+			playerAngle += 360;
+		}
+
+		return playerAngle;
+	}
+	
+	public float getAdjustedAngleNonRounded() {
+		float playerAngle = -dynamicBody.getAngle(); // get angle
+		playerAngle = PApplet.degrees(playerAngle); // convert to degrees
+//		playerAngle = Math.round(playerAngle / 90) * 90; // round to nearest 90
 
 		// get it into the 360 range
 		while (Math.abs(playerAngle) > 270) {
