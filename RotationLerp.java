@@ -18,7 +18,7 @@ public class RotationLerp {
 
 	public float getAngle() {
 		oldAngle = PApplet.lerp(oldAngle, newAngle, lerpAmount);
-		if (oldAngle == newAngle) {
+		if (Math.abs(oldAngle-newAngle) < 0.001) {
 			this.isFinished = true;
 		}
 		return oldAngle;

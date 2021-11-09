@@ -1095,7 +1095,7 @@ public class Player extends Editable {
 			graphics.translate(pos.x, pos.y);
 
 			if (rotationLerp != null) {
-				a = rotationLerp.getAngle();
+				a = PApplet.radians(rotationLerp.getAngle());
 				if(rotationLerp.isFinished()) {
 					rotationLerp = null;
 				}
