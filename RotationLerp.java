@@ -13,12 +13,12 @@ public class RotationLerp {
 		this.oldAngle = oldAngle;
 		this.newAngle = newAngle;
 
-		this.lerpAmount = 0.3f;
+		this.lerpAmount = 0.4f;
 	}
 
 	public float getAngle() {
 		oldAngle = PApplet.lerp(oldAngle, newAngle, lerpAmount);
-		if (Math.abs(oldAngle-newAngle) < 0.0001) {
+		if (Math.abs(oldAngle-newAngle) < 0.001) {
 			this.isFinished = true;
 		}
 		return oldAngle;
