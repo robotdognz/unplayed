@@ -264,6 +264,9 @@ public class Player extends Editable {
 		groundTimer.deltaStep(delta);
 		wallTimer.deltaStep(delta);
 		boostTimer.deltaStep(delta);
+		if(rotationSmooth != null) {
+			rotationSmooth.step();
+		}
 
 		// run checks
 		checkJumps();
