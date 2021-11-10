@@ -421,7 +421,7 @@ public class Game {
 	public void step(float deltaTime) {
 		// step player non-physics logic
 		if (player != null) {
-			player.step();
+			player.step(deltaTime);
 		}
 
 		// step physics

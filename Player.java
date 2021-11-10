@@ -264,9 +264,6 @@ public class Player extends Editable {
 		groundTimer.deltaStep(delta);
 		wallTimer.deltaStep(delta);
 		boostTimer.deltaStep(delta);
-		if(rotationSmooth != null) {
-			rotationSmooth.step();
-		}
 
 		// run checks
 		checkJumps();
@@ -1072,8 +1069,12 @@ public class Player extends Editable {
 		return file;
 	}
 
-	public void step() {
+	public void step(float deltaTime) {
 		vibeFrame = false; // clear vibeFrame
+		
+		if(rotationSmooth != null) {
+			rotationSmooth.deltaStep(deltaTime);
+		}
 
 		// check all the events the player is colliding with
 		try {
