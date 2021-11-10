@@ -82,7 +82,7 @@ public class Player extends Editable {
 	private boolean stuck; // is the player stuck in the environment TODO: might not be needed
 
 	// rotation snapping
-	private RotationLerp rotationLerp;
+	private RotationSmooth rotationSmooth;
 
 	// movement / jumping
 	private float movementSpeed;
@@ -390,7 +390,7 @@ public class Player extends Editable {
 			}
 
 
-			rotationLerp = new RotationLerp(oldAngle, newAngle);
+			rotationSmooth = new RotationSmooth(oldAngle, newAngle);
 
 			// TODO: remove this
 			PApplet.print("Angle: " + angle + ", Angle Rounded: " + adjustedAngle + ", New Angle: "
@@ -1104,10 +1104,10 @@ public class Player extends Editable {
 			graphics.imageMode(CENTER);
 			graphics.translate(pos.x, pos.y);
 
-			if (rotationLerp != null) {
-				a = -PApplet.radians(rotationLerp.getAngle());
-				if (rotationLerp.isFinished()) {
-					rotationLerp = null;
+			if (rotationSmooth != null) {
+				a = -PApplet.radians(rotationSmooth.getAngle());
+				if (rotationSmooth.isFinished()) {
+					rotationSmooth = null;
 				}
 			}
 
