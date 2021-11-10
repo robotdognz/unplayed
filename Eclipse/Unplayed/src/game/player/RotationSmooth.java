@@ -14,7 +14,7 @@ public class RotationSmooth {
 
 		float difference = Math.abs(oldAngle - newAngle);
 
-		float animationLength = difference / 350;// 0.1f; // portion of a second it takes the animation to finish
+		float animationLength = difference / 500;// portion of a second it takes the animation to finish
 
 		if (newAngle < oldAngle) {
 			difference = -difference;
