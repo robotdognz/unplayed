@@ -33,7 +33,7 @@ public class RotationSmooth {
 	public void deltaStep(float deltaTime) {
 		oldAngle += stepSize;
 
-		if (oldAngle >= newAngle) {
+		if (Math.abs(oldAngle - newAngle) <= 3) { // arbitrary number
 			isFinished = true;
 		}
 
