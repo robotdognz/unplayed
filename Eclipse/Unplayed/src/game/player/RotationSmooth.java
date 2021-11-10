@@ -7,7 +7,11 @@ public class RotationSmooth {
 	private boolean isFinished = false;
 //	private float lerpAmount;
 
+	private int steps;
+	private int step;
 	private float stepSize;
+
+	// TODO: this system needs to use delta
 
 	public RotationSmooth(float oldAngle, float newAngle) {
 		this.oldAngle = oldAngle;
@@ -20,7 +24,10 @@ public class RotationSmooth {
 			difference = -difference;
 		}
 
-		this.stepSize = difference * 0.25f;
+		this.step = 0;
+		this.steps = 3;
+
+		this.stepSize = difference * (1 / (float) steps);
 	}
 
 	public float getAngle() {
@@ -30,7 +37,8 @@ public class RotationSmooth {
 //		}
 
 		oldAngle += stepSize;
-		if (oldAngle == newAngle) {
+		step += 1;
+		if (step == steps) {
 			isFinished = true;
 		}
 
