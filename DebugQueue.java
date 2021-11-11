@@ -41,7 +41,7 @@ public class DebugQueue {
 //				j += m.drawMessage(p, p.width / 2, y + textSize * j);
 //			}
 
-			for (int i = messageQueue.size() - 1; i >= 0; i++) {
+			for (int i = messageQueue.size() - 1; i >= 0; i--) {
 				j += messageQueue.get(i).drawMessage(p, p.width / 2, y + textSize * j);
 			}
 		}
