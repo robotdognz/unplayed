@@ -51,9 +51,11 @@ public class DebugQueue {
 //			float messageHeight = editorTop.getHeight() + textSize;
 			int i = 0;
 			for (DebugMessage m : messageQueue) {
+				
+				i += m.drawMessage(p, p.width / 2, y + textSize * i);
 
-				p.text(m.getMessage(), p.width / 2, y + textSize * i);
-				i += 1 + m.getMessage().split(System.getProperty("line.separator")).length;
+//				p.text(m.getMessage(), p.width / 2, y + textSize * i);
+//				i += 1 + m.getMessage().split(System.getProperty("line.separator")).length;
 			}
 		}
 	}

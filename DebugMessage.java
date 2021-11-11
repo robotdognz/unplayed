@@ -1,5 +1,7 @@
 package editor;
 
+import processing.core.PApplet;
+
 public class DebugMessage {
 	private String message;
 	private float time;
@@ -18,7 +20,12 @@ public class DebugMessage {
 			return true; // is finished
 		}
 
-		return false; //is still going
+		return false; // is still going
+	}
+
+	public int drawMessage(PApplet p, float x, float y) {
+		p.text(message, p.width / 2, y);
+		return 1 + message.split(System.getProperty("line.separator")).length;
 	}
 
 	public float getTime() {

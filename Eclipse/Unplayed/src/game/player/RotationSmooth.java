@@ -2,6 +2,7 @@ package game.player;
 
 import org.jbox2d.common.Vec2;
 import editor.DebugQueue;
+import processing.core.PApplet;
 
 public class RotationSmooth {
 	private float currentAngle;
@@ -39,10 +40,11 @@ public class RotationSmooth {
 		// calculate the size of the step to be taken each frame
 		this.stepSize = difference / animationLength;
 
-		String output = "Old Angle: " + oldAngle + ", New Angle: " + newAngle + "\n" + "Velocity: " + absVelocity
-				+ ", Animation Length: " + animationLength;
+		String output = "Old Angle: " + PApplet.nf(oldAngle, 0, 1) + ", New Angle: " + PApplet.nf(newAngle, 0, 1) + "\n"
+				+ "Velocity: " + PApplet.nf(absVelocity, 0, 3) + ", Animation Length: "
+				+ PApplet.nf(animationLength, 0, 3);
 
-		DebugQueue.pushMessage(output, 3);
+		DebugQueue.pushMessage(output, 5);
 	}
 
 	public void deltaStep(float deltaTime) {
