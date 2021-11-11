@@ -383,13 +383,11 @@ public class Player extends Editable {
 			dynamicBody.setFixedRotation(true);
 			dynamicBody.setLinearVelocity(vel);
 
-
+			// create a rotationSmooth to smooth over the angle adjustment
 			float newAngle = getAdjustedAngleBasic(true);
 			if(oldAngle > 180 && newAngle < 180) {
 				newAngle += 360;
 			}
-
-
 			rotationSmooth = new RotationSmooth(oldAngle, newAngle);
 
 			// TODO: remove this
