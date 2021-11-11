@@ -252,11 +252,16 @@ public class Editor {
 				float messageHeight = editorTop.getHeight() + textSize;
 				int i = 0;
 				for (String s : messages) {
-					p.text(s, p.width / 2, messageHeight + textSize * i);
-					i++;
+//					int lines = (int) Math.ceil(s.length() / 20);
+//					if (lines > 1) {
+//						
+//					} else {
+						p.text(s, p.width / 2, messageHeight + textSize * i);
+						i++;
+//					}
 				}
 			}
-			
+
 			DebugMessage.step(deltaTime);
 		}
 	}

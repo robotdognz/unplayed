@@ -41,11 +41,8 @@ public class RotationSmooth {
 		// calculate the size of the step to be taken each frame
 		this.stepSize = difference / animationLength;
 
-		String output = "Old Angle: " + oldAngle + ", New Angle: " + newAngle;
-
-		DebugMessage.pushMessage(output);
-
-		output = "Velocity: " + absVelocity + ", Animation Length: " + animationLength;
+		String output = "Old Angle: " + oldAngle + ", New Angle: " + newAngle + "\n" + "Velocity: " + absVelocity
+				+ ", Animation Length: " + animationLength;
 
 		DebugMessage.pushMessage(output);
 
