@@ -1,31 +1,32 @@
 package editor;
 
-import java.util.PriorityQueue;
-
 public class DebugMessage {
-	static PriorityQueue<String> messageQueue = new PriorityQueue<String>();
-	
-	static float messageLength = 5f;
-	static float currentMessage = 0;
-	
-	public static void pushMessage(String message) {
-		messageQueue.add(message);
+	private String message;
+	private float time;
+	private float duration;
+
+	public DebugMessage(String message, float duration) {
+		this.message = message;
+		this.time = 0;
+		this.duration = duration;
 	}
-	
-	protected static void step(float deltaTime) {
-		if(messageQueue.size() == 0) {
-			return;
+
+	public boolean step(float deltaTime) {
+		this.time += deltaTime;
+
+		if (time >= duration) {
+			return true; // is finished
 		}
-		
-		currentMessage += deltaTime;
-		
-		if(currentMessage >= messageLength) {
-			currentMessage = 0;
-			messageQueue.remove();
-		}
+
+		return false; //is still going
 	}
-	
-	protected static PriorityQueue<String> getMessages() {
-		return messageQueue;
+
+	public float getTime() {
+		return time;
 	}
+
+	public String getMessage() {
+		return message;
+	}
+
 }

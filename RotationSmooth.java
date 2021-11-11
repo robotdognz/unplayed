@@ -1,9 +1,7 @@
 package game.player;
 
 import org.jbox2d.common.Vec2;
-
-import editor.DebugMessage;
-import processing.core.PApplet;
+import editor.DebugQueue;
 
 public class RotationSmooth {
 	private float currentAngle;
@@ -44,10 +42,7 @@ public class RotationSmooth {
 		String output = "Old Angle: " + oldAngle + ", New Angle: " + newAngle + "\n" + "Velocity: " + absVelocity
 				+ ", Animation Length: " + animationLength;
 
-		DebugMessage.pushMessage(output);
-
-//		PApplet.print("Old Angle: " + oldAngle + ", New Angle: " + newAngle + ", Velocity: " + absVelocity
-//				+ ", Animation Length: " + animationLength + "\n");
+		DebugQueue.pushMessage(output, 3);
 	}
 
 	public void deltaStep(float deltaTime) {

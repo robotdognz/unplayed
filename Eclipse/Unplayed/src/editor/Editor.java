@@ -1,7 +1,7 @@
 package editor;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.Queue;
 
 import org.jbox2d.common.Vec2;
 
@@ -246,18 +246,20 @@ public class Editor {
 					p.height - editorBottom.getHeight() - textSize * 2);
 			p.text("DT: " + PApplet.nf(deltaTime, 1, 4), p.width / 2, p.height - editorBottom.getHeight() - textSize);
 
-			// draw debug messages
-			PriorityQueue<String> messages = DebugMessage.getMessages();
-			if (messages.size() > 0) {
-				float messageHeight = editorTop.getHeight() + textSize;
-				int i = 0;
-				for (String s : messages) {
-					p.text(s, p.width / 2, messageHeight + textSize * i);
-					i += 1 + s.split(System.getProperty("line.separator")).length;
-				}
-			}
+//			// draw debug messages
+//			Queue<String> messages = DebugQueue.getMessages();
+//			if (messages.size() > 0) {
+//				float messageHeight = editorTop.getHeight() + textSize;
+//				int i = 0;
+//				for (String s : messages) {
+//					p.text(s, p.width / 2, messageHeight + textSize * i);
+//					i += 1 + s.split(System.getProperty("line.separator")).length;
+//				}
+//			}
+			
+			DebugQueue.drawMessages(p, editorTop.getHeight() + textSize, textSize);
 
-			DebugMessage.step(deltaTime);
+			DebugQueue.step(deltaTime);
 		}
 	}
 
