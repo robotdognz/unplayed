@@ -7,10 +7,14 @@ public class DebugMessage {
 	private float time;
 	private float duration;
 
+	private int opacity;
+
 	public DebugMessage(String message, float duration) {
 		this.message = message;
 		this.time = 0;
 		this.duration = duration;
+
+		this.opacity = 255;
 	}
 
 	public boolean step(float deltaTime) {
@@ -24,6 +28,8 @@ public class DebugMessage {
 	}
 
 	public int drawMessage(PApplet p, float x, float y) {
+		opacity = (int) (255 * (time / duration));
+		p.fill(80, opacity);
 		p.text(message, p.width / 2, y);
 		return 1 + message.split(System.getProperty("line.separator")).length;
 	}

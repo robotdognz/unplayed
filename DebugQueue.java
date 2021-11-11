@@ -1,5 +1,7 @@
 package editor;
 
+import static processing.core.PConstants.CENTER;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -49,6 +51,12 @@ public class DebugQueue {
 		// draw debug messages
 		if (messageQueue.size() > 0) {
 //			float messageHeight = editorTop.getHeight() + textSize;
+			
+			
+			
+			p.textSize(textSize);
+			p.textAlign(CENTER, CENTER);
+			
 			int i = 0;
 			for (DebugMessage m : messageQueue) {
 				
