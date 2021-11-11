@@ -259,7 +259,7 @@ public class Editor {
 					p.text(s, p.width / 2, messageHeight + textSize * i);
 //						i++;
 //					}
-					i += (int) s.lines().count();
+					i += s.split(System.getProperty("line.separator")).length;
 				}
 			}
 
