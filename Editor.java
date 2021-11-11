@@ -249,10 +249,10 @@ public class Editor {
 			// draw debug messages
 			PriorityQueue<String> messages = DebugMessage.getMessages();
 			if (messages.size() > 0) {
-				float messageHeight = p.height / 2;
+				float messageHeight = editorTop.getHeight() + textSize;
 				int i = 0;
 				for (String s : messages) {
-					p.text(s, p.width / 2, messageHeight - textSize * i + 1);
+					p.text(s, p.width / 2, messageHeight - textSize * i);
 					i++;
 				}
 			}

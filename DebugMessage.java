@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 public class DebugMessage {
 	static PriorityQueue<String> messageQueue = new PriorityQueue<String>();
 	
-	static float messageLength = 2f;
+	static float messageLength = 5f;
 	static float currentMessage = 0;
 	
 	public static void pushMessage(String message) {
