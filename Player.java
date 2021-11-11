@@ -383,21 +383,21 @@ public class Player extends Editable {
 			dynamicBody.setAngularVelocity(0);
 			dynamicBody.setFixedRotation(true);
 			dynamicBody.setLinearVelocity(vel);
-			
-			// TODO: take the player's velocity into account when starting a smooth
-			// the faster the player is moving, the quicker the smooth animation
 
-			// create a rotationSmooth to smooth over the angle adjustment
+			// calculate the old and new angles
 			float newAngle = getAdjustedAngleBasic(true);
 			if(oldAngle > 180 && newAngle < 180) {
 				newAngle += 360;
+			}else if(oldAngle < 180 && newAngle > 180) {
+				newAngle -= 360;
 			}
+			// create a rotationSmooth to smooth over the angle adjustment
 			rotationSmooth = new RotationSmooth(oldAngle, newAngle, vel, angularVel);
 
 			// TODO: remove this
-			PApplet.print("Angle: " + angle + ", Angle Rounded: " + adjustedAngle + ", New Angle: "
-					+ PApplet.degrees(dynamicBody.getAngle()) + "\n");
-			PApplet.print("AngleOld: " + oldAngle + ", AngleNew: " + newAngle + "\n");
+//			PApplet.print("Angle: " + angle + ", Angle Rounded: " + adjustedAngle + ", New Angle: "
+//					+ PApplet.degrees(dynamicBody.getAngle()) + "\n");
+//			PApplet.print("AngleOld: " + oldAngle + ", AngleNew: " + newAngle + "\n");
 
 		}
 	}
