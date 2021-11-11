@@ -1,5 +1,7 @@
 package game.player;
 
+import org.jbox2d.common.Vec2;
+
 public class RotationSmooth {
 	private float currentAngle;
 	private float finalAngle;
@@ -8,14 +10,17 @@ public class RotationSmooth {
 
 	private float stepSize;
 
-	public RotationSmooth(float oldAngle, float newAngle) {
+	public RotationSmooth(float oldAngle, float newAngle, Vec2 velocity) {
 		this.currentAngle = oldAngle;
 		this.finalAngle = newAngle;
 
 		float difference = Math.abs(oldAngle - newAngle);
 
+		float absVelocity = Math.abs(velocity.x) + Math.abs(velocity.y);
+
 		// portion of a second it takes the animation to finish
-		float animationLength = difference / 400; // calculated relative to rotation amount
+		float animationLength = difference / (absVelocity * 2); // calculated relative to rotation amount
+//		float animationLength = difference / 400; // calculated relative to rotation amount
 
 		if (newAngle < oldAngle) {
 			difference = -difference;
@@ -29,7 +34,8 @@ public class RotationSmooth {
 
 		float steppedAngle = currentAngle + stepSize * deltaTime;
 
-		// check if the stepped angle is closer to the final angle than the current angle
+		// check if the stepped angle is closer to the final angle than the current
+		// angle
 		if (Math.abs(steppedAngle - finalAngle) < Math.abs(currentAngle - finalAngle)) {
 			// apply the current step
 			currentAngle = steppedAngle;
