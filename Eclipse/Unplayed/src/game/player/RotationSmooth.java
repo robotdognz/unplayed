@@ -19,7 +19,7 @@ public class RotationSmooth {
 		float absVelocity = Math.abs(velocity.x) + Math.abs(velocity.y);
 
 		// portion of a second it takes the animation to finish
-		float animationLength = difference / (200 + absVelocity * 2); // calculated relative to rotation amount
+		float animationLength = difference / (300 + absVelocity); // calculated relative to rotation amount
 //		float animationLength = difference / 400; // calculated relative to rotation amount
 
 		if (newAngle < oldAngle) {
