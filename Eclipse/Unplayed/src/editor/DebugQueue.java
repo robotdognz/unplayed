@@ -29,11 +29,9 @@ public class DebugQueue {
 		}
 
 //		currentMessage += deltaTime;
-		
-		
-		
-		boolean current = messageQueue.poll().step(deltaTime);
-		if(current) {
+
+		boolean current = messageQueue.peek().step(deltaTime);
+		if (current) {
 			messageQueue.remove();
 		}
 
@@ -53,7 +51,7 @@ public class DebugQueue {
 //			float messageHeight = editorTop.getHeight() + textSize;
 			int i = 0;
 			for (DebugMessage m : messageQueue) {
-				
+
 				p.text(m.getMessage(), p.width / 2, y + textSize * i);
 				i += 1 + m.getMessage().split(System.getProperty("line.separator")).length;
 			}
