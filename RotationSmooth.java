@@ -2,6 +2,7 @@ package game.player;
 
 import org.jbox2d.common.Vec2;
 
+import editor.DebugMessage;
 import processing.core.PApplet;
 
 public class RotationSmooth {
@@ -11,6 +12,11 @@ public class RotationSmooth {
 	private boolean isFinished = false;
 
 	private float stepSize;
+
+	// TODO: currently this system uses velocity from before the snap. It could
+	// potentially be improved by storing the biggest physics impact from the half
+	// second (or so, this would be one of the values to adjust) before the snap and
+	// using that to determine how fast it should rotate
 
 	public RotationSmooth(float oldAngle, float newAngle, Vec2 velocity, float angularVel) {
 		this.currentAngle = oldAngle;
@@ -35,8 +41,13 @@ public class RotationSmooth {
 		// calculate the size of the step to be taken each frame
 		this.stepSize = difference / animationLength;
 
-		PApplet.print("Old Angle: " + oldAngle + ", New Angle: " + newAngle + ", Velocity: " + absVelocity
-				+ ", Animation Length: " + animationLength + "\n");
+		String output = "Old Angle: " + oldAngle + ", New Angle: " + newAngle + ", Velocity: " + absVelocity
+				+ ", Animation Length: " + animationLength;
+		
+		DebugMessage.pushMessage(output);
+
+//		PApplet.print("Old Angle: " + oldAngle + ", New Angle: " + newAngle + ", Velocity: " + absVelocity
+//				+ ", Animation Length: " + animationLength + "\n");
 	}
 
 	public void deltaStep(float deltaTime) {
