@@ -20,7 +20,7 @@ public class RotationSmooth {
 		float absVelocity = Math.abs(velocity.y);
 
 		// portion of a second it takes the animation to finish
-		float animationLength = difference / (400 + absVelocity); // calculated relative to rotation amount
+		float animationLength = difference / (400 + absVelocity); // calculated relative to rotation amount (difference)
 //		float animationLength = difference / 400; // calculated relative to rotation amount
 
 		// turn absolute difference back into standard difference
@@ -46,6 +46,7 @@ public class RotationSmooth {
 			currentAngle = steppedAngle;
 		} else {
 			// the rotation is complete
+			currentAngle = finalAngle;
 			isFinished = true;
 		}
 
