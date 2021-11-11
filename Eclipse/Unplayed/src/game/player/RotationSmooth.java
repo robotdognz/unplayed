@@ -17,7 +17,7 @@ public class RotationSmooth {
 		this.finalAngle = newAngle;
 
 		float difference = Math.abs(oldAngle - newAngle);
-		float absVelocity = Math.abs(velocity.y);
+		float absVelocity = Math.max(Math.abs(velocity.y), 150);
 
 		// portion of a second it takes the animation to finish
 		float animationLength = difference / (400 + absVelocity); // calculated relative to rotation amount (difference)
@@ -30,9 +30,9 @@ public class RotationSmooth {
 
 		// calculate the size of the step to be taken each frame
 		this.stepSize = difference / animationLength;
-		
-		PApplet.print("Old Angle: " + oldAngle + ", New Angle: " + newAngle + ", Velocity: "
-				+ absVelocity + ", Animation Length: " + animationLength + "\n");
+
+		PApplet.print("Old Angle: " + oldAngle + ", New Angle: " + newAngle + ", Velocity: " + absVelocity
+				+ ", Animation Length: " + animationLength + "\n");
 	}
 
 	public void deltaStep(float deltaTime) {
