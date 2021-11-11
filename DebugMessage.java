@@ -28,7 +28,7 @@ public class DebugMessage {
 	}
 
 	public int drawMessage(PApplet p, float x, float y) {
-		opacity = (int) (255 * (time / duration));
+		opacity = 255 + (int) (255 * (time / duration));
 		p.fill(80, opacity);
 		p.text(message, p.width / 2, y);
 		return 1 + message.split(System.getProperty("line.separator")).length;
