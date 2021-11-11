@@ -256,9 +256,10 @@ public class Editor {
 //					if (lines > 1) {
 //						
 //					} else {
-						p.text(s, p.width / 2, messageHeight + textSize * i);
-						i++;
+					p.text(s, p.width / 2, messageHeight + textSize * i);
+//						i++;
 //					}
+					i += (int) s.lines().count();
 				}
 			}
 
