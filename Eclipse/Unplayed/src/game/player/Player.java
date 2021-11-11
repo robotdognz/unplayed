@@ -386,13 +386,16 @@ public class Player extends Editable {
 
 			// calculate the old and new angles
 			float newAngle = getAdjustedAngleBasic(true);
-			if(oldAngle > 180 && newAngle < 180) {
+			if (oldAngle > 180 && newAngle < 180) {
 				newAngle += 360;
-			}else if(oldAngle < 180 && newAngle > 180) {
+			} else if (oldAngle < 180 && newAngle > 180) {
 				newAngle -= 360;
 			}
 			// create a rotationSmooth to smooth over the angle adjustment
-			rotationSmooth = new RotationSmooth(oldAngle, newAngle, vel, angularVel);
+			// only if there is a reasonable difference
+			if (Math.abs(oldAngle - newAngle) > 2) {
+				rotationSmooth = new RotationSmooth(oldAngle, newAngle, vel, angularVel);
+			}
 
 			// TODO: remove this
 //			PApplet.print("Angle: " + angle + ", Angle Rounded: " + adjustedAngle + ", New Angle: "
@@ -1073,8 +1076,8 @@ public class Player extends Editable {
 
 	public void step(float deltaTime) {
 		vibeFrame = false; // clear vibeFrame
-		
-		if(rotationSmooth != null) {
+
+		if (rotationSmooth != null) {
 			rotationSmooth.deltaStep(deltaTime);
 		}
 
