@@ -368,6 +368,7 @@ public class Player extends Editable {
 		if (dynamicBody.isFixedRotation() && angleRemainder > 0.0001) {
 			Vec2 newPos = dynamicBody.getPosition();
 			Vec2 vel = dynamicBody.getLinearVelocity();
+			float angularVel = dynamicBody.getAngularVelocity();
 
 			float oldAngle = getAdjustedAngleBasic(false);
 
@@ -391,7 +392,7 @@ public class Player extends Editable {
 			if(oldAngle > 180 && newAngle < 180) {
 				newAngle += 360;
 			}
-			rotationSmooth = new RotationSmooth(oldAngle, newAngle, vel);
+			rotationSmooth = new RotationSmooth(oldAngle, newAngle, vel, angularVel);
 
 			// TODO: remove this
 			PApplet.print("Angle: " + angle + ", Angle Rounded: " + adjustedAngle + ", New Angle: "

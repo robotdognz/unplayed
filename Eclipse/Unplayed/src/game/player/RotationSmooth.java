@@ -10,13 +10,13 @@ public class RotationSmooth {
 
 	private float stepSize;
 
-	public RotationSmooth(float oldAngle, float newAngle, Vec2 velocity) {
+	public RotationSmooth(float oldAngle, float newAngle, Vec2 velocity, float angularVel) {
 		this.currentAngle = oldAngle;
 		this.finalAngle = newAngle;
 
 		float difference = Math.abs(oldAngle - newAngle);
 
-		float absVelocity = Math.abs(velocity.x) + Math.abs(velocity.y);
+		float absVelocity = Math.abs(velocity.y);
 
 		// portion of a second it takes the animation to finish
 		float animationLength = difference / (300 + absVelocity); // calculated relative to rotation amount
