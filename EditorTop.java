@@ -102,4 +102,9 @@ public class EditorTop extends Toolbar {
 			widgets.get(i).click();
 		}
 	}
+	
+	@Override
+	public float getHeight() {
+		return bounds.getHeight();
+	}
 }
