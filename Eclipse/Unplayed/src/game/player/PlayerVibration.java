@@ -50,8 +50,8 @@ public class PlayerVibration {
 				max = current;
 			}
 		}
-		return max;
-//		return total;
+//		return max;
+		return total;
 	}
 
 	public void physicsImpact(float[] impulses, float velocity) {
