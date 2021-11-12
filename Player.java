@@ -362,7 +362,7 @@ public class Player extends Editable {
 		fixRotationOffset(angle, angleRemainder, av);
 	}
 
-	private void fixRotationOffset(float angle, float angleRemainder, float angularVelocity) {
+	private void fixRotationOffset(float angle, float angleRemainder, float angularVel) {
 
 		if (dynamicBody.isFixedRotation() && angleRemainder > 0.0001) {
 			Vec2 newPos = dynamicBody.getPosition();
