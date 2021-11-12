@@ -61,7 +61,7 @@ public class PlayerVibration {
 			total += impulse;
 		}
 		
-		impacts.add(new PhysicsImpact(total, velocity, currentTime));
+		
 
 //		impacts.add(new PhysicsImpact(total, currentTime));
 
@@ -80,7 +80,7 @@ public class PlayerVibration {
 
 		if (total > 800 && !vibeFrame) { // 400
 			
-			
+			impacts.add(new PhysicsImpact(total, velocity, currentTime));
 
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
