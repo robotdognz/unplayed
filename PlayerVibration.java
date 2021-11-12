@@ -38,14 +38,20 @@ public class PlayerVibration {
 		}
 	}
 
+	public float getImpactHistory() {
+		float total = 0;
+		for (PhysicsImpact impact : impacts) {
+			total += impact.impact;
+		}
+		return total;
+	}
+
 	public void physicsImpact(float[] impulses) {
 		// find total impulse power
 		float total = 0;
 		for (float impulse : impulses) {
 			total += impulse;
 		}
-
-		
 
 		// TODO: this doesn't work because if you jump in one spot at the same height,
 		// it stops the vibration
@@ -61,7 +67,7 @@ public class PlayerVibration {
 //				}
 
 		if (total > 800 && !vibeFrame) { // 400
-			
+
 			impacts.add(new PhysicsImpact(total, System.nanoTime())); // currentTime
 
 			// Math.abs returns positive no matter what goes in
