@@ -20,7 +20,7 @@ public class PlayerVibration {
 		currentTime = System.nanoTime();
 		impacts = new ArrayList<PhysicsImpact>();
 
-		timeout = 0.2f; // how long the impacts are kept for in seconds
+		timeout = 0.25f; // how long the impacts are kept for in seconds
 		timeoutLong = (long) (timeout * 1000000000); // translated to nanoseconds
 	}
 
@@ -42,10 +42,15 @@ public class PlayerVibration {
 
 	public float getImpactHistory() {
 		float total = 0;
+		float max = 0;
 		for (PhysicsImpact impact : impacts) {
 			total += impact.impact;
+			if(impact.impact > max) {
+				max = impact.impact;
+			}
 		}
-		return total;
+		return max;
+//		return total;
 	}
 
 	public void physicsImpact(float[] impulses) {
