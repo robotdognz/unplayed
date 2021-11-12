@@ -29,7 +29,7 @@ public class RotationSmooth {
 //		}
 
 		// portion of a second it takes the animation to finish
-		float animationLength = difference / (350 + (impact / 1000)); // calculated relative to rotation amount
+		float animationLength = difference / (400 + (impact / 1000)); // calculated relative to rotation amount
 																		// (difference)
 //		float animationLength = difference / 400; // calculated relative to rotation amount
 
