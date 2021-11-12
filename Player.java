@@ -1034,7 +1034,7 @@ public class Player extends Editable {
 	}
 
 	public void physicsImpact(float[] impulses) {
-		vibration.physicsImpact(impulses);
+		vibration.physicsImpact(impulses, Math.abs(dynamicBody.getLinearVelocity().y));
 	}
 
 	public File getFile() {
