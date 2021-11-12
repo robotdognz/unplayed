@@ -44,8 +44,8 @@ public class PlayerVibration {
 		float total = 0;
 		float max = 0;
 		for (PhysicsImpact impact : impacts) {
-			total += impact.velocity;
-			float current = Math.abs(impact.velocity);
+			total += impact.impact;
+			float current = Math.abs(impact.impact);
 			if(current > max) {
 				max = current;
 			}
