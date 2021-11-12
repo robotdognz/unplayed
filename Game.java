@@ -8,7 +8,7 @@ import game.player.Player;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.MyContactListener;
-import misc.Vibe;
+//import misc.Vibe;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
@@ -23,7 +23,7 @@ public class Game {
 	public Player player;
 	public Paper paper;
 	public Converter convert;
-	private Vibe vibe;
+//	private Vibe vibe;
 	private TextureCache texture;
 	public AppLogic app;
 
@@ -70,7 +70,7 @@ public class Game {
 	float accumulator = 0;
 	float stepSize = 1f / 240f;
 
-	public Game(PApplet p, AppLogic app, Camera c, Vibe v, TextureCache texture, Converter convert) {
+	public Game(PApplet p, AppLogic app, Camera c, TextureCache texture, Converter convert) { //Vibe v,
 		// legacy variables from level class TODO: write these out eventually
 		PVector cameraTopLeft = new PVector(-400, -400);
 		PVector cameraBottomRight = new PVector(500, 600);
@@ -85,7 +85,7 @@ public class Game {
 		this.p = p;
 		this.app = app;
 		this.camera = c;
-		this.vibe = v;
+//		this.vibe = v;
 		this.texture = texture;
 		this.convert = convert;
 
@@ -297,7 +297,7 @@ public class Game {
 				this.player.destroy();
 
 			}
-			player = new Player(p, box2d, locked, texture, current, vibe);
+			player = new Player(p, box2d, locked, texture, current); //, vibe);
 		} else if (playerArea instanceof Tile) {
 			HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
 			world.retrieve(returnObjects, playerArea);
@@ -328,14 +328,14 @@ public class Game {
 					if (this.player != null) {
 						this.player.destroy();
 					}
-					player = new Player(p, box2d, locked, texture, playerCheckpoint, vibe);
+					player = new Player(p, box2d, locked, texture, playerCheckpoint); //, vibe);
 				} else if (playerStart != null) {
 					Tile current = ((PlayerStart) playerStart).getRequired();
 					if (current != null) {
 						if (this.player != null) {
 							this.player.destroy();
 						}
-						player = new Player(p, box2d, locked, texture, current, vibe);
+						player = new Player(p, box2d, locked, texture, current); //, vibe);
 					}
 				}
 

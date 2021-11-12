@@ -5,8 +5,8 @@ import android.os.VibrationEffect;
 import android.content.Context;
 
 public class Vibe {
-	private Vibrator vibe;
-	private boolean deprecated;
+	private static Vibrator vibe;
+	private static boolean deprecated;
 
 	public Vibe(Context c) {
 		vibe = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE); //changed from getActivity() to context
@@ -16,7 +16,7 @@ public class Vibe {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void vibrate(long amount) {
+	public static void vibrate(long amount) {
 		// amount = duration
 		if (!deprecated) {
 			vibe.vibrate(VibrationEffect.createOneShot(amount, 255));
@@ -28,7 +28,7 @@ public class Vibe {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void vibrate(long amount, int level) {
+	public static void vibrate(long amount, int level) {
 		// amount = duration
 		// level = intensity
 		if (!deprecated) {

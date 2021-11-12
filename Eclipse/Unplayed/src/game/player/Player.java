@@ -33,7 +33,7 @@ public class Player extends Editable {
 	private boolean right = false;
 
 	// vibration
-	private Vibe vibe;
+//	private Vibe vibe;
 
 	// box2d player
 	private Box2DProcessing box2d; // the box2d world
@@ -92,12 +92,12 @@ public class Player extends Editable {
 	private boolean horizontalTunnel;
 //	private Vec2 previousPosition; // last player location
 
-	public Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile, Vibe v) {
+	public Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile) { //, Vibe v) {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.file = tile.getFile();
 		this.setAngle(tile.getAngle());
 
-		vibe = v;
+//		vibe = v;
 
 		if (file != null && texture != null && texture.getTileMap().containsKey(file)) {
 			this.tileTexture = texture.getTileMap().get(file);
@@ -1061,7 +1061,7 @@ public class Player extends Editable {
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
 			int strength = (int) Math.max(Math.abs(total / 1000), 1); // 800
-			vibe.vibrate(strength);
+			Vibe.vibrate(strength);
 //			PApplet.println(total + " " + strength);
 			vibeFrame = true;
 //			previousImpulse = total;
