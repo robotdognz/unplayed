@@ -258,6 +258,8 @@ public class Player extends Editable {
 	}
 
 	public void physicsStep(float delta) {
+		vibration.step(delta);
+		
 		// step timers
 		jumpTimer.deltaStep(delta);
 		groundTimer.deltaStep(delta);
@@ -1041,7 +1043,7 @@ public class Player extends Editable {
 	}
 
 	public void step(float deltaTime) {
-		vibration.step(deltaTime);
+//		vibration.step(deltaTime);
 
 		if (rotationSmooth != null) {
 			rotationSmooth.deltaStep(deltaTime);
