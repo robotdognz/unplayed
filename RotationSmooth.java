@@ -11,10 +11,8 @@ public class RotationSmooth {
 
 	private float stepSize;
 
-	// TODO: currently this system uses velocity from before the snap. It could
-	// potentially be improved by storing the biggest physics impact from the half
-	// second (or so, this would be one of the values to adjust) before the snap and
-	// using that to determine how fast it should rotate
+	// TODO: another way could be to check the max velocity of the last part of a second and use that
+	// not the way I did before, completely unrealated to physics impacts
 
 	public RotationSmooth(float oldAngle, float newAngle, float impact) {
 		this.currentAngle = oldAngle;
@@ -22,15 +20,9 @@ public class RotationSmooth {
 
 		float difference = Math.abs(oldAngle - newAngle);
 
-//		float absVelocity = Math.abs(velocity.y);
-//		if (absVelocity > 150) {
-//			absVelocity = 250;
-//		}
-
 		// portion of a second it takes the animation to finish
 		float animationLength = difference / (300 + (impact / 400)); // calculated relative to rotation amount
 																		// (difference)
-//		float animationLength = difference / 400; // calculated relative to rotation amount
 
 		// turn absolute difference back into standard difference
 		if (newAngle < oldAngle) {

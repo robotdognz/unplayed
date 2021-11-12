@@ -18,9 +18,6 @@ import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
 import static processing.core.PConstants.*;
 import org.jbox2d.dynamics.*;
-
-import editor.DebugOutput;
-
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 
@@ -367,7 +364,6 @@ public class Player extends Editable {
 		if (dynamicBody.isFixedRotation() && angleRemainder > 0.0001) {
 			Vec2 newPos = dynamicBody.getPosition();
 			Vec2 vel = dynamicBody.getLinearVelocity();
-			
 
 			float oldAngle = getAdjustedAngleBasic(false);
 
@@ -392,14 +388,9 @@ public class Player extends Editable {
 			}
 			// create a rotationSmooth to smooth over the angle adjustment
 			// only if there is a reasonable difference
-//			if (Math.abs(oldAngle - newAngle) > 2) {
-//			DebugOutput.pushMessage("" + PApplet.nf(vibration.getImpactHistory() / 1000, 0, 1) + " " + PApplet.nf(Math.abs(angularVel), 0, 2), 5);
-			rotationSmooth = new RotationSmooth(oldAngle, newAngle, vibration.getImpactHistory());
-			
-			//  / 1000
-			
-//			DebugOutput.pushMessage("" + vibration.impacts.get(vibration.impacts.size()-1), 5);
-//			}
+			if (Math.abs(oldAngle - newAngle) > 2) {
+				rotationSmooth = new RotationSmooth(oldAngle, newAngle, vibration.getImpactHistory());
+			}
 
 		}
 	}
