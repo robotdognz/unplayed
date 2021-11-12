@@ -3,6 +3,7 @@ package game.player;
 import java.util.ArrayList;
 import java.util.List;
 
+import editor.DebugOutput;
 import misc.Vibe;
 
 public class PlayerVibration {
@@ -29,6 +30,8 @@ public class PlayerVibration {
 
 		currentTime = System.nanoTime();
 
+		DebugOutput.pushMessage("" + currentTime, 1);
+
 		// remove old impacts
 		for (int i = impacts.size() - 1; i >= 0; i--) {
 			PhysicsImpact impact = impacts.get(i);
@@ -54,8 +57,8 @@ public class PlayerVibration {
 		for (float impulse : impulses) {
 			total += impulse;
 		}
-		
-		impacts.add(new PhysicsImpact(total, currentTime)); //  System.nanoTime()
+
+		impacts.add(new PhysicsImpact(total, currentTime)); // System.nanoTime()
 
 		// TODO: this doesn't work because if you jump in one spot at the same height,
 		// it stops the vibration
@@ -72,8 +75,6 @@ public class PlayerVibration {
 
 		if (total > 800 && !vibeFrame) { // 400
 
-			
-
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
 			int strength = (int) Math.max(Math.abs(total / 1000), 1); // 800
@@ -84,5 +85,5 @@ public class PlayerVibration {
 			return;
 		}
 	}
-	
+
 }
