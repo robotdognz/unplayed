@@ -3,6 +3,7 @@ package game.player;
 import java.util.ArrayList;
 import java.util.List;
 
+import editor.DebugOutput;
 import misc.Vibe;
 
 public class PlayerVibration {
@@ -51,8 +52,16 @@ public class PlayerVibration {
 	public void physicsImpact(float[] impulses) {
 		// find total impulse power
 		float total = 0;
+		boolean test = false; //TODO: get rid of this
 		for (float impulse : impulses) {
 			total += impulse;
+			if(impulse < 0) {
+				test = true;
+			}
+		}
+		
+		if(test) {
+			DebugOutput.pushMessage("it happened", 2);
 		}
 		
 		impacts.add(new PhysicsImpact(total, System.nanoTime())); // currentTime
