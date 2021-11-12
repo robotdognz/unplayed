@@ -11,7 +11,8 @@ public class PlayerVibration {
 
 	public List<PhysicsImpact> impacts;
 
-	private long timeout;
+	private float timeout;
+	private long timeoutLong;
 
 	private long currentTime;
 
@@ -19,7 +20,8 @@ public class PlayerVibration {
 		currentTime = System.nanoTime();
 		impacts = new ArrayList<PhysicsImpact>();
 
-		timeout = 1 * 1000000000;
+		timeout = 0.25f; // how long the impacts are kept for in seconds
+		timeoutLong = (long) (timeout * 1000000000);
 	}
 
 	public void step(float deltaTime) {
@@ -30,7 +32,7 @@ public class PlayerVibration {
 		// remove old impacts
 		for (int i = impacts.size() - 1; i >= 0; i--) {
 			PhysicsImpact impact = impacts.get(i);
-			if (currentTime - timeout > impact.time) {
+			if (currentTime - timeoutLong > impact.time) {
 				impacts.remove(impact);
 			} else {
 				break;
