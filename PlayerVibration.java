@@ -30,7 +30,7 @@ public class PlayerVibration {
 
 		currentTime = System.nanoTime();
 
-		DebugOutput.pushMessage("" + currentTime, 1);
+//		DebugOutput.pushMessage("" + currentTime, 1);
 
 		// remove old impacts
 		for (int i = 0; i < impacts.size(); i++) {
