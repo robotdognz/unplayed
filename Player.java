@@ -393,7 +393,7 @@ public class Player extends Editable {
 			// create a rotationSmooth to smooth over the angle adjustment
 			// only if there is a reasonable difference
 //			if (Math.abs(oldAngle - newAngle) > 2) {
-			DebugOutput.pushMessage("" + PApplet.nf(vibration.getImpactHistory() , 0, 1) + " " + PApplet.nf(Math.abs(angularVel), 0, 2), 5);
+			DebugOutput.pushMessage("" + PApplet.nf(vibration.getImpactHistory() / 1000, 0, 1) + " " + PApplet.nf(Math.abs(angularVel), 0, 2), 5);
 			rotationSmooth = new RotationSmooth(oldAngle, newAngle, vel, angularVel);
 			
 			//  / 1000
@@ -1036,7 +1036,7 @@ public class Player extends Editable {
 	}
 
 	public void physicsImpact(float[] impulses) {
-		vibration.physicsImpact(impulses, Math.abs(dynamicBody.getLinearVelocity().y));
+		vibration.physicsImpact(impulses);
 	}
 
 	public File getFile() {
