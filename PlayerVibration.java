@@ -33,7 +33,7 @@ public class PlayerVibration {
 		DebugOutput.pushMessage("" + currentTime, 1);
 
 		// remove old impacts
-		for (int i = impacts.size() - 1; i >= 0; i--) {
+		for (int i = 0; i < impacts.size(); i++) {
 			PhysicsImpact impact = impacts.get(i);
 			if (impact.time + timeoutLong < currentTime) {
 				impacts.remove(impact);
