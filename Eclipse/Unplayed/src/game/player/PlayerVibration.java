@@ -55,7 +55,7 @@ public class PlayerVibration {
 			total += impulse;
 		}
 
-		impacts.add(new PhysicsImpact(total, currentTime)); // System.nanoTime()
+//		impacts.add(new PhysicsImpact(total, currentTime));
 
 		// TODO: this doesn't work because if you jump in one spot at the same height,
 		// it stops the vibration
@@ -71,6 +71,8 @@ public class PlayerVibration {
 //				}
 
 		if (total > 800 && !vibeFrame) { // 400
+			
+			impacts.add(new PhysicsImpact(total, currentTime));
 
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
