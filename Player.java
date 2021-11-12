@@ -393,8 +393,9 @@ public class Player extends Editable {
 			// create a rotationSmooth to smooth over the angle adjustment
 			// only if there is a reasonable difference
 //			if (Math.abs(oldAngle - newAngle) > 2) {
-			rotationSmooth = new RotationSmooth(oldAngle, newAngle, vel, angularVel);
 			DebugOutput.pushMessage("" + PApplet.nf(vibration.getImpactHistory() / 1000, 0, 1), 5);
+			rotationSmooth = new RotationSmooth(oldAngle, newAngle, vel, angularVel);
+			
 //			DebugOutput.pushMessage("" + vibration.impacts.get(vibration.impacts.size()-1), 5);
 //			}
 
