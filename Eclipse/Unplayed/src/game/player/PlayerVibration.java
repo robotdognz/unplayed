@@ -1,16 +1,41 @@
 package game.player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import misc.Vibe;
 
 public class PlayerVibration {
-	
+
 	private boolean vibeFrame; // has a vibration happened yet this frame
 
+	public List<PhysicsImpact> impacts;
+
+	private long timeout;
+
+	private long currentTime;
+
 	public PlayerVibration() {
+		currentTime = System.nanoTime();
+		impacts = new ArrayList<PhysicsImpact>();
+
+		timeout = 1 * 1000000000;
 	}
-	
+
 	public void step(float deltaTime) {
 		vibeFrame = false; // clear vibeFrame
+
+		currentTime = System.nanoTime();
+
+		// remove old impacts
+		for (int i = impacts.size() - 1; i >= 0; i--) {
+			PhysicsImpact impact = impacts.get(i);
+			if (currentTime - timeout > impact.time) {
+				impacts.remove(impact);
+			} else {
+				break;
+			}
+		}
 	}
 
 	public void physicsImpact(float[] impulses) {
@@ -19,6 +44,8 @@ public class PlayerVibration {
 		for (float impulse : impulses) {
 			total += impulse;
 		}
+
+		impacts.add(new PhysicsImpact(total, System.nanoTime())); // currentTime
 
 		// TODO: this doesn't work because if you jump in one spot at the same height,
 		// it stops the vibration

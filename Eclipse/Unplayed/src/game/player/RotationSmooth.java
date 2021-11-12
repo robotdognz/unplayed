@@ -1,7 +1,7 @@
 package game.player;
 
 import org.jbox2d.common.Vec2;
-import editor.DebugQueue;
+import editor.DebugOutput;
 import processing.core.PApplet;
 
 public class RotationSmooth {
@@ -44,7 +44,7 @@ public class RotationSmooth {
 				+ "Velocity: " + PApplet.nf(absVelocity, 0, 3) + ", Animation Length: "
 				+ PApplet.nf(animationLength, 0, 3);
 
-		DebugQueue.pushMessage(output, 5);
+		DebugOutput.pushMessage(output, 5);
 	}
 
 	public void deltaStep(float deltaTime) {

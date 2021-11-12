@@ -246,8 +246,8 @@ public class Editor {
 			p.text("DT: " + PApplet.nf(deltaTime, 1, 4), p.width / 2, p.height - editorBottom.getHeight() - textSize);
 
 			// draw debug messages		
-			DebugQueue.drawMessages(p, editorTop.getHeight() + textSize, textSize);
-			DebugQueue.step(deltaTime);
+			DebugOutput.drawMessages(p, editorTop.getHeight() + textSize, textSize);
+			DebugOutput.step(deltaTime);
 		}
 	}
 

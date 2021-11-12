@@ -1,5 +1,11 @@
 (Major version).(Minor version).(Revision number)
 
+1.2.2: First 2021 build
+
+-Cleaned a bunch of old dodgy code
+-Fixed player getting stuck in tunnels and slots issue (animation smoothing system still needs some work)
+-Implemented a debug message system
+
 1.2.1: Improving physics and tuning player 'feel'
 
 -Various bug fixes

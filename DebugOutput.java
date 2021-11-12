@@ -4,14 +4,32 @@ import static processing.core.PConstants.CENTER;
 import java.util.LinkedList;
 import processing.core.PApplet;
 
-public class DebugQueue {
+public class DebugOutput {
+	// debug queue
 	static LinkedList<DebugMessage> messageQueue = new LinkedList<DebugMessage>();
-
-	static float messageLength = 5f;
-	static float currentMessage = 0;
+	static int maxMessages = 10;
 
 	public static void pushMessage(String message, float duration) {
 		messageQueue.add(new DebugMessage(message, duration));
+
+		if (messageQueue.size() > 10) {
+			messageQueue.remove();
+		}
+	}
+	
+	// maybe a heading string and an open list of strings and values for the values
+	// so stuff like "Velocity x: 0 y: 0" can be done
+
+	public static void pushConstantFloat(String name, float value) {
+
+	}
+
+	public static void pushConstantInt(String name, int value) {
+
+	}
+
+	public static void pushConstantBoolean(String name, boolean value) {
+
 	}
 
 	protected static void step(float deltaTime) {
@@ -36,5 +54,9 @@ public class DebugQueue {
 				line += messageQueue.get(i).drawMessage(p, p.width / 2, y + textSize * line);
 			}
 		}
+	}
+
+	public static void drawConstants(PApplet p, float y, int textSize) {
+
 	}
 }

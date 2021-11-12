@@ -18,6 +18,9 @@ import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
 import static processing.core.PConstants.*;
 import org.jbox2d.dynamics.*;
+
+import editor.DebugOutput;
+
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 
@@ -47,7 +50,6 @@ public class Player extends Editable {
 	public CountdownTimer boostTimer; // used to correct the ground timer
 
 	private ArrayList<Event> events; // list of events touching the player
-//	private boolean vibeFrame; // has a vibration happened yet this frame
 	private PlayerVibration vibration; // vibration system
 
 	// environment checking
@@ -110,7 +112,7 @@ public class Player extends Editable {
 
 		this.locked = locked; // is rotation locked
 //		this.contactNumber = 0; // is the player touching anything
-		
+
 		this.vibration = new PlayerVibration();
 
 		// environment checking
@@ -392,12 +394,8 @@ public class Player extends Editable {
 			// only if there is a reasonable difference
 			if (Math.abs(oldAngle - newAngle) > 2) {
 				rotationSmooth = new RotationSmooth(oldAngle, newAngle, vel, angularVel);
+				DebugOutput.pushMessage(Integer.toString(vibration.impacts.size()), 5);
 			}
-
-			// TODO: remove this
-//			PApplet.print("Angle: " + angle + ", Angle Rounded: " + adjustedAngle + ", New Angle: "
-//					+ PApplet.degrees(dynamicBody.getAngle()) + "\n");
-//			PApplet.print("AngleOld: " + oldAngle + ", AngleNew: " + newAngle + "\n");
 
 		}
 	}
@@ -1034,40 +1032,7 @@ public class Player extends Editable {
 	}
 
 	public void physicsImpact(float[] impulses) {
-		
 		vibration.physicsImpact(impulses);
-		
-//		// find total impulse power
-//		float total = 0;
-//		for (float impulse : impulses) {
-//			total += impulse;
-//		}
-//
-//		// TODO: this doesn't work because if you jump in one spot at the same height,
-//		// it stops the vibration
-//		// could be improved by adding a short timer to it
-//
-////		// check if we already did one like this
-////		float impulseDifference = Math.abs(total - previousImpulse);
-////		if (previousImpulse != 0 && impulseDifference < 4) {
-////			PApplet.println(total + " skipped by previousImpulse");
-////			return;
-////		} else {
-//////			previousImpulse = total;
-////		}
-//
-//		if (total > 800 && !vibeFrame) { // 400
-//
-//			// Math.abs returns positive no matter what goes in
-//			// Math.log returns the log of the number it is given
-//			int strength = (int) Math.max(Math.abs(total / 1000), 1); // 800
-//			Vibe.vibrate(strength);
-////			PApplet.println(total + " " + strength);
-//			vibeFrame = true;
-////			previousImpulse = total;
-//			return;
-//		}
-
 	}
 
 	public File getFile() {
@@ -1075,7 +1040,6 @@ public class Player extends Editable {
 	}
 
 	public void step(float deltaTime) {
-//		vibeFrame = false; // clear vibeFrame
 		vibration.step(deltaTime);
 
 		if (rotationSmooth != null) {
