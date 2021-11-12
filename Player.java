@@ -394,7 +394,7 @@ public class Player extends Editable {
 			// only if there is a reasonable difference
 			if (Math.abs(oldAngle - newAngle) > 2) {
 				rotationSmooth = new RotationSmooth(oldAngle, newAngle, vel, angularVel);
-				DebugOutput.pushMessage("" + vibration.getImpactHistory(), 5);
+				DebugOutput.pushMessage("" + PApplet.nf(vibration.getImpactHistory(), 0, 0), 5);
 			}
 
 		}

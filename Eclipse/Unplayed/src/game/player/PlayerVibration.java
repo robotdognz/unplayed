@@ -20,7 +20,7 @@ public class PlayerVibration {
 		currentTime = System.nanoTime();
 		impacts = new ArrayList<PhysicsImpact>();
 
-		timeout = 0.25f; // how long the impacts are kept for in seconds
+		timeout = 0.1f; // how long the impacts are kept for in seconds
 		timeoutLong = (long) (timeout * 1000000000);
 	}
 

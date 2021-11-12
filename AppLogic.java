@@ -77,7 +77,7 @@ public class AppLogic {
 
 		Camera camera = new FreeCamera(); // new GameCamera();
 		convert = new Converter(p, camera);
-		game = new Game(p, this, camera, texture, convert); //vibe, 
+		game = new Game(p, this, camera, texture, convert);
 		texture.passGame(game);
 		controller = new PlayerControl(p, game);
 //		DoToast toast = new DoToast(activity);
