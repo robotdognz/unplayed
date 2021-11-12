@@ -32,7 +32,7 @@ public class PlayerVibration {
 		// remove old impacts
 		for (int i = impacts.size() - 1; i >= 0; i--) {
 			PhysicsImpact impact = impacts.get(i);
-			if (currentTime - timeoutLong > impact.time) {
+			if (impact.time + timeoutLong < currentTime) {
 				impacts.remove(impact);
 			} else {
 				break;
@@ -55,7 +55,7 @@ public class PlayerVibration {
 			total += impulse;
 		}
 		
-		impacts.add(new PhysicsImpact(total, System.nanoTime())); // currentTime
+		impacts.add(new PhysicsImpact(total, currentTime)); //  System.nanoTime()
 
 		// TODO: this doesn't work because if you jump in one spot at the same height,
 		// it stops the vibration
