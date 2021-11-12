@@ -28,18 +28,12 @@ public class DebugMessage {
 	}
 
 	public int drawMessage(PApplet p, float x, float y) {
+		// calculate opacity from remaining time
 		opacity = 255 - (int) (255 * (time / duration));
+		// draw the message
 		p.fill(80, opacity);
 		p.text(message, p.width / 2, y);
+		// return how many lines the message was
 		return 1 + message.split(System.getProperty("line.separator")).length;
 	}
-
-	public float getTime() {
-		return time;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
 }

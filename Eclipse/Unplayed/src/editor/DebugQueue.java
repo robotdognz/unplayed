@@ -1,10 +1,7 @@
 package editor;
 
 import static processing.core.PConstants.CENTER;
-
 import java.util.LinkedList;
-import java.util.Queue;
-
 import processing.core.PApplet;
 
 public class DebugQueue {
@@ -29,20 +26,14 @@ public class DebugQueue {
 	}
 
 	public static void drawMessages(PApplet p, float y, int textSize) {
-		// draw debug messages
+		// if there are debug messages, draw them
 		if (messageQueue.size() > 0) {
-
 			p.textSize(textSize);
 			p.textAlign(CENTER, CENTER);
 
-			int j = 0;
-//			for (DebugMessage m : messageQueue) {
-//
-//				j += m.drawMessage(p, p.width / 2, y + textSize * j);
-//			}
-
+			int line = 0;
 			for (int i = messageQueue.size() - 1; i >= 0; i--) {
-				j += messageQueue.get(i).drawMessage(p, p.width / 2, y + textSize * j);
+				line += messageQueue.get(i).drawMessage(p, p.width / 2, y + textSize * line);
 			}
 		}
 	}
