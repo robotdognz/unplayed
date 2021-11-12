@@ -8,4 +8,8 @@ public class PhysicsImpact {
 		this.impact = impact;
 		this.time = time;
 	}
+	
+	public String toString() {
+		return "" +  impact + " : " + time;
+	}
 }
