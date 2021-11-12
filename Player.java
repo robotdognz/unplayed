@@ -11,7 +11,6 @@ import handlers.TileHandler;
 import misc.CollisionEnum;
 import misc.CountdownTimer;
 import misc.PlayerTileXComparator;
-import misc.Vibe;
 import objects.Editable;
 import objects.Event;
 import objects.Tile;
@@ -32,16 +31,13 @@ public class Player extends Editable {
 	private boolean left = false;
 	private boolean right = false;
 
-	// vibration
-//	private Vibe vibe;
-
 	// box2d player
 	private Box2DProcessing box2d; // the box2d world
 	public Body dynamicBody; // the player's physics body
 	private float density; // the player's density
 	private float friction; // the player's friction
 
-	public boolean locked; // does the player have locked rotation
+	public boolean locked; // does the player have locked rotation TODO: remove when physics completed
 	int contactNumber; // the number of things touching the player's body
 	public int groundContacts; // the number of grounds touching the player's body
 	public int wallContacts; // the number of walls touching the player's body
@@ -51,7 +47,8 @@ public class Player extends Editable {
 	public CountdownTimer boostTimer; // used to correct the ground timer
 
 	private ArrayList<Event> events; // list of events touching the player
-	private boolean vibeFrame; // has a vibration happened yet this frame
+//	private boolean vibeFrame; // has a vibration happened yet this frame
+	private PlayerVibration vibration; // vibration system
 
 	// environment checking
 	public boolean showChecking = false;
@@ -92,12 +89,10 @@ public class Player extends Editable {
 	private boolean horizontalTunnel;
 //	private Vec2 previousPosition; // last player location
 
-	public Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile) { //, Vibe v) {
+	public Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile) {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.file = tile.getFile();
 		this.setAngle(tile.getAngle());
-
-//		vibe = v;
 
 		if (file != null && texture != null && texture.getTileMap().containsKey(file)) {
 			this.tileTexture = texture.getTileMap().get(file);
@@ -115,6 +110,8 @@ public class Player extends Editable {
 
 		this.locked = locked; // is rotation locked
 //		this.contactNumber = 0; // is the player touching anything
+		
+		this.vibration = new PlayerVibration();
 
 		// environment checking
 		this.sensorContacts = new HashSet<Tile>();
@@ -1037,36 +1034,39 @@ public class Player extends Editable {
 	}
 
 	public void physicsImpact(float[] impulses) {
-		// find total impulse power
-		float total = 0;
-		for (float impulse : impulses) {
-			total += impulse;
-		}
-
-		// TODO: this doesn't work because if you jump in one spot at the same height,
-		// it stops the vibration
-		// could be improved by adding a short timer to it
-
-//		// check if we already did one like this
-//		float impulseDifference = Math.abs(total - previousImpulse);
-//		if (previousImpulse != 0 && impulseDifference < 4) {
-//			PApplet.println(total + " skipped by previousImpulse");
-//			return;
-//		} else {
-////			previousImpulse = total;
+		
+		vibration.physicsImpact(impulses);
+		
+//		// find total impulse power
+//		float total = 0;
+//		for (float impulse : impulses) {
+//			total += impulse;
 //		}
-
-		if (total > 800 && !vibeFrame) { // 400
-
-			// Math.abs returns positive no matter what goes in
-			// Math.log returns the log of the number it is given
-			int strength = (int) Math.max(Math.abs(total / 1000), 1); // 800
-			Vibe.vibrate(strength);
-//			PApplet.println(total + " " + strength);
-			vibeFrame = true;
-//			previousImpulse = total;
-			return;
-		}
+//
+//		// TODO: this doesn't work because if you jump in one spot at the same height,
+//		// it stops the vibration
+//		// could be improved by adding a short timer to it
+//
+////		// check if we already did one like this
+////		float impulseDifference = Math.abs(total - previousImpulse);
+////		if (previousImpulse != 0 && impulseDifference < 4) {
+////			PApplet.println(total + " skipped by previousImpulse");
+////			return;
+////		} else {
+//////			previousImpulse = total;
+////		}
+//
+//		if (total > 800 && !vibeFrame) { // 400
+//
+//			// Math.abs returns positive no matter what goes in
+//			// Math.log returns the log of the number it is given
+//			int strength = (int) Math.max(Math.abs(total / 1000), 1); // 800
+//			Vibe.vibrate(strength);
+////			PApplet.println(total + " " + strength);
+//			vibeFrame = true;
+////			previousImpulse = total;
+//			return;
+//		}
 
 	}
 
@@ -1075,7 +1075,8 @@ public class Player extends Editable {
 	}
 
 	public void step(float deltaTime) {
-		vibeFrame = false; // clear vibeFrame
+//		vibeFrame = false; // clear vibeFrame
+		vibration.step(deltaTime);
 
 		if (rotationSmooth != null) {
 			rotationSmooth.deltaStep(deltaTime);
