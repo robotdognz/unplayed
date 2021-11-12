@@ -3,7 +3,6 @@ package game.player;
 import java.util.ArrayList;
 import java.util.List;
 
-import editor.DebugOutput;
 import misc.Vibe;
 
 public class PlayerVibration {
@@ -22,15 +21,13 @@ public class PlayerVibration {
 		impacts = new ArrayList<PhysicsImpact>();
 
 		timeout = 0.1f; // how long the impacts are kept for in seconds
-		timeoutLong = (long) (timeout * 1000000000);
+		timeoutLong = (long) (timeout * 1000000000); // translated to nanoseconds
 	}
 
 	public void step(float deltaTime) {
 		vibeFrame = false; // clear vibeFrame
 
 		currentTime = System.nanoTime();
-
-//		DebugOutput.pushMessage("" + currentTime, 1);
 
 		// remove old impacts
 		for (int i = 0; i < impacts.size(); i++) {
