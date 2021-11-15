@@ -352,10 +352,16 @@ public class Player extends Editable {
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		boolean resetRotation = checkTunnel(pos);
-		checkForWallSlots(pos, vel, resetRotation);
 		checkForGroundSlots(pos, vel, resetRotation);
-//		checkForWallSlots(pos, vel, resetRotation);
+		checkForWallSlots(pos, vel, resetRotation);
 		checkForRoofSlots(pos, vel);
+
+		// TODO: temp possible fix for edge case
+		if (wallBarrier != null && groundBarrier != null) {
+			if (wallBarrier.getUserData() == groundBarrier.getUserData()) {
+				destroyWallBarrier(resetRotation);
+			}
+		}
 
 		fixRotationOffset(angle, angleRemainder);
 	}
@@ -558,7 +564,6 @@ public class Player extends Editable {
 								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createGroundBarrier(top, bottom);
-								destroyWallBarrier(resetRotation); //TODO: testing
 							}
 
 						} else { // moving right
@@ -571,7 +576,6 @@ public class Player extends Editable {
 								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createGroundBarrier(top, bottom);
-								destroyWallBarrier(resetRotation); //TODO: testing
 							}
 						}
 
