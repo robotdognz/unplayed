@@ -704,7 +704,7 @@ public class Player extends Editable {
 		}
 
 		// sort the found tiles
-		if (vel.y > 1) { // moving up
+		if (vel.y > -2) { // moving up // FIXME: this used to be 1, doing testing
 			Collections.sort(wallChecking, Collections.reverseOrder());
 		} else { // moving down
 			Collections.sort(wallChecking);
