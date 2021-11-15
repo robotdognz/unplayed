@@ -18,6 +18,9 @@ import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
 import static processing.core.PConstants.*;
 import org.jbox2d.dynamics.*;
+
+import editor.DebugOutput;
+
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 
@@ -359,6 +362,7 @@ public class Player extends Editable {
 		// TODO: temp possible fix for edge case
 		if (wallBarrier != null && groundBarrier != null) {
 			if (wallBarrier.getUserData() == groundBarrier.getUserData()) {
+				DebugOutput.pushMessage("" + wallBarrier.getUserData() + " " + groundBarrier.getUserData(), 5);
 				destroyWallBarrier(resetRotation);
 			}
 		}
