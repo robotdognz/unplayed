@@ -558,6 +558,7 @@ public class Player extends Editable {
 								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createGroundBarrier(top, bottom);
+								destroyWallBarrier(resetRotation); //TODO: testing
 							}
 
 						} else { // moving right
@@ -570,6 +571,7 @@ public class Player extends Editable {
 								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createGroundBarrier(top, bottom);
+								destroyWallBarrier(resetRotation); //TODO: testing
 							}
 						}
 
