@@ -1011,7 +1011,7 @@ public class Player extends Editable {
 
 					// TODO: testing fix for jumping up into wall slots
 					if (wallBarrier == null
-							|| ((Vec2) wallBarrier.getUserData()).y < box2d.getBodyPixelCoordPVector(dynamicBody).y) {
+							|| ((Vec2) wallBarrier.getUserData()).y > box2d.getBodyPixelCoordPVector(dynamicBody).y) {
 						xImpulse = (dynamicBody.getMass() * jumpPower / 2);
 					}
 				}
@@ -1024,7 +1024,7 @@ public class Player extends Editable {
 
 					// TODO: testing fix for jumping up into wall slots
 					if (wallBarrier == null
-							|| ((Vec2) wallBarrier.getUserData()).y < box2d.getBodyPixelCoordPVector(dynamicBody).y) {
+							|| ((Vec2) wallBarrier.getUserData()).y > box2d.getBodyPixelCoordPVector(dynamicBody).y) {
 						xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 					}
 				}
