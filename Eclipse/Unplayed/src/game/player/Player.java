@@ -341,10 +341,10 @@ public class Player extends Editable {
 		float angle = PApplet.degrees(dynamicBody.getAngle());
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
-		if (angleRemainder >= 45) { // 3 TODO: play with this value
-			destroyAllBarriers(true);
-			return;
-		}
+//		if (angleRemainder >= 45) { // 3 TODO: play with this value
+//			destroyAllBarriers(true);
+//			return;
+//		}
 
 		// run the algorithms
 		// if tunnel checking locks the player's rotation, the other algorithms
@@ -353,7 +353,9 @@ public class Player extends Editable {
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		boolean resetRotation = checkTunnel(pos);
 		checkForGroundSlots(pos, vel, resetRotation);
-		checkForWallSlots(pos, vel, resetRotation);
+		if (groundBarrier == null) { // TODO: this is just a quick and dirty test to fix the getting stuck edge case
+			checkForWallSlots(pos, vel, resetRotation);
+		}
 		checkForRoofSlots(pos, vel);
 
 		fixRotationOffset(angle, angleRemainder);
