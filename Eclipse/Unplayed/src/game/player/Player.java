@@ -363,7 +363,10 @@ public class Player extends Editable {
 		if (wallBarrier != null && groundBarrier != null) {
 			DebugOutput.pushMessage("" + wallBarrier.getUserData() + " " + groundBarrier.getUserData(), 5);
 			if (wallBarrier.getUserData() == groundBarrier.getUserData()) {
+				DebugOutput.appendMessage("True");
 				destroyWallBarrier(resetRotation);
+			} else {
+				DebugOutput.appendMessage("False");
 			}
 		}
 

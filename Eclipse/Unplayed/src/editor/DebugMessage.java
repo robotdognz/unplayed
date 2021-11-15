@@ -16,6 +16,11 @@ public class DebugMessage {
 
 		this.opacity = 255;
 	}
+	
+	public void append(String message) {
+		this.time = 0;
+		this.message += "\n" + message;
+	}
 
 	public boolean step(float deltaTime) {
 		this.time += deltaTime;
