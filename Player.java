@@ -329,7 +329,7 @@ public class Player extends Editable {
 			destroyAllBarriers(true);
 			return;
 		}
-		
+
 		boolean tumble = false;
 
 		if (tumble) {
@@ -345,7 +345,8 @@ public class Player extends Editable {
 		float angle = PApplet.degrees(dynamicBody.getAngle());
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
-//		if (angleRemainder >= 45) { // 3 TODO: play with this value
+		// this code will probably be removed
+//		if (angleRemainder >= 45) { // 3 
 //			destroyAllBarriers(true);
 //			return;
 //		}
@@ -986,7 +987,8 @@ public class Player extends Editable {
 		float yImpulse = 0;
 
 		if (groundContacts > 0 || groundTimer.isRunning()) { // touching the ground
-			// check if jumping while moving in a tunnel
+			// check if jumping while moving in a tunnel //TODO: make changes here to all
+			// player jump up through slot while not moving
 			Vec2 vel = dynamicBody.getLinearVelocity();
 			if (horizontalTunnel && Math.abs(vel.x) > 0.1f) { // 0.5f
 				if (vel.x > 0) {
@@ -1006,18 +1008,28 @@ public class Player extends Editable {
 			if (left) { // pushing into a wall left
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
-					xImpulse = (dynamicBody.getMass() * jumpPower / 2);
+
+					// TODO: testing fix for jumping up into wall slots
+					if (wallBarrier == null
+							|| ((Vec2) wallBarrier.getUserData()).y < box2d.getBodyPixelCoordPVector(dynamicBody).y) {
+						xImpulse = (dynamicBody.getMass() * jumpPower / 2);
+					}
 				}
 				// extraJump = true;
-				extraJump = false; // TODO: testing
+				extraJump = false; // TODO: testing, 2020 development
 
 			} else if (right) { // pushing into a wall right
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
-					xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
+
+					// TODO: testing fix for jumping up into wall slots
+					if (wallBarrier == null
+							|| ((Vec2) wallBarrier.getUserData()).y < box2d.getBodyPixelCoordPVector(dynamicBody).y) {
+						xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
+					}
 				}
 				// extraJump = true;
-				extraJump = false; // TODO: testing, 2020 devalopment
+				extraJump = false; // TODO: testing, 2020 development
 
 			} else if (extraJump) { // not pushing into the wall
 				yImpulse = dynamicBody.getMass() * jumpPower;
