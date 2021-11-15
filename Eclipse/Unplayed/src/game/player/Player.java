@@ -352,10 +352,9 @@ public class Player extends Editable {
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		boolean resetRotation = checkTunnel(pos);
+		checkForWallSlots(pos, vel, resetRotation);
 		checkForGroundSlots(pos, vel, resetRotation);
-		if (groundBarrier == null) { // TODO: this is just a quick and dirty test to fix the getting stuck edge case
-			checkForWallSlots(pos, vel, resetRotation);
-		}
+//		checkForWallSlots(pos, vel, resetRotation);
 		checkForRoofSlots(pos, vel);
 
 		fixRotationOffset(angle, angleRemainder);
