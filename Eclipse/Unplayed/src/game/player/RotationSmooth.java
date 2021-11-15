@@ -12,7 +12,7 @@ public class RotationSmooth {
 	private float stepSize;
 
 	// TODO: another way could be to check the max velocity of the last part of a second and use that
-	// not the way I did before, completely unrealated to physics impacts
+	// not the way I did before, completely unrelated to physics impacts
 
 	public RotationSmooth(float oldAngle, float newAngle, float impact) {
 		this.currentAngle = oldAngle;

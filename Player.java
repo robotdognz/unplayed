@@ -331,11 +331,11 @@ public class Player extends Editable {
 		}
 
 		// check the player isn't spinning
-		float av = dynamicBody.getAngularVelocity();
-		if (Math.abs(av) >= 2) {
-			destroyAllBarriers(true);
-			return;
-		}
+//		float av = dynamicBody.getAngularVelocity();
+//		if (Math.abs(av) >= 2) {
+//			destroyAllBarriers(true);
+//			return;
+//		}
 
 		// check angle is appropriate
 		float angle = PApplet.degrees(dynamicBody.getAngle());
