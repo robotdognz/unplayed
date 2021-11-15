@@ -874,7 +874,7 @@ public class Player extends Editable {
 		// body
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.STATIC;
-		bodyDef.userData = v1;
+		bodyDef.userData = v2;
 		groundBarrier = box2d.createBody(bodyDef);
 
 		// shape
@@ -897,7 +897,7 @@ public class Player extends Editable {
 		// body
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.STATIC;
-		bodyDef.userData = v1;
+		bodyDef.userData = v2;
 		wallBarrier = box2d.createBody(bodyDef);
 
 		// shape
@@ -920,7 +920,7 @@ public class Player extends Editable {
 		// body
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.STATIC;
-		bodyDef.userData = v1;
+		bodyDef.userData = v2;
 		roofBarrier = box2d.createBody(bodyDef);
 
 		// shape
@@ -1014,7 +1014,7 @@ public class Player extends Editable {
 					xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 				}
 				// extraJump = true;
-				extraJump = false; // TODO: testing
+				extraJump = false; // TODO: testing, 2020 devalopment
 
 			} else if (extraJump) { // not pushing into the wall
 				yImpulse = dynamicBody.getMass() * jumpPower;
