@@ -18,9 +18,6 @@ import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
 import static processing.core.PConstants.*;
 import org.jbox2d.dynamics.*;
-
-import editor.DebugOutput;
-
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 
@@ -334,11 +331,11 @@ public class Player extends Editable {
 		}
 
 		// check the player isn't spinning
-//		float av = dynamicBody.getAngularVelocity();
-//		if (Math.abs(av) >= 2) {
-//			destroyAllBarriers(true);
-//			return;
-//		}
+		float av = dynamicBody.getAngularVelocity();
+		if (Math.abs(av) >= 2) {
+			destroyAllBarriers(true);
+			return;
+		}
 
 		// check angle is appropriate
 		float angle = PApplet.degrees(dynamicBody.getAngle());
@@ -359,7 +356,8 @@ public class Player extends Editable {
 		checkForWallSlots(pos, vel, resetRotation);
 		checkForRoofSlots(pos, vel);
 
-		// TODO: temp possible fix for edge case
+		// prevent the edge case when a player jumps into the intersection of a ground
+		// slot and a wall slot
 		if (wallBarrier != null && groundBarrier != null) {
 
 			if (((Vec2) wallBarrier.getUserData()).x == ((Vec2) groundBarrier.getUserData()).x
@@ -568,7 +566,7 @@ public class Player extends Editable {
 							if (t.getBottomRight().x <= pos.x - getWidth() / 2 - 0.25f) {
 								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
-								createGroundBarrier(top, bottom);
+								createGroundBarrier(bottom, top);
 							}
 
 						} else { // moving right
@@ -580,7 +578,7 @@ public class Player extends Editable {
 							if (t.getTopLeft().x >= pos.x + getWidth() / 2 + 0.25f) {
 								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
-								createGroundBarrier(top, bottom);
+								createGroundBarrier(bottom, top);
 							}
 						}
 
@@ -733,11 +731,11 @@ public class Player extends Editable {
 								if (direction) { // moving left
 									Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
 									Vec2 top = new Vec2(bottom.x + 5, bottom.y);
-									createWallBarrier(top, bottom);
+									createWallBarrier(bottom, top);
 								} else { // moving right
 									Vec2 bottom = new Vec2(t.getTopLeft().x, t.getBottomRight().y);
 									Vec2 top = new Vec2(bottom.x - 5, bottom.y);
-									createWallBarrier(top, bottom);
+									createWallBarrier(bottom, top);
 								}
 							}
 
@@ -750,11 +748,11 @@ public class Player extends Editable {
 								if (direction) { // moving left
 									Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 									Vec2 top = new Vec2(bottom.x + 5, bottom.y);
-									createWallBarrier(top, bottom);
+									createWallBarrier(bottom, top);
 								} else { // moving right
 									Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 									Vec2 top = new Vec2(bottom.x - 5, bottom.y);
-									createWallBarrier(top, bottom);
+									createWallBarrier(bottom, top);
 								}
 							}
 						}
@@ -840,7 +838,7 @@ public class Player extends Editable {
 							if (t.getBottomRight().x <= pos.x - getWidth() / 2 - 0.25f) {
 								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y + 5);
-								createRoofBarrier(top, bottom);
+								createRoofBarrier(bottom, top);
 							}
 
 						} else { // moving right
@@ -852,7 +850,7 @@ public class Player extends Editable {
 							if (t.getTopLeft().x >= pos.x + getWidth() / 2 + 0.25f) {
 								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getBottomRight().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y + 5);
-								createRoofBarrier(top, bottom);
+								createRoofBarrier(bottom, top);
 							}
 						}
 
@@ -875,7 +873,7 @@ public class Player extends Editable {
 		// body
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.STATIC;
-		bodyDef.userData = v2;
+		bodyDef.userData = v1;
 		groundBarrier = box2d.createBody(bodyDef);
 
 		// shape
@@ -898,7 +896,7 @@ public class Player extends Editable {
 		// body
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.STATIC;
-		bodyDef.userData = v2;
+		bodyDef.userData = v1;
 		wallBarrier = box2d.createBody(bodyDef);
 
 		// shape
@@ -921,7 +919,7 @@ public class Player extends Editable {
 		// body
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.STATIC;
-		bodyDef.userData = v2;
+		bodyDef.userData = v1;
 		roofBarrier = box2d.createBody(bodyDef);
 
 		// shape
