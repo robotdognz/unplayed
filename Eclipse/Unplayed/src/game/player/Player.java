@@ -362,7 +362,8 @@ public class Player extends Editable {
 		// TODO: temp possible fix for edge case
 		if (wallBarrier != null && groundBarrier != null) {
 			DebugOutput.pushMessage("" + wallBarrier.getUserData() + " " + groundBarrier.getUserData(), 5);
-			if (wallBarrier.getUserData() == groundBarrier.getUserData()) {
+
+			if ((Vec2) wallBarrier.getUserData() == (Vec2) groundBarrier.getUserData()) {
 				DebugOutput.appendMessage("True");
 				destroyWallBarrier(resetRotation);
 			} else {
