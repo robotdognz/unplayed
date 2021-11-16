@@ -719,9 +719,9 @@ public class Player extends Editable {
 				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
 
 					// make sure the gap is in front of the player
-					if ((vel.y > 1 && t.getBottomRight().y < pos.y) // moving up
+					if ((vel.y > 1 && t.getBottomRight().y < pos.y - getHeight() * 0.5) // moving up
 							|| (vel.y < 1 && t.getTopLeft().y > pos.y)) { // moving down
-
+						
 						// lock rotation
 						this.dynamicBody.setFixedRotation(true);
 
@@ -1072,8 +1072,6 @@ public class Player extends Editable {
 				if (!verticalTunnel) { // not in a tunnel
 
 					// TODO: testing fix for jumping up into wall slots
-//					if (wallBarrier == null
-//							|| ((Vec2) wallBarrier.getUserData()).y > box2d.getBodyPixelCoordPVector(dynamicBody).y) {
 					if (!checkForWallSlotsJump(true)) {
 						xImpulse = (dynamicBody.getMass() * jumpPower / 2);
 					}
@@ -1086,8 +1084,6 @@ public class Player extends Editable {
 				if (!verticalTunnel) { // not in a tunnel
 
 					// TODO: testing fix for jumping up into wall slots
-//					if (wallBarrier == null
-//							|| ((Vec2) wallBarrier.getUserData()).y > box2d.getBodyPixelCoordPVector(dynamicBody).y) {
 					if (!checkForWallSlotsJump(false)) {
 						xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 					}
