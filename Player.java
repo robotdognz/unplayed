@@ -1120,15 +1120,19 @@ public class Player extends Editable {
 
 			int roofSlot = checkForRoofSlotsJump();
 			if (roofSlot == -1) { // left
+				// reset horizontal speed
+				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 				xImpulse = -(dynamicBody.getMass() * (jumpPower * 1)); // 0.5f
 				boostTimer.start();
 			} else if (roofSlot == 1) { // right
+				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 				xImpulse = dynamicBody.getMass() * (jumpPower * 1); // 0.5f
 				boostTimer.start();
 			} else { // none
 				yImpulse = dynamicBody.getMass() * jumpPower;
 			}
 
+			// old code where you had to be moving to jump up through a roof slot
 //			Vec2 vel = dynamicBody.getLinearVelocity();
 //			if (horizontalTunnel && Math.abs(vel.x) > 0.1f) { // 0.5f
 //				if (vel.x > 0) {
