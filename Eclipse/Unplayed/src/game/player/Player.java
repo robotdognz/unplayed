@@ -518,10 +518,10 @@ public class Player extends Editable {
 
 		// if the player is moving away from an existing barrier, destroy it
 		if (groundBarrier != null) {
-			if (direction && ((Vec2) groundBarrier.getUserData()).x < pos.x) { // moving left
+			if (left && ((Vec2) groundBarrier.getUserData()).x > pos.x) { // moving left
 				destroyWallBarrier(false);
 			}
-			if (!direction && ((Vec2) groundBarrier.getUserData()).x > pos.x) { // moving right
+			if (right && ((Vec2) groundBarrier.getUserData()).x < pos.x) { // moving right
 				destroyWallBarrier(false);
 			}
 		}
