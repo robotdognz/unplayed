@@ -719,7 +719,7 @@ public class Player extends Editable {
 				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
 
 					// make sure the gap is in front of the player
-					if ((vel.y > 1 && t.getBottomRight().y < pos.y - getHeight() * 0.5 + 1) // moving up
+					if ((vel.y > 1 && t.getBottomRight().y < pos.y) // moving up
 							|| (vel.y < 1 && t.getTopLeft().y > pos.y)) { // moving down
 						
 						// lock rotation
@@ -737,11 +737,11 @@ public class Player extends Editable {
 									if (direction) { // moving left
 										Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
 										Vec2 top = new Vec2(bottom.x + 5, bottom.y);
-//										createWallBarrier(bottom, top);
+										createWallBarrier(bottom, top);
 									} else { // moving right
 										Vec2 bottom = new Vec2(t.getTopLeft().x, t.getBottomRight().y);
 										Vec2 top = new Vec2(bottom.x - 5, bottom.y);
-//										createWallBarrier(bottom, top);
+										createWallBarrier(bottom, top);
 									}
 								}
 
