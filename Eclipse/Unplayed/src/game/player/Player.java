@@ -775,20 +775,8 @@ public class Player extends Editable {
 		destroyWallBarrier(resetRotation);
 	}
 
-	private boolean checkForWallSlotsJump() {
+	private boolean checkForWallSlotsJump(boolean direction) {
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
-
-		// player is trying to move on the x axis
-		if (!(left || right)) {
-			return false;
-		}
-		boolean direction = true; // true = left, false = right
-		if (left) {
-			direction = true;
-		}
-		if (right) {
-			direction = false;
-		}
 
 		// create a list of relevant tiles sorted by x position
 		for (Tile t : sensorContacts) {
@@ -831,7 +819,7 @@ public class Player extends Editable {
 				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
 
 					// make sure the gap is in front of the player
-					if (t.getBottomRight().y < pos.y) { // moving up
+					if (t.getBottomRight().y < pos.y + getHeight() / 2) { // moving up
 						return true;
 					}
 				}
@@ -1082,7 +1070,7 @@ public class Player extends Editable {
 					// TODO: testing fix for jumping up into wall slots
 //					if (wallBarrier == null
 //							|| ((Vec2) wallBarrier.getUserData()).y > box2d.getBodyPixelCoordPVector(dynamicBody).y) {
-					if (!checkForWallSlotsJump()) {
+					if (!checkForWallSlotsJump(true)) {
 						xImpulse = (dynamicBody.getMass() * jumpPower / 2);
 					}
 				}
@@ -1096,7 +1084,7 @@ public class Player extends Editable {
 					// TODO: testing fix for jumping up into wall slots
 //					if (wallBarrier == null
 //							|| ((Vec2) wallBarrier.getUserData()).y > box2d.getBodyPixelCoordPVector(dynamicBody).y) {
-					if(!checkForWallSlotsJump()) {
+					if (!checkForWallSlotsJump(false)) {
 						xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 					}
 				}
