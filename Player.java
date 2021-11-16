@@ -18,6 +18,9 @@ import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
 import static processing.core.PConstants.*;
 import org.jbox2d.dynamics.*;
+
+import editor.DebugOutput;
+
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 
@@ -501,7 +504,7 @@ public class Player extends Editable {
 		// player is moving or trying to move on the x axis
 		if (!((left || right) || (Math.abs(vel.x) >= 4))) {
 			destroyGroundBarrier(resetRotation);
-			staticGroundSlots(pos, vel, resetRotation);
+			checkGroundSlotsStatic(pos, vel, resetRotation);
 			return;
 		}
 		boolean direction = true; // true = left, false = right
@@ -598,7 +601,7 @@ public class Player extends Editable {
 		destroyGroundBarrier(resetRotation);
 	}
 
-	private void staticGroundSlots(PVector pos, Vec2 vel, boolean resetRotation) {
+	private void checkGroundSlotsStatic(PVector pos, Vec2 vel, boolean resetRotation) {
 		// player is still or falling on the y axis
 		if (!(vel.y <= 2)) {
 			destroyGroundBarrier(resetRotation);
@@ -721,7 +724,7 @@ public class Player extends Editable {
 					// make sure the gap is in front of the player
 					if ((vel.y > 1 && t.getBottomRight().y < pos.y) // moving up
 							|| (vel.y < 1 && t.getTopLeft().y > pos.y)) { // moving down
-						
+
 						// lock rotation
 						this.dynamicBody.setFixedRotation(true);
 
@@ -776,6 +779,7 @@ public class Player extends Editable {
 	}
 
 	private boolean checkForWallSlotsJump(boolean direction) {
+		wallChecking.clear();
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 
 		// create a list of relevant tiles sorted by x position
@@ -932,6 +936,64 @@ public class Player extends Editable {
 		destroyRoofBarrier();
 	}
 
+	private int checkForRoofSlotsJump() {
+		roofChecking.clear();
+		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
+
+		// create a list of relevant tiles sorted by x position
+		for (Tile t : sensorContacts) {
+			// skip this tile if the bottom of it is below the player's midpoint
+			if (t.getBottomRight().y > pos.y) {
+				continue;
+			}
+
+			// skip this tile if it is too far above the player
+			if (t.getBottomRight().y < pos.y - getHeight()) {
+				continue;
+			}
+
+			// skip this tile if it isn't directly above the player
+
+			if (pos.x + getWidth() * 1.5 < t.getTopLeft().x) {
+				continue;
+			}
+
+			if (pos.x - getWidth() * 1.5 > t.getBottomRight().x) {
+				continue;
+			}
+
+			roofChecking.add(t);
+		}
+
+		Collections.sort(roofChecking);
+
+		// check the list of tiles for a playerWidth sized gap
+		float previousX = 0;
+		for (int i = 0; i < roofChecking.size(); i++) {
+			Tile t = roofChecking.get(i);
+			if (i > 0) {
+				// if this tile is the far side of a gap
+				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
+					// slot found
+
+					if (t.getTopLeft().x > pos.x + getWidth() * 0.5) {
+						// slot is to the right
+						DebugOutput.appendMessage("right");
+						return 1;
+					} else {
+						// slot is to the left
+						DebugOutput.appendMessage("left");
+						return -1;
+					}
+				}
+			}
+			previousX = t.getX();
+		}
+
+		// didn't find a roof slot
+		return 0;
+	}
+
 	private void createGroundBarrier(Vec2 v1, Vec2 v2) {
 		if (groundBarrier != null) {
 			return;
@@ -1051,6 +1113,9 @@ public class Player extends Editable {
 		if (groundContacts > 0 || groundTimer.isRunning()) { // touching the ground
 			// check if jumping while moving in a tunnel //TODO: make changes here to all
 			// player jump up through slot while not moving
+			
+			checkForRoofSlotsJump();
+			
 			Vec2 vel = dynamicBody.getLinearVelocity();
 			if (horizontalTunnel && Math.abs(vel.x) > 0.1f) { // 0.5f
 				if (vel.x > 0) {
