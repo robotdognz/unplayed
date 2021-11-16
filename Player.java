@@ -508,12 +508,24 @@ public class Player extends Editable {
 			checkGroundSlotsStatic(pos, vel, resetRotation);
 			return;
 		}
+
 		boolean direction = true; // true = left, false = right
 		if (left || vel.x <= -4) {
 			direction = true;
 		} else if (right || vel.x >= 4) {
 			direction = false;
 		}
+
+		// if the player is moving away from an existing barrier, destroy it
+		if (groundBarrier != null) {
+			if (direction && ((Vec2) groundBarrier.getUserData()).x < pos.x) { // moving left
+				destroyWallBarrier(false);
+			}
+			if (!direction && ((Vec2) groundBarrier.getUserData()).x > pos.x) { // moving right
+				destroyWallBarrier(false);
+			}
+		}
+
 		// player is still or falling on the y axis
 		if (!(vel.y <= 2)) {
 			destroyGroundBarrier(resetRotation);
