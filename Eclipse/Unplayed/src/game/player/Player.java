@@ -985,6 +985,7 @@ public class Player extends Editable {
 						DebugOutput.pushMessage("left", 4);
 						return -1;
 					} else {
+						DebugOutput.pushMessage("none", 4);
 						return 0;
 					}
 				}
@@ -993,6 +994,7 @@ public class Player extends Editable {
 		}
 
 		// didn't find a roof slot
+		DebugOutput.pushMessage("none", 4);
 		return 0;
 	}
 
