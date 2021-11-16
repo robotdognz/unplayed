@@ -665,6 +665,17 @@ public class Player extends Editable {
 			destroyWallBarrier(resetRotation);
 			return;
 		}
+
+		// if the player is moving away from an existing barrier
+		if (wallBarrier != null) {
+			if (vel.y > 0 && ((Vec2) wallBarrier.getUserData()).y > pos.y) { // moving up
+				destroyWallBarrier(false);
+			}
+			if (vel.y < 0 && ((Vec2) wallBarrier.getUserData()).y < pos.y) { // moving dwn
+				destroyWallBarrier(false);
+			}
+		}
+
 		boolean direction = true; // true = left, false = right
 		if (left) {
 			direction = true;
@@ -736,7 +747,8 @@ public class Player extends Editable {
 								// final position check (stops barriers being made under player)
 								// this works because it failing doesn't remove an existing barrier
 								// so it only prevents barriers being made when you're already in the slot
-								if (t.getBottomRight().y <= pos.y - getHeight()) { // t.getBottomRight().y <= pos.y - getHeight() * 0.5
+								if (t.getBottomRight().y <= pos.y) { // t.getBottomRight().y <= pos.y - getHeight() *
+																		// 0.5
 									if (direction) { // moving left
 										Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
 										Vec2 top = new Vec2(bottom.x + 5, bottom.y);
@@ -753,7 +765,7 @@ public class Player extends Editable {
 								// final position check (stops barriers being made under player)
 								// this works because it failing doesn't remove an existing barrier
 								// so it only prevents barriers being made when you're already in the slot
-								if (t.getTopLeft().y >= pos.y + getHeight()) { // t.getTopLeft().y >= pos.y + getHeight() * 0.5
+								if (t.getTopLeft().y >= pos.y) { // t.getTopLeft().y >= pos.y + getHeight() * 0.5
 									if (direction) { // moving left
 										Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 										Vec2 top = new Vec2(bottom.x + 5, bottom.y);
