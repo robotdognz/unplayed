@@ -348,7 +348,7 @@ public class Player extends Editable {
 		float angle = PApplet.degrees(dynamicBody.getAngle());
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
-		
+
 		// this code will probably be removed
 //		if (angleRemainder >= 45) { // 3 
 //			destroyAllBarriers(true);
@@ -572,7 +572,7 @@ public class Player extends Editable {
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							if (t.getBottomRight().x <= pos.x - getWidth() / 2 - 0.25f) {
+							if (t.getBottomRight().x <= pos.x - getWidth() * 0.5 - 0.25f) {
 								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createGroundBarrier(bottom, top);
@@ -584,7 +584,7 @@ public class Player extends Editable {
 							// so it only prevents barriers being made when you're already in the slot
 							// 0.25 is added to stop a barrier being constructed when you're up against the
 							// edge of the gap
-							if (t.getTopLeft().x >= pos.x + getWidth() / 2 + 0.25f) {
+							if (t.getTopLeft().x >= pos.x + getWidth() * 0.5 + 0.25f) {
 								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y - 5);
 								createGroundBarrier(bottom, top);
@@ -736,7 +736,7 @@ public class Player extends Editable {
 								// final position check (stops barriers being made under player)
 								// this works because it failing doesn't remove an existing barrier
 								// so it only prevents barriers being made when you're already in the slot
-								if (t.getBottomRight().y <= pos.y - getHeight() / 2) {
+								if (t.getBottomRight().y <= pos.y - getHeight() * 0.5 - 0.25) {
 
 									if (direction) { // moving left
 										Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
@@ -754,7 +754,7 @@ public class Player extends Editable {
 								// final position check (stops barriers being made under player)
 								// this works because it failing doesn't remove an existing barrier
 								// so it only prevents barriers being made when you're already in the slot
-								if (t.getTopLeft().y >= pos.y + getHeight() / 2) {
+								if (t.getTopLeft().y >= pos.y + getHeight() * 0.5 + 0.25) {
 									if (direction) { // moving left
 										Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 										Vec2 top = new Vec2(bottom.x + 5, bottom.y);
@@ -911,7 +911,7 @@ public class Player extends Editable {
 								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y + 5);
 								createRoofBarrier(bottom, top);
-								destroyWallBarrier(false); // prevent edge case
+								destroyWallBarrier(false); // prevent edge case in four way intersection
 							}
 
 						} else { // moving right
@@ -924,7 +924,7 @@ public class Player extends Editable {
 								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getBottomRight().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y + 5);
 								createRoofBarrier(bottom, top);
-								destroyWallBarrier(false); // prevent edge case
+								destroyWallBarrier(false); // prevent edge case in four way intersection
 							}
 						}
 
@@ -1118,7 +1118,7 @@ public class Player extends Editable {
 		float yImpulse = 0;
 
 		if (groundContacts > 0 || groundTimer.isRunning()) { // touching the ground
-			
+
 //          Vec2 vel = dynamicBody.getLinearVelocity();
 
 			// if the player is in a horizontal tunnel, but not at a tunnel intersection
