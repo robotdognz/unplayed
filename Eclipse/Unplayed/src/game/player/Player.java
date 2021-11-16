@@ -733,18 +733,15 @@ public class Player extends Editable {
 				// if this tile is the far side of a gap
 				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
 
-//					// make sure the gap is in front of the player
-//					if ((vel.y > 1 && t.getBottomRight().y < pos.y) // moving up
-//							|| (vel.y < 1 && t.getTopLeft().y > pos.y)) { // moving down
-
 					// try create the barrier
 					if (wallContacts > 0) {
-						if (vel.y > 0) { // moving up //TODO: was 1
+						if (vel.y > 0) { // moving up
 
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							if (t.getBottomRight().y <= pos.y) { // t.getBottomRight().y <= pos.y - getHeight() * 0.5
+							// TODO: the above comment is now redundant, describe what is actually happening
+							if (t.getBottomRight().y <= pos.y) {
 
 								// lock rotation
 								this.dynamicBody.setFixedRotation(true);
@@ -759,6 +756,8 @@ public class Player extends Editable {
 									createWallBarrier(bottom, top);
 								}
 								return;
+							} else {
+								destroyWallBarrier(false);
 							}
 
 						} else { // moving down
@@ -766,7 +765,8 @@ public class Player extends Editable {
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							if (t.getTopLeft().y >= pos.y) { // t.getTopLeft().y >= pos.y + getHeight() * 0.5
+							// TODO: the above comment is now redundant, describe what is actually happening
+							if (t.getTopLeft().y >= pos.y) {
 
 								// lock rotation
 								this.dynamicBody.setFixedRotation(true);
@@ -781,11 +781,11 @@ public class Player extends Editable {
 									createWallBarrier(bottom, top);
 								}
 								return;
+							} else {
+								destroyWallBarrier(false);
 							}
 						}
 					}
-
-//					}
 				}
 			}
 			previousY = t.getY();
