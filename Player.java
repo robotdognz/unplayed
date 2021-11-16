@@ -723,8 +723,10 @@ public class Player extends Editable {
 				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
 
 					// make sure the gap is in front of the player
-					if ((vel.y > 0 && t.getBottomRight().y < pos.y) // moving up //TODO: vel.y was 1 for both
-							|| (vel.y < 0 && t.getTopLeft().y > pos.y)) { // moving down
+//					if ((vel.y > 1 && t.getBottomRight().y < pos.y) // moving up
+//							|| (vel.y < 1 && t.getTopLeft().y > pos.y)) { // moving down
+					if ((vel.y > 1 && t.getBottomRight().y <= pos.y - getHeight() * 0.5) // moving up
+							|| (vel.y < 1 && t.getTopLeft().y >= pos.y + getHeight() * 0.5)) { // moving down
 
 						// lock rotation
 						this.dynamicBody.setFixedRotation(true);
@@ -736,8 +738,7 @@ public class Player extends Editable {
 								// final position check (stops barriers being made under player)
 								// this works because it failing doesn't remove an existing barrier
 								// so it only prevents barriers being made when you're already in the slot
-								if (t.getBottomRight().y <= pos.y - getHeight() * 0.5 + 0.25) {
-
+								if (t.getBottomRight().y <= pos.y - getHeight() * 0.5) {
 									if (direction) { // moving left
 										Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
 										Vec2 top = new Vec2(bottom.x + 5, bottom.y);
@@ -754,7 +755,7 @@ public class Player extends Editable {
 								// final position check (stops barriers being made under player)
 								// this works because it failing doesn't remove an existing barrier
 								// so it only prevents barriers being made when you're already in the slot
-								if (t.getTopLeft().y >= pos.y + getHeight() * 0.5 - 0.25) {
+								if (t.getTopLeft().y >= pos.y + getHeight() * 0.5) {
 									if (direction) { // moving left
 										Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
 										Vec2 top = new Vec2(bottom.x + 5, bottom.y);
