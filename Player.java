@@ -822,9 +822,9 @@ public class Player extends Editable {
 					if (pos.y - getHeight() / 2 > t.getBottomRight().y) {
 						// make sure the gap isn't too far away
 						if (pos.y - getHeight() < t.getBottomRight().y) {
-
+							return true;
 						}
-						return true;
+						
 					}
 				}
 			}
