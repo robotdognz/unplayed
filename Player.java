@@ -1113,21 +1113,31 @@ public class Player extends Editable {
 		if (groundContacts > 0 || groundTimer.isRunning()) { // touching the ground
 			// check if jumping while moving in a tunnel //TODO: make changes here to all
 			// player jump up through slot while not moving
-			
-			checkForRoofSlotsJump();
-			
-			Vec2 vel = dynamicBody.getLinearVelocity();
-			if (horizontalTunnel && Math.abs(vel.x) > 0.1f) { // 0.5f
-				if (vel.x > 0) {
-					xImpulse = dynamicBody.getMass() * (jumpPower / 2);
-					boostTimer.start();
-				} else {
-					xImpulse = -(dynamicBody.getMass() * (jumpPower / 2));
-					boostTimer.start();
-				}
-			} else {
+
+			int roofSlot = checkForRoofSlotsJump();
+			if (roofSlot == -1) { // left
+				xImpulse = -(dynamicBody.getMass() * (jumpPower / 2));
+				boostTimer.start();
+			} else if (roofSlot == 1) { // right
+				xImpulse = dynamicBody.getMass() * (jumpPower / 2);
+				boostTimer.start();
+			} else { // none
 				yImpulse = dynamicBody.getMass() * jumpPower;
 			}
+
+//			Vec2 vel = dynamicBody.getLinearVelocity();
+//			if (horizontalTunnel && Math.abs(vel.x) > 0.1f) { // 0.5f
+//				if (vel.x > 0) {
+//					xImpulse = dynamicBody.getMass() * (jumpPower / 2);
+//					boostTimer.start();
+//				} else {
+//					xImpulse = -(dynamicBody.getMass() * (jumpPower / 2));
+//					boostTimer.start();
+//				}
+//			} else {
+//				yImpulse = dynamicBody.getMass() * jumpPower;
+//			}
+
 			extraJump = true;
 
 		} else if (wallContacts > 0 || wallTimer.isRunning()) { // touching a wall
