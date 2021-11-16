@@ -980,10 +980,12 @@ public class Player extends Editable {
 						// slot is to the right
 						DebugOutput.pushMessage("right", 4);
 						return 1;
-					} else {
+					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5) {
 						// slot is to the left
 						DebugOutput.pushMessage("left", 4);
 						return -1;
+					} else {
+						return 0;
 					}
 				}
 			}
