@@ -274,9 +274,6 @@ public class Player extends Editable {
 		if (touchingRoofBarrier) {
 			jumpTimer.start();
 
-			// old code where you had to be moving to jump up through a roof slot
-//			extraJump = false;
-
 			// reset vertical speed
 			dynamicBody.setLinearVelocity(new Vec2(0, 0)); // dynamicBody.getLinearVelocity().x
 			// apply impulse
@@ -732,7 +729,7 @@ public class Player extends Editable {
 						this.dynamicBody.setFixedRotation(true);
 
 						// try create the barrier
-						if (wallContacts > 0) { // TODO: testing
+						if (wallContacts > 0) {
 							if (vel.y > 1) { // moving up
 
 								// final position check (stops barriers being made under player)
@@ -977,21 +974,18 @@ public class Player extends Editable {
 			if (i > 0) {
 				// if this tile is the far side of a gap
 				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
-					// slot found
 
-					if (t.getTopLeft().x == pos.x + getWidth() * 0.5) {
-						DebugOutput.pushMessage("in slot", 4);
-						return 0;
-					} else if (t.getTopLeft().x > pos.x + getWidth() * 0.5 + 0.2) {
+					if (t.getTopLeft().x > pos.x + getWidth() * 0.5 + 0.2) {
 						// slot is to the right
-						DebugOutput.pushMessage("right", 4);
+//						DebugOutput.pushMessage("right", 4);
 						return 1;
 					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5 - 0.2) {
 						// slot is to the left
-						DebugOutput.pushMessage("left", 4);
+//						DebugOutput.pushMessage("left", 4);
 						return -1;
 					} else {
-						DebugOutput.pushMessage("none", 4);
+						// in slot or no slot
+//						DebugOutput.pushMessage("none", 4);
 						return 0;
 					}
 				}
@@ -1121,36 +1115,29 @@ public class Player extends Editable {
 		float yImpulse = 0;
 
 		if (groundContacts > 0 || groundTimer.isRunning()) { // touching the ground
-			// check if jumping while moving in a tunnel //TODO: make changes here to all
-			// player jump up through slot while not moving
 
-			int roofSlot = checkForRoofSlotsJump();
-			if (roofSlot == -1) { // left
-				// reset horizontal speed
-				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
-				xImpulse = -(dynamicBody.getMass() * (jumpPower * 1)); // 0.5f
-				boostTimer.start();
-			} else if (roofSlot == 1) { // right
-				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
-				xImpulse = dynamicBody.getMass() * (jumpPower * 1); // 0.5f
-				boostTimer.start();
-			} else { // none
+			// if the player is in a horizontal tunnel, but not at a tunnel intersection
+			if (horizontalTunnel && !verticalTunnel) {
+				int roofSlot = checkForRoofSlotsJump();
+				if (roofSlot == -1) { // left
+					// reset horizontal speed
+					dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
+					// apply x impulse
+					xImpulse = -(dynamicBody.getMass() * jumpPower);
+					boostTimer.start();
+				} else if (roofSlot == 1) { // right
+					// reset horizontal speed
+					dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
+					// apply x impulse
+					xImpulse = dynamicBody.getMass() * jumpPower;
+					boostTimer.start();
+				} else { // none
+					yImpulse = dynamicBody.getMass() * jumpPower;
+				}
+
+			} else {
 				yImpulse = dynamicBody.getMass() * jumpPower;
 			}
-
-			// old code where you had to be moving to jump up through a roof slot
-//			Vec2 vel = dynamicBody.getLinearVelocity();
-//			if (horizontalTunnel && Math.abs(vel.x) > 0.1f) { // 0.5f
-//				if (vel.x > 0) {
-//					xImpulse = dynamicBody.getMass() * (jumpPower / 2);
-//					boostTimer.start();
-//				} else {
-//					xImpulse = -(dynamicBody.getMass() * (jumpPower / 2));
-//					boostTimer.start();
-//				}
-//			} else {
-//				yImpulse = dynamicBody.getMass() * jumpPower;
-//			}
 
 			extraJump = true;
 
