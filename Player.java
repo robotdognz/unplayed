@@ -273,7 +273,10 @@ public class Player extends Editable {
 		// boost up if touching roof barrier
 		if (touchingRoofBarrier) {
 			jumpTimer.start();
+			
+			// old code where you had to be moving to jump up through a roof slot
 //			extraJump = false;
+			
 			// reset vertical speed
 			dynamicBody.setLinearVelocity(new Vec2(0, 0)); // dynamicBody.getLinearVelocity().x
 			// apply impulse
@@ -976,11 +979,11 @@ public class Player extends Editable {
 				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
 					// slot found
 
-					if (t.getTopLeft().x > pos.x + getWidth() * 0.5 + 0.1) {
+					if (t.getTopLeft().x > pos.x + getWidth() * 0.5 - 0.1) {
 						// slot is to the right
 						DebugOutput.pushMessage("right", 4);
 						return 1;
-					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5 - 0.1) {
+					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5 + 0.1) {
 						// slot is to the left
 						DebugOutput.pushMessage("left", 4);
 						return -1;
