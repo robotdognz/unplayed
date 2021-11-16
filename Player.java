@@ -737,11 +737,11 @@ public class Player extends Editable {
 									if (direction) { // moving left
 										Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
 										Vec2 top = new Vec2(bottom.x + 5, bottom.y);
-										createWallBarrier(bottom, top);
+//										createWallBarrier(bottom, top);
 									} else { // moving right
 										Vec2 bottom = new Vec2(t.getTopLeft().x, t.getBottomRight().y);
 										Vec2 top = new Vec2(bottom.x - 5, bottom.y);
-										createWallBarrier(bottom, top);
+//										createWallBarrier(bottom, top);
 									}
 								}
 
