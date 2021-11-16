@@ -704,7 +704,7 @@ public class Player extends Editable {
 		}
 
 		// sort the found tiles
-		if (vel.y > -2) { // moving up // FIXME: this used to be 1, doing testing
+		if (vel.y > 1) { // moving up
 			Collections.sort(wallChecking, Collections.reverseOrder());
 		} else { // moving down
 			Collections.sort(wallChecking);
@@ -726,7 +726,7 @@ public class Player extends Editable {
 						this.dynamicBody.setFixedRotation(true);
 
 						// try create the barrier
-						if (wallContacts > 0) { //TODO: testing
+						if (wallContacts > 0) { // TODO: testing
 							if (vel.y > 1) { // moving up
 
 								// final position check (stops barriers being made under player)
@@ -773,6 +773,74 @@ public class Player extends Editable {
 
 		// conditions wern't met, remove the barrier
 		destroyWallBarrier(resetRotation);
+	}
+
+	private boolean checkForWallSlotsJump() {
+		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
+
+		// player is trying to move on the x axis
+		if (!(left || right)) {
+			return false;
+		}
+		boolean direction = true; // true = left, false = right
+		if (left) {
+			direction = true;
+		}
+		if (right) {
+			direction = false;
+		}
+
+		// create a list of relevant tiles sorted by x position
+		for (Tile t : sensorContacts) {
+
+			// skip the tile if it is to the back of the player
+			if (direction) { // moving left
+				if (t.getX() > pos.x - getWidth() / 2) {
+					continue;
+				}
+				if (t.getX() < pos.x - getWidth() * 2) {
+					continue;
+				}
+			} else { // moving right
+				if (t.getBottomRight().x < pos.x + getWidth() / 2) {
+					continue;
+				}
+				if (t.getBottomRight().x > pos.x + getWidth() * 2) {
+					continue;
+				}
+			}
+
+			// skip the tile if it is behind the player
+
+			if (pos.y + getHeight() * 0.60f < t.getTopLeft().y) {
+				continue;
+			}
+
+			wallChecking.add(t);
+		}
+
+		// sort the found tiles
+		Collections.sort(wallChecking, Collections.reverseOrder());
+
+		// check the list of tiles for a playerWidth sized gap
+		float previousY = 0;
+		for (int i = 0; i < wallChecking.size(); i++) {
+			Tile t = wallChecking.get(i);
+			if (i > 0) {
+				// if this tile is the far side of a gap
+				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
+
+					// make sure the gap is in front of the player
+					if (t.getBottomRight().y < pos.y) { // moving up
+						return true;
+					}
+				}
+			}
+			previousY = t.getY();
+		}
+
+		// conditions wern't met, remove the barrier
+		return false;
 	}
 
 	private void checkForRoofSlots(PVector pos, Vec2 vel) {
@@ -1012,8 +1080,9 @@ public class Player extends Editable {
 				if (!verticalTunnel) { // not in a tunnel
 
 					// TODO: testing fix for jumping up into wall slots
-					if (wallBarrier == null
-							|| ((Vec2) wallBarrier.getUserData()).y > box2d.getBodyPixelCoordPVector(dynamicBody).y) {
+//					if (wallBarrier == null
+//							|| ((Vec2) wallBarrier.getUserData()).y > box2d.getBodyPixelCoordPVector(dynamicBody).y) {
+					if (!checkForWallSlotsJump()) {
 						xImpulse = (dynamicBody.getMass() * jumpPower / 2);
 					}
 				}
@@ -1025,8 +1094,9 @@ public class Player extends Editable {
 				if (!verticalTunnel) { // not in a tunnel
 
 					// TODO: testing fix for jumping up into wall slots
-					if (wallBarrier == null
-							|| ((Vec2) wallBarrier.getUserData()).y > box2d.getBodyPixelCoordPVector(dynamicBody).y) {
+//					if (wallBarrier == null
+//							|| ((Vec2) wallBarrier.getUserData()).y > box2d.getBodyPixelCoordPVector(dynamicBody).y) {
+					if(!checkForWallSlotsJump()) {
 						xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
 					}
 				}
