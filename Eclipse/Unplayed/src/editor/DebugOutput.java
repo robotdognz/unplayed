@@ -16,11 +16,15 @@ public class DebugOutput {
 			messageQueue.remove();
 		}
 	}
-	
+
 	public static void appendMessage(String message) {
-		messageQueue.getLast().append(message);
+		if (messageQueue.size() > 0) {
+			messageQueue.getLast().append(message);
+		} else {
+			pushMessage("No message found\n" + message, 3);
+		}
 	}
-	
+
 	// maybe a heading string and an open list of strings and values for the values
 	// so stuff like "Velocity x: 0 y: 0" can be done
 
