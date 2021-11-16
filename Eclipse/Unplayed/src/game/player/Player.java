@@ -975,11 +975,11 @@ public class Player extends Editable {
 				// if this tile is the far side of a gap
 				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
 
-					if (t.getTopLeft().x > pos.x + getWidth() * 0.5 + 0.2) {
+					if (t.getTopLeft().x > pos.x + getWidth() * 0.5) { // + 0.2
 						// slot is to the right
 //						DebugOutput.pushMessage("right", 4);
 						return 1;
-					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5 - 0.2) {
+					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5) { // - 0.2
 						// slot is to the left
 //						DebugOutput.pushMessage("left", 4);
 						return -1;
