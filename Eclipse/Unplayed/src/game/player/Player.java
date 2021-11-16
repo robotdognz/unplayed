@@ -666,15 +666,15 @@ public class Player extends Editable {
 			return;
 		}
 
-		// if the player is moving away from an existing barrier
-		if (wallBarrier != null) {
-			if (vel.y > 0 && ((Vec2) wallBarrier.getUserData()).y > pos.y) { // moving up
-				destroyWallBarrier(false);
-			}
-			if (vel.y < 0 && ((Vec2) wallBarrier.getUserData()).y < pos.y) { // moving dwn
-				destroyWallBarrier(false);
-			}
-		}
+//		// if the player is moving away from an existing barrier
+//		if (wallBarrier != null) {
+//			if (vel.y > 0 && ((Vec2) wallBarrier.getUserData()).y > pos.y) { // moving up
+//				destroyWallBarrier(false);
+//			}
+//			if (vel.y < 0 && ((Vec2) wallBarrier.getUserData()).y < pos.y) { // moving dwn
+//				destroyWallBarrier(false);
+//			}
+//		}
 
 		boolean direction = true; // true = left, false = right
 		if (left) {
@@ -733,54 +733,59 @@ public class Player extends Editable {
 				// if this tile is the far side of a gap
 				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
 
-					// make sure the gap is in front of the player
-					if ((vel.y > 1 && t.getBottomRight().y < pos.y) // moving up
-							|| (vel.y < 1 && t.getTopLeft().y > pos.y)) { // moving down
+//					// make sure the gap is in front of the player
+//					if ((vel.y > 1 && t.getBottomRight().y < pos.y) // moving up
+//							|| (vel.y < 1 && t.getTopLeft().y > pos.y)) { // moving down
 
-						// lock rotation
-						this.dynamicBody.setFixedRotation(true);
+					// try create the barrier
+					if (wallContacts > 0) {
+						if (vel.y > 0) { // moving up //TODO: was 1
 
-						// try create the barrier
-						if (wallContacts > 0) {
-							if (vel.y > 0) { // moving up //TODO: was 1
+							// final position check (stops barriers being made under player)
+							// this works because it failing doesn't remove an existing barrier
+							// so it only prevents barriers being made when you're already in the slot
+							if (t.getBottomRight().y <= pos.y) { // t.getBottomRight().y <= pos.y - getHeight() * 0.5
 
-								// final position check (stops barriers being made under player)
-								// this works because it failing doesn't remove an existing barrier
-								// so it only prevents barriers being made when you're already in the slot
-								if (t.getBottomRight().y <= pos.y) { // t.getBottomRight().y <= pos.y - getHeight() *
-																		// 0.5
-									if (direction) { // moving left
-										Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
-										Vec2 top = new Vec2(bottom.x + 5, bottom.y);
-										createWallBarrier(bottom, top);
-									} else { // moving right
-										Vec2 bottom = new Vec2(t.getTopLeft().x, t.getBottomRight().y);
-										Vec2 top = new Vec2(bottom.x - 5, bottom.y);
-										createWallBarrier(bottom, top);
-									}
+								// lock rotation
+								this.dynamicBody.setFixedRotation(true);
+
+								if (direction) { // moving left
+									Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
+									Vec2 top = new Vec2(bottom.x + 5, bottom.y);
+									createWallBarrier(bottom, top);
+								} else { // moving right
+									Vec2 bottom = new Vec2(t.getTopLeft().x, t.getBottomRight().y);
+									Vec2 top = new Vec2(bottom.x - 5, bottom.y);
+									createWallBarrier(bottom, top);
 								}
+								return;
+							}
 
-							} else { // moving down
+						} else { // moving down
 
-								// final position check (stops barriers being made under player)
-								// this works because it failing doesn't remove an existing barrier
-								// so it only prevents barriers being made when you're already in the slot
-								if (t.getTopLeft().y >= pos.y) { // t.getTopLeft().y >= pos.y + getHeight() * 0.5
-									if (direction) { // moving left
-										Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
-										Vec2 top = new Vec2(bottom.x + 5, bottom.y);
-										createWallBarrier(bottom, top);
-									} else { // moving right
-										Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
-										Vec2 top = new Vec2(bottom.x - 5, bottom.y);
-										createWallBarrier(bottom, top);
-									}
+							// final position check (stops barriers being made under player)
+							// this works because it failing doesn't remove an existing barrier
+							// so it only prevents barriers being made when you're already in the slot
+							if (t.getTopLeft().y >= pos.y) { // t.getTopLeft().y >= pos.y + getHeight() * 0.5
+
+								// lock rotation
+								this.dynamicBody.setFixedRotation(true);
+
+								if (direction) { // moving left
+									Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
+									Vec2 top = new Vec2(bottom.x + 5, bottom.y);
+									createWallBarrier(bottom, top);
+								} else { // moving right
+									Vec2 bottom = new Vec2(t.getTopLeft().x, t.getTopLeft().y);
+									Vec2 top = new Vec2(bottom.x - 5, bottom.y);
+									createWallBarrier(bottom, top);
 								}
+								return;
 							}
 						}
-
-						return;
 					}
+
+//					}
 				}
 			}
 			previousY = t.getY();
