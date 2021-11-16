@@ -273,7 +273,7 @@ public class Player extends Editable {
 		// boost up if touching roof barrier
 		if (touchingRoofBarrier) {
 			jumpTimer.start();
-			extraJump = false;
+//			extraJump = false;
 			// reset vertical speed
 			dynamicBody.setLinearVelocity(new Vec2(0, 0)); // dynamicBody.getLinearVelocity().x
 			// apply impulse
