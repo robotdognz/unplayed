@@ -348,6 +348,7 @@ public class Player extends Editable {
 		float angle = PApplet.degrees(dynamicBody.getAngle());
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
+		
 		// this code will probably be removed
 //		if (angleRemainder >= 45) { // 3 
 //			destroyAllBarriers(true);
@@ -910,6 +911,7 @@ public class Player extends Editable {
 								Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y + 5);
 								createRoofBarrier(bottom, top);
+								destroyWallBarrier(false); // prevent edge case
 							}
 
 						} else { // moving right
@@ -922,6 +924,7 @@ public class Player extends Editable {
 								Vec2 bottom = new Vec2(t.getTopLeft().x, t.getBottomRight().y);
 								Vec2 top = new Vec2(bottom.x, bottom.y + 5);
 								createRoofBarrier(bottom, top);
+								destroyWallBarrier(false); // prevent edge case
 							}
 						}
 
@@ -1115,6 +1118,8 @@ public class Player extends Editable {
 		float yImpulse = 0;
 
 		if (groundContacts > 0 || groundTimer.isRunning()) { // touching the ground
+			
+//          Vec2 vel = dynamicBody.getLinearVelocity();
 
 			// if the player is in a horizontal tunnel, but not at a tunnel intersection
 			if (horizontalTunnel && !verticalTunnel) {
