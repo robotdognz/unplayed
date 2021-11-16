@@ -819,12 +819,12 @@ public class Player extends Editable {
 				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
 
 					// make sure the gap is in front of the player
-					if (pos.y - getHeight() / 2 > t.getBottomRight().y) {
+					if (pos.y - getHeight() * 0.5 > t.getBottomRight().y) {
 						// make sure the gap isn't too far away
-						if (pos.y - getHeight() < t.getBottomRight().y) {
+						if (pos.y - getHeight() * 1.5 < t.getBottomRight().y) {
 							return true;
 						}
-						
+
 					}
 				}
 			}
