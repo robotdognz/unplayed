@@ -976,11 +976,11 @@ public class Player extends Editable {
 				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
 					// slot found
 
-					if (t.getTopLeft().x > pos.x + getWidth() * 0.5) {
+					if (t.getTopLeft().x > pos.x + getWidth() * 0.5 + 0.1) {
 						// slot is to the right
 						DebugOutput.pushMessage("right", 4);
 						return 1;
-					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5) {
+					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5 - 0.1) {
 						// slot is to the left
 						DebugOutput.pushMessage("left", 4);
 						return -1;
@@ -1120,10 +1120,10 @@ public class Player extends Editable {
 
 			int roofSlot = checkForRoofSlotsJump();
 			if (roofSlot == -1) { // left
-				xImpulse = -(dynamicBody.getMass() * (jumpPower / 2));
+				xImpulse = -(dynamicBody.getMass() * (jumpPower * 1)); // 0.5f
 				boostTimer.start();
 			} else if (roofSlot == 1) { // right
-				xImpulse = dynamicBody.getMass() * (jumpPower / 2);
+				xImpulse = dynamicBody.getMass() * (jumpPower * 1); // 0.5f
 				boostTimer.start();
 			} else { // none
 				yImpulse = dynamicBody.getMass() * jumpPower;
