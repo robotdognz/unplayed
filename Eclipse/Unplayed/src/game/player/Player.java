@@ -516,20 +516,20 @@ public class Player extends Editable {
 			direction = false;
 		}
 
-		// if the player is moving away from an existing barrier, destroy it
-		if (groundBarrier != null) {
-			if (left && ((Vec2) groundBarrier.getUserData()).x > pos.x) { // moving left
-				destroyWallBarrier(false);
-			}
-			if (right && ((Vec2) groundBarrier.getUserData()).x < pos.x) { // moving right
-				destroyWallBarrier(false);
-			}
-		}
-
 		// player is still or falling on the y axis
 		if (!(vel.y <= 2)) {
 			destroyGroundBarrier(resetRotation);
 			return;
+		}
+
+		// if the player is moving away from an existing barrier, destroy it
+		if (groundBarrier != null) {
+			if (left && ((Vec2) groundBarrier.getUserData()).x > pos.x) { // moving left
+				destroyGroundBarrier(false);
+			}
+			if (right && ((Vec2) groundBarrier.getUserData()).x < pos.x) { // moving right
+				destroyGroundBarrier(false);
+			}
 		}
 
 		// create a list of relevant tiles sorted by x position
