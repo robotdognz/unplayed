@@ -666,15 +666,15 @@ public class Player extends Editable {
 			return;
 		}
 
-//		// if the player is moving away from an existing barrier
-//		if (wallBarrier != null) {
-//			if (vel.y > 0 && ((Vec2) wallBarrier.getUserData()).y > pos.y) { // moving up
-//				destroyWallBarrier(false);
-//			}
-//			if (vel.y < 0 && ((Vec2) wallBarrier.getUserData()).y < pos.y) { // moving dwn
-//				destroyWallBarrier(false);
-//			}
-//		}
+		// if the player is moving away from an existing barrier, destroy it
+		if (wallBarrier != null) {
+			if (vel.y > 0 && ((Vec2) wallBarrier.getUserData()).y > pos.y) { // moving up
+				destroyWallBarrier(false);
+			}
+			if (vel.y < 0 && ((Vec2) wallBarrier.getUserData()).y < pos.y) { // moving down
+				destroyWallBarrier(false);
+			}
+		}
 
 		boolean direction = true; // true = left, false = right
 		if (left) {
@@ -705,7 +705,7 @@ public class Player extends Editable {
 			}
 
 			// skip the tile if it is behind the player
-			if (vel.y > 1) { // moving up
+			if (vel.y > 0) { // moving up
 				if (pos.y + getHeight() * 0.60f < t.getTopLeft().y) {
 					continue;
 				}
@@ -756,10 +756,7 @@ public class Player extends Editable {
 									createWallBarrier(bottom, top);
 								}
 								return;
-							} else {
-								destroyWallBarrier(false);
 							}
-
 						} else { // moving down
 
 							// final position check (stops barriers being made under player)
@@ -781,8 +778,6 @@ public class Player extends Editable {
 									createWallBarrier(bottom, top);
 								}
 								return;
-							} else {
-								destroyWallBarrier(false);
 							}
 						}
 					}
