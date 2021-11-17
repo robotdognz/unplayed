@@ -83,7 +83,6 @@ public class Player extends Editable {
 	private CountdownTimer wallBoostTimer; // boost off wall timer
 	private float wallJumpPower; // ratio for power of juping off wall
 	private float wallBoostPower; // ratio for power of boosting off wall
-	
 
 	// rotation snapping
 	private RotationSmooth rotationSmooth;
@@ -1265,8 +1264,8 @@ public class Player extends Editable {
 						}
 					}
 				}
-				// extraJump = true;
-				extraJump = false; // TODO: testing, 2020 development
+				// extraJump = true; // double jumping off wall is currently disabled
+				extraJump = false;
 
 			} else if (right) { // pushing into a wall right
 				yImpulse = dynamicBody.getMass() * jumpPower;
@@ -1289,8 +1288,8 @@ public class Player extends Editable {
 						}
 					}
 				}
-				// extraJump = true;
-				extraJump = false; // TODO: testing, 2020 development
+				// extraJump = true; // double jumping off wall is currently disabled
+				extraJump = false;
 
 			} else if (rightStickTimer.isRunning()) { // jump off right wall
 				// if not pushing into either wall, apply a small jump
@@ -1301,6 +1300,10 @@ public class Player extends Editable {
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 				// turn off timer
 				rightStickTimer.stop();
+
+				// extraJump = true; // double jumping off wall is currently disabled
+				extraJump = false;
+
 				DebugOutput.pushMessage("Jump off right wall no direction", 2);
 			} else if (leftStickTimer.isRunning()) { // jump of left wall
 				// if not pushing into either wall, apply a small jump
@@ -1311,6 +1314,10 @@ public class Player extends Editable {
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 				// turn off timer
 				leftStickTimer.stop();
+
+				// extraJump = true; // double jumping off wall is currently disabled
+				extraJump = false;
+
 				DebugOutput.pushMessage("Jump off left wall no direction", 2);
 			}
 
