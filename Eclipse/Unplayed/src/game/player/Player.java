@@ -1290,10 +1290,9 @@ public class Player extends Editable {
 				extraJump = false; // TODO: testing, 2020 development
 
 			} 
-			
-			// TODO: testing a more forgiving wall jump
+			// if not pushing into either wall, apply a small jump
 			else if (rightStickTimer.isRunning()) { // jump off right wall
-				xImpulse = -(dynamicBody.getMass() * jumpPower * 0.5f);
+				xImpulse = -(dynamicBody.getMass() * jumpPower * 0.25f);
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
@@ -1301,7 +1300,7 @@ public class Player extends Editable {
 				rightStickTimer.stop();
 				DebugOutput.pushMessage("Jump off right wall no direction", 2);
 			} else if (leftStickTimer.isRunning()) { // jump of left wall
-				xImpulse = (dynamicBody.getMass() * jumpPower * 0.5f);
+				xImpulse = (dynamicBody.getMass() * jumpPower * 0.25f);
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
@@ -1317,24 +1316,6 @@ public class Player extends Editable {
 			}
 
 		} else { // touching nothing
-
-//			// TODO: testing a more forgiving wall jump
-//			if (rightStickTimer.isRunning()) { // boost off right wall
-//				xImpulse = -(dynamicBody.getMass() * jumpPower * 0.75f); // TODO: number should be a field
-//				// reset horizontal speed
-//				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
-//				// turn off timer
-//				rightStickTimer.stop();
-//				DebugOutput.pushMessage("Boost off right wall in space", 2);
-//			} else if (leftStickTimer.isRunning()) { // boost of left wall
-//				xImpulse = (dynamicBody.getMass() * jumpPower * 0.75f); // TODO: number should be a field
-//				// reset horizontal speed
-//				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
-//				// turn off timer
-//				leftStickTimer.stop();
-//				DebugOutput.pushMessage("Boost off left wall in space", 2);
-//			} else
-
 			if (extraJump) {
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				extraJump = false;
