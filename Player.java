@@ -321,9 +321,16 @@ public class Player extends Editable {
 //		rightStickTimer.start();
 
 		// touching a wall, but not the ground
-		if (!dynamicBody.isFixedRotation() && !horizontalTunnel && !verticalTunnel && wallContacts > 0
-				&& groundContacts == 0) {
-			
+
+		if (groundContacts > 0) {
+			leftStickTimer.stop();
+			rightStickTimer.stop();
+			return;
+		}
+
+		// && !horizontalTunnel && !verticalTunnel && !dynamicBody.isFixedRotation()
+		if (!horizontalTunnel && !verticalTunnel && wallContacts > 0) {
+
 			// check angle is appropriate
 			float angle = PApplet.degrees(dynamicBody.getAngle());
 			float angleRounded = Math.round(angle / 90) * 90;
@@ -333,6 +340,7 @@ public class Player extends Editable {
 				leftStickTimer.start();
 			}
 		}
+
 	}
 
 	private void checkJumps() {
