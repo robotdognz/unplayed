@@ -1059,10 +1059,11 @@ public class Player extends Editable {
 					if (t.getTopLeft().x > pos.x + getWidth() * 0.5) {
 						// slot is to the right
 						return 1;
-					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5 + 0.1) {
+					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5) {
 						// slot is to the left
 						return -1;
 					} else {
+
 						// in slot or no slot
 						return 0;
 					}
@@ -1072,7 +1073,8 @@ public class Player extends Editable {
 		}
 
 		// didn't find a roof slot
-		return 0;
+		return 5;
+
 	}
 
 	private void createGroundBarrier(Vec2 v1, Vec2 v2) {
@@ -1208,6 +1210,8 @@ public class Player extends Editable {
 					// apply x impulse
 					xImpulse = dynamicBody.getMass() * jumpPower;
 					boostTimer.start();
+				} else if (roofSlot == 0) {
+					yImpulse = dynamicBody.getMass() * jumpPower;
 				} else { // none
 					// this has been disabled to prevent fruitless jumping in tunnels
 					// yImpulse = dynamicBody.getMass() * jumpPower;
