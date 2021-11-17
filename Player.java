@@ -791,7 +791,7 @@ public class Player extends Editable {
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							
+
 							// the above comment is now redundant, describe what is actually happening
 							if (t.getBottomRight().y <= pos.y) {
 
@@ -814,7 +814,7 @@ public class Player extends Editable {
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							
+
 							// the above comment is now redundant, describe what is actually happening
 							if (t.getTopLeft().y >= pos.y) {
 
@@ -1208,40 +1208,40 @@ public class Player extends Editable {
 
 		} else if (wallContacts > 0 || wallTimer.isRunning()) { // touching a wall
 
-			if (leftStickTimer.isRunning() || left) { // pushing into a wall left
+			if (left) { // pushing into a wall left
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
 
 					// TODO: testing fix for jumping up into wall slots
 					if (!checkForWallSlotsJump(true)) {
 						xImpulse = (dynamicBody.getMass() * jumpPower * 0.5f);
-						if (leftStickTimer.isRunning()) {
-							xImpulse = (dynamicBody.getMass() * jumpPower * 2f); //TODO: messing with wall jumps
+						if (rightStickTimer.isRunning()) {
+							xImpulse = -(dynamicBody.getMass() * jumpPower * 2f); // TODO: messing with wall jumps
 							// reset horizontal speed
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
-							//turn off timer
-//							leftStickTimer.stop();
-							DebugOutput.pushMessage("Boost off left wall", 4);
+							// turn off timer
+//							rightStickTimer.stop();
+							DebugOutput.pushMessage("Boost off right wall", 4);
 						}
 					}
 				}
 				// extraJump = true;
 				extraJump = false; // TODO: testing, 2020 development
 
-			} else if (rightStickTimer.isRunning() || right) { // pushing into a wall right
+			} else if (right) { // pushing into a wall right
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
 
 					// TODO: testing fix for jumping up into wall slots
 					if (!checkForWallSlotsJump(false)) {
 						xImpulse = -(dynamicBody.getMass() * jumpPower * 0.5f);
-						if (rightStickTimer.isRunning()) {
-							xImpulse = -(dynamicBody.getMass() * jumpPower * 2f); //TODO: messing with wall jumps
+						if (leftStickTimer.isRunning()) {
+							xImpulse = (dynamicBody.getMass() * jumpPower * 2f); // TODO: messing with wall jumps
 							// reset horizontal speed
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
-							//turn off timer
-//							rightStickTimer.stop();
-							DebugOutput.pushMessage("Boost off right wall", 4);
+							// turn off timer
+//							leftStickTimer.stop();
+							DebugOutput.pushMessage("Boost off left wall", 4);
 						}
 					}
 				}
