@@ -152,10 +152,10 @@ public class Player extends Editable {
 		this.horizontalTunnel = false;
 
 		// how long to stick to a wall after letting go
-		this.leftStickTimer = new CountdownTimer(0.128f); //0.256f
-		this.rightStickTimer = new CountdownTimer(0.128f); //0.256f
+		this.leftStickTimer = new CountdownTimer(0.190f); // 0.256f
+		this.rightStickTimer = new CountdownTimer(0.190f); // 0.256f
 		// how long you can boost for after wall stick activated
-		this.wallBoostTimer = new CountdownTimer(0.128f);
+		this.wallBoostTimer = new CountdownTimer(0.150f); // 0.128f
 
 		create();
 	}
@@ -1222,7 +1222,7 @@ public class Player extends Editable {
 
 			if (left) { // pushing into a wall left
 				yImpulse = dynamicBody.getMass() * jumpPower;
-				
+
 				// the player is not in a tunnel
 				if (!verticalTunnel) {
 
@@ -1246,7 +1246,7 @@ public class Player extends Editable {
 
 			} else if (right) { // pushing into a wall right
 				yImpulse = dynamicBody.getMass() * jumpPower;
-				
+
 				// the player is not in a tunnel
 				if (!verticalTunnel) {
 
