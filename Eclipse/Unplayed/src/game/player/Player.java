@@ -1217,6 +1217,8 @@ public class Player extends Editable {
 						xImpulse = (dynamicBody.getMass() * jumpPower * 0.5f);
 						if (leftStickTimer.isRunning()) {
 							xImpulse = (dynamicBody.getMass() * jumpPower * 2f); //TODO: messing with wall jumps
+							// reset horizontal speed
+							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 						}
 					}
 				}
@@ -1232,6 +1234,8 @@ public class Player extends Editable {
 						xImpulse = -(dynamicBody.getMass() * jumpPower * 0.5f);
 						if (rightStickTimer.isRunning()) {
 							xImpulse = -(dynamicBody.getMass() * jumpPower * 2f); //TODO: messing with wall jumps
+							// reset horizontal speed
+							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 						}
 					}
 				}
