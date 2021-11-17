@@ -302,7 +302,8 @@ public class Player extends Editable {
 				// stick to right wall
 				if (rightStickTimer.isRunning()) {
 					desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
-					wallBoostTimer.start();
+					DebugOutput.pushMessage("Stick to right wall", 2);
+//					wallBoostTimer.start();
 				}
 			} else {
 				return;
@@ -316,7 +317,8 @@ public class Player extends Editable {
 				// stick to left wall
 				if (leftStickTimer.isRunning()) {
 					desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
-					wallBoostTimer.start();
+					DebugOutput.pushMessage("Stick to right wall", 2);
+//					wallBoostTimer.start();
 				}
 			} else {
 				return;
@@ -1234,7 +1236,7 @@ public class Player extends Editable {
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 							// turn off timer
 							rightStickTimer.stop();
-							DebugOutput.pushMessage("Boost off right wall", 4);
+							DebugOutput.pushMessage("Boost off right wall", 2);
 						}
 					}
 				}
@@ -1258,7 +1260,7 @@ public class Player extends Editable {
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 							// turn off timer
 							leftStickTimer.stop();
-							DebugOutput.pushMessage("Boost off left wall", 4);
+							DebugOutput.pushMessage("Boost off left wall", 2);
 						}
 					}
 				}
