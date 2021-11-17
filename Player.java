@@ -1171,6 +1171,8 @@ public class Player extends Editable {
 	}
 
 	public void jump() {
+		leftStickTimer.stop();
+		rightStickTimer.stop();
 
 		float xImpulse = 0;
 		float yImpulse = 0;
@@ -1204,7 +1206,7 @@ public class Player extends Editable {
 
 		} else if (wallContacts > 0 || wallTimer.isRunning()) { // touching a wall
 
-			if (left) { // pushing into a wall left
+			if (leftStickTimer.isRunning() || left) { // pushing into a wall left
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
 
@@ -1216,7 +1218,7 @@ public class Player extends Editable {
 				// extraJump = true;
 				extraJump = false; // TODO: testing, 2020 development
 
-			} else if (right) { // pushing into a wall right
+			} else if (rightStickTimer.isRunning() || right) { // pushing into a wall right
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
 
