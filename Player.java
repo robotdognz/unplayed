@@ -1216,7 +1216,7 @@ public class Player extends Editable {
 						
 						
 						if (rightStickTimer.isRunning()) {
-							xImpulse = -(dynamicBody.getMass() * jumpPower * 1f); // TODO: messing with wall jumps
+							xImpulse = -(dynamicBody.getMass() * jumpPower * 0.75f); // TODO: messing with wall jumps
 							// reset horizontal speed
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 							// turn off timer
@@ -1238,7 +1238,7 @@ public class Player extends Editable {
 						
 						
 						if (leftStickTimer.isRunning()) {
-							xImpulse = (dynamicBody.getMass() * jumpPower * 1f); // TODO: messing with wall jumps
+							xImpulse = (dynamicBody.getMass() * jumpPower * 0.75f); // TODO: messing with wall jumps
 							// reset horizontal speed
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 							// turn off timer
