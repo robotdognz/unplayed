@@ -1173,8 +1173,7 @@ public class Player extends Editable {
 	}
 
 	public void jump() {
-		leftStickTimer.stop();
-		rightStickTimer.stop();
+		
 
 		float xImpulse = 0;
 		float yImpulse = 0;
@@ -1271,6 +1270,9 @@ public class Player extends Editable {
 			// apply impulse
 			dynamicBody.applyLinearImpulse(new Vec2(xImpulse, yImpulse), dynamicBody.getWorldCenter(), true);
 		}
+		
+		leftStickTimer.stop();
+		rightStickTimer.stop();
 	}
 
 	public void physicsImpact(float[] impulses) {
