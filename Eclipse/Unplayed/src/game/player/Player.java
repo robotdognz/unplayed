@@ -297,7 +297,7 @@ public class Player extends Editable {
 			if (vel.x >= -movementSpeed) {
 				desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
 				if (rightStickTimer.isRunning()) {
-					desiredVel = Math.min(vel.x + 2.0f, movementSpeed); //TODO
+					desiredVel = movementSpeed; // TODO
 				}
 			} else {
 				return;
@@ -307,7 +307,7 @@ public class Player extends Editable {
 			if (vel.x <= movementSpeed) {
 				desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
 				if (leftStickTimer.isRunning()) {
-					desiredVel = Math.max(vel.x - 2.0f, -movementSpeed); //TODO
+					desiredVel = -movementSpeed; // TODO
 				}
 			} else {
 				return;
@@ -791,7 +791,8 @@ public class Player extends Editable {
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							// TODO: the above comment is now redundant, describe what is actually happening
+							
+							// the above comment is now redundant, describe what is actually happening
 							if (t.getBottomRight().y <= pos.y) {
 
 								// lock rotation
@@ -813,7 +814,8 @@ public class Player extends Editable {
 							// final position check (stops barriers being made under player)
 							// this works because it failing doesn't remove an existing barrier
 							// so it only prevents barriers being made when you're already in the slot
-							// TODO: the above comment is now redundant, describe what is actually happening
+							
+							// the above comment is now redundant, describe what is actually happening
 							if (t.getTopLeft().y >= pos.y) {
 
 								// lock rotation
@@ -1212,7 +1214,10 @@ public class Player extends Editable {
 
 					// TODO: testing fix for jumping up into wall slots
 					if (!checkForWallSlotsJump(true)) {
-						xImpulse = (dynamicBody.getMass() * jumpPower / 2);
+						xImpulse = (dynamicBody.getMass() * jumpPower * 0.5f);
+						if (leftStickTimer.isRunning()) {
+							xImpulse = (dynamicBody.getMass() * jumpPower * 1f); //TODO: messing with wall jumps
+						}
 					}
 				}
 				// extraJump = true;
@@ -1224,7 +1229,10 @@ public class Player extends Editable {
 
 					// TODO: testing fix for jumping up into wall slots
 					if (!checkForWallSlotsJump(false)) {
-						xImpulse = -(dynamicBody.getMass() * jumpPower / 2);
+						xImpulse = -(dynamicBody.getMass() * jumpPower * 0.5f);
+						if (rightStickTimer.isRunning()) {
+							xImpulse = -(dynamicBody.getMass() * jumpPower * 1f); //TODO: messing with wall jumps
+						}
 					}
 				}
 				// extraJump = true;
