@@ -1056,7 +1056,7 @@ public class Player extends Editable {
 			Tile t = roofChecking.get(i);
 
 			// check if above player
-			if (t.getTopLeft().x > pos.x - getWidth() * 0.5 && t.getBottomRight().x < pos.x + getWidth() * 0.5) {
+			if (t.getBottomRight().x > pos.x - getWidth() * 0.5 && t.getTopLeft().x < pos.x + getWidth() * 0.5) {
 				tileAbovelayer = true;
 			}
 
@@ -1225,7 +1225,7 @@ public class Player extends Editable {
 					xImpulse = dynamicBody.getMass() * jumpPower;
 					boostTimer.start();
 				} else if (roofSlot == 0) { // none
-					// this can't be disabled, creates an edge case where the play can't jump when
+					// this can't be disabled, creates an edge case where the player can't jump when
 					// to the left of a horizontal tunnel
 					yImpulse = dynamicBody.getMass() * jumpPower;
 				} else {
