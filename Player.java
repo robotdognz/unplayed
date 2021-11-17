@@ -271,6 +271,7 @@ public class Player extends Editable {
 		boostTimer.deltaStep(delta);
 		leftStickTimer.deltaStep(delta);
 		rightStickTimer.deltaStep(delta);
+		wallBoostTimer.deltaStep(delta);
 
 		// run checks
 		checkJumps();
