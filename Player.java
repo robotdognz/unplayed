@@ -339,7 +339,7 @@ public class Player extends Editable {
 			float angleRounded = Math.round(angle / 90) * 90;
 			float angleRemainder = Math.abs(angle - angleRounded);
 
-			if (angleRemainder < 0.05) {
+			if (angleRemainder < 5) { // 0.05
 				if (left && !rightStickTimer.isRunning()) {
 					leftStickTimer.start();
 				}
@@ -1210,7 +1210,7 @@ public class Player extends Editable {
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
 
-					// TODO: testing fix for jumping up into wall slots
+					// if there is no wall slot within reach of the player
 					if (!checkForWallSlotsJump(true)) {
 						xImpulse = (dynamicBody.getMass() * jumpPower * 0.5f);
 						
@@ -1232,7 +1232,7 @@ public class Player extends Editable {
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				if (!verticalTunnel) { // not in a tunnel
 
-					// TODO: testing fix for jumping up into wall slots
+					// if there is no wall slot within reach of the player
 					if (!checkForWallSlotsJump(false)) {
 						xImpulse = -(dynamicBody.getMass() * jumpPower * 0.5f);
 						
