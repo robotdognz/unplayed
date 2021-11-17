@@ -1289,29 +1289,49 @@ public class Player extends Editable {
 				// extraJump = true;
 				extraJump = false; // TODO: testing, 2020 development
 
-			} else if (extraJump) { // not pushing into the wall
-				yImpulse = dynamicBody.getMass() * jumpPower;
-				extraJump = false;
-			}
-
-		} else { // touching nothing
-
+			} 
+			
 			// TODO: testing a more forgiving wall jump
-			if (rightStickTimer.isRunning()) { // boost off right wall
+			else if (rightStickTimer.isRunning()) { // boost off right wall
 				xImpulse = -(dynamicBody.getMass() * jumpPower * 0.75f); // TODO: number should be a field
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 				// turn off timer
 				rightStickTimer.stop();
-				DebugOutput.pushMessage("Boost off right wall in space", 2);
+				DebugOutput.pushMessage("Boost off right wall no direction", 2);
 			} else if (leftStickTimer.isRunning()) { // boost of left wall
 				xImpulse = (dynamicBody.getMass() * jumpPower * 0.75f); // TODO: number should be a field
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 				// turn off timer
 				leftStickTimer.stop();
-				DebugOutput.pushMessage("Boost off left wall in space", 2);
-			} else
+				DebugOutput.pushMessage("Boost off left wall no direction", 2);
+			} 
+			
+			
+			else if (extraJump) { // not pushing into the wall
+				yImpulse = dynamicBody.getMass() * jumpPower;
+				extraJump = false;
+			}
+
+		} else { // touching nothing
+
+//			// TODO: testing a more forgiving wall jump
+//			if (rightStickTimer.isRunning()) { // boost off right wall
+//				xImpulse = -(dynamicBody.getMass() * jumpPower * 0.75f); // TODO: number should be a field
+//				// reset horizontal speed
+//				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
+//				// turn off timer
+//				rightStickTimer.stop();
+//				DebugOutput.pushMessage("Boost off right wall in space", 2);
+//			} else if (leftStickTimer.isRunning()) { // boost of left wall
+//				xImpulse = (dynamicBody.getMass() * jumpPower * 0.75f); // TODO: number should be a field
+//				// reset horizontal speed
+//				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
+//				// turn off timer
+//				leftStickTimer.stop();
+//				DebugOutput.pushMessage("Boost off left wall in space", 2);
+//			} else
 
 			if (extraJump) {
 				yImpulse = dynamicBody.getMass() * jumpPower;
