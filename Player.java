@@ -152,8 +152,8 @@ public class Player extends Editable {
 		this.horizontalTunnel = false;
 
 		// how long to stick to a wall after letting go
-		this.leftStickTimer = new CountdownTimer(0.256f);
-		this.rightStickTimer = new CountdownTimer(0.256f);
+		this.leftStickTimer = new CountdownTimer(0.128f); //0.256f
+		this.rightStickTimer = new CountdownTimer(0.128f); //0.256f
 		// how long you can boost for after wall stick activated
 		this.wallBoostTimer = new CountdownTimer(0.128f);
 
