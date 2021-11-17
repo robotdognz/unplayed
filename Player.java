@@ -1059,7 +1059,7 @@ public class Player extends Editable {
 					if (t.getTopLeft().x > pos.x + getWidth() * 0.5) {
 						// slot is to the right
 						return 1;
-					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5) {
+					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5 + 0.1) {
 						// slot is to the left
 						return -1;
 					} else {
@@ -1209,7 +1209,8 @@ public class Player extends Editable {
 					xImpulse = dynamicBody.getMass() * jumpPower;
 					boostTimer.start();
 				} else { // none
-//					yImpulse = dynamicBody.getMass() * jumpPower; //TODO: testing turned off to prevent jumping in tunnels
+					// this has been disabled to prevent fruitless jumping in tunnels
+					// yImpulse = dynamicBody.getMass() * jumpPower;
 				}
 
 			} else {
