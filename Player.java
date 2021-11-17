@@ -289,7 +289,7 @@ public class Player extends Editable {
 
 		// do movement
 
-		checkWallStick(); // TODO: finish this
+		checkWallStick(vel); // TODO: finish this
 
 		float desiredVel = 0;
 
@@ -316,7 +316,7 @@ public class Player extends Editable {
 
 	}
 
-	private void checkWallStick() {
+	private void checkWallStick(Vec2 vel) {
 //		leftStickTimer.start();
 //		rightStickTimer.start();
 
@@ -337,7 +337,12 @@ public class Player extends Editable {
 			float angleRemainder = Math.abs(angle - angleRounded);
 
 			if (angleRemainder < 0.05) {
-				leftStickTimer.start();
+				if (left && vel.x >= 0) { // pushing left but not moving left
+					leftStickTimer.start();
+				}
+				if (right && vel.x <= 0) { // pushing right but not moving right
+					rightStickTimer.start();
+				}
 			}
 		}
 
