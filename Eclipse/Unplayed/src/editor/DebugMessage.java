@@ -14,8 +14,7 @@ public class DebugMessage {
 		this.message = message;
 		this.time = 0;
 		this.duration = duration;
-
-		this.count = 0;
+		this.count = 1;
 
 		this.opacity = 255;
 	}
@@ -50,7 +49,7 @@ public class DebugMessage {
 		// draw the message
 		p.fill(80, opacity);
 		String printMessage = message;
-		if (count > 0) {
+		if (count > 1) {
 			printMessage += " [" + count + "]";
 		}
 		p.text(printMessage, p.width / 2, y);

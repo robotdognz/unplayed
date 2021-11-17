@@ -10,7 +10,8 @@
 -Fixed edge case where player could quickly change direction and slide over a ground slot
 -Fixed edge case where player could jump up and down in a tunnel to skip a wall slot
 -Player can now jump up into roof slots/tunnels while not moving
--Implemented the first version of a wall jump boost system
+-Improved the wall jumping system to be more forgiving
+-Implemented wall boost system, allowing for longer wall jumps when done correctly
 
 1.2.1: Improving physics and tuning player 'feel'
 

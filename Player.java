@@ -1023,7 +1023,7 @@ public class Player extends Editable {
 		roofChecking.clear();
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 
-		boolean tileAbovelayer = false;
+//		boolean tileAbovelayer = false;
 
 		// create a list of relevant tiles sorted by x position
 		for (Tile t : sensorContacts) {
@@ -1061,9 +1061,9 @@ public class Player extends Editable {
 			// if right edge is larger than player left edge (off by a tiny bit to fix the
 			// edge case)
 			// and if left edge is smaller than player right edge
-			if (t.getBottomRight().x > pos.x - getWidth() * 0.499 && t.getTopLeft().x < pos.x + getWidth() * 0.5) {
-				tileAbovelayer = true;
-			}
+//			if (t.getBottomRight().x > pos.x - getWidth() * 0.499 && t.getTopLeft().x < pos.x + getWidth() * 0.5) {
+//				tileAbovelayer = true;
+//			}
 
 			if (i > 0) {
 				// if this tile is the far side of a gap
@@ -1086,10 +1086,10 @@ public class Player extends Editable {
 
 		// didn't find a roof slot
 
-		// player blocked from above
-		if (tileAbovelayer) {
-			return 5;
-		}
+//		// player blocked from above
+//		if (tileAbovelayer) {
+//			return 5;
+//		}
 
 		// player in open space
 		return 0;
@@ -1229,11 +1229,12 @@ public class Player extends Editable {
 					// apply x impulse
 					xImpulse = dynamicBody.getMass() * jumpPower;
 					boostTimer.start();
-				} else if (roofSlot == 0) { // in slot
+				} else { //if (roofSlot == 0) { // in slot
 					yImpulse = dynamicBody.getMass() * jumpPower;
-				} else {
-					DebugOutput.pushMessage("Blocked from above", 3);
-				}
+				} 
+//				else {
+//					DebugOutput.pushMessage("Blocked from above", 3);
+//				}
 
 			} else {
 				yImpulse = dynamicBody.getMass() * jumpPower;
