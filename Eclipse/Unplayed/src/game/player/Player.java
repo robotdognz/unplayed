@@ -317,7 +317,7 @@ public class Player extends Editable {
 				// stick to left wall
 				if (leftStickTimer.isRunning()) {
 					desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
-					DebugOutput.pushMessage("Stick to right wall", 2);
+					DebugOutput.pushMessage("Stick to left wall", 2);
 //					wallBoostTimer.start();
 				}
 			} else {
