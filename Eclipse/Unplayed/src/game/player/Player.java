@@ -288,8 +288,8 @@ public class Player extends Editable {
 		}
 
 		// do movement
-		
-		checkWallStick(); //TODO: finish this
+
+		checkWallStick(); // TODO: finish this
 
 		float desiredVel = 0;
 
@@ -321,13 +321,13 @@ public class Player extends Editable {
 //		rightStickTimer.start();
 
 		// touching a wall, but not the ground
-		if (wallContacts > 0 && groundContacts == 0) {
+		if (!horizontalTunnel && !verticalTunnel && wallContacts > 0 && groundContacts == 0) {
 			// check angle is appropriate
 			float angle = PApplet.degrees(dynamicBody.getAngle());
 			float angleRounded = Math.round(angle / 90) * 90;
 			float angleRemainder = Math.abs(angle - angleRounded);
 
-			if (angleRemainder < 0.001) {
+			if (angleRemainder < 0.01) {
 				leftStickTimer.start();
 			}
 		}
@@ -1159,8 +1159,6 @@ public class Player extends Editable {
 		float yImpulse = 0;
 
 		if (groundContacts > 0 || groundTimer.isRunning()) { // touching the ground
-
-//          Vec2 vel = dynamicBody.getLinearVelocity();
 
 			// if the player is in a horizontal tunnel, but not at a tunnel intersection
 			if (horizontalTunnel && !verticalTunnel) {
