@@ -25,8 +25,9 @@ public class DebugMessage {
 		this.message += "\n" + message;
 	}
 	
-	public void count() {
+	public void increaseCount() {
 		count++;
+		time = 0;
 	}
 
 	public boolean step(float deltaTime) {

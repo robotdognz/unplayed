@@ -1056,7 +1056,8 @@ public class Player extends Editable {
 			Tile t = roofChecking.get(i);
 
 			// check tile is above player and blocking their jump
-			// if right edge is larger than player left edge (off by a tiny bit to fix the edge case)
+			// if right edge is larger than player left edge (off by a tiny bit to fix the
+			// edge case)
 			// and if left edge is smaller than player right edge
 			if (t.getBottomRight().x > pos.x - getWidth() * 0.499 && t.getTopLeft().x < pos.x + getWidth() * 0.5) {
 				tileAbovelayer = true;
@@ -1226,9 +1227,7 @@ public class Player extends Editable {
 					// apply x impulse
 					xImpulse = dynamicBody.getMass() * jumpPower;
 					boostTimer.start();
-				} else if (roofSlot == 0) { // none
-					// this can't be disabled, creates an edge case where the player can't jump when
-					// to the left of a horizontal tunnel
+				} else if (roofSlot == 0) { // in slot
 					yImpulse = dynamicBody.getMass() * jumpPower;
 				} else {
 					DebugOutput.pushMessage("Blocked from above", 3);
@@ -1254,7 +1253,7 @@ public class Player extends Editable {
 
 						// boost off right wall
 						if (rightStickTimer.isRunning() || wallBoostTimer.isRunning()) {
-							xImpulse = -(dynamicBody.getMass() * jumpPower * 0.75f); // TODO: messing with wall jumps
+							xImpulse = -(dynamicBody.getMass() * jumpPower * 0.75f); // TODO: number should be a field
 							// reset horizontal speed
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 							// turn off timer
@@ -1278,7 +1277,7 @@ public class Player extends Editable {
 
 						// boost off left wall
 						if (leftStickTimer.isRunning() || wallBoostTimer.isRunning()) {
-							xImpulse = (dynamicBody.getMass() * jumpPower * 0.75f); // TODO: messing with wall jumps
+							xImpulse = (dynamicBody.getMass() * jumpPower * 0.75f); // TODO: number should be a field
 							// reset horizontal speed
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 							// turn off timer
@@ -1296,6 +1295,24 @@ public class Player extends Editable {
 			}
 
 		} else { // touching nothing
+
+			// TODO: testing a more forgiving wall jump
+			if (rightStickTimer.isRunning()) { // boost off right wall
+				xImpulse = -(dynamicBody.getMass() * jumpPower * 0.75f); // TODO: number should be a field
+				// reset horizontal speed
+				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
+				// turn off timer
+				rightStickTimer.stop();
+				DebugOutput.pushMessage("Boost off right wall in space", 2);
+			} else if (leftStickTimer.isRunning()) { // boost of left wall
+				xImpulse = (dynamicBody.getMass() * jumpPower * 0.75f); // TODO: number should be a field
+				// reset horizontal speed
+				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
+				// turn off timer
+				leftStickTimer.stop();
+				DebugOutput.pushMessage("Boost off left wall in space", 2);
+			} else
+
 			if (extraJump) {
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				extraJump = false;
