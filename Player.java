@@ -328,17 +328,17 @@ public class Player extends Editable {
 			return;
 		}
 		
-		if (left && vel.x < 0) { // pushing left but not moving left
-			leftStickTimer.stop();
-			return;
-		}
-		if (right && vel.x > 0) { // pushing right but not moving right
-			rightStickTimer.stop();
-			return;
-		}
+//		if (left && vel.x < -1) { // pushing left and moving left
+//			leftStickTimer.stop();
+//			return;
+//		}
+//		if (right && vel.x > 1) { // pushing right and moving right
+//			rightStickTimer.stop();
+//			return;
+//		}
 
 		// && !horizontalTunnel && !verticalTunnel && !dynamicBody.isFixedRotation()
-		if (wallContacts > 0) {
+		if (wallContacts > 1) {
 
 			// check angle is appropriate
 			float angle = PApplet.degrees(dynamicBody.getAngle());
