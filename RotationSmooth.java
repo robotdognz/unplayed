@@ -1,7 +1,6 @@
 package game.player;
 
-import editor.DebugOutput;
-import processing.core.PApplet;
+//import editor.DebugOutput;
 
 public class RotationSmooth {
 	private float currentAngle;

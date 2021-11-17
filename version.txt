@@ -2,9 +2,15 @@
 
 1.2.2: First 2021 build
 
--Cleaned a bunch of old dodgy code
+-Cleaned up a bunch of old dodgy code
 -Fixed player getting stuck in tunnels and slots issue (animation smoothing system still needs some work)
 -Implemented a debug message system
+-Added a check that prevents player wall jumping away from the wall when directly below a wall slot
+-Fixed edge case where player could get momentarily stuck in the intersection of a ground and wall slot
+-Fixed edge case where player could quickly change direction and slide over a ground slot
+-Fixed edge case where player could jump up and down in a tunnel to skip a wall slot
+-Player can now jump up into roof slots/tunnels while not moving
+-Implemented the first version of a wall jump boost system
 
 1.2.1: Improving physics and tuning player 'feel'
 

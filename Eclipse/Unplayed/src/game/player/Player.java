@@ -80,6 +80,7 @@ public class Player extends Editable {
 	// wall magnetism
 	public CountdownTimer leftStickTimer; // sticking to left wall
 	public CountdownTimer rightStickTimer; // sticking to right wall
+	public CountdownTimer wallBoostTimer; // boost off wall timer
 
 	// rotation snapping
 	private RotationSmooth rotationSmooth;
@@ -153,6 +154,8 @@ public class Player extends Editable {
 		// how long to stick to a wall after letting go
 		this.leftStickTimer = new CountdownTimer(0.256f);
 		this.rightStickTimer = new CountdownTimer(0.256f);
+		// how long you can boost for after wall stick activated
+		this.wallBoostTimer = new CountdownTimer(0.128f);
 
 		create();
 	}
@@ -287,17 +290,19 @@ public class Player extends Editable {
 			dynamicBody.applyLinearImpulse(new Vec2(0, yImpulse), dynamicBody.getWorldCenter(), true);
 		}
 
-		// do movement
-
-		checkWallStick(vel); // TODO: finish this
-
+		// do horizontal movement calculations
+		checkWallStick(vel);
 		float desiredVel = 0;
 
 		if (left) {
 			if (vel.x >= -movementSpeed) {
+				// standard movement
 				desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
+
+				// stick to right wall
 				if (rightStickTimer.isRunning()) {
-					desiredVel = Math.min(vel.x + 2.0f, movementSpeed); // movementSpeed; // TODO
+					desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
+					wallBoostTimer.start();
 				}
 			} else {
 				return;
@@ -305,17 +310,23 @@ public class Player extends Editable {
 
 		} else if (right) {
 			if (vel.x <= movementSpeed) {
+				// standard movement
 				desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
+
+				// stick to left wall
 				if (leftStickTimer.isRunning()) {
-					desiredVel = Math.max(vel.x - 2.0f, -movementSpeed); // -movementSpeed; // TODO
+					desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
+					wallBoostTimer.start();
 				}
 			} else {
 				return;
 			}
 		} else {
+			// slow down
 			desiredVel = vel.x * 0.999f;
 		}
 
+		// apply horizontal movement calculations
 		float velChange = desiredVel - vel.x;
 		float impulse = dynamicBody.getMass() * velChange;
 		dynamicBody.applyLinearImpulse(new Vec2(impulse, 0), dynamicBody.getWorldCenter(), true);
@@ -1195,7 +1206,7 @@ public class Player extends Editable {
 					xImpulse = dynamicBody.getMass() * jumpPower;
 					boostTimer.start();
 				} else { // none
-					yImpulse = dynamicBody.getMass() * jumpPower;
+//					yImpulse = dynamicBody.getMass() * jumpPower; //TODO: testing turned off to prevent jumping in tunnels
 				}
 
 			} else {
@@ -1208,19 +1219,21 @@ public class Player extends Editable {
 
 			if (left) { // pushing into a wall left
 				yImpulse = dynamicBody.getMass() * jumpPower;
-				if (!verticalTunnel) { // not in a tunnel
+				
+				// the player is not in a tunnel
+				if (!verticalTunnel) {
 
 					// if there is no wall slot within reach of the player
 					if (!checkForWallSlotsJump(true)) {
 						xImpulse = (dynamicBody.getMass() * jumpPower * 0.5f);
-						
-						
-						if (rightStickTimer.isRunning()) {
+
+						// boost off right wall
+						if (rightStickTimer.isRunning() || wallBoostTimer.isRunning()) {
 							xImpulse = -(dynamicBody.getMass() * jumpPower * 0.75f); // TODO: messing with wall jumps
 							// reset horizontal speed
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 							// turn off timer
-//							rightStickTimer.stop();
+							rightStickTimer.stop();
 							DebugOutput.pushMessage("Boost off right wall", 4);
 						}
 					}
@@ -1230,19 +1243,21 @@ public class Player extends Editable {
 
 			} else if (right) { // pushing into a wall right
 				yImpulse = dynamicBody.getMass() * jumpPower;
-				if (!verticalTunnel) { // not in a tunnel
+				
+				// the player is not in a tunnel
+				if (!verticalTunnel) {
 
 					// if there is no wall slot within reach of the player
 					if (!checkForWallSlotsJump(false)) {
 						xImpulse = -(dynamicBody.getMass() * jumpPower * 0.5f);
-						
-						
-						if (leftStickTimer.isRunning()) {
+
+						// boost off left wall
+						if (leftStickTimer.isRunning() || wallBoostTimer.isRunning()) {
 							xImpulse = (dynamicBody.getMass() * jumpPower * 0.75f); // TODO: messing with wall jumps
 							// reset horizontal speed
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 							// turn off timer
-//							leftStickTimer.stop();
+							leftStickTimer.stop();
 							DebugOutput.pushMessage("Boost off left wall", 4);
 						}
 					}
