@@ -1292,7 +1292,7 @@ public class Player extends Editable {
 			} 
 			// if not pushing into either wall, apply a small jump
 			else if (rightStickTimer.isRunning()) { // jump off right wall
-				xImpulse = -(dynamicBody.getMass() * jumpPower * 0.25f);
+				xImpulse = -(dynamicBody.getMass() * jumpPower * 0.4f); // 0.5f
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
@@ -1300,7 +1300,7 @@ public class Player extends Editable {
 				rightStickTimer.stop();
 				DebugOutput.pushMessage("Jump off right wall no direction", 2);
 			} else if (leftStickTimer.isRunning()) { // jump of left wall
-				xImpulse = (dynamicBody.getMass() * jumpPower * 0.25f);
+				xImpulse = (dynamicBody.getMass() * jumpPower * 0.4f); // 0.5f
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
