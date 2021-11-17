@@ -1021,6 +1021,8 @@ public class Player extends Editable {
 		roofChecking.clear();
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 
+		boolean tileAbovelayer = false;
+
 		// create a list of relevant tiles sorted by x position
 		for (Tile t : sensorContacts) {
 			// skip this tile if the bottom of it is below the player's midpoint
@@ -1052,6 +1054,12 @@ public class Player extends Editable {
 		float previousX = 0;
 		for (int i = 0; i < roofChecking.size(); i++) {
 			Tile t = roofChecking.get(i);
+
+			// check if above player
+			if (t.getTopLeft().x > pos.x - getWidth() * 0.5 && t.getBottomRight().x < pos.x + getWidth() * 0.5) {
+				tileAbovelayer = true;
+			}
+
 			if (i > 0) {
 				// if this tile is the far side of a gap
 				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
@@ -1063,8 +1071,7 @@ public class Player extends Editable {
 						// slot is to the left
 						return -1;
 					} else {
-
-						// in slot or no slot
+						// in slot
 						return 0;
 					}
 				}
@@ -1073,7 +1080,14 @@ public class Player extends Editable {
 		}
 
 		// didn't find a roof slot
-		return 5;
+
+		// player blocked from above
+		if (tileAbovelayer) {
+			return 5;
+		}
+
+		// player in open space
+		return 0;
 
 	}
 
@@ -1210,11 +1224,12 @@ public class Player extends Editable {
 					// apply x impulse
 					xImpulse = dynamicBody.getMass() * jumpPower;
 					boostTimer.start();
-				} else if (roofSlot == 0) {
+				} else if (roofSlot == 0) { // none
+					// this can't be disabled, creates an edge case where the play can't jump when
+					// to the left of a horizontal tunnel
 					yImpulse = dynamicBody.getMass() * jumpPower;
-				} else { // none
-					// this has been disabled to prevent fruitless jumping in tunnels
-					// yImpulse = dynamicBody.getMass() * jumpPower;
+				} else {
+					DebugOutput.pushMessage("Blocked from above", 3);
 				}
 
 			} else {
