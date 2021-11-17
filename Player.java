@@ -337,12 +337,26 @@ public class Player extends Editable {
 			float angleRemainder = Math.abs(angle - angleRounded);
 
 			if (angleRemainder < 0.05) {
-				if (left && vel.x >= 0) { // pushing left but not moving left
-					leftStickTimer.start();
+				if (left) {
+					if (vel.x >= 0) {
+						leftStickTimer.start();
+					} else {
+						leftStickTimer.stop();
+					}
 				}
-				if (right && vel.x <= 0) { // pushing right but not moving right
-					rightStickTimer.start();
+				if (right) {
+					if (vel.x <= 0) {
+						rightStickTimer.start();
+					} else {
+						rightStickTimer.stop();
+					}
 				}
+//				if (left && vel.x >= 0) { // pushing left but not moving left
+//					leftStickTimer.start();
+//				}
+//				if (right && vel.x <= 0) { // pushing right but not moving right
+//					rightStickTimer.start();
+//				}
 			}
 		}
 
