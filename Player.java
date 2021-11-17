@@ -340,10 +340,10 @@ public class Player extends Editable {
 			float angleRemainder = Math.abs(angle - angleRounded);
 
 			if (angleRemainder < 0.05) {
-				if (left) {
+				if (left && !rightStickTimer.isRunning()) {
 					leftStickTimer.start();
 				}
-				if (right) {
+				if (right && !leftStickTimer.isRunning()) {
 					rightStickTimer.start();
 				}
 			}
