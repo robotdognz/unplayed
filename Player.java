@@ -1216,7 +1216,7 @@ public class Player extends Editable {
 					if (!checkForWallSlotsJump(true)) {
 						xImpulse = (dynamicBody.getMass() * jumpPower * 0.5f);
 						if (leftStickTimer.isRunning()) {
-							xImpulse = (dynamicBody.getMass() * jumpPower * 1f); //TODO: messing with wall jumps
+							xImpulse = (dynamicBody.getMass() * jumpPower * 2f); //TODO: messing with wall jumps
 						}
 					}
 				}
@@ -1231,7 +1231,7 @@ public class Player extends Editable {
 					if (!checkForWallSlotsJump(false)) {
 						xImpulse = -(dynamicBody.getMass() * jumpPower * 0.5f);
 						if (rightStickTimer.isRunning()) {
-							xImpulse = -(dynamicBody.getMass() * jumpPower * 1f); //TODO: messing with wall jumps
+							xImpulse = -(dynamicBody.getMass() * jumpPower * 2f); //TODO: messing with wall jumps
 						}
 					}
 				}
