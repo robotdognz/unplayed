@@ -77,8 +77,9 @@ public class Player extends Editable {
 	private Fixture roofFixture; // reference to the barrier fixture
 	public boolean touchingRoofBarrier; // is the player touching a roof barrier
 
-	// stuck checking
-	private boolean stuck; // is the player stuck in the environment TODO: might not be needed
+	// wall magnetism
+	public CountdownTimer leftStickTimer; // sticking to left wall
+	public CountdownTimer rightStickTimer; // sticking to right wall
 
 	// rotation snapping
 	private RotationSmooth rotationSmooth;
@@ -149,7 +150,9 @@ public class Player extends Editable {
 		this.verticalTunnel = false;
 		this.horizontalTunnel = false;
 
-		this.stuck = false;
+		// how long to stick to a wall after letting go
+		this.leftStickTimer = new CountdownTimer(0.256f);
+		this.rightStickTimer = new CountdownTimer(0.256f);
 
 		create();
 	}
@@ -263,6 +266,8 @@ public class Player extends Editable {
 		groundTimer.deltaStep(delta);
 		wallTimer.deltaStep(delta);
 		boostTimer.deltaStep(delta);
+		leftStickTimer.deltaStep(delta);
+		rightStickTimer.deltaStep(delta);
 
 		// run checks
 		checkJumps();
@@ -283,6 +288,9 @@ public class Player extends Editable {
 		}
 
 		// do movement
+		
+		checkWallStick(); //TODO: finish this
+
 		float desiredVel = 0;
 
 		if (left) {
@@ -308,6 +316,23 @@ public class Player extends Editable {
 
 	}
 
+	private void checkWallStick() {
+//		leftStickTimer.start();
+//		rightStickTimer.start();
+
+		// touching a wall, but not the ground
+		if (wallContacts > 0 && groundContacts == 0) {
+			// check angle is appropriate
+			float angle = PApplet.degrees(dynamicBody.getAngle());
+			float angleRounded = Math.round(angle / 90) * 90;
+			float angleRemainder = Math.abs(angle - angleRounded);
+
+			if (angleRemainder < 0.001) {
+				leftStickTimer.start();
+			}
+		}
+	}
+
 	private void checkJumps() {
 		if (groundContacts > 0) {
 			extraJump = true;
@@ -324,8 +349,6 @@ public class Player extends Editable {
 		this.groundChecking.clear();
 		this.wallChecking.clear();
 		this.roofChecking.clear();
-
-		this.stuck = false;
 
 		// check there are enough tiles (need at least 2)
 		if (!(sensorContacts.size() >= 2)) {
@@ -347,13 +370,8 @@ public class Player extends Editable {
 		// check angle is appropriate
 		float angle = PApplet.degrees(dynamicBody.getAngle());
 		float angleRounded = Math.round(angle / 90) * 90;
-		float angleRemainder = Math.abs(angle - angleRounded);
-
-		// this code will probably be removed
-//		if (angleRemainder >= 45) { // 3 
-//			destroyAllBarriers(true);
-//			return;
-//		}
+		float angleRemainder = Math.abs(angle - angleRounded); // TODO: this should be calculated inside
+																// fixRotationOffset instead of here
 
 		// run the algorithms
 		// if tunnel checking locks the player's rotation, the other algorithms
@@ -1292,7 +1310,7 @@ public class Player extends Editable {
 				graphics.rect(0, -getHeight() / 2, getWidth() / 2, getHeight());
 			}
 
-			if (showChecking && stuck) {
+			if (showChecking && (leftStickTimer.isRunning() || rightStickTimer.isRunning())) {
 				graphics.noStroke();
 				graphics.fill(255, 0, 0, 100);
 				graphics.rectMode(CENTER);
