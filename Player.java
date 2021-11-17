@@ -1220,7 +1220,8 @@ public class Player extends Editable {
 							// reset horizontal speed
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 							//turn off timer
-							leftStickTimer.stop();
+//							leftStickTimer.stop();
+							DebugOutput.pushMessage("Boost off left wall", 4);
 						}
 					}
 				}
@@ -1239,7 +1240,8 @@ public class Player extends Editable {
 							// reset horizontal speed
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 							//turn off timer
-							rightStickTimer.stop();
+//							rightStickTimer.stop();
+							DebugOutput.pushMessage("Boost off right wall", 4);
 						}
 					}
 				}

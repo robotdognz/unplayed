@@ -32,10 +32,10 @@ public class RotationSmooth {
 		// calculate the size of the step to be taken each frame
 		this.stepSize = difference / animationLength;
 
-		String output = "Old Angle: " + PApplet.nf(oldAngle, 0, 1) + ", New Angle: " + PApplet.nf(newAngle, 0, 1) + "\n"
-				+ "Impact: " + PApplet.nf(impact / 400, 0, 3) + ", Animation: " + PApplet.nf(animationLength, 0, 3);
-
-		DebugOutput.pushMessage(output, 4);
+//		String output = "Old Angle: " + PApplet.nf(oldAngle, 0, 1) + ", New Angle: " + PApplet.nf(newAngle, 0, 1) + "\n"
+//				+ "Impact: " + PApplet.nf(impact / 400, 0, 3) + ", Animation: " + PApplet.nf(animationLength, 0, 3);
+//
+//		DebugOutput.pushMessage(output, 4);
 	}
 
 	public void deltaStep(float deltaTime) {
