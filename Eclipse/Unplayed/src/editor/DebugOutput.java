@@ -11,7 +11,7 @@ public class DebugOutput {
 
 	public static void pushMessage(String message, float duration) {
 
-		if (messageQueue.getLast().getMessage().equals(message)) {
+		if (messageQueue.size() > 0 && messageQueue.getLast().getMessage().equals(message)) {
 			messageQueue.getLast().count();
 			return;
 		}
