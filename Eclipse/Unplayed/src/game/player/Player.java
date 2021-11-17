@@ -1055,8 +1055,10 @@ public class Player extends Editable {
 		for (int i = 0; i < roofChecking.size(); i++) {
 			Tile t = roofChecking.get(i);
 
-			// check if above player
-			if (t.getBottomRight().x > pos.x - getWidth() * 0.49 && t.getTopLeft().x < pos.x + getWidth() * 0.5) {
+			// check tile is above player and blocking their jump
+			// if right edge is larger than player left edge (off by a tiny bit to fix the edge case)
+			// and if left edge is smaller than player right edge
+			if (t.getBottomRight().x > pos.x - getWidth() * 0.499 && t.getTopLeft().x < pos.x + getWidth() * 0.5) {
 				tileAbovelayer = true;
 			}
 
