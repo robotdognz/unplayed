@@ -1222,6 +1222,8 @@ public class Player extends Editable {
 							// turn off timer
 //							rightStickTimer.stop();
 							DebugOutput.pushMessage("Boost off right wall", 4);
+						} else {
+							DebugOutput.pushMessage("Normal left wall jump", 4);
 						}
 					}
 				}
@@ -1242,6 +1244,8 @@ public class Player extends Editable {
 							// turn off timer
 //							leftStickTimer.stop();
 							DebugOutput.pushMessage("Boost off left wall", 4);
+						} else {
+							DebugOutput.pushMessage("Normal right wall jump", 4);
 						}
 					}
 				}
