@@ -322,7 +322,7 @@ public class Player extends Editable {
 
 		// touching a wall, but not the ground
 
-		if (groundContacts > 0 || horizontalTunnel || verticalTunnel) {
+		if (groundContacts > 0 || groundTimer.isRunning() || horizontalTunnel || verticalTunnel) {
 			leftStickTimer.stop();
 			rightStickTimer.stop();
 			return;
