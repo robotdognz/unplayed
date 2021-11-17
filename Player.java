@@ -303,7 +303,7 @@ public class Player extends Editable {
 				if (rightStickTimer.isRunning()) {
 					desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
 					DebugOutput.pushMessage("Stick to right wall", 2);
-//					wallBoostTimer.start();
+					wallBoostTimer.start();
 				}
 			} else {
 				return;
@@ -318,7 +318,7 @@ public class Player extends Editable {
 				if (leftStickTimer.isRunning()) {
 					desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
 					DebugOutput.pushMessage("Stick to left wall", 2);
-//					wallBoostTimer.start();
+					wallBoostTimer.start();
 				}
 			} else {
 				return;

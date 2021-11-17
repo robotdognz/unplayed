@@ -10,6 +10,12 @@ public class DebugOutput {
 	static int maxMessages = 10;
 
 	public static void pushMessage(String message, float duration) {
+
+		if (messageQueue.getLast().getMessage().equals(message)) {
+			messageQueue.getLast().count();
+			return;
+		}
+
 		messageQueue.add(new DebugMessage(message, duration));
 
 		if (messageQueue.size() > 10) {

@@ -6,6 +6,7 @@ public class DebugMessage {
 	private String message;
 	private float time;
 	private float duration;
+	private int count;
 
 	private int opacity;
 
@@ -14,12 +15,18 @@ public class DebugMessage {
 		this.time = 0;
 		this.duration = duration;
 
+		this.count = 0;
+
 		this.opacity = 255;
 	}
-	
+
 	public void append(String message) {
 		this.time = 0;
 		this.message += "\n" + message;
+	}
+	
+	public void count() {
+		count++;
 	}
 
 	public boolean step(float deltaTime) {
@@ -32,12 +39,20 @@ public class DebugMessage {
 		return false; // is still going
 	}
 
+	public String getMessage() {
+		return message;
+	}
+
 	public int drawMessage(PApplet p, float x, float y) {
 		// calculate opacity from remaining time
 		opacity = 255 - (int) (255 * (time / duration));
 		// draw the message
 		p.fill(80, opacity);
-		p.text(message, p.width / 2, y);
+		String printMessage = message;
+		if (count > 0) {
+			printMessage += " [" + count + "]";
+		}
+		p.text(printMessage, p.width / 2, y);
 		// return how many lines the message was
 		return 1 + message.split(System.getProperty("line.separator")).length;
 	}
