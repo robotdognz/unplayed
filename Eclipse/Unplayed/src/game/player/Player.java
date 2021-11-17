@@ -327,6 +327,15 @@ public class Player extends Editable {
 			rightStickTimer.stop();
 			return;
 		}
+		
+		if (left && vel.x < 0) { // pushing left but not moving left
+			leftStickTimer.stop();
+			return;
+		}
+		if (right && vel.x > 0) { // pushing right but not moving right
+			rightStickTimer.stop();
+			return;
+		}
 
 		// && !horizontalTunnel && !verticalTunnel && !dynamicBody.isFixedRotation()
 		if (wallContacts > 0) {
@@ -338,18 +347,18 @@ public class Player extends Editable {
 
 			if (angleRemainder < 0.05) {
 				if (left) {
-					if (vel.x >= 0) {
+//					if (vel.x >= 0) {
 						leftStickTimer.start();
-					} else {
-						leftStickTimer.stop();
-					}
+//					} else {
+//						leftStickTimer.stop();
+//					}
 				}
 				if (right) {
-					if (vel.x <= 0) {
+//					if (vel.x <= 0) {
 						rightStickTimer.start();
-					} else {
-						rightStickTimer.stop();
-					}
+//					} else {
+//						rightStickTimer.stop();
+//					}
 				}
 //				if (left && vel.x >= 0) { // pushing left but not moving left
 //					leftStickTimer.start();
