@@ -296,6 +296,9 @@ public class Player extends Editable {
 		if (left) {
 			if (vel.x >= -movementSpeed) {
 				desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
+				if (rightStickTimer.isRunning()) {
+					desiredVel = Math.min(vel.x + 2.0f, movementSpeed); //TODO
+				}
 			} else {
 				return;
 			}
@@ -303,6 +306,9 @@ public class Player extends Editable {
 		} else if (right) {
 			if (vel.x <= movementSpeed) {
 				desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
+				if (leftStickTimer.isRunning()) {
+					desiredVel = Math.max(vel.x - 2.0f, -movementSpeed); //TODO
+				}
 			} else {
 				return;
 			}
@@ -317,18 +323,15 @@ public class Player extends Editable {
 	}
 
 	private void checkWallStick(Vec2 vel) {
-//		leftStickTimer.start();
-//		rightStickTimer.start();
 
-		// touching a wall, but not the ground
-
+		// not touching ground or in tunnel
 		if (groundContacts > 0 || groundTimer.isRunning() || horizontalTunnel || verticalTunnel) {
 			leftStickTimer.stop();
 			rightStickTimer.stop();
 			return;
 		}
 
-		// && !horizontalTunnel && !verticalTunnel && !dynamicBody.isFixedRotation()
+		// touching a wall and pushing into it
 		if (wallContacts > 0) {
 
 			// check angle is appropriate
@@ -1037,17 +1040,14 @@ public class Player extends Editable {
 				// if this tile is the far side of a gap
 				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
 
-					if (t.getTopLeft().x > pos.x + getWidth() * 0.5) { // + 0.2
+					if (t.getTopLeft().x > pos.x + getWidth() * 0.5) {
 						// slot is to the right
-//						DebugOutput.pushMessage("right", 4);
 						return 1;
-					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5) { // - 0.2
+					} else if (t.getTopLeft().x < pos.x + getWidth() * 0.5) {
 						// slot is to the left
-//						DebugOutput.pushMessage("left", 4);
 						return -1;
 					} else {
 						// in slot or no slot
-//						DebugOutput.pushMessage("none", 4);
 						return 0;
 					}
 				}
@@ -1056,7 +1056,6 @@ public class Player extends Editable {
 		}
 
 		// didn't find a roof slot
-		DebugOutput.pushMessage("none", 4);
 		return 0;
 	}
 
@@ -1326,9 +1325,16 @@ public class Player extends Editable {
 				graphics.rect(0, -getHeight() / 2, getWidth() / 2, getHeight());
 			}
 
-			if (showChecking && (leftStickTimer.isRunning() || rightStickTimer.isRunning())) {
+			if (showChecking && leftStickTimer.isRunning()) { // left stick timer
 				graphics.noStroke();
-				graphics.fill(255, 0, 0, 100);
+				graphics.fill(235, 235, 52, 100);
+				graphics.rectMode(CENTER);
+				graphics.rect(0, 0, getWidth() / 2, getHeight() / 2);
+			}
+
+			if (showChecking && rightStickTimer.isRunning()) { // right stick timer
+				graphics.noStroke();
+				graphics.fill(235, 52, 52, 100);
 				graphics.rectMode(CENTER);
 				graphics.rect(0, 0, getWidth() / 2, getHeight() / 2);
 			}
