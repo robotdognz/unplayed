@@ -322,14 +322,14 @@ public class Player extends Editable {
 
 		// touching a wall, but not the ground
 
-		if (groundContacts > 0) {
+		if (groundContacts > 0 || horizontalTunnel || verticalTunnel) {
 			leftStickTimer.stop();
 			rightStickTimer.stop();
 			return;
 		}
 
 		// && !horizontalTunnel && !verticalTunnel && !dynamicBody.isFixedRotation()
-		if (!horizontalTunnel && !verticalTunnel && wallContacts > 0) {
+		if (wallContacts > 0) {
 
 			// check angle is appropriate
 			float angle = PApplet.degrees(dynamicBody.getAngle());
