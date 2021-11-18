@@ -12,6 +12,11 @@
 -Player can now jump up into roof slots/tunnels while not moving
 -Improved the wall jumping system to be more forgiving
 -Implemented wall boost system, allowing for longer wall jumps when done correctly
+-Improved wall jumping so there are only three distict variations:
+	-wall jumping (jumping while pushing into a wall)
+	-away from wall jumping (jumping off a way while not pushing in any direction)
+	-wall boosting (jumping away from a wall while pull away from the wall)
+-Fixed edge case where player could get a ground jump while wall jumping
 
 1.2.1: Improving physics and tuning player 'feel'
 
