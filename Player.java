@@ -169,8 +169,8 @@ public class Player extends Editable {
 		this.wallJumpPower = 0.4f; // 0.5f
 		this.wallBoostPower = 0.75f;
 
-		this.pushLeftTimer = new CountdownTimer(0.064f);
-		this.pushRightTimer = new CountdownTimer(0.064f);
+		this.pushLeftTimer = new CountdownTimer(0.256f);
+		this.pushRightTimer = new CountdownTimer(0.256f);
 
 		create();
 	}
