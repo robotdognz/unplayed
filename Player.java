@@ -35,13 +35,13 @@ public class Player extends Editable {
 	private boolean right = false;
 
 	// box2d player
-	private Box2DProcessing box2d; // the box2d world
+	private static Box2DProcessing box2d; // the box2d world
 	public static Body dynamicBody; // the player's physics body
 	private float density; // the player's density
 	private float friction; // the player's friction
 
 	public boolean locked; // does the player have locked rotation TODO: remove when physics completed
-	int contactNumber; // the number of things touching the player's body
+	public int contactNumber; // the number of things touching the player's body
 	public int groundContacts; // the number of grounds touching the player's body
 	public int wallContacts; // the number of walls touching the player's body
 	public CountdownTimer groundTimer; // used to make ground collision more forgiving
@@ -81,7 +81,7 @@ public class Player extends Editable {
 	private CountdownTimer leftStickTimer; // sticking to left wall
 	private CountdownTimer rightStickTimer; // sticking to right wall
 	private CountdownTimer wallBoostTimer; // boost off wall timer
-	private float wallJumpPower; // ratio for power of juping off wall
+	private float wallJumpPower; // ratio for power of jumping off wall
 	private float wallBoostPower; // ratio for power of boosting off wall
 
 	// rotation snapping
@@ -110,7 +110,7 @@ public class Player extends Editable {
 		this.events = new ArrayList<Event>();
 
 		// box2d
-		this.box2d = box2d;
+		Player.box2d = box2d;
 		this.friction = 0.6f; // from 0 to 1
 		this.density = 1; // from 0 to 1
 
