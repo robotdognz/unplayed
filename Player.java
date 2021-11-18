@@ -44,7 +44,10 @@ public class Player extends Editable {
 	public int contactNumber; // the number of things touching the player's body
 	public int groundContacts; // the number of grounds touching the player's body
 	public int wallContacts; // the number of walls touching the player's body
+
 	public CountdownTimer groundTimer; // used to make ground collision more forgiving
+	public CountdownTimer startGroundTimer; // only start the above timer after a time
+
 	public CountdownTimer wallTimer; // used to make wall collision more forgiving
 	public CountdownTimer jumpTimer; // used to correct the ground timer
 	public CountdownTimer boostTimer; // used to correct the ground timer
@@ -143,6 +146,8 @@ public class Player extends Editable {
 		this.wallContacts = 0;
 		// how long to pad leaving the ground
 		this.groundTimer = new CountdownTimer(0.200f); // 0.128
+		this.startGroundTimer = new CountdownTimer(0.064f);
+
 		// how long to pad leaving the ground
 		this.wallTimer = new CountdownTimer(0.128f); // 0.064
 		// how long after a jump before the ground a wall timers can be started
@@ -217,6 +222,11 @@ public class Player extends Editable {
 
 	public void startGroundContact() {
 		this.groundContacts++;
+
+		// TODO: new timer code
+		if (this.groundContacts == 1 && !startGroundTimer.isRunning()) {
+			startGroundTimer.start();
+		}
 	}
 
 	public void endGroundContact() {
@@ -224,6 +234,12 @@ public class Player extends Editable {
 		// if the player has just left the ground and it wasn't because of a jump
 		// if (this.groundContacts == 0) { // alternate version from 2020 development,
 		// unknown purpose
+
+		// TODO: new timer code
+		if (!startGroundTimer.isFinished()) {
+			return;
+		}
+
 		if (this.groundContacts == 0 && !this.jumpTimer.isRunning()) {
 			groundTimer.start();
 		}
@@ -271,6 +287,7 @@ public class Player extends Editable {
 		// step timers
 		jumpTimer.deltaStep(delta);
 		groundTimer.deltaStep(delta);
+		startGroundTimer.deltaStep(delta);
 		wallTimer.deltaStep(delta);
 		boostTimer.deltaStep(delta);
 		leftStickTimer.deltaStep(delta);

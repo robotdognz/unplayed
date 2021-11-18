@@ -7,18 +7,21 @@ public class CountdownTimer {
 	private float deltaTimer;
 	private float deltaLimit;
 
-	private boolean running;
+	private boolean running; // only true when the timer is running
+	private boolean finished; // only true when the timer has naturally finished
 
 	public CountdownTimer(int limit) {
 		this.intTimer = 0;
 		this.intLimit = limit;
 		this.running = false;
+		this.finished = false;
 	}
 
 	public CountdownTimer(float limit) {
 		this.deltaTimer = 0;
 		this.deltaLimit = limit;
 		this.running = false;
+		this.finished = false;
 	}
 
 	public void intStep() {
@@ -27,6 +30,7 @@ public class CountdownTimer {
 				intTimer++;
 			} else {
 				running = false;
+				finished = true;
 				intTimer = 0;
 			}
 		}
@@ -38,9 +42,14 @@ public class CountdownTimer {
 				deltaTimer += delta;
 			} else {
 				running = false;
+				finished = true;
 				deltaTimer = 0;
 			}
 		}
+	}
+
+	public boolean isFinished() {
+		return finished;
 	}
 
 	public boolean isRunning() {
@@ -67,9 +76,11 @@ public class CountdownTimer {
 		intTimer = 0;
 		deltaTimer = 0;
 		running = true;
+		finished = false;
 	}
 
 	public void stop() {
 		running = false;
+		finished = false;
 	}
 }
