@@ -90,6 +90,7 @@ public class Player extends Editable {
 	private CountdownTimer rightStickTimer; // sticking to right wall
 	private CountdownTimer wallBoostTimer; // boost off wall timer, used as padding for the 'stick' timers above
 	private float wallJumpPower; // ratio (of jumpPower) for power of jumping off wall
+	private float wallJumpAwayPower; // ratio (of jumpPower) for power of jumping away from a wall
 	private float wallBoostPower; // ratio (of jumpPower) for power of boosting off wall
 
 	// rotation snapping
@@ -169,6 +170,7 @@ public class Player extends Editable {
 		// how long you can boost for after wall stick activated
 		this.wallBoostTimer = new CountdownTimer(0.150f); // 0.128f
 		this.wallJumpPower = 0.4f; // 0.5f
+		this.wallJumpAwayPower = 0.25f;
 		this.wallBoostPower = 0.75f;
 
 		this.pushLeftTimer = new CountdownTimer(0.200f);
@@ -1342,7 +1344,7 @@ public class Player extends Editable {
 			} else if (rightStickTimer.isRunning()) { // jump off right wall
 				// if not pushing into either wall, apply a small jump
 
-				xImpulse = -(dynamicBody.getMass() * jumpPower * wallJumpPower);
+				xImpulse = -(dynamicBody.getMass() * jumpPower * wallJumpAwayPower);
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
@@ -1357,7 +1359,7 @@ public class Player extends Editable {
 			} else if (leftStickTimer.isRunning()) { // jump of left wall
 				// if not pushing into either wall, apply a small jump
 
-				xImpulse = (dynamicBody.getMass() * jumpPower * wallJumpPower);
+				xImpulse = (dynamicBody.getMass() * jumpPower * wallJumpAwayPower);
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
