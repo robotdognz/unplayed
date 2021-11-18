@@ -355,7 +355,7 @@ public class Player extends Editable {
 			float angleRounded = Math.round(angle / 90) * 90;
 			float angleRemainder = Math.abs(angle - angleRounded);
 
-			if (angleRemainder < 5) { // 0.05
+			if (angleRemainder < 20) { // 0.05
 				if (left && !rightStickTimer.isRunning()) {
 					leftStickTimer.start();
 				}
@@ -1231,10 +1231,7 @@ public class Player extends Editable {
 					boostTimer.start();
 				} else { //if (roofSlot == 0) { // in slot
 					yImpulse = dynamicBody.getMass() * jumpPower;
-				} 
-//				else {
-//					DebugOutput.pushMessage("Blocked from above", 3);
-//				}
+				}
 
 			} else {
 				yImpulse = dynamicBody.getMass() * jumpPower;
@@ -1295,7 +1292,7 @@ public class Player extends Editable {
 			} else if (rightStickTimer.isRunning()) { // jump off right wall
 				// if not pushing into either wall, apply a small jump
 
-				xImpulse = -(dynamicBody.getMass() * jumpPower * wallJumpPower); //(wallJumpPower - 0.1f)
+				xImpulse = -(dynamicBody.getMass() * jumpPower * wallJumpPower);
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
@@ -1309,7 +1306,7 @@ public class Player extends Editable {
 			} else if (leftStickTimer.isRunning()) { // jump of left wall
 				// if not pushing into either wall, apply a small jump
 
-				xImpulse = (dynamicBody.getMass() * jumpPower * wallJumpPower); //(wallJumpPower - 0.1f)
+				xImpulse = (dynamicBody.getMass() * jumpPower * wallJumpPower);
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
