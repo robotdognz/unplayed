@@ -158,7 +158,7 @@ public class Player extends Editable {
 		this.rightStickTimer = new CountdownTimer(0.190f); // 0.256f
 		// how long you can boost for after wall stick activated
 		this.wallBoostTimer = new CountdownTimer(0.150f); // 0.128f
-		this.wallJumpPower = 0.4f; //0.5f
+		this.wallJumpPower = 0.4f; // 0.5f
 		this.wallBoostPower = 0.75f;
 
 		create();
@@ -202,6 +202,9 @@ public class Player extends Editable {
 			sensorFixtureDef.isSensor = true;
 			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR;
 			dynamicBody.createFixture(sensorFixtureDef);
+
+			extraJump = false; // TODO: seeing if this fixes the wall slot give the player an extra jump edge
+								// case
 
 //			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
 		}
@@ -1229,7 +1232,7 @@ public class Player extends Editable {
 					// apply x impulse
 					xImpulse = dynamicBody.getMass() * jumpPower;
 					boostTimer.start();
-				} else { //if (roofSlot == 0) { // in slot
+				} else { // if (roofSlot == 0) { // in slot
 					yImpulse = dynamicBody.getMass() * jumpPower;
 				}
 
