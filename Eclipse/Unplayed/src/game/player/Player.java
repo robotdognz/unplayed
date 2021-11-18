@@ -203,8 +203,10 @@ public class Player extends Editable {
 			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR;
 			dynamicBody.createFixture(sensorFixtureDef);
 
-			extraJump = false; // TODO: seeing if this fixes the wall slot give the player an extra jump edge
-								// case
+			// TODO: seeing if this fixes the wall slot give the player an extra jump edge
+			// case
+			groundTimer.stop();
+			extraJump = false;
 
 //			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
 		}
