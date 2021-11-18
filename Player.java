@@ -158,7 +158,7 @@ public class Player extends Editable {
 		this.rightStickTimer = new CountdownTimer(0.190f); // 0.256f
 		// how long you can boost for after wall stick activated
 		this.wallBoostTimer = new CountdownTimer(0.150f); // 0.128f
-		this.wallJumpPower = 0.5f;
+		this.wallJumpPower = 0.4f; //0.5f
 		this.wallBoostPower = 0.75f;
 
 		create();
@@ -1295,7 +1295,7 @@ public class Player extends Editable {
 			} else if (rightStickTimer.isRunning()) { // jump off right wall
 				// if not pushing into either wall, apply a small jump
 
-				xImpulse = -(dynamicBody.getMass() * jumpPower * (wallJumpPower - 0.1f));
+				xImpulse = -(dynamicBody.getMass() * jumpPower * wallJumpPower); //(wallJumpPower - 0.1f)
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
@@ -1309,7 +1309,7 @@ public class Player extends Editable {
 			} else if (leftStickTimer.isRunning()) { // jump of left wall
 				// if not pushing into either wall, apply a small jump
 
-				xImpulse = (dynamicBody.getMass() * jumpPower * (wallJumpPower - 0.1f));
+				xImpulse = (dynamicBody.getMass() * jumpPower * wallJumpPower); //(wallJumpPower - 0.1f)
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
