@@ -203,11 +203,6 @@ public class Player extends Editable {
 			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR;
 			dynamicBody.createFixture(sensorFixtureDef);
 
-			// TODO: seeing if this fixes the wall slot give the player an extra jump edge
-			// case
-			groundTimer.stop();
-			extraJump = false;
-
 //			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
 		}
 	}
@@ -470,6 +465,10 @@ public class Player extends Editable {
 			if (Math.abs(oldAngle - newAngle) > 2) {
 				rotationSmooth = new RotationSmooth(oldAngle, newAngle, vibration.getImpactHistory());
 			}
+
+			// TODO: seeing if this fixes wall slot giving player an extra jump edge case
+			groundTimer.stop();
+			extraJump = false;
 
 		}
 	}
@@ -1266,6 +1265,8 @@ public class Player extends Editable {
 							rightStickTimer.stop();
 							DebugOutput.pushMessage("Boost off right wall", 2);
 						}
+					} else {
+						DebugOutput.pushMessage("Slot above jump", 2);
 					}
 				}
 				// extraJump = true; // double jumping off wall is currently disabled
@@ -1290,6 +1291,8 @@ public class Player extends Editable {
 							leftStickTimer.stop();
 							DebugOutput.pushMessage("Boost off left wall", 2);
 						}
+					} else {
+						DebugOutput.pushMessage("Slot above jump", 2);
 					}
 				}
 				// extraJump = true; // double jumping off wall is currently disabled
