@@ -379,7 +379,7 @@ public class Player extends Editable {
 		}
 
 		// touching a wall and pushing into it
-		if (wallContacts > 0) {
+		if (wallContacts > 0 || wallTimer.isRunning()) { //TODO: testing making wall stick more forgiving
 
 			// check angle is appropriate
 			float angle = PApplet.degrees(dynamicBody.getAngle());
