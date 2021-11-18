@@ -1272,7 +1272,6 @@ public class Player extends Editable {
 				yImpulse = dynamicBody.getMass() * jumpPower;
 			}
 
-			DebugOutput.pushMessage("Ground jump " + groundContacts, 2);
 			extraJump = true;
 
 		} else if (wallContacts > 0 || wallTimer.isRunning()) { // touching a wall
