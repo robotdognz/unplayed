@@ -69,7 +69,7 @@ public class Game {
 	float accumulator = 0;
 	float stepSize = 1f / 240f;
 
-	public Game(PApplet p, AppLogic app, Camera c, TextureCache texture, Converter convert) { //Vibe v,
+	public Game(PApplet p, AppLogic app, Camera c, TextureCache texture, Converter convert) { // Vibe v,
 		// legacy variables from level class TODO: write these out eventually
 		PVector cameraTopLeft = new PVector(-400, -400);
 		PVector cameraBottomRight = new PVector(500, 600);
@@ -121,6 +121,14 @@ public class Game {
 
 		// box2d
 		buildWorld();
+	}
+
+	public void removePlayer() {
+		if (player == null) {
+			return;
+		}
+		player.destroy(); // remove the player physics body
+		player = null; // remove the player
 	}
 
 	public void buildWorld() {
@@ -237,12 +245,12 @@ public class Game {
 	}
 
 	public void endPuzzle(Rectangle playerArea) {
-		
-		if(world.playerEndCount() - puzzlesCompleted == 1) {
+
+		if (world.playerEndCount() - puzzlesCompleted == 1) {
 			endGame();
 			return;
 		}
-		
+
 		HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
 		world.retrieve(returnObjects, playerArea);
 		Tile found = null;
@@ -566,7 +574,6 @@ public class Game {
 		else
 			return 1; // 240 Hz ( 160 Hz to .. )
 	}
-
 
 //	public int getRemainingPuzzles() {
 //		return world.playerEndCount() - puzzlesCompleted;

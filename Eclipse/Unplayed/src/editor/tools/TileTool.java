@@ -154,8 +154,7 @@ public class TileTool implements Tool {
 				if (required != null && required.equals(editor.selected)) {
 					editor.selected = null;
 				}
-				game.player.destroy(); // remove the old player body
-				game.player = null;
+				game.removePlayer();
 				((PlayerStart) p).setRequired(null);
 			} else if (p instanceof PlayerEnd) {
 				Tile required = ((PlayerEnd) p).getRequired();
