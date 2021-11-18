@@ -78,6 +78,13 @@ public class CountdownTimer {
 		running = true;
 		finished = false;
 	}
+	
+	public void start(float limit) {
+		deltaTimer = 0;
+		deltaLimit = limit;
+		running = true;
+		finished = false;
+	}
 
 	public void stop() {
 		running = false;

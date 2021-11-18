@@ -82,6 +82,8 @@ public class Player extends Editable {
 
 	public CountdownTimer pushLeftTimer; // keeps the player pushing left for a time after wall jumping
 	public CountdownTimer pushRightTimer; // keeps the player pushing right for a time after wall jumping
+	public float wallPushTime; // how long the above timers run for for a wall jump
+	public float wallSlotTime; // how long the above timers run for jumping up into a slot
 
 	// wall jumping, magnetism, and boosting
 	private CountdownTimer leftStickTimer; // sticking to left wall
@@ -171,6 +173,8 @@ public class Player extends Editable {
 
 		this.pushLeftTimer = new CountdownTimer(0.256f);
 		this.pushRightTimer = new CountdownTimer(0.256f);
+		this.wallPushTime = 0.256f;
+		this.wallSlotTime = 0.500f;
 
 		create();
 	}
@@ -1296,6 +1300,7 @@ public class Player extends Editable {
 							pushLeftTimer.start();
 						}
 					} else {
+						pushLeftTimer.start();
 						DebugOutput.pushMessage("Slot above jump", 2);
 					}
 				}
@@ -1311,10 +1316,9 @@ public class Player extends Editable {
 					// if there is no wall slot within reach of the player
 					if (!checkForWallSlotsJump(false)) {
 
-						
 						if (leftStickTimer.isRunning() || wallBoostTimer.isRunning()) {
 							// boost off left wall
-							
+
 							xImpulse = (dynamicBody.getMass() * jumpPower * wallBoostPower);
 							// reset horizontal speed
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
@@ -1323,11 +1327,12 @@ public class Player extends Editable {
 							DebugOutput.pushMessage("Boost off left wall", 2);
 						} else {
 							// wall jump off right wall
-							
+
 							xImpulse = -(dynamicBody.getMass() * jumpPower * wallJumpPower);
 							pushRightTimer.start();
 						}
 					} else {
+						pushRightTimer.start();
 						DebugOutput.pushMessage("Slot above jump", 2);
 					}
 				}
