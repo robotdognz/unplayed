@@ -45,13 +45,6 @@ public class Player extends Editable {
 	public int groundContacts; // the number of grounds touching the player's body
 	public int wallContacts; // the number of walls touching the player's body
 
-	public CountdownTimer groundTimer; // used to make ground collision more forgiving
-	public CountdownTimer startGroundTimer; // only start the above timer after a time
-
-	public CountdownTimer wallTimer; // used to make wall collision more forgiving
-	public CountdownTimer jumpTimer; // used to correct the ground timer
-	public CountdownTimer boostTimer; // used to correct the ground timer
-
 	private ArrayList<Event> events; // list of events touching the player
 	private PlayerVibration vibration; // vibration system
 
@@ -80,12 +73,22 @@ public class Player extends Editable {
 	private Fixture roofFixture; // reference to the barrier fixture
 	public boolean touchingRoofBarrier; // is the player touching a roof barrier
 
+	// movement timers
+	public CountdownTimer groundTimer; // used to make ground collision more forgiving, walking off edges, etc.
+	public CountdownTimer groundTimerPadding; // how long the player must touch the ground before getting double jump
+	public CountdownTimer wallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
+	public CountdownTimer jumpTimer; // used to correct the ground timer, stop it from starting after a jump
+	public CountdownTimer boostTimer; // used for boosting up into roof slots
+
+	public CountdownTimer pushLeftTimer; // keeps the player pushing left for a time after wall jumping
+	public CountdownTimer pushRightTimer; // keeps the player pushing right for a time after wall jumping
+
 	// wall jumping, magnetism, and boosting
 	private CountdownTimer leftStickTimer; // sticking to left wall
 	private CountdownTimer rightStickTimer; // sticking to right wall
-	private CountdownTimer wallBoostTimer; // boost off wall timer
-	private float wallJumpPower; // ratio for power of jumping off wall
-	private float wallBoostPower; // ratio for power of boosting off wall
+	private CountdownTimer wallBoostTimer; // boost off wall timer, used as padding for the 'stick' timers above
+	private float wallJumpPower; // ratio (of jumpPower) for power of jumping off wall
+	private float wallBoostPower; // ratio (of jumpPower) for power of boosting off wall
 
 	// rotation snapping
 	private RotationSmooth rotationSmooth;
@@ -146,7 +149,7 @@ public class Player extends Editable {
 		this.wallContacts = 0;
 		// how long to pad leaving the ground
 		this.groundTimer = new CountdownTimer(0.200f); // 0.128
-		this.startGroundTimer = new CountdownTimer(0.064f);
+		this.groundTimerPadding = new CountdownTimer(0.064f);
 
 		// how long to pad leaving the ground
 		this.wallTimer = new CountdownTimer(0.128f); // 0.064
@@ -165,6 +168,9 @@ public class Player extends Editable {
 		this.wallBoostTimer = new CountdownTimer(0.150f); // 0.128f
 		this.wallJumpPower = 0.4f; // 0.5f
 		this.wallBoostPower = 0.75f;
+
+		this.pushLeftTimer = new CountdownTimer(0.064f);
+		this.pushRightTimer = new CountdownTimer(0.064f);
 
 		create();
 	}
@@ -223,9 +229,9 @@ public class Player extends Editable {
 	public void startGroundContact() {
 		this.groundContacts++;
 
-		// TODO: new timer code
-		if (this.groundContacts == 1 && !startGroundTimer.isRunning()) {
-			startGroundTimer.start();
+		// start ground timer padding when first touching ground
+		if (this.groundContacts == 1 && !groundTimerPadding.isRunning()) {
+			groundTimerPadding.start();
 		}
 	}
 
@@ -235,8 +241,8 @@ public class Player extends Editable {
 		// if (this.groundContacts == 0) { // alternate version from 2020 development,
 		// unknown purpose
 
-		// TODO: new timer code
-		if (!startGroundTimer.isFinished()) {
+		// prevent ground timer from starting if padding timer is still running
+		if (!groundTimerPadding.isFinished()) {
 			return;
 		}
 
@@ -287,12 +293,14 @@ public class Player extends Editable {
 		// step timers
 		jumpTimer.deltaStep(delta);
 		groundTimer.deltaStep(delta);
-		startGroundTimer.deltaStep(delta);
+		groundTimerPadding.deltaStep(delta);
 		wallTimer.deltaStep(delta);
 		boostTimer.deltaStep(delta);
 		leftStickTimer.deltaStep(delta);
 		rightStickTimer.deltaStep(delta);
 		wallBoostTimer.deltaStep(delta);
+		pushLeftTimer.deltaStep(delta);
+		pushRightTimer.deltaStep(delta);
 
 		// run checks
 		checkJumps();
@@ -316,7 +324,7 @@ public class Player extends Editable {
 		checkWallStick(vel);
 		float desiredVel = 0;
 
-		if (left) {
+		if (left || pushLeftTimer.isRunning()) {
 			if (vel.x >= -movementSpeed) {
 				// standard movement
 				desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
@@ -330,7 +338,7 @@ public class Player extends Editable {
 				return;
 			}
 
-		} else if (right) {
+		} else if (right || pushRightTimer.isRunning()) {
 			if (vel.x <= movementSpeed) {
 				// standard movement
 				desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
@@ -1271,16 +1279,21 @@ public class Player extends Editable {
 
 					// if there is no wall slot within reach of the player
 					if (!checkForWallSlotsJump(true)) {
-						xImpulse = (dynamicBody.getMass() * jumpPower * wallJumpPower);
 
-						// boost off right wall
 						if (rightStickTimer.isRunning() || wallBoostTimer.isRunning()) {
+							// boost off right wall
+
 							xImpulse = -(dynamicBody.getMass() * jumpPower * wallBoostPower);
 							// reset horizontal speed
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 							// turn off timer
 							rightStickTimer.stop();
 							DebugOutput.pushMessage("Boost off right wall", 2);
+						} else {
+							// wall jump off left wall
+
+							xImpulse = (dynamicBody.getMass() * jumpPower * wallJumpPower);
+							pushLeftTimer.start();
 						}
 					} else {
 						DebugOutput.pushMessage("Slot above jump", 2);
@@ -1297,16 +1310,22 @@ public class Player extends Editable {
 
 					// if there is no wall slot within reach of the player
 					if (!checkForWallSlotsJump(false)) {
-						xImpulse = -(dynamicBody.getMass() * jumpPower * wallJumpPower);
 
-						// boost off left wall
+						
 						if (leftStickTimer.isRunning() || wallBoostTimer.isRunning()) {
+							// boost off left wall
+							
 							xImpulse = (dynamicBody.getMass() * jumpPower * wallBoostPower);
 							// reset horizontal speed
 							dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 							// turn off timer
 							leftStickTimer.stop();
 							DebugOutput.pushMessage("Boost off left wall", 2);
+						} else {
+							// wall jump off right wall
+							
+							xImpulse = -(dynamicBody.getMass() * jumpPower * wallJumpPower);
+							pushRightTimer.start();
 						}
 					} else {
 						DebugOutput.pushMessage("Slot above jump", 2);
@@ -1329,6 +1348,7 @@ public class Player extends Editable {
 				extraJump = false;
 
 				DebugOutput.pushMessage("Jump off right wall no direction", 2);
+
 			} else if (leftStickTimer.isRunning()) { // jump of left wall
 				// if not pushing into either wall, apply a small jump
 
@@ -1343,6 +1363,7 @@ public class Player extends Editable {
 				extraJump = false;
 
 				DebugOutput.pushMessage("Jump off left wall no direction", 2);
+
 			}
 
 			else if (extraJump) { // not pushing into the wall
