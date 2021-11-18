@@ -36,7 +36,7 @@ public class Player extends Editable {
 
 	// box2d player
 	private Box2DProcessing box2d; // the box2d world
-	public Body dynamicBody; // the player's physics body
+	public static Body dynamicBody; // the player's physics body
 	private float density; // the player's density
 	private float friction; // the player's friction
 
@@ -179,8 +179,8 @@ public class Player extends Editable {
 			bodyDef.position.set(physicsPosition);
 			bodyDef.angle = -PApplet.radians(physicsAngle);
 			bodyDef.userData = this;
-			this.dynamicBody = box2d.createBody(bodyDef);
-			this.dynamicBody.setFixedRotation(locked);
+			dynamicBody = box2d.createBody(bodyDef);
+			dynamicBody.setFixedRotation(locked);
 
 			// shape
 			PolygonShape boxShape = new PolygonShape();
@@ -201,7 +201,7 @@ public class Player extends Editable {
 			sensorFixtureDef.shape = sensorShape;
 			sensorFixtureDef.isSensor = true;
 			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR;
-			this.dynamicBody.createFixture(sensorFixtureDef);
+			dynamicBody.createFixture(sensorFixtureDef);
 
 //			previousPosition = box2d.getBodyPixelCoord(dynamicBody); // set last player location
 		}
@@ -511,7 +511,7 @@ public class Player extends Editable {
 
 				if (i > 0) {
 					if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
-						this.dynamicBody.setFixedRotation(true);
+						dynamicBody.setFixedRotation(true);
 						verticalTunnel = true;
 						returnBoolean = false;
 						break;
@@ -531,7 +531,7 @@ public class Player extends Editable {
 
 				if (i > 0) {
 					if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
-						this.dynamicBody.setFixedRotation(true);
+						dynamicBody.setFixedRotation(true);
 						horizontalTunnel = true;
 						returnBoolean = false;
 						break;
@@ -549,7 +549,7 @@ public class Player extends Editable {
 		}
 
 		// no tunnel found
-		this.dynamicBody.setFixedRotation(locked);
+		dynamicBody.setFixedRotation(locked);
 		return true;
 
 	}
@@ -631,8 +631,8 @@ public class Player extends Editable {
 							|| (!direction && t.getTopLeft().x > pos.x)) { // moving right
 
 						// lock rotation
-						this.dynamicBody.setFixedRotation(true);
-						this.dynamicBody.setAngularVelocity(0);
+						dynamicBody.setFixedRotation(true);
+						dynamicBody.setAngularVelocity(0);
 
 						// try create the barrier
 						if (direction) { // moving left
@@ -712,8 +712,8 @@ public class Player extends Editable {
 				if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
 
 					// lock rotation
-					this.dynamicBody.setFixedRotation(true);
-					this.dynamicBody.setAngularVelocity(0);
+					dynamicBody.setFixedRotation(true);
+					dynamicBody.setAngularVelocity(0);
 
 					return;
 				}
@@ -812,7 +812,7 @@ public class Player extends Editable {
 							if (t.getBottomRight().y <= pos.y) {
 
 								// lock rotation
-								this.dynamicBody.setFixedRotation(true);
+								dynamicBody.setFixedRotation(true);
 
 								if (direction) { // moving left
 									Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
@@ -835,7 +835,7 @@ public class Player extends Editable {
 							if (t.getTopLeft().y >= pos.y) {
 
 								// lock rotation
-								this.dynamicBody.setFixedRotation(true);
+								dynamicBody.setFixedRotation(true);
 
 								if (direction) { // moving left
 									Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
@@ -980,7 +980,7 @@ public class Player extends Editable {
 							|| (!direction && t.getTopLeft().x > pos.x)) { // moving right
 
 						// lock rotation
-						this.dynamicBody.setFixedRotation(true);
+						dynamicBody.setFixedRotation(true);
 
 						// try create the barrier
 						if (direction) { // moving left
@@ -1173,7 +1173,7 @@ public class Player extends Editable {
 			groundBarrier = null;
 
 			if (resetRotation) {
-				this.dynamicBody.setFixedRotation(locked);
+				dynamicBody.setFixedRotation(locked);
 			}
 		}
 	}
@@ -1185,7 +1185,7 @@ public class Player extends Editable {
 			wallBarrier = null;
 
 			if (resetRotation) {
-				this.dynamicBody.setFixedRotation(locked);
+				dynamicBody.setFixedRotation(locked);
 			}
 		}
 	}
@@ -1200,7 +1200,7 @@ public class Player extends Editable {
 
 	private void destroyAllBarriers(boolean resetRotation) {
 		if (resetRotation) {
-			this.dynamicBody.setFixedRotation(locked);
+			dynamicBody.setFixedRotation(locked);
 		}
 		destroyGroundBarrier(false);
 		destroyWallBarrier(false);

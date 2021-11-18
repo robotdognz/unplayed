@@ -16,6 +16,7 @@ import editor.uitop.EditorTop;
 import game.Game;
 import game.PageView;
 import game.Quadtree;
+import game.player.Player;
 import handlers.EventHandler;
 import handlers.ImageHandler;
 import handlers.TextureCache;
@@ -216,12 +217,12 @@ public class Editor {
 			p.textSize(textSize);
 			p.textAlign(CENTER, CENTER);
 			if (game.player != null) {
-				Vec2 vel = game.player.dynamicBody.getLinearVelocity();
-				float aVel = game.player.dynamicBody.getAngularVelocity();
+				Vec2 vel = Player.dynamicBody.getLinearVelocity();
+				float aVel = Player.dynamicBody.getAngularVelocity();
 				p.text("Velocity x:" + PApplet.nf(Math.abs(vel.x), 1, 2) + " y:" + PApplet.nf(Math.abs(vel.y), 1, 2)
 						+ " a:" + PApplet.nf(Math.abs(aVel), 1, 2), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 9);
-				float angle = PApplet.degrees(game.player.dynamicBody.getAngle());
+				float angle = PApplet.degrees(Player.dynamicBody.getAngle());
 				p.text("Angle:" + PApplet.nf(angle, 1, 4), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 8);
 				p.text("ground: " + game.player.groundContacts + " wall: " + game.player.wallContacts, p.width / 2,
