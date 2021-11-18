@@ -82,8 +82,8 @@ public class Player extends Editable {
 
 	public CountdownTimer pushLeftTimer; // keeps the player pushing left for a time after wall jumping
 	public CountdownTimer pushRightTimer; // keeps the player pushing right for a time after wall jumping
-	public float wallPushTime; // how long the above timers run for for a wall jump
-	public float wallSlotTime; // how long the above timers run for jumping up into a slot
+	public float wallPushTime; // how long the above timers run for for a wall jump //TODO: not used
+	public float wallSlotTime; // how long the above timers run for jumping up into a slot //TODO: not used
 
 	// wall jumping, magnetism, and boosting
 	private CountdownTimer leftStickTimer; // sticking to left wall
@@ -171,8 +171,8 @@ public class Player extends Editable {
 		this.wallJumpPower = 0.4f; // 0.5f
 		this.wallBoostPower = 0.75f;
 
-		this.pushLeftTimer = new CountdownTimer(0.256f);
-		this.pushRightTimer = new CountdownTimer(0.256f);
+		this.pushLeftTimer = new CountdownTimer(0.200f);
+		this.pushRightTimer = new CountdownTimer(0.200f);
 		this.wallPushTime = 0.256f;
 		this.wallSlotTime = 0.500f;
 
@@ -496,8 +496,8 @@ public class Player extends Editable {
 			}
 
 			// TODO: seeing if this fixes wall slot giving player an extra jump edge case
-			groundTimer.stop();
-			extraJump = false;
+//			groundTimer.stop();
+//			extraJump = false;
 
 		}
 	}

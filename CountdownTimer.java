@@ -72,6 +72,7 @@ public class CountdownTimer {
 		return deltaTimer / deltaLimit;
 	}
 
+	// start with current time limit
 	public void start() {
 		intTimer = 0;
 		deltaTimer = 0;
@@ -79,6 +80,7 @@ public class CountdownTimer {
 		finished = false;
 	}
 	
+	// start with new time limit
 	public void start(float limit) {
 		deltaTimer = 0;
 		deltaLimit = limit;
