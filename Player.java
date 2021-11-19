@@ -156,7 +156,7 @@ public class Player extends Editable {
 		this.groundTimer = new CountdownTimer(0.200f); // 0.128
 		this.groundTimerPadding = new CountdownTimer(0.064f);
 
-		// how long to pad leaving the ground
+		// how long to pad leaving a wall
 		this.wallTimer = new CountdownTimer(0.128f); // 0.064
 		// how long after a jump before the ground a wall timers can be started
 		this.jumpTimer = new CountdownTimer(0.064f);
@@ -167,14 +167,14 @@ public class Player extends Editable {
 		this.horizontalTunnel = false;
 
 		// keep track of recent key presses
-		this.leftTimer = new CountdownTimer(0.128f);
-		this.rightTimer = new CountdownTimer(0.128f);
+		this.leftTimer = new CountdownTimer(0.300f); // 0.128f
+		this.rightTimer = new CountdownTimer(0.300f); // 0.128f
 
 		// how long to stick to a wall after letting go
-		this.leftStickTimer = new CountdownTimer(0.190f); // 0.256f
-		this.rightStickTimer = new CountdownTimer(0.190f); // 0.256f
+		this.leftStickTimer = new CountdownTimer(0.190f);
+		this.rightStickTimer = new CountdownTimer(0.190f);
 		// how long you can boost for after wall stick activated
-		this.wallBoostTimer = new CountdownTimer(0.150f); // 0.128f
+		this.wallBoostTimer = new CountdownTimer(0.150f);
 		this.wallJumpPower = 0.4f; // 0.5f
 		this.wallJumpAwayPower = 0.25f;
 		this.wallBoostPower = 0.85f; // 0.75f
@@ -392,7 +392,7 @@ public class Player extends Editable {
 		}
 
 		// touching a wall and pushing into it
-		if (wallContacts > 0 || wallTimer.isRunning()) { //TODO: testing making wall stick more forgiving
+		if (wallContacts > 0 || wallTimer.isRunning()) { // TODO: testing making wall stick more forgiving
 
 			// check angle is appropriate
 			float angle = PApplet.degrees(dynamicBody.getAngle());
@@ -400,10 +400,10 @@ public class Player extends Editable {
 			float angleRemainder = Math.abs(angle - angleRounded);
 
 			if (angleRemainder < 20) { // 0.05
-				if ((left || leftTimer.isRunning()) && !rightStickTimer.isRunning()) { //TODO: testing
+				if ((left || leftTimer.isRunning()) && !rightStickTimer.isRunning()) { // TODO: testing
 					leftStickTimer.start();
 				}
-				if ((right || rightTimer.isRunning()) && !leftStickTimer.isRunning()) { //TODO: testing
+				if ((right || rightTimer.isRunning()) && !leftStickTimer.isRunning()) { // TODO: testing
 					rightStickTimer.start();
 				}
 			}
