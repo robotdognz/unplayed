@@ -80,6 +80,8 @@ public class Player extends Editable {
 	public CountdownTimer jumpTimer; // used to correct the ground timer, stop it from starting after a jump
 	public CountdownTimer boostTimer; // used for boosting up into roof slots
 
+	public CountdownTimer leftTimer; // keeps track of if the player was pressing left recently
+	public CountdownTimer rightTimer; // keeps track of if the player was pressing right recently
 	public CountdownTimer pushLeftTimer; // keeps the player pushing left for a time after wall jumping
 	public CountdownTimer pushRightTimer; // keeps the player pushing right for a time after wall jumping
 	public float wallPushTime; // how long the above timers run for for a wall jump //TODO: not used
@@ -164,6 +166,10 @@ public class Player extends Editable {
 		this.verticalTunnel = false;
 		this.horizontalTunnel = false;
 
+		// keep track of recent key presses
+		this.leftTimer = new CountdownTimer(0.128f);
+		this.rightTimer = new CountdownTimer(0.128f);
+
 		// how long to stick to a wall after letting go
 		this.leftStickTimer = new CountdownTimer(0.190f); // 0.256f
 		this.rightStickTimer = new CountdownTimer(0.190f); // 0.256f
@@ -171,7 +177,7 @@ public class Player extends Editable {
 		this.wallBoostTimer = new CountdownTimer(0.150f); // 0.128f
 		this.wallJumpPower = 0.4f; // 0.5f
 		this.wallJumpAwayPower = 0.25f;
-		this.wallBoostPower = 0.85f; //0.75f
+		this.wallBoostPower = 0.85f; // 0.75f
 
 		this.pushLeftTimer = new CountdownTimer(0.200f);
 		this.pushRightTimer = new CountdownTimer(0.200f);
@@ -305,6 +311,9 @@ public class Player extends Editable {
 		leftStickTimer.deltaStep(delta);
 		rightStickTimer.deltaStep(delta);
 		wallBoostTimer.deltaStep(delta);
+
+		leftTimer.deltaStep(delta);
+		rightTimer.deltaStep(delta);
 		pushLeftTimer.deltaStep(delta);
 		pushRightTimer.deltaStep(delta);
 
@@ -331,6 +340,8 @@ public class Player extends Editable {
 		float desiredVel = 0;
 
 		if (left || pushLeftTimer.isRunning()) {
+			leftTimer.start();
+			rightTimer.stop();
 			if (vel.x >= -movementSpeed) {
 				// standard movement
 				desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
@@ -345,6 +356,8 @@ public class Player extends Editable {
 			}
 
 		} else if (right || pushRightTimer.isRunning()) {
+			rightTimer.start();
+			leftTimer.stop();
 			if (vel.x <= movementSpeed) {
 				// standard movement
 				desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
@@ -387,10 +400,10 @@ public class Player extends Editable {
 			float angleRemainder = Math.abs(angle - angleRounded);
 
 			if (angleRemainder < 20) { // 0.05
-				if (left && !rightStickTimer.isRunning()) {
+				if ((left || leftTimer.isRunning()) && !rightStickTimer.isRunning()) { //TODO: testing
 					leftStickTimer.start();
 				}
-				if (right && !leftStickTimer.isRunning()) {
+				if ((right || rightTimer.isRunning()) && !leftStickTimer.isRunning()) { //TODO: testing
 					rightStickTimer.start();
 				}
 			}
