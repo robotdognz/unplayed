@@ -391,22 +391,23 @@ public class Player extends Editable {
 			return;
 		}
 
-		// touching a wall and pushing into it
-		if (wallContacts > 0 || wallTimer.isRunning()) { // TODO: testing making wall stick more forgiving
+		// touching a wall, or just was touching one, and pushing into it
+		if (wallContacts > 0 || wallTimer.isRunning()) {
 
-			// check angle is appropriate
-			float angle = PApplet.degrees(dynamicBody.getAngle());
-			float angleRounded = Math.round(angle / 90) * 90;
-			float angleRemainder = Math.abs(angle - angleRounded);
-
-//			if (angleRemainder < 20) { // 0.05
-				if ((left || leftTimer.isRunning()) && !rightStickTimer.isRunning()) { // TODO: testing
-					leftStickTimer.start();
-				}
-				if ((right || rightTimer.isRunning()) && !leftStickTimer.isRunning()) { // TODO: testing
-					rightStickTimer.start();
-				}
+			// check angle is appropriate //TODO: testing no rotation requirement
+//			float angle = PApplet.degrees(dynamicBody.getAngle());
+//			float angleRounded = Math.round(angle / 90) * 90;
+//			float angleRemainder = Math.abs(angle - angleRounded);
+//			if (angleRemainder < 20) { // 0.05 
+			
+			if ((left || leftTimer.isRunning()) && !rightStickTimer.isRunning()) {
+				leftStickTimer.start();
+			}
+			if ((right || rightTimer.isRunning()) && !leftStickTimer.isRunning()) {
+				rightStickTimer.start();
+			}
 //			}
+			
 		} else {
 			leftStickTimer.stop();
 			rightStickTimer.stop();
