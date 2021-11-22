@@ -98,14 +98,16 @@ public class Tile extends Editable implements Comparable<Tile> {
 			leftEdgeDef.shape = leftEdge;
 			leftEdgeDef.density = density;
 			leftEdgeDef.friction = friction;
-			leftEdgeDef.userData = CollisionEnum.LEFT_WALL;
+			leftEdgeDef.userData = CollisionEnum.RIGHT_WALL; // determined relative to player, not tile, left edge is to
+																// the right of player
 			staticBody.createFixture(leftEdgeDef);
 			// right edge
 			FixtureDef rightEdgeDef = new FixtureDef();
 			rightEdgeDef.shape = rightEdge;
 			rightEdgeDef.density = density;
 			rightEdgeDef.friction = friction;
-			rightEdgeDef.userData = CollisionEnum.RIGHT_WALL;
+			rightEdgeDef.userData = CollisionEnum.LEFT_WALL; // determined relative to player, not tile, right edge is
+																// to the left of player
 			staticBody.createFixture(rightEdgeDef);
 
 //			// left wall sensor

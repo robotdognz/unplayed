@@ -79,7 +79,6 @@ public class Player extends Editable {
 	public CountdownTimer groundTimer; // used to make ground collision more forgiving, walking off edges, etc.
 	public CountdownTimer groundTimerPadding; // how long the player must touch the ground before getting double jump
 
-//	public CountdownTimer wallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
 	public CountdownTimer leftWallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
 	public CountdownTimer rightWallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
 
@@ -164,7 +163,6 @@ public class Player extends Editable {
 		this.groundTimerPadding = new CountdownTimer(0.064f);
 
 		// how long to pad leaving a wall
-//		this.wallTimer = new CountdownTimer(0.128f); // 0.064
 		this.leftWallTimer = new CountdownTimer(0.128f); // 0.064
 		this.rightWallTimer = new CountdownTimer(0.128f); // 0.064
 		// how long after a jump before the ground a wall timers can be started
@@ -324,7 +322,6 @@ public class Player extends Editable {
 		jumpTimer.deltaStep(delta);
 		groundTimer.deltaStep(delta);
 		groundTimerPadding.deltaStep(delta);
-//		wallTimer.deltaStep(delta);
 		leftWallTimer.deltaStep(delta);
 		rightWallTimer.deltaStep(delta);
 		boostTimer.deltaStep(delta);
@@ -414,19 +411,25 @@ public class Player extends Editable {
 		// touching a wall, or just was touching one, and pushing into it
 		if (leftWallContacts > 0 || leftWallTimer.isRunning() || rightWallContacts > 0 || rightWallTimer.isRunning()) {
 
-			// check angle is appropriate //TODO: testing no rotation requirement
-//			float angle = PApplet.degrees(dynamicBody.getAngle());
-//			float angleRounded = Math.round(angle / 90) * 90;
-//			float angleRemainder = Math.abs(angle - angleRounded);
-//			if (angleRemainder < 20) { // 0.05 
 
-			if ((left || leftTimer.isRunning()) && !rightStickTimer.isRunning()) {
-				leftStickTimer.start();
+			if ((left || leftTimer.isRunning()) || (right || rightTimer.isRunning())) {
+				if (leftWallContacts > 0) { // maybe have && leftWallContacts > rightWallContacts ?
+					leftStickTimer.start();
+				}
+
+				if (rightWallContacts > 0) {
+					rightStickTimer.start();
+				}
 			}
-			if ((right || rightTimer.isRunning()) && !leftStickTimer.isRunning()) {
-				rightStickTimer.start();
-			}
+
+//			if ((left || leftTimer.isRunning()) && !rightStickTimer.isRunning()) {
+//				leftStickTimer.start();
 //			}
+//			if ((right || rightTimer.isRunning()) && !leftStickTimer.isRunning()) {
+//				rightStickTimer.start();
+//			}
+			
+			
 
 		} else {
 			leftStickTimer.stop();
@@ -1308,7 +1311,8 @@ public class Player extends Editable {
 
 			extraJump = true;
 
-		} else if (leftWallContacts > 0 || leftWallTimer.isRunning() || rightWallContacts > 0 || rightWallTimer.isRunning()) { // touching a wall
+		} else if (leftWallContacts > 0 || leftWallTimer.isRunning() || rightWallContacts > 0
+				|| rightWallTimer.isRunning()) { // touching a wall
 
 			if (left) { // pushing into a wall left
 				yImpulse = dynamicBody.getMass() * jumpPower;
