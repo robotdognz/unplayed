@@ -43,8 +43,7 @@ public class Player extends Editable {
 	public boolean locked; // does the player have locked rotation TODO: remove when physics completed
 	public int contactNumber; // the number of things touching the player's body
 	public int groundContacts; // the number of grounds touching the player's body
-	
-	public int wallContacts; // the number of walls touching the player's body
+
 	public int leftWallContacts; // the number of left walls touching the player's body
 	public int rightWallContacts; // the number of right walls touching the player's body
 
@@ -79,11 +78,11 @@ public class Player extends Editable {
 	// movement timers
 	public CountdownTimer groundTimer; // used to make ground collision more forgiving, walking off edges, etc.
 	public CountdownTimer groundTimerPadding; // how long the player must touch the ground before getting double jump
-	
+
 //	public CountdownTimer wallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
 	public CountdownTimer leftWallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
 	public CountdownTimer rightWallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
-	
+
 	public CountdownTimer jumpTimer; // used to correct the ground timer, stop it from starting after a jump
 	public CountdownTimer boostTimer; // used for boosting up into roof slots
 
@@ -158,8 +157,6 @@ public class Player extends Editable {
 		this.movementSpeed = 60.0f;
 		this.jumpPower = 120;
 		this.groundContacts = 0;
-		
-		this.wallContacts = 0;
 		this.leftWallContacts = 0;
 		this.rightWallContacts = 0;
 		// how long to pad leaving the ground
@@ -274,44 +271,28 @@ public class Player extends Editable {
 			groundTimer.start();
 		}
 	}
-	
+
 	public void startLeftWallContact() {
 		this.leftWallContacts++;
-		this.wallContacts++;
 	}
-	
+
 	public void startRightWallContact() {
 		this.rightWallContacts++;
-		this.wallContacts++;
 	}
-	
+
 	public void endLeftWallContact() {
 		this.leftWallContacts--;
-		this.wallContacts--;
 		if (this.leftWallContacts == 0 && !this.jumpTimer.isRunning()) {
 			leftWallTimer.start();
 		}
 	}
-	
+
 	public void endRightWallContact() {
 		this.rightWallContacts--;
-		this.wallContacts--;
 		if (this.rightWallContacts == 0 && !this.jumpTimer.isRunning()) {
 			rightWallTimer.start();
 		}
 	}
-
-//	public void startWallContact() {
-//		this.wallContacts++;
-//	}
-
-//	public void endWallContact() {
-//		this.wallContacts--;
-//
-//		if (this.wallContacts == 0 && !this.jumpTimer.isRunning()) {
-//			wallTimer.start();
-//		}
-//	}
 
 	public void addTile(Tile tile) {
 		sensorContacts.add(tile);
@@ -431,14 +412,14 @@ public class Player extends Editable {
 		}
 
 		// touching a wall, or just was touching one, and pushing into it
-		if (wallContacts > 0 || leftWallTimer.isRunning() || rightWallTimer.isRunning()) {
+		if (leftWallContacts > 0 || leftWallTimer.isRunning() || rightWallContacts > 0 || rightWallTimer.isRunning()) {
 
 			// check angle is appropriate //TODO: testing no rotation requirement
 //			float angle = PApplet.degrees(dynamicBody.getAngle());
 //			float angleRounded = Math.round(angle / 90) * 90;
 //			float angleRemainder = Math.abs(angle - angleRounded);
 //			if (angleRemainder < 20) { // 0.05 
-			
+
 			if ((left || leftTimer.isRunning()) && !rightStickTimer.isRunning()) {
 				leftStickTimer.start();
 			}
@@ -446,7 +427,7 @@ public class Player extends Editable {
 				rightStickTimer.start();
 			}
 //			}
-			
+
 		} else {
 			leftStickTimer.stop();
 			rightStickTimer.stop();
@@ -889,7 +870,7 @@ public class Player extends Editable {
 				if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
 
 					// try create the barrier
-					if (wallContacts > 0) {
+					if (leftWallContacts > 0 || rightWallContacts > 0) {
 						if (vel.y > 0) { // moving up
 
 							// final position check (stops barriers being made under player)
@@ -1327,7 +1308,7 @@ public class Player extends Editable {
 
 			extraJump = true;
 
-		} else if (wallContacts > 0 || leftWallTimer.isRunning() || rightWallTimer.isRunning()) { // touching a wall
+		} else if (leftWallContacts > 0 || leftWallTimer.isRunning() || rightWallContacts > 0 || rightWallTimer.isRunning()) { // touching a wall
 
 			if (left) { // pushing into a wall left
 				yImpulse = dynamicBody.getMass() * jumpPower;
