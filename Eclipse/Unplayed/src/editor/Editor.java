@@ -225,7 +225,8 @@ public class Editor {
 				float angle = PApplet.degrees(Player.dynamicBody.getAngle());
 				p.text("Angle:" + PApplet.nf(angle, 1, 4), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 8);
-				p.text("ground: " + game.player.groundContacts + " wall: " + game.player.wallContacts, p.width / 2,
+				p.text("ground: " + game.player.groundContacts + " left wall: " + game.player.leftWallContacts
+						+ " right wall: " + game.player.rightWallContacts, p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 7);
 				p.text("Timer: " + game.player.groundTimer.isRunning(), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 6);
@@ -246,7 +247,7 @@ public class Editor {
 					p.height - editorBottom.getHeight() - textSize * 2);
 			p.text("DT: " + PApplet.nf(deltaTime, 1, 4), p.width / 2, p.height - editorBottom.getHeight() - textSize);
 
-			// draw debug messages		
+			// draw debug messages
 			DebugOutput.drawMessages(p, editorTop.getHeight() + textSize, textSize);
 			DebugOutput.step(deltaTime);
 		}

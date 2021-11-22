@@ -43,7 +43,10 @@ public class Player extends Editable {
 	public boolean locked; // does the player have locked rotation TODO: remove when physics completed
 	public int contactNumber; // the number of things touching the player's body
 	public int groundContacts; // the number of grounds touching the player's body
+	
 	public int wallContacts; // the number of walls touching the player's body
+	public int leftWallContacts; // the number of left walls touching the player's body
+	public int rightWallContacts; // the number of right walls touching the player's body
 
 	private ArrayList<Event> events; // list of events touching the player
 	private PlayerVibration vibration; // vibration system
@@ -76,7 +79,11 @@ public class Player extends Editable {
 	// movement timers
 	public CountdownTimer groundTimer; // used to make ground collision more forgiving, walking off edges, etc.
 	public CountdownTimer groundTimerPadding; // how long the player must touch the ground before getting double jump
-	public CountdownTimer wallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
+	
+//	public CountdownTimer wallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
+	public CountdownTimer leftWallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
+	public CountdownTimer rightWallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
+	
 	public CountdownTimer jumpTimer; // used to correct the ground timer, stop it from starting after a jump
 	public CountdownTimer boostTimer; // used for boosting up into roof slots
 
@@ -151,13 +158,18 @@ public class Player extends Editable {
 		this.movementSpeed = 60.0f;
 		this.jumpPower = 120;
 		this.groundContacts = 0;
+		
 		this.wallContacts = 0;
+		this.leftWallContacts = 0;
+		this.rightWallContacts = 0;
 		// how long to pad leaving the ground
 		this.groundTimer = new CountdownTimer(0.200f); // 0.128
 		this.groundTimerPadding = new CountdownTimer(0.064f);
 
 		// how long to pad leaving a wall
-		this.wallTimer = new CountdownTimer(0.128f); // 0.064
+//		this.wallTimer = new CountdownTimer(0.128f); // 0.064
+		this.leftWallTimer = new CountdownTimer(0.128f); // 0.064
+		this.rightWallTimer = new CountdownTimer(0.128f); // 0.064
 		// how long after a jump before the ground a wall timers can be started
 		this.jumpTimer = new CountdownTimer(0.064f);
 		// how long after boosting to keep checking for roof slots
@@ -262,19 +274,44 @@ public class Player extends Editable {
 			groundTimer.start();
 		}
 	}
-
-	public void startWallContact() {
+	
+	public void startLeftWallContact() {
+		this.leftWallContacts++;
 		this.wallContacts++;
 	}
-
-	public void endWallContact() {
+	
+	public void startRightWallContact() {
+		this.rightWallContacts++;
+		this.wallContacts++;
+	}
+	
+	public void endLeftWallContact() {
+		this.leftWallContacts--;
 		this.wallContacts--;
-		// if (this.wallContacts == 0) { // alternate version from 2020 development,
-		// unknown purpose
-		if (this.wallContacts == 0 && !this.jumpTimer.isRunning()) {
-			wallTimer.start();
+		if (this.leftWallContacts == 0 && !this.jumpTimer.isRunning()) {
+			leftWallTimer.start();
 		}
 	}
+	
+	public void endRightWallContact() {
+		this.rightWallContacts--;
+		this.wallContacts--;
+		if (this.rightWallContacts == 0 && !this.jumpTimer.isRunning()) {
+			rightWallTimer.start();
+		}
+	}
+
+//	public void startWallContact() {
+//		this.wallContacts++;
+//	}
+
+//	public void endWallContact() {
+//		this.wallContacts--;
+//
+//		if (this.wallContacts == 0 && !this.jumpTimer.isRunning()) {
+//			wallTimer.start();
+//		}
+//	}
 
 	public void addTile(Tile tile) {
 		sensorContacts.add(tile);
@@ -306,7 +343,9 @@ public class Player extends Editable {
 		jumpTimer.deltaStep(delta);
 		groundTimer.deltaStep(delta);
 		groundTimerPadding.deltaStep(delta);
-		wallTimer.deltaStep(delta);
+//		wallTimer.deltaStep(delta);
+		leftWallTimer.deltaStep(delta);
+		rightWallTimer.deltaStep(delta);
 		boostTimer.deltaStep(delta);
 		leftStickTimer.deltaStep(delta);
 		rightStickTimer.deltaStep(delta);
@@ -392,7 +431,7 @@ public class Player extends Editable {
 		}
 
 		// touching a wall, or just was touching one, and pushing into it
-		if (wallContacts > 0 || wallTimer.isRunning()) {
+		if (wallContacts > 0 || leftWallTimer.isRunning() || rightWallTimer.isRunning()) {
 
 			// check angle is appropriate //TODO: testing no rotation requirement
 //			float angle = PApplet.degrees(dynamicBody.getAngle());
@@ -1288,7 +1327,7 @@ public class Player extends Editable {
 
 			extraJump = true;
 
-		} else if (wallContacts > 0 || wallTimer.isRunning()) { // touching a wall
+		} else if (wallContacts > 0 || leftWallTimer.isRunning() || rightWallTimer.isRunning()) { // touching a wall
 
 			if (left) { // pushing into a wall left
 				yImpulse = dynamicBody.getMass() * jumpPower;

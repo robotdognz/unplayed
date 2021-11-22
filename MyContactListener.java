@@ -60,12 +60,12 @@ public class MyContactListener implements ContactListener {
 
 		// if one of them is the player and one is a left wall
 		if (leftWall && playerBody) {
-			player.startWallContact();
+			player.startLeftWallContact();
 		}
 
 		// if one of them is the player and one is a right wall
 		if (rightWall && playerBody) {
-			player.startWallContact();
+			player.startRightWallContact();
 		}
 
 		// if one of them is the player and one is an event
@@ -113,12 +113,12 @@ public class MyContactListener implements ContactListener {
 
 		// if one of them is the player and one is a left wall
 		if (leftWall && playerBody) {
-			player.endWallContact();
+			player.endLeftWallContact();
 		}
 
 		// if one of them is the player and one is a right wall
 		if (rightWall && playerBody) {
-			player.endWallContact();
+			player.endRightWallContact();
 		}
 
 		// if one of them is the player and one is an event
