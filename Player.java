@@ -413,11 +413,11 @@ public class Player extends Editable {
 
 
 			if ((left || leftTimer.isRunning()) || (right || rightTimer.isRunning())) {
-				if (leftWallContacts > 0) { // maybe have && leftWallContacts > rightWallContacts ?
+				if (leftWallContacts > 0 && !rightStickTimer.isRunning()) { // maybe have && leftWallContacts > rightWallContacts ?
 					leftStickTimer.start();
 				}
 
-				if (rightWallContacts > 0) {
+				if (rightWallContacts > 0 && !leftStickTimer.isRunning()) {
 					rightStickTimer.start();
 				}
 			}
