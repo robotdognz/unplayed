@@ -411,13 +411,12 @@ public class Player extends Editable {
 		// touching a wall, or just was touching one, and pushing into it
 		if (leftWallContacts > 0 || leftWallTimer.isRunning() || rightWallContacts > 0 || rightWallTimer.isRunning()) {
 
-
 			if ((left || leftTimer.isRunning()) || (right || rightTimer.isRunning())) {
-				if (leftWallContacts > 0 && !rightStickTimer.isRunning()) { // maybe have && leftWallContacts > rightWallContacts ?
+				if (leftWallContacts > 0 && !rightStickTimer.isRunning() && leftWallContacts > rightWallContacts) {
 					leftStickTimer.start();
 				}
 
-				if (rightWallContacts > 0 && !leftStickTimer.isRunning()) {
+				if (rightWallContacts > 0 && !leftStickTimer.isRunning() && rightWallContacts > leftWallContacts) {
 					rightStickTimer.start();
 				}
 			}
@@ -428,8 +427,6 @@ public class Player extends Editable {
 //			if ((right || rightTimer.isRunning()) && !leftStickTimer.isRunning()) {
 //				rightStickTimer.start();
 //			}
-			
-			
 
 		} else {
 			leftStickTimer.stop();
