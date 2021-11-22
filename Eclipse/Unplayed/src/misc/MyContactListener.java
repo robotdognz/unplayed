@@ -20,7 +20,11 @@ public class MyContactListener implements ContactListener {
 	private boolean playerBody = false; // one of the fixtures is the player
 	private boolean playerSensor = false; // one of the fixtures is the player's sensor
 	private boolean ground = false; // one of the fixtures is the ground
-	private boolean wall = false; // one of the fixtures is a wall
+//	private boolean wall = false; // one of the fixtures is a wall
+
+	private boolean leftWall = false; // one of the fixtures is a left wall
+	private boolean rightWall = false; // one of the fixtures is a right wall
+
 	private boolean roofBarrier = false; // one of the fixtures is a roof barrier
 
 	public MyContactListener(Game game) {
@@ -37,7 +41,8 @@ public class MyContactListener implements ContactListener {
 		this.playerBody = false;
 		this.playerSensor = false;
 		this.ground = false;
-		this.wall = false;
+		this.leftWall = false;
+		this.rightWall = false;
 		this.roofBarrier = false;
 
 		updateVariables(contact.getFixtureA());
@@ -53,8 +58,13 @@ public class MyContactListener implements ContactListener {
 			player.touchingRoofBarrier = true;
 		}
 
-		// if one of them is the player and one is a wall
-		if (wall && playerBody) {
+		// if one of them is the player and one is a left wall
+		if (leftWall && playerBody) {
+			player.startWallContact();
+		}
+
+		// if one of them is the player and one is a right wall
+		if (rightWall && playerBody) {
 			player.startWallContact();
 		}
 
@@ -79,7 +89,8 @@ public class MyContactListener implements ContactListener {
 		this.playerBody = false;
 		this.playerSensor = false;
 		this.ground = false;
-		this.wall = false;
+		this.leftWall = false;
+		this.rightWall = false;
 		this.roofBarrier = false;
 
 		updateVariables(contact.getFixtureA());
@@ -100,8 +111,13 @@ public class MyContactListener implements ContactListener {
 			player.endGroundContact();
 		}
 
-		// if one of them is the player and one is a wall
-		if (wall && playerBody) {
+		// if one of them is the player and one is a left wall
+		if (leftWall && playerBody) {
+			player.endWallContact();
+		}
+
+		// if one of them is the player and one is a right wall
+		if (rightWall && playerBody) {
 			player.endWallContact();
 		}
 
@@ -131,8 +147,11 @@ public class MyContactListener implements ContactListener {
 				case GROUND:
 					ground = true;
 					break;
-				case WALL:
-					wall = true;
+				case LEFT_WALL:
+					leftWall = true;
+					break;
+				case RIGHT_WALL:
+					rightWall = true;
 					break;
 				case EVENT:
 					event = (Event) fixture.getBody().getUserData();
@@ -149,7 +168,7 @@ public class MyContactListener implements ContactListener {
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
-		
+
 		Fixture[] fixtures = { contact.getFixtureA(), contact.getFixtureB() };
 
 		Player player = null;
