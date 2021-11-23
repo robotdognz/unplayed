@@ -85,8 +85,6 @@ public class Player extends Editable {
 	public CountdownTimer jumpTimer; // used to correct the ground timer, stop it from starting after a jump
 	public CountdownTimer boostTimer; // used for boosting up into roof slots
 
-	public CountdownTimer leftTimer; // keeps track of if the player was pressing left recently
-	public CountdownTimer rightTimer; // keeps track of if the player was pressing right recently
 	public CountdownTimer pushLeftTimer; // keeps the player pushing left for a time after wall jumping
 	public CountdownTimer pushRightTimer; // keeps the player pushing right for a time after wall jumping
 	public float wallPushTime; // how long the above timers run for for a wall jump //TODO: not used
@@ -166,16 +164,12 @@ public class Player extends Editable {
 		this.leftWallTimer = new CountdownTimer(0.128f); // 0.064
 		this.rightWallTimer = new CountdownTimer(0.128f); // 0.064
 		// how long after a jump before the ground a wall timers can be started
-		this.jumpTimer = new CountdownTimer(0.128f); //0.064f TODO
+		this.jumpTimer = new CountdownTimer(0.128f); // 0.064f TODO
 		// how long after boosting to keep checking for roof slots
 		this.boostTimer = new CountdownTimer(0.256f);
 		this.extraJump = false;
 		this.verticalTunnel = false;
 		this.horizontalTunnel = false;
-
-		// keep track of recent key presses
-		this.leftTimer = new CountdownTimer(0.300f); // 0.128f
-		this.rightTimer = new CountdownTimer(0.300f); // 0.128f
 
 		// how long to stick to a wall after letting go
 		this.leftStickTimer = new CountdownTimer(0.190f);
@@ -336,9 +330,6 @@ public class Player extends Editable {
 		leftStickTimer.deltaStep(delta);
 		rightStickTimer.deltaStep(delta);
 		wallBoostTimer.deltaStep(delta);
-
-		leftTimer.deltaStep(delta);
-		rightTimer.deltaStep(delta);
 		pushLeftTimer.deltaStep(delta);
 		pushRightTimer.deltaStep(delta);
 
@@ -365,8 +356,7 @@ public class Player extends Editable {
 		float desiredVel = 0;
 
 		if (left || pushLeftTimer.isRunning()) {
-			leftTimer.start();
-			rightTimer.stop();
+
 			if (vel.x >= -movementSpeed) {
 				// standard movement
 				desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
@@ -381,8 +371,7 @@ public class Player extends Editable {
 			}
 
 		} else if (right || pushRightTimer.isRunning()) {
-			rightTimer.start();
-			leftTimer.stop();
+
 			if (vel.x <= movementSpeed) {
 				// standard movement
 				desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
@@ -409,19 +398,19 @@ public class Player extends Editable {
 
 	private void checkWallStick(Vec2 vel) {
 
-		// not touching ground or in tunnel
 		if (groundContacts > 0 || groundTimer.isRunning() || jumpTimer.isRunning() || horizontalTunnel
 				|| verticalTunnel) {
+			// return if touching ground, just jumped, or in tunnel
+
 			leftStickTimer.stop();
 			rightStickTimer.stop();
 			return;
 		}
-		
-		//TODO: rework this
 
-		// touching a wall, or just was touching one
+		// TODO: rework this
+
 		if (leftWallContacts > 0 || leftWallTimer.isRunning() || rightWallContacts > 0 || rightWallTimer.isRunning()) {
-
+			// touching a wall, or just was touching one
 
 			if ((left) && (rightWallContacts > leftWallContacts || rightWallTimer.isRunning())
 					&& !leftStickTimer.isRunning()) {
@@ -433,7 +422,6 @@ public class Player extends Editable {
 
 			}
 
-
 			if ((right) && (leftWallContacts > rightWallContacts || leftWallTimer.isRunning())
 					&& !rightStickTimer.isRunning()) {
 
@@ -443,9 +431,9 @@ public class Player extends Editable {
 				}
 			}
 
-
-
 		} else {
+			// not touching any walls, reset the timers
+
 			leftStickTimer.stop();
 			rightStickTimer.stop();
 		}
@@ -1330,6 +1318,7 @@ public class Player extends Editable {
 			// player is touching a wall
 
 			yImpulse = dynamicBody.getMass() * jumpPower;
+			extraJump = false; // any kind of wall jump removes the second jump
 
 			// the player is not in a tunnel
 			if (!verticalTunnel) {
@@ -1363,7 +1352,7 @@ public class Player extends Editable {
 
 					} else if (extraJump) { // no direction left wall, extra jump
 
-						extraJump = false;
+//						extraJump = false;
 
 					} else { // no direction left wall
 
@@ -1374,7 +1363,7 @@ public class Player extends Editable {
 						leftStickTimer.stop();
 
 						// extraJump = true; // double jumping off wall is currently disabled
-						extraJump = false;
+//						extraJump = false;
 
 						DebugOutput.pushMessage("Jump off left wall no direction", 2);
 
@@ -1408,7 +1397,7 @@ public class Player extends Editable {
 
 					} else if (extraJump) { // no direction right wall, extra jump
 
-						extraJump = false;
+//						extraJump = false;
 
 					} else { // no direction right wall
 
@@ -1419,7 +1408,7 @@ public class Player extends Editable {
 						rightStickTimer.stop();
 
 						// extraJump = true; // double jumping off wall is currently disabled
-						extraJump = false;
+//						extraJump = false;
 
 						DebugOutput.pushMessage("Jump off right wall no direction", 2);
 
