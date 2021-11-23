@@ -257,8 +257,6 @@ public class Player extends Editable {
 	public void endGroundContact() {
 		this.groundContacts--;
 		// if the player has just left the ground and it wasn't because of a jump
-		// if (this.groundContacts == 0) { // alternate version from 2020 development,
-		// unknown purpose
 
 		// prevent ground timer from starting if padding timer is still running
 		if (!groundTimerPadding.isFinished()) {
@@ -281,14 +279,24 @@ public class Player extends Editable {
 	public void endLeftWallContact() {
 		this.leftWallContacts--;
 		if (this.leftWallContacts == 0 && !this.jumpTimer.isRunning()) {
-			leftWallTimer.start();
+			if (rightWallTimer.isRunning()) {
+				rightWallTimer.stop();
+				leftWallTimer.stop();
+			} else {
+				leftWallTimer.start();
+			}
 		}
 	}
 
 	public void endRightWallContact() {
 		this.rightWallContacts--;
 		if (this.rightWallContacts == 0 && !this.jumpTimer.isRunning()) {
-			rightWallTimer.start();
+			if (leftWallTimer.isRunning()) {
+				leftWallTimer.stop();
+				rightWallTimer.stop();
+			} else {
+				rightWallTimer.start();
+			}
 		}
 	}
 
