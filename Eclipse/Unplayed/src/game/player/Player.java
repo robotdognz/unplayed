@@ -1408,7 +1408,7 @@ public class Player extends Editable {
 				// extraJump = true; // double jumping off wall is currently disabled
 				extraJump = false;
 
-			} else if (rightWallContacts > leftWallContacts || leftWallTimer.isRunning()) { // jump off right wall
+			} else if (rightWallContacts > leftWallContacts || rightWallTimer.isRunning()) { // jump off right wall
 				// if not pushing into either wall, apply a small jump
 
 				xImpulse = -(dynamicBody.getMass() * jumpPower * wallJumpAwayPower);
@@ -1423,7 +1423,7 @@ public class Player extends Editable {
 
 				DebugOutput.pushMessage("Jump off right wall no direction", 2);
 
-			} else if (leftWallContacts > rightWallContacts || rightWallTimer.isRunning()) { // jump of left wall
+			} else if (leftWallContacts > rightWallContacts || leftWallTimer.isRunning()) { // jump of left wall
 				// if not pushing into either wall, apply a small jump
 
 				xImpulse = (dynamicBody.getMass() * jumpPower * wallJumpAwayPower);
