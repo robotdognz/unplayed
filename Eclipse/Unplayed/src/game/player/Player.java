@@ -166,7 +166,7 @@ public class Player extends Editable {
 		this.leftWallTimer = new CountdownTimer(0.128f); // 0.064
 		this.rightWallTimer = new CountdownTimer(0.128f); // 0.064
 		// how long after a jump before the ground a wall timers can be started
-		this.jumpTimer = new CountdownTimer(0.064f);
+		this.jumpTimer = new CountdownTimer(0.128f); //0.064f TODO
 		// how long after boosting to keep checking for roof slots
 		this.boostTimer = new CountdownTimer(0.256f);
 		this.extraJump = false;
@@ -416,54 +416,34 @@ public class Player extends Editable {
 			rightStickTimer.stop();
 			return;
 		}
+		
+		//TODO: rework this
 
-		// touching a wall, or just was touching one, and pushing into it
+		// touching a wall, or just was touching one
 		if (leftWallContacts > 0 || leftWallTimer.isRunning() || rightWallContacts > 0 || rightWallTimer.isRunning()) {
 
-//			if ((left || leftTimer.isRunning()) && rightWallContacts > leftWallContacts
-//					&& !leftStickTimer.isRunning()) {
-//
-//				// start right stick timer
-//				if (!rightStickTimer.isRunning() && !rightStickTimer.isFinished()) {
-//					rightStickTimer.start();
-//				}
-//
-//			}
+
 			if ((left) && (rightWallContacts > leftWallContacts || rightWallTimer.isRunning())
 					&& !leftStickTimer.isRunning()) {
 
 				// start right stick timer
-				if (!rightStickTimer.isRunning() && !rightStickTimer.isFinished() && !groundTimer.isRunning()
-						&& !jumpTimer.isRunning()) {
+				if (!rightStickTimer.isRunning() && !rightStickTimer.isFinished()) {
 					rightStickTimer.start();
 				}
 
 			}
 
-//			if ((right || rightTimer.isRunning()) && leftWallContacts > rightWallContacts && !rightStickTimer.isRunning()) {
-//
-//				// start left stick timer
-//				if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished()) {
-//					leftStickTimer.start();
-//				}
-//			}
+
 			if ((right) && (leftWallContacts > rightWallContacts || leftWallTimer.isRunning())
 					&& !rightStickTimer.isRunning()) {
 
 				// start left stick timer
-				if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished() && !groundTimer.isRunning()
-						&& !jumpTimer.isRunning()) {
+				if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished()) {
 					leftStickTimer.start();
 				}
 			}
 
-			// old system
-//			if ((left || leftTimer.isRunning()) && !rightStickTimer.isRunning()) {
-//				leftStickTimer.start();
-//			}
-//			if ((right || rightTimer.isRunning()) && !leftStickTimer.isRunning()) {
-//				rightStickTimer.start();
-//			}
+
 
 		} else {
 			leftStickTimer.stop();
