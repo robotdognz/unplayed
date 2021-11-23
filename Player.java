@@ -161,10 +161,10 @@ public class Player extends Editable {
 		this.groundTimerPadding = new CountdownTimer(0.064f);
 
 		// how long to pad leaving a wall
-		this.leftWallTimer = new CountdownTimer(0.128f); // 0.064
-		this.rightWallTimer = new CountdownTimer(0.128f); // 0.064
+		this.leftWallTimer = new CountdownTimer(0.064f); // 0.128f // 0.064f
+		this.rightWallTimer = new CountdownTimer(0.064f); // 0.128f // 0.064
 		// how long after a jump before the ground a wall timers can be started
-		this.jumpTimer = new CountdownTimer(0.128f); // 0.064f TODO
+		this.jumpTimer = new CountdownTimer(0.128f);
 		// how long after boosting to keep checking for roof slots
 		this.boostTimer = new CountdownTimer(0.256f);
 		this.extraJump = false;
