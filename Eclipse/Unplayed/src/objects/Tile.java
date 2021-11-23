@@ -69,13 +69,13 @@ public class Tile extends Editable implements Comparable<Tile> {
 			bottomEdge.set(v1, v2);
 			// left edge
 			EdgeShape leftEdge = new EdgeShape();
-			v1 = new Vec2(-box2dW, box2dH);
-			v2 = new Vec2(-box2dW, -box2dH);
+			v1 = new Vec2(-box2dW, box2dH); // top
+			v2 = new Vec2(-box2dW, -box2dH); // bottom
 			leftEdge.set(v1, v2);
 			// right edge
 			EdgeShape rightEdge = new EdgeShape();
-			v1 = new Vec2(box2dW, box2dH);
-			v2 = new Vec2(box2dW, -box2dH);
+			v1 = new Vec2(box2dW, box2dH);// top
+			v2 = new Vec2(box2dW, -box2dH); // bottom
 			rightEdge.set(v1, v2);
 
 			// fixtures
@@ -87,28 +87,29 @@ public class Tile extends Editable implements Comparable<Tile> {
 			topEdgeDef.friction = friction;
 //			topEdgeDef.userData = "ground";
 			staticBody.createFixture(topEdgeDef);
+
 			// bottom edge
 			FixtureDef bottomEdgeDef = new FixtureDef();
 			bottomEdgeDef.shape = bottomEdge;
 			bottomEdgeDef.density = density;
 			bottomEdgeDef.friction = friction;
 			staticBody.createFixture(bottomEdgeDef);
+
 			// left edge
 			FixtureDef leftEdgeDef = new FixtureDef();
 			leftEdgeDef.shape = leftEdge;
 			leftEdgeDef.density = density;
 			leftEdgeDef.friction = friction;
-			leftEdgeDef.userData = CollisionEnum.RIGHT_WALL; // determined relative to player, not tile, left edge is to
-																// the right of player
-			staticBody.createFixture(leftEdgeDef);
+//			leftEdgeDef.userData = CollisionEnum.RIGHT_WALL; // determined relative to player, not tile, left edge is to
+			staticBody.createFixture(leftEdgeDef); // the right of player
+
 			// right edge
 			FixtureDef rightEdgeDef = new FixtureDef();
 			rightEdgeDef.shape = rightEdge;
 			rightEdgeDef.density = density;
 			rightEdgeDef.friction = friction;
-			rightEdgeDef.userData = CollisionEnum.LEFT_WALL; // determined relative to player, not tile, right edge is
-																// to the left of player
-			staticBody.createFixture(rightEdgeDef);
+//			rightEdgeDef.userData = CollisionEnum.LEFT_WALL; // determined relative to player, not tile, right edge is
+			staticBody.createFixture(rightEdgeDef); // to the left of player
 
 //			// left wall sensor
 //			EdgeShape leftSensor = new EdgeShape();
@@ -134,19 +135,47 @@ public class Tile extends Editable implements Comparable<Tile> {
 //			staticBody.createFixture(rightSensorDef);
 
 			// ground sensor
+			// shape
 			EdgeShape sensor = new EdgeShape();
 			float sBox2dW = box2d.scalarPixelsToWorld((getWidth() - 0.2f) / 2);
 			v1 = new Vec2(-sBox2dW, box2dH);
 			v2 = new Vec2(sBox2dW, box2dH);
 			sensor.set(v1, v2);
+			// fixture
 			FixtureDef sensorDef = new FixtureDef();
 			sensorDef.shape = sensor;
 			sensorDef.userData = CollisionEnum.GROUND;
 			sensorDef.isSensor = true;
 			staticBody.createFixture(sensorDef);
 
-			// player sensor sensor
+			// left side of tile sensor
+			// shape
+			EdgeShape leftWallSensor = new EdgeShape();
+			float sBox2dH = box2d.scalarPixelsToWorld((getHeight() - 0.1f) / 2);
+			v1 = new Vec2(-box2dW, box2dH); // top
+			v2 = new Vec2(-box2dW, -sBox2dH); // bottom
+			leftWallSensor.set(v1, v2);
+			// fixture
+			FixtureDef leftWallSensorDef = new FixtureDef();
+			leftWallSensorDef.shape = leftWallSensor;
+			leftWallSensorDef.userData = CollisionEnum.RIGHT_WALL;
+			leftWallSensorDef.isSensor = true;
+			staticBody.createFixture(leftWallSensorDef);
 
+			// right side of tile sensor
+			// shape
+			EdgeShape rightWallSensor = new EdgeShape();
+			v1 = new Vec2(box2dW, box2dH); // top
+			v2 = new Vec2(box2dW, -sBox2dH); // bottom
+			rightWallSensor.set(v1, v2);
+			// fixture
+			FixtureDef rightWallSensorDef = new FixtureDef();
+			rightWallSensorDef.shape = rightWallSensor;
+			rightWallSensorDef.userData = CollisionEnum.LEFT_WALL;
+			rightWallSensorDef.isSensor = true;
+			staticBody.createFixture(rightWallSensorDef);
+
+			// player sensor sensor
 			// shape
 			PolygonShape boxShape = new PolygonShape();
 			box2dW = box2d.scalarPixelsToWorld(getWidth() / 2 - 5);
