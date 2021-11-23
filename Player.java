@@ -411,37 +411,38 @@ public class Player extends Editable {
 		// touching a wall, or just was touching one, and pushing into it
 		if (leftWallContacts > 0 || leftWallTimer.isRunning() || rightWallContacts > 0 || rightWallTimer.isRunning()) {
 
-//			if ((left || leftTimer.isRunning()) || (right || rightTimer.isRunning())) {
-//				if (leftWallContacts > 0 && !rightStickTimer.isRunning() && leftWallContacts > rightWallContacts) {
-//					if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished()) {
-//						leftStickTimer.start();
-//					}
-//				}
-//				if (rightWallContacts > 0 && !leftStickTimer.isRunning() && rightWallContacts > leftWallContacts) {
-//					if (!rightStickTimer.isRunning() && !rightStickTimer.isFinished()) {
-//						rightStickTimer.start();
-//					}
-//				}
-//			}
+			if ((left || leftTimer.isRunning()) && rightWallContacts > leftWallContacts
+					&& !leftStickTimer.isRunning()) {
 
-			if ((left) && rightWallContacts > leftWallContacts && !leftStickTimer.isRunning()) { 
-				// ((left || leftTimer.isRunning()) && rightWallContacts > leftWallContacts && !leftStickTimer.isRunning()) {
-				
 				// start right stick timer
 				if (!rightStickTimer.isRunning() && !rightStickTimer.isFinished()) {
 					rightStickTimer.start();
 				}
 
 			}
+//			if ((left) && rightWallContacts > leftWallContacts && !leftStickTimer.isRunning()) {
+//
+//				// start right stick timer
+//				if (!rightStickTimer.isRunning() && !rightStickTimer.isFinished()) {
+//					rightStickTimer.start();
+//				}
+//
+//			}
 
-			if ((right) && leftWallContacts > rightWallContacts && !rightStickTimer.isRunning()) {
-				// ((right || rightTimer.isRunning()) && leftWallContacts > rightWallContacts && !rightStickTimer.isRunning()) {
-				
+			if ((right || rightTimer.isRunning()) && leftWallContacts > rightWallContacts && !rightStickTimer.isRunning()) {
+
 				// start left stick timer
 				if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished()) {
 					leftStickTimer.start();
 				}
 			}
+//			if ((right) && leftWallContacts > rightWallContacts && !rightStickTimer.isRunning()) {
+//
+//				// start left stick timer
+//				if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished()) {
+//					leftStickTimer.start();
+//				}
+//			}
 
 //			if ((left || leftTimer.isRunning()) && !rightStickTimer.isRunning()) {
 //				leftStickTimer.start();
@@ -1303,9 +1304,9 @@ public class Player extends Editable {
 		float xImpulse = 0;
 		float yImpulse = 0;
 
-		if (groundContacts > 0 || groundTimer.isRunning()) { 
+		if (groundContacts > 0 || groundTimer.isRunning()) {
 			// player is touching the ground
-			
+
 			// if the player is in a horizontal tunnel, but not at a tunnel intersection
 			if (horizontalTunnel && !verticalTunnel) {
 				int roofSlot = checkForRoofSlotsJump();
@@ -1331,9 +1332,9 @@ public class Player extends Editable {
 
 			extraJump = true;
 
-		} else if (leftWallContacts != rightWallContacts || leftWallTimer.isRunning() || rightWallTimer.isRunning()) { 
+		} else if (leftWallContacts != rightWallContacts || leftWallTimer.isRunning() || rightWallTimer.isRunning()) {
 			// player is touching a wall
-			
+
 			yImpulse = dynamicBody.getMass() * jumpPower;
 
 			if (left) { // pushing into a wall left
@@ -1359,6 +1360,8 @@ public class Player extends Editable {
 
 							xImpulse = (dynamicBody.getMass() * jumpPower * wallJumpPower);
 							pushLeftTimer.start();
+
+							DebugOutput.pushMessage("Wall jump on left wall", 2);
 						}
 					} else {
 						pushLeftTimer.start();
@@ -1391,6 +1394,8 @@ public class Player extends Editable {
 
 							xImpulse = -(dynamicBody.getMass() * jumpPower * wallJumpPower);
 							pushRightTimer.start();
+
+							DebugOutput.pushMessage("Wall jump on right wall", 2);
 						}
 					} else {
 						pushRightTimer.start();
