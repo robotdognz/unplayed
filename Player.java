@@ -402,7 +402,7 @@ public class Player extends Editable {
 	private void checkWallStick(Vec2 vel) {
 
 		// not touching ground or in tunnel
-		if (groundContacts > 0 || groundTimer.isRunning() || horizontalTunnel || verticalTunnel) {
+		if (groundContacts > 0 || groundTimer.isRunning() || jumpTimer.isRunning() || horizontalTunnel || verticalTunnel) {
 			leftStickTimer.stop();
 			rightStickTimer.stop();
 			return;
