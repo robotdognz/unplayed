@@ -172,8 +172,8 @@ public class Player extends Editable {
 		this.horizontalTunnel = false;
 
 		// how long to stick to a wall after letting go
-		this.leftStickTimer = new CountdownTimer(0.190f); //0.190f
-		this.rightStickTimer = new CountdownTimer(0.190f); //0.190f
+		this.leftStickTimer = new CountdownTimer(0.190f); // 0.190f
+		this.rightStickTimer = new CountdownTimer(0.190f); // 0.190f
 		// how long you can boost for after wall stick activated
 //		this.wallBoostTimer = new CountdownTimer(0.150f);
 		this.wallJumpPower = 0.4f; // 0.5f
@@ -418,23 +418,33 @@ public class Player extends Editable {
 		if (leftWallContacts > 0 || leftWallTimer.isRunning() || rightWallContacts > 0 || rightWallTimer.isRunning()) {
 			// touching a wall, or just was touching one
 
-			if ((left) && (rightWallContacts > leftWallContacts || rightWallTimer.isRunning())
-					&& !leftStickTimer.isRunning()) {
+//			if ((left) && (rightWallContacts > leftWallContacts || rightWallTimer.isRunning())
+//					&& !leftStickTimer.isRunning()) {
+//
+//				// start right stick timer
+//				if (!rightStickTimer.isRunning() && !rightStickTimer.isFinished()) {
+//					rightStickTimer.start();
+//				}
+//
+//			}
+//
+//			if ((right) && (leftWallContacts > rightWallContacts || leftWallTimer.isRunning())
+//					&& !rightStickTimer.isRunning()) {
+//
+//				// start left stick timer
+//				if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished()) {
+//					leftStickTimer.start();
+//				}
+//			}
 
-				// start right stick timer
-				if (!rightStickTimer.isRunning() && !rightStickTimer.isFinished()) {
-					rightStickTimer.start();
-				}
-
+			if (left && (leftWallContacts > rightWallContacts || leftWallTimer.isRunning())) {
+				leftStickTimer.start();
+				rightStickTimer.stop();
 			}
 
-			if ((right) && (leftWallContacts > rightWallContacts || leftWallTimer.isRunning())
-					&& !rightStickTimer.isRunning()) {
-
-				// start left stick timer
-				if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished()) {
-					leftStickTimer.start();
-				}
+			if (right && (rightWallContacts > leftWallContacts || rightWallTimer.isRunning())) {
+				rightStickTimer.start();
+				leftStickTimer.start();
 			}
 
 		} else {
@@ -1412,7 +1422,7 @@ public class Player extends Editable {
 			yImpulse = dynamicBody.getMass() * jumpPower;
 			extraJump = false; // double jumping off wall is currently disabled
 
-		//} else if (wallBoostTimer.isRunning()) { // wall boost padding
+			// } else if (wallBoostTimer.isRunning()) { // wall boost padding
 //
 //			if (left) {
 //				// boost off right wall
