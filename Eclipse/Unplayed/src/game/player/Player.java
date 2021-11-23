@@ -420,7 +420,7 @@ public class Player extends Editable {
 //				}
 //
 //			}
-			if ((left) && (rightWallContacts > leftWallContacts || rightWallTimer.isRunning())
+			if ((left) && (rightWallContacts > leftWallContacts ) //|| rightWallTimer.isRunning()
 					&& !leftStickTimer.isRunning()) {
 
 				// start right stick timer
@@ -436,8 +436,8 @@ public class Player extends Editable {
 //				if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished()) {
 //					leftStickTimer.start();
 //				}
-//			}
-			if ((right) && (leftWallContacts > rightWallContacts || leftWallTimer.isRunning())
+//			} 
+			if ((right) && (leftWallContacts > rightWallContacts ) //|| leftWallTimer.isRunning()
 					&& !rightStickTimer.isRunning()) {
 
 				// start left stick timer
