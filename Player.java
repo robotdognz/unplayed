@@ -172,8 +172,8 @@ public class Player extends Editable {
 		this.horizontalTunnel = false;
 
 		// how long to stick to a wall after letting go
-		this.leftStickTimer = new CountdownTimer(0.190f);
-		this.rightStickTimer = new CountdownTimer(0.190f);
+		this.leftStickTimer = new CountdownTimer(0.120f); //0.190f
+		this.rightStickTimer = new CountdownTimer(0.120f); //0.190f
 		// how long you can boost for after wall stick activated
 		this.wallBoostTimer = new CountdownTimer(0.150f);
 		this.wallJumpPower = 0.4f; // 0.5f
@@ -1322,7 +1322,7 @@ public class Player extends Editable {
 
 		} else if (leftWallContacts != rightWallContacts || leftWallTimer.isRunning() || rightWallTimer.isRunning()) {
 			// player is touching a wall
-			
+
 			if (!verticalTunnel) {
 				// the player is not in a tunnel
 				if (leftWallContacts > rightWallContacts || leftWallTimer.isRunning()) {
@@ -1353,7 +1353,6 @@ public class Player extends Editable {
 						DebugOutput.pushMessage("Boost off left wall", 2);
 
 					} else if (extraJump) { // no direction left wall, extra jump
-
 
 					} else { // no direction left wall
 
@@ -1395,7 +1394,6 @@ public class Player extends Editable {
 
 					} else if (extraJump) { // no direction right wall, extra jump
 
-
 					} else { // no direction right wall
 
 						xImpulse = -(dynamicBody.getMass() * jumpPower * wallJumpAwayPower);
@@ -1410,11 +1408,33 @@ public class Player extends Editable {
 				}
 
 			}
-			
+
 			yImpulse = dynamicBody.getMass() * jumpPower;
 			extraJump = false; // double jumping off wall is currently disabled
 
+		} else if (wallBoostTimer.isRunning()) { // wall boost padding
+
+			if (left) {
+				// boost off right wall
+
+				xImpulse = -(dynamicBody.getMass() * jumpPower * wallBoostPower);
+				// reset horizontal speed
+				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
+				// turn off timer
+				rightStickTimer.stop();
+				DebugOutput.pushMessage("Boost off right wall (padded)", 2);
+			} else if (right) {
+				// boost of left wall
+
+				xImpulse = (dynamicBody.getMass() * jumpPower * wallBoostPower);
+				// reset horizontal speed
+				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
+				// turn off timer
+				leftStickTimer.stop();
+				DebugOutput.pushMessage("Boost off left wall (padded)", 2);
+			}
 		} else { // touching nothing
+
 			if (extraJump) {
 				yImpulse = dynamicBody.getMass() * jumpPower;
 				extraJump = false;
