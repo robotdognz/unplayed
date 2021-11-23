@@ -54,7 +54,7 @@ public class Tile extends Editable implements Comparable<Tile> {
 			float box2dW = box2d.scalarPixelsToWorld(getWidth() / 2);
 			float box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
 
-			// shapes
+			// collision shapes
 
 			// top edge
 			topEdge = new EdgeShape();
@@ -78,14 +78,13 @@ public class Tile extends Editable implements Comparable<Tile> {
 			v2 = new Vec2(box2dW, -box2dH); // bottom
 			rightEdge.set(v1, v2);
 
-			// fixtures
+			// collision fixtures
 
 			// top edge
 			FixtureDef topEdgeDef = new FixtureDef();
 			topEdgeDef.shape = topEdge;
 			topEdgeDef.density = density;
 			topEdgeDef.friction = friction;
-//			topEdgeDef.userData = "ground";
 			staticBody.createFixture(topEdgeDef);
 
 			// bottom edge
@@ -100,39 +99,14 @@ public class Tile extends Editable implements Comparable<Tile> {
 			leftEdgeDef.shape = leftEdge;
 			leftEdgeDef.density = density;
 			leftEdgeDef.friction = friction;
-//			leftEdgeDef.userData = CollisionEnum.RIGHT_WALL; // determined relative to player, not tile, left edge is to
-			staticBody.createFixture(leftEdgeDef); // the right of player
+			staticBody.createFixture(leftEdgeDef);
 
 			// right edge
 			FixtureDef rightEdgeDef = new FixtureDef();
 			rightEdgeDef.shape = rightEdge;
 			rightEdgeDef.density = density;
 			rightEdgeDef.friction = friction;
-//			rightEdgeDef.userData = CollisionEnum.LEFT_WALL; // determined relative to player, not tile, right edge is
-			staticBody.createFixture(rightEdgeDef); // to the left of player
-
-//			// left wall sensor
-//			EdgeShape leftSensor = new EdgeShape();
-//			float sBox2dH = box2d.scalarPixelsToWorld((getHeight() - 1) / 2);
-//			v1 = new Vec2(-box2dW, sBox2dH);
-//			v2 = new Vec2(-box2dW, -sBox2dH);
-//			leftSensor.set(v1, v2);
-//			FixtureDef sensorDef = new FixtureDef();
-//			sensorDef.shape = leftSensor;
-//			sensorDef.userData = "wall";
-//			sensorDef.isSensor = true;
-//			staticBody.createFixture(sensorDef);
-//
-//			// right wall sensor
-//			EdgeShape sensor = new EdgeShape();
-//			v1 = new Vec2(box2dW, sBox2dH);
-//			v2 = new Vec2(box2dW, -sBox2dH);
-//			sensor.set(v1, v2);
-//			FixtureDef rightSensorDef = new FixtureDef();
-//			rightSensorDef.shape = sensor;
-//			rightSensorDef.userData = "wall";
-//			rightSensorDef.isSensor = true;
-//			staticBody.createFixture(rightSensorDef);
+			staticBody.createFixture(rightEdgeDef);
 
 			// ground sensor
 			// shape

@@ -1370,7 +1370,7 @@ public class Player extends Editable {
 					// touching right wall
 
 					if (right) { // pushing into right wall
-						if (!checkForWallSlotsJump(true)) {
+						if (!checkForWallSlotsJump(false)) {
 							// normal wall jump
 
 							xImpulse = -(dynamicBody.getMass() * jumpPower * wallJumpPower);
