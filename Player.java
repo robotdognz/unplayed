@@ -273,6 +273,9 @@ public class Player extends Editable {
 	public void endLeftWallContact() {
 		this.leftWallContacts--;
 		if (this.leftWallContacts == 0 && !this.jumpTimer.isRunning()) {
+			// this code results in both timers being disabled if they were started too
+			// close to each other, if both types of wall contact end at the same time, for
+			// instance
 			if (rightWallTimer.isRunning()) {
 				rightWallTimer.stop();
 				leftWallTimer.stop();
@@ -285,6 +288,9 @@ public class Player extends Editable {
 	public void endRightWallContact() {
 		this.rightWallContacts--;
 		if (this.rightWallContacts == 0 && !this.jumpTimer.isRunning()) {
+			// this code results in both timers being disabled if they were started too
+			// close to each other, if both types of wall contact end at the same time, for
+			// instance
 			if (leftWallTimer.isRunning()) {
 				leftWallTimer.stop();
 				rightWallTimer.stop();
@@ -1316,13 +1322,9 @@ public class Player extends Editable {
 
 		} else if (leftWallContacts != rightWallContacts || leftWallTimer.isRunning() || rightWallTimer.isRunning()) {
 			// player is touching a wall
-
-			yImpulse = dynamicBody.getMass() * jumpPower;
-			extraJump = false; // any kind of wall jump removes the second jump
-
-			// the player is not in a tunnel
+			
 			if (!verticalTunnel) {
-
+				// the player is not in a tunnel
 				if (leftWallContacts > rightWallContacts || leftWallTimer.isRunning()) {
 					// touching left wall
 
@@ -1352,7 +1354,6 @@ public class Player extends Editable {
 
 					} else if (extraJump) { // no direction left wall, extra jump
 
-//						extraJump = false;
 
 					} else { // no direction left wall
 
@@ -1361,9 +1362,6 @@ public class Player extends Editable {
 						dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 						// turn off timer
 						leftStickTimer.stop();
-
-						// extraJump = true; // double jumping off wall is currently disabled
-//						extraJump = false;
 
 						DebugOutput.pushMessage("Jump off left wall no direction", 2);
 
@@ -1397,7 +1395,6 @@ public class Player extends Editable {
 
 					} else if (extraJump) { // no direction right wall, extra jump
 
-//						extraJump = false;
 
 					} else { // no direction right wall
 
@@ -1407,15 +1404,15 @@ public class Player extends Editable {
 						// turn off timer
 						rightStickTimer.stop();
 
-						// extraJump = true; // double jumping off wall is currently disabled
-//						extraJump = false;
-
 						DebugOutput.pushMessage("Jump off right wall no direction", 2);
 
 					}
 				}
 
 			}
+			
+			yImpulse = dynamicBody.getMass() * jumpPower;
+			extraJump = false; // double jumping off wall is currently disabled
 
 		} else { // touching nothing
 			if (extraJump) {
