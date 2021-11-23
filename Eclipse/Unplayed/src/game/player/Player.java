@@ -93,7 +93,7 @@ public class Player extends Editable {
 	// wall jumping, magnetism, and boosting
 	private CountdownTimer leftStickTimer; // sticking to left wall
 	private CountdownTimer rightStickTimer; // sticking to right wall
-	private CountdownTimer wallBoostTimer; // boost off wall timer, used as padding for the 'stick' timers above
+//	private CountdownTimer wallBoostTimer; // boost off wall timer, used as padding for the 'stick' timers above
 	private float wallJumpPower; // ratio (of jumpPower) for power of jumping off wall
 	private float wallJumpAwayPower; // ratio (of jumpPower) for power of jumping away from a wall
 	private float wallBoostPower; // ratio (of jumpPower) for power of boosting off wall
@@ -172,10 +172,10 @@ public class Player extends Editable {
 		this.horizontalTunnel = false;
 
 		// how long to stick to a wall after letting go
-		this.leftStickTimer = new CountdownTimer(0.120f); //0.190f
-		this.rightStickTimer = new CountdownTimer(0.120f); //0.190f
+		this.leftStickTimer = new CountdownTimer(0.190f); //0.190f
+		this.rightStickTimer = new CountdownTimer(0.190f); //0.190f
 		// how long you can boost for after wall stick activated
-		this.wallBoostTimer = new CountdownTimer(0.150f);
+//		this.wallBoostTimer = new CountdownTimer(0.150f);
 		this.wallJumpPower = 0.4f; // 0.5f
 		this.wallJumpAwayPower = 0.25f;
 		this.wallBoostPower = 0.85f; // 0.75f
@@ -335,7 +335,7 @@ public class Player extends Editable {
 		boostTimer.deltaStep(delta);
 		leftStickTimer.deltaStep(delta);
 		rightStickTimer.deltaStep(delta);
-		wallBoostTimer.deltaStep(delta);
+//		wallBoostTimer.deltaStep(delta);
 		pushLeftTimer.deltaStep(delta);
 		pushRightTimer.deltaStep(delta);
 
@@ -370,7 +370,7 @@ public class Player extends Editable {
 				// stick to right wall
 				if (rightStickTimer.isRunning()) {
 					desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
-					wallBoostTimer.start();
+//					wallBoostTimer.start();
 				}
 			} else {
 				return;
@@ -385,7 +385,7 @@ public class Player extends Editable {
 				// stick to left wall
 				if (leftStickTimer.isRunning()) {
 					desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
-					wallBoostTimer.start();
+//					wallBoostTimer.start();
 				}
 			} else {
 				return;
@@ -1412,27 +1412,27 @@ public class Player extends Editable {
 			yImpulse = dynamicBody.getMass() * jumpPower;
 			extraJump = false; // double jumping off wall is currently disabled
 
-		} else if (wallBoostTimer.isRunning()) { // wall boost padding
-
-			if (left) {
-				// boost off right wall
-
-				xImpulse = -(dynamicBody.getMass() * jumpPower * wallBoostPower);
-				// reset horizontal speed
-				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
-				// turn off timer
-				rightStickTimer.stop();
-				DebugOutput.pushMessage("Boost off right wall (padded)", 2);
-			} else if (right) {
-				// boost of left wall
-
-				xImpulse = (dynamicBody.getMass() * jumpPower * wallBoostPower);
-				// reset horizontal speed
-				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
-				// turn off timer
-				leftStickTimer.stop();
-				DebugOutput.pushMessage("Boost off left wall (padded)", 2);
-			}
+		//} else if (wallBoostTimer.isRunning()) { // wall boost padding
+//
+//			if (left) {
+//				// boost off right wall
+//
+//				xImpulse = -(dynamicBody.getMass() * jumpPower * wallBoostPower);
+//				// reset horizontal speed
+//				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
+//				// turn off timer
+//				rightStickTimer.stop();
+//				DebugOutput.pushMessage("Boost off right wall (padded)", 2);
+//			} else if (right) {
+//				// boost of left wall
+//
+//				xImpulse = (dynamicBody.getMass() * jumpPower * wallBoostPower);
+//				// reset horizontal speed
+//				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
+//				// turn off timer
+//				leftStickTimer.stop();
+//				DebugOutput.pushMessage("Boost off left wall (padded)", 2);
+//			}
 		} else { // touching nothing
 
 			if (extraJump) {
