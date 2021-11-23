@@ -341,7 +341,7 @@ public class Player extends Editable {
 
 		if (left || pushLeftTimer.isRunning()) {
 			leftTimer.start();
-//			rightTimer.stop();
+			rightTimer.stop();
 			if (vel.x >= -movementSpeed) {
 				// standard movement
 				desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
@@ -357,7 +357,7 @@ public class Player extends Editable {
 
 		} else if (right || pushRightTimer.isRunning()) {
 			rightTimer.start();
-//			leftTimer.stop();
+			leftTimer.stop();
 			if (vel.x <= movementSpeed) {
 				// standard movement
 				desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
