@@ -424,8 +424,9 @@ public class Player extends Editable {
 //				}
 //			}
 
-			if ((left || leftTimer.isRunning()) && rightWallContacts > leftWallContacts
-					&& !leftStickTimer.isRunning()) {
+			if ((left) && rightWallContacts > leftWallContacts && !leftStickTimer.isRunning()) { 
+				// ((left || leftTimer.isRunning()) && rightWallContacts > leftWallContacts && !leftStickTimer.isRunning()) {
+				
 				// start right stick timer
 				if (!rightStickTimer.isRunning() && !rightStickTimer.isFinished()) {
 					rightStickTimer.start();
@@ -433,8 +434,9 @@ public class Player extends Editable {
 
 			}
 
-			if ((right || rightTimer.isRunning()) && leftWallContacts > rightWallContacts
-					&& !rightStickTimer.isRunning()) {
+			if ((right) && leftWallContacts > rightWallContacts && !rightStickTimer.isRunning()) {
+				// ((right || rightTimer.isRunning()) && leftWallContacts > rightWallContacts && !rightStickTimer.isRunning()) {
+				
 				// start left stick timer
 				if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished()) {
 					leftStickTimer.start();
@@ -1301,8 +1303,9 @@ public class Player extends Editable {
 		float xImpulse = 0;
 		float yImpulse = 0;
 
-		if (groundContacts > 0 || groundTimer.isRunning()) { // touching the ground
-
+		if (groundContacts > 0 || groundTimer.isRunning()) { 
+			// player is touching the ground
+			
 			// if the player is in a horizontal tunnel, but not at a tunnel intersection
 			if (horizontalTunnel && !verticalTunnel) {
 				int roofSlot = checkForRoofSlotsJump();
@@ -1328,11 +1331,13 @@ public class Player extends Editable {
 
 			extraJump = true;
 
-		} else if (leftWallContacts > 0 || leftWallTimer.isRunning() || rightWallContacts > 0
-				|| rightWallTimer.isRunning()) { // touching a wall
+		} else if (leftWallContacts != rightWallContacts || leftWallTimer.isRunning() || rightWallTimer.isRunning()) { 
+			// player is touching a wall
+			
+			yImpulse = dynamicBody.getMass() * jumpPower;
 
 			if (left) { // pushing into a wall left
-				yImpulse = dynamicBody.getMass() * jumpPower;
+//				yImpulse = dynamicBody.getMass() * jumpPower;
 
 				// the player is not in a tunnel
 				if (!verticalTunnel) {
@@ -1364,7 +1369,7 @@ public class Player extends Editable {
 				extraJump = false;
 
 			} else if (right) { // pushing into a wall right
-				yImpulse = dynamicBody.getMass() * jumpPower;
+//				yImpulse = dynamicBody.getMass() * jumpPower;
 
 				// the player is not in a tunnel
 				if (!verticalTunnel) {
@@ -1395,11 +1400,11 @@ public class Player extends Editable {
 				// extraJump = true; // double jumping off wall is currently disabled
 				extraJump = false;
 
-			} else if (rightWallContacts > leftWallContacts || leftWallTimer.isRunning()) { // jump off right wall //rightStickTimer.isRunning()
+			} else if (rightWallContacts > leftWallContacts || leftWallTimer.isRunning()) { // jump off right wall
 				// if not pushing into either wall, apply a small jump
 
 				xImpulse = -(dynamicBody.getMass() * jumpPower * wallJumpAwayPower);
-				yImpulse = dynamicBody.getMass() * jumpPower;
+//				yImpulse = dynamicBody.getMass() * jumpPower;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 				// turn off timer
@@ -1410,11 +1415,11 @@ public class Player extends Editable {
 
 				DebugOutput.pushMessage("Jump off right wall no direction", 2);
 
-			} else if (leftWallContacts > rightWallContacts || rightWallTimer.isRunning()) { // jump of left wall //leftStickTimer.isRunning()
+			} else if (leftWallContacts > rightWallContacts || rightWallTimer.isRunning()) { // jump of left wall
 				// if not pushing into either wall, apply a small jump
 
 				xImpulse = (dynamicBody.getMass() * jumpPower * wallJumpAwayPower);
-				yImpulse = dynamicBody.getMass() * jumpPower;
+//				yImpulse = dynamicBody.getMass() * jumpPower;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 				// turn off timer
@@ -1428,7 +1433,7 @@ public class Player extends Editable {
 			}
 
 			else if (extraJump) { // not pushing into the wall
-				yImpulse = dynamicBody.getMass() * jumpPower;
+//				yImpulse = dynamicBody.getMass() * jumpPower;
 				extraJump = false;
 			}
 
