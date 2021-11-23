@@ -411,7 +411,16 @@ public class Player extends Editable {
 		// touching a wall, or just was touching one, and pushing into it
 		if (leftWallContacts > 0 || leftWallTimer.isRunning() || rightWallContacts > 0 || rightWallTimer.isRunning()) {
 
-			if ((left || leftTimer.isRunning()) && rightWallContacts > leftWallContacts
+//			if ((left || leftTimer.isRunning()) && rightWallContacts > leftWallContacts
+//					&& !leftStickTimer.isRunning()) {
+//
+//				// start right stick timer
+//				if (!rightStickTimer.isRunning() && !rightStickTimer.isFinished()) {
+//					rightStickTimer.start();
+//				}
+//
+//			}
+			if ((left) && (rightWallContacts > leftWallContacts || rightWallTimer.isRunning())
 					&& !leftStickTimer.isRunning()) {
 
 				// start right stick timer
@@ -420,30 +429,24 @@ public class Player extends Editable {
 				}
 
 			}
-//			if ((left) && rightWallContacts > leftWallContacts && !leftStickTimer.isRunning()) {
-//
-//				// start right stick timer
-//				if (!rightStickTimer.isRunning() && !rightStickTimer.isFinished()) {
-//					rightStickTimer.start();
-//				}
-//
-//			}
 
-			if ((right || rightTimer.isRunning()) && leftWallContacts > rightWallContacts && !rightStickTimer.isRunning()) {
-
-				// start left stick timer
-				if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished()) {
-					leftStickTimer.start();
-				}
-			}
-//			if ((right) && leftWallContacts > rightWallContacts && !rightStickTimer.isRunning()) {
+//			if ((right || rightTimer.isRunning()) && leftWallContacts > rightWallContacts && !rightStickTimer.isRunning()) {
 //
 //				// start left stick timer
 //				if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished()) {
 //					leftStickTimer.start();
 //				}
 //			}
+			if ((right) && (leftWallContacts > rightWallContacts || leftWallTimer.isRunning())
+					&& !rightStickTimer.isRunning()) {
 
+				// start left stick timer
+				if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished()) {
+					leftStickTimer.start();
+				}
+			}
+
+			// old system
 //			if ((left || leftTimer.isRunning()) && !rightStickTimer.isRunning()) {
 //				leftStickTimer.start();
 //			}
