@@ -413,13 +413,14 @@ public class Player extends Editable {
 
 			if ((left || leftTimer.isRunning()) || (right || rightTimer.isRunning())) {
 				if (leftWallContacts > 0 && !rightStickTimer.isRunning() && leftWallContacts > rightWallContacts) {
-					leftStickTimer.start();
-				} else if (rightWallContacts > 0 && !leftStickTimer.isRunning()
-						&& rightWallContacts > leftWallContacts) {
-					rightStickTimer.start();
-				} else {
-					leftStickTimer.stop();
-					rightStickTimer.stop();
+					if (!leftStickTimer.isRunning() && !leftStickTimer.isFinished()) {
+						leftStickTimer.start();
+					}
+				}
+				if (rightWallContacts > 0 && !leftStickTimer.isRunning() && rightWallContacts > leftWallContacts) {
+					if (!rightStickTimer.isRunning() && !rightStickTimer.isFinished()) {
+						rightStickTimer.start();
+					}
 				}
 			}
 
