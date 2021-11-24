@@ -162,10 +162,11 @@ public class MyContactListener implements ContactListener {
 				case PLAYER_EDGE:
 					player = (Player) fixture.getBody().getUserData();
 					playerEdge = true;
-					DebugOutput.pushMessage("Come on, man", 1);
+					DebugOutput.pushMessage("edge", 1);
 					break;
 				case SOLID:
 					solid = true;
+					DebugOutput.pushMessage("solid", 1);
 					break;
 				case TILE:
 					tile = (Tile) fixture.getBody().getUserData();
