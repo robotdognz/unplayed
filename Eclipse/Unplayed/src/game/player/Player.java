@@ -93,7 +93,8 @@ public class Player extends Editable {
 	// wall jumping, magnetism, and boosting
 	private CountdownTimer leftStickTimer; // keep player sticking to left wall
 	private CountdownTimer rightStickTimer; // keep player sticking to right wall
-	private CountdownTimer wallBoostTimer; // boost off wall timer, if active player will boost in direction pressed
+	private CountdownTimer leftWallBoostTimer; // boost off wall timer, if active player will boost in direction pressed
+	private CountdownTimer rightWallBoostTimer; // boost off wall timer, if active player will boost in direction pressed
 	private float wallJumpPower; // ratio (of jumpPower) for power of jumping off wall
 	private float wallJumpAwayPower; // ratio (of jumpPower) for power of jumping away from a wall
 	private float wallBoostPower; // ratio (of jumpPower) for power of boosting off wall
@@ -161,8 +162,8 @@ public class Player extends Editable {
 		this.groundTimerPadding = new CountdownTimer(0.064f);
 
 		// how long to pad leaving a wall
-		this.leftWallTimer = new CountdownTimer(0.064f); // 0.128f // 0.064f
-		this.rightWallTimer = new CountdownTimer(0.064f); // 0.128f // 0.064
+		this.leftWallTimer = new CountdownTimer(0.064f); 
+		this.rightWallTimer = new CountdownTimer(0.064f); 
 		// how long after a jump before the ground a wall timers can be started
 		this.jumpTimer = new CountdownTimer(0.128f);
 		// how long after boosting to keep checking for roof slots
@@ -172,10 +173,11 @@ public class Player extends Editable {
 		this.horizontalTunnel = false;
 
 		// how long to stick to a wall after letting go
-		this.leftStickTimer = new CountdownTimer(0.120f); // 0.190f
-		this.rightStickTimer = new CountdownTimer(0.120f); // 0.190f
+		this.leftStickTimer = new CountdownTimer(0.120f); 
+		this.rightStickTimer = new CountdownTimer(0.120f);
 		// how long you can boost after doing a non-directed wall jump
-		this.wallBoostTimer = new CountdownTimer(0.120f); // 0.64f
+		this.leftWallBoostTimer = new CountdownTimer(0.120f); 
+		this.rightWallBoostTimer = new CountdownTimer(0.120f);
 		this.wallJumpPower = 0.4f; // 0.5f
 		this.wallJumpAwayPower = 0.25f;
 		this.wallBoostPower = 0.85f; // 0.75f
@@ -335,7 +337,8 @@ public class Player extends Editable {
 		boostTimer.deltaStep(delta);
 		leftStickTimer.deltaStep(delta);
 		rightStickTimer.deltaStep(delta);
-		wallBoostTimer.deltaStep(delta);
+		leftWallBoostTimer.deltaStep(delta);
+		rightWallBoostTimer.deltaStep(delta);
 		pushLeftTimer.deltaStep(delta);
 		pushRightTimer.deltaStep(delta);
 
@@ -363,7 +366,7 @@ public class Player extends Editable {
 
 		if (left || pushLeftTimer.isRunning()) {
 
-			if (wallBoostTimer.isRunning()) {
+			if (rightWallBoostTimer.isRunning()) {
 				float xImpulse = -(dynamicBody.getMass() * jumpPower * wallBoostPower);
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
@@ -371,7 +374,7 @@ public class Player extends Editable {
 				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, 0), dynamicBody.getWorldCenter(), true);
 				// timers
 				rightStickTimer.stop();
-				wallBoostTimer.stop();
+				rightWallBoostTimer.stop();
 				jumpTimer.start();
 
 				DebugOutput.pushMessage("Boost off right wall (padded)", 2);
@@ -392,7 +395,7 @@ public class Player extends Editable {
 
 		} else if (right || pushRightTimer.isRunning()) {
 
-			if (wallBoostTimer.isRunning()) {
+			if (leftWallBoostTimer.isRunning()) {
 				float xImpulse = (dynamicBody.getMass() * jumpPower * wallBoostPower);
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
@@ -400,7 +403,7 @@ public class Player extends Editable {
 				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, 0), dynamicBody.getWorldCenter(), true);
 				// timers
 				leftStickTimer.stop();
-				wallBoostTimer.stop();
+				leftWallBoostTimer.stop();
 				jumpTimer.start();
 
 				DebugOutput.pushMessage("Boost off left wall (padded)", 2);
@@ -1387,8 +1390,8 @@ public class Player extends Editable {
 						DebugOutput.pushMessage("Jump off left wall no direction", 2);
 
 						// TODO: start a wall boost jump padding timer
-						wallBoostTimer.start();
-
+						leftWallBoostTimer.start();
+						rightWallBoostTimer.stop();
 					}
 
 				} else if (rightWallContacts > leftWallContacts || rightWallTimer.isRunning()) {
@@ -1430,8 +1433,8 @@ public class Player extends Editable {
 						DebugOutput.pushMessage("Jump off right wall no direction", 2);
 
 						// TODO: start a wall boost jump padding timer
-						wallBoostTimer.start();
-
+						rightWallBoostTimer.start();
+						leftWallBoostTimer.stop();
 					}
 				}
 
