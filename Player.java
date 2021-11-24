@@ -1609,6 +1609,8 @@ public class Player extends Editable {
 				graphics.rect(0, 0, getWidth() / 2, getHeight() / 2);
 			}
 
+			graphics.popMatrix();
+
 			// draw edge sensors
 			if (showChecking) {
 				if (topEdgeSensor != null) {
@@ -1640,8 +1642,6 @@ public class Player extends Editable {
 					graphics.line(v1.x, v1.y, v2.x, v2.y);
 				}
 			}
-
-			graphics.popMatrix();
 		}
 
 		// draw tile checking logic, for debugging slots
