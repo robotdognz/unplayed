@@ -54,13 +54,13 @@ public class MyContactListener implements ContactListener {
 		updateVariables(contact.getFixtureA());
 		updateVariables(contact.getFixtureB());
 
-		if (playerEdge && event == null) {
-			DebugOutput.pushMessage(
-					"Solid: " + solid + " Ground: " + ground + " lWall: " + leftWall + " rWall: " + rightWall, 1);
-		}
+//		if (playerEdge && event == null) {
+//			DebugOutput.pushMessage(
+//					"Solid: " + solid + " Ground: " + ground + " lWall: " + leftWall + " rWall: " + rightWall, 1);
+//		}
 
 		// if one of them is a player edge and one is a solid surface
-		if (playerEdge && solid) {
+		if (playerEdge && tile != null) {
 			player.startEdgeContact();
 		}
 
@@ -115,7 +115,7 @@ public class MyContactListener implements ContactListener {
 		updateVariables(contact.getFixtureB());
 
 		// if one of them is a player edge and one is a solid surface
-		if (playerEdge && solid) {
+		if (playerEdge && tile != null) {
 			player.endEdgeContact();
 		}
 

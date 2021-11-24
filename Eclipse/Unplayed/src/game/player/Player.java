@@ -236,8 +236,8 @@ public class Player extends Editable {
 			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR;
 			dynamicBody.createFixture(sensorFixtureDef);
 
-			box2dW = box2d.scalarPixelsToWorld((getWidth() + 0.5f) / 2);
-			box2dH = box2d.scalarPixelsToWorld((getHeight() + 0.5f) / 2);
+			box2dW = box2d.scalarPixelsToWorld((getWidth() + 5f) / 2);
+			box2dH = box2d.scalarPixelsToWorld((getHeight() + 5f) / 2);
 
 			// collision vibration sensors
 			// top edge sensor shape
