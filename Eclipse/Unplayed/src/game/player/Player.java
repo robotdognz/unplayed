@@ -371,6 +371,7 @@ public class Player extends Editable {
 				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, 0), dynamicBody.getWorldCenter(), true);
 				// timers
 				rightStickTimer.stop();
+				wallBoostTimer.stop();
 				jumpTimer.start();
 
 				DebugOutput.pushMessage("Boost off right wall (padded)", 2);
@@ -399,6 +400,7 @@ public class Player extends Editable {
 				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, 0), dynamicBody.getWorldCenter(), true);
 				// timers
 				leftStickTimer.stop();
+				wallBoostTimer.stop();
 				jumpTimer.start();
 
 				DebugOutput.pushMessage("Boost off left wall (padded)", 2);
