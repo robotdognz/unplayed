@@ -172,10 +172,10 @@ public class Player extends Editable {
 		this.horizontalTunnel = false;
 
 		// how long to stick to a wall after letting go
-		this.leftStickTimer = new CountdownTimer(0.100f); // 0.190f
-		this.rightStickTimer = new CountdownTimer(0.100f); // 0.190f
+		this.leftStickTimer = new CountdownTimer(0.120f); // 0.190f
+		this.rightStickTimer = new CountdownTimer(0.120f); // 0.190f
 		// how long you can boost after doing a non-directed wall jump
-		this.wallBoostTimer = new CountdownTimer(0.090f); //0.64f
+		this.wallBoostTimer = new CountdownTimer(0.120f); // 0.64f
 		this.wallJumpPower = 0.4f; // 0.5f
 		this.wallJumpAwayPower = 0.25f;
 		this.wallBoostPower = 0.85f; // 0.75f
@@ -367,16 +367,11 @@ public class Player extends Editable {
 				float xImpulse = -(dynamicBody.getMass() * jumpPower * wallBoostPower);
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
-				// turn off timer
-				rightStickTimer.stop();
-
-//				float yImpulse = 0; //dynamicBody.getMass() * jumpPower;
-
-				jumpTimer.start();
-				// reset vertical speed
-//				dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 				// apply impulse
 				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, 0), dynamicBody.getWorldCenter(), true);
+				// timers
+				rightStickTimer.stop();
+				jumpTimer.start();
 
 				DebugOutput.pushMessage("Boost off right wall (padded)", 2);
 				return;
@@ -400,16 +395,11 @@ public class Player extends Editable {
 				float xImpulse = (dynamicBody.getMass() * jumpPower * wallBoostPower);
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
-				// turn off timer
-				leftStickTimer.stop();
-
-//				float yImpulse = 0; //dynamicBody.getMass() * jumpPower;
-
-				jumpTimer.start();
-				// reset vertical speed
-//				dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 				// apply impulse
 				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, 0), dynamicBody.getWorldCenter(), true);
+				// timers
+				leftStickTimer.stop();
+				jumpTimer.start();
 
 				DebugOutput.pushMessage("Boost off left wall (padded)", 2);
 				return;
