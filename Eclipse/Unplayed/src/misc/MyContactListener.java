@@ -5,6 +5,8 @@ import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.contacts.Contact;
+
+import editor.DebugOutput;
 import game.Game;
 import game.player.Player;
 import objects.Event;
@@ -160,6 +162,7 @@ public class MyContactListener implements ContactListener {
 				case PLAYER_EDGE:
 					player = (Player) fixture.getBody().getUserData();
 					playerEdge = true;
+					DebugOutput.pushMessage("Come on, man", 1);
 					break;
 				case SOLID:
 					solid = true;
