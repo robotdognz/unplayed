@@ -1614,11 +1614,12 @@ public class Player extends Editable {
 			// draw edge sensors
 			if (showChecking) {
 				if (topEdgeSensor != null) {
-					DebugOutput.pushMessage("Fuck!", 1);
+					
 					Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) topEdgeSensor.getShape()).m_vertex1);
 					Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) topEdgeSensor.getShape()).m_vertex2);
+					DebugOutput.pushMessage("" + v1, 1);
 					graphics.stroke(255, 0, 0); // red
-					graphics.strokeWeight(4);
+					graphics.strokeWeight(100);
 					graphics.line(v1.x, v1.y, v2.x, v2.y);
 				}
 				if (bottomEdgeSensor != null) {
