@@ -175,7 +175,7 @@ public class Player extends Editable {
 		this.leftStickTimer = new CountdownTimer(0.100f); // 0.190f
 		this.rightStickTimer = new CountdownTimer(0.100f); // 0.190f
 		// how long you can boost after doing a non-directed wall jump
-		this.wallBoostTimer = new CountdownTimer(0.064f);
+		this.wallBoostTimer = new CountdownTimer(0.090f); //0.64f
 		this.wallJumpPower = 0.4f; // 0.5f
 		this.wallJumpAwayPower = 0.25f;
 		this.wallBoostPower = 0.85f; // 0.75f
@@ -370,7 +370,7 @@ public class Player extends Editable {
 				// turn off timer
 				rightStickTimer.stop();
 
-				float yImpulse = dynamicBody.getMass() * jumpPower;
+				float yImpulse = 0; //dynamicBody.getMass() * jumpPower;
 
 				jumpTimer.start();
 				// reset vertical speed
@@ -403,7 +403,7 @@ public class Player extends Editable {
 				// turn off timer
 				leftStickTimer.stop();
 
-				float yImpulse = dynamicBody.getMass() * jumpPower;
+				float yImpulse = 0; //dynamicBody.getMass() * jumpPower;
 
 				jumpTimer.start();
 				// reset vertical speed
