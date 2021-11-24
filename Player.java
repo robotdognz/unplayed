@@ -370,13 +370,13 @@ public class Player extends Editable {
 				// turn off timer
 				rightStickTimer.stop();
 
-				float yImpulse = 0; //dynamicBody.getMass() * jumpPower;
+//				float yImpulse = 0; //dynamicBody.getMass() * jumpPower;
 
 				jumpTimer.start();
 				// reset vertical speed
-				dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
+//				dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 				// apply impulse
-				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, yImpulse), dynamicBody.getWorldCenter(), true);
+				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, 0), dynamicBody.getWorldCenter(), true);
 
 				DebugOutput.pushMessage("Boost off right wall (padded)", 2);
 				return;
@@ -403,13 +403,13 @@ public class Player extends Editable {
 				// turn off timer
 				leftStickTimer.stop();
 
-				float yImpulse = 0; //dynamicBody.getMass() * jumpPower;
+//				float yImpulse = 0; //dynamicBody.getMass() * jumpPower;
 
 				jumpTimer.start();
 				// reset vertical speed
-				dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
+//				dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 				// apply impulse
-				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, yImpulse), dynamicBody.getWorldCenter(), true);
+				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, 0), dynamicBody.getWorldCenter(), true);
 
 				DebugOutput.pushMessage("Boost off left wall (padded)", 2);
 				return;
