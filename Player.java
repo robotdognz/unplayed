@@ -1609,15 +1609,11 @@ public class Player extends Editable {
 				graphics.rect(0, 0, getWidth() / 2, getHeight() / 2);
 			}
 
-			graphics.popMatrix();
-
 			// draw edge sensors
 			if (showChecking) {
 				if (topEdgeSensor != null) {
-					
 					Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) topEdgeSensor.getShape()).m_vertex1);
 					Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) topEdgeSensor.getShape()).m_vertex2);
-					DebugOutput.pushMessage("" + v1, 1);
 					graphics.stroke(255, 0, 0); // red
 					graphics.strokeWeight(100);
 					graphics.line(v1.x, v1.y, v2.x, v2.y);
@@ -1644,6 +1640,9 @@ public class Player extends Editable {
 					graphics.line(v1.x, v1.y, v2.x, v2.y);
 				}
 			}
+
+			graphics.popMatrix();
+
 		}
 
 		// draw tile checking logic, for debugging slots
