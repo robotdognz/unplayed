@@ -359,6 +359,7 @@ public class Player extends Editable {
 	
 	public void startEdgeContact() {
 		this.edgeContacts++;
+		DebugOutput.pushMessage("Contact started", 1);
 	}
 	
 	public void endEdgeContact() {
