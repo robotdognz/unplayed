@@ -209,17 +209,17 @@ public class Player extends Editable {
 			dynamicBody = box2d.createBody(bodyDef);
 			dynamicBody.setFixedRotation(locked);
 
-			// shape
-			PolygonShape boxShape = new PolygonShape();
-			boxShape.setAsBox(box2dW, box2dH);
-
-			// fixture
-			FixtureDef boxFixtureDef = new FixtureDef();
-			boxFixtureDef.shape = boxShape;
-			boxFixtureDef.density = density;
-			boxFixtureDef.friction = friction;
-			boxFixtureDef.userData = CollisionEnum.PLAYER_BODY;
-			dynamicBody.createFixture(boxFixtureDef);
+//			// shape
+//			PolygonShape boxShape = new PolygonShape();
+//			boxShape.setAsBox(box2dW, box2dH);
+//
+//			// fixture
+//			FixtureDef boxFixtureDef = new FixtureDef();
+//			boxFixtureDef.shape = boxShape;
+//			boxFixtureDef.density = density;
+//			boxFixtureDef.friction = friction;
+//			boxFixtureDef.userData = CollisionEnum.PLAYER_BODY;
+//			dynamicBody.createFixture(boxFixtureDef);
 
 			// environment sensor
 			CircleShape sensorShape = new CircleShape();
@@ -256,32 +256,32 @@ public class Player extends Editable {
 			topEdgeSensorDef.shape = topEdge;
 			topEdgeSensorDef.density = density;
 			topEdgeSensorDef.friction = friction;
-			topEdgeSensorDef.isSensor = true;
-			topEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
+//			topEdgeSensorDef.isSensor = true;
+			topEdgeSensorDef.userData = CollisionEnum.PLAYER_BODY; //CollisionEnum.PLAYER_EDGE;
 			dynamicBody.createFixture(topEdgeSensorDef);
 			// bottom edge sensor fixture
 			FixtureDef bottomEdgeSensorDef = new FixtureDef();
 			bottomEdgeSensorDef.shape = bottomEdge;
 			bottomEdgeSensorDef.density = density;
 			bottomEdgeSensorDef.friction = friction;
-			bottomEdgeSensorDef.isSensor = true;
-			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
+//			bottomEdgeSensorDef.isSensor = true;
+			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_BODY; //CollisionEnum.PLAYER_EDGE;
 			dynamicBody.createFixture(bottomEdgeSensorDef);
 			// left edge sensor fixture
 			FixtureDef leftEdgeSensorDef = new FixtureDef();
 			leftEdgeSensorDef.shape = leftEdge;
 			leftEdgeSensorDef.density = density;
 			leftEdgeSensorDef.friction = friction;
-			leftEdgeSensorDef.isSensor = true;
-			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
+//			leftEdgeSensorDef.isSensor = true;
+			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_BODY; //CollisionEnum.PLAYER_EDGE;
 			dynamicBody.createFixture(leftEdgeSensorDef);
 			// right edge sensor fixture
 			FixtureDef rightEdgeSensorDef = new FixtureDef();
 			rightEdgeSensorDef.shape = rightEdge;
 			rightEdgeSensorDef.density = density;
 			rightEdgeSensorDef.friction = friction;
-			rightEdgeSensorDef.isSensor = true;
-			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
+//			rightEdgeSensorDef.isSensor = true;
+			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_BODY; //CollisionEnum.PLAYER_EDGE;
 			dynamicBody.createFixture(rightEdgeSensorDef);
 
 		}
