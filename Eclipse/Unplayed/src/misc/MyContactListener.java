@@ -60,7 +60,7 @@ public class MyContactListener implements ContactListener {
 //		}
 
 		// if one of them is a player edge and one is a solid surface
-		if (playerEdge && tile != null) {
+		if (playerEdge && event == null) {
 			player.startEdgeContact();
 		}
 
@@ -115,7 +115,7 @@ public class MyContactListener implements ContactListener {
 		updateVariables(contact.getFixtureB());
 
 		// if one of them is a player edge and one is a solid surface
-		if (playerEdge && tile != null) {
+		if (playerEdge && event == null) {
 			player.endEdgeContact();
 		}
 
