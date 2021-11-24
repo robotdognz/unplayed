@@ -45,7 +45,7 @@ public class Player extends Editable {
 	public int groundContacts; // the number of grounds touching the player's body
 	public int leftWallContacts; // the number of left walls touching the player's body
 	public int rightWallContacts; // the number of right walls touching the player's body
-	
+
 	public int edgeContacts; // the number of solid surface touching the players edges
 
 	private ArrayList<Event> events; // list of events touching the player
@@ -108,6 +108,12 @@ public class Player extends Editable {
 	private boolean extraJump; // does the player have an extra jump
 	private boolean verticalTunnel; // used to check if player should jump away from the wall or not
 	private boolean horizontalTunnel;
+
+	// edge sensors
+	private Fixture topEdgeSensor; // reference to the top edge fixture
+	private Fixture bottomEdgeSensor; // reference to the bottom edge fixture
+	private Fixture leftEdgeSensor; // reference to the left edge fixture
+	private Fixture rightEdgeSensor; // reference to the right edge fixture
 
 	public Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -229,7 +235,7 @@ public class Player extends Editable {
 			sensorFixtureDef.isSensor = true;
 			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR;
 			dynamicBody.createFixture(sensorFixtureDef);
-			
+
 			box2dW = box2d.scalarPixelsToWorld(getWidth() / 2);
 			box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
 
@@ -261,7 +267,7 @@ public class Player extends Editable {
 			topEdgeSensorDef.friction = friction;
 			topEdgeSensorDef.isSensor = true;
 			topEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
-			dynamicBody.createFixture(topEdgeSensorDef);
+			topEdgeSensor = dynamicBody.createFixture(topEdgeSensorDef);
 			// bottom edge sensor fixture
 			FixtureDef bottomEdgeSensorDef = new FixtureDef();
 			bottomEdgeSensorDef.shape = bottomEdge;
@@ -269,7 +275,7 @@ public class Player extends Editable {
 			bottomEdgeSensorDef.friction = friction;
 			bottomEdgeSensorDef.isSensor = true;
 			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
-			dynamicBody.createFixture(bottomEdgeSensorDef);
+			bottomEdgeSensor = dynamicBody.createFixture(bottomEdgeSensorDef);
 			// left edge sensor fixture
 			FixtureDef leftEdgeSensorDef = new FixtureDef();
 			leftEdgeSensorDef.shape = leftEdge;
@@ -277,7 +283,7 @@ public class Player extends Editable {
 			leftEdgeSensorDef.friction = friction;
 			leftEdgeSensorDef.isSensor = true;
 			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
-			dynamicBody.createFixture(leftEdgeSensorDef);
+			leftEdgeSensor = dynamicBody.createFixture(leftEdgeSensorDef);
 			// right edge sensor fixture
 			FixtureDef rightEdgeSensorDef = new FixtureDef();
 			rightEdgeSensorDef.shape = rightEdge;
@@ -285,7 +291,7 @@ public class Player extends Editable {
 			rightEdgeSensorDef.friction = friction;
 			rightEdgeSensorDef.isSensor = true;
 			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
-			dynamicBody.createFixture(rightEdgeSensorDef);
+			rightEdgeSensor = dynamicBody.createFixture(rightEdgeSensorDef);
 
 		}
 	}
@@ -295,6 +301,11 @@ public class Player extends Editable {
 			destroyAllBarriers(false); // get rid of barriers so they don't mess with the next player
 			box2d.destroyBody(dynamicBody);
 			dynamicBody = null;
+
+			topEdgeSensor = null;
+			bottomEdgeSensor = null;
+			leftEdgeSensor = null;
+			rightEdgeSensor = null;
 		}
 	}
 
@@ -339,11 +350,10 @@ public class Player extends Editable {
 			}
 		}
 	}
-	
+
 	public void startRightWallContact() {
 		this.rightWallContacts++;
 	}
-
 
 	public void endRightWallContact() {
 		this.rightWallContacts--;
@@ -359,16 +369,15 @@ public class Player extends Editable {
 			}
 		}
 	}
-	
+
 	public void startEdgeContact() {
 		this.edgeContacts++;
 		DebugOutput.pushMessage("Contact started", 1);
 	}
-	
+
 	public void endEdgeContact() {
 		this.edgeContacts--;
 	}
-
 
 	public void addTile(Tile tile) {
 		sensorContacts.add(tile);
@@ -1598,6 +1607,38 @@ public class Player extends Editable {
 				graphics.fill(235, 52, 52, 100);
 				graphics.rectMode(CENTER);
 				graphics.rect(0, 0, getWidth() / 2, getHeight() / 2);
+			}
+
+			// draw edge sensors
+			if (showChecking) {
+				if (topEdgeSensor != null) {
+					Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) topEdgeSensor.getShape()).m_vertex1);
+					Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) topEdgeSensor.getShape()).m_vertex2);
+					graphics.stroke(0, 0, 255); // blue
+					graphics.strokeWeight(1);
+					graphics.line(v1.x, v1.y, v2.x, v2.y);
+				}
+				if (bottomEdgeSensor != null) {
+					Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) bottomEdgeSensor.getShape()).m_vertex1);
+					Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) bottomEdgeSensor.getShape()).m_vertex2);
+					graphics.stroke(0, 0, 255); // blue
+					graphics.strokeWeight(1);
+					graphics.line(v1.x, v1.y, v2.x, v2.y);
+				}
+				if (leftEdgeSensor != null) {
+					Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) leftEdgeSensor.getShape()).m_vertex1);
+					Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) leftEdgeSensor.getShape()).m_vertex2);
+					graphics.stroke(0, 0, 255); // blue
+					graphics.strokeWeight(1);
+					graphics.line(v1.x, v1.y, v2.x, v2.y);
+				}
+				if (rightEdgeSensor != null) {
+					Vec2 v1 = box2d.coordWorldToPixels(((EdgeShape) rightEdgeSensor.getShape()).m_vertex1);
+					Vec2 v2 = box2d.coordWorldToPixels(((EdgeShape) rightEdgeSensor.getShape()).m_vertex2);
+					graphics.stroke(0, 0, 255); // blue
+					graphics.strokeWeight(1);
+					graphics.line(v1.x, v1.y, v2.x, v2.y);
+				}
 			}
 
 			graphics.popMatrix();

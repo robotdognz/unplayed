@@ -54,7 +54,7 @@ public class MyContactListener implements ContactListener {
 		updateVariables(contact.getFixtureA());
 		updateVariables(contact.getFixtureB());
 
-		if (playerEdge) {
+		if (playerEdge && event == null) {
 			DebugOutput.pushMessage(
 					"Solid: " + solid + " Ground: " + ground + " lWall: " + leftWall + " rWall: " + rightWall, 1);
 		}
