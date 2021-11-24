@@ -23,8 +23,6 @@ public class Tile extends Editable implements Comparable<Tile> {
 	float density;
 	float friction;
 
-	EdgeShape topEdge;
-
 	public Tile(Box2DProcessing box2d, TextureCache texture, File file, float x, float y) {
 		super(x, y, 100, 100);
 		this.box2d = box2d;
@@ -55,57 +53,55 @@ public class Tile extends Editable implements Comparable<Tile> {
 			float box2dH = box2d.scalarPixelsToWorld(getHeight() / 2);
 
 			// collision shapes
-
-			// top edge
-			topEdge = new EdgeShape();
-			Vec2 v1 = new Vec2(-box2dW, box2dH);
-			Vec2 v2 = new Vec2(box2dW, box2dH);
+			// top edge shape
+			EdgeShape topEdge = new EdgeShape();
+			Vec2 v1 = new Vec2(-box2dW, box2dH); // left
+			Vec2 v2 = new Vec2(box2dW, box2dH); // right
 			topEdge.set(v1, v2);
-
-			// bottom edge
+			// bottom edge shape
 			EdgeShape bottomEdge = new EdgeShape();
-			v1 = new Vec2(-box2dW, -box2dH);
-			v2 = new Vec2(box2dW, -box2dH);
+			v1 = new Vec2(-box2dW, -box2dH); // left
+			v2 = new Vec2(box2dW, -box2dH); // right
 			bottomEdge.set(v1, v2);
-			// left edge
+			// left edge shape
 			EdgeShape leftEdge = new EdgeShape();
 			v1 = new Vec2(-box2dW, box2dH); // top
 			v2 = new Vec2(-box2dW, -box2dH); // bottom
 			leftEdge.set(v1, v2);
-			// right edge
+			// right edge shape
 			EdgeShape rightEdge = new EdgeShape();
-			v1 = new Vec2(box2dW, box2dH);// top
+			v1 = new Vec2(box2dW, box2dH); // top
 			v2 = new Vec2(box2dW, -box2dH); // bottom
 			rightEdge.set(v1, v2);
 
 			// collision fixtures
-
-			// top edge
+			// top edge fixture
 			FixtureDef topEdgeDef = new FixtureDef();
 			topEdgeDef.shape = topEdge;
 			topEdgeDef.density = density;
 			topEdgeDef.friction = friction;
+			topEdgeDef.userData = CollisionEnum.SOLID;
 			staticBody.createFixture(topEdgeDef);
-
-			// bottom edge
+			// bottom edge fixture
 			FixtureDef bottomEdgeDef = new FixtureDef();
 			bottomEdgeDef.shape = bottomEdge;
 			bottomEdgeDef.density = density;
 			bottomEdgeDef.friction = friction;
+			bottomEdgeDef.userData = CollisionEnum.SOLID;
 			staticBody.createFixture(bottomEdgeDef);
-
-			// left edge
+			// left edge fixture
 			FixtureDef leftEdgeDef = new FixtureDef();
 			leftEdgeDef.shape = leftEdge;
 			leftEdgeDef.density = density;
 			leftEdgeDef.friction = friction;
+			leftEdgeDef.userData = CollisionEnum.SOLID;
 			staticBody.createFixture(leftEdgeDef);
-
-			// right edge
+			// right edge fixture
 			FixtureDef rightEdgeDef = new FixtureDef();
 			rightEdgeDef.shape = rightEdge;
 			rightEdgeDef.density = density;
 			rightEdgeDef.friction = friction;
+			rightEdgeDef.userData = CollisionEnum.SOLID;
 			staticBody.createFixture(rightEdgeDef);
 
 			// ground sensor

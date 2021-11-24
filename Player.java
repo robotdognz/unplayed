@@ -41,11 +41,12 @@ public class Player extends Editable {
 	private float friction; // the player's friction
 
 	public boolean locked; // does the player have locked rotation TODO: remove when physics completed
-	public int contactNumber; // the number of things touching the player's body
-	public int groundContacts; // the number of grounds touching the player's body
 
+	public int groundContacts; // the number of grounds touching the player's body
 	public int leftWallContacts; // the number of left walls touching the player's body
 	public int rightWallContacts; // the number of right walls touching the player's body
+	
+	public int edgeContacts; // the number of solid surface touching the players edges
 
 	private ArrayList<Event> events; // list of events touching the player
 	private PlayerVibration vibration; // vibration system
@@ -75,17 +76,18 @@ public class Player extends Editable {
 	public boolean touchingRoofBarrier; // is the player touching a roof barrier
 
 	// movement timers
-	public CountdownTimer groundTimer; // used to make ground collision more forgiving, walking off edges, etc.
-	public CountdownTimer groundTimerPadding; // how long the player must touch the ground before getting double jump
+	private CountdownTimer groundTimer; // used to make ground collision more forgiving, walking off edges, etc.
+	private CountdownTimer groundTimerPadding; // how long the player must touch the ground before getting double jump
 
-	public CountdownTimer leftWallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
-	public CountdownTimer rightWallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
+	private CountdownTimer leftWallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
+	private CountdownTimer rightWallTimer; // used to make wall collision more forgiving, recovering from bad jumps,
+											// etc.
 
-	public CountdownTimer jumpTimer; // used to correct the ground timer, stop it from starting after a jump
-	public CountdownTimer roofBoostTimer; // used for boosting up into roof slots
+	private CountdownTimer jumpTimer; // used to correct the ground timer, stop it from starting after a jump
+	private CountdownTimer roofBoostTimer; // used for boosting up into roof slots
 
-	public CountdownTimer pushLeftTimer; // keeps the player pushing left for a time after wall jumping
-	public CountdownTimer pushRightTimer; // keeps the player pushing right for a time after wall jumping
+	private CountdownTimer pushLeftTimer; // keeps the player pushing left for a time after wall jumping
+	private CountdownTimer pushRightTimer; // keeps the player pushing right for a time after wall jumping
 
 	// wall jumping, magnetism, and boosting
 	private CountdownTimer leftStickTimer; // keep player sticking to left wall
@@ -107,7 +109,6 @@ public class Player extends Editable {
 	private boolean verticalTunnel; // used to check if player should jump away from the wall or not
 	private boolean horizontalTunnel;
 
-	
 	public Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile) {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.file = tile.getFile();
@@ -150,6 +151,7 @@ public class Player extends Editable {
 		this.groundContacts = 0;
 		this.leftWallContacts = 0;
 		this.rightWallContacts = 0;
+		this.edgeContacts = 0;
 
 		this.verticalTunnel = false;
 		this.horizontalTunnel = false;
@@ -219,7 +221,7 @@ public class Player extends Editable {
 			boxFixtureDef.userData = CollisionEnum.PLAYER_BODY;
 			dynamicBody.createFixture(boxFixtureDef);
 
-			// sensor
+			// environment sensor
 			CircleShape sensorShape = new CircleShape();
 			sensorShape.m_radius = box2d.scalarPixelsToWorld(getWidth() * 2);
 			FixtureDef sensorFixtureDef = new FixtureDef();
@@ -227,6 +229,60 @@ public class Player extends Editable {
 			sensorFixtureDef.isSensor = true;
 			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR;
 			dynamicBody.createFixture(sensorFixtureDef);
+
+			// collision vibration sensors
+			// top edge sensor shape
+			EdgeShape topEdge = new EdgeShape();
+			Vec2 v1 = new Vec2(-box2dW, box2dH); // left
+			Vec2 v2 = new Vec2(box2dW, box2dH); // right
+			topEdge.set(v1, v2);
+			// bottom edge sensor shape
+			EdgeShape bottomEdge = new EdgeShape();
+			v1 = new Vec2(-box2dW, -box2dH); // left
+			v2 = new Vec2(box2dW, -box2dH); // right
+			bottomEdge.set(v1, v2);
+			// left edge sensor shape
+			EdgeShape leftEdge = new EdgeShape();
+			v1 = new Vec2(-box2dW, box2dH); // top
+			v2 = new Vec2(-box2dW, -box2dH); // bottom
+			leftEdge.set(v1, v2);
+			// right edge sensor shape
+			EdgeShape rightEdge = new EdgeShape();
+			v1 = new Vec2(box2dW, box2dH); // top
+			v2 = new Vec2(box2dW, -box2dH); // bottom
+			rightEdge.set(v1, v2);
+			// top edge sensor fixture
+			FixtureDef topEdgeSensorDef = new FixtureDef();
+			topEdgeSensorDef.shape = topEdge;
+			topEdgeSensorDef.density = density;
+			topEdgeSensorDef.friction = friction;
+			topEdgeSensorDef.isSensor = true;
+			topEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
+			dynamicBody.createFixture(topEdgeSensorDef);
+			// bottom edge sensor fixture
+			FixtureDef bottomEdgeSensorDef = new FixtureDef();
+			bottomEdgeSensorDef.shape = bottomEdge;
+			bottomEdgeSensorDef.density = density;
+			bottomEdgeSensorDef.friction = friction;
+			bottomEdgeSensorDef.isSensor = true;
+			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
+			dynamicBody.createFixture(bottomEdgeSensorDef);
+			// left edge sensor fixture
+			FixtureDef leftEdgeSensorDef = new FixtureDef();
+			leftEdgeSensorDef.shape = leftEdge;
+			leftEdgeSensorDef.density = density;
+			leftEdgeSensorDef.friction = friction;
+			leftEdgeSensorDef.isSensor = true;
+			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
+			dynamicBody.createFixture(leftEdgeSensorDef);
+			// right edge sensor fixture
+			FixtureDef rightEdgeSensorDef = new FixtureDef();
+			rightEdgeSensorDef.shape = rightEdge;
+			rightEdgeSensorDef.density = density;
+			rightEdgeSensorDef.friction = friction;
+			rightEdgeSensorDef.isSensor = true;
+			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
+			dynamicBody.createFixture(rightEdgeSensorDef);
 
 		}
 	}
@@ -266,10 +322,6 @@ public class Player extends Editable {
 		this.leftWallContacts++;
 	}
 
-	public void startRightWallContact() {
-		this.rightWallContacts++;
-	}
-
 	public void endLeftWallContact() {
 		this.leftWallContacts--;
 		if (this.leftWallContacts == 0 && !this.jumpTimer.isRunning()) {
@@ -284,6 +336,11 @@ public class Player extends Editable {
 			}
 		}
 	}
+	
+	public void startRightWallContact() {
+		this.rightWallContacts++;
+	}
+
 
 	public void endRightWallContact() {
 		this.rightWallContacts--;
@@ -299,6 +356,15 @@ public class Player extends Editable {
 			}
 		}
 	}
+	
+	public void startEdgeContact() {
+		this.edgeContacts++;
+	}
+	
+	public void endEdgeContact() {
+		this.edgeContacts--;
+	}
+
 
 	public void addTile(Tile tile) {
 		sensorContacts.add(tile);

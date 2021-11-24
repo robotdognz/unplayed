@@ -219,16 +219,16 @@ public class Editor {
 			if (game.player != null) {
 				Vec2 vel = Player.dynamicBody.getLinearVelocity();
 				float aVel = Player.dynamicBody.getAngularVelocity();
+				p.text("Edge Contacts: " + game.player.edgeContacts, p.width / 2,
+				p.height - editorBottom.getHeight() - textSize * 9);
 				p.text("Velocity x:" + PApplet.nf(Math.abs(vel.x), 1, 2) + " y:" + PApplet.nf(Math.abs(vel.y), 1, 2)
 						+ " a:" + PApplet.nf(Math.abs(aVel), 1, 2), p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 9);
+						p.height - editorBottom.getHeight() - textSize * 8);
 				float angle = PApplet.degrees(Player.dynamicBody.getAngle());
 				p.text("Angle:" + PApplet.nf(angle, 1, 4), p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 8);
+						p.height - editorBottom.getHeight() - textSize * 7);
 				p.text("ground: " + game.player.groundContacts + " left wall: " + game.player.leftWallContacts
 						+ " right wall: " + game.player.rightWallContacts, p.width / 2,
-						p.height - editorBottom.getHeight() - textSize * 7);
-				p.text("Timer: " + game.player.groundTimer.isRunning(), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 6);
 			}
 			if (game.placed != null) {
@@ -241,8 +241,6 @@ public class Editor {
 			}
 			p.text(PApplet.nf(convert.getScale(), 1, 2), p.width / 2,
 					p.height - editorBottom.getHeight() - textSize * 3);
-//			p.text(game.playerObjects.size() + " : " + game.screenObjects.size(), p.width / 2,
-//					p.height - editorBottom.getHeight() - textSize * 3);
 			p.text("FPS: " + PApplet.nf(this.frame, 1, 2), p.width / 2,
 					p.height - editorBottom.getHeight() - textSize * 2);
 			p.text("DT: " + PApplet.nf(deltaTime, 1, 4), p.width / 2, p.height - editorBottom.getHeight() - textSize);
