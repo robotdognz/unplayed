@@ -356,7 +356,7 @@ public class Player extends Editable {
 		if (left || pushLeftTimer.isRunning()) {
 
 			if (rightWallBoostTimer.isRunning()) {
-				float xImpulse = -(dynamicBody.getMass() * jumpPower * wallBoostPower);
+				float xImpulse = -(dynamicBody.getMass() * wallBoostPower);
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 				// apply impulse
@@ -385,7 +385,7 @@ public class Player extends Editable {
 		} else if (right || pushRightTimer.isRunning()) {
 
 			if (leftWallBoostTimer.isRunning()) {
-				float xImpulse = (dynamicBody.getMass() * jumpPower * wallBoostPower);
+				float xImpulse = (dynamicBody.getMass() * wallBoostPower);
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 				// apply impulse
