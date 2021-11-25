@@ -72,7 +72,7 @@ public class PlayerVibration {
 		Iterator it = stepImpacts.entrySet().iterator();
 		while (it.hasNext()) {
 			Float key = (Float) ((Map.Entry) it.next()).getKey();
-			
+
 			if (stepImpacts.get(key) > 1) { // bad impact from this frame
 				stepImpacts.put(key, 0);
 			} else if (stepImpacts.get(key) == 0) { // bad impact from last frame
@@ -142,13 +142,14 @@ public class PlayerVibration {
 		}
 
 		// store rounded impact
-		
-		float rounded = Math.round(total / 20) * 20; // round to nearest 100
-		
-		if (stepImpacts.containsKey(rounded)) {
-			stepImpacts.put(rounded, stepImpacts.get(rounded) + 1);
-		} else {
-			stepImpacts.put(rounded, 1);
+		if (total > 800) {
+			float rounded = Math.round(total / 20) * 20; // round to nearest 100
+
+			if (stepImpacts.containsKey(rounded)) {
+				stepImpacts.put(rounded, stepImpacts.get(rounded) + 1);
+			} else {
+				stepImpacts.put(rounded, 1);
+			}
 		}
 
 		// store impact
