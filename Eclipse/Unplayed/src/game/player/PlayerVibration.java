@@ -71,12 +71,17 @@ public class PlayerVibration {
 		return total;
 	}
 
-	
 	// the current system in here works, but it could be improved:
-	// there are patterns in the actual values (not converted to 'strength') that could
+	// there are patterns in the actual values (not converted to 'strength') that
+	// could
 	// be analyzed from some kind of list of stored recent impulses, perhaps it's
-	// always looking for patterns in the data and only lets something through when it
+	// always looking for patterns in the data and only lets something through when
+	// it
 	// isn't part of a pattern
+
+	// This needs to be changed to use a range of total instead of strength, if the
+	// varying values in the impulse pattern fall on either side of the rounding of
+	// 'strength' the vibration bug still happens
 	public void physicsImpact(float[] impulses) {
 		// find total impulse power
 		float total = 0;
