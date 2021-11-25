@@ -101,6 +101,7 @@ public class PlayerVibration {
 
 				DebugOutput.pushMessage("Did vibe: " + strength, 1);
 			} else if (strength == previousImpulse) {
+				pauseVibration.start();
 				DebugOutput.pushMessage("Skipped vibe: " + strength, 1);
 			}
 
