@@ -111,7 +111,6 @@ public class PlayerVibration {
 				Vibe.vibrate(strength);
 				vibeFrame = true;
 
-				// store this information
 				if (strength == previousImpulse) {
 					pauseVibration.start();
 				}
@@ -119,6 +118,10 @@ public class PlayerVibration {
 
 				DebugOutput.pushMessage("Did vibe: " + strength, 1);
 			} else {
+				if (strength == previousImpulse) {
+					pauseVibration.start();
+				}
+
 				DebugOutput.pushMessage("Skipped vibe: " + strength, 1);
 			}
 
