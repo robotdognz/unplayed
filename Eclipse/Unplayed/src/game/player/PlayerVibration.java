@@ -143,7 +143,7 @@ public class PlayerVibration {
 
 		// store rounded impact
 		
-		float rounded = Math.round(total / 100) * 100; // round to nearest 100
+		float rounded = Math.round(total / 20) * 20; // round to nearest 100
 		
 		if (stepImpacts.containsKey(rounded)) {
 			stepImpacts.put(rounded, stepImpacts.get(rounded) + 1);
