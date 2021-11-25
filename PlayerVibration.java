@@ -63,25 +63,27 @@ public class PlayerVibration {
 			}
 		}
 
-		
-		
-		
 		// new system
 		float biggestImpact = 0;
 		for (Float key : stepImpacts.keySet()) {
-			if (stepImpacts.get(key) == 1 && key > biggestImpact) {
-				biggestImpact = key;
+			if (stepImpacts.get(key) > 1) { // bad impact from this frame
+				stepImpacts.put(key, 0);
+			} else if (stepImpacts.get(key) == 0) { // bad impact from last frame
+				stepImpacts.remove(key);
+			} else { // good impact from this frame
+				if (key > biggestImpact) {
+					biggestImpact = key;
+				}
+				stepImpacts.remove(key);
 			}
 		}
 
 		if (biggestImpact > 800) {
 			int strength = (int) Math.min(Math.max(Math.abs(biggestImpact / 1000), minimum), maximum); // 800
 			Vibe.vibrate(strength);
-			DebugOutput.pushMessage("Did vibe: " + strength, 1);
+			DebugOutput.pushMessage("Did vibe: " + strength + " - " + biggestImpact, 1);
 			stepImpacts.clear();
 		}
-		
-		
 
 	}
 
