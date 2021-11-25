@@ -54,9 +54,9 @@ public class MyContactListener implements ContactListener {
 		updateVariables(contact.getFixtureA());
 		updateVariables(contact.getFixtureB());
 		
-		if(playerEdge) {
-			DebugOutput.pushMessage("Yup", 1);
-		}
+//		if(playerEdge) {
+//			DebugOutput.pushMessage("Yup", 1);
+//		}
 
 //		if (playerEdge && event == null) {
 //			DebugOutput.pushMessage(
@@ -171,6 +171,7 @@ public class MyContactListener implements ContactListener {
 				case PLAYER_EDGE:
 					player = (Player) fixture.getBody().getUserData();
 					playerEdge = true;
+					DebugOutput.pushMessage("Yup", 1);
 					break;
 				case SOLID:
 					solid = true;

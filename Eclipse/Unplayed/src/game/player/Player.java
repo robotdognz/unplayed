@@ -283,7 +283,7 @@ public class Player extends Editable {
 			leftEdgeSensorDef.density = density;
 			leftEdgeSensorDef.friction = friction;
 			leftEdgeSensorDef.isSensor = true;
-			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
+			leftEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
 			leftEdgeSensor = dynamicBody.createFixture(leftEdgeSensorDef);
 			// right edge sensor fixture
 			FixtureDef rightEdgeSensorDef = new FixtureDef();
@@ -291,7 +291,7 @@ public class Player extends Editable {
 			rightEdgeSensorDef.density = density;
 			rightEdgeSensorDef.friction = friction;
 			rightEdgeSensorDef.isSensor = true;
-			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
+			rightEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
 			rightEdgeSensor = dynamicBody.createFixture(rightEdgeSensorDef);
 
 		}
