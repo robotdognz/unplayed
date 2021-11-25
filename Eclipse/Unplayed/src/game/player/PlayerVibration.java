@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import editor.DebugOutput;
+import misc.CountdownTimer;
 import misc.Vibe;
 
 public class PlayerVibration {
@@ -17,12 +18,18 @@ public class PlayerVibration {
 
 	private long currentTime;
 
+	private CountdownTimer pauseVibration;
+	private int previousImpulse;
+
 	public PlayerVibration() {
 		currentTime = System.nanoTime();
 		impacts = new ArrayList<PhysicsImpact>();
 
 		timeout = 0.25f; // how long the impacts are kept for in seconds
 		timeoutLong = (long) (timeout * 1000000000); // translated to nanoseconds
+
+		pauseVibration = new CountdownTimer(0.064f);
+		previousImpulse = 0;
 	}
 
 	public void step(float deltaTime) {
@@ -64,8 +71,6 @@ public class PlayerVibration {
 
 		impacts.add(new PhysicsImpact(total, currentTime));
 
-//		impacts.add(new PhysicsImpact(total, currentTime));
-
 		// TODO: this doesn't work because if you jump in one spot at the same height,
 		// it stops the vibration
 		// could be improved by adding a short timer to it
@@ -84,12 +89,19 @@ public class PlayerVibration {
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
 			int strength = (int) Math.max(Math.abs(total / 1000), 1); // 800
-			Vibe.vibrate(strength);
-//					PApplet.println(total + " " + strength);
-			vibeFrame = true;
-//					previousImpulse = total;
 
-			DebugOutput.pushMessage("" + strength, 1);
+			if (!(pauseVibration.isRunning() && strength == previousImpulse)) {
+				Vibe.vibrate(strength);
+				vibeFrame = true;
+
+				// store this information
+				pauseVibration.start();
+				previousImpulse = strength;
+
+				DebugOutput.pushMessage("Did vibe: " + strength, 1);
+			} else if (strength == previousImpulse) {
+				DebugOutput.pushMessage("Skipped vibe: " + strength, 1);
+			}
 
 			return;
 		}
