@@ -92,18 +92,33 @@ public class PlayerVibration {
 //
 //			}
 
-			if (!pauseVibration.isRunning() && strength != previousImpulse) {
+//			if (!pauseVibration.isRunning() && strength != previousImpulse) {
+//				Vibe.vibrate(strength);
+//				vibeFrame = true;
+//
+//				// store this information
+//				pauseVibration.start();
+//				previousImpulse = strength;
+//
+//				DebugOutput.pushMessage("Did vibe: " + strength, 1);
+//			} else if (strength == previousImpulse) {
+//				pauseVibration.start();
+//
+//				DebugOutput.pushMessage("Skipped vibe: " + strength, 1);
+//			}
+
+			if (!pauseVibration.isRunning()) {
 				Vibe.vibrate(strength);
 				vibeFrame = true;
 
 				// store this information
-				pauseVibration.start();
+				if (strength == previousImpulse) {
+					pauseVibration.start();
+				}
 				previousImpulse = strength;
 
 				DebugOutput.pushMessage("Did vibe: " + strength, 1);
-			} else if (strength == previousImpulse) {
-				pauseVibration.start();
-
+			} else {
 				DebugOutput.pushMessage("Skipped vibe: " + strength, 1);
 			}
 
