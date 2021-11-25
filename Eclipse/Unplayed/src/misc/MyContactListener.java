@@ -54,19 +54,10 @@ public class MyContactListener implements ContactListener {
 		updateVariables(contact.getFixtureA());
 		updateVariables(contact.getFixtureB());
 		
-//		if(playerEdge) {
-//			DebugOutput.pushMessage("Yup", 1);
-//		}
-
+//		// if one of them is a player edge and one is a solid surface
 //		if (playerEdge && event == null) {
-//			DebugOutput.pushMessage(
-//					"Solid: " + solid + " Ground: " + ground + " lWall: " + leftWall + " rWall: " + rightWall, 1);
+//			player.startEdgeContact();
 //		}
-
-		// if one of them is a player edge and one is a solid surface
-		if (playerEdge && event == null) {
-			player.startEdgeContact();
-		}
 
 		// if on of them is the player and one is the ground
 		if (ground && playerBody) {
@@ -118,10 +109,10 @@ public class MyContactListener implements ContactListener {
 		updateVariables(contact.getFixtureA());
 		updateVariables(contact.getFixtureB());
 
-		// if one of them is a player edge and one is a solid surface
-		if (playerEdge && event == null) {
-			player.endEdgeContact();
-		}
+//		// if one of them is a player edge and one is a solid surface
+//		if (playerEdge && event == null) {
+//			player.endEdgeContact();
+//		}
 
 		// if one of them is the player sensor and one is a tile
 		if (playerSensor && tile != null) {
@@ -171,7 +162,6 @@ public class MyContactListener implements ContactListener {
 				case PLAYER_EDGE:
 					player = (Player) fixture.getBody().getUserData();
 					playerEdge = true;
-					DebugOutput.pushMessage("Yup", 1);
 					break;
 				case SOLID:
 					solid = true;

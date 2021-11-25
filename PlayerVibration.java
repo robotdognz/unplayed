@@ -3,6 +3,7 @@ package game.player;
 import java.util.ArrayList;
 import java.util.List;
 
+import editor.DebugOutput;
 import misc.Vibe;
 
 public class PlayerVibration {
@@ -46,7 +47,7 @@ public class PlayerVibration {
 		for (PhysicsImpact impact : impacts) {
 			total += impact.impact;
 			float current = Math.abs(impact.impact);
-			if(current > max) {
+			if (current > max) {
 				max = current;
 			}
 		}
@@ -60,7 +61,7 @@ public class PlayerVibration {
 		for (float impulse : impulses) {
 			total += impulse;
 		}
-		
+
 		impacts.add(new PhysicsImpact(total, currentTime));
 
 //		impacts.add(new PhysicsImpact(total, currentTime));
@@ -79,8 +80,6 @@ public class PlayerVibration {
 //				}
 
 		if (total > 800 && !vibeFrame) { // 400
-			
-			
 
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
@@ -89,6 +88,9 @@ public class PlayerVibration {
 //					PApplet.println(total + " " + strength);
 			vibeFrame = true;
 //					previousImpulse = total;
+
+			DebugOutput.pushMessage("" + strength, 1);
+
 			return;
 		}
 	}
