@@ -71,6 +71,12 @@ public class PlayerVibration {
 		return total;
 	}
 
+	
+	// the current system in here works, but it could be improved:
+	// there are patterns in the actual values (not converted to 'strength') that could
+	// be analyzed from some kind of list of stored recent impulses, perhaps it's
+	// always looking for patterns in the data and only lets something through when it
+	// isn't part of a pattern
 	public void physicsImpact(float[] impulses) {
 		// find total impulse power
 		float total = 0;
@@ -86,35 +92,12 @@ public class PlayerVibration {
 			// Math.log returns the log of the number it is given
 			int strength = (int) Math.min(Math.max(Math.abs(total / 1000), minimum), maximum); // 800
 
-//			if (currentBadImpulse != -1) { // there is a current bad impulse
-//
-//			} else {
-//
-//			}
-
-//			if (!pauseVibration.isRunning() && strength != previousImpulse) {
-//				Vibe.vibrate(strength);
-//				vibeFrame = true;
-//
-//				// store this information
-//				pauseVibration.start();
-//				previousImpulse = strength;
-//
-//				DebugOutput.pushMessage("Did vibe: " + strength, 1);
-//			} else if (strength == previousImpulse) {
-//				pauseVibration.start();
-//
-//				DebugOutput.pushMessage("Skipped vibe: " + strength, 1);
-//			}
-
 			if (!pauseVibration.isRunning()) {
 				Vibe.vibrate(strength);
 				DebugOutput.pushMessage("Did vibe: " + strength, 1);
 				vibeFrame = true;
 
-//				if (strength == previousImpulse) {
 				pauseVibration.start();
-//				}
 
 				previousImpulse = strength;
 				currentBadImpulse = -1;

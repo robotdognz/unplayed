@@ -109,12 +109,7 @@ public class Player extends Editable {
 	private boolean verticalTunnel; // used to check if player should jump away from the wall or not
 	private boolean horizontalTunnel;
 
-	// edge sensors
-//	private Fixture topEdgeSensor; // reference to the top edge fixture
-//	private Fixture bottomEdgeSensor; // reference to the bottom edge fixture
-//	private Fixture leftEdgeSensor; // reference to the left edge fixture
-//	private Fixture rightEdgeSensor; // reference to the right edge fixture
-
+	
 	public Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile) {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.file = tile.getFile();
