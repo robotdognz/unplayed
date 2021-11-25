@@ -212,6 +212,7 @@ public class Player extends Editable {
 			bodyDef.position.set(physicsPosition);
 			bodyDef.angle = -PApplet.radians(physicsAngle);
 			bodyDef.userData = this;
+			bodyDef.bullet = true; //TODO: testing
 			dynamicBody = box2d.createBody(bodyDef);
 			dynamicBody.setFixedRotation(locked);
 
