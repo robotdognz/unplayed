@@ -20,6 +20,10 @@ public class PlayerVibration {
 
 	private CountdownTimer pauseVibration;
 	private int previousImpulse;
+	private int currentBadImpulse;
+
+	private int maximum;
+	private int minimum;
 
 	public PlayerVibration() {
 		currentTime = System.nanoTime();
@@ -29,7 +33,11 @@ public class PlayerVibration {
 		timeoutLong = (long) (timeout * 1000000000); // translated to nanoseconds
 
 		pauseVibration = new CountdownTimer(0.064f);
-		previousImpulse = 0;
+		previousImpulse = -1;
+		currentBadImpulse = -1;
+
+		maximum = 25;
+		minimum = 1;
 	}
 
 	public void step(float deltaTime) {
@@ -72,25 +80,43 @@ public class PlayerVibration {
 
 		impacts.add(new PhysicsImpact(total, currentTime));
 
-
 		if (total > 800 && !vibeFrame) { // 400
 
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
-			int strength = (int) Math.max(Math.abs(total / 1000), 1); // 800
+			int strength = (int) Math.min(Math.max(Math.abs(total / 1000), minimum), maximum); // 800
 
-			if (!(pauseVibration.isRunning() && strength == previousImpulse)) {
+//			if (currentBadImpulse != -1) { // there is a current bad impulse
+//
+//			} else {
+//
+//			}
+
+			if (!pauseVibration.isRunning() && strength != previousImpulse) {
 				Vibe.vibrate(strength);
 				vibeFrame = true;
+
+				if (currentBadImpulse != -1 && strength != currentBadImpulse) {
+					currentBadImpulse = -1;
+				} else {
+					pauseVibration.start();
+
+					currentBadImpulse = strength;
+
+					DebugOutput.pushMessage("Skipped vibe with pre: " + strength, 1);
+				}
 
 				// store this information
 				pauseVibration.start();
 				previousImpulse = strength;
 
-				DebugOutput.pushMessage("Did vibe: " + total  + " - " + strength, 1);
+				DebugOutput.pushMessage("Did vibe: " + strength, 1);
 			} else if (strength == previousImpulse) {
 				pauseVibration.start();
-				DebugOutput.pushMessage("Skipped vibe: " + total  + " - " + strength, 1);
+
+				currentBadImpulse = strength;
+
+				DebugOutput.pushMessage("Skipped vibe: " + strength, 1);
 			}
 
 			return;
