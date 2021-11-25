@@ -72,18 +72,6 @@ public class PlayerVibration {
 
 		impacts.add(new PhysicsImpact(total, currentTime));
 
-		// TODO: this doesn't work because if you jump in one spot at the same height,
-		// it stops the vibration
-		// could be improved by adding a short timer to it
-
-//				// check if we already did one like this
-//				float impulseDifference = Math.abs(total - previousImpulse);
-//				if (previousImpulse != 0 && impulseDifference < 4) {
-//					PApplet.println(total + " skipped by previousImpulse");
-//					return;
-//				} else {
-////					previousImpulse = total;
-//				}
 
 		if (total > 800 && !vibeFrame) { // 400
 
@@ -99,10 +87,10 @@ public class PlayerVibration {
 				pauseVibration.start();
 				previousImpulse = strength;
 
-				DebugOutput.pushMessage("Did vibe: " + strength, 1);
+				DebugOutput.pushMessage("Did vibe: " + total  + " - " + strength, 1);
 			} else if (strength == previousImpulse) {
 				pauseVibration.start();
-				DebugOutput.pushMessage("Skipped vibe: " + strength, 1);
+				DebugOutput.pushMessage("Skipped vibe: " + total  + " - " + strength, 1);
 			}
 
 			return;

@@ -80,28 +80,24 @@ public class Tile extends Editable implements Comparable<Tile> {
 			topEdgeDef.shape = topEdge;
 			topEdgeDef.density = density;
 			topEdgeDef.friction = friction;
-			topEdgeDef.userData = CollisionEnum.SOLID;
 			staticBody.createFixture(topEdgeDef);
 			// bottom edge fixture
 			FixtureDef bottomEdgeDef = new FixtureDef();
 			bottomEdgeDef.shape = bottomEdge;
 			bottomEdgeDef.density = density;
 			bottomEdgeDef.friction = friction;
-			bottomEdgeDef.userData = CollisionEnum.SOLID;
 			staticBody.createFixture(bottomEdgeDef);
 			// left edge fixture
 			FixtureDef leftEdgeDef = new FixtureDef();
 			leftEdgeDef.shape = leftEdge;
 			leftEdgeDef.density = density;
 			leftEdgeDef.friction = friction;
-			leftEdgeDef.userData = CollisionEnum.SOLID;
 			staticBody.createFixture(leftEdgeDef);
 			// right edge fixture
 			FixtureDef rightEdgeDef = new FixtureDef();
 			rightEdgeDef.shape = rightEdge;
 			rightEdgeDef.density = density;
 			rightEdgeDef.friction = friction;
-			rightEdgeDef.userData = CollisionEnum.SOLID;
 			staticBody.createFixture(rightEdgeDef);
 
 			// ground sensor

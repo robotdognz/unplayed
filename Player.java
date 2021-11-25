@@ -110,10 +110,10 @@ public class Player extends Editable {
 	private boolean horizontalTunnel;
 
 	// edge sensors
-	private Fixture topEdgeSensor; // reference to the top edge fixture
-	private Fixture bottomEdgeSensor; // reference to the bottom edge fixture
-	private Fixture leftEdgeSensor; // reference to the left edge fixture
-	private Fixture rightEdgeSensor; // reference to the right edge fixture
+//	private Fixture topEdgeSensor; // reference to the top edge fixture
+//	private Fixture bottomEdgeSensor; // reference to the bottom edge fixture
+//	private Fixture leftEdgeSensor; // reference to the left edge fixture
+//	private Fixture rightEdgeSensor; // reference to the right edge fixture
 
 	public Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile) {
 		super(tile.getX(), tile.getY(), 100, 100);
@@ -236,64 +236,6 @@ public class Player extends Editable {
 			sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR;
 			dynamicBody.createFixture(sensorFixtureDef);
 
-			box2dW = box2d.scalarPixelsToWorld(getWidth() / 2); // + 5
-			box2dH = box2d.scalarPixelsToWorld(getHeight() / 2); // + 5
-
-			// collision vibration sensors
-			// top edge sensor shape
-			EdgeShape topEdge = new EdgeShape();
-			Vec2 v1 = new Vec2(-box2dW, box2dH); // left
-			Vec2 v2 = new Vec2(box2dW, box2dH); // right
-			topEdge.set(v1, v2);
-			// bottom edge sensor shape
-			EdgeShape bottomEdge = new EdgeShape();
-			v1 = new Vec2(-box2dW, -box2dH); // left
-			v2 = new Vec2(box2dW, -box2dH); // right
-			bottomEdge.set(v1, v2);
-			// left edge sensor shape
-			EdgeShape leftEdge = new EdgeShape();
-			v1 = new Vec2(-box2dW, box2dH); // top
-			v2 = new Vec2(-box2dW, -box2dH); // bottom
-			leftEdge.set(v1, v2);
-			// right edge sensor shape
-			EdgeShape rightEdge = new EdgeShape();
-			v1 = new Vec2(box2dW, box2dH); // top
-			v2 = new Vec2(box2dW, -box2dH); // bottom
-			rightEdge.set(v1, v2);
-			// top edge sensor fixture
-			FixtureDef topEdgeSensorDef = new FixtureDef();
-			topEdgeSensorDef.shape = topEdge;
-			topEdgeSensorDef.density = density;
-			topEdgeSensorDef.friction = friction;
-			topEdgeSensorDef.isSensor = true;
-			topEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
-			topEdgeSensor = dynamicBody.createFixture(topEdgeSensorDef);
-			// bottom edge sensor fixture
-			FixtureDef bottomEdgeSensorDef = new FixtureDef();
-			bottomEdgeSensorDef.shape = bottomEdge;
-			bottomEdgeSensorDef.density = density;
-			bottomEdgeSensorDef.friction = friction;
-			bottomEdgeSensorDef.isSensor = true;
-			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
-//			bottomEdgeSensorDef.filter
-			bottomEdgeSensor = dynamicBody.createFixture(bottomEdgeSensorDef);
-			// left edge sensor fixture
-			FixtureDef leftEdgeSensorDef = new FixtureDef();
-			leftEdgeSensorDef.shape = leftEdge;
-			leftEdgeSensorDef.density = density;
-			leftEdgeSensorDef.friction = friction;
-			leftEdgeSensorDef.isSensor = true;
-			leftEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
-			leftEdgeSensor = dynamicBody.createFixture(leftEdgeSensorDef);
-			// right edge sensor fixture
-			FixtureDef rightEdgeSensorDef = new FixtureDef();
-			rightEdgeSensorDef.shape = rightEdge;
-			rightEdgeSensorDef.density = density;
-			rightEdgeSensorDef.friction = friction;
-			rightEdgeSensorDef.isSensor = true;
-			rightEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
-			rightEdgeSensor = dynamicBody.createFixture(rightEdgeSensorDef);
-
 		}
 	}
 
@@ -302,11 +244,6 @@ public class Player extends Editable {
 			destroyAllBarriers(false); // get rid of barriers so they don't mess with the next player
 			box2d.destroyBody(dynamicBody);
 			dynamicBody = null;
-
-			topEdgeSensor = null;
-			bottomEdgeSensor = null;
-			leftEdgeSensor = null;
-			rightEdgeSensor = null;
 		}
 	}
 
@@ -1608,38 +1545,6 @@ public class Player extends Editable {
 				graphics.fill(235, 52, 52, 100);
 				graphics.rectMode(CENTER);
 				graphics.rect(0, 0, getWidth() / 2, getHeight() / 2);
-			}
-
-			// draw edge sensors
-			if (showChecking) {
-				if (topEdgeSensor != null) { //box2d.coordWorldToPixels
-					Vec2 v1 = box2d.vectorWorldToPixels(((EdgeShape) topEdgeSensor.getShape()).m_vertex1);
-					Vec2 v2 = box2d.vectorWorldToPixels(((EdgeShape) topEdgeSensor.getShape()).m_vertex2);
-					graphics.stroke(255, 0, 0); // red
-					graphics.strokeWeight(4);
-					graphics.line(v1.x, v1.y, v2.x, v2.y);
-				}
-				if (bottomEdgeSensor != null) {
-					Vec2 v1 = box2d.vectorWorldToPixels(((EdgeShape) bottomEdgeSensor.getShape()).m_vertex1);
-					Vec2 v2 = box2d.vectorWorldToPixels(((EdgeShape) bottomEdgeSensor.getShape()).m_vertex2);
-					graphics.stroke(255, 0, 0); // red
-					graphics.strokeWeight(4);
-					graphics.line(v1.x, v1.y, v2.x, v2.y);
-				}
-				if (leftEdgeSensor != null) {
-					Vec2 v1 = box2d.vectorWorldToPixels(((EdgeShape) leftEdgeSensor.getShape()).m_vertex1);
-					Vec2 v2 = box2d.vectorWorldToPixels(((EdgeShape) leftEdgeSensor.getShape()).m_vertex2);
-					graphics.stroke(255, 0, 0); // red
-					graphics.strokeWeight(4);
-					graphics.line(v1.x, v1.y, v2.x, v2.y);
-				}
-				if (rightEdgeSensor != null) {
-					Vec2 v1 = box2d.vectorWorldToPixels(((EdgeShape) rightEdgeSensor.getShape()).m_vertex1);
-					Vec2 v2 = box2d.vectorWorldToPixels(((EdgeShape) rightEdgeSensor.getShape()).m_vertex2);
-					graphics.stroke(255, 0, 0); // red
-					graphics.strokeWeight(4);
-					graphics.line(v1.x, v1.y, v2.x, v2.y);
-				}
 			}
 
 			graphics.popMatrix();

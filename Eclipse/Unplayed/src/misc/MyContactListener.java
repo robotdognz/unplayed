@@ -6,7 +6,6 @@ import org.jbox2d.collision.Manifold;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.contacts.Contact;
 
-import editor.DebugOutput;
 import game.Game;
 import game.player.Player;
 import objects.Event;
@@ -21,10 +20,6 @@ public class MyContactListener implements ContactListener {
 	private Event event = null;
 	private boolean playerBody = false; // one of the fixtures is the player
 	private boolean playerSensor = false; // one of the fixtures is the player's sensor
-
-	private boolean playerEdge = false;
-	private boolean solid = false;
-
 	private boolean ground = false; // one of the fixtures is the ground
 	private boolean leftWall = false; // one of the fixtures is a left wall
 	private boolean rightWall = false; // one of the fixtures is a right wall
@@ -44,8 +39,6 @@ public class MyContactListener implements ContactListener {
 		this.event = null;
 		this.playerBody = false;
 		this.playerSensor = false;
-		this.playerEdge = false;
-		this.solid = false;
 		this.ground = false;
 		this.leftWall = false;
 		this.rightWall = false;
@@ -54,11 +47,6 @@ public class MyContactListener implements ContactListener {
 		updateVariables(contact.getFixtureA());
 		updateVariables(contact.getFixtureB());
 		
-//		// if one of them is a player edge and one is a solid surface
-//		if (playerEdge && event == null) {
-//			player.startEdgeContact();
-//		}
-
 		// if on of them is the player and one is the ground
 		if (ground && playerBody) {
 			player.startGroundContact();
@@ -99,8 +87,6 @@ public class MyContactListener implements ContactListener {
 		this.event = null;
 		this.playerBody = false;
 		this.playerSensor = false;
-		this.playerEdge = false;
-		this.solid = false;
 		this.ground = false;
 		this.leftWall = false;
 		this.rightWall = false;
@@ -108,11 +94,6 @@ public class MyContactListener implements ContactListener {
 
 		updateVariables(contact.getFixtureA());
 		updateVariables(contact.getFixtureB());
-
-//		// if one of them is a player edge and one is a solid surface
-//		if (playerEdge && event == null) {
-//			player.endEdgeContact();
-//		}
 
 		// if one of them is the player sensor and one is a tile
 		if (playerSensor && tile != null) {
@@ -158,13 +139,6 @@ public class MyContactListener implements ContactListener {
 				case PLAYER_SENSOR:
 					player = (Player) fixture.getBody().getUserData();
 					playerSensor = true;
-					break;
-				case PLAYER_EDGE:
-					player = (Player) fixture.getBody().getUserData();
-					playerEdge = true;
-					break;
-				case SOLID:
-					solid = true;
 					break;
 				case TILE:
 					tile = (Tile) fixture.getBody().getUserData();
