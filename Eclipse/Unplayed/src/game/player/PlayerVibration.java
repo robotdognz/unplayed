@@ -9,6 +9,7 @@ import java.util.Map;
 import editor.DebugOutput;
 import misc.CountdownTimer;
 import misc.Vibe;
+import processing.core.PApplet;
 
 public class PlayerVibration {
 
@@ -140,11 +141,14 @@ public class PlayerVibration {
 			total += impulse;
 		}
 
-		// store impact
-		if (stepImpacts.containsKey(total)) {
-			stepImpacts.put(total, stepImpacts.get(total) + 1);
+		// store rounded impact
+		
+		float rounded = Math.round(total / 100) * 100; // round to nearest 100
+		
+		if (stepImpacts.containsKey(rounded)) {
+			stepImpacts.put(rounded, stepImpacts.get(rounded) + 1);
 		} else {
-			stepImpacts.put(total, 1);
+			stepImpacts.put(rounded, 1);
 		}
 
 		// store impact
