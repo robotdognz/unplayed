@@ -78,9 +78,10 @@ public class PlayerVibration {
 			int strength = (int) Math.min(Math.max(Math.abs(biggestImpact / 1000), minimum), maximum); // 800
 			Vibe.vibrate(strength);
 			DebugOutput.pushMessage("Did vibe: " + strength, 1);
+			stepImpacts.clear();
 		}
 		
-		stepImpacts.clear();
+		
 
 	}
 
