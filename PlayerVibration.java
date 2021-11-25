@@ -34,6 +34,7 @@ public class PlayerVibration {
 
 	public void step(float deltaTime) {
 		vibeFrame = false; // clear vibeFrame
+		pauseVibration.deltaStep(deltaTime);
 
 		currentTime = System.nanoTime();
 
