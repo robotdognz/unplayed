@@ -2,7 +2,9 @@ package game.player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import editor.DebugOutput;
 import misc.CountdownTimer;
@@ -65,7 +67,11 @@ public class PlayerVibration {
 
 		// new system
 		float biggestImpact = 0;
-		for (Float key : stepImpacts.keySet()) {
+
+		Iterator it = stepImpacts.entrySet().iterator();
+		while (it.hasNext()) {
+			float key = (float) ((Map.Entry) it.next()).getKey();
+			
 			if (stepImpacts.get(key) > 1) { // bad impact from this frame
 				stepImpacts.put(key, 0);
 			} else if (stepImpacts.get(key) == 0) { // bad impact from last frame
@@ -77,6 +83,19 @@ public class PlayerVibration {
 				stepImpacts.remove(key);
 			}
 		}
+
+//		for (Float key : stepImpacts.keySet()) {
+//			if (stepImpacts.get(key) > 1) { // bad impact from this frame
+//				stepImpacts.put(key, 0);
+//			} else if (stepImpacts.get(key) == 0) { // bad impact from last frame
+//				stepImpacts.remove(key);
+//			} else { // good impact from this frame
+//				if (key > biggestImpact) {
+//					biggestImpact = key;
+//				}
+//				stepImpacts.remove(key);
+//			}
+//		}
 
 		if (biggestImpact > 800) {
 			int strength = (int) Math.min(Math.max(Math.abs(biggestImpact / 1000), minimum), maximum); // 800
