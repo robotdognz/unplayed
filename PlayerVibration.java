@@ -1,6 +1,7 @@
 package game.player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import editor.DebugOutput;
@@ -25,6 +26,9 @@ public class PlayerVibration {
 	private int maximum;
 	private int minimum;
 
+	// new system
+	HashMap<Float, Integer> stepImpacts;
+
 	public PlayerVibration() {
 		currentTime = System.nanoTime();
 		impacts = new ArrayList<PhysicsImpact>();
@@ -38,9 +42,12 @@ public class PlayerVibration {
 
 		maximum = 25;
 		minimum = 1;
+
+		stepImpacts = new HashMap<Float, Integer>();
 	}
 
 	public void step(float deltaTime) {
+		// old system
 		vibeFrame = false; // clear vibeFrame
 		pauseVibration.deltaStep(deltaTime);
 
@@ -55,6 +62,23 @@ public class PlayerVibration {
 				break;
 			}
 		}
+
+		
+		
+		
+		// new system
+		float biggestImpact = 0;
+		for (Float key : stepImpacts.keySet()) {
+			if (stepImpacts.get(key) == 1 && key > biggestImpact) {
+				biggestImpact = key;
+			}
+		}
+
+		if (biggestImpact > 800) {
+			int strength = (int) Math.min(Math.max(Math.abs(biggestImpact / 1000), minimum), maximum); // 800
+			Vibe.vibrate(strength);
+		}
+
 	}
 
 	public float getImpactHistory() {
@@ -89,43 +113,51 @@ public class PlayerVibration {
 			total += impulse;
 		}
 
+		// store impact
+		if (stepImpacts.containsKey(total)) {
+			stepImpacts.put(total, stepImpacts.get(total) + 1);
+		} else {
+			stepImpacts.put(total, 1);
+		}
+
+		// store impact
 		impacts.add(new PhysicsImpact(total, currentTime));
 
-		if (total > 800 && !vibeFrame) { // 400
-
-			// Math.abs returns positive no matter what goes in
-			// Math.log returns the log of the number it is given
-			int strength = (int) Math.min(Math.max(Math.abs(total / 1000), minimum), maximum); // 800
-
-			if (!pauseVibration.isRunning()) {
-				Vibe.vibrate(strength);
-				DebugOutput.pushMessage("Did vibe: " + strength, 1);
-				vibeFrame = true;
-
-				pauseVibration.start();
-
-				previousImpulse = strength;
-				currentBadImpulse = -1;
-
-			} else {
-				if (strength == previousImpulse) {
-					pauseVibration.start();
-					currentBadImpulse = strength;
-					DebugOutput.pushMessage("Skipped vibe: " + strength, 1);
-				} else {
-					if (strength != currentBadImpulse) {
-						Vibe.vibrate(strength);
-						DebugOutput.pushMessage("Did vibe: " + strength, 1);
-						vibeFrame = true;
-					}
-				}
-
-				previousImpulse = strength;
-
-			}
-
-			return;
-		}
+//		if (total > 800 && !vibeFrame) { // 400
+//
+//			// Math.abs returns positive no matter what goes in
+//			// Math.log returns the log of the number it is given
+//			int strength = (int) Math.min(Math.max(Math.abs(total / 1000), minimum), maximum); // 800
+//
+//			if (!pauseVibration.isRunning()) {
+//				Vibe.vibrate(strength);
+//				DebugOutput.pushMessage("Did vibe: " + strength, 1);
+//				vibeFrame = true;
+//
+//				pauseVibration.start();
+//
+//				previousImpulse = strength;
+//				currentBadImpulse = -1;
+//
+//			} else {
+//				if (strength == previousImpulse) {
+//					pauseVibration.start();
+//					currentBadImpulse = strength;
+//					DebugOutput.pushMessage("Skipped vibe: " + strength, 1);
+//				} else {
+//					if (strength != currentBadImpulse) {
+//						Vibe.vibrate(strength);
+//						DebugOutput.pushMessage("Did vibe: " + strength, 1);
+//						vibeFrame = true;
+//					}
+//				}
+//
+//				previousImpulse = strength;
+//
+//			}
+//
+//			return;
+//		}
 	}
 
 }
