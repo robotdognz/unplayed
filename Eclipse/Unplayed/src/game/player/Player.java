@@ -275,6 +275,7 @@ public class Player extends Editable {
 			bottomEdgeSensorDef.friction = friction;
 			bottomEdgeSensorDef.isSensor = true;
 			bottomEdgeSensorDef.userData = CollisionEnum.PLAYER_EDGE;
+//			bottomEdgeSensorDef.filter
 			bottomEdgeSensor = dynamicBody.createFixture(bottomEdgeSensorDef);
 			// left edge sensor fixture
 			FixtureDef leftEdgeSensorDef = new FixtureDef();

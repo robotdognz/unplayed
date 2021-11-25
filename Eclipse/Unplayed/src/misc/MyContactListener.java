@@ -53,6 +53,10 @@ public class MyContactListener implements ContactListener {
 
 		updateVariables(contact.getFixtureA());
 		updateVariables(contact.getFixtureB());
+		
+		if(playerEdge) {
+			DebugOutput.pushMessage("Yup", 1);
+		}
 
 //		if (playerEdge && event == null) {
 //			DebugOutput.pushMessage(
