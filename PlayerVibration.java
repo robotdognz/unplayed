@@ -96,16 +96,6 @@ public class PlayerVibration {
 				Vibe.vibrate(strength);
 				vibeFrame = true;
 
-				if (currentBadImpulse != -1 && strength != currentBadImpulse) {
-					currentBadImpulse = -1;
-				} else {
-					pauseVibration.start();
-
-					currentBadImpulse = strength;
-
-					DebugOutput.pushMessage("Skipped vibe with pre: " + strength, 1);
-				}
-
 				// store this information
 				pauseVibration.start();
 				previousImpulse = strength;
@@ -113,8 +103,6 @@ public class PlayerVibration {
 				DebugOutput.pushMessage("Did vibe: " + strength, 1);
 			} else if (strength == previousImpulse) {
 				pauseVibration.start();
-
-				currentBadImpulse = strength;
 
 				DebugOutput.pushMessage("Skipped vibe: " + strength, 1);
 			}
