@@ -109,20 +109,27 @@ public class PlayerVibration {
 
 			if (!pauseVibration.isRunning()) {
 				Vibe.vibrate(strength);
+				DebugOutput.pushMessage("Did vibe: " + strength, 1);
 				vibeFrame = true;
 
 				if (strength == previousImpulse) {
 					pauseVibration.start();
 				}
+				
 				previousImpulse = strength;
 
-				DebugOutput.pushMessage("Did vibe: " + strength, 1);
 			} else {
 				if (strength == previousImpulse) {
 					pauseVibration.start();
+					DebugOutput.pushMessage("Skipped vibe: " + strength, 1);
+				} else {
+					Vibe.vibrate(strength);
+					DebugOutput.pushMessage("Did vibe: " + strength, 1);
+					vibeFrame = true;
 				}
+				
+				previousImpulse = strength;
 
-				DebugOutput.pushMessage("Skipped vibe: " + strength, 1);
 			}
 
 			return;
