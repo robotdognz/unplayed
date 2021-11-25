@@ -70,7 +70,7 @@ public class PlayerVibration {
 
 		Iterator it = stepImpacts.entrySet().iterator();
 		while (it.hasNext()) {
-			float key = (float) ((Map.Entry) it.next()).getKey();
+			Float key = (Float) ((Map.Entry) it.next()).getKey();
 			
 			if (stepImpacts.get(key) > 1) { // bad impact from this frame
 				stepImpacts.put(key, 0);
