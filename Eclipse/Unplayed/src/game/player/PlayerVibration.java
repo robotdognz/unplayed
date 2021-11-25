@@ -75,12 +75,14 @@ public class PlayerVibration {
 			if (stepImpacts.get(key) > 1) { // bad impact from this frame
 				stepImpacts.put(key, 0);
 			} else if (stepImpacts.get(key) == 0) { // bad impact from last frame
-				stepImpacts.remove(key);
+//				stepImpacts.remove(key);
+				it.remove();
 			} else { // good impact from this frame
 				if (key > biggestImpact) {
 					biggestImpact = key;
 				}
-				stepImpacts.remove(key);
+//				stepImpacts.remove(key);
+				it.remove();
 			}
 		}
 
