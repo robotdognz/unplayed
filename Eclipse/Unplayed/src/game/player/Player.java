@@ -1369,7 +1369,7 @@ public class Player extends Editable {
 
 						DebugOutput.pushMessage("Boost off left wall", 2);
 
-					} else if (extraJump) { // no direction left wall, extra jump
+//					} else if (extraJump) { // no direction left wall, extra jump
 
 					} else { // no direction left wall
 
@@ -1414,7 +1414,7 @@ public class Player extends Editable {
 
 						DebugOutput.pushMessage("Boost off right wall", 2);
 
-					} else if (extraJump) { // no direction right wall, extra jump
+//					} else if (extraJump) { // no direction right wall, extra jump
 
 					} else { // no direction right wall
 
