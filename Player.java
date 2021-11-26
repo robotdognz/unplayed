@@ -1332,6 +1332,7 @@ public class Player extends Editable {
 				yImpulse = dynamicBody.getMass() * jumpPower;
 			}
 
+			groundTimer.stop();
 			extraJump = true;
 
 		} else if (leftWallContacts != rightWallContacts || leftWallTimer.isRunning() || rightWallTimer.isRunning()) {
