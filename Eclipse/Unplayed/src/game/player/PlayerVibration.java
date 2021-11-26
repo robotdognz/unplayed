@@ -22,7 +22,8 @@ public class PlayerVibration {
 
 	private long currentTime;
 
-	private CountdownTimer pauseVibration;
+	private CountdownTimer vibrationMonitor;
+	private CountdownTimer vibrationCooldown;
 	private int previousImpulse;
 	private int currentBadImpulse;
 
@@ -39,7 +40,8 @@ public class PlayerVibration {
 		timeout = 0.25f; // how long the impacts are kept for in seconds
 		timeoutLong = (long) (timeout * 1000000000); // translated to nanoseconds
 
-		pauseVibration = new CountdownTimer(0.064f);
+		vibrationMonitor = new CountdownTimer(0.064f);
+		vibrationCooldown = new CountdownTimer(0.064f);
 		previousImpulse = -1;
 		currentBadImpulse = -1;
 
@@ -52,7 +54,7 @@ public class PlayerVibration {
 	public void step(float deltaTime) {
 		// old system
 		vibeFrame = false; // clear vibeFrame
-		pauseVibration.deltaStep(deltaTime);
+		vibrationMonitor.deltaStep(deltaTime);
 
 		currentTime = System.nanoTime();
 
@@ -147,24 +149,30 @@ public class PlayerVibration {
 			int strength = Math.round(total / 200) * 200;
 			strength = (int) Math.min(Math.max(Math.abs(strength / 1000), minimum), maximum); // 800
 
-			if (!pauseVibration.isRunning()) {
-				Vibe.vibrate(strength);
-				DebugOutput.pushMessage("Did vibe: " + strength, 1);
+			if (!vibrationMonitor.isRunning()) {
+				if (!vibrationCooldown.isRunning()) {
+					Vibe.vibrate(strength);
+					vibrationCooldown.start();
+				}
+				DebugOutput.pushMessage("Did vibe: " + strength + " - " + total, 1);
 				vibeFrame = true;
 
-				pauseVibration.start();
+				vibrationMonitor.start();
 
 				previousImpulse = strength;
 				currentBadImpulse = -1;
 
 			} else {
 				if (strength == previousImpulse) {
-					pauseVibration.start();
+					vibrationMonitor.start();
 					currentBadImpulse = strength;
 					DebugOutput.pushMessage("Skipped vibe: " + strength + " - " + total, 1);
 				} else {
 					if (strength != currentBadImpulse) {
-						Vibe.vibrate(strength);
+						if (!vibrationCooldown.isRunning()) {
+							Vibe.vibrate(strength);
+							vibrationCooldown.start();
+						}
 						DebugOutput.pushMessage("Did vibe: " + strength + " - " + total, 1);
 						vibeFrame = true;
 					}
