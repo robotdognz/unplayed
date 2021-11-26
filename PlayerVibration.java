@@ -5,11 +5,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import editor.DebugOutput;
 import misc.CountdownTimer;
 import misc.Vibe;
-import processing.core.PApplet;
 
 public class PlayerVibration {
 
@@ -41,7 +39,7 @@ public class PlayerVibration {
 		timeoutLong = (long) (timeout * 1000000000); // translated to nanoseconds
 
 		vibrationMonitor = new CountdownTimer(0.064f);
-		vibrationCooldown = new CountdownTimer(0.032f);
+		vibrationCooldown = new CountdownTimer(0.020f);
 		previousImpulse = -1;
 		currentBadImpulse = -1;
 
@@ -53,7 +51,7 @@ public class PlayerVibration {
 
 	public void step(float deltaTime) {
 		// old system
-		vibeFrame = false; // clear vibeFrame
+//		vibeFrame = false; // clear vibeFrame
 		vibrationMonitor.deltaStep(deltaTime);
 		vibrationCooldown.deltaStep(deltaTime);
 
@@ -143,7 +141,7 @@ public class PlayerVibration {
 		// store impact
 		impacts.add(new PhysicsImpact(total, currentTime));
 
-		if (total > 800 && !vibeFrame) { // 400
+		if (total > 800) { // && !vibeFrame) { // 400
 
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
@@ -154,9 +152,10 @@ public class PlayerVibration {
 				if (!vibrationCooldown.isRunning()) {
 					Vibe.vibrate(strength);
 					vibrationCooldown.start();
+//					vibeFrame = true;
 				}
 				DebugOutput.pushMessage("Did vibe: " + strength + " - " + total, 1);
-				vibeFrame = true;
+				
 
 				vibrationMonitor.start();
 
@@ -173,9 +172,9 @@ public class PlayerVibration {
 						if (!vibrationCooldown.isRunning()) {
 							Vibe.vibrate(strength);
 							vibrationCooldown.start();
+//							vibeFrame = true;
 						}
 						DebugOutput.pushMessage("Did vibe: " + strength + " - " + total, 1);
-						vibeFrame = true;
 					}
 				}
 
