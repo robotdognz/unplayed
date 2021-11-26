@@ -169,7 +169,7 @@ public class Player extends Editable {
 
 		// how long to pad leaving the ground
 		this.groundTimer = new CountdownTimer(0.200f); // 0.128
-		this.groundTimerPadding = new CountdownTimer(0.064f);
+		this.groundTimerPadding = new CountdownTimer(0.032f); // 0.064f
 		// how long to pad leaving a wall
 		this.leftWallTimer = new CountdownTimer(0.064f);
 		this.rightWallTimer = new CountdownTimer(0.064f);
