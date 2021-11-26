@@ -41,7 +41,7 @@ public class PlayerVibration {
 		timeoutLong = (long) (timeout * 1000000000); // translated to nanoseconds
 
 		vibrationMonitor = new CountdownTimer(0.064f);
-		vibrationCooldown = new CountdownTimer(0.064f);
+		vibrationCooldown = new CountdownTimer(0.032f);
 		previousImpulse = -1;
 		currentBadImpulse = -1;
 
