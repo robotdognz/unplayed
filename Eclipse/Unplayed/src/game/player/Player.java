@@ -528,6 +528,11 @@ public class Player extends Editable {
 				destroyWallBarrier(false);
 			}
 		}
+		
+		// prevent edge case where wall barrier prevents boost up into roof slot
+		if (wallBarrier != null && roofBarrier != null) {
+			destroyWallBarrier(false);
+		}
 
 		fixRotationOffset();
 	}
