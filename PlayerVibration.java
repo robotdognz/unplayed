@@ -55,6 +55,7 @@ public class PlayerVibration {
 		// old system
 		vibeFrame = false; // clear vibeFrame
 		vibrationMonitor.deltaStep(deltaTime);
+		vibrationCooldown.deltaStep(deltaTime);
 
 		currentTime = System.nanoTime();
 
