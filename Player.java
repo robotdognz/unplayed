@@ -168,7 +168,7 @@ public class Player extends Editable {
 		// timers
 
 		// how long to pad leaving the ground
-		this.groundTimer = new CountdownTimer(0.200f); // 0.128
+		this.groundTimer = new CountdownTimer(0.256f); // 0.200
 		this.groundTimerPadding = new CountdownTimer(0.032f); // 0.064f
 		// how long to pad leaving a wall
 		this.leftWallTimer = new CountdownTimer(0.064f);
@@ -1369,8 +1369,6 @@ public class Player extends Editable {
 
 						DebugOutput.pushMessage("Boost off left wall", 2);
 
-//					} else if (extraJump) { // no direction left wall, extra jump
-
 					} else { // no direction left wall
 
 						xImpulse = (dynamicBody.getMass() * wallJumpAwayPower);
@@ -1413,8 +1411,6 @@ public class Player extends Editable {
 						rightStickTimer.stop();
 
 						DebugOutput.pushMessage("Boost off right wall", 2);
-
-//					} else if (extraJump) { // no direction right wall, extra jump
 
 					} else { // no direction right wall
 
