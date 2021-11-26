@@ -144,7 +144,8 @@ public class PlayerVibration {
 
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
-			int strength = (int) Math.min(Math.max(Math.abs(total / 1000), minimum), maximum); // 800
+			int strength = Math.round(total / 200) * 200;
+			strength = (int) Math.min(Math.max(Math.abs(strength / 1000), minimum), maximum); // 800
 
 			if (!pauseVibration.isRunning()) {
 				Vibe.vibrate(strength);
