@@ -109,7 +109,6 @@ public class Player extends Editable {
 	private boolean verticalTunnel; // used to check if player should jump away from the wall or not
 	private boolean horizontalTunnel;
 
-	
 	public Player(PApplet p, Box2DProcessing box2d, boolean locked, TextureCache texture, Tile tile) {
 		super(tile.getX(), tile.getY(), 100, 100);
 		this.file = tile.getFile();
@@ -365,7 +364,7 @@ public class Player extends Editable {
 		checkWallStick(vel);
 		float desiredVel = 0;
 
-		if (left || pushLeftTimer.isRunning()) {
+		if (!roofBoostTimer.isRunning() && (left || pushLeftTimer.isRunning())) {
 
 			if (rightWallBoostTimer.isRunning()) {
 				float xImpulse = -(dynamicBody.getMass() * wallBoostPower);
@@ -394,7 +393,7 @@ public class Player extends Editable {
 				return;
 			}
 
-		} else if (right || pushRightTimer.isRunning()) {
+		} else if (!roofBoostTimer.isRunning() && (right || pushRightTimer.isRunning())) {
 
 			if (leftWallBoostTimer.isRunning()) {
 				float xImpulse = (dynamicBody.getMass() * wallBoostPower);
