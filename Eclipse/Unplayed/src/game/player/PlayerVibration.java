@@ -1,17 +1,14 @@
 package game.player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import editor.DebugOutput;
 import misc.CountdownTimer;
 import misc.Vibe;
 
 public class PlayerVibration {
 
-	private boolean vibeFrame; // has a vibration happened yet this frame
+//	private boolean vibeFrame; // has a vibration happened yet this frame
 
 	public List<PhysicsImpact> impacts;
 
