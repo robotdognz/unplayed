@@ -57,8 +57,6 @@ public class EditorSide extends Toolbar {
 		Widget counterClockwiseW = new WidgetRotateCounterClockwise(p, editor, this);
 		Widget adjustW = new WidgetAdjust(p, editor, this);
 		Widget levelendW = new WidgetPELevelEnd(p, editor, this);
-		Widget noRotationW = new WidgetPENoRotation(p, editor, this);
-		Widget halfRotationW = new WidgetPE180Rotation(p, editor, this);
 		Widget excludeW = new WidgetExcludeMenu(p, editor, this);
 		Widget cameraAddW = new WidgetCameraAdd(p, editor, this);
 		Widget cameraSubW = new WidgetCameraSub(p, editor, this);
@@ -67,8 +65,6 @@ public class EditorSide extends Toolbar {
 		tile = new ArrayList<Widget>();
 		tile.add(deleteW);
 		tile.add(finishW);
-//		tile.add(flipHW);
-//		tile.add(flipVW);
 		tile.add(clockwiseW);
 		tile.add(counterClockwiseW);
 
@@ -107,8 +103,6 @@ public class EditorSide extends Toolbar {
 		playerEnd.add(deleteW);
 		playerEnd.add(finishW);
 		playerEnd.add(levelendW);
-		playerEnd.add(halfRotationW);
-		playerEnd.add(noRotationW);
 		playerEnd.add(adjustW);
 
 		// widgets for spikes

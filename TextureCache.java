@@ -146,7 +146,7 @@ public class TextureCache {
 //				tileMap.put(file, new TileHandler(p, this, file));
 //			}
 
-			if (path.matches(".+[0-2].png$")) { // check for .png with 0-2 before it
+			if (path.matches(".+[0-2]\\.png$")) { // check for .png with 0-2 before it
 				Pattern pattern = Pattern.compile("\\d+");
 				Matcher m = pattern.matcher(path);
 				int lastInt = -1;
@@ -203,7 +203,7 @@ public class TextureCache {
 		ArrayList<Integer> temp = new ArrayList<Integer>(); // holds the numbers found in the file name
 		for (File file : imagePaths) {
 			String path = file.getAbsolutePath();
-			if (path.matches(".+([0-9]+)x([0-9]+).png$")) { // check file ends with number "x" number ".png"
+			if (path.matches(".+([0-9]+)x([0-9]+)\\.png$")) { // check file ends with number "x" number ".png"
 				Pattern pattern = Pattern.compile("\\d+");
 				Matcher m = pattern.matcher(path);
 				while (m.find()) {

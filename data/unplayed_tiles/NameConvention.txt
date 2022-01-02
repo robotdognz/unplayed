@@ -1,16 +1,8 @@
-tile_theme00_01
-tile_theme00_02
-tile_theme00_03
+tile_type[x]_[y]
 
-tile_theme01_01
-tile_theme01_02
-tile_theme01_03
+x = number in series starting from 00
 
-tile_theme02_01
-tile_theme02_02
-tile_theme02_03
+y = rotation code
+0 = cares about rotation, 1 = ignore 180 rotation, 2 = ignore all rotation
 
-tile_theme03_01
-tile_theme03_02
-tile_theme03_03
 
