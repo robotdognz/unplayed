@@ -18,29 +18,29 @@ public class WidgetPE180Rotation extends Widget {
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (editor.selected != null && editor.selected instanceof PlayerEnd) {
-			available = true;
-			if (((PlayerEnd) editor.selected).getRotationMode() == 1) {
-				active = true;
-			} else {
-				active = false;
-			}
-
-		} else {
-			available = false;
-		}
+//		if (editor.selected != null && editor.selected instanceof PlayerEnd) {
+//			available = true;
+//			if (((PlayerEnd) editor.selected).getRotationMode() == 1) {
+//				active = true;
+//			} else {
+//				active = false;
+//			}
+//
+//		} else {
+//			available = false;
+//		}
 
 	}
 
 	@Override
 	public void clicked() {
-		if (editor.selected != null && editor.selected instanceof PlayerEnd) {
-			if (active) {
-				((PlayerEnd) editor.selected).setRotationMode(0);
-			} else {
-				((PlayerEnd) editor.selected).setRotationMode(1);
-			}
-		}
+//		if (editor.selected != null && editor.selected instanceof PlayerEnd) {
+//			if (active) {
+//				((PlayerEnd) editor.selected).setRotationMode(0);
+//			} else {
+//				((PlayerEnd) editor.selected).setRotationMode(1);
+//			}
+//		}
 	}
 
 }

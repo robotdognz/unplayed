@@ -226,6 +226,14 @@ public class Tile extends Editable implements Comparable<Tile> {
 			return null;
 		}
 	}
+	
+	public int getRotationMode() {
+		if (tileTexture != null) {
+			return tileTexture.getRotationMode();
+		} else {
+			return -1;
+		}
+	}
 
 	@Override
 	public int compareTo(Tile otherTile) {
