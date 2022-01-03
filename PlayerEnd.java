@@ -160,7 +160,7 @@ public class PlayerEnd extends Event {
 			} else if (rotationMode == 1) { // only 180 degree rotation matters
 				float playerAngle = player.getAdjustedAngle();
 
-				if (!(playerAngle == required.getAngle() || playerAngle - 180 == required.getAngle())) {
+				if (!(playerAngle == required.getAngle() || playerAngle - 180 == required.getAngle() || playerAngle + 180 == required.getAngle())) {
 					return;
 				}
 			}
