@@ -116,8 +116,9 @@ public abstract class Handler {
 		if (editorRotation != 0) {
 			p.pushMatrix();
 			p.imageMode(CENTER);
-//			p.rotate(PApplet.radians(editorRotation));
-			p.image(getSprite(6), pX, pY, widthRenderRatio * size, heightRenderRatio * size);
+			p.translate(pX, pY);
+			p.rotate(PApplet.radians(editorRotation));
+			p.image(getSprite(6), 0, 0, widthRenderRatio * size, heightRenderRatio * size);
 			p.popMatrix();
 		} else {
 			p.image(getSprite(6), pX, pY, widthRenderRatio * size, heightRenderRatio * size);
