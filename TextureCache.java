@@ -274,7 +274,7 @@ public class TextureCache {
 		EventHandler spike = new EventHandler(p, this, spikeFile) {
 			@Override
 			public Event makeEvent(int x, int y) {
-				return new Spike(game, texture, spikeString, x, y);
+				return new Spike(game, texture, spikeString, x, y, editorRotation);
 			}
 		};
 		eventMap.put(spikeString, spike);

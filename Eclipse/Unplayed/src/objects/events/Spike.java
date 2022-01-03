@@ -21,9 +21,9 @@ public class Spike extends Event {
 	private FixtureDef spikeDef;
 //	private Fixture spikeFixture;
 
-	public Spike(Game game, TextureCache texture, String name, int x, int y) {
+	public Spike(Game game, TextureCache texture, String name, int x, int y, float angle) {
 		super(game, texture, name, true, x, y, 100, 100);
-		angle = 0;
+		this.angle = angle;
 //		spikeFixture = null;
 	}
 

@@ -355,7 +355,7 @@ public class EditorJSON {
 					worldObjects.add(pd);
 				} else if (type.equals("Spike")) {
 					String name = object.getString("name");
-					Spike s = new Spike(game, texture, name, pX, pY);
+					Spike s = new Spike(game, texture, name, pX, pY, 0);
 					try {
 						float angle = object.getFloat("angle");
 						s.setAngle(angle);
