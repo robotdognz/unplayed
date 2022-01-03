@@ -4,6 +4,7 @@ import java.io.File;
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
+
 import handlers.TextureCache;
 import handlers.TileHandler;
 import misc.CollisionEnum;
@@ -161,6 +162,10 @@ public class Tile extends Editable implements Comparable<Tile> {
 			box2d.destroyBody(staticBody);
 			staticBody = null;
 		}
+	}
+	
+	public TileHandler getHandler() {
+		return tileTexture;
 	}
 
 	public void drawTransparent(PGraphics graphics, float scale) {

@@ -285,6 +285,10 @@ public class EditorSide extends Toolbar {
 				// check if this tile is inside a player start
 				if (editor.selected instanceof Tile) {
 
+					// update angle of handler
+					float selectedAngle = ((Tile) editor.selected).getAngle();
+					((Tile) editor.selected).getHandler().setEditorAngle(selectedAngle);
+
 					HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
 					editor.game.world.retrieve(returnObjects, editor.selected);
 					for (Rectangle r : returnObjects) {
@@ -308,8 +312,6 @@ public class EditorSide extends Toolbar {
 				}
 			} else if (editor.selected instanceof Spike) {
 				((Spike) editor.selected).addAngle(angle);
-//				float currentAngle = ((Spike) editor.selected).getAngle(); //TODO: troubleshooting
-//				((Spike) editor.selected).getHandler().setEditorAngle(currentAngle);
 			}
 		}
 	}
