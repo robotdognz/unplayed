@@ -262,7 +262,7 @@ public class TextureCache {
 
 		backgroundMap = new HashMap<File, BackgroundHandler>();
 		ArrayList<Integer> temp = new ArrayList<Integer>(); // holds the numbers found in the file name
-		for (File file : imagePaths) {
+		for (File file : backgroundPaths) {
 			String path = file.getAbsolutePath();
 			if (path.matches(".+([0-9]+)x([0-9]+)\\.png$")) { // check file ends with number "x" number ".png"
 				Pattern pattern = Pattern.compile("\\d+");
