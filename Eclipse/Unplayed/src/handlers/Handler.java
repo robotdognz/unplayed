@@ -1,5 +1,7 @@
 package handlers;
 
+import static processing.core.PConstants.CENTER;
+
 import java.io.File;
 
 import editor.DebugOutput;
@@ -113,7 +115,8 @@ public abstract class Handler {
 		// bar correctly and draw the scaled image
 		if (editorRotation != 0) {
 			p.pushMatrix();
-			p.rotate(PApplet.radians(editorRotation));
+			p.imageMode(CENTER);
+//			p.rotate(PApplet.radians(editorRotation));
 			p.image(getSprite(6), pX, pY, widthRenderRatio * size, heightRenderRatio * size);
 			p.popMatrix();
 		} else {
