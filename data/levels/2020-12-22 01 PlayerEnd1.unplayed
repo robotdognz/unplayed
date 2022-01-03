@@ -3,147 +3,6 @@
     "pHeight": 100,
     "pX": -600,
     "name": "PlayerDeath",
-    "pY": -500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": -300,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_14.png",
-    "pX": 0,
-    "pY": 0,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": -100,
-    "pY": 100,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 100,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 200,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_12.png",
-    "pX": -100,
-    "pY": 0,
-    "flipV": false,
-    "angle": 180,
-    "flipH": false,
-    "type": "tile",
-    "pWidth": 100
-  },
-  {
-    "pHeight": 100,
-    "newPlayerX": 0,
-    "pX": -100,
-    "name": "PlayerEnd",
-    "pY": 0,
-    "end": false,
-    "pWidth": 100,
-    "type": "PlayerEnd",
-    "rotationMode": 0,
-    "newPlayerWidth": 100,
-    "newPlayerHeight": 100,
-    "newPlayerY": -100
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": 300,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 500,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": 200,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": -200,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 0,
-    "pY": 200,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": 400,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_14.png",
-    "pX": 200,
-    "pY": 0,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
     "pY": -400,
     "pWidth": 100,
     "type": "PlayerDeath"
@@ -152,7 +11,23 @@
     "pHeight": 100,
     "pX": 800,
     "name": "PlayerDeath",
-    "pY": -300,
+    "pY": 100,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": -500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": -200,
     "pWidth": 100,
     "type": "PlayerDeath"
   },
@@ -168,13 +43,53 @@
     "pHeight": 100,
     "pX": 800,
     "name": "PlayerDeath",
-    "pY": -200,
+    "pY": 0,
     "pWidth": 100,
     "type": "PlayerDeath"
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_12.png",
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": 400,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": 400,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 600,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -200,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -100,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_puzzle02_0.png",
     "pX": 100,
     "pY": 100,
     "flipV": false,
@@ -185,7 +100,100 @@
   },
   {
     "pHeight": 100,
-    "pX": -500,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": -100,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": -200,
+    "pY": 200,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 300,
+    "pY": 200,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": -100,
+    "pY": 200,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 400,
+    "pY": 100,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 400,
+    "pY": 200,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_puzzle04_1.png",
+    "pX": 0,
+    "pY": 0,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 400,
+    "pY": 0,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": -200,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -600,
     "name": "PlayerDeath",
     "pY": 500,
     "pWidth": 100,
@@ -193,7 +201,134 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_13.png",
+    "pX": 100,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 700,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 0,
+    "pY": 100,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": -300,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": -500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_puzzle03_0.png",
+    "pX": 0,
+    "pY": -100,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 100,
+    "pY": 200,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 300,
+    "pY": 100,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 200,
+    "pY": 100,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 500,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": 100,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": 0,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": -400,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_puzzle03_0.png",
     "pX": 100,
     "pY": 0,
     "flipV": false,
@@ -211,104 +346,13 @@
     "end": false,
     "pWidth": 100,
     "type": "PlayerEnd",
-    "rotationMode": 0,
     "newPlayerWidth": 100,
     "newPlayerHeight": 100,
     "newPlayerY": -100
   },
   {
     "pHeight": 100,
-    "pX": -100,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_12.png",
-    "pX": 400,
-    "pY": -100,
-    "flipV": false,
-    "angle": 180,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
     "pX": 0,
-    "pY": 100,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": 200,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": -100,
-    "pY": 200,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 400,
-    "pY": 200,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": -500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 300,
-    "pY": 200,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": -200,
-    "pY": 100,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 600,
     "name": "PlayerDeath",
     "pY": 500,
     "pWidth": 100,
@@ -316,8 +360,16 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 400,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": 200,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": -200,
     "pY": 0,
     "flipV": false,
     "angle": 0,
@@ -327,14 +379,35 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 400,
-    "pY": 100,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
+    "pX": -300,
+    "name": "PlayerDeath",
+    "pY": 500,
     "pWidth": 100,
-    "type": "tile"
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 300,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -500,
+    "name": "PlayerDeath",
+    "pY": 500,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": -600,
+    "name": "PlayerDeath",
+    "pY": -100,
+    "pWidth": 100,
+    "type": "PlayerDeath"
   },
   {
     "pHeight": 100,
@@ -346,50 +419,7 @@
   },
   {
     "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": -400,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 200,
-    "pY": 200,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": 100,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": -200,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": 0,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
+    "pX": -400,
     "name": "PlayerDeath",
     "pY": 500,
     "pWidth": 100,
@@ -397,35 +427,32 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
+    "file": "unplayed_tiles/tile_puzzle02_0.png",
+    "pX": -100,
+    "pY": 0,
+    "flipV": false,
+    "angle": 180,
+    "flipH": false,
+    "type": "tile",
+    "pWidth": 100
+  },
+  {
+    "pHeight": 100,
+    "newPlayerX": 0,
+    "pX": -100,
+    "name": "PlayerEnd",
+    "pY": 0,
+    "end": false,
+    "pWidth": 100,
+    "type": "PlayerEnd",
+    "newPlayerWidth": 100,
+    "newPlayerHeight": 100,
+    "newPlayerY": -100
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
     "pX": -200,
-    "pY": 0,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 0,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 200,
     "pY": 100,
     "flipV": false,
     "angle": 0,
@@ -435,7 +462,7 @@
   },
   {
     "pHeight": 100,
-    "pX": 300,
+    "pX": 200,
     "name": "PlayerDeath",
     "pY": 500,
     "pWidth": 100,
@@ -443,38 +470,19 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": -200,
-    "pY": 200,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": 400,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_13.png",
-    "pX": 0,
+    "file": "unplayed_tiles/tile_puzzle02_0.png",
+    "pX": 400,
     "pY": -100,
     "flipV": false,
-    "angle": 0,
+    "angle": 180,
     "flipH": false,
     "pWidth": 100,
     "type": "tile"
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 300,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": -100,
     "pY": 100,
     "flipV": false,
     "angle": 0,
@@ -484,15 +492,42 @@
   },
   {
     "pHeight": 100,
-    "pX": 700,
+    "pX": -600,
     "name": "PlayerDeath",
-    "pY": 500,
+    "pY": 300,
     "pWidth": 100,
     "type": "PlayerDeath"
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_12.png",
+    "file": "unplayed_tiles/tile_puzzle04_1.png",
+    "pX": 200,
+    "pY": 0,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": -300,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "pX": 800,
+    "name": "PlayerDeath",
+    "pY": 200,
+    "pWidth": 100,
+    "type": "PlayerDeath"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_puzzle02_0.png",
     "pX": 300,
     "pY": 0,
     "flipV": false,
@@ -510,15 +545,14 @@
     "end": false,
     "pWidth": 100,
     "type": "PlayerEnd",
-    "rotationMode": 0,
     "newPlayerWidth": 100,
     "newPlayerHeight": 100,
     "newPlayerY": -100
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_06.png",
-    "pX": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 0,
     "pY": 200,
     "flipV": false,
     "angle": 0,
@@ -528,55 +562,18 @@
   },
   {
     "pHeight": 100,
-    "pX": -400,
-    "name": "PlayerDeath",
-    "pY": 500,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 200,
+    "pY": 200,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
     "pWidth": 100,
-    "type": "PlayerDeath"
+    "type": "tile"
   },
   {
     "pHeight": 100,
-    "pX": -300,
-    "name": "PlayerDeath",
-    "pY": 500,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": 0,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": -600,
-    "name": "PlayerDeath",
-    "pY": -100,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": 100,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "pX": 800,
-    "name": "PlayerDeath",
-    "pY": -100,
-    "pWidth": 100,
-    "type": "PlayerDeath"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_theme02_12.png",
+    "file": "unplayed_tiles/tile_puzzle02_0.png",
     "pX": -200,
     "pY": -100,
     "flipV": false,
