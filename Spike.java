@@ -83,6 +83,7 @@ public class Spike extends Event {
 			destroy();
 			create();
 		}
+		eventTexture.setEditorAngle(this.angle);
 
 	}
 
