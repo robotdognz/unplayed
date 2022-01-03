@@ -17,6 +17,7 @@ import game.Game;
 import game.PageView;
 import game.Quadtree;
 import game.player.Player;
+import handlers.BackgroundHandler;
 import handlers.EventHandler;
 import handlers.ImageHandler;
 import handlers.TextureCache;
@@ -80,6 +81,7 @@ public class Editor {
 	// current object to put into level
 	public TileHandler currentTile = null;
 	public ImageHandler currentImage = null;
+	public BackgroundHandler currentBackground = null;
 	public EventHandler currentEvent = null;
 	public View currentView = null;
 	public Page currentPage = null;

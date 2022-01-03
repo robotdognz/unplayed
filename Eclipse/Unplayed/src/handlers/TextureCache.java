@@ -46,6 +46,10 @@ public class TextureCache {
 	private File[] imagePaths;
 	private HashMap<File, ImageHandler> imageMap;
 	private ArrayList<ImageHandler> imageList;
+	// background images
+	private File[] backgroundPaths;
+	private HashMap<File, BackgroundHandler> backgroundMap;
+	private ArrayList<BackgroundHandler> backgroundList;
 	// tiles
 	private File[] tilePaths;
 	private HashMap<File, TileHandler> tileMap;
@@ -77,6 +81,7 @@ public class TextureCache {
 
 		// level assets
 		loadLevelImages();
+		loadBackgroundImages();
 		loadTiles();
 		loadEvents();
 	}
@@ -218,6 +223,65 @@ public class TextureCache {
 		Collections.sort(imageList);
 	}
 
+	private void loadBackgroundImages() {
+		// generate all the relative file paths
+		try {
+			// App mode
+
+			AssetManager am = context.getAssets();
+			String backgroundPath = "unplayed_backgrounds";
+			String[] backgroundStrings = am.list(backgroundPath);
+
+			if (backgroundStrings.length == 0) {
+				throw new IOException();
+			}
+
+			backgroundPaths = new File[backgroundStrings.length];
+
+			// make relative files from all of the tile strings
+			for (int i = 0; i < backgroundStrings.length; i++) {
+				backgroundPaths[i] = new File(backgroundPath + '/' + backgroundStrings[i]);
+			}
+
+		} catch (IOException e) {
+			// Preview mode
+
+			String base = p.sketchPath("");
+			File backgroundPath = new File(base + "/unplayed_backgrounds" + '/');
+
+			File[] absoluteFiles = backgroundPath.listFiles();
+			backgroundPaths = new File[absoluteFiles.length];
+
+			// make relative files from all of the tile strings
+			for (int i = 0; i < absoluteFiles.length; i++) {
+				String relativeFile = absoluteFiles[i].toString();
+				relativeFile = relativeFile.replace(base + '/', "");
+				backgroundPaths[i] = new File(relativeFile);
+			}
+		}
+
+		backgroundMap = new HashMap<File, BackgroundHandler>();
+		ArrayList<Integer> temp = new ArrayList<Integer>(); // holds the numbers found in the file name
+		for (File file : imagePaths) {
+			String path = file.getAbsolutePath();
+			if (path.matches(".+([0-9]+)x([0-9]+)\\.png$")) { // check file ends with number "x" number ".png"
+				Pattern pattern = Pattern.compile("\\d+");
+				Matcher m = pattern.matcher(path);
+				while (m.find()) {
+					int i = Integer.parseInt(m.group());
+					temp.add(i);
+				}
+				if (temp.size() >= 2) {
+					backgroundMap.put(file,
+							new BackgroundHandler(p, this, file, temp.get(temp.size() - 2), temp.get(temp.size() - 1)));
+				}
+			}
+			temp.clear();
+		}
+		backgroundList = new ArrayList<BackgroundHandler>(backgroundMap.values());
+		Collections.sort(backgroundList);
+	}
+
 	private void loadEvents() {
 
 		// get directory and make map
@@ -298,6 +362,14 @@ public class TextureCache {
 
 	public ArrayList<ImageHandler> getImageList() {
 		return imageList;
+	}
+	
+	public HashMap<File, BackgroundHandler> getBackgroundMap() {
+		return backgroundMap;
+	}
+
+	public ArrayList<BackgroundHandler> getBackgroundList() {
+		return backgroundList;
 	}
 
 	public HashMap<String, EventHandler> getEventMap() {

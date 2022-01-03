@@ -22,12 +22,10 @@ public class PlayerEnd extends Event {
 	private Rectangle newPlayerArea;
 	private long lastTime = 0;
 	private PVector center; // used for checking against player position
-//	private int rotationMode; // what kind of rotation does this player end care about
 
 	public PlayerEnd(Game game, TextureCache texture, String name, float x, float y) {
 		super(game, texture, name, false, x, y, 100, 100);
-//		this.rotationMode = 0;
-		// 0 = cares about rotation, 1 = ignore 180 rotation, 2 = ignore all rotation
+		
 		this.levelEnd = false; // true;
 		this.newPlayerArea = new Rectangle(getX() + getWidth(), getY() - getHeight(), getWidth(), getHeight());
 
@@ -121,14 +119,6 @@ public class PlayerEnd extends Event {
 	public void setLevelEnd(boolean levelEnd) {
 		this.levelEnd = levelEnd;
 	}
-
-//	public int getRotationMode() {
-//		return rotationMode;
-//	}
-//
-//	public void setRotationMode(int newRotationMode) {
-//		this.rotationMode = newRotationMode;
-//	}
 
 	@Override
 	public void activate() {

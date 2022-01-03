@@ -17,6 +17,7 @@ import editor.tools.EventTool;
 import editor.tools.ImageTool;
 import editor.tools.TileTool;
 import editor.tools.PageTool;
+import handlers.BackgroundHandler;
 import handlers.EventHandler;
 import handlers.Handler;
 import handlers.ImageHandler;
@@ -36,6 +37,8 @@ public class EditorBottom extends Toolbar {
 	private float tileOffset;
 	private ArrayList<ImageHandler> images; // images
 	private float imageOffset;
+	private ArrayList<BackgroundHandler> backgrounds; // backgrounds
+	private float backgroundOffset;
 	private ArrayList<EventHandler> events; // events
 	private float eventOffset;
 	public ArrayList<View> views;// views
@@ -72,6 +75,7 @@ public class EditorBottom extends Toolbar {
 		this.size = (int) (p.width / 9.6f); // 150
 		this.tiles = texture.getTileList();
 		this.images = texture.getImageList();
+		this.backgrounds = texture.getBackgroundList();
 		this.events = texture.getEventList();
 		this.views = editor.game.views;
 
@@ -120,9 +124,17 @@ public class EditorBottom extends Toolbar {
 			offset = tileOffset;
 			currentHandler = editor.currentTile;
 		} else if (editor.currentTool instanceof ImageTool) {
-			objects.addAll(images);
-			offset = imageOffset;
-			currentHandler = editor.currentImage;
+			
+			if (editor.showPageView) {
+				objects.addAll(backgrounds);
+				offset = backgroundOffset;
+				currentHandler = editor.currentBackground;
+			} else {
+				objects.addAll(images);
+				offset = imageOffset;
+				currentHandler = editor.currentImage;
+			}
+			
 		} else if (editor.currentTool instanceof EventTool) {
 			objects.addAll(events);
 			offset = eventOffset;
