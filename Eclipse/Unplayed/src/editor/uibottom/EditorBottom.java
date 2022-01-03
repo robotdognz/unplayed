@@ -189,8 +189,15 @@ public class EditorBottom extends Toolbar {
 				objects.addAll(tiles);
 				offset = tileOffset;
 			} else if (editor.currentTool instanceof ImageTool) {
-				objects.addAll(images);
-				offset = imageOffset;
+				
+				if (editor.showPageView) {
+					objects.addAll(backgrounds);
+					offset = backgroundOffset;
+				} else {
+					objects.addAll(images);
+					offset = imageOffset;
+				}
+				
 			} else if (editor.currentTool instanceof EventTool) {
 				objects.addAll(events);
 				offset = eventOffset;
@@ -239,19 +246,41 @@ public class EditorBottom extends Toolbar {
 					}
 				}
 			} else if (editor.currentTool instanceof ImageTool) {
-				float objectsWidth = images.size() * selectionArea.getHeight();
-				if (objectsWidth > selectionArea.getWidth()) {
-					// scroll
-					imageOffset += (p.pmouseX - p.mouseX) / 3;
-					// prevent scrolling off right edge
-					if (imageOffset > objectsWidth - selectionArea.getWidth() + 1) {
-						imageOffset = objectsWidth - selectionArea.getWidth();
+				
+				if (editor.showPageView) {
+					
+					float objectsWidth = backgrounds.size() * selectionArea.getHeight();
+					if (objectsWidth > selectionArea.getWidth()) {
+						// scroll
+						backgroundOffset += (p.pmouseX - p.mouseX) / 3;
+						// prevent scrolling off right edge
+						if (backgroundOffset > objectsWidth - selectionArea.getWidth() + 1) {
+							backgroundOffset = objectsWidth - selectionArea.getWidth();
+						}
+						// prevent scrolling off left edge
+						if (backgroundOffset < 0) {
+							backgroundOffset = 0;
+						}
 					}
-					// prevent scrolling off left edge
-					if (imageOffset < 0) {
-						imageOffset = 0;
+					
+				} else {
+					
+					float objectsWidth = images.size() * selectionArea.getHeight();
+					if (objectsWidth > selectionArea.getWidth()) {
+						// scroll
+						imageOffset += (p.pmouseX - p.mouseX) / 3;
+						// prevent scrolling off right edge
+						if (imageOffset > objectsWidth - selectionArea.getWidth() + 1) {
+							imageOffset = objectsWidth - selectionArea.getWidth();
+						}
+						// prevent scrolling off left edge
+						if (imageOffset < 0) {
+							imageOffset = 0;
+						}
 					}
+					
 				}
+				
 			} else if (editor.currentTool instanceof EventTool) {
 				float objectsWidth = events.size() * selectionArea.getHeight();
 				if (objectsWidth > selectionArea.getWidth()) {
