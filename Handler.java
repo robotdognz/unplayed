@@ -2,6 +2,7 @@ package handlers;
 
 import java.io.File;
 
+import editor.DebugOutput;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -61,6 +62,7 @@ public abstract class Handler {
 	public void setEditorAngle(float angle) {
 		if (isRotatable) {
 			editorRotation = (int) angle;
+			DebugOutput.pushMessage("" + angle, 2);
 		}
 	}
 
