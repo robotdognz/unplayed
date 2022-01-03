@@ -124,7 +124,7 @@ public class EditorBottom extends Toolbar {
 			offset = tileOffset;
 			currentHandler = editor.currentTile;
 		} else if (editor.currentTool instanceof ImageTool) {
-			
+
 			if (editor.showPageView) {
 				objects.addAll(backgrounds);
 				offset = backgroundOffset;
@@ -134,7 +134,7 @@ public class EditorBottom extends Toolbar {
 				offset = imageOffset;
 				currentHandler = editor.currentImage;
 			}
-			
+
 		} else if (editor.currentTool instanceof EventTool) {
 			objects.addAll(events);
 			offset = eventOffset;
@@ -189,7 +189,7 @@ public class EditorBottom extends Toolbar {
 				objects.addAll(tiles);
 				offset = tileOffset;
 			} else if (editor.currentTool instanceof ImageTool) {
-				
+
 				if (editor.showPageView) {
 					objects.addAll(backgrounds);
 					offset = backgroundOffset;
@@ -197,7 +197,7 @@ public class EditorBottom extends Toolbar {
 					objects.addAll(images);
 					offset = imageOffset;
 				}
-				
+
 			} else if (editor.currentTool instanceof EventTool) {
 				objects.addAll(events);
 				offset = eventOffset;
@@ -214,7 +214,13 @@ public class EditorBottom extends Toolbar {
 					if (editor.currentTool instanceof TileTool) {
 						editor.currentTile = (TileHandler) objects.get(i);
 					} else if (editor.currentTool instanceof ImageTool) {
-						editor.currentImage = (ImageHandler) objects.get(i);
+
+						if (editor.showPageView) {
+							editor.currentBackground = (BackgroundHandler) objects.get(i);
+						} else {
+							editor.currentImage = (ImageHandler) objects.get(i);
+						}
+
 					} else if (editor.currentTool instanceof EventTool) {
 						editor.currentEvent = (EventHandler) objects.get(i);
 					} else if (editor.currentTool instanceof PageTool) {
@@ -246,9 +252,9 @@ public class EditorBottom extends Toolbar {
 					}
 				}
 			} else if (editor.currentTool instanceof ImageTool) {
-				
+
 				if (editor.showPageView) {
-					
+
 					float objectsWidth = backgrounds.size() * selectionArea.getHeight();
 					if (objectsWidth > selectionArea.getWidth()) {
 						// scroll
@@ -262,9 +268,9 @@ public class EditorBottom extends Toolbar {
 							backgroundOffset = 0;
 						}
 					}
-					
+
 				} else {
-					
+
 					float objectsWidth = images.size() * selectionArea.getHeight();
 					if (objectsWidth > selectionArea.getWidth()) {
 						// scroll
@@ -278,9 +284,9 @@ public class EditorBottom extends Toolbar {
 							imageOffset = 0;
 						}
 					}
-					
+
 				}
-				
+
 			} else if (editor.currentTool instanceof EventTool) {
 				float objectsWidth = events.size() * selectionArea.getHeight();
 				if (objectsWidth > selectionArea.getWidth()) {
