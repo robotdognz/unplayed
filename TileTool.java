@@ -35,6 +35,7 @@ public class TileTool implements Tool {
 				// create correct tile
 				toInsert = new Tile(game.box2d, texture, editor.currentTile.getFile(), (int) editor.point.getX(),
 						(int) editor.point.getY());
+				toInsert.setAngle(editor.currentTile.getEditorAngle());
 			} else {
 				// use blank tile
 				toInsert = new Tile(null, null, null, (int) editor.point.getX(), (int) editor.point.getY());

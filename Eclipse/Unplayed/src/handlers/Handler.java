@@ -25,8 +25,8 @@ public abstract class Handler {
 	private float widthRenderRatio;
 	private float heightRenderRatio;
 
-	public boolean isRotatable; // can the editor default angle for this object be changed
-	public int editorRotation; // angle to add when creating new instance with level editor
+	private boolean isRotatable; // can the editor default angle for this object be changed
+	protected int editorRotation; // angle to add when creating new instance with level editor
 
 	public Handler(PApplet p, TextureCache texture, File file, int width, int height) {
 		this.p = p;
@@ -66,6 +66,10 @@ public abstract class Handler {
 			editorRotation = (int) angle;
 			DebugOutput.pushMessage("" + angle, 2);
 		}
+	}
+	
+	public int getEditorAngle() {
+		return editorRotation;
 	}
 
 	public PImage getSprite(float scale) {
