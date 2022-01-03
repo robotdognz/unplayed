@@ -80,6 +80,10 @@ public abstract class Event extends Rectangle {
 	public String getType() {
 		return "";
 	}
+	
+	public EventHandler getHandler() {
+		return eventTexture;
+	}
 
 	public void activate() {
 	}

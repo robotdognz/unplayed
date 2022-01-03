@@ -22,6 +22,9 @@ public abstract class Handler {
 	private float widthRenderRatio;
 	private float heightRenderRatio;
 
+	public boolean isRotatable; // can the editor default angle for this object be changed
+	public int editorRotation; // angle to add when creating new instance with level editor
+
 	public Handler(PApplet p, TextureCache texture, File file, int width, int height) {
 		this.p = p;
 		this.texture = texture;
@@ -49,6 +52,15 @@ public abstract class Handler {
 		} else {
 			widthRenderRatio = 1;
 			heightRenderRatio = 1;
+		}
+
+		this.isRotatable = true;
+		this.editorRotation = 0;
+	}
+
+	public void setEditorAngle(float angle) {
+		if (isRotatable) {
+			editorRotation = (int) angle;
 		}
 	}
 
@@ -97,6 +109,13 @@ public abstract class Handler {
 	public void draw(float pX, float pY, float size) {
 		// calculate how to scale the image so it appears in the editor bottom scroll
 		// bar correctly and draw the scaled image
-		p.image(getSprite(6), pX, pY, widthRenderRatio * size, heightRenderRatio * size);
+		if (editorRotation != 0) {
+			p.pushMatrix();
+			p.rotate(PApplet.radians(editorRotation));
+			p.image(getSprite(6), pX, pY, widthRenderRatio * size, heightRenderRatio * size);
+			p.popMatrix();
+		} else {
+			p.image(getSprite(6), pX, pY, widthRenderRatio * size, heightRenderRatio * size);
+		}
 	}
 }

@@ -308,6 +308,8 @@ public class EditorSide extends Toolbar {
 				}
 			} else if (editor.selected instanceof Spike) {
 				((Spike) editor.selected).addAngle(angle);
+				float currentAngle = ((Spike) editor.selected).getAngle();
+				((Spike) editor.selected).getHandler().setEditorAngle(currentAngle);
 			}
 		}
 	}

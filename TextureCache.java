@@ -142,9 +142,6 @@ public class TextureCache {
 		tileMap = new HashMap<File, TileHandler>();
 		for (File file : tilePaths) {
 			String path = file.getAbsolutePath();
-//			if (path.matches(".+.png$")) { // only checks for .png
-//				tileMap.put(file, new TileHandler(p, this, file));
-//			}
 
 			if (path.matches(".+[0-2]\\.png$")) { // check for .png with 0-2 before it
 				Pattern pattern = Pattern.compile("\\d+");
