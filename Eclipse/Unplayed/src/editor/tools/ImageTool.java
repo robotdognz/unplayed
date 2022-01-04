@@ -3,6 +3,7 @@ package editor.tools;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import editor.DebugOutput;
 import editor.Editor;
 import editor.Tool;
 import editor.Editor.editorMode;
@@ -12,7 +13,6 @@ import game.PageView;
 import handlers.TextureCache;
 import objects.Background;
 import objects.Image;
-import objects.Page;
 import objects.Rectangle;
 import processing.core.PVector;
 
@@ -195,6 +195,7 @@ public class ImageTool implements Tool {
 			editor.selected = currentBackground;
 			editorSide.adjust = true;
 			editor.eMode = Editor.editorMode.SELECT;
+			DebugOutput.pushMessage("Background added", 3);
 		}
 	}
 
