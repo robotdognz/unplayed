@@ -175,9 +175,10 @@ public class ImageTool implements Tool {
 
 	@Override
 	public void touchEnded(PVector touch) {
-		DebugOutput.pushMessage("Image tool touch", 3);
+		
 		if (editor.showPageView) { // backgrounds
-			if (!editorSide.adjust) {
+			DebugOutput.pushMessage("Image tool touch", 3);
+//			if (!editorSide.adjust) {
 				if (editor.eMode == editorMode.ADD) {
 					addBackground();
 				} else if (editor.eMode == editorMode.ERASE) {
@@ -186,7 +187,7 @@ public class ImageTool implements Tool {
 //					selectBackground();
 				}
 //				currentPage = null;
-			}
+//			}
 		}
 	}
 	
