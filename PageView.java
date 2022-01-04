@@ -6,6 +6,7 @@ import java.util.List;
 import camera.Camera;
 import handlers.TextureCache;
 import misc.Converter;
+import objects.Background;
 import objects.Page;
 import objects.Rectangle;
 import objects.events.CameraChange;
@@ -18,6 +19,7 @@ public class PageView {
 	private TextureCache texture;
 	private Converter convert;
 	private ArrayList<Page> pages;
+	private ArrayList<Background> backgrounds;
 
 	// world camera
 	private Camera camera;
@@ -29,6 +31,7 @@ public class PageView {
 		this.convert = convert;
 		this.camera = camera;
 		pages = new ArrayList<Page>();
+		backgrounds = new ArrayList<Background>();
 	}
 
 	public void draw() {
@@ -59,6 +62,23 @@ public class PageView {
 		} else {
 			topLeft = convert.screenToLevel(0, 0);
 			bottomRight = convert.screenToLevel(p.width, p.height);
+		}
+		// draw backgrounds that are inside that area
+		for (Background background : backgrounds) {
+			if (background.leftOf(topLeft.x)) {
+				continue;
+			}
+			if (background.rightOf(bottomRight.x)) {
+				continue;
+			}
+			if (background.above(topLeft.y)) {
+				continue;
+			}
+			if (background.below(bottomRight.y)) {
+				continue;
+			}
+
+			background.draw(currentScale);
 		}
 		// draw pages that are inside that area
 		for (Page page : pages) {
@@ -144,5 +164,43 @@ public class PageView {
 
 	public void clearPages() {
 		this.pages.clear();
+	}
+	
+	
+	
+	
+	public void addBackground(Background background) {
+		backgrounds.add(background);
+	}
+
+	public void removeBackground(Background background) {
+		backgrounds.remove(background);
+	}
+
+	public Background getBackground(float x, float y) {
+		if (backgrounds.size() < 1) {
+			return null;
+		}
+		for (Background background : backgrounds) {
+			// return the first overlap
+			if (background.isInside(x, y)) {
+				return background;
+			}
+
+		}
+
+		return null;
+	}
+
+	public List<Background> getBackgrounds() {
+		return backgrounds;
+	}
+
+	public void setBackgrounds(ArrayList<Background> backgrounds) {
+		this.backgrounds = backgrounds;
+	}
+
+	public void clearBackgrounds() {
+		this.backgrounds.clear();
 	}
 }

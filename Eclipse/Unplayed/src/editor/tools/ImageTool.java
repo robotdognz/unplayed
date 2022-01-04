@@ -6,9 +6,13 @@ import java.util.HashSet;
 import editor.Editor;
 import editor.Tool;
 import editor.Editor.editorMode;
+import editor.uiside.EditorSide;
 import game.Game;
+import game.PageView;
 import handlers.TextureCache;
+import objects.Background;
 import objects.Image;
+import objects.Page;
 import objects.Rectangle;
 import processing.core.PVector;
 
@@ -16,11 +20,17 @@ public class ImageTool implements Tool {
 	Editor editor;
 	Game game;
 	TextureCache texture;
+	
+	private EditorSide editorSide;
+	private Background currentBackground;
+	private PageView pageView;
 
 	public ImageTool(Editor editor) {
 		this.editor = editor;
 		this.game = editor.game;
 		this.texture = editor.texture;
+		this.editorSide = (EditorSide) editor.editorSide;
+		this.pageView = game.getPageView();
 	}
 
 	@Override
@@ -165,6 +175,27 @@ public class ImageTool implements Tool {
 
 	@Override
 	public void touchEnded(PVector touch) {
+		if (editor.showPageView) { // backgrounds
+			if (!editorSide.adjust) {
+				if (editor.eMode == editorMode.ADD) {
+					addBackground();
+				} else if (editor.eMode == editorMode.ERASE) {
+//					eraseBackground();
+				} else if (editor.eMode == editorMode.SELECT) {
+//					selectBackground();
+				}
+//				currentPage = null;
+			}
+		}
+	}
+	
+	private void addBackground() {
+		if (currentBackground != null) { // if there is something to create a page from
+			pageView.addBackground(currentBackground);
+			editor.selected = currentBackground;
+			editorSide.adjust = true;
+			editor.eMode = Editor.editorMode.SELECT;
+		}
 	}
 
 	@Override
