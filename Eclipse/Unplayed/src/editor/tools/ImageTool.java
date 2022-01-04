@@ -214,7 +214,7 @@ public class ImageTool implements Tool {
 	public void touchEnded(PVector touch) {
 
 		if (editor.showPageView) { // backgrounds
-			DebugOutput.pushMessage("Image tool touch", 3);
+			
 //			if (!editorSide.adjust) {
 			if (editor.eMode == editorMode.ADD) {
 				addBackground();
@@ -234,7 +234,7 @@ public class ImageTool implements Tool {
 			editor.selected = currentBackground;
 			editorSide.adjust = true;
 			editor.eMode = Editor.editorMode.SELECT;
-			DebugOutput.pushMessage("Background added", 3);
+//			DebugOutput.pushMessage("Background added", 3);
 		}
 	}
 

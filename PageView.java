@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import camera.Camera;
+import editor.DebugOutput;
 import handlers.TextureCache;
 import misc.Converter;
 import objects.Background;
@@ -171,6 +172,7 @@ public class PageView {
 	
 	public void addBackground(Background background) {
 		backgrounds.add(background);
+		DebugOutput.pushMessage("background added " + backgrounds.size(), 3);
 	}
 
 	public void removeBackground(Background background) {
