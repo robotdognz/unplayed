@@ -77,7 +77,7 @@ public class ImageTool implements Tool {
 				}
 			}
 		} else { // backgrounds
-			if (!editorSide.adjust) {
+//			if (!editorSide.adjust) {
 				if (editor.eMode == editorMode.ADD) {
 					if (editor.currentView != null) {
 						if (currentBackground == null) {
@@ -97,16 +97,16 @@ public class ImageTool implements Tool {
 						}
 					}
 				}
-			} else {
-				// adjust the page with a single finger
-				if (editor.selected != null && editor.selected instanceof Page) {
-					float xDist = p.mouseX - p.pmouseX;
-					float yDist = p.mouseY - p.pmouseY;
-					xDist = convert.screenToLevel(xDist / 3);
-					yDist = convert.screenToLevel(yDist / 3);
-					((Page) editor.selected).addPosition(xDist, yDist);
-				}
-			}
+//			} else {
+//				// adjust the page with a single finger
+//				if (editor.selected != null && editor.selected instanceof Page) {
+//					float xDist = p.mouseX - p.pmouseX;
+//					float yDist = p.mouseY - p.pmouseY;
+//					xDist = convert.screenToLevel(xDist / 3);
+//					yDist = convert.screenToLevel(yDist / 3);
+//					((Page) editor.selected).addPosition(xDist, yDist);
+//				}
+//			}
 		}
 	}
 
