@@ -26,6 +26,7 @@ import misc.Converter;
 import misc.DoToast;
 import misc.EditorJSON;
 import misc.FileChooser;
+import objects.Background;
 import objects.Event;
 import objects.Image;
 import objects.Page;
@@ -193,7 +194,7 @@ public class Editor {
 
 				// draw selection box around selected object
 				if (selected != null && !(controller instanceof PlayerControl)) {
-					if (selected instanceof Page) {
+					if (selected instanceof Page || selected instanceof Background) {
 						selected.drawSelected(p.g);
 					} else if (selected instanceof CameraChange) {
 						((CameraChange) selected).drawCameraArea(p.g);

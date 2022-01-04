@@ -2,6 +2,7 @@ package editor.uiside;
 
 import editor.Editor;
 import editor.Toolbar;
+import objects.Background;
 import objects.Page;
 import objects.events.PlayerEnd;
 import processing.core.PApplet;
@@ -20,7 +21,8 @@ public class WidgetAdjust extends Widget {
 	public void updateActive() {
 		super.updateActive();
 		if (editor.selected != null) { // if there is something selected
-			if (editor.selected instanceof Page // if it's a Page or a PlayerEnd that is not a level end
+			// if it's a Page or a Background, or a PlayerEnd that is not a level end
+			if (editor.selected instanceof Page || editor.selected instanceof Background
 					|| (editor.selected instanceof PlayerEnd && !((PlayerEnd) editor.selected).getLevelEnd())) {
 				available = true;
 				if (toolbar.adjust) {
@@ -28,7 +30,7 @@ public class WidgetAdjust extends Widget {
 				} else {
 					active = false;
 				}
-			}else {
+			} else {
 				available = false;
 			}
 		} else {
