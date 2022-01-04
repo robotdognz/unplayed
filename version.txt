@@ -22,6 +22,8 @@
 -Tiles and spikes in the editor bottom toolbar now take on the most recently used angle
 -All levels rebuilt to work with new systems
 -Added background images to the level editor, these are used for adding tutorial and story content to the levels
+-Added looping paper background to page view
+-Added drop shadows to pages
 
 1.2.1: Improving physics and tuning player 'feel'
 
