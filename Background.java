@@ -26,6 +26,7 @@ public class Background extends Editable {
 
 	public Background(PApplet p, TextureCache texture, File file, PVector position) {
 		super(position.x, position.y, 1, 1);
+		
 
 		this.p = p;
 
@@ -46,8 +47,8 @@ public class Background extends Editable {
 
 	public void draw(float scale) {
 
+		DebugOutput.pushMessage("background draw", 1);
 		if (hasTexture) {
-			DebugOutput.pushMessage("background draw", 1);
 			// draw the background
 			p.pushMatrix();
 			p.translate(position.x, position.y);
