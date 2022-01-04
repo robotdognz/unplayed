@@ -123,7 +123,7 @@ public class Page extends Editable {
 
 		// draw the shadow
 		p.translate(shadowOffset, shadowOffset);
-		p.fill(0, 100);
+		p.fill(0, 70);
 		p.noStroke();
 		p.rectMode(CENTER);
 		p.rect(0, 0, pageGraphics.width, pageGraphics.height);
