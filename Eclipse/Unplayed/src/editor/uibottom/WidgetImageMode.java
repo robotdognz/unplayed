@@ -15,7 +15,7 @@ public class WidgetImageMode extends Widget {
 
 	@Override
 	public void clicked() {
-		editor.currentTool = new ImageTool(editor);
+		editor.currentTool = new ImageTool(p, editor);
 	}
 
 	@Override
