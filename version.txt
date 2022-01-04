@@ -21,6 +21,7 @@
 -PlayerEnds no longer have manual rotation settings, this is taken care of automatically
 -Tiles and spikes in the editor bottom toolbar now take on the most recently used angle
 -All levels rebuilt to work with new systems
+-Added background images to the level editor, these are used for adding tutorial and story content to the levels
 
 1.2.1: Improving physics and tuning player 'feel'
 
