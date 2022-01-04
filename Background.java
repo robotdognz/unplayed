@@ -30,7 +30,7 @@ public class Background extends Editable {
 
 		this.p = p;
 
-		if (file != null && texture != null && texture.getTileMap().containsKey(file)) {
+		if (file != null && texture != null && texture.getBackgroundMap().containsKey(file)) {
 			this.backgroundTexture = texture.getBackgroundMap().get(file);
 			hasTexture = true;
 			// TODO: textures are stored in grid amounts 1x1 etc, whereas actual world
