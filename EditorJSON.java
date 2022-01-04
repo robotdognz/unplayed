@@ -292,11 +292,6 @@ public class EditorJSON {
 			loadViews(values, game);
 			loadBackgrounds(values, game);
 
-//			// TODO: this only exists for backwards compatibility
-//			if (game.getPageView().getPages().size() == 0) {
-//				loadPages(values, game);
-//			}
-
 			if (toast != null) {
 				toast.showToast("Level Loaded");
 			}
@@ -555,74 +550,5 @@ public class EditorJSON {
 
 		game.getPageView().setBackgrounds(backgrounds);
 	}
-
-//	// TODO: this only exists for backwards compatibility
-//	private void loadPages(JSONArray values, Game game) {
-//		// list of pages
-//		ArrayList<Page> pages = new ArrayList<Page>();
-//		ArrayList<View> views = game.views;
-//
-//		for (int i = 0; i < values.size(); i++) {
-//			JSONObject object = values.getJSONObject(i);
-//			String type = object.getString("type");
-//			if (type.equals("page")) {
-//				int centerX = object.getInt("centerX");
-//				int centerY = object.getInt("centerY");
-//				float size = object.getFloat("size");
-//				float angle = object.getFloat("angle");
-//				boolean flipH = object.getBoolean("flipH");
-//				boolean flipV = object.getBoolean("flipV");
-//				int pX = object.getInt("pX");
-//				int pY = object.getInt("pY");
-//				int pWidth = object.getInt("pWidth");
-//				int pHeight = object.getInt("pHeight");
-//				PVector center = new PVector(centerX, centerY);
-//
-//				// find matching view
-//				View currentView = null;
-//				for (View view : views) {
-//					if (view.getX() != pX) {
-//						continue;
-//					}
-//					if (view.getY() != pY) {
-//						continue;
-//					}
-//					if (view.getWidth() != pWidth) {
-//						continue;
-//					}
-//					if (view.getHeight() != pHeight) {
-//						continue;
-//					}
-//					currentView = view;
-//					break;
-//				}
-//
-//				if (currentView != null) {
-//					Page page = new Page(p, game, currentView, center);
-//					if (flipH) {
-//						page.flipH();
-//					}
-//					if (flipV) {
-//						page.flipV();
-//					}
-//					page.setSize(size);
-//					page.setAngle(angle);
-//
-//					// exclusion booleans
-//					try {
-//						page.showPlayer = object.getBoolean("showPlayer");
-//						page.showObstacles = object.getBoolean("showObstacles");
-//						page.showTiles = object.getBoolean("showTiles");
-//						page.showImages = object.getBoolean("showImages");
-//					} catch (Exception e) {
-//
-//					}
-//
-//					pages.add(page);
-//				}
-//			}
-//		}
-//		game.getPageView().setPages(pages);
-//	}
 
 }

@@ -17,6 +17,9 @@ public class PageView {
 	private Game game;
 	private TextureCache texture;
 	private Converter convert;
+	
+	private BackgroundPaper paper;
+	
 	private ArrayList<Page> pages;
 	private ArrayList<Background> backgrounds;
 
@@ -29,8 +32,11 @@ public class PageView {
 		this.texture = texture;
 		this.convert = convert;
 		this.camera = camera;
-		pages = new ArrayList<Page>();
-		backgrounds = new ArrayList<Background>();
+		
+		this.paper = new BackgroundPaper(texture);
+		
+		this.pages = new ArrayList<Page>();
+		this.backgrounds = new ArrayList<Background>();
 	}
 
 	public void draw() {
@@ -45,12 +51,15 @@ public class PageView {
 
 		float currentScale = convert.getScale();
 
-		p.background(100);
-		// draw the desk
-		p.imageMode(CENTER);
-		PImage temp = texture.getDeskBehind();
-		float ratio = (float) temp.height / (float) temp.width;
-		p.image(temp, 0, 0, p.width * 5, p.width * 5 * ratio);
+		p.background(100); // grey background
+//		// draw the desk
+//		p.imageMode(CENTER);
+//		PImage temp = texture.getDeskBehind();
+//		float ratio = (float) temp.height / (float) temp.width;
+//		p.image(temp, 0, 0, p.width * 5, p.width * 5 * ratio);
+		
+		// draw the looping background
+		paper.draw(p.getGraphics(), game.screenSpace, convert.getScale()); // paper effect
 
 		// calculate page drawing area
 		PVector topLeft;
@@ -97,9 +106,9 @@ public class PageView {
 			page.draw(currentScale);
 		}
 
-		// draw desk shading
-		p.imageMode(CENTER);
-		p.image(texture.getDeskInfront(), 0, 0, p.width * 5, p.width * 5 * ratio);
+//		// draw desk shading
+//		p.imageMode(CENTER);
+//		p.image(texture.getDeskInfront(), 0, 0, p.width * 5, p.width * 5 * ratio);
 
 		// draw existing cameras
 		if (!camera.getGame()) {

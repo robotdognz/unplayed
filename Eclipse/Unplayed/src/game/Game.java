@@ -21,7 +21,7 @@ import org.jbox2d.callbacks.ContactListener;
 public class Game {
 	private PApplet p;
 	public Player player;
-	public Paper paper;
+	public MathsPaper paper;
 	public Converter convert;
 	private TextureCache texture;
 	public AppLogic app;
@@ -98,7 +98,7 @@ public class Game {
 
 		pageView = new PageView(p, this, camera, texture, convert);
 
-		paper = new Paper(texture);
+		paper = new MathsPaper(texture);
 
 		// camera
 		camera.setScale(startScale);

@@ -5,12 +5,12 @@ import objects.Rectangle;
 import processing.core.PGraphics;
 import static processing.core.PConstants.*;
 
-public class Paper {
+public class MathsPaper {
 	// private PImage grid;
 	private TextureCache texture;
 	int gridSize;
 
-	public Paper(TextureCache texture) {
+	public MathsPaper(TextureCache texture) {
 		// grid = texture.grid;
 		this.texture = texture;
 		gridSize = 400;

@@ -41,6 +41,8 @@ public class TextureCache {
 	// desk textures
 	private PImage deskBehind;
 	private PImage deskInfront;
+	
+	private PImage pageViewBackground;
 
 	// level images
 	private File[] imagePaths;
@@ -78,6 +80,8 @@ public class TextureCache {
 		// page view background textures
 		deskBehind = p.requestImage("PagesViewBackGround.png");
 		deskInfront = p.requestImage("PagesViewBackGround_shading.png");
+		
+		pageViewBackground = p.requestImage("PageViewBackground.jpg");
 
 		// level assets
 		loadLevelImages();
@@ -378,6 +382,10 @@ public class TextureCache {
 
 	public ArrayList<EventHandler> getEventList() {
 		return eventList;
+	}
+	
+	public PImage getPageViewBackground() {
+		return pageViewBackground;
 	}
 
 	public PImage getDeskBehind() {
