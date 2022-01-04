@@ -15,7 +15,6 @@ import static processing.core.PConstants.*;
 public class PageView {
 	private PApplet p;
 	private Game game;
-	private TextureCache texture;
 	private Converter convert;
 	
 	private BackgroundPaper paper;
@@ -29,7 +28,6 @@ public class PageView {
 	public PageView(PApplet p, Game game, Camera camera, TextureCache texture, Converter convert) {
 		this.p = p;
 		this.game = game;
-		this.texture = texture;
 		this.convert = convert;
 		this.camera = camera;
 		
@@ -51,15 +49,10 @@ public class PageView {
 
 		float currentScale = convert.getScale();
 
-		p.background(100); // grey background
-//		// draw the desk
-//		p.imageMode(CENTER);
-//		PImage temp = texture.getDeskBehind();
-//		float ratio = (float) temp.height / (float) temp.width;
-//		p.image(temp, 0, 0, p.width * 5, p.width * 5 * ratio);
+//		p.background(100); // grey background
 		
 		// draw the looping background
-		paper.draw(p.getGraphics(), game.screenSpace, convert.getScale()); // paper effect
+		paper.draw(p.getGraphics(), game.screenSpace, convert.getScale()); // background paper effect
 
 		// calculate page drawing area
 		PVector topLeft;
@@ -105,10 +98,6 @@ public class PageView {
 
 			page.draw(currentScale);
 		}
-
-//		// draw desk shading
-//		p.imageMode(CENTER);
-//		p.image(texture.getDeskInfront(), 0, 0, p.width * 5, p.width * 5 * ratio);
 
 		// draw existing cameras
 		if (!camera.getGame()) {

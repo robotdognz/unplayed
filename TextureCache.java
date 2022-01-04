@@ -38,10 +38,6 @@ public class TextureCache {
 	private PImage gridLOD16;
 	private PImage gridLOD8;
 
-	// desk textures
-	private PImage deskBehind;
-	private PImage deskInfront;
-	
 	private PImage pageViewBackground;
 
 	// level images
@@ -77,10 +73,7 @@ public class TextureCache {
 		gridLOD16 = p.loadImage("PaperGrid_64x64.png");
 		gridLOD8 = p.loadImage("PaperGrid_32x32.png");
 
-		// page view background textures
-		deskBehind = p.requestImage("PagesViewBackGround.png");
-		deskInfront = p.requestImage("PagesViewBackGround_shading.png");
-		
+		// page view background texture
 		pageViewBackground = p.requestImage("PageViewBackground.jpg");
 
 		// level assets
@@ -386,13 +379,5 @@ public class TextureCache {
 	
 	public PImage getPageViewBackground() {
 		return pageViewBackground;
-	}
-
-	public PImage getDeskBehind() {
-		return deskBehind;
-	}
-
-	public PImage getDeskInfront() {
-		return deskInfront;
 	}
 }
