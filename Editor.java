@@ -366,7 +366,7 @@ public class Editor {
 		}
 
 		// draw selection box around selected object
-		if (selected != null && !(selected instanceof Page) && !(controller instanceof PlayerControl)) {
+		if (selected != null && !(selected instanceof Page || selected instanceof Background) && !(controller instanceof PlayerControl)) {
 			selected.drawSelected(p.g);
 		}
 
