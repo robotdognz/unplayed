@@ -2,8 +2,6 @@ package editor.tools;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-
-import editor.DebugOutput;
 import editor.Editor;
 import editor.Tool;
 import editor.Editor.editorMode;
@@ -14,9 +12,7 @@ import handlers.TextureCache;
 import misc.Converter;
 import objects.Background;
 import objects.Image;
-import objects.Page;
 import objects.Rectangle;
-import objects.View;
 import processing.core.PApplet;
 import processing.core.PVector;
 

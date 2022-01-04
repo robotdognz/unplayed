@@ -46,20 +46,20 @@ public class Background extends Editable {
 	public void draw(float scale) {
 
 		if (hasTexture) {
-			// draw the background
+			// texture isn't missing
 			p.pushMatrix();
 			p.translate(position.x, position.y);
 			p.scale(size); // size the page will appear in the page view
 			p.rotate(PApplet.radians(angle)); // rotate the page
 			p.scale(flipX, flipY); // flip the page
 			p.imageMode(CENTER);
-			p.image(backgroundTexture.getSprite(scale), 0, 0); // draw the page
+			p.image(backgroundTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the page
 			p.popMatrix();
 		} else {
-			// draw missing background square
+			// texture is missing
 			p.pushMatrix();
 			p.translate(position.x, position.y);
-			p.scale(size); // size the page will appear in the page view
+			p.scale(size); // size the background will appear in the page view
 			p.rotate(PApplet.radians(angle)); // rotate the page
 			p.scale(flipX, flipY); // flip the page
 			p.noStroke();
