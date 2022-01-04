@@ -54,7 +54,7 @@ public class Page extends Editable {
 		showTiles = true;
 		showImages = true;
 		
-		this.shadowOffset = 7;
+		this.shadowOffset = 9;
 
 		setPosition(position);
 		createGraphics();
@@ -123,7 +123,7 @@ public class Page extends Editable {
 
 		// draw the shadow
 		p.translate(shadowOffset, shadowOffset);
-		p.fill(0, 70);
+		p.fill(0, 40);
 		p.noStroke();
 		p.rectMode(CENTER);
 		p.rect(0, 0, pageGraphics.width, pageGraphics.height);
