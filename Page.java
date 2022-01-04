@@ -117,6 +117,16 @@ public class Page extends Editable {
 		p.translate(position.x, position.y);
 		p.scale(size); // size the page will appear in the page view
 		p.rotate(PApplet.radians(angle)); // rotate the page
+
+		// draw the shadow
+		p.translate(1, 1);
+		p.fill(100, 100);
+		p.noStroke();
+		p.rectMode(CENTER);
+		p.rect(0, 0, pageGraphics.width, pageGraphics.height);
+		p.translate(-1, -1);
+		
+		// draw the page itself
 		p.scale(flipX, flipY); // flip the page
 		p.imageMode(CENTER);
 		p.image(pageGraphics, 0, 0); // draw the page
