@@ -2,8 +2,6 @@ package objects;
 
 import static processing.core.PConstants.CENTER;
 import java.io.File;
-
-import editor.DebugOutput;
 import handlers.BackgroundHandler;
 import handlers.TextureCache;
 import processing.core.PApplet;
@@ -47,7 +45,6 @@ public class Background extends Editable {
 
 	public void draw(float scale) {
 
-		DebugOutput.pushMessage("background draw", 1);
 		if (hasTexture) {
 			// draw the background
 			p.pushMatrix();
@@ -59,6 +56,7 @@ public class Background extends Editable {
 			p.image(backgroundTexture.getSprite(scale), 0, 0); // draw the page
 			p.popMatrix();
 		} else {
+			// draw missing background square
 			p.pushMatrix();
 			p.translate(position.x, position.y);
 			p.scale(size); // size the page will appear in the page view

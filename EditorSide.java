@@ -8,6 +8,7 @@ import java.util.HashSet;
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
+import objects.Background;
 import objects.Editable;
 import objects.Image;
 import objects.Page;
@@ -39,6 +40,7 @@ public class EditorSide extends Toolbar {
 	private ArrayList<Widget> image;
 	private ArrayList<Widget> view;
 	private ArrayList<Widget> page;
+	private ArrayList<Widget> background;
 	private ArrayList<Widget> cameraChange;
 	private ArrayList<Widget> playerEnd;
 	private ArrayList<Widget> spike;
@@ -91,6 +93,14 @@ public class EditorSide extends Toolbar {
 		page.add(adjustW);
 		page.add(excludeW);
 
+		// widgets for pages
+		background = new ArrayList<Widget>();
+		background.add(deleteW);
+		background.add(finishW);
+		background.add(flipHW);
+		background.add(flipVW);
+		background.add(adjustW);
+
 		// widgets for cameraChange
 		cameraChange = new ArrayList<Widget>();
 		cameraChange.add(deleteW);
@@ -141,6 +151,8 @@ public class EditorSide extends Toolbar {
 			// select correct widget list
 			if (editor.selected instanceof Page) {
 				widgets = page;
+			} else if (editor.selected instanceof Background) {
+				widgets = background;
 			} else if (editor.selected instanceof View) {
 				widgets = view;
 				adjust = false;

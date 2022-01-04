@@ -14,7 +14,9 @@ import handlers.TextureCache;
 import misc.Converter;
 import objects.Background;
 import objects.Image;
+import objects.Page;
 import objects.Rectangle;
+import objects.View;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -76,34 +78,34 @@ public class ImageTool implements Tool {
 				}
 			}
 		} else { // backgrounds
-//			if (!editorSide.adjust) {
-			if (editor.eMode == editorMode.ADD) {
-				if (currentBackground == null) {
-					PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
-					// offset placement by 50
-					float finalX = placement.x - 50;
-					float finalY = placement.y - 50;
-					PVector center = new PVector(finalX, finalY);
-					currentBackground = new Background(p, texture, editor.currentBackground.getFile(), center);
-				} else {
-					PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
-					// round so blocks snap to grid
-					float finalX = placement.x - 50;
-					float finalY = placement.y - 50;
-					PVector center = new PVector(finalX, finalY);
-					currentBackground.setPosition(center);
+			if (!editorSide.adjust) {
+				if (editor.eMode == editorMode.ADD) {
+					if (currentBackground == null) {
+						PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+						// offset placement by 50
+						float finalX = placement.x - 50;
+						float finalY = placement.y - 50;
+						PVector center = new PVector(finalX, finalY);
+						currentBackground = new Background(p, texture, editor.currentBackground.getFile(), center);
+					} else {
+						PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+						// round so blocks snap to grid
+						float finalX = placement.x - 50;
+						float finalY = placement.y - 50;
+						PVector center = new PVector(finalX, finalY);
+						currentBackground.setPosition(center);
+					}
+				}
+			} else {
+				// adjust the page with a single finger
+				if (editor.selected != null && editor.selected instanceof Background) {
+					float xDist = p.mouseX - p.pmouseX;
+					float yDist = p.mouseY - p.pmouseY;
+					xDist = convert.screenToLevel(xDist / 3);
+					yDist = convert.screenToLevel(yDist / 3);
+					((Background) editor.selected).addPosition(xDist, yDist);
 				}
 			}
-//			} else {
-//				// adjust the page with a single finger
-//				if (editor.selected != null && editor.selected instanceof Page) {
-//					float xDist = p.mouseX - p.pmouseX;
-//					float yDist = p.mouseY - p.pmouseY;
-//					xDist = convert.screenToLevel(xDist / 3);
-//					yDist = convert.screenToLevel(yDist / 3);
-//					((Page) editor.selected).addPosition(xDist, yDist);
-//				}
-//			}
 		}
 	}
 
@@ -214,17 +216,17 @@ public class ImageTool implements Tool {
 	public void touchEnded(PVector touch) {
 
 		if (editor.showPageView) { // backgrounds
-			
-//			if (!editorSide.adjust) {
-			if (editor.eMode == editorMode.ADD) {
-				addBackground();
-			} else if (editor.eMode == editorMode.ERASE) {
-//					eraseBackground();
-			} else if (editor.eMode == editorMode.SELECT) {
-//					selectBackground();
+
+			if (!editorSide.adjust) {
+				if (editor.eMode == editorMode.ADD) {
+					addBackground();
+				} else if (editor.eMode == editorMode.ERASE) {
+					eraseBackground();
+				} else if (editor.eMode == editorMode.SELECT) {
+					selectBackground();
+				}
+				currentBackground = null;
 			}
-//				currentPage = null;
-//			}
 		}
 	}
 
@@ -234,7 +236,27 @@ public class ImageTool implements Tool {
 			editor.selected = currentBackground;
 			editorSide.adjust = true;
 			editor.eMode = Editor.editorMode.SELECT;
-//			DebugOutput.pushMessage("Background added", 3);
+		}
+	}
+
+	private void eraseBackground() {
+		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
+		Background found = pageView.getBackground(mouse.x, mouse.y);
+		if (found != null) {
+			pageView.removeBackground(found);
+			if (found.equals(editor.selected)) {
+				editor.selected = null;
+			}
+		}
+	}
+
+	private void selectBackground() {
+		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
+		Background found = pageView.getBackground(mouse.x, mouse.y);
+		if (found != null) {
+			editor.selected = found; // select it
+		} else {
+			editor.selected = null;
 		}
 	}
 
@@ -249,9 +271,27 @@ public class ImageTool implements Tool {
 
 	@Override
 	public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
+		// background resize
+		if (editor.showPageView && editorSide.adjust) {
+			if (editor.selected != null && editor.selected instanceof Background) {
+				((Background) editor.selected).addSize(convert.screenToLevel(d) / 500);
+				// TODO: figure out what the 500 should be
+
+				// old code
+				PVector center = convert.screenToLevel(x, y);
+				((Background) editor.selected).setPosition(center);
+
+			}
+		}
 	}
 
 	@Override
 	public void onRotate(float x, float y, float angle) {
+		// background rotate
+		if (editor.showPageView && editorSide.adjust) {
+			if (editor.selected != null && editor.selected instanceof Background) {
+				((Background) editor.selected).addAngle(PApplet.degrees(angle));
+			}
+		}
 	}
 }
