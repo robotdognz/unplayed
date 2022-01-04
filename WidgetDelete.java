@@ -6,6 +6,7 @@ import java.util.List;
 import editor.Editor;
 import editor.Toolbar;
 import game.Game;
+import objects.Background;
 import objects.Event;
 import objects.Image;
 import objects.Page;
@@ -101,6 +102,8 @@ public class WidgetDelete extends Widget {
 			} else { // page view
 				if (editor.selected instanceof Page) {
 					game.getPageView().removePage((Page) editor.selected);
+				} else if (editor.selected instanceof Background) {
+					game.getPageView().removeBackground((Background) editor.selected);
 				}
 			}
 			// deselect the object
