@@ -2,6 +2,8 @@ package objects;
 
 import static processing.core.PConstants.CENTER;
 import java.io.File;
+
+import editor.DebugOutput;
 import handlers.BackgroundHandler;
 import handlers.TextureCache;
 import processing.core.PApplet;
@@ -45,6 +47,7 @@ public class Background extends Editable {
 	public void draw(float scale) {
 
 		if (hasTexture) {
+			DebugOutput.pushMessage("background draw", 1);
 			// draw the background
 			p.pushMatrix();
 			p.translate(position.x, position.y);

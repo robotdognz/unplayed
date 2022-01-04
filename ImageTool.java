@@ -14,7 +14,6 @@ import handlers.TextureCache;
 import misc.Converter;
 import objects.Background;
 import objects.Image;
-import objects.Page;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -23,7 +22,7 @@ public class ImageTool implements Tool {
 	Editor editor;
 	Game game;
 	TextureCache texture;
-	
+
 	PApplet p;
 	private Converter convert;
 	private EditorSide editorSide;
@@ -78,25 +77,23 @@ public class ImageTool implements Tool {
 			}
 		} else { // backgrounds
 //			if (!editorSide.adjust) {
-				if (editor.eMode == editorMode.ADD) {
-					if (editor.currentView != null) {
-						if (currentBackground == null) {
-							PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
-							// offset placement by 50
-							float finalX = placement.x - 50;
-							float finalY = placement.y - 50;
-							PVector center = new PVector(finalX, finalY);
-							currentBackground = new Background(p, texture, editor.currentBackground.getFile(), center);
-						} else {
-							PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
-							// round so blocks snap to grid
-							float finalX = placement.x - 50;
-							float finalY = placement.y - 50;
-							PVector center = new PVector(finalX, finalY);
-							currentBackground.setPosition(center);
-						}
-					}
+			if (editor.eMode == editorMode.ADD) {
+				if (currentBackground == null) {
+					PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+					// offset placement by 50
+					float finalX = placement.x - 50;
+					float finalY = placement.y - 50;
+					PVector center = new PVector(finalX, finalY);
+					currentBackground = new Background(p, texture, editor.currentBackground.getFile(), center);
+				} else {
+					PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+					// round so blocks snap to grid
+					float finalX = placement.x - 50;
+					float finalY = placement.y - 50;
+					PVector center = new PVector(finalX, finalY);
+					currentBackground.setPosition(center);
 				}
+			}
 //			} else {
 //				// adjust the page with a single finger
 //				if (editor.selected != null && editor.selected instanceof Page) {
