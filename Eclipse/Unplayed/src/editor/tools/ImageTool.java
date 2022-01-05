@@ -258,6 +258,11 @@ public class ImageTool implements Tool {
 
 	@Override
 	public void draw() {
+		if (editor.showPageView) { // backgrounds
+			if (currentBackground != null) {
+				currentBackground.draw(16); // 80 // draw the page at lowest LOD
+			}
+		}
 	}
 
 	@Override
