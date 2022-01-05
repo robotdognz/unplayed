@@ -11,9 +11,10 @@ public class BackgroundHandler extends Handler implements Comparable<BackgroundH
 	}
 
 	@Override
-	public int compareTo(BackgroundHandler o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(BackgroundHandler otherBackgroundHandler) {
+		String otherName = otherBackgroundHandler.getFile().toString();
+		String name = datapath.toString();
+		return name.compareTo(otherName);
 	}
 
 }
