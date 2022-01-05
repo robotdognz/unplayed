@@ -53,7 +53,7 @@ public class Page extends Editable {
 		showObstacles = true;
 		showTiles = true;
 		showImages = true;
-		
+
 		this.shadowOffset = 9;
 
 		setPosition(position);
@@ -128,7 +128,7 @@ public class Page extends Editable {
 		p.rectMode(CENTER);
 		p.rect(0, 0, pageGraphics.width, pageGraphics.height);
 		p.translate(-shadowOffset, -shadowOffset);
-		
+
 		// draw the page itself
 		p.scale(flipX, flipY); // flip the page
 		p.imageMode(CENTER);
@@ -244,6 +244,7 @@ public class Page extends Editable {
 	public void setSize(float size) {
 		this.size = size;
 		updateCorners();
+		updateShadow();
 	}
 
 	public void addSize(float size) {
@@ -253,6 +254,7 @@ public class Page extends Editable {
 			this.size = 0.5f;
 		}
 		updateCorners();
+		updateShadow();
 	}
 
 	public float getSize() {
@@ -265,6 +267,10 @@ public class Page extends Editable {
 
 	public View getView() {
 		return view;
+	}
+
+	private void updateShadow() {
+		this.shadowOffset = (int) (9 * size);
 	}
 
 	// --------------update the corner PVectors---------------

@@ -260,7 +260,7 @@ public class ImageTool implements Tool {
 	public void draw() {
 		if (editor.showPageView) { // backgrounds
 			if (currentBackground != null) {
-				currentBackground.draw(16); // 80 // draw the page at lowest LOD
+				currentBackground.draw(16); // 80 // draw the background while placing
 			}
 		}
 	}
