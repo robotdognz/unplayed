@@ -19,7 +19,8 @@ public class Page extends Editable {
 
 	private PGraphics pageGraphics;
 	private PGraphics tiles;
-	private int shadowOffset;
+	private int shadowOffset; // the absolute amount to offset the shadow by
+	private int shadow; // the relative amount to offset the shadow by
 	private boolean redraw = true;
 	private PVector position; // center of the page in page view
 
@@ -55,6 +56,7 @@ public class Page extends Editable {
 		showImages = true;
 
 		this.shadowOffset = 9;
+		this.shadow = 9;
 
 		setPosition(position);
 		createGraphics();
@@ -122,12 +124,12 @@ public class Page extends Editable {
 		p.rotate(PApplet.radians(angle)); // rotate the page
 
 		// draw the shadow
-		p.translate(shadowOffset, shadowOffset);
+		p.translate(shadow, shadow);
 		p.fill(0, 40);
 		p.noStroke();
 		p.rectMode(CENTER);
 		p.rect(0, 0, pageGraphics.width, pageGraphics.height);
-		p.translate(-shadowOffset, -shadowOffset);
+		p.translate(-shadow, -shadow);
 
 		// draw the page itself
 		p.scale(flipX, flipY); // flip the page
@@ -270,7 +272,7 @@ public class Page extends Editable {
 	}
 
 	private void updateShadow() {
-		this.shadowOffset = (int) (9 * size);
+		this.shadow = (int) (shadowOffset / size);
 	}
 
 	// --------------update the corner PVectors---------------
