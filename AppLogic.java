@@ -376,6 +376,14 @@ public class AppLogic {
 				file.delete();
 			}
 		}
+		// background images
+		File backgroundDir = new File(p.dataPath("unplayed_backgrounds") + '/');
+		File[] backgroundPaths = backgroundDir.listFiles();
+		for (File file : backgroundPaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
 		// events
 		File eventDir = new File(p.dataPath("unplayed_events") + '/');
 		File[] eventPaths = eventDir.listFiles();
