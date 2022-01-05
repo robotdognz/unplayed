@@ -38,6 +38,8 @@ public class Background extends Editable {
 			setHeight(backgroundTexture.getHeight() * 100);
 		} else {
 			hasTexture = false;
+			setWidth(100);
+			setHeight(100);
 		}
 
 		setPosition(position);
