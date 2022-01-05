@@ -11,7 +11,7 @@ public class BackgroundPaper {
 
 	public BackgroundPaper(TextureCache texture) {
 		this.texture = texture;
-		gridSize = 800;
+		gridSize = 1600; // 400
 	}
 
 	public void draw(PGraphics graphics, Rectangle screen, float scale) {
