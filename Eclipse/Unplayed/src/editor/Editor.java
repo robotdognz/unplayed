@@ -1,6 +1,7 @@
 package editor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.jbox2d.common.Vec2;
 
@@ -98,6 +99,9 @@ public class Editor {
 	// saver/loader class
 	public EditorJSON eJSON;
 
+	// objects to be rendered in level build view
+	public HashSet<Rectangle> screenObjects;
+
 	// frame count and debug visualization
 	private int textSize;
 	public boolean debugVis;
@@ -142,9 +146,16 @@ public class Editor {
 		frameDelay = 60; // 100
 		textSize = (int) (p.width / 28.8); // 50
 		tileSearch = false;
+
+		// Initialize screen  objects set
+		screenObjects = new HashSet<Rectangle>();
 	}
 
 	public void step(ArrayList<PVector> touches) {
+		// get objects to draw
+		screenObjects.clear();
+		world.retrieve(screenObjects, game.screenSpace);
+
 		editorTop.step();
 		editorBottom.step();
 		editorSide.step();
@@ -267,15 +278,16 @@ public class Editor {
 		p.background(240);
 
 		// find corners of camera
-		PVector currentTopLeft = convert.screenToLevel(0, 0);
-		PVector currentBottomRight = convert.screenToLevel(p.width, p.height);
+		PVector currentTopLeft = game.screenSpace.getTopLeft(); //convert.screenToLevel(0, 0);
+		PVector currentBottomRight = game.screenSpace.getBottomRight(); //convert.screenToLevel(p.width, p.height);
 		// TODO: this system is not great, when I've merged the level view updating code
 		// from game to editor, I need to change this so it only goes eliminates things
 		// that shouldn't be drawn once
 
+		
 		// draw player and environment
 
-		for (Rectangle r : game.screenObjects) { // draw images
+		for (Rectangle r : screenObjects) { // draw images
 			if (!(r instanceof Image)) {
 				continue;
 			}
@@ -293,7 +305,7 @@ public class Editor {
 			}
 			((Image) r).draw(p.g, currentScale);
 		}
-		for (Rectangle r : game.screenObjects) { // draw tiles on top of images
+		for (Rectangle r : screenObjects) { // draw tiles on top of images
 			if (!(r instanceof Tile)) {
 				continue;
 			}
@@ -321,7 +333,7 @@ public class Editor {
 				view.draw(p.g);
 			}
 		}
-		for (Rectangle r : game.screenObjects) { // draw events on top of player, tiles, and images
+		for (Rectangle r : screenObjects) { // draw events on top of player, tiles, and images
 			if (r instanceof Event && (eventVis || ((Event) r).visible)) {
 				((Event) r).draw(p.g, currentScale);
 			}

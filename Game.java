@@ -42,10 +42,10 @@ public class Game {
 	public Rectangle cameraAreaStart;
 	public Rectangle cameraAreaCheckpoint;
 
-	// TODO: move these to editor (need to move some logic from step too)
 	public Rectangle screenSpace;
 	public int screenSpaceOffset;
-	public HashSet<Rectangle> screenObjects;
+	// for debug purposes, I believe (future Marco here), can be used to decrease
+	// the rendering space
 
 	// local variables for camera
 	public float newScale;
@@ -65,7 +65,7 @@ public class Game {
 	public ContactListener contactListener;
 
 	public boolean tumble = true; // should the player tumble when being corrected into a slot
-	
+
 	// delta time
 	float accumulator = 0;
 	float stepSize = 1f / 240f;
@@ -113,7 +113,7 @@ public class Game {
 		float screenSpaceWidth = convert.screenToLevel(p.width + screenSpaceOffset * 2);
 		float screenSpaceHeight = convert.screenToLevel(p.height + screenSpaceOffset * 2);
 		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
-		screenObjects = new HashSet<Rectangle>();
+//		screenObjects = new HashSet<Rectangle>();
 
 		float camX = camera.getCenter().x - newScale / 2;
 		cameraArea = new Rectangle(camX, bottomOfTopBar, newScale, topOfBottomBar - bottomOfTopBar);
@@ -443,9 +443,9 @@ public class Game {
 		}
 		box2d.world.clearForces();
 
-		// get objects to draw
-		screenObjects.clear();
-		world.retrieve(screenObjects, screenSpace);
+//		// get objects to draw
+//		screenObjects.clear();
+//		world.retrieve(screenObjects, screenSpace);
 
 		if (camera.getGame()) {
 			screenMovement(deltaTime);
