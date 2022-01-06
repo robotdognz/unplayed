@@ -63,8 +63,9 @@ public class Game {
 	// box2d
 	public Box2DProcessing box2d;
 	public ContactListener contactListener;
-	public boolean locked = false;
 
+	public boolean tumble = false; // should the player tumble when being corrected into a slot
+	
 	// delta time
 	float accumulator = 0;
 	float stepSize = 1f / 240f;
@@ -304,7 +305,7 @@ public class Game {
 				this.player.destroy();
 
 			}
-			player = new Player(p, box2d, locked, texture, current);
+			player = new Player(p, box2d, texture, current);
 		} else if (playerArea instanceof Tile) {
 			HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
 			world.retrieve(returnObjects, playerArea);
@@ -335,14 +336,14 @@ public class Game {
 					if (this.player != null) {
 						this.player.destroy();
 					}
-					player = new Player(p, box2d, locked, texture, playerCheckpoint);
+					player = new Player(p, box2d, texture, playerCheckpoint);
 				} else if (playerStart != null) {
 					Tile current = ((PlayerStart) playerStart).getRequired();
 					if (current != null) {
 						if (this.player != null) {
 							this.player.destroy();
 						}
-						player = new Player(p, box2d, locked, texture, current);
+						player = new Player(p, box2d, texture, current);
 					}
 				}
 
@@ -428,6 +429,7 @@ public class Game {
 	public void step(float deltaTime) {
 		// step player non-physics logic
 		if (player != null) {
+			player.tumble = this.tumble;
 			player.step(deltaTime);
 		}
 

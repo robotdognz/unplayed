@@ -13,13 +13,13 @@ public class WidgetLock extends Widget {
 
 	@Override
 	public void clicked() {
-		editor.game.locked = !editor.game.locked;
+		editor.game.tumble = !editor.game.tumble;
 	}
 
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (editor.game.locked) {
+		if (editor.game.tumble) {
 			active = true;
 		} else {
 			active = false;
