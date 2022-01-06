@@ -291,9 +291,7 @@ public class Editor {
 			if (r.getBottomRight().y < currentTopLeft.y + 1) {
 				continue;
 			}
-//			if (r instanceof Image) {
 			((Image) r).draw(p.g, currentScale);
-//			}
 		}
 		for (Rectangle r : game.screenObjects) { // draw tiles on top of images
 			if (!(r instanceof Tile)) {
@@ -311,9 +309,7 @@ public class Editor {
 			if (r.getBottomRight().y < currentTopLeft.y + 1) {
 				continue;
 			}
-//			if (r instanceof Tile) {
 			((Tile) r).draw(p.g, currentScale);
-//			}
 		}
 
 		if (game.player != null) { // draw the player on top of tiles and images
@@ -364,7 +360,8 @@ public class Editor {
 		}
 
 		// draw selection box around selected object
-		if (selected != null && !(selected instanceof Page || selected instanceof Background) && !(controller instanceof PlayerControl)) {
+		if (selected != null && !(selected instanceof Page || selected instanceof Background)
+				&& !(controller instanceof PlayerControl)) {
 			selected.drawSelected(p.g);
 		}
 

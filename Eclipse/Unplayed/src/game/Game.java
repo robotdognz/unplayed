@@ -70,7 +70,7 @@ public class Game {
 	float accumulator = 0;
 	float stepSize = 1f / 240f;
 
-	public Game(PApplet p, AppLogic app, Camera c, TextureCache texture, Converter convert) { // Vibe v,
+	public Game(PApplet p, AppLogic app, Camera c, TextureCache texture, Converter convert) {
 		// legacy variables from level class TODO: write these out eventually
 		PVector cameraTopLeft = new PVector(-400, -400);
 		PVector cameraBottomRight = new PVector(500, 600);
@@ -85,7 +85,6 @@ public class Game {
 		this.p = p;
 		this.app = app;
 		this.camera = c;
-//		this.vibe = v;
 		this.texture = texture;
 		this.convert = convert;
 
