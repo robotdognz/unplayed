@@ -147,14 +147,11 @@ public class Editor {
 		textSize = (int) (p.width / 28.8); // 50
 		tileSearch = false;
 
-		// Initialize screen  objects set
+		// Initialize screen objects set
 		screenObjects = new HashSet<Rectangle>();
 	}
 
 	public void step(ArrayList<PVector> touches) {
-		// get objects to draw
-		screenObjects.clear();
-		world.retrieve(screenObjects, game.screenSpace);
 
 		editorTop.step();
 		editorBottom.step();
@@ -171,6 +168,10 @@ public class Editor {
 
 		if (showPageView) {
 			point = null;
+		} else {
+			// get objects to draw in level build view
+			screenObjects.clear();
+			world.retrieve(screenObjects, game.screenSpace);
 		}
 
 		if (!(controller instanceof EditorControl)) {
@@ -188,13 +189,13 @@ public class Editor {
 
 	}
 
-	// a bunch of this probably needs to be moved to step, for logical consistency
-	// only drawing should be in draw
 	public void draw(float deltaTime, PVector touch, Menu menu) {
-		// draw the level
+
 		if (!showPageView) {
+			// draw the level build view
 			drawLevel();
 		} else {
+			// draw on screen tool information
 			if (!camera.getGame()) {
 				// start working at game scale
 				p.pushMatrix();
@@ -278,14 +279,12 @@ public class Editor {
 		p.background(240);
 
 		// find corners of camera
-		PVector currentTopLeft = game.screenSpace.getTopLeft(); //convert.screenToLevel(0, 0);
-		PVector currentBottomRight = game.screenSpace.getBottomRight(); //convert.screenToLevel(p.width, p.height);
-		// TODO: this system is not great, when I've merged the level view updating code
-		// from game to editor, I need to change this so it only goes eliminates things
-		// that shouldn't be drawn once
+		PVector currentTopLeft = game.screenSpace.getTopLeft();
+		PVector currentBottomRight = game.screenSpace.getBottomRight();
 
-		
 		// draw player and environment
+		// TODO: this system is not great, I need to change this so it only eliminates
+		// things that shouldn't be drawn once
 
 		for (Rectangle r : screenObjects) { // draw images
 			if (!(r instanceof Image)) {

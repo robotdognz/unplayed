@@ -8,7 +8,6 @@ import game.player.Player;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.MyContactListener;
-//import misc.Vibe;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
@@ -44,8 +43,8 @@ public class Game {
 
 	public Rectangle screenSpace;
 	public int screenSpaceOffset;
-	// for debug purposes, I believe (future Marco here), can be used to decrease
-	// the rendering space
+	// screenSpaceOffset is for debug purposes, I believe (future Marco here), it
+	// can be used to decrease the rendering space
 
 	// local variables for camera
 	public float newScale;
@@ -106,14 +105,12 @@ public class Game {
 		camera.setCenter(startCenter);
 		newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
 
-		// calculate screen space TODO: clean this up, screen space should be moved to
-		// the editor
+		// calculate screen space
 		screenSpaceOffset = 0; // positive makes it larger, negative makes it smaller
 		PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
 		float screenSpaceWidth = convert.screenToLevel(p.width + screenSpaceOffset * 2);
 		float screenSpaceHeight = convert.screenToLevel(p.height + screenSpaceOffset * 2);
 		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
-//		screenObjects = new HashSet<Rectangle>();
 
 		float camX = camera.getCenter().x - newScale / 2;
 		cameraArea = new Rectangle(camX, bottomOfTopBar, newScale, topOfBottomBar - bottomOfTopBar);
@@ -400,27 +397,27 @@ public class Game {
 		p.scale(camera.getSubScale()); // apply offset for tall screen spaces
 		p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
 
-		// draw black bars
-		if (camera.getGame()) {
-			p.fill(20, 255); // 10, 255
-			int barSize = 1000000;
-			p.rectMode(CORNERS);
-			p.noStroke();
-
-			// top bar
-			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
-					cameraArea.getTopLeft().y);
-			// bottom bar
-			p.rect(-barSize + camera.getCenter().x, cameraArea.getBottomRight().y, barSize + camera.getCenter().x,
-					camera.getCenter().y + barSize);
-			// left bar
-			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, cameraArea.getTopLeft().x,
-					camera.getCenter().y + barSize);
-			// right bar
-			p.rect(cameraArea.getBottomRight().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
-					camera.getCenter().y + barSize);
-			p.rectMode(CORNER);
-		}
+//		// draw black bars
+//		if (camera.getGame()) {
+//			p.fill(20, 255); // 10, 255
+//			int barSize = 1000000;
+//			p.rectMode(CORNERS);
+//			p.noStroke();
+//
+//			// top bar
+//			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
+//					cameraArea.getTopLeft().y);
+//			// bottom bar
+//			p.rect(-barSize + camera.getCenter().x, cameraArea.getBottomRight().y, barSize + camera.getCenter().x,
+//					camera.getCenter().y + barSize);
+//			// left bar
+//			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, cameraArea.getTopLeft().x,
+//					camera.getCenter().y + barSize);
+//			// right bar
+//			p.rect(cameraArea.getBottomRight().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
+//					camera.getCenter().y + barSize);
+//			p.rectMode(CORNER);
+//		}
 
 		p.popMatrix(); // start working at screen scale
 	}
