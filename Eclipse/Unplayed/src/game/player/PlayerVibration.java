@@ -2,7 +2,6 @@ package game.player;
 
 import java.util.ArrayList;
 import java.util.List;
-import editor.DebugOutput;
 import misc.CountdownTimer;
 import misc.Vibe;
 
@@ -151,7 +150,7 @@ public class PlayerVibration {
 					vibrationCooldown.start();
 //					vibeFrame = true;
 				}
-				DebugOutput.pushMessage("Did vibe: " + strength + " - " + total, 1);
+//				DebugOutput.pushMessage("Did vibe: " + strength + " - " + total, 1);
 				
 
 				vibrationMonitor.start();
@@ -163,7 +162,7 @@ public class PlayerVibration {
 				if (strength == previousImpulse) {
 					vibrationMonitor.start();
 					currentBadImpulse = strength;
-					DebugOutput.pushMessage("Skipped vibe: " + strength + " - " + total, 1);
+//					DebugOutput.pushMessage("Skipped vibe: " + strength + " - " + total, 1);
 				} else {
 					if (strength != currentBadImpulse) {
 						if (!vibrationCooldown.isRunning()) {
@@ -171,7 +170,7 @@ public class PlayerVibration {
 							vibrationCooldown.start();
 //							vibeFrame = true;
 						}
-						DebugOutput.pushMessage("Did vibe: " + strength + " - " + total, 1);
+//						DebugOutput.pushMessage("Did vibe: " + strength + " - " + total, 1);
 					}
 				}
 
