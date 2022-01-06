@@ -5,8 +5,8 @@ import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class WidgetLock extends Widget {
-	public WidgetLock(PApplet p, Editor editor, Toolbar parent) {
+public class WidgetTumble extends Widget {
+	public WidgetTumble(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 //		icon = p.loadImage(folder + "debugging.png");
 	}

@@ -37,8 +37,7 @@ public class Player extends Editable {
 	private float density; // the player's density
 	private float friction; // the player's friction
 
-//	public boolean locked; // does the player have locked rotation TODO: remove when physics completed
-	public boolean tumble;
+	public boolean tumble; // is the player in physics tumble mode
 
 	public int groundContacts; // the number of grounds touching the player's body
 	public int leftWallContacts; // the number of left walls touching the player's body
@@ -124,8 +123,7 @@ public class Player extends Editable {
 		this.friction = 0.6f; // from 0 to 1
 		this.density = 1; // from 0 to 1
 
-//		this.locked = false; //locked; // is rotation locked
-		tumble = false;
+		this.tumble = true;
 
 		this.vibration = new PlayerVibration();
 
@@ -485,8 +483,7 @@ public class Player extends Editable {
 			return;
 		}
 
-		// TODO: remove this eventually
-//		boolean tumble = false;
+		// TODO: find out which way is best
 		if (tumble) {
 			// check the player isn't spinning
 			float av = dynamicBody.getAngularVelocity();

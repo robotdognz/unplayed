@@ -24,6 +24,8 @@
 -Added background images to the level editor, these are used for adding tutorial and story content to the levels
 -Added looping paper background to page view
 -Added drop shadows to pages
+-Added a setting in the level editor for changing player tumble mode, for testing
+-Added temp hints to current demo levels
 
 1.2.1: Improving physics and tuning player 'feel'
 
