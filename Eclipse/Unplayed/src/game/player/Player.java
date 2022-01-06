@@ -18,9 +18,6 @@ import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
 import static processing.core.PConstants.*;
 import org.jbox2d.dynamics.*;
-
-import editor.DebugOutput;
-
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 
@@ -45,8 +42,6 @@ public class Player extends Editable {
 	public int groundContacts; // the number of grounds touching the player's body
 	public int leftWallContacts; // the number of left walls touching the player's body
 	public int rightWallContacts; // the number of right walls touching the player's body
-
-	public int edgeContacts; // the number of solid surface touching the players edges
 
 	private ArrayList<Event> events; // list of events touching the player
 	private PlayerVibration vibration; // vibration system
@@ -128,7 +123,7 @@ public class Player extends Editable {
 		this.friction = 0.6f; // from 0 to 1
 		this.density = 1; // from 0 to 1
 
-		this.locked = locked; // is rotation locked
+		this.locked = false; //locked; // is rotation locked
 
 		this.vibration = new PlayerVibration();
 
@@ -151,7 +146,6 @@ public class Player extends Editable {
 		this.groundContacts = 0;
 		this.leftWallContacts = 0;
 		this.rightWallContacts = 0;
-		this.edgeContacts = 0;
 
 		this.verticalTunnel = false;
 		this.horizontalTunnel = false;
@@ -302,15 +296,6 @@ public class Player extends Editable {
 		}
 	}
 
-	public void startEdgeContact() {
-		this.edgeContacts++;
-		DebugOutput.pushMessage("Contact started", 1);
-	}
-
-	public void endEdgeContact() {
-		this.edgeContacts--;
-	}
-
 	public void addTile(Tile tile) {
 		sensorContacts.add(tile);
 	}
@@ -377,7 +362,7 @@ public class Player extends Editable {
 				rightWallBoostTimer.stop();
 				jumpTimer.start();
 
-				DebugOutput.pushMessage("Boost off right wall (padded)", 2);
+//				DebugOutput.pushMessage("Boost off right wall (padded)", 2);
 				return;
 			}
 
@@ -406,7 +391,7 @@ public class Player extends Editable {
 				leftWallBoostTimer.stop();
 				jumpTimer.start();
 
-				DebugOutput.pushMessage("Boost off left wall (padded)", 2);
+//				DebugOutput.pushMessage("Boost off left wall (padded)", 2);
 				return;
 			}
 
@@ -1350,13 +1335,13 @@ public class Player extends Editable {
 							xImpulse = (dynamicBody.getMass() * wallJumpPower);
 							pushLeftTimer.start();
 
-							DebugOutput.pushMessage("Wall jump on left wall", 2);
+//							DebugOutput.pushMessage("Wall jump on left wall", 2);
 
 						} else {
 							// there is a slot directly above
 							pushLeftTimer.start();
 
-							DebugOutput.pushMessage("Slot above jump", 2);
+//							DebugOutput.pushMessage("Slot above jump", 2);
 						}
 
 					} else if (right) { // pulling away from left wall
@@ -1368,7 +1353,7 @@ public class Player extends Editable {
 						// turn off timer
 						leftStickTimer.stop();
 
-						DebugOutput.pushMessage("Boost off left wall", 2);
+//						DebugOutput.pushMessage("Boost off left wall", 2);
 
 					} else { // no direction left wall
 
@@ -1381,7 +1366,7 @@ public class Player extends Editable {
 						leftWallBoostTimer.start();
 						rightWallBoostTimer.stop();
 
-						DebugOutput.pushMessage("Jump off left wall no direction", 2);
+//						DebugOutput.pushMessage("Jump off left wall no direction", 2);
 					}
 
 				} else if (rightWallContacts > leftWallContacts || rightWallTimer.isRunning()) {
@@ -1394,13 +1379,13 @@ public class Player extends Editable {
 							xImpulse = -(dynamicBody.getMass() * wallJumpPower);
 							pushRightTimer.start();
 
-							DebugOutput.pushMessage("Wall jump on right wall", 2);
+//							DebugOutput.pushMessage("Wall jump on right wall", 2);
 
 						} else {
 							// there is a slot directly above
 							pushRightTimer.start();
 
-							DebugOutput.pushMessage("Slot above jump", 2);
+//							DebugOutput.pushMessage("Slot above jump", 2);
 						}
 					} else if (left) { // pulling away from right wall
 						// boost off right wall
@@ -1411,7 +1396,7 @@ public class Player extends Editable {
 						// turn off timer
 						rightStickTimer.stop();
 
-						DebugOutput.pushMessage("Boost off right wall", 2);
+//						DebugOutput.pushMessage("Boost off right wall", 2);
 
 					} else { // no direction right wall
 
@@ -1424,7 +1409,7 @@ public class Player extends Editable {
 						rightWallBoostTimer.start();
 						leftWallBoostTimer.stop();
 
-						DebugOutput.pushMessage("Jump off right wall no direction", 2);
+//						DebugOutput.pushMessage("Jump off right wall no direction", 2);
 					}
 				}
 
