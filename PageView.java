@@ -17,15 +17,15 @@ public class PageView {
 	private PApplet p;
 	private Game game;
 	private Converter convert;
-	
+
 	private BackgroundPaper paper;
-	
+
 	private ArrayList<Page> pages;
 	private ArrayList<Background> backgrounds;
 
 	// world camera
 	private Camera camera;
-	
+
 	private PageViewCamera pageCamera;
 
 	public PageView(PApplet p, Game game, Camera camera, TextureCache texture, Converter convert) {
@@ -33,11 +33,11 @@ public class PageView {
 		this.game = game;
 		this.convert = convert;
 		this.camera = camera;
-		
+
 		this.pageCamera = new PageViewCamera();
-		
+
 		this.paper = new BackgroundPaper(texture);
-		
+
 		this.pages = new ArrayList<Page>();
 		this.backgrounds = new ArrayList<Background>();
 	}
@@ -102,6 +102,16 @@ public class PageView {
 			page.draw(currentScale);
 		}
 
+		// draw auto generated camera
+		if (!camera.getGame()) {
+			p.noFill();
+			p.stroke(255, 0, 0);
+			p.strokeWeight(3);
+			p.rectMode(CORNERS);
+			p.rect(pageCamera.getTopLeft().x, pageCamera.getTopLeft().y, pageCamera.getBottomRight().x,
+					pageCamera.getBottomRight().y);
+		}
+
 		// draw existing cameras
 		if (!camera.getGame()) {
 			for (CameraChange c : game.world.getCameras()) {
@@ -119,9 +129,34 @@ public class PageView {
 	}
 
 	public void step() {
-		for (Page p : pages) {
-			p.step();
+		boolean adjustCamera = false;
+		for (Page page : pages) {
+			page.step();
+			if (page.playerVisibilityChanged()) {
+				adjustCamera = true;
+			}
 		}
+
+		if (adjustCamera) {
+			// update the camera zone
+			float minX = Float.POSITIVE_INFINITY;
+			float minY = Float.POSITIVE_INFINITY;
+			float maxX = Float.NEGATIVE_INFINITY;
+			float maxY = Float.NEGATIVE_INFINITY;
+			for (Page page : pages) {
+				if (page.playerVisible()) {
+					// if this page has a visible player
+					minX = Math.min(minX, page.getLeftmostPoint());
+					minY = Math.min(minY, page.getTopmostPoint());
+					maxX = Math.max(maxX, page.getRightmostPoint());
+					maxY = Math.max(maxY, page.getBottommostPoint());
+				}
+			}
+
+			pageCamera.update(minX, minY, maxX, maxY);
+		}
+
+		pageCamera.step();
 	}
 
 	public void forceRedraw() {
@@ -165,10 +200,7 @@ public class PageView {
 	public void clearPages() {
 		this.pages.clear();
 	}
-	
-	
-	
-	
+
 	public void addBackground(Background background) {
 		backgrounds.add(background);
 	}

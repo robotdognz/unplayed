@@ -42,7 +42,8 @@ public class Page extends Editable {
 	public boolean showImages;
 
 	// player visibility
-	public boolean playerVisible;
+	private boolean playerVisible;
+	private boolean playerVisibleChanged;
 
 	public Page(PApplet p, Game game, View view, PVector position) { // PVector topLeft, PVector bottomRight,
 		super(view.getTopLeft().x, view.getTopLeft().y, view.getWidth(), view.getHeight());
@@ -121,24 +122,40 @@ public class Page extends Editable {
 	private void updatePlayerVisibility() {
 		// update player visibility
 		if (game.player != null) {
-			playerVisible = false;
-			if (game.player.getCenter().x > view.getBottomRight().x - 1) {
-				return;
+			boolean temp = false;
+			while (temp == false) {
+				if (game.player.getCenter().x - game.player.getWidth() > view.getBottomRight().x - 1) {
+					break;
+				}
+				if (game.player.getCenter().x + game.player.getWidth() < view.getTopLeft().x + 1) {
+					break;
+				}
+				if (game.player.getCenter().y - game.player.getWidth() > view.getBottomRight().y - 1) {
+					break;
+				}
+				if (game.player.getCenter().y + game.player.getWidth() < view.getTopLeft().y + 1) {
+					break;
+				}
+
+				temp = true;
 			}
-			if (game.player.getCenter().x < view.getTopLeft().x + 1) {
-				return;
+
+			if (temp != playerVisible) {
+				playerVisible = temp;
+				playerVisibleChanged = true;
 			}
-			if (game.player.getCenter().y > view.getBottomRight().y - 1) {
-				return;
-			}
-			if (game.player.getCenter().y < view.getTopLeft().y + 1) {
-				return;
-			}
-			playerVisible = true;
 
 		} else {
 			playerVisible = false;
 		}
+	}
+
+	public boolean playerVisibilityChanged() {
+		// has player visibility changed since last check?
+		boolean temp = playerVisibleChanged;
+		playerVisibleChanged = false;
+		return temp;
+
 	}
 
 //	public void exclude(Rectangle object) {
@@ -261,6 +278,10 @@ public class Page extends Editable {
 		g.popMatrix();
 	}
 
+	public boolean playerVisible() {
+		return playerVisible;
+	}
+
 	@Override
 	public void setAngle(float angle) {
 		super.setAngle(angle);
@@ -360,6 +381,23 @@ public class Page extends Editable {
 		}
 
 		return true;
+	}
+
+	// get the bounding box edges for the page
+	public float getLeftmostPoint() {
+		return Math.min(Math.min(topLeft.x, topRight.x), Math.min(bottomLeft.x, bottomRight.x));
+	}
+
+	public float getRightmostPoint() {
+		return Math.max(Math.max(topLeft.x, topRight.x), Math.max(bottomLeft.x, bottomRight.x));
+	}
+
+	public float getTopmostPoint() {
+		return Math.min(Math.min(topLeft.y, topRight.y), Math.min(bottomLeft.y, bottomRight.y));
+	}
+
+	public float getBottommostPoint() {
+		return Math.max(Math.max(topLeft.y, topRight.y), Math.max(bottomLeft.y, bottomRight.y));
 	}
 
 	// ----------is this page off camera------------
