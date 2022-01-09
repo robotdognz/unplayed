@@ -143,9 +143,11 @@ public class PageView {
 			float minY = Float.POSITIVE_INFINITY;
 			float maxX = Float.NEGATIVE_INFINITY;
 			float maxY = Float.NEGATIVE_INFINITY;
+			int visiblePage = 0;
 			for (Page page : pages) {
 				if (page.playerVisible()) {
 					// if this page has a visible player
+					visiblePage++;
 					minX = Math.min(minX, page.getLeftmostPoint());
 					minY = Math.min(minY, page.getTopmostPoint());
 					maxX = Math.max(maxX, page.getRightmostPoint());
@@ -153,7 +155,10 @@ public class PageView {
 				}
 			}
 
-			pageCamera.update(minX, minY, maxX, maxY);
+			// only update camera if player is visible somewhere
+			if (visiblePage > 0) {
+				pageCamera.update(minX, minY, maxX, maxY);
+			}
 		}
 
 		pageCamera.step();
