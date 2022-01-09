@@ -41,6 +41,9 @@ public class Page extends Editable {
 	public boolean showTiles;
 	public boolean showImages;
 
+	// player visibility
+	public boolean playerVisible;
+
 	public Page(PApplet p, Game game, View view, PVector position) { // PVector topLeft, PVector bottomRight,
 		super(view.getTopLeft().x, view.getTopLeft().y, view.getWidth(), view.getHeight());
 		this.p = p;
@@ -96,6 +99,48 @@ public class Page extends Editable {
 		updateCorners();
 	}
 
+	public void step() {
+		// get objects visible to this page
+		pageObjects.clear();
+		game.world.retrieve(pageObjects, view);
+
+		// check if anything in the page has changed
+		if (pageObjects.size() != worldCount || game.placed.size() != placedCount
+				|| game.removed.size() != removedCount) {
+			redraw = true;
+		}
+
+		// update previous count fields
+		worldCount = pageObjects.size();
+		placedCount = game.placed.size();
+		removedCount = game.removed.size();
+
+		updatePlayerVisibility();
+	}
+
+	private void updatePlayerVisibility() {
+		// update player visibility
+		if (game.player != null) {
+			playerVisible = false;
+			if (game.player.getCenter().x > view.getBottomRight().x - 1) {
+				return;
+			}
+			if (game.player.getCenter().x < view.getTopLeft().x + 1) {
+				return;
+			}
+			if (game.player.getCenter().y > view.getBottomRight().y - 1) {
+				return;
+			}
+			if (game.player.getCenter().y < view.getTopLeft().y + 1) {
+				return;
+			}
+			playerVisible = true;
+
+		} else {
+			playerVisible = false;
+		}
+	}
+
 //	public void exclude(Rectangle object) {
 //		excludedObjects.add(object.toString());
 //	}
@@ -138,29 +183,14 @@ public class Page extends Editable {
 		p.popMatrix();
 
 		// draw page corners
-//		p.rectMode(CENTER);
-//		p.fill(255, 0, 0);
-//		p.rect(topLeft.x, topLeft.y, 10, 10);
-//		p.rect(topRight.x, topRight.y, 10, 10);
-//		p.rect(bottomLeft.x, bottomLeft.y, 10, 10);
-//		p.rect(bottomRight.x, bottomRight.y, 10, 10);
-	}
-
-	public void step() {
-		// get objects visible to this page
-		pageObjects.clear();
-		game.world.retrieve(pageObjects, view);
-
-		// check if anything in the page has changed
-		if (pageObjects.size() != worldCount || game.placed.size() != placedCount
-				|| game.removed.size() != removedCount) {
-			redraw = true;
+		if (playerVisible) {
+			p.rectMode(CENTER);
+			p.fill(255, 0, 0);
+			p.rect(topLeft.x, topLeft.y, 10, 10);
+			p.rect(topRight.x, topRight.y, 10, 10);
+			p.rect(bottomLeft.x, bottomLeft.y, 10, 10);
+			p.rect(bottomRight.x, bottomRight.y, 10, 10);
 		}
-
-		// update previous count fields
-		worldCount = pageObjects.size();
-		placedCount = game.placed.size();
-		removedCount = game.removed.size();
 	}
 
 	public void drawView() { // float scale

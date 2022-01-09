@@ -3,6 +3,8 @@ package misc;
 import camera.Camera;
 import processing.core.*;
 
+// TODO: this class can probably be improved by being made static, like DebugOutput
+
 public class Converter {
 	private PApplet p;
 	private Camera cCamera;

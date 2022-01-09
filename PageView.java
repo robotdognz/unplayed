@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 import camera.Camera;
+import camera.PageViewCamera;
 import handlers.TextureCache;
 import misc.Converter;
 import objects.Background;
@@ -24,12 +25,16 @@ public class PageView {
 
 	// world camera
 	private Camera camera;
+	
+	private PageViewCamera pageCamera;
 
 	public PageView(PApplet p, Game game, Camera camera, TextureCache texture, Converter convert) {
 		this.p = p;
 		this.game = game;
 		this.convert = convert;
 		this.camera = camera;
+		
+		this.pageCamera = new PageViewCamera();
 		
 		this.paper = new BackgroundPaper(texture);
 		
@@ -49,8 +54,6 @@ public class PageView {
 
 		float currentScale = convert.getScale();
 
-//		p.background(100); // grey background
-		
 		// draw the looping background
 		paper.draw(p.getGraphics(), game.screenSpace, convert.getScale()); // background paper effect
 
