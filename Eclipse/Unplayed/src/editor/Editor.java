@@ -70,7 +70,7 @@ public class Editor {
 	public boolean controllerActive = true; // is the current controller active
 	public Rectangle point = null; // holds the current selection point in the game world
 	public boolean eventVis; // are events visible
-	public boolean quadVis; // is the quad tree being draw
+	
 	public boolean viewVis; // are the views being drawn in level view
 
 	// editor settings
@@ -107,7 +107,9 @@ public class Editor {
 	public boolean debugVis;
 	private int frameDelay;
 	private float frame;
-	public boolean tileSearch; // display the logic for searching for slots
+	public static boolean quadVis; // is the quad tree being draw
+	public static boolean tileSearch; // display the logic for searching for slots
+	public static boolean autoCameraSearch; // display the logic for searching for pages to draw
 
 	public Editor(PApplet p, FileChooser files, TextureCache texture, Game game, Camera camera, Converter convert,
 			DoToast toast) {
@@ -130,7 +132,7 @@ public class Editor {
 		this.eMode = editorMode.ADD;
 		this.eImagePlane = imagePlane.LEVEL;
 		this.eventVis = true;
-		this.quadVis = false;
+		quadVis = false;
 		this.viewVis = true;
 
 		// Initialize camera backup fields

@@ -4,6 +4,7 @@ package objects;
 import java.util.HashSet;
 //import java.util.Set;
 
+import editor.Editor;
 import game.Game;
 
 import processing.core.*;
@@ -200,7 +201,7 @@ public class Page extends Editable {
 		p.popMatrix();
 
 		// draw page corners
-		if (playerVisible) {
+		if (Editor.autoCameraSearch && playerVisible) {
 			p.rectMode(CENTER);
 			p.fill(255, 0, 0);
 			p.rect(topLeft.x, topLeft.y, 10, 10);

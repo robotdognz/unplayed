@@ -13,7 +13,8 @@ public class WidgetQuadtree extends Widget {
 
 	@Override
 	public void clicked() {
-		editor.tileSearch = !editor.tileSearch;
+		Editor.tileSearch = !Editor.tileSearch;
+		Editor.autoCameraSearch = Editor.tileSearch;
 //		editor.quadVis = !editor.quadVis;
 	}
 
@@ -25,7 +26,7 @@ public class WidgetQuadtree extends Widget {
 //		} else {
 //			active = false;
 //		}
-		if (editor.tileSearch) {
+		if (Editor.tileSearch) {
 			active = true;
 		} else {
 			active = false;

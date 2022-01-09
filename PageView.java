@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import camera.Camera;
 import camera.PageViewCamera;
+import editor.Editor;
 import handlers.TextureCache;
 import misc.Converter;
 import objects.Background;
@@ -103,7 +104,7 @@ public class PageView {
 		}
 
 		// draw auto generated camera
-		if (!camera.getGame()) {
+		if (Editor.autoCameraSearch && !camera.getGame()) {
 			p.noFill();
 			p.stroke(255, 0, 0);
 			p.strokeWeight(3);
