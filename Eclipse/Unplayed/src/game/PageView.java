@@ -105,12 +105,6 @@ public class PageView {
 
 		// draw auto generated camera
 		if (Editor.autoCameraSearch && !Camera.getGame()) {
-//			p.noFill();
-//			p.stroke(255, 0, 0);
-//			p.strokeWeight(3);
-//			p.rectMode(CORNERS);
-//			p.rect(pageCamera.getTopLeft().x, pageCamera.getTopLeft().y, pageCamera.getBottomRight().x,
-//					pageCamera.getBottomRight().y);
 			pageCamera.draw();
 		}
 
