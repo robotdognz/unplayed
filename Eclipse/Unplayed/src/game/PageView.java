@@ -24,7 +24,6 @@ public class PageView {
 	private ArrayList<Page> pages;
 	private ArrayList<Background> backgrounds;
 
-
 	private PageViewCamera pageCamera;
 
 	public PageView(PApplet p, Game game, TextureCache texture, Converter convert) {
@@ -45,23 +44,24 @@ public class PageView {
 		p.pushMatrix(); // start working at game scale
 		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
 
-		// camera
-		
-		if(Camera.getGame()) {
-//			p.scale((float) p.width / (float) Camera.getScale()); // width/screen fits the level scale to the screen
-//			p.scale(Camera.getSubScale()); // apply offset for tall screen spaces
-//			p.translate(-Camera.getCenter().x, -Camera.getCenter().y); // moves the view around the level
-			
+		if (Camera.getGame()) {
+			// auto camera
 			p.scale((float) p.width / (float) pageCamera.getScale()); // width/screen fits the level scale to the screen
 			p.scale(pageCamera.getSubScale()); // apply offset for tall screen spaces
 			p.translate(-pageCamera.getCenter().x, -pageCamera.getCenter().y); // moves the view around the level
-		
+
+		} else {
+			// editor camera
+			p.scale((float) p.width / (float) Camera.getScale()); // width/screen fits the level scale to the screen
+			p.scale(Camera.getSubScale()); // apply offset for tall screen spaces
+			p.translate(-Camera.getCenter().x, -Camera.getCenter().y); // moves the view around the level
 		}
 
 		float currentScale = convert.getScale();
 
 		// draw the looping background
-		paper.draw(p.getGraphics(), game.screenSpace, convert.getScale()); // background paper effect
+		p.background(100);
+//		paper.draw(p.getGraphics(), game.screenSpace, convert.getScale()); // background paper effect
 
 		// calculate page drawing area
 		PVector topLeft;
