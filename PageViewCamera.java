@@ -85,16 +85,16 @@ public class PageViewCamera {
 			}
 		}
 
-		if (Camera.getSubScale() != newSubScale) {
-			Camera.setSubScale(PApplet.lerp(Camera.getSubScale(), newSubScale, PApplet.exp(-(zoomSpeed / deltaTime)))); // -zoomSpeed
+		if (subScale != newSubScale) {
+			subScale = PApplet.lerp(subScale, newSubScale, PApplet.exp(-(zoomSpeed / deltaTime))); // -zoomSpeed
 		}
 		// main scale
-		if (Camera.getScale() != newScale) {
-			Camera.setScale(PApplet.lerp(Camera.getScale(), newScale, PApplet.exp(-(zoomSpeed / deltaTime))));
+		if (scale != newScale) {
+			scale = PApplet.lerp(scale, newScale, PApplet.exp(-(zoomSpeed / deltaTime)));
 		}
 		// translate
-		if (Camera.getCenter() != newCenter) {
-			Camera.setCenter(PVector.lerp(Camera.getCenter(), newCenter, PApplet.exp(-(zoomSpeed / deltaTime))));
+		if (center != newCenter) {
+			center = PVector.lerp(center, newCenter, PApplet.exp(-(zoomSpeed / deltaTime)));
 		}
 		// black border movement
 		if (!cameraArea.sameDimensions(newCameraArea)) {
