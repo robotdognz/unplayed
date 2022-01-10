@@ -25,7 +25,7 @@ public class PageViewCamera {
 	static private float subScale = 1; // defaults to 1
 	static private float newSubScale = 1; // defaults to 1
 
-	static private float zoomSpeed = 0.01f; // 0.1f is the default, lower is faster
+	static private float zoomSpeed = 0.05f; // 0.1f is the default, lower is faster
 
 	public PageViewCamera(PApplet papplet) {
 		p = papplet;
