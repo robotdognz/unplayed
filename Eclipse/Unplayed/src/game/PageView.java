@@ -66,13 +66,13 @@ public class PageView {
 		// calculate page drawing area
 		PVector topLeft;
 		PVector bottomRight;
-		if (Camera.getGame()) {
-			topLeft = pageCamera.getTopLeft();
-			bottomRight = pageCamera.getBottomRight();
-		} else {
-			topLeft = convert.screenToLevel(0, 0);
-			bottomRight = convert.screenToLevel(p.width, p.height);
-		}
+//		if (Camera.getGame()) {
+//			topLeft = pageCamera.getTopLeft();
+//			bottomRight = pageCamera.getBottomRight();
+//		} else {
+		topLeft = convert.screenToLevel(0, 0);
+		bottomRight = convert.screenToLevel(p.width, p.height);
+//		}
 		// draw backgrounds that are inside that area
 		for (Background background : backgrounds) {
 			if (background.leftOf(topLeft.x)) {
