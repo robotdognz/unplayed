@@ -513,7 +513,7 @@ public class Player extends Editable {
 				destroyWallBarrier(false);
 			}
 		}
-		
+
 		// prevent edge case where wall barrier prevents boost up into roof slot
 		if (wallBarrier != null && roofBarrier != null) {
 			destroyWallBarrier(false);
@@ -1501,27 +1501,29 @@ public class Player extends Editable {
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
 			graphics.noTint();
 
-			if (showChecking && verticalTunnel) {
+			if (showChecking && !Editor.showPageView && verticalTunnel) {
 				graphics.noStroke();
 				graphics.fill(0, 255, 0, 100);
 				graphics.rectMode(CORNER);
 				graphics.rect(-getWidth() / 2, -getHeight() / 2, getWidth() / 2, getHeight());
 			}
-			if (showChecking && horizontalTunnel) {
+			if (showChecking && !Editor.showPageView && horizontalTunnel) {
 				graphics.noStroke();
 				graphics.fill(0, 255, 0, 100);
 				graphics.rectMode(CORNER);
 				graphics.rect(0, -getHeight() / 2, getWidth() / 2, getHeight());
 			}
 
-			if (showChecking && (leftStickTimer.isRunning() || leftWallBoostTimer.isRunning())) { // left stick timer
+			if (showChecking && !Editor.showPageView
+					&& (leftStickTimer.isRunning() || leftWallBoostTimer.isRunning())) { // left stick timer
 				graphics.noStroke();
 				graphics.fill(235, 235, 52, 100);
 				graphics.rectMode(CENTER);
 				graphics.rect(0, 0, getWidth() / 2, getHeight() / 2);
 			}
 
-			if (showChecking && (rightStickTimer.isRunning() || rightWallBoostTimer.isRunning())) { // right stick timer
+			if (showChecking && !Editor.showPageView
+					&& (rightStickTimer.isRunning() || rightWallBoostTimer.isRunning())) { // right stick timer
 				graphics.noStroke();
 				graphics.fill(235, 52, 52, 100);
 				graphics.rectMode(CENTER);
@@ -1533,7 +1535,7 @@ public class Player extends Editable {
 		}
 
 		// draw tile checking logic, for debugging slots
-		if (showChecking && Editor.showPageView) {
+		if (showChecking && !Editor.showPageView) {
 			for (Tile t : sensorContacts) {
 				graphics.noStroke();
 				graphics.fill(150, 150, 150, 150);
