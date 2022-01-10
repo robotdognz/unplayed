@@ -1,9 +1,14 @@
 package camera;
 
+import static processing.core.PConstants.CORNERS;
+
 import objects.Rectangle;
+import processing.core.PApplet;
 import processing.core.PVector;
 
 public class PageViewCamera {
+
+	static private PApplet p;
 
 	static private Rectangle pageArea; // always represents the current page area
 	static private float areaPadding; // amount to pad the camera around page area
@@ -20,24 +25,28 @@ public class PageViewCamera {
 	static private float subScale = 1; // defaults to 1
 	static private float newSubScale = 1; // defaults to 1
 
-	public PageViewCamera() {
+	static private float zoomSpeed = 0.1f; // 0.1 is the default
+
+	public PageViewCamera(PApplet papplet) {
+		p = papplet;
+
 		// setup temp initial values
 		pageArea = new Rectangle(-400, -400, 900, 1000);
 
 		areaPadding = 100;
-		
+
 		cameraArea = new Rectangle(-400, -400, 900, 1000);
 		newCameraArea = cameraArea.copy();
-		
+
 		center = new PVector(0, 0);
 		newCenter = center.copy();
-		
+
 		scale = 1;
 		newScale = scale;
-		
+
 		subScale = 1;
 		newSubScale = subScale;
-		
+
 	}
 
 	public float getScale() {
@@ -61,9 +70,64 @@ public class PageViewCamera {
 	}
 
 	public void step(float deltaTime) {
-		if (Camera.getGame()) {
-//			screenMovement(deltaTime);
+//		if (Camera.getGame()) { // run the page view camera
+		if (!cameraArea.sameDimensions(newCameraArea)) { // camera is changing
+			// if there might be a difference in tall screen scale
+			if ((newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y)
+					/ (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) > (float) p.height
+							/ (float) p.width) {
+
+				newSubScale = ((float) p.height
+						/ ((float) p.width / (float) (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x)))
+						/ (newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y);
+			} else {
+				newSubScale = 1;
+			}
 		}
+
+		if (Camera.getSubScale() != newSubScale) {
+			Camera.setSubScale(PApplet.lerp(Camera.getSubScale(), newSubScale, PApplet.exp(-(zoomSpeed / deltaTime)))); // -zoomSpeed
+		}
+		// main scale
+		if (Camera.getScale() != newScale) {
+			Camera.setScale(PApplet.lerp(Camera.getScale(), newScale, PApplet.exp(-(zoomSpeed / deltaTime))));
+		}
+		// translate
+		if (Camera.getCenter() != newCenter) {
+			Camera.setCenter(PVector.lerp(Camera.getCenter(), newCenter, PApplet.exp(-(zoomSpeed / deltaTime))));
+		}
+		// black border movement
+		if (!cameraArea.sameDimensions(newCameraArea)) {
+			float topLeftX = PApplet.lerp(cameraArea.getTopLeft().x, newCameraArea.getTopLeft().x,
+					PApplet.exp(-(zoomSpeed / deltaTime))); // -boarderZoomSpeed
+			float topLeftY = PApplet.lerp(cameraArea.getTopLeft().y, newCameraArea.getTopLeft().y,
+					PApplet.exp(-(zoomSpeed / deltaTime)));
+			float bottomRightX = PApplet.lerp(cameraArea.getBottomRight().x, newCameraArea.getBottomRight().x,
+					PApplet.exp(-(zoomSpeed / deltaTime)));
+			float bottomRightY = PApplet.lerp(cameraArea.getBottomRight().y, newCameraArea.getBottomRight().y,
+					PApplet.exp(-(zoomSpeed / deltaTime)));
+			cameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
+		}
+//		}
+
+	}
+
+	public void draw() {
+		// draw page area
+		p.noFill();
+		p.stroke(255, 0, 0);
+		p.strokeWeight(3);
+		p.rectMode(CORNERS);
+		p.rect(pageArea.getTopLeft().x, pageArea.getTopLeft().y, pageArea.getBottomRight().x,
+				pageArea.getBottomRight().y);
+
+		// draw camera area
+		p.noFill();
+		p.stroke(0, 0, 255);
+		p.strokeWeight(3);
+		p.rectMode(CORNERS);
+		p.rect(cameraArea.getTopLeft().x, cameraArea.getTopLeft().y, cameraArea.getBottomRight().x,
+				cameraArea.getBottomRight().y);
 	}
 
 	public void update(float minX, float minY, float maxX, float maxY) {

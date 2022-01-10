@@ -468,7 +468,7 @@ public class Game {
 		pageView.step(deltaTime); // step the page view
 	}
 
-	void screenMovement(float deltaTime) {
+	private void screenMovement(float deltaTime) {
 		// tall screen space scaling (subScale)
 		// uses the 'new...' versions of edge variables so that
 		// scaling happens immediately instead of trailing the

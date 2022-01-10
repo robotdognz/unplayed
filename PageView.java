@@ -32,7 +32,7 @@ public class PageView {
 		this.game = game;
 		this.convert = convert;
 
-		this.pageCamera = new PageViewCamera();
+		this.pageCamera = new PageViewCamera(p);
 
 		this.paper = new BackgroundPaper(texture);
 
@@ -105,12 +105,13 @@ public class PageView {
 
 		// draw auto generated camera
 		if (Editor.autoCameraSearch && !Camera.getGame()) {
-			p.noFill();
-			p.stroke(255, 0, 0);
-			p.strokeWeight(3);
-			p.rectMode(CORNERS);
-			p.rect(pageCamera.getTopLeft().x, pageCamera.getTopLeft().y, pageCamera.getBottomRight().x,
-					pageCamera.getBottomRight().y);
+//			p.noFill();
+//			p.stroke(255, 0, 0);
+//			p.strokeWeight(3);
+//			p.rectMode(CORNERS);
+//			p.rect(pageCamera.getTopLeft().x, pageCamera.getTopLeft().y, pageCamera.getBottomRight().x,
+//					pageCamera.getBottomRight().y);
+			pageCamera.draw();
 		}
 
 		// draw existing cameras
