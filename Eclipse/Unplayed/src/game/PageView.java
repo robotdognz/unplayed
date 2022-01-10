@@ -101,6 +101,9 @@ public class PageView {
 			}
 
 			page.draw(currentScale);
+			if (Editor.autoCameraSearch && !camera.getGame()) {
+				page.drawCorners();
+			}
 		}
 
 		// draw auto generated camera

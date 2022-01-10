@@ -200,6 +200,9 @@ public class Page extends Editable {
 		p.image(pageGraphics, 0, 0); // draw the page
 		p.popMatrix();
 
+	}
+
+	public void drawCorners() {
 		// draw page corners
 		if (Editor.autoCameraSearch && playerVisible) {
 			p.rectMode(CENTER);
