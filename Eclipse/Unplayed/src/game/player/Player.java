@@ -1494,7 +1494,7 @@ public class Player extends Editable {
 
 			graphics.rotate(-a);
 
-			if (showChecking && dynamicBody.isFixedRotation()) {
+			if (showChecking && !Editor.showPageView && dynamicBody.isFixedRotation()) {
 				graphics.tint(200, 255, 200);
 			}
 
