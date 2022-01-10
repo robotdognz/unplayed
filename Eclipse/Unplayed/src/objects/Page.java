@@ -146,7 +146,7 @@ public class Page extends Editable {
 				if (game.player.getCenter().y > view.getBottomRight().y) {
 					break;
 				}
-				if (game.player.getCenter().y * 0.5 < view.getTopLeft().y) {
+				if (game.player.getCenter().y < view.getTopLeft().y) {
 					break;
 				}
 
