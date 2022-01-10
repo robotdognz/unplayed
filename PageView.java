@@ -105,18 +105,9 @@ public class PageView {
 				continue;
 			}
 
-			if (Camera.getGame()) {
-				if (page.playerVisible()) {
-					page.draw(currentScale);
-					if (Editor.autoCameraSearch && !Camera.getGame()) {
-						page.drawCorners();
-					}
-				}
-			} else {
-				page.draw(currentScale);
-				if (Editor.autoCameraSearch && !Camera.getGame()) {
-					page.drawCorners();
-				}
+			page.draw(currentScale);
+			if (Editor.autoCameraSearch && !Camera.getGame()) {
+				page.drawCorners();
 			}
 
 		}
