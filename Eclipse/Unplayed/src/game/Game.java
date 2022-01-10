@@ -100,15 +100,15 @@ public class Game {
 		playerObjects = new HashSet<Rectangle>();
 		player = null;
 
-		pageView = new PageView(p, this, camera, texture, convert);
+		pageView = new PageView(p, this, texture, convert);
 
 		paper = new MathsPaper(texture);
 
 		// camera
-		camera.setScale(startScale);
+		Camera.setScale(startScale);
 		newScale = startScale;
-		camera.setCenter(startCenter);
-		newCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
+		Camera.setCenter(startCenter);
+		newCenter = new PVector(Camera.getCenter().x, Camera.getCenter().y);
 
 		// calculate screen space
 		screenSpaceOffset = 0; // positive makes it larger, negative makes it smaller
@@ -123,7 +123,7 @@ public class Game {
 		float pageSpaceWidth = screenSpace.getWidth() - (screenSpace.getWidth() / 10);
 		float pageSpaceVericalOffset = 0; // vertical
 
-		float camX = camera.getCenter().x - newScale / 2;
+		float camX = Camera.getCenter().x - newScale / 2;
 		cameraArea = new Rectangle(camX, bottomOfTopBar, newScale, topOfBottomBar - bottomOfTopBar);
 		newCameraArea = cameraArea.copy();
 
@@ -186,10 +186,10 @@ public class Game {
 			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
 			PVector startCenter = new PVector(centerX, centerY);
 			// apply values
-			camera.setScale(cameraAreaStart.getWidth()); // scale
+			Camera.setScale(cameraAreaStart.getWidth()); // scale
 			newScale = cameraAreaStart.getWidth(); // new scale
-			camera.setCenter(startCenter); // centre
-			newCenter = new PVector(camera.getCenter().x, camera.getCenter().y); // new centre
+			Camera.setCenter(startCenter); // centre
+			newCenter = new PVector(Camera.getCenter().x, Camera.getCenter().y); // new centre
 			cameraArea = cameraAreaStart.copy(); // camera area
 			newCameraArea = cameraArea.copy(); // new camera area
 
@@ -206,7 +206,7 @@ public class Game {
 				newSubScale = 1;
 			}
 			// set the scale
-			camera.setSubScale(newSubScale);
+			Camera.setSubScale(newSubScale);
 		}
 		// clear player
 		if (this.player != null) {
@@ -474,7 +474,7 @@ public class Game {
 		// scaling happens immediately instead of trailing the
 		// other variables
 
-		if (camera.getScale() != newScale || !cameraArea.sameDimensions(newCameraArea)) {
+		if (Camera.getScale() != newScale || !cameraArea.sameDimensions(newCameraArea)) {
 			// if there might be a difference in tall screen scale
 			if ((newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y)
 					/ (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) > (float) p.height
@@ -488,16 +488,16 @@ public class Game {
 			}
 		}
 
-		if (camera.getSubScale() != newSubScale) {
-			camera.setSubScale(PApplet.lerp(camera.getSubScale(), newSubScale, PApplet.exp(-(zoomSpeed / deltaTime)))); // -zoomSpeed
+		if (Camera.getSubScale() != newSubScale) {
+			Camera.setSubScale(PApplet.lerp(Camera.getSubScale(), newSubScale, PApplet.exp(-(zoomSpeed / deltaTime)))); // -zoomSpeed
 		}
 		// main scale
-		if (camera.getScale() != newScale) {
-			camera.setScale(PApplet.lerp(camera.getScale(), newScale, PApplet.exp(-(zoomSpeed / deltaTime))));
+		if (Camera.getScale() != newScale) {
+			Camera.setScale(PApplet.lerp(Camera.getScale(), newScale, PApplet.exp(-(zoomSpeed / deltaTime))));
 		}
 		// translate
-		if (camera.getCenter() != newCenter) {
-			camera.setCenter(PVector.lerp(camera.getCenter(), newCenter, PApplet.exp(-(zoomSpeed / deltaTime))));
+		if (Camera.getCenter() != newCenter) {
+			Camera.setCenter(PVector.lerp(Camera.getCenter(), newCenter, PApplet.exp(-(zoomSpeed / deltaTime))));
 		}
 		// black border movement
 		if (!cameraArea.sameDimensions(newCameraArea)) {

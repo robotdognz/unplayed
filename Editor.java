@@ -136,12 +136,12 @@ public class Editor {
 		this.viewVis = true;
 
 		// Initialize camera backup fields
-		lvScale = camera.getScale();
-		lvSubScale = camera.getSubScale();
-		lvCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
-		pvScale = camera.getScale();
-		pvSubScale = camera.getSubScale();
-		pvCenter = new PVector(camera.getCenter().x, camera.getCenter().y);
+		lvScale = Camera.getScale();
+		lvSubScale = Camera.getSubScale();
+		lvCenter = new PVector(Camera.getCenter().x, Camera.getCenter().y);
+		pvScale = Camera.getScale();
+		pvSubScale = Camera.getSubScale();
+		pvCenter = new PVector(Camera.getCenter().x, Camera.getCenter().y);
 
 		// debug display
 		debugVis = false;
@@ -202,9 +202,9 @@ public class Editor {
 				// start working at game scale
 				p.pushMatrix();
 				p.translate(p.width / 2, p.height / 2);
-				p.scale((float) p.width / (float) camera.getScale());
-				p.scale(camera.getSubScale());
-				p.translate(-camera.getCenter().x, -camera.getCenter().y);
+				p.scale((float) p.width / (float) Camera.getScale());
+				p.scale(Camera.getSubScale());
+				p.translate(-Camera.getCenter().x, -Camera.getCenter().y);
 
 				// draw selection box around selected object
 				if (selected != null && !(controller instanceof PlayerControl)) {
@@ -272,9 +272,9 @@ public class Editor {
 		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
 
 		// camera
-		p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
-		p.scale(camera.getSubScale()); // apply offset for tall screen spaces
-		p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
+		p.scale((float) p.width / (float) Camera.getScale()); // width/screen fits the level scale to the screen
+		p.scale(Camera.getSubScale()); // apply offset for tall screen spaces
+		p.translate(-Camera.getCenter().x, -Camera.getCenter().y); // moves the view around the level
 
 		float currentScale = convert.getScale();
 
@@ -459,25 +459,25 @@ public class Editor {
 		if (showPageView) {
 			showPageView = false;
 			// save page view camera
-			pvScale = camera.getScale();
-			pvSubScale = camera.getSubScale();
-			pvCenter.x = camera.getCenter().x;
-			pvCenter.y = camera.getCenter().y;
+			pvScale = Camera.getScale();
+			pvSubScale = Camera.getSubScale();
+			pvCenter.x = Camera.getCenter().x;
+			pvCenter.y = Camera.getCenter().y;
 			// set camera to level view
-			camera.setScale(lvScale);
-			camera.setSubScale(lvSubScale);
-			camera.setCenter(lvCenter);
+			Camera.setScale(lvScale);
+			Camera.setSubScale(lvSubScale);
+			Camera.setCenter(lvCenter);
 		} else {
 			showPageView = true;
 			// save level view camera
-			lvScale = camera.getScale();
-			lvSubScale = camera.getSubScale();
-			lvCenter.x = camera.getCenter().x;
-			lvCenter.y = camera.getCenter().y;
+			lvScale = Camera.getScale();
+			lvSubScale = Camera.getSubScale();
+			lvCenter.x = Camera.getCenter().x;
+			lvCenter.y = Camera.getCenter().y;
 			// set camera to page view
-			camera.setScale(pvScale);
-			camera.setSubScale(pvSubScale);
-			camera.setCenter(pvCenter);
+			Camera.setScale(pvScale);
+			Camera.setSubScale(pvSubScale);
+			Camera.setCenter(pvCenter);
 
 			// force re-render of pages
 			pageView.forceRedraw();

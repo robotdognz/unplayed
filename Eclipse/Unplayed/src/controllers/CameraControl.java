@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.ArrayList;
 
+import camera.Camera;
 import editor.Editor;
 import game.Game;
 import misc.Converter;
@@ -42,7 +43,7 @@ public class CameraControl implements Controller {
 			float moveX = (p.pmouseX - p.mouseX) / 3;
 			float moveY = (p.pmouseY - p.mouseY) / 3;
 			PVector diff = new PVector(convert.screenToLevel(moveX), convert.screenToLevel(moveY));
-			editor.camera.setCenter(editor.camera.getCenter().add(diff));
+			Camera.setCenter(Camera.getCenter().add(diff));
 		}
 	}
 
@@ -58,7 +59,7 @@ public class CameraControl implements Controller {
 		}
 
 		if (touch.size() == 2) {
-			float newScale = editor.camera.getScale() - convert.screenToLevel(d);
+			float newScale = Camera.getScale() - convert.screenToLevel(d);
 			float newTotalScale = convert.getTotalFromScale(newScale);
 			if (newTotalScale < editor.minZoom) {
 				newScale = convert.getScaleFromTotal(editor.minZoom);
@@ -66,7 +67,7 @@ public class CameraControl implements Controller {
 			if (newTotalScale > editor.maxZoom) {
 				newScale = convert.getScaleFromTotal(editor.maxZoom);
 			}
-			editor.camera.setScale(newScale);
+			Camera.setScale(newScale);
 		}
 	}
 

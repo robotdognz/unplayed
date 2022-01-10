@@ -24,16 +24,13 @@ public class PageView {
 	private ArrayList<Page> pages;
 	private ArrayList<Background> backgrounds;
 
-	// world camera
-	private Camera camera;
 
 	private PageViewCamera pageCamera;
 
-	public PageView(PApplet p, Game game, Camera camera, TextureCache texture, Converter convert) {
+	public PageView(PApplet p, Game game, TextureCache texture, Converter convert) {
 		this.p = p;
 		this.game = game;
 		this.convert = convert;
-		this.camera = camera;
 
 		this.pageCamera = new PageViewCamera();
 
@@ -49,9 +46,9 @@ public class PageView {
 		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
 
 		// camera
-		p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
-		p.scale(camera.getSubScale()); // apply offset for tall screen spaces
-		p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
+		p.scale((float) p.width / (float) Camera.getScale()); // width/screen fits the level scale to the screen
+		p.scale(Camera.getSubScale()); // apply offset for tall screen spaces
+		p.translate(-Camera.getCenter().x, -Camera.getCenter().y); // moves the view around the level
 
 		float currentScale = convert.getScale();
 

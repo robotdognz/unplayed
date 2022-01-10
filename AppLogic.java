@@ -76,7 +76,7 @@ public class AppLogic {
 		vibe = new Vibe(context);
 
 		Camera camera = new FreeCamera(); // new GameCamera();
-		convert = new Converter(p, camera);
+		convert = new Converter(p);
 		game = new Game(p, this, camera, texture, convert);
 		texture.passGame(game);
 		controller = new PlayerControl(p, game);

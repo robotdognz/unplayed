@@ -14,27 +14,27 @@ public abstract class Camera {
 		return game;
 	}
 
-	public float getScale() {
+	public static float getScale() {
 		return scale;
 	}
 
-	public void setScale(float newScale) {
+	public static void setScale(float newScale) {
 		scale = newScale;
 	}
 
-	public float getSubScale() {
+	public static float getSubScale() {
 		return subScale;
 	}
 
-	public void setSubScale(float newSubScale) {
+	public static void setSubScale(float newSubScale) {
 		subScale = newSubScale;
 	}
 
-	public PVector getCenter() {
+	public static PVector getCenter() {
 		return center;
 	}
 
-	public void setCenter(PVector newCenter) {
+	public static void setCenter(PVector newCenter) {
 		if (center == null) {
 			center = new PVector(newCenter.x, newCenter.y);
 		} else {
