@@ -14,7 +14,6 @@ import objects.View;
 import objects.events.PlayerStart;
 import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
-import static processing.core.PConstants.*;
 import org.jbox2d.callbacks.ContactListener;
 
 public class Game {

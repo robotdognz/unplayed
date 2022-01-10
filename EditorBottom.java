@@ -125,7 +125,7 @@ public class EditorBottom extends Toolbar {
 			currentHandler = editor.currentTile;
 		} else if (editor.currentTool instanceof ImageTool) {
 
-			if (editor.showPageView) {
+			if (Editor.showPageView) {
 				objects.addAll(backgrounds);
 				offset = backgroundOffset;
 				currentHandler = editor.currentBackground;
@@ -190,7 +190,7 @@ public class EditorBottom extends Toolbar {
 				offset = tileOffset;
 			} else if (editor.currentTool instanceof ImageTool) {
 
-				if (editor.showPageView) {
+				if (Editor.showPageView) {
 					objects.addAll(backgrounds);
 					offset = backgroundOffset;
 				} else {
@@ -215,7 +215,7 @@ public class EditorBottom extends Toolbar {
 						editor.currentTile = (TileHandler) objects.get(i);
 					} else if (editor.currentTool instanceof ImageTool) {
 
-						if (editor.showPageView) {
+						if (Editor.showPageView) {
 							editor.currentBackground = (BackgroundHandler) objects.get(i);
 						} else {
 							editor.currentImage = (ImageHandler) objects.get(i);
@@ -225,7 +225,7 @@ public class EditorBottom extends Toolbar {
 						editor.currentEvent = (EventHandler) objects.get(i);
 					} else if (editor.currentTool instanceof PageTool) {
 						editor.currentView = (View) objects.get(i);
-						if (!editor.showPageView) {
+						if (!Editor.showPageView) {
 							editor.selected = (View) objects.get(i);
 						}
 					}
@@ -253,7 +253,7 @@ public class EditorBottom extends Toolbar {
 				}
 			} else if (editor.currentTool instanceof ImageTool) {
 
-				if (editor.showPageView) {
+				if (Editor.showPageView) {
 
 					float objectsWidth = backgrounds.size() * selectionArea.getHeight();
 					if (objectsWidth > selectionArea.getWidth()) {

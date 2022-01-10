@@ -30,7 +30,7 @@ public class WidgetDelete extends Widget {
 	@Override
 	public void clicked() {
 		if (editor.selected != null) {
-			if (!editor.showPageView) { // level view
+			if (!Editor.showPageView) { // level view
 				if (editor.selected instanceof Tile) {
 					// check if the selected tile is contained inside a PlayerStart or PlayerEnd
 					HashSet<Rectangle> returnSet = new HashSet<Rectangle>();

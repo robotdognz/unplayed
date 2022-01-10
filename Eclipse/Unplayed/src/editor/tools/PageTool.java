@@ -39,7 +39,7 @@ public class PageTool extends AreaTool {
 
 	@Override
 	public void touchMoved(PVector touch) {
-		if (!editor.showPageView) {// views
+		if (!Editor.showPageView) {// views
 			if (editor.selected != null && editor.selected instanceof View && editor.eMode == editorMode.SELECT) {
 //				edit = editor.selected;
 				super.touchMoved(touch);
@@ -83,7 +83,7 @@ public class PageTool extends AreaTool {
 
 	@Override
 	public void touchEnded(PVector touch) {
-		if (!editor.showPageView) { // views
+		if (!Editor.showPageView) { // views
 			if (editor.eMode == editorMode.ADD) {
 				addView(touch);
 			} else if (editor.eMode == editorMode.ERASE) {
@@ -108,7 +108,7 @@ public class PageTool extends AreaTool {
 	@Override
 	public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
 		// page resize
-		if (editor.showPageView && editorSide.adjust) {
+		if (Editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
 				((Page) editor.selected).addSize(convert.screenToLevel(d) / 500); // TODO: figure out what the 500
 																					// should be
@@ -132,7 +132,7 @@ public class PageTool extends AreaTool {
 	@Override
 	public void onRotate(float x, float y, float angle) {
 		// page rotate
-		if (editor.showPageView && editorSide.adjust) {
+		if (Editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
 				((Page) editor.selected).addAngle(PApplet.degrees(angle));
 			}
@@ -264,7 +264,7 @@ public class PageTool extends AreaTool {
 
 	@Override
 	public void draw() {
-		if (!editor.showPageView) { // views
+		if (!Editor.showPageView) { // views
 			super.draw();
 		} else { // pages
 			if (currentPage != null) {

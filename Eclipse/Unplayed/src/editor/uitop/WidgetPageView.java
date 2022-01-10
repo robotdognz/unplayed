@@ -19,7 +19,7 @@ public class WidgetPageView extends Widget {
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (editor.showPageView) {
+		if (Editor.showPageView) {
 			active = true;
 		} else {
 			active = false;

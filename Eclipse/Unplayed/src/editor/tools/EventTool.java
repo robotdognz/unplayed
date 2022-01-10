@@ -33,7 +33,7 @@ public class EventTool extends AreaTool {
 
 	@Override
 	public void touchMoved(PVector touch) {
-		if (!editor.showPageView) { // world view
+		if (!Editor.showPageView) { // world view
 			if (editor.point != null) {
 				// if adjusting a PlayerEnd
 				if (editorSide.adjust && editor.selected instanceof PlayerEnd) {
@@ -308,7 +308,7 @@ public class EventTool extends AreaTool {
 	@Override
 	public void draw() {
 		// draw ui for editing camera area
-		if (editor.showPageView && editor.eMode == Editor.editorMode.SELECT) { // pages
+		if (Editor.showPageView && editor.eMode == Editor.editorMode.SELECT) { // pages
 			super.draw();
 		}
 		// stop editing the camera change area if any of things aren't true

@@ -43,7 +43,7 @@ public class EditorMenu extends Menu {
 			if (b.click().equals(resume)) { // resume the game if resume button pressed
 				al.menu = null; // remove pause menu
 			} else if (b.click().equals(editor)) {
-				al.editorToggle = !al.editorToggle;
+				AppLogic.editorToggle = !AppLogic.editorToggle;
 				al.menu = null; // remove pause menu
 //				al.toggleEditor();
 				

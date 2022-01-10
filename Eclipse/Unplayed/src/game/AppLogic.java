@@ -42,7 +42,7 @@ public class AppLogic {
 	public TextureCache texture;
 
 	public Menu menu; // current menu
-	public boolean editorToggle; // is the editor enabled
+	public static boolean editorToggle; // is the editor enabled
 	public Game game; // holds the game class
 	public Controller controller; // holds the current controller
 	public Editor editor; // holds the editor
@@ -213,7 +213,7 @@ public class AppLogic {
 		}
 
 		// draw the game
-		if ((editor != null && !editorToggle) || (editor != null && editor.showPageView)
+		if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView)
 				|| (editor == null && runGame)) { // || editor == null
 			game.draw(); // draw the game
 		}

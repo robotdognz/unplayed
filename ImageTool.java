@@ -40,7 +40,7 @@ public class ImageTool implements Tool {
 
 	@Override
 	public void touchMoved(PVector touch) {
-		if (!editor.showPageView) {// images
+		if (!Editor.showPageView) {// images
 			if (editor.point != null) {
 				// figure out what to insert
 				Image toInsert = null;
@@ -211,7 +211,7 @@ public class ImageTool implements Tool {
 	@Override
 	public void touchEnded(PVector touch) {
 
-		if (editor.showPageView) { // backgrounds
+		if (Editor.showPageView) { // backgrounds
 
 			if (!editorSide.adjust) {
 				if (editor.eMode == editorMode.ADD) {
@@ -258,7 +258,7 @@ public class ImageTool implements Tool {
 
 	@Override
 	public void draw() {
-		if (editor.showPageView) { // backgrounds
+		if (Editor.showPageView) { // backgrounds
 			if (currentBackground != null) {
 				currentBackground.draw(16); // 80 // draw the background while placing
 			}
@@ -273,7 +273,7 @@ public class ImageTool implements Tool {
 	@Override
 	public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
 		// background resize
-		if (editor.showPageView && editorSide.adjust) {
+		if (Editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Background) {
 				((Background) editor.selected).addSize(convert.screenToLevel(d) / 500);
 				// TODO: figure out what the 500 should be
@@ -289,7 +289,7 @@ public class ImageTool implements Tool {
 	@Override
 	public void onRotate(float x, float y, float angle) {
 		// background rotate
-		if (editor.showPageView && editorSide.adjust) {
+		if (Editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Background) {
 				((Background) editor.selected).addAngle(PApplet.degrees(angle));
 			}

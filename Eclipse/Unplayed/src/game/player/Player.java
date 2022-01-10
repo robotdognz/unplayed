@@ -14,6 +14,7 @@ import misc.PlayerTileXComparator;
 import objects.Editable;
 import objects.Event;
 import objects.Tile;
+import editor.Editor;
 import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
 import static processing.core.PConstants.*;
@@ -1532,7 +1533,7 @@ public class Player extends Editable {
 		}
 
 		// draw tile checking logic, for debugging slots
-		if (showChecking) {
+		if (showChecking && Editor.showPageView) {
 			for (Tile t : sensorContacts) {
 				graphics.noStroke();
 				graphics.fill(150, 150, 150, 150);
