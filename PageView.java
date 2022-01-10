@@ -66,13 +66,13 @@ public class PageView {
 		// calculate page drawing area
 		PVector topLeft;
 		PVector bottomRight;
-		if (Camera.getGame()) {
-			topLeft = game.cameraArea.getTopLeft();
-			bottomRight = game.cameraArea.getBottomRight();
-		} else {
-			topLeft = convert.screenToLevel(0, 0);
-			bottomRight = convert.screenToLevel(p.width, p.height);
-		}
+//		if (Camera.getGame()) {
+//			topLeft = game.cameraArea.getTopLeft();
+//			bottomRight = game.cameraArea.getBottomRight();
+//		} else {
+		topLeft = convert.screenToLevel(0, 0);
+		bottomRight = convert.screenToLevel(p.width, p.height);
+//		}
 		// draw backgrounds that are inside that area
 		for (Background background : backgrounds) {
 			if (background.leftOf(topLeft.x)) {
@@ -105,10 +105,20 @@ public class PageView {
 				continue;
 			}
 
-			page.draw(currentScale);
-			if (Editor.autoCameraSearch && !Camera.getGame()) {
-				page.drawCorners();
+			if (Camera.getGame()) {
+				if (page.playerVisible()) {
+					page.draw(currentScale);
+					if (Editor.autoCameraSearch && !Camera.getGame()) {
+						page.drawCorners();
+					}
+				}
+			} else {
+				page.draw(currentScale);
+				if (Editor.autoCameraSearch && !Camera.getGame()) {
+					page.drawCorners();
+				}
 			}
+
 		}
 
 		// draw auto generated camera
