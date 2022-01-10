@@ -44,6 +44,12 @@ public class Game {
 	public int screenSpaceOffset;
 	// screenSpaceOffset is for debug purposes, I believe (future Marco here), it
 	// can be used to decrease the rendering space
+	public Rectangle pageSpace; // TODO: implement this
+	// pageSpace is a subset of screen space that can be filled with pages
+	// this is used to keep the actual gameplay in the same aspect ratio across
+	// devices with different screen sizes, as well as prevent pages being drawn
+	// where the player should be using their fingers (this will only be a small
+	// strip on the bottom for standard aspect ratio phones e.g. s6)
 
 	// local variables for camera
 	public float newScale;
@@ -110,6 +116,12 @@ public class Game {
 		float screenSpaceWidth = convert.screenToLevel(p.width + screenSpaceOffset * 2);
 		float screenSpaceHeight = convert.screenToLevel(p.height + screenSpaceOffset * 2);
 		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
+
+		// calculate page space
+		float aspectRatio = 1920 / 1080;
+		float pageSpaceHeight = (screenSpace.getWidth() * aspectRatio) - (screenSpace.getWidth() / 10);
+		float pageSpaceWidth = screenSpace.getWidth() - (screenSpace.getWidth() / 10);
+		float pageSpaceVericalOffset = 0; // vertical
 
 		float camX = camera.getCenter().x - newScale / 2;
 		cameraArea = new Rectangle(camX, bottomOfTopBar, newScale, topOfBottomBar - bottomOfTopBar);
@@ -392,9 +404,9 @@ public class Game {
 		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
 
 		// camera
-		p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
-		p.scale(camera.getSubScale()); // apply offset for tall screen spaces
-		p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
+//		p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
+//		p.scale(camera.getSubScale()); // apply offset for tall screen spaces
+//		p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
 
 //		// draw black bars
 //		if (camera.getGame()) {
@@ -455,9 +467,10 @@ public class Game {
 	}
 
 	void screenMovement(float deltaTime) {
-		// tall screen space scaling
+		// tall screen space scaling (subScale)
 		// uses the 'new...' versions of edge variables so that
 		// scaling happens immediately
+
 		if (camera.getScale() != newScale || !cameraArea.sameDimensions(newCameraArea)) {
 			// if there might be a difference in tall screen scale
 			if ((newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y)

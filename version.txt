@@ -26,6 +26,7 @@
 -Added drop shadows to pages
 -Added a setting in the level editor for changing player tumble mode, for testing
 -Added temp hints to current demo levels
+-Added visualisation for auto camera logic to page view
 
 1.2.1: Improving physics and tuning player 'feel'
 

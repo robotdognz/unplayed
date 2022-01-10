@@ -30,7 +30,6 @@ public class CameraChange extends Event {
 		this.camera = new Rectangle(-300, -400, 700, 900);
 		this.cameraZoom = 0.032f; // 2
 		this.edgeZoom = 0.032f; // 2
-		// this.type = type;
 	}
 
 	public Rectangle getCameraArea() {
