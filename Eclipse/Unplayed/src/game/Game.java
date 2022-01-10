@@ -117,11 +117,11 @@ public class Game {
 		float screenSpaceHeight = convert.screenToLevel(p.height + screenSpaceOffset * 2);
 		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
 
-		// calculate page space
-		float aspectRatio = 1920 / 1080;
-		float pageSpaceHeight = (screenSpace.getWidth() * aspectRatio) - (screenSpace.getWidth() / 10);
-		float pageSpaceWidth = screenSpace.getWidth() - (screenSpace.getWidth() / 10);
-		float pageSpaceVericalOffset = 0; // vertical
+//		// calculate page space
+//		float aspectRatio = 1920 / 1080;
+//		float pageSpaceHeight = (screenSpace.getWidth() * aspectRatio) - (screenSpace.getWidth() / 10);
+//		float pageSpaceWidth = screenSpace.getWidth() - (screenSpace.getWidth() / 10);
+//		float pageSpaceVericalOffset = 0; // vertical
 
 		float camX = Camera.getCenter().x - newScale / 2;
 		cameraArea = new Rectangle(camX, bottomOfTopBar, newScale, topOfBottomBar - bottomOfTopBar);
@@ -452,10 +452,6 @@ public class Game {
 			steps--;
 		}
 		box2d.world.clearForces();
-
-//		// get objects to draw
-//		screenObjects.clear();
-//		world.retrieve(screenObjects, screenSpace);
 
 		if (Camera.getGame()) {
 			screenMovement(deltaTime);

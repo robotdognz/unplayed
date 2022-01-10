@@ -70,7 +70,6 @@ public class PageViewCamera {
 	}
 
 	public void step(float deltaTime) {
-//		if (Camera.getGame()) { // run the page view camera
 		if (!cameraArea.sameDimensions(newCameraArea)) { // camera is changing
 			// if there might be a difference in tall screen scale
 			if ((newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y)
@@ -84,9 +83,9 @@ public class PageViewCamera {
 				newSubScale = 1;
 			}
 		}
-
+		// vertical scale
 		if (subScale != newSubScale) {
-			subScale = PApplet.lerp(subScale, newSubScale, PApplet.exp(-(zoomSpeed / deltaTime))); // -zoomSpeed
+			subScale = PApplet.lerp(subScale, newSubScale, PApplet.exp(-(zoomSpeed / deltaTime)));
 		}
 		// main scale
 		if (scale != newScale) {
@@ -99,7 +98,7 @@ public class PageViewCamera {
 		// black border movement
 		if (!cameraArea.sameDimensions(newCameraArea)) {
 			float topLeftX = PApplet.lerp(cameraArea.getTopLeft().x, newCameraArea.getTopLeft().x,
-					PApplet.exp(-(zoomSpeed / deltaTime))); // -boarderZoomSpeed
+					PApplet.exp(-(zoomSpeed / deltaTime)));
 			float topLeftY = PApplet.lerp(cameraArea.getTopLeft().y, newCameraArea.getTopLeft().y,
 					PApplet.exp(-(zoomSpeed / deltaTime)));
 			float bottomRightX = PApplet.lerp(cameraArea.getBottomRight().x, newCameraArea.getBottomRight().x,
@@ -108,7 +107,6 @@ public class PageViewCamera {
 					PApplet.exp(-(zoomSpeed / deltaTime)));
 			cameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
 		}
-//		}
 
 	}
 
@@ -121,6 +119,14 @@ public class PageViewCamera {
 		p.rect(pageArea.getTopLeft().x, pageArea.getTopLeft().y, pageArea.getBottomRight().x,
 				pageArea.getBottomRight().y);
 
+		// draw new camera area
+		p.noFill();
+		p.stroke(0, 255, 0);
+		p.strokeWeight(3);
+		p.rectMode(CORNERS);
+		p.rect(newCameraArea.getTopLeft().x, newCameraArea.getTopLeft().y, newCameraArea.getBottomRight().x,
+				newCameraArea.getBottomRight().y);
+		
 		// draw camera area
 		p.noFill();
 		p.stroke(0, 0, 255);
@@ -128,6 +134,7 @@ public class PageViewCamera {
 		p.rectMode(CORNERS);
 		p.rect(cameraArea.getTopLeft().x, cameraArea.getTopLeft().y, cameraArea.getBottomRight().x,
 				cameraArea.getBottomRight().y);
+		
 	}
 
 	public void update(float minX, float minY, float maxX, float maxY) {
