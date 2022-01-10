@@ -1,14 +1,44 @@
 package camera;
 
+import objects.Rectangle;
 import processing.core.PVector;
 
 public class PageViewCamera {
-	static private float scale;
-	static private float subScale = 1; // defaults to 1
-	
+
+	static private Rectangle pageArea; // always represents the current page area
+	static private float areaPadding; // amount to pad the camera around page area
+
+	static private Rectangle cameraArea;
+	static private Rectangle newCameraArea;
+
 	static private PVector center;
-	static private PVector topLeft = new PVector(-400, -400);
-	static private PVector bottomRight = new PVector(500, 600);
+	static private PVector newCenter;
+
+	static private float scale;
+	static private float newScale;
+
+	static private float subScale = 1; // defaults to 1
+	static private float newSubScale = 1; // defaults to 1
+
+	public PageViewCamera() {
+		// setup temp initial values
+		pageArea = new Rectangle(-400, -400, 900, 1000);
+
+		areaPadding = 100;
+		
+		cameraArea = new Rectangle(-400, -400, 900, 1000);
+		newCameraArea = cameraArea.copy();
+		
+		center = new PVector(0, 0);
+		newCenter = center.copy();
+		
+		scale = 1;
+		newScale = scale;
+		
+		subScale = 1;
+		newSubScale = subScale;
+		
+	}
 
 	public float getScale() {
 		return scale;
@@ -21,24 +51,45 @@ public class PageViewCamera {
 	public PVector getCenter() {
 		return center;
 	}
-	
+
 	public PVector getTopLeft() {
-		return topLeft;
+		return pageArea.getTopLeft();
 	}
-	
+
 	public PVector getBottomRight() {
-		return bottomRight;
+		return pageArea.getBottomRight();
 	}
 
-	public void step() {
-
+	public void step(float deltaTime) {
+		if (Camera.getGame()) {
+//			screenMovement(deltaTime);
+		}
 	}
 
 	public void update(float minX, float minY, float maxX, float maxY) {
-		topLeft.x = minX;
-		topLeft.y = minY;
-		bottomRight.x = maxX;
-		bottomRight.y = maxY;
+		// update page area boundary
+		pageArea.setCorners(minX, minY, maxX, maxY);
+
+		// calculate center
+		updateNewCamera();
+		updateNewCenter();
+		updateNewScale();
+	}
+
+	private static void updateNewCamera() {
+		newCameraArea.setCorners(pageArea.getTopLeft().x - areaPadding, pageArea.getTopLeft().y - areaPadding,
+				pageArea.getBottomRight().x + areaPadding, pageArea.getBottomRight().y + areaPadding);
+	}
+
+	private static void updateNewCenter() {
+		int centerX = (int) ((pageArea.getBottomRight().x - pageArea.getTopLeft().x) / 2 + pageArea.getTopLeft().x);
+		int centerY = (int) ((pageArea.getTopLeft().y - pageArea.getBottomRight().y) / 2 + pageArea.getBottomRight().y);
+		newCenter.x = centerX;
+		newCenter.y = centerY;
+	}
+
+	private static void updateNewScale() {
+		newScale = (int) Math.abs(newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x);
 	}
 
 }

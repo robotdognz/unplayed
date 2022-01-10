@@ -175,7 +175,7 @@ public class Game {
 
 	public void startGame() {
 		// only alter the camera if we're in game or play testing
-		if (playerStart != null && camera.getGame()) {
+		if (playerStart != null && Camera.getGame()) {
 			// setup start camera area
 			cameraAreaStart = playerStart.getCameraArea();
 
@@ -399,17 +399,18 @@ public class Game {
 	public void draw() {
 		pageView.draw();
 
-		// camera black border code
-		p.pushMatrix(); // start working at game scale
-		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
-
-		// camera
-//		p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
-//		p.scale(camera.getSubScale()); // apply offset for tall screen spaces
-//		p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
-
 //		// draw black bars
 //		if (camera.getGame()) {
+//		
+//			// camera black border code
+//			p.pushMatrix(); // start working at game scale
+//			p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
+//		
+//			// camera position
+//			p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
+//			p.scale(camera.getSubScale()); // apply offset for tall screen spaces
+//			p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
+//		
 //			p.fill(20, 255); // 10, 255
 //			int barSize = 1000000;
 //			p.rectMode(CORNERS);
@@ -428,9 +429,10 @@ public class Game {
 //			p.rect(cameraArea.getBottomRight().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
 //					camera.getCenter().y + barSize);
 //			p.rectMode(CORNER);
+//		
+//			p.popMatrix(); // start working at screen scale
 //		}
 
-		p.popMatrix(); // start working at screen scale
 	}
 
 	public void step(float deltaTime) {
@@ -455,7 +457,7 @@ public class Game {
 //		screenObjects.clear();
 //		world.retrieve(screenObjects, screenSpace);
 
-		if (camera.getGame()) {
+		if (Camera.getGame()) {
 			screenMovement(deltaTime);
 		}
 		PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
@@ -463,13 +465,14 @@ public class Game {
 		float screenSpaceHeight = convert.screenToLevel(p.height + screenSpaceOffset * 2);
 		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
 
-		pageView.step(); // step the page view
+		pageView.step(deltaTime); // step the page view
 	}
 
 	void screenMovement(float deltaTime) {
 		// tall screen space scaling (subScale)
 		// uses the 'new...' versions of edge variables so that
-		// scaling happens immediately
+		// scaling happens immediately instead of trailing the
+		// other variables
 
 		if (camera.getScale() != newScale || !cameraArea.sameDimensions(newCameraArea)) {
 			// if there might be a difference in tall screen scale

@@ -10,7 +10,7 @@ public abstract class Camera {
 	static protected float subScale = 1; // defaults to 1
 	static protected PVector center;
 
-	public boolean getGame() {
+	public static boolean getGame() {
 		return game;
 	}
 

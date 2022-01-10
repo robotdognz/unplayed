@@ -11,6 +11,8 @@ import processing.core.PVector;
 
 import static processing.core.PConstants.*;
 
+import camera.Camera;
+
 public class CameraChange extends Event {
 	private Rectangle camera;
 	private float cameraZoom;
@@ -98,7 +100,7 @@ public class CameraChange extends Event {
 	@Override
 	public void activate() {
 		super.activate();
-		if (game.camera.getGame()) {
+		if (Camera.getGame()) {
 			// change center
 			PVector center = getCameraCentre();
 			if (game.newCenter != center) {

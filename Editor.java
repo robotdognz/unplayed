@@ -198,7 +198,7 @@ public class Editor {
 			drawLevel();
 		} else {
 			// draw on screen tool information
-			if (!camera.getGame()) {
+			if (!Camera.getGame()) {
 				// start working at game scale
 				p.pushMatrix();
 				p.translate(p.width / 2, p.height / 2);

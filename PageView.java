@@ -61,7 +61,7 @@ public class PageView {
 		// calculate page drawing area
 		PVector topLeft;
 		PVector bottomRight;
-		if (game.camera.getGame()) {
+		if (Camera.getGame()) {
 			topLeft = game.cameraArea.getTopLeft();
 			bottomRight = game.cameraArea.getBottomRight();
 		} else {
@@ -101,13 +101,13 @@ public class PageView {
 			}
 
 			page.draw(currentScale);
-			if (Editor.autoCameraSearch && !camera.getGame()) {
+			if (Editor.autoCameraSearch && !Camera.getGame()) {
 				page.drawCorners();
 			}
 		}
 
 		// draw auto generated camera
-		if (Editor.autoCameraSearch && !camera.getGame()) {
+		if (Editor.autoCameraSearch && !Camera.getGame()) {
 			p.noFill();
 			p.stroke(255, 0, 0);
 			p.strokeWeight(3);
@@ -117,7 +117,7 @@ public class PageView {
 		}
 
 		// draw existing cameras
-		if (!camera.getGame()) {
+		if (!Camera.getGame()) {
 			for (CameraChange c : game.world.getCameras()) {
 				Rectangle area = c.getCameraArea();
 				p.noFill();
@@ -132,7 +132,7 @@ public class PageView {
 
 	}
 
-	public void step() {
+	public void step(float deltaTime) {
 		boolean adjustCamera = false;
 		for (Page page : pages) {
 			page.step();
@@ -165,7 +165,7 @@ public class PageView {
 			}
 		}
 
-		pageCamera.step();
+		pageCamera.step(deltaTime);
 	}
 
 	public void forceRedraw() {
