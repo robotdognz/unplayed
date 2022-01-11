@@ -8,12 +8,21 @@ import processing.core.PImage;
 import static processing.core.PConstants.*;
 
 public class MathsPaper {
-	// private PImage grid;
 	private TextureCache texture;
 	int gridSize;
+	
+	// rendering algorithm variables
+	PImage image;
+	float leftEdge;
+	float topEdge;
+	float rightEdge;
+	float bottomEdge;
+	int imageStartX;
+	int imageStartY;
+	int imageEndX;
+	int imageEndY;
 
 	public MathsPaper(TextureCache texture) {
-		// grid = texture.grid;
 		this.texture = texture;
 		gridSize = 400;
 	}
@@ -30,21 +39,22 @@ public class MathsPaper {
 		int endX = (int) Math.round((screen.getBottomRight().x + (gridSize / 2)) / gridSize) * gridSize;
 		// find y end position
 		int endY = (int) Math.round((screen.getBottomRight().y + (gridSize / 2)) / gridSize) * gridSize;
+		
 		// nested for loops to tile the images
 		for (int y = startY; y < endY; y += gridSize) {
 			for (int x = startX; x < endX; x += gridSize) {
 
-				PImage image = texture.getGrid(scale);
+				image = texture.getGrid(scale);
 
-				float leftEdge = x;
-				float topEdge = y;
-				float rightEdge = x + gridSize;
-				float bottomEdge = y + gridSize;
+				leftEdge = x;
+				topEdge = y;
+				rightEdge = x + gridSize;
+				bottomEdge = y + gridSize;
 
-				int imageStartX = 0;
-				int imageStartY = 0;
-				int imageEndX = image.width;
-				int imageEndY = image.height;
+				imageStartX = 0;
+				imageStartY = 0;
+				imageEndX = image.width;
+				imageEndY = image.height;
 
 				if (x < screen.getTopLeft().x) {
 					leftEdge = screen.getTopLeft().x;
@@ -68,13 +78,7 @@ public class MathsPaper {
 				graphics.imageMode(CORNERS);
 				graphics.image(image, leftEdge, topEdge, rightEdge, bottomEdge, imageStartX, imageStartY, imageEndX,
 						imageEndY);
-//				graphics.image(texture.getGrid(scale), x, y, gridSize, gridSize);
 			}
 		}
-
-		// draw partial image
-		// p.image(pageGraphics, 0, 0, pageGraphics.width/2, pageGraphics.height, 0, 0,
-		// pageGraphics.width/2, pageGraphics.height);
-
 	}
 }
