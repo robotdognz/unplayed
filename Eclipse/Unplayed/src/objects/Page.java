@@ -197,12 +197,10 @@ public class Page extends Editable {
 
 		// draw the page itself
 		p.scale(flipX, flipY); // flip the page
-		p.imageMode(CENTER);
 
 		// draw the page background
 		p.fill(240);
-		p.rectMode(CORNER);
-		p.rect(view.getWidth() / 2, view.getHeight() / 2, view.getWidth(), view.getHeight());
+		p.rect(0, 0, view.getWidth(), view.getHeight());
 
 		// draw tiles and images
 		for (Rectangle r : pageObjects) { // draw images
