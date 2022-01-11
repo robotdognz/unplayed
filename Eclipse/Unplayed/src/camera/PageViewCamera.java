@@ -85,26 +85,26 @@ public class PageViewCamera {
 		}
 		// vertical scale
 		if (subScale != newSubScale) {
-			subScale = PApplet.lerp(subScale, newSubScale, PApplet.exp(-(zoomSpeed / deltaTime)));
+			subScale = PApplet.lerp(subScale, newSubScale, (float) (1 - Math.pow(zoomSpeed, deltaTime)));
 		}
 		// main scale
 		if (scale != newScale) {
-			scale = PApplet.lerp(scale, newScale, PApplet.exp(-(zoomSpeed / deltaTime)));
+			scale = PApplet.lerp(scale, newScale, (float) (1 - Math.pow(zoomSpeed, deltaTime)));
 		}
 		// translate
 		if (center != newCenter) {
-			center = PVector.lerp(center, newCenter, PApplet.exp(-(zoomSpeed / deltaTime)));
+			center = PVector.lerp(center, newCenter, (float) (1 - Math.pow(zoomSpeed, deltaTime)));
 		}
 		// black border movement
 		if (!cameraArea.sameDimensions(newCameraArea)) {
 			float topLeftX = PApplet.lerp(cameraArea.getTopLeft().x, newCameraArea.getTopLeft().x,
-					PApplet.exp(-(zoomSpeed / deltaTime)));
+					(float) (1 - Math.pow(zoomSpeed, deltaTime)));
 			float topLeftY = PApplet.lerp(cameraArea.getTopLeft().y, newCameraArea.getTopLeft().y,
-					PApplet.exp(-(zoomSpeed / deltaTime)));
+					(float) (1 - Math.pow(zoomSpeed, deltaTime)));
 			float bottomRightX = PApplet.lerp(cameraArea.getBottomRight().x, newCameraArea.getBottomRight().x,
-					PApplet.exp(-(zoomSpeed / deltaTime)));
+					(float) (1 - Math.pow(zoomSpeed, deltaTime)));
 			float bottomRightY = PApplet.lerp(cameraArea.getBottomRight().y, newCameraArea.getBottomRight().y,
-					PApplet.exp(-(zoomSpeed / deltaTime)));
+					(float) (1 - Math.pow(zoomSpeed, deltaTime)));
 			cameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
 		}
 
@@ -126,7 +126,7 @@ public class PageViewCamera {
 		p.rectMode(CORNERS);
 		p.rect(newCameraArea.getTopLeft().x, newCameraArea.getTopLeft().y, newCameraArea.getBottomRight().x,
 				newCameraArea.getBottomRight().y);
-		
+
 		// draw camera area
 		p.noFill();
 		p.stroke(0, 0, 255);
@@ -134,7 +134,7 @@ public class PageViewCamera {
 		p.rectMode(CORNERS);
 		p.rect(cameraArea.getTopLeft().x, cameraArea.getTopLeft().y, cameraArea.getBottomRight().x,
 				cameraArea.getBottomRight().y);
-		
+
 	}
 
 	public void update(float minX, float minY, float maxX, float maxY) {
