@@ -35,5 +35,10 @@ public class MathsPaper {
 				graphics.image(texture.getGrid(scale), x, y, gridSize, gridSize);
 			}
 		}
+		
+		// draw partial image
+		//p.image(pageGraphics, 0, 0, pageGraphics.width/2, pageGraphics.height, 0, 0, pageGraphics.width/2, pageGraphics.height);
+		
+		
 	}
 }
