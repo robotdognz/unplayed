@@ -57,7 +57,7 @@ public class PageView {
 			p.translate(-Camera.getCenter().x, -Camera.getCenter().y); // moves the view around the level
 		}
 
-		float currentScale = convert.getScale();
+		float currentScale = pageCamera.getScale() / pageCamera.getSubScale() / 100;// convert.getScale();
 
 		// draw the looping background
 		p.background(100);
@@ -68,7 +68,7 @@ public class PageView {
 		PVector bottomRight;
 		topLeft = convert.screenToLevel(0, 0);
 		bottomRight = convert.screenToLevel(p.width, p.height);
-		
+
 		// draw backgrounds that are inside that area
 		for (Background background : backgrounds) {
 			if (background.leftOf(topLeft.x)) {
