@@ -17,15 +17,15 @@ public class BackgroundPaper {
 	int startY;
 	int endX;
 	int endY;
-	PImage image;
-	float leftEdge;
-	float topEdge;
-	float rightEdge;
-	float bottomEdge;
-	int imageStartX;
-	int imageStartY;
-	int imageEndX;
-	int imageEndY;
+//	PImage image;
+//	float leftEdge;
+//	float topEdge;
+//	float rightEdge;
+//	float bottomEdge;
+//	int imageStartX;
+//	int imageStartY;
+//	int imageEndX;
+//	int imageEndY;
 
 	public BackgroundPaper(TextureCache texture) {
 		this.texture = texture;
@@ -87,56 +87,56 @@ public class BackgroundPaper {
 		}
 	}
 
-	public void draw(PGraphics graphics, Rectangle screen, float scale) {
-		// find x start position
-		startX = (int) Math.round((screen.getTopLeft().x - (gridSize / 2)) / gridSize) * gridSize;
-		// find y start position
-		startY = (int) Math.round((screen.getTopLeft().y - (gridSize / 2)) / gridSize) * gridSize;
-		// find x end position
-		endX = (int) Math.round((screen.getBottomRight().x + (gridSize / 2)) / gridSize) * gridSize;
-		// find y end position
-		endY = (int) Math.round((screen.getBottomRight().y + (gridSize / 2)) / gridSize) * gridSize;
-
-		// nested for loops to tile the images
-		for (int y = startY; y < endY; y += gridSize) {
-			for (int x = startX; x < endX; x += gridSize) {
-
-				image = texture.getPageViewBackground(scale);
-
-				leftEdge = x;
-				topEdge = y;
-				rightEdge = x + gridSize;
-				bottomEdge = y + gridSize;
-
-				imageStartX = 0;
-				imageStartY = 0;
-				imageEndX = image.width;
-				imageEndY = image.height;
-
-				if (x < screen.getTopLeft().x) {
-					leftEdge = screen.getTopLeft().x;
-					imageStartX = (int) (image.width * ((screen.getTopLeft().x - x) / gridSize));
-				}
-				if (y < screen.getTopLeft().y) {
-					topEdge = screen.getTopLeft().y;
-					imageStartY = (int) (image.height * ((screen.getTopLeft().y - y) / gridSize));
-				}
-				if (x + gridSize > screen.getBottomRight().x) {
-					rightEdge = screen.getBottomRight().x;
-					imageEndX = (int) (image.width
-							- (image.width * (((x + gridSize) - screen.getBottomRight().x) / gridSize)));
-				}
-				if (y + gridSize > screen.getBottomRight().y) {
-					bottomEdge = screen.getBottomRight().y;
-					imageEndY = (int) (image.height
-							- (image.height * (((y + gridSize) - screen.getBottomRight().y) / gridSize)));
-				}
-
-				graphics.imageMode(CORNERS);
-				graphics.image(image, leftEdge, topEdge, rightEdge, bottomEdge, imageStartX, imageStartY, imageEndX,
-						imageEndY);
-
-			}
-		}
-	}
+//	public void draw(PGraphics graphics, Rectangle screen, float scale) {
+//		// find x start position
+//		startX = (int) Math.round((screen.getTopLeft().x - (gridSize / 2)) / gridSize) * gridSize;
+//		// find y start position
+//		startY = (int) Math.round((screen.getTopLeft().y - (gridSize / 2)) / gridSize) * gridSize;
+//		// find x end position
+//		endX = (int) Math.round((screen.getBottomRight().x + (gridSize / 2)) / gridSize) * gridSize;
+//		// find y end position
+//		endY = (int) Math.round((screen.getBottomRight().y + (gridSize / 2)) / gridSize) * gridSize;
+//
+//		// nested for loops to tile the images
+//		for (int y = startY; y < endY; y += gridSize) {
+//			for (int x = startX; x < endX; x += gridSize) {
+//
+//				image = texture.getPageViewBackground(scale);
+//
+//				leftEdge = x;
+//				topEdge = y;
+//				rightEdge = x + gridSize;
+//				bottomEdge = y + gridSize;
+//
+//				imageStartX = 0;
+//				imageStartY = 0;
+//				imageEndX = image.width;
+//				imageEndY = image.height;
+//
+//				if (x < screen.getTopLeft().x) {
+//					leftEdge = screen.getTopLeft().x;
+//					imageStartX = (int) (image.width * ((screen.getTopLeft().x - x) / gridSize));
+//				}
+//				if (y < screen.getTopLeft().y) {
+//					topEdge = screen.getTopLeft().y;
+//					imageStartY = (int) (image.height * ((screen.getTopLeft().y - y) / gridSize));
+//				}
+//				if (x + gridSize > screen.getBottomRight().x) {
+//					rightEdge = screen.getBottomRight().x;
+//					imageEndX = (int) (image.width
+//							- (image.width * (((x + gridSize) - screen.getBottomRight().x) / gridSize)));
+//				}
+//				if (y + gridSize > screen.getBottomRight().y) {
+//					bottomEdge = screen.getBottomRight().y;
+//					imageEndY = (int) (image.height
+//							- (image.height * (((y + gridSize) - screen.getBottomRight().y) / gridSize)));
+//				}
+//
+//				graphics.imageMode(CORNERS);
+//				graphics.image(image, leftEdge, topEdge, rightEdge, bottomEdge, imageStartX, imageStartY, imageEndX,
+//						imageEndY);
+//
+//			}
+//		}
+//	}
 }
