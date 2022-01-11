@@ -35,18 +35,18 @@ public class BackgroundPaper {
 	public void draw(PGraphics graphics, PVector topLeft, PVector bottomRight, float scale) {
 		
 		float topLeftXRounded = (int) Math.floor(topLeft.x);
-		float topLeftYRounded = (int) Math.floor(topLeft.y);
-		float bottomRightXRounded = (int) Math.ceil(bottomRight.x);
-		float bottomRightYRounded = (int) Math.ceil(bottomRight.y);
+//		float topLeftYRounded = (int) Math.floor(topLeft.y);
+//		float bottomRightXRounded = (int) Math.ceil(bottomRight.x);
+//		float bottomRightYRounded = (int) Math.ceil(bottomRight.y);
 		
 		// find x start position
-		startX = (int) Math.floor(Math.round((topLeftXRounded - (gridSize / 2)) / gridSize) * gridSize);
+		startX = (int) Math.round((topLeft.x - (gridSize / 2)) / gridSize) * gridSize;
 		// find y start position
-		startY = (int) Math.floor(Math.round((topLeftYRounded - (gridSize / 2)) / gridSize) * gridSize);
+		startY = (int) Math.round((topLeft.y - (gridSize / 2)) / gridSize) * gridSize;
 		// find x end position
-		endX = (int) Math.ceil(Math.round((bottomRightXRounded + (gridSize / 2)) / gridSize) * gridSize);
+		endX = (int) Math.round((bottomRight.x + (gridSize / 2)) / gridSize) * gridSize;
 		// find y end position
-		endY = (int) Math.ceil(Math.round((bottomRightYRounded + (gridSize / 2)) / gridSize) * gridSize);
+		endY = (int) Math.round((bottomRight.y + (gridSize / 2)) / gridSize) * gridSize;
 		
 		
 		// nested for loops to tile the images
@@ -65,23 +65,23 @@ public class BackgroundPaper {
 				imageEndX = image.width;
 				imageEndY = image.height;
 
-				if (x < topLeftXRounded) {
+				if (x < topLeft.x) {
 					leftEdge = topLeftXRounded;
-					imageStartX = (int) (image.width * ((topLeftXRounded - x) / gridSize));
+					imageStartX = (int) Math.floor(image.width * ((topLeftXRounded - x) / gridSize));
 				}
-				if (y < topLeftYRounded) {
-					topEdge = topLeftYRounded;
-					imageStartY = (int) (image.height * ((topLeftYRounded - y) / gridSize));
+				if (y < topLeft.y) {
+					topEdge = topLeft.y;
+					imageStartY = (int) (image.height * ((topLeft.y - y) / gridSize));
 				}
-				if (x + gridSize > bottomRightXRounded) {
-					rightEdge = bottomRightXRounded;
+				if (x + gridSize > bottomRight.x) {
+					rightEdge = bottomRight.x;
 					imageEndX = (int) (image.width
-							- (image.width * (((x + gridSize) - bottomRightXRounded) / gridSize)));
+							- (image.width * (((x + gridSize) - bottomRight.x) / gridSize)));
 				}
-				if (y + gridSize > bottomRightYRounded) {
-					bottomEdge = bottomRightYRounded;
+				if (y + gridSize > bottomRight.y) {
+					bottomEdge = bottomRight.y;
 					imageEndY = (int) (image.height
-							- (image.height * (((y + gridSize) - bottomRightYRounded) / gridSize)));
+							- (image.height * (((y + gridSize) - bottomRight.y) / gridSize)));
 				}
 
 				graphics.imageMode(CORNERS);
