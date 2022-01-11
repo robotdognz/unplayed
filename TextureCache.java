@@ -79,7 +79,7 @@ public class TextureCache {
 
 		// page view background texture
 		int pvbSize = 3;
-		pageViewBackgroundLOD256 = p.requestImage("PageViewBackground.jpg");
+		pageViewBackgroundLOD256 = p.loadImage("PageViewBackground.jpg");
 		pageViewBackgroundLOD256.resize(256 * pvbSize, 256 * pvbSize);
 		pageViewBackgroundLOD128 = pageViewBackgroundLOD256.get();
 		pageViewBackgroundLOD128.resize(128 * pvbSize, 128 * pvbSize);
