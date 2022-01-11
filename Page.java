@@ -201,6 +201,8 @@ public class Page extends Editable {
 		// draw the page background
 		p.fill(240);
 		p.rect(0, 0, view.getWidth(), view.getHeight());
+		
+		p.translate(view.getX(), view.getY());
 
 		// draw tiles and images
 		for (Rectangle r : pageObjects) { // draw images
