@@ -32,7 +32,7 @@ public class BackgroundPaper {
 		for (int y = startY; y < endY; y += gridSize) {
 			for (int x = startX; x < endX; x += gridSize) {
 				graphics.imageMode(CORNER);
-				graphics.image(texture.getPageViewBackground(), x, y, gridSize, gridSize);
+				graphics.image(texture.getPageViewBackground(scale), x, y, gridSize, gridSize);
 			}
 		}
 	}
@@ -53,7 +53,7 @@ public class BackgroundPaper {
 		for (int y = startY; y < endY; y += gridSize) {
 			for (int x = startX; x < endX; x += gridSize) {
 				graphics.imageMode(CORNER);
-				graphics.image(texture.getPageViewBackground(), x, y, gridSize, gridSize);
+				graphics.image(texture.getPageViewBackground(scale), x, y, gridSize, gridSize);
 			}
 		}
 	}

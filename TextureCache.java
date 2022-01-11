@@ -38,7 +38,11 @@ public class TextureCache {
 	private PImage gridLOD16;
 	private PImage gridLOD8;
 
-	private PImage pageViewBackground;
+//	private PImage pageViewBackground;
+	private PImage pageViewBackgroundLOD256;
+	private PImage pageViewBackgroundLOD128;
+	private PImage pageViewBackgroundLOD64;
+	private PImage pageViewBackgroundLOD32;
 
 	// level images
 	private File[] imagePaths;
@@ -74,7 +78,15 @@ public class TextureCache {
 		gridLOD8 = p.loadImage("PaperGrid_32x32.png");
 
 		// page view background texture
-		pageViewBackground = p.requestImage("PageViewBackground.jpg");
+		int pvbSize = 3;
+		pageViewBackgroundLOD256 = p.requestImage("PageViewBackground.jpg");
+		pageViewBackgroundLOD256.resize(256 * pvbSize, 256 * pvbSize);
+		pageViewBackgroundLOD128 = pageViewBackgroundLOD256.get();
+		pageViewBackgroundLOD128.resize(128 * pvbSize, 128 * pvbSize);
+		pageViewBackgroundLOD64 = pageViewBackgroundLOD256.get();
+		pageViewBackgroundLOD64.resize(64 * pvbSize, 64 * pvbSize);
+		pageViewBackgroundLOD32 = pageViewBackgroundLOD256.get();
+		pageViewBackgroundLOD32.resize(32 * pvbSize, 32 * pvbSize);
 
 		// level assets
 		loadLevelImages();
@@ -85,6 +97,18 @@ public class TextureCache {
 
 	public void passGame(Game game) {
 		this.game = game;
+	}
+
+	public PImage getPageViewBackground(float scale) {
+		if (scale > 16) {
+			return pageViewBackgroundLOD32; // between 16 and 32
+		} else if (scale > 8) {
+			return pageViewBackgroundLOD64; // between 8 and 16
+		} else if (scale > 4) {
+			return pageViewBackgroundLOD128; // between 4 and 8
+		} else {
+			return pageViewBackgroundLOD256; // less than 4
+		}
 	}
 
 	public PImage getGrid(float scale) {
@@ -360,7 +384,7 @@ public class TextureCache {
 	public ArrayList<ImageHandler> getImageList() {
 		return imageList;
 	}
-	
+
 	public HashMap<File, BackgroundHandler> getBackgroundMap() {
 		return backgroundMap;
 	}
@@ -376,8 +400,8 @@ public class TextureCache {
 	public ArrayList<EventHandler> getEventList() {
 		return eventList;
 	}
-	
-	public PImage getPageViewBackground() {
-		return pageViewBackground;
-	}
+
+//	public PImage getPageViewBackground() {
+//		return pageViewBackground;
+//	}
 }
