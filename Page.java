@@ -181,63 +181,12 @@ public class Page extends Editable {
 	}
 
 	private void drawNew2(float scale) {
-		if (playerVisible) {
-			pageGraphics.beginDraw();
-			pageGraphics.background(240); // background
-			pageGraphics.translate(-view.getX(), -view.getY());
-
-			for (Rectangle r : pageObjects) { // draw images
-				if (!(r instanceof Image)) {
-					continue;
-				}
-				if (r.getTopLeft().x > view.getBottomRight().x - 1) {
-					continue;
-				}
-				if (r.getBottomRight().x < view.getTopLeft().x + 1) {
-					continue;
-				}
-				if (r.getTopLeft().y > view.getBottomRight().y - 1) {
-					continue;
-				}
-				if (r.getBottomRight().y < view.getTopLeft().y + 1) {
-					continue;
-				}
-				if (r instanceof Image && showImages) {
-					((Image) r).draw(pageGraphics, scale / size); // 3 // scale/size
-				}
-			}
-
-			for (Rectangle r : pageObjects) { // draw tiles and events
-				if (!(r instanceof Tile || r instanceof Event)) {
-					continue;
-				}
-				if (r.getTopLeft().x > view.getBottomRight().x - 1) {
-					continue;
-				}
-				if (r.getBottomRight().x < view.getTopLeft().x + 1) {
-					continue;
-				}
-				if (r.getTopLeft().y > view.getBottomRight().y - 1) {
-					continue;
-				}
-				if (r.getBottomRight().y < view.getTopLeft().y + 1) {
-					continue;
-				}
-				if (r instanceof Tile && showTiles) {
-					((Tile) r).draw(pageGraphics, scale / size); // 3 // scale/size
-				}
-				if (r instanceof Event && ((Event) r).visible && showObstacles) {
-					((Event) r).draw(pageGraphics, scale / size); // 3 // scale/size
-				}
-			}
-
-			if (game.player != null && showPlayer) {
-				game.player.draw(pageGraphics, scale / size); // 3 // player scale/size
-			}
-			game.paper.draw(pageGraphics, view, scale / size); // paper effect
-
-			pageGraphics.endDraw();
+		
+		if (redraw || playerVisible) {
+			redraw();
+			redraw = false;
 		}
+		
 
 		p.pushMatrix();
 		p.translate(position.x, position.y);
@@ -258,6 +207,64 @@ public class Page extends Editable {
 		p.image(pageGraphics, 0, 0); // draw the page
 
 		p.popMatrix();
+	}
+	
+	private void redraw() {
+		pageGraphics.beginDraw();
+		pageGraphics.background(240); // background
+		pageGraphics.translate(-view.getX(), -view.getY());
+
+		for (Rectangle r : pageObjects) { // draw images
+			if (!(r instanceof Image)) {
+				continue;
+			}
+			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
+				continue;
+			}
+			if (r.getBottomRight().x < view.getTopLeft().x + 1) {
+				continue;
+			}
+			if (r.getTopLeft().y > view.getBottomRight().y - 1) {
+				continue;
+			}
+			if (r.getBottomRight().y < view.getTopLeft().y + 1) {
+				continue;
+			}
+			if (r instanceof Image && showImages) {
+				((Image) r).draw(pageGraphics, 3); // 3 // scale/size
+			}
+		}
+
+		for (Rectangle r : pageObjects) { // draw tiles and events
+			if (!(r instanceof Tile || r instanceof Event)) {
+				continue;
+			}
+			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
+				continue;
+			}
+			if (r.getBottomRight().x < view.getTopLeft().x + 1) {
+				continue;
+			}
+			if (r.getTopLeft().y > view.getBottomRight().y - 1) {
+				continue;
+			}
+			if (r.getBottomRight().y < view.getTopLeft().y + 1) {
+				continue;
+			}
+			if (r instanceof Tile && showTiles) {
+				((Tile) r).draw(pageGraphics, 3); // 3 // scale/size
+			}
+			if (r instanceof Event && ((Event) r).visible && showObstacles) {
+				((Event) r).draw(pageGraphics, 3); // 3 // scale/size
+			}
+		}
+
+		if (game.player != null && showPlayer) {
+			game.player.draw(pageGraphics, 3); // 3 // player scale/size
+		}
+		game.paper.draw(pageGraphics, view, 3); // scale / size // paper effect
+
+		pageGraphics.endDraw();
 	}
 
 	private void drawNew(float scale) {
