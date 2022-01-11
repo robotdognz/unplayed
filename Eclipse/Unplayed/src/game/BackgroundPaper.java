@@ -34,11 +34,6 @@ public class BackgroundPaper {
 
 	public void draw(PGraphics graphics, PVector topLeft, PVector bottomRight, float scale) {
 
-//		float topLeftXRounded = (int) Math.floor(topLeft.x);
-//		float topLeftYRounded = (int) Math.floor(topLeft.y);
-//		float bottomRightXRounded = (int) Math.ceil(bottomRight.x);
-//		float bottomRightYRounded = (int) Math.ceil(bottomRight.y);
-
 		// find x start position
 		startX = (int) Math.round((topLeft.x - (gridSize / 2)) / gridSize) * gridSize;
 		// find y start position
@@ -52,38 +47,41 @@ public class BackgroundPaper {
 		for (int y = startY; y < endY; y += gridSize) {
 			for (int x = startX; x < endX; x += gridSize) {
 
-				image = texture.getPageViewBackground(scale);
+//				image = texture.getPageViewBackground(scale);
+//
+//				leftEdge = x;
+//				topEdge = y;
+//				rightEdge = x + gridSize;
+//				bottomEdge = y + gridSize;
+//
+//				imageStartX = 0;
+//				imageStartY = 0;
+//				imageEndX = image.width;
+//				imageEndY = image.height;
+//
+//				if (x + gridSize / 2 < topLeft.x) {
+//					leftEdge = leftEdge + gridSize / 2;
+//					imageStartX = image.width / 2;
+//				}
+//				if (y + gridSize / 2 < topLeft.y) {
+//					topEdge = topEdge + gridSize / 2;
+//					imageStartY = image.height / 2;
+//				}
+//				if (x + gridSize / 2 > bottomRight.x) {
+//					rightEdge = rightEdge - gridSize / 2;
+//					imageEndX = image.width / 2;
+//				}
+//				if (y + gridSize / 2 > bottomRight.y) {
+//					bottomEdge = bottomEdge - gridSize / 2;
+//					imageEndY = image.height / 2;
+//				}
 
-				leftEdge = x;
-				topEdge = y;
-				rightEdge = x + gridSize;
-				bottomEdge = y + gridSize;
-
-				imageStartX = 0;
-				imageStartY = 0;
-				imageEndX = image.width;
-				imageEndY = image.height;
-
-				if (x + gridSize / 2 < topLeft.x) {
-					leftEdge = leftEdge + gridSize / 2;
-					imageStartX = image.width / 2;
-				}
-				if (y + gridSize / 2 < topLeft.y) {
-					topEdge = topEdge + gridSize / 2;
-					imageStartY = image.height / 2;
-				}
-				if (x + gridSize / 2 > bottomRight.x) {
-					rightEdge = rightEdge - gridSize / 2;
-					imageEndX = image.width / 2;
-				}
-				if (y + gridSize / 2 > bottomRight.y) {
-					bottomEdge = bottomEdge - gridSize / 2;
-					imageEndY = image.height / 2;
-				}
-
-				graphics.imageMode(CORNERS);
-				graphics.image(image, leftEdge, topEdge, rightEdge, bottomEdge, imageStartX, imageStartY, imageEndX,
-						imageEndY);
+//				graphics.imageMode(CORNERS);
+//				graphics.image(image, leftEdge, topEdge, rightEdge, bottomEdge, imageStartX, imageStartY, imageEndX,
+//						imageEndY);
+				
+				graphics.imageMode(CORNER);
+				graphics.image(texture.getPageViewBackground(scale), x, y, gridSize, gridSize);
 
 			}
 		}
