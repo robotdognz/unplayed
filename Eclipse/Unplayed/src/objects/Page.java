@@ -202,7 +202,7 @@ public class Page extends Editable {
 				continue;
 			}
 			if (r instanceof Image && showImages) {
-				((Image) r).draw(pageGraphics, 3); // scale/size
+				((Image) r).draw(pageGraphics, scale / size); // 3 // scale/size
 			}
 		}
 
@@ -223,15 +223,15 @@ public class Page extends Editable {
 				continue;
 			}
 			if (r instanceof Tile && showTiles) {
-				((Tile) r).draw(pageGraphics, 3); // scale/size
+				((Tile) r).draw(pageGraphics, scale / size); // 3 // scale/size
 			}
 			if (r instanceof Event && ((Event) r).visible && showObstacles) {
-				((Event) r).draw(pageGraphics, 3); // scale/size
+				((Event) r).draw(pageGraphics, scale / size); // 3 // scale/size
 			}
 		}
 		
 		if (game.player != null && showPlayer) {
-			game.player.draw(pageGraphics, 3); // player scale/size
+			game.player.draw(pageGraphics, scale / size); // 3 // player scale/size
 		}
 		game.paper.draw(pageGraphics, view, scale / size); // paper effect
 
