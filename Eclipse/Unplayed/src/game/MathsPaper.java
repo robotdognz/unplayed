@@ -50,6 +50,10 @@ public class MathsPaper {
 					leftEdge = screen.getTopLeft().x;
 					imageStartX = (int) (image.width * ((screen.getTopLeft().x - x) / gridSize));
 				}
+				if (y < screen.getTopLeft().y) {
+					topEdge = screen.getTopLeft().y;
+					imageStartY = (int) (image.height * ((screen.getTopLeft().y - y) / gridSize));
+				}
 
 				graphics.imageMode(CORNERS);
 				graphics.image(image, leftEdge, topEdge, rightEdge, bottomEdge, imageStartX, imageStartY, imageEndX,
