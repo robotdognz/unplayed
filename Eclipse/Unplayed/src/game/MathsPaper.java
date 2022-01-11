@@ -33,26 +33,27 @@ public class MathsPaper {
 		// nested for loops to tile the images
 		for (int y = startY; y < endY; y += gridSize) {
 			for (int x = startX; x < endX; x += gridSize) {
-				
+
 				PImage image = texture.getGrid(scale);
-				
+
 				float leftEdge = x;
 				float topEdge = y;
 				float rightEdge = x + gridSize;
 				float bottomEdge = y + gridSize;
-				
+
 				int imageStartX = 0;
 				int imageStartY = 0;
 				int imageEndX = image.width;
 				int imageEndY = image.height;
-				
+
 				if (x < screen.getTopLeft().x) {
 					leftEdge = screen.getTopLeft().x;
-					imageStartX = (int) screen.getTopLeft().x - x;
+					imageStartX = (int) (image.width * ((screen.getTopLeft().x - x) / gridSize));
 				}
 
 				graphics.imageMode(CORNERS);
-				graphics.image(image, leftEdge, topEdge, rightEdge, bottomEdge, imageStartX, imageStartY, imageEndX, imageEndY);
+				graphics.image(image, leftEdge, topEdge, rightEdge, bottomEdge, imageStartX, imageStartY, imageEndX,
+						imageEndY);
 //				graphics.image(texture.getGrid(scale), x, y, gridSize, gridSize);
 			}
 		}
