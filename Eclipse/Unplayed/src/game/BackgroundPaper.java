@@ -29,7 +29,7 @@ public class BackgroundPaper {
 
 	public BackgroundPaper(TextureCache texture) {
 		this.texture = texture;
-		gridSize = 1000; // 400
+		gridSize = 512; // 400
 	}
 
 	public void draw(PGraphics graphics, PVector topLeft, PVector bottomRight, float scale) {
