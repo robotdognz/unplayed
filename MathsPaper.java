@@ -3,6 +3,8 @@ package game;
 import handlers.TextureCache;
 import objects.Rectangle;
 import processing.core.PGraphics;
+import processing.core.PImage;
+
 import static processing.core.PConstants.*;
 
 public class MathsPaper {
@@ -33,12 +35,13 @@ public class MathsPaper {
 			for (int x = startX; x < endX; x += gridSize) {
 				float adjustedX = x;
 				float adjustedY = y;
+				PImage image = texture.getGrid(scale);
 				if (x < screen.getTopLeft().x) {
 
 				}
 
 				graphics.imageMode(CORNERS);
-				graphics.image(texture.getGrid(scale), x, y, x + gridSize, y + gridSize, 0, 0, gridSize, gridSize);
+				graphics.image(image, x, y, x + gridSize, y + gridSize, 0, 0, image.width, image.height);
 //				graphics.image(texture.getGrid(scale), x, y, gridSize, gridSize);
 			}
 		}
