@@ -204,7 +204,9 @@ public class Page extends Editable {
 		// draw the page itself
 		p.scale(flipX, flipY); // flip the page
 		p.imageMode(CENTER);
-		p.image(pageGraphics, 0, 0); // draw the page
+//		p.image(pageGraphics, 0, 0); // draw the page
+		
+		p.image(pageGraphics, 0, 0, pageGraphics.width, pageGraphics.height, 0, 0, pageGraphics.width/2, pageGraphics.height);
 
 		p.popMatrix();
 	}
