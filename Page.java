@@ -201,6 +201,8 @@ public class Page extends Editable {
 		// draw the page background
 		p.fill(240);
 		p.rect(0, 0, view.getWidth(), view.getHeight());
+		p.imageMode(CENTER);
+		p.clip(0, 0, view.getWidth(), view.getHeight());
 
 		p.translate((float) -(view.getX() + view.getWidth() * 0.5), (float) -(view.getY() + view.getHeight() * 0.5));
 
@@ -248,6 +250,7 @@ public class Page extends Editable {
 				((Event) r).draw(p.g, 3); // scale/size
 			}
 		}
+		
 
 		// draw player and paper effect
 		if (game.player != null && showPlayer) {
