@@ -54,23 +54,23 @@ public class BackgroundPaper {
 				imageEndX = image.width;
 				imageEndY = image.height;
 
-				if (x < topLeft.x) {
-					leftEdge = topLeft.x;
-					imageStartX = (int) (image.width * ((topLeft.x - x) / gridSize));
+				if (x < startX) {
+					leftEdge = startX;
+					imageStartX = (int) (image.width * ((startX - x) / gridSize));
 				}
-				if (y < topLeft.y) {
-					topEdge = topLeft.y;
-					imageStartY = (int) (image.height * ((topLeft.y - y) / gridSize));
+				if (y < startY) {
+					topEdge = startY;
+					imageStartY = (int) (image.height * ((startY - y) / gridSize));
 				}
-				if (x + gridSize > bottomRight.x) {
-					rightEdge = bottomRight.x;
+				if (x + gridSize > endX) {
+					rightEdge = endX;
 					imageEndX = (int) (image.width
-							- (image.width * (((x + gridSize) - bottomRight.x) / gridSize)));
+							- (image.width * (((x + gridSize) - endX) / gridSize)));
 				}
-				if (y + gridSize > bottomRight.y) {
-					bottomEdge = bottomRight.y;
+				if (y + gridSize > endY) {
+					bottomEdge = endY;
 					imageEndY = (int) (image.height
-							- (image.height * (((y + gridSize) - bottomRight.y) / gridSize)));
+							- (image.height * (((y + gridSize) - endY) / gridSize)));
 				}
 
 				graphics.imageMode(CORNERS);
