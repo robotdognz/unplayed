@@ -48,7 +48,7 @@ public class MathsPaper {
 				
 				if (x < screen.getTopLeft().x) {
 					leftEdge = screen.getTopLeft().x;
-					imageStartX = (int) screen.getTopLeft().x + x;
+					imageStartX = (int) screen.getTopLeft().x - x;
 				}
 
 				graphics.imageMode(CORNERS);
