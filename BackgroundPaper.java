@@ -33,19 +33,21 @@ public class BackgroundPaper {
 	}
 
 	public void draw(PGraphics graphics, PVector topLeft, PVector bottomRight, float scale) {
-		// find x start position
-		startX = (int) Math.round((topLeft.x - (gridSize / 2)) / gridSize) * gridSize;
-		// find y start position
-		startY = (int) Math.round((topLeft.y - (gridSize / 2)) / gridSize) * gridSize;
-		// find x end position
-		endX = (int) Math.round((bottomRight.x + (gridSize / 2)) / gridSize) * gridSize;
-		// find y end position
-		endY = (int) Math.round((bottomRight.y + (gridSize / 2)) / gridSize) * gridSize;
 		
 		float topLeftXRounded = (int) Math.floor(topLeft.x);
 		float topLeftYRounded = (int) Math.floor(topLeft.y);
 		float bottomRightXRounded = (int) Math.ceil(bottomRight.x);
 		float bottomRightYRounded = (int) Math.ceil(bottomRight.y);
+		
+		// find x start position
+		startX = (int) Math.floor(((topLeftXRounded - (gridSize / 2)) / gridSize) * gridSize);
+		// find y start position
+		startY = (int) Math.floor(((topLeftYRounded - (gridSize / 2)) / gridSize) * gridSize);
+		// find x end position
+		endX = (int) Math.ceil(((bottomRightXRounded + (gridSize / 2)) / gridSize) * gridSize);
+		// find y end position
+		endY = (int) Math.ceil(((bottomRightYRounded + (gridSize / 2)) / gridSize) * gridSize);
+		
 		
 		// nested for loops to tile the images
 		for (int y = startY; y < endY; y += gridSize) {
