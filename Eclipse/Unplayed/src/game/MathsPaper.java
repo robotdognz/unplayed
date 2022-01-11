@@ -12,6 +12,10 @@ public class MathsPaper {
 	int gridSize;
 	
 	// rendering algorithm variables
+	int startX;
+	int startY;
+	int endX;
+	int endY;
 	PImage image;
 	float leftEdge;
 	float topEdge;
@@ -29,16 +33,14 @@ public class MathsPaper {
 
 	public void draw(PGraphics graphics, Rectangle screen, float scale) {
 
-		graphics.imageMode(CORNER);
-
 		// find x start position
-		int startX = (int) Math.round((screen.getTopLeft().x - (gridSize / 2)) / gridSize) * gridSize;
+		startX = (int) Math.round((screen.getTopLeft().x - (gridSize / 2)) / gridSize) * gridSize;
 		// find y start position
-		int startY = (int) Math.round((screen.getTopLeft().y - (gridSize / 2)) / gridSize) * gridSize;
+		startY = (int) Math.round((screen.getTopLeft().y - (gridSize / 2)) / gridSize) * gridSize;
 		// find x end position
-		int endX = (int) Math.round((screen.getBottomRight().x + (gridSize / 2)) / gridSize) * gridSize;
+		endX = (int) Math.round((screen.getBottomRight().x + (gridSize / 2)) / gridSize) * gridSize;
 		// find y end position
-		int endY = (int) Math.round((screen.getBottomRight().y + (gridSize / 2)) / gridSize) * gridSize;
+		endY = (int) Math.round((screen.getBottomRight().y + (gridSize / 2)) / gridSize) * gridSize;
 		
 		// nested for loops to tile the images
 		for (int y = startY; y < endY; y += gridSize) {
