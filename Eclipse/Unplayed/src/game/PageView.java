@@ -72,8 +72,8 @@ public class PageView {
 		}
 
 		// draw the looping background
-		p.background(100);
-//		paper.draw(p.getGraphics(), game.screenSpace, convert.getScale()); // background paper effect
+//		p.background(100);
+		paper.draw(p.getGraphics(), game.screenSpace, convert.getScale()); // background paper effect
 
 		// draw backgrounds that are inside that area
 		for (Background background : backgrounds) {
