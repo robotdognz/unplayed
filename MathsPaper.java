@@ -55,8 +55,9 @@ public class MathsPaper {
 					imageStartY = (int) (image.height * ((screen.getTopLeft().y - y) / gridSize));
 				}
 				if (x + gridSize > screen.getBottomRight().x) {
-					rightEdge = screen.getBottomRight().x; // this works
-					imageEndX = (int) (image.width * (((x + gridSize) - screen.getBottomRight().x) / gridSize));
+					rightEdge = screen.getBottomRight().x; // this line works
+					imageEndX = (int) (image.width
+							- (image.width * (((x + gridSize) - screen.getBottomRight().x) / gridSize)));
 				}
 
 				graphics.imageMode(CORNERS);
