@@ -40,13 +40,13 @@ public class BackgroundPaper {
 		float bottomRightYRounded = (int) Math.ceil(bottomRight.y);
 		
 		// find x start position
-		startX = (int) Math.floor(((topLeftXRounded - (gridSize / 2)) / gridSize) * gridSize);
+		startX = (int) Math.floor(Math.round((topLeftXRounded - (gridSize / 2)) / gridSize) * gridSize);
 		// find y start position
-		startY = (int) Math.floor(((topLeftYRounded - (gridSize / 2)) / gridSize) * gridSize);
+		startY = (int) Math.floor(Math.round((topLeftYRounded - (gridSize / 2)) / gridSize) * gridSize);
 		// find x end position
-		endX = (int) Math.ceil(((bottomRightXRounded + (gridSize / 2)) / gridSize) * gridSize);
+		endX = (int) Math.ceil(Math.round((bottomRightXRounded + (gridSize / 2)) / gridSize) * gridSize);
 		// find y end position
-		endY = (int) Math.ceil(((bottomRightYRounded + (gridSize / 2)) / gridSize) * gridSize);
+		endY = (int) Math.ceil(Math.round((bottomRightYRounded + (gridSize / 2)) / gridSize) * gridSize);
 		
 		
 		// nested for loops to tile the images
