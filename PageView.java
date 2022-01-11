@@ -72,7 +72,7 @@ public class PageView {
 		}
 
 		// draw the looping background
-		p.background(119, 103, 69);
+		p.background(206, 191, 160);
 //		paper.draw(p.getGraphics(), topLeft, bottomRight, currentScale*2); // background paper effect
 
 		// draw backgrounds that are inside that area
