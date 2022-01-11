@@ -44,8 +44,7 @@ public class PageView {
 		p.pushMatrix(); // start working at game scale
 		p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
 
-		float currentScale = 0;
-		// page drawing area
+		float currentScale;
 		PVector topLeft;
 		PVector bottomRight;
 
@@ -56,7 +55,6 @@ public class PageView {
 			p.translate(-pageCamera.getCenter().x, -pageCamera.getCenter().y); // moves the view around the level
 
 			currentScale = pageCamera.getScale() / pageCamera.getSubScale() / 100;
-
 			topLeft = convert.screenToLevel(0, 0, pageCamera.getScale(), pageCamera.getSubScale(),
 					pageCamera.getCenter());
 			bottomRight = convert.screenToLevel(p.width, p.height, pageCamera.getScale(), pageCamera.getSubScale(),
@@ -69,7 +67,6 @@ public class PageView {
 			p.translate(-Camera.getCenter().x, -Camera.getCenter().y); // moves the view around the level
 
 			currentScale = convert.getScale();
-
 			topLeft = convert.screenToLevel(0, 0);
 			bottomRight = convert.screenToLevel(p.width, p.height);
 		}

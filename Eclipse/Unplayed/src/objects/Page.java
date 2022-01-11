@@ -176,6 +176,89 @@ public class Page extends Editable {
 //	}
 
 	public void draw(float scale) {
+		drawNew(scale);
+//		drawOld(scale);
+	}
+
+	private void drawNew(float scale) {
+		// draw the page
+		p.pushMatrix();
+		p.translate(position.x, position.y);
+		p.scale(size); // size the page will appear in the page view
+		p.rotate(PApplet.radians(angle)); // rotate the page
+
+		// draw the shadow
+		p.translate(shadow, shadow);
+		p.fill(0, 40);
+		p.noStroke();
+		p.rectMode(CENTER);
+		p.rect(0, 0, view.getWidth(), view.getHeight());
+		p.translate(-shadow, -shadow);
+
+		// draw the page itself
+		p.scale(flipX, flipY); // flip the page
+		p.imageMode(CENTER);
+
+		// draw the page background
+		p.fill(240);
+		p.rectMode(CORNER);
+		p.rect(view.getWidth() / 2, view.getHeight() / 2, view.getWidth(), view.getHeight());
+
+		// draw tiles and images
+		for (Rectangle r : pageObjects) { // draw images
+			if (!(r instanceof Image)) {
+				continue;
+			}
+			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
+				continue;
+			}
+			if (r.getBottomRight().x < view.getTopLeft().x + 1) {
+				continue;
+			}
+			if (r.getTopLeft().y > view.getBottomRight().y - 1) {
+				continue;
+			}
+			if (r.getBottomRight().y < view.getTopLeft().y + 1) {
+				continue;
+			}
+			if (r instanceof Image && showImages) {
+				((Image) r).draw(p.g, 3); // scale/size
+			}
+		}
+		for (Rectangle r : pageObjects) { // draw tiles and events
+			if (!(r instanceof Tile || r instanceof Event)) {
+				continue;
+			}
+			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
+				continue;
+			}
+			if (r.getBottomRight().x < view.getTopLeft().x + 1) {
+				continue;
+			}
+			if (r.getTopLeft().y > view.getBottomRight().y - 1) {
+				continue;
+			}
+			if (r.getBottomRight().y < view.getTopLeft().y + 1) {
+				continue;
+			}
+			if (r instanceof Tile && showTiles) {
+				((Tile) r).draw(p.g, 3); // scale/size
+			}
+			if (r instanceof Event && ((Event) r).visible && showObstacles) {
+				((Event) r).draw(p.g, 3); // scale/size
+			}
+		}
+
+		// draw player and paper effect
+		if (game.player != null && showPlayer) {
+			game.player.draw(p.g, 3); // player scale/size
+		}
+		game.paper.draw(p.g, view, scale / size); // paper effect
+
+		p.popMatrix();
+	}
+
+	private void drawOld(float scale) {
 		if (redraw) {
 			drawView();
 			redraw = false;
@@ -211,7 +294,6 @@ public class Page extends Editable {
 		p.imageMode(CENTER);
 		p.image(pageGraphics, 0, 0); // draw the page
 		p.popMatrix();
-
 	}
 
 	public void drawCorners() {
