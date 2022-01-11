@@ -17,9 +17,9 @@ public class MathsPaper {
 	}
 
 	public void draw(PGraphics graphics, Rectangle screen, float scale) {
-		// if(convert.getScale() > 30){ // stop drawing paper/tiles at this size
-		// return;
-		// }
+
+		graphics.imageMode(CORNER);
+
 		// find x start position
 		int startX = (int) Math.round((screen.getTopLeft().x - (gridSize / 2)) / gridSize) * gridSize;
 		// find y start position
@@ -31,14 +31,21 @@ public class MathsPaper {
 		// nested for loops to tile the images
 		for (int y = startY; y < endY; y += gridSize) {
 			for (int x = startX; x < endX; x += gridSize) {
-				graphics.imageMode(CORNER);
-				graphics.image(texture.getGrid(scale), x, y, gridSize, gridSize);
+				float adjustedX = x;
+				float adjustedY = y;
+				if (x < screen.getTopLeft().x) {
+
+				}
+
+				graphics.imageMode(CORNERS);
+				graphics.image(texture.getGrid(scale), x, y, x + gridSize, y + gridSize, 0, 0, gridSize, gridSize);
+//				graphics.image(texture.getGrid(scale), x, y, gridSize, gridSize);
 			}
 		}
-		
+
 		// draw partial image
-		//p.image(pageGraphics, 0, 0, pageGraphics.width/2, pageGraphics.height, 0, 0, pageGraphics.width/2, pageGraphics.height);
-		
-		
+		// p.image(pageGraphics, 0, 0, pageGraphics.width/2, pageGraphics.height, 0, 0,
+		// pageGraphics.width/2, pageGraphics.height);
+
 	}
 }
