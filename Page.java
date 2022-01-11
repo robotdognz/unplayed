@@ -202,7 +202,7 @@ public class Page extends Editable {
 		p.fill(240);
 		p.rect(0, 0, view.getWidth(), view.getHeight());
 
-		p.translate(-view.getX() - view.getWidth() * 0.5, -view.getY());
+		p.translate((float) -(view.getX() - view.getWidth() * 0.5), (float) -(view.getY() - view.getHeight() * 0.5));
 
 		// draw tiles and images
 		for (Rectangle r : pageObjects) { // draw images
