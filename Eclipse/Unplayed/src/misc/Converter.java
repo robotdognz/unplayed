@@ -26,6 +26,12 @@ public class Converter {
 		lastCalc.y = ((screenY - p.height / 2) / ((float) p.width / currentScale) / currentSubScale) + currentCenter.y;
 		return lastCalc.copy();
 	}
+	
+	public PVector screenToLevel(float screenX, float screenY, float scale, float subScale, PVector center) {
+		lastCalc.x = ((screenX - p.width / 2) / ((float) p.width / scale) / subScale) + center.x;
+		lastCalc.y = ((screenY - p.height / 2) / ((float) p.width / scale) / subScale) + center.y;
+		return lastCalc.copy();
+	}
 
 	public float screenToLevel(float distance) {
 		currentScale = Camera.getScale();
