@@ -35,7 +35,6 @@ public class BackgroundPaper {
 		this.texture = texture;
 		gridSize = 1000; // 1000
 
-		PShape shape;
 		shape = p.createShape(RECT, 0, 0, gridSize, gridSize);
 		shape.setTexture(texture.getPageViewBackground(1));
 
