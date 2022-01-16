@@ -47,14 +47,20 @@ public class BackgroundPaper {
 		int yTile = 0; // 1;
 		int rightEdge = 0;
 		int bottomEdge = 0;
-
-		// nested for loops to tile the images
+		
+		for (int x = startX; x < endX; x += gridSize) {
+			xTile += 1;
+			rightEdge = x + gridSize;
+		}
+		
 		for (int y = startY; y < endY; y += gridSize) {
 			yTile += 1;
 			bottomEdge = y + gridSize;
-			for (int x = startX; x < endX; x += gridSize) {
-				xTile += 1;
-				rightEdge = x + gridSize;
+		}
+
+		// nested for loops to tile the images
+//		for (int y = startY; y < endY; y += gridSize) {
+//			for (int x = startX; x < endX; x += gridSize) {
 //				image = texture.getPageViewBackground(scale);
 //
 //				leftEdge = x;
@@ -91,8 +97,8 @@ public class BackgroundPaper {
 //				graphics.imageMode(CORNER);
 //				graphics.image(texture.getPageViewBackground(scale), x, y, gridSize, gridSize);
 //
-			}
-		}
+//			}
+//		}
 
 		// texture
 		graphics.noStroke();
