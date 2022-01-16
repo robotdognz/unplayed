@@ -37,6 +37,7 @@ public class BackgroundPaper {
 
 		shape = p.createShape(RECT, 0, 0, gridSize, gridSize);
 		shape.setTexture(texture.getPageViewBackground(1));
+		shape.noStroke();
 
 	}
 
@@ -90,9 +91,9 @@ public class BackgroundPaper {
 				
 				graphics.translate(gridSize, 0);
 				
-				xDistance =+ gridSize;
+				xDistance -= gridSize;
 			}
-			graphics.translate(-xDistance, gridSize);
+			graphics.translate(xDistance, gridSize);
 		}
 		
 		graphics.popMatrix();
