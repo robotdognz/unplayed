@@ -27,6 +27,7 @@
 -Added a setting in the level editor for changing player tumble mode, for testing
 -Added temp hints to current demo levels
 -Added visualisation for auto camera logic to page view
+-Added auto camera to level editor, cameras no longer need to be manually defined
 
 1.2.1: Improving physics and tuning player 'feel'
 

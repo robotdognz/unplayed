@@ -43,6 +43,21 @@ public class BackgroundPaper {
 		// find y end position
 		endY = (int) Math.round((bottomRight.y + (gridSize / 2)) / gridSize) * gridSize;
 
+		int xTile = endX - startX / gridSize; // 1;
+		int yTile = endY - startY / gridSize; //1;
+
+		// texture
+		graphics.noStroke();
+		graphics.textureMode(NORMAL);
+		graphics.beginShape();
+		graphics.textureWrap(REPEAT);
+		graphics.texture(texture.getPageViewBackground(scale));
+		graphics.vertex(startX, startY, 0, 0); // top left
+		graphics.vertex(endX, startY, xTile, 0); // top right
+		graphics.vertex(endX, endY, xTile, yTile); // bottom right
+		graphics.vertex(startX, endY, 0, yTile); // bottom left
+		graphics.endShape();
+
 		// nested for loops to tile the images
 		for (int y = startY; y < endY; y += gridSize) {
 			for (int x = startX; x < endX; x += gridSize) {
@@ -79,7 +94,7 @@ public class BackgroundPaper {
 //				graphics.imageMode(CORNERS);
 //				graphics.image(image, leftEdge, topEdge, rightEdge, bottomEdge, imageStartX, imageStartY, imageEndX,
 //						imageEndY);
-				
+
 				graphics.imageMode(CORNER);
 				graphics.image(texture.getPageViewBackground(scale), x, y, gridSize, gridSize);
 
