@@ -82,14 +82,17 @@ public class BackgroundPaper {
 		graphics.translate(startX, startY);
 		
 		for (int y = startY; y < endY; y += gridSize) {
+			int xDistance = 0;
 			
 			for (int x = startX; x < endX; x += gridSize) {
 				
 				graphics.shape(shape);
 				
 				graphics.translate(gridSize, 0);
+				
+				xDistance =+ gridSize;
 			}
-			graphics.translate(0, gridSize);
+			graphics.translate(-xDistance, gridSize);
 		}
 		
 		graphics.popMatrix();
