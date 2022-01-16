@@ -43,8 +43,8 @@ public class BackgroundPaper {
 		// find y end position
 		endY = (int) Math.round((bottomRight.y + (gridSize / 2)) / gridSize) * gridSize;
 
-		int xTile = endX - startX / gridSize; // 1;
-		int yTile = endY - startY / gridSize; //1;
+		int xTile = (int) (endX - startX / (float) gridSize); // 1;
+		int yTile = (int) (endY - startY / (float) gridSize); // 1;
 
 		// texture
 		graphics.noStroke();
