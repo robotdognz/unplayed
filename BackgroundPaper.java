@@ -59,8 +59,8 @@ public class BackgroundPaper {
 		graphics.endShape();
 
 		// nested for loops to tile the images
-		for (int y = startY; y < endY; y += gridSize) {
-			for (int x = startX; x < endX; x += gridSize) {
+//		for (int y = startY; y < endY; y += gridSize) {
+//			for (int x = startX; x < endX; x += gridSize) {
 
 //				image = texture.getPageViewBackground(scale);
 //
@@ -95,11 +95,11 @@ public class BackgroundPaper {
 //				graphics.image(image, leftEdge, topEdge, rightEdge, bottomEdge, imageStartX, imageStartY, imageEndX,
 //						imageEndY);
 
-				graphics.imageMode(CORNER);
-				graphics.image(texture.getPageViewBackground(scale), x, y, gridSize, gridSize);
-
-			}
-		}
+//				graphics.imageMode(CORNER);
+//				graphics.image(texture.getPageViewBackground(scale), x, y, gridSize, gridSize);
+//
+//			}
+//		}
 	}
 
 //	public void draw(PGraphics graphics, Rectangle screen, float scale) {
