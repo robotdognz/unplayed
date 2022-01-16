@@ -43,24 +43,14 @@ public class BackgroundPaper {
 		// find y end position
 		endY = (int) Math.round((bottomRight.y + (gridSize / 2)) / gridSize) * gridSize;
 
-		int xTile = (int) (endX - startX / (float) gridSize); // 1;
-		int yTile = (int) (endY - startY / (float) gridSize); // 1;
-
-		// texture
-		graphics.noStroke();
-		graphics.textureMode(NORMAL);
-		graphics.beginShape();
-		graphics.textureWrap(REPEAT);
-		graphics.texture(texture.getPageViewBackground(scale));
-		graphics.vertex(startX, startY, 0, 0); // top left
-		graphics.vertex(endX, startY, xTile, 0); // top right
-		graphics.vertex(endX, endY, xTile, yTile); // bottom right
-		graphics.vertex(startX, endY, 0, yTile); // bottom left
-		graphics.endShape();
+		int xTile = 0; // 1;
+		int yTile = 0; // 1;
 
 		// nested for loops to tile the images
-//		for (int y = startY; y < endY; y += gridSize) {
-//			for (int x = startX; x < endX; x += gridSize) {
+		for (int y = startY; y < endY; y += gridSize) {
+			yTile += 1;
+			for (int x = startX; x < endX; x += gridSize) {
+				xTile += 1;
 
 //				image = texture.getPageViewBackground(scale);
 //
@@ -98,8 +88,23 @@ public class BackgroundPaper {
 //				graphics.imageMode(CORNER);
 //				graphics.image(texture.getPageViewBackground(scale), x, y, gridSize, gridSize);
 //
-//			}
-//		}
+			}
+		}
+		
+		
+
+		// texture
+		graphics.noStroke();
+		graphics.textureMode(NORMAL);
+		graphics.beginShape();
+		graphics.textureWrap(REPEAT);
+		graphics.texture(texture.getPageViewBackground(scale));
+		graphics.vertex(startX, startY, 0, 0); // top left
+		graphics.vertex(endX, startY, xTile, 0); // top right
+		graphics.vertex(endX, endY, xTile, yTile); // bottom right
+		graphics.vertex(startX, endY, 0, yTile); // bottom left
+		graphics.endShape();
+		
 	}
 
 //	public void draw(PGraphics graphics, Rectangle screen, float scale) {
