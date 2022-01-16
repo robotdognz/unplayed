@@ -45,13 +45,16 @@ public class BackgroundPaper {
 
 		int xTile = 0; // 1;
 		int yTile = 0; // 1;
+		int rightEdge = 0;
+		int bottomEdge = 0;
 
 		// nested for loops to tile the images
 		for (int y = startY; y < endY; y += gridSize) {
 			yTile += 1;
+			bottomEdge = y + gridSize;
 			for (int x = startX; x < endX; x += gridSize) {
 				xTile += 1;
-
+				rightEdge = x + gridSize;
 //				image = texture.getPageViewBackground(scale);
 //
 //				leftEdge = x;
@@ -90,8 +93,6 @@ public class BackgroundPaper {
 //
 			}
 		}
-		
-		
 
 		// texture
 		graphics.noStroke();
@@ -100,11 +101,11 @@ public class BackgroundPaper {
 		graphics.textureWrap(REPEAT);
 		graphics.texture(texture.getPageViewBackground(scale));
 		graphics.vertex(startX, startY, 0, 0); // top left
-		graphics.vertex(endX, startY, xTile, 0); // top right
-		graphics.vertex(endX, endY, xTile, yTile); // bottom right
-		graphics.vertex(startX, endY, 0, yTile); // bottom left
+		graphics.vertex(rightEdge, startY, xTile, 0); // top right
+		graphics.vertex(rightEdge, bottomEdge, xTile, yTile); // bottom right
+		graphics.vertex(startX, bottomEdge, 0, yTile); // bottom left
 		graphics.endShape();
-		
+
 	}
 
 //	public void draw(PGraphics graphics, Rectangle screen, float scale) {
