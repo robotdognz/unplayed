@@ -4,7 +4,9 @@ import handlers.TextureCache;
 import objects.Rectangle;
 import processing.core.PGraphics;
 import processing.core.PImage;
+import processing.core.PShape;
 import processing.core.PVector;
+import processing.core.PApplet;
 
 import static processing.core.PConstants.*;
 
@@ -27,9 +29,16 @@ public class BackgroundPaper {
 //	int imageEndX;
 //	int imageEndY;
 
-	public BackgroundPaper(TextureCache texture) {
+	PShape shape;
+
+	public BackgroundPaper(PApplet p, TextureCache texture) {
 		this.texture = texture;
 		gridSize = 1000; // 1000
+
+		PShape rectangle;
+		rectangle = p.createShape(RECT, 0, 0, gridSize, gridSize);
+		rectangle.setTexture(texture.getPageViewBackground(1));
+
 	}
 
 	public void draw(PGraphics graphics, PVector topLeft, PVector bottomRight, float scale) {
@@ -43,24 +52,53 @@ public class BackgroundPaper {
 		// find y end position
 		endY = (int) Math.round((bottomRight.y + (gridSize / 2)) / gridSize) * gridSize;
 
-		int xTile = 0; // 1;
-		int yTile = 0; // 1;
-		int rightEdge = 0;
-		int bottomEdge = 0;
-		
-		for (int x = startX; x < endX; x += gridSize) {
-			xTile += 1;
-			rightEdge = x + gridSize;
-		}
+//		int xTile = 0; // 1;
+//		int yTile = 0; // 1;
+//		int rightEdge = 0;
+//		int bottomEdge = 0;
+//
+//		for (int x = startX; x < endX; x += gridSize) {
+//			xTile += 1;
+//			rightEdge = x + gridSize;
+//		}
+//
+//		for (int y = startY; y < endY; y += gridSize) {
+//			yTile += 1;
+//			bottomEdge = y + gridSize;
+//		}
+//
+//		// texture
+//		graphics.noStroke();
+//		graphics.textureMode(NORMAL);
+//		graphics.beginShape();
+//		graphics.textureWrap(REPEAT);
+//		graphics.texture(texture.getPageViewBackground(scale));
+//		graphics.vertex(startX, startY, 0, 0); // top left
+//		graphics.vertex(rightEdge, startY, xTile, 0); // top right
+//		graphics.vertex(rightEdge, bottomEdge, xTile, yTile); // bottom right
+//		graphics.vertex(startX, bottomEdge, 0, yTile); // bottom left
+//		graphics.endShape();
+
+		graphics.pushMatrix();
+		graphics.translate(startX, startY);
 		
 		for (int y = startY; y < endY; y += gridSize) {
-			yTile += 1;
-			bottomEdge = y + gridSize;
+			
+			for (int x = startX; x < endX; x += gridSize) {
+				
+				graphics.shape(shape);
+				
+				graphics.translate(gridSize, 0);
+			}
+			graphics.translate(0, gridSize);
 		}
+		
+		graphics.popMatrix();
 
 		// nested for loops to tile the images
 //		for (int y = startY; y < endY; y += gridSize) {
 //			for (int x = startX; x < endX; x += gridSize) {
+				
 //				image = texture.getPageViewBackground(scale);
 //
 //				leftEdge = x;
@@ -97,20 +135,9 @@ public class BackgroundPaper {
 //				graphics.imageMode(CORNER);
 //				graphics.image(texture.getPageViewBackground(scale), x, y, gridSize, gridSize);
 //
+
 //			}
 //		}
-
-		// texture
-		graphics.noStroke();
-		graphics.textureMode(NORMAL);
-		graphics.beginShape();
-		graphics.textureWrap(REPEAT);
-		graphics.texture(texture.getPageViewBackground(scale));
-		graphics.vertex(startX, startY, 0, 0); // top left
-		graphics.vertex(rightEdge, startY, xTile, 0); // top right
-		graphics.vertex(rightEdge, bottomEdge, xTile, yTile); // bottom right
-		graphics.vertex(startX, bottomEdge, 0, yTile); // bottom left
-		graphics.endShape();
 
 	}
 

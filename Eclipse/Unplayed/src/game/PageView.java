@@ -33,7 +33,7 @@ public class PageView {
 
 		this.pageCamera = new PageViewCamera(p);
 
-		this.paper = new BackgroundPaper(texture);
+		this.paper = new BackgroundPaper(p, texture);
 
 		this.pages = new ArrayList<Page>();
 		this.backgrounds = new ArrayList<Background>();
