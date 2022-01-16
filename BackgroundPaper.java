@@ -36,8 +36,8 @@ public class BackgroundPaper {
 		gridSize = 1000; // 1000
 
 		shape = p.createShape(RECT, 0, 0, gridSize, gridSize);
-		shape.setTexture(texture.getPageViewBackground(1));
 		shape.noStroke();
+		shape.setTexture(texture.getPageViewBackground(1));
 
 	}
 
