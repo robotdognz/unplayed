@@ -70,8 +70,8 @@ public class Page extends Editable {
 		this.shadow = 9;
 
 		// create player drawer
-		player = p.createGraphics(128, 128, P2D);
-		playerMask = p.createGraphics(128, 128, P2D);
+		player = p.createGraphics(256, 256, P2D);
+		playerMask = p.createGraphics(256, 256, P2D);
 
 		setPosition(position);
 		createGraphics();
@@ -359,7 +359,7 @@ public class Page extends Editable {
 		
 		
 		Vec2 center = game.player.getCenter();
-		float angle = game.player.getAngle();
+		float angle = game.player.getDrawingAngle();
 
 		// draw the mask at the player position and add masking
 		playerMask.beginDraw();
