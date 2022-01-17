@@ -75,14 +75,20 @@ public class BackgroundPaper {
 		if (startX < topLeft.x) {
 			// offset start by difference between startX and topLeft.x in texture units
 			xTileStart += (topLeft.x - startX) / gridSize;
-			// move rectangle left edge over to screen start
+			// move rectangle left edge over to screen start x
 			startX = topLeft.x;
 		}
 		if (startY < topLeft.y) {
 			// offset start by difference between startY and topLeft.y in texture units
 			yTileStart += (topLeft.y - startY) / gridSize;
-			// move rectangle top edge over to screen start
+			// move rectangle top edge over to screen start y
 			startY = topLeft.y;
+		}
+		if (endX > bottomRight.x) {
+			// offset start by difference between endY and bottomRight.y in texture units
+			xTileEnd -= (endX - bottomRight.x) / gridSize;
+			// move rectangle right edge over to screen end x
+			endX = bottomRight.x;
 		}
 
 		// texture
@@ -98,9 +104,10 @@ public class BackgroundPaper {
 		graphics.endShape();
 
 		// reference code
-//		if (x < screen.getTopLeft().x) {
-//			leftEdge = screen.getTopLeft().x;
-//			imageStartX = (int) (image.width * ((screen.getTopLeft().x - x) / gridSize));
+//		if (x + gridSize > screen.getBottomRight().x) {
+//			rightEdge = screen.getBottomRight().x;
+//			imageEndX = (int) (image.width
+//					- (image.width * (((x + gridSize) - screen.getBottomRight().x) / gridSize)));
 //		}
 
 		// nested for loops to tile the images
