@@ -70,8 +70,8 @@ public class Page extends Editable {
 		this.shadow = 9;
 
 		// create player drawer
-		player = p.createGraphics(512, 512, P2D);
-		playerMask = p.createGraphics(512, 512, P2D);
+		player = p.createGraphics(128, 128, P2D);
+		playerMask = p.createGraphics(128, 128, P2D);
 
 		setPosition(position);
 		createGraphics();
@@ -377,7 +377,7 @@ public class Page extends Editable {
 		// draw the player
 		player.beginDraw();
 		player.translate(playerMask.width / 2, playerMask.height / 2); // set to center
-		player.background(0, 0);
+		player.background(255, 0);
 		game.player.drawInPlace(player, scale);
 		player.endDraw();
 		
