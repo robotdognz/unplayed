@@ -1481,6 +1481,7 @@ public class Player extends Editable {
 			
 			graphics.pushMatrix();
 			graphics.rotate(-a);
+			graphics.imageMode(CENTER);
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
 			graphics.popMatrix();
 		}
