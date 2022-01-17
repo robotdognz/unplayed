@@ -370,9 +370,9 @@ public class Page extends Editable {
 		float yDiff = view.getY() - center.y;
 		
 		playerMask.noStroke();
-		playerMask.fill(255); // white
 		playerMask.rotate(angle);
-		playerMask.scale(100/256);
+		playerMask.scale(100/256f);
+		playerMask.fill(255); // white
 		playerMask.rect(xDiff, yDiff, view.getWidth(), view.getHeight());
 		playerMask.endDraw();
 		
