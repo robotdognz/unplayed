@@ -1482,14 +1482,6 @@ public class Player extends Editable {
 		}
 	}
 
-	public PImage getSprite(float scale) {
-		if (hasTexture) {
-			return tileTexture.getSprite(scale);
-		} else {
-			return null;
-		}
-	}
-
 	public float getDrawingAngle() {
 		float a = dynamicBody.getAngle();
 

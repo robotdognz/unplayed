@@ -13,11 +13,13 @@ public class BackgroundPaper {
 
 	public BackgroundPaper(PApplet p, TextureCache texture) {
 		this.texture = texture;
-		gridSize = 1000; // 1000
+		gridSize = 1000;
 
 	}
 
 	public void draw(PGraphics graphics, PVector topLeft, PVector bottomRight, float scale) {
+		// TODO: this could potentially be made more efficient by only recalculating
+		// when the screen has moved
 
 		// find x start position
 		float startX = (int) Math.round((topLeft.x - (gridSize / 2)) / gridSize);

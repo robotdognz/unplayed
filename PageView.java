@@ -72,8 +72,8 @@ public class PageView {
 		}
 
 		// draw the looping background
-//		p.background(217, 201, 170); //206, 191, 160
-		paper.draw(p.getGraphics(), topLeft, bottomRight, currentScale); // background paper effect // * 4
+//		p.background(217, 201, 170);
+		paper.draw(p.getGraphics(), topLeft, bottomRight, currentScale); // background paper effect
 
 		// draw backgrounds that are inside that area
 		for (Background background : backgrounds) {
@@ -172,10 +172,7 @@ public class PageView {
 	}
 
 	public void forceRedraw() {
-//		for (Page p : pages) {
-//			p.createGraphics(); // resize
-//			p.drawView(); // redraw
-//		}
+		// TODO: either remove this method, or repurpose it
 	}
 
 	public void addPage(Page page) {
