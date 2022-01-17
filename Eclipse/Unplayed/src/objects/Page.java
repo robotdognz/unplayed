@@ -361,14 +361,14 @@ public class Page extends Editable {
 
 		// draw the mask at the player position and add masking
 		playerMask.beginDraw();
-		playerMask.background(255); // black
+		playerMask.background(0); // black
 		playerMask.translate(playerMask.width / 2, playerMask.height / 2); // set to center
 
 		float xDiff = view.getX() - center.x;
 		float yDiff = view.getY() - center.y;
 		
 		playerMask.noStroke();
-		playerMask.fill(0);
+		playerMask.fill(255);
 		playerMask.rect(xDiff, yDiff, view.getWidth(), view.getHeight());
 		playerMask.endDraw();
 		
