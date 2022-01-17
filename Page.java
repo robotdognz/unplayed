@@ -365,8 +365,8 @@ public class Page extends Editable {
 
 
 
-		float xDiff = center.x - view.getX();
-		float yDiff = center.y - view.getY();
+		float xDiff = view.getX() - center.x;
+		float yDiff = view.getY() - center.y;
 		
 		playerMask.noStroke();
 		playerMask.fill(0);
