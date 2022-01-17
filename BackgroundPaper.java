@@ -26,7 +26,6 @@ public class BackgroundPaper {
 //	int imageEndX;
 //	int imageEndY;
 
-
 	public BackgroundPaper(PApplet p, TextureCache texture) {
 		this.texture = texture;
 		gridSize = 1000; // 1000
@@ -35,28 +34,34 @@ public class BackgroundPaper {
 
 	public void draw(PGraphics graphics, PVector topLeft, PVector bottomRight, float scale) {
 
-		// find x start position
-		startX = (int) Math.round((topLeft.x - (gridSize / 2)) / gridSize) * gridSize;
-		// find y start position
-		startY = (int) Math.round((topLeft.y - (gridSize / 2)) / gridSize) * gridSize;
-		// find x end position
-		endX = (int) Math.round((bottomRight.x + (gridSize / 2)) / gridSize) * gridSize;
-		// find y end position
-		endY = (int) Math.round((bottomRight.y + (gridSize / 2)) / gridSize) * gridSize;
-
-		int xTile = (endX - startX) / gridSize; //0; // number of times to tile horizontally
-		int yTile = (endY - startY) / gridSize; //0; // number of times to tile vertically
-
-//		for (int x = startX; x < endX; x += gridSize) {
-//			xTile += 1;
-//			rightEdge = x + gridSize;
-//		}
+//		// find x start position
+//		startX = (int) Math.round((topLeft.x - (gridSize / 2)) / gridSize) * gridSize;
+//		// find y start position
+//		startY = (int) Math.round((topLeft.y - (gridSize / 2)) / gridSize) * gridSize;
+//		// find x end position
+//		endX = (int) Math.round((bottomRight.x + (gridSize / 2)) / gridSize) * gridSize;
+//		// find y end position
+//		endY = (int) Math.round((bottomRight.y + (gridSize / 2)) / gridSize) * gridSize;
 //
+//		int xTile = (endX - startX) / gridSize; // number of times to tile horizontally
+//		int yTile = (endY - startY) / gridSize; // number of times to tile vertically
+
 //		for (int y = startY; y < endY; y += gridSize) {
-//			yTile += 1;
-//			bottomEdge = y + gridSize;
+//			for (int x = startX; x < endX; x += gridSize) {
+//				
+//			}
 //		}
 		
+		startX = (int) Math.round((topLeft.x - (gridSize / 2)) / gridSize);
+		// find y start position;
+		startY = (int) Math.round((topLeft.y - (gridSize / 2)) / gridSize);
+		// find x end position
+		endX = (int) Math.round((bottomRight.x + (gridSize / 2)) / gridSize);
+		// find y end position
+		endY = (int) Math.round((bottomRight.y + (gridSize / 2)) / gridSize);
+
+		int xTile = endX - startX; // number of times to tile horizontally
+		int yTile = endY - startY; // number of times to tile vertically
 
 		// texture
 		graphics.noStroke();
@@ -70,11 +75,10 @@ public class BackgroundPaper {
 		graphics.vertex(startX, endY, 0, yTile); // bottom left
 		graphics.endShape();
 
-
 		// nested for loops to tile the images
 //		for (int y = startY; y < endY; y += gridSize) {
 //			for (int x = startX; x < endX; x += gridSize) {
-				
+
 //				image = texture.getPageViewBackground(scale);
 //
 //				leftEdge = x;
