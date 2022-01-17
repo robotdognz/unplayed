@@ -1478,7 +1478,8 @@ public class Player extends Editable {
 	public void drawInPlace(PGraphics graphics, float scale) {
 		if (hasTexture) {
 			float a = getDrawingAngle();
-
+			
+			graphics.pushMatrix();
 			graphics.rotate(-a);
 			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
 			graphics.popMatrix();
