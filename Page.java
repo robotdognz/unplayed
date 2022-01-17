@@ -331,7 +331,6 @@ public class Page extends Editable {
 
 	private void drawPlayer(PGraphics graphics, float scale) { // TODO: finish me
 		
-		
 		Vec2 center = game.player.getCenter();
 		float angle = game.player.getDrawingAngle();
 

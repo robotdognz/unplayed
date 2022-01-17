@@ -44,8 +44,8 @@ public class BackgroundPaper {
 		// find y end position
 		endY = (int) Math.round((bottomRight.y + (gridSize / 2)) / gridSize) * gridSize;
 
-		int xTile = 0; // 1;
-		int yTile = 0; // 1;
+		int xTile = 0; // number of times to tile horizontally
+		int yTile = 0; // number of times to tile vertically
 		int rightEdge = 0;
 		int bottomEdge = 0;
 
@@ -58,6 +58,9 @@ public class BackgroundPaper {
 			yTile += 1;
 			bottomEdge = y + gridSize;
 		}
+		
+		rightEdge = endX;
+		bottomEdge = endY;
 
 		// texture
 		graphics.noStroke();
