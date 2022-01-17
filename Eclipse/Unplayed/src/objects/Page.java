@@ -381,23 +381,23 @@ public class Page extends Editable {
 		// draw the player
 		player.beginDraw();
 		player.translate(playerMask.width / 2, playerMask.height / 2); // set to center
-		player.background(255, 0);
+		player.background(240, 0);
 		player.scale(256/100f);
 		game.player.drawNoTransform(player, scale);
 		player.endDraw();
 		
-		PImage test = game.player.getSprite(1);
+//		PImage test = game.player.getSprite(1);
+//		test.mask(playerMask);
 		
-		test.mask(playerMask);
-//		player.mask(playerMask);
+		player.mask(playerMask);
 		
 		graphics.pushMatrix();
 		graphics.imageMode(CENTER);
 		graphics.translate(center.x, center.y);
 		graphics.rotate(-angle);
 		graphics.scale(100/256f);
-		graphics.image(test, 0, 0);
-//		graphics.image(player, 0, 0);
+//		graphics.image(test, 0, 0);
+		graphics.image(player, 0, 0);
 		graphics.popMatrix();
 		
 		
