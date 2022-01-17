@@ -172,10 +172,10 @@ public class PageView {
 	}
 
 	public void forceRedraw() {
-		for (Page p : pages) {
-			p.createGraphics(); // resize
-			p.drawView(); // redraw
-		}
+//		for (Page p : pages) {
+//			p.createGraphics(); // resize
+//			p.drawView(); // redraw
+//		}
 	}
 
 	public void addPage(Page page) {
