@@ -12,10 +12,10 @@ public class BackgroundPaper {
 	int gridSize;
 
 	// rendering algorithm variables
-	int startX;
-	int startY;
-	int endX;
-	int endY;
+	float startX;
+	float startY;
+	float endX;
+	float endY;
 //	PImage image;
 //	float leftEdge;
 //	float topEdge;
@@ -51,7 +51,7 @@ public class BackgroundPaper {
 //				
 //			}
 //		}
-		
+
 		// find x start position
 		startX = (int) Math.round((topLeft.x - (gridSize / 2)) / gridSize);
 		// find y start position;
@@ -61,14 +61,27 @@ public class BackgroundPaper {
 		// find y end position
 		endY = (int) Math.round((bottomRight.y + (gridSize / 2)) / gridSize);
 
-		int xTile = endX - startX; // number of times to tile horizontally
-		int yTile = endY - startY; // number of times to tile vertically
-		
+		float xTileStart = 0;
+		float yTileStart = 0;
+		float xTileEnd = endX - startX; // number of times to tile horizontally
+		float yTileEnd = endY - startY; // number of times to tile vertically
+
 		// convert to level dimensions
 		startX = startX * gridSize;
 		startY = startY * gridSize;
 		endX = endX * gridSize;
 		endY = endY * gridSize;
+
+		if (startX < topLeft.x) {
+			// get difference between startX and topLeft.x in gridSize units
+			float temp = (topLeft.x - startX) / gridSize;
+			// move rectangle left edge over to screen start
+			startX = topLeft.x;
+			// offset tile pattern start
+			xTileStart += temp;
+			// offset tile pattern end
+			xTileEnd += temp;
+		}
 
 		// texture
 		graphics.noStroke();
@@ -76,11 +89,17 @@ public class BackgroundPaper {
 		graphics.beginShape();
 		graphics.textureWrap(REPEAT);
 		graphics.texture(texture.getPageViewBackground(scale));
-		graphics.vertex(startX, startY, 0, 0); // top left
-		graphics.vertex(endX, startY, xTile, 0); // top right
-		graphics.vertex(endX, endY, xTile, yTile); // bottom right
-		graphics.vertex(startX, endY, 0, yTile); // bottom left
+		graphics.vertex(startX, startY, xTileStart, yTileStart); // top left
+		graphics.vertex(endX, startY, xTileEnd, yTileStart); // top right
+		graphics.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right
+		graphics.vertex(startX, endY, xTileStart, yTileEnd); // bottom left
 		graphics.endShape();
+
+		// reference code
+//		if (x < screen.getTopLeft().x) {
+//			leftEdge = screen.getTopLeft().x;
+//			imageStartX = (int) (image.width * ((screen.getTopLeft().x - x) / gridSize));
+//		}
 
 		// nested for loops to tile the images
 //		for (int y = startY; y < endY; y += gridSize) {
