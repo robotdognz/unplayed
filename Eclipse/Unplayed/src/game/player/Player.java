@@ -1474,6 +1474,25 @@ public class Player extends Editable {
 		}
 		return true;
 	}
+	
+	public void drawInPlace(PGraphics graphics, float scale) {
+		if (hasTexture) {
+			float a = dynamicBody.getAngle();
+			graphics.pushMatrix();
+			graphics.imageMode(CENTER);
+			
+			if (rotationSmooth != null) {
+				a = -PApplet.radians(rotationSmooth.getAngle());
+				if (rotationSmooth.isFinished()) {
+					rotationSmooth = null;
+				}
+			}
+			
+			graphics.rotate(-a);
+			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
+			graphics.popMatrix();
+		}
+	}
 
 	public void draw(PGraphics graphics, float scale) {
 

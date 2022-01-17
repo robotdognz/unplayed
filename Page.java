@@ -347,39 +347,43 @@ public class Page extends Editable {
 
 		// draw player and paper effect
 		if (playerVisible && game.player != null && showPlayer) {
-			drawPlayer(p.g);
-			game.player.draw(p.g, 3); // player scale/size
+			drawPlayer(p.g, 3);
+//			game.player.draw(p.g, 3); // player scale/size
 		}
 		game.paper.draw(p.g, view, scale / size); // paper effect
 
 		p.popMatrix();
 	}
 
-	private void drawPlayer(PGraphics graphics) { // TODO: hasuh
+	private void drawPlayer(PGraphics graphics, float scale) { // TODO: finish me
 		Vec2 center = game.player.getCenter();
+		float angle = game.player.getAngle();
 
 		// draw the mask at the player position and add masking
 		playerMask.beginDraw();
 		playerMask.background(255); // black
 		playerMask.translate(playerMask.width / 2, playerMask.height / 2); // set to center
 
-
-
 		float xDiff = view.getX() - center.x;
 		float yDiff = view.getY() - center.y;
 		
 		playerMask.noStroke();
 		playerMask.fill(0);
-		
 		playerMask.rect(xDiff, yDiff, view.getWidth(), view.getHeight());
-
-
 		playerMask.endDraw();
+		
+		// draw the player
+		player.beginDraw();
+		player.translate(playerMask.width / 2, playerMask.height / 2); // set to center
+		game.player.drawInPlace(player, scale);
+		player.endDraw();
+		
+		player.mask(playerMask);
 		
 		graphics.pushMatrix();
 		graphics.imageMode(CENTER);
 		graphics.translate(center.x, center.y);
-		graphics.image(playerMask, 0, 0);
+		graphics.image(player, 0, 0);
 		graphics.popMatrix();
 		
 		
