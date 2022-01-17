@@ -390,7 +390,7 @@ public class Page extends Editable {
 		graphics.imageMode(CENTER);
 		graphics.translate(center.x, center.y);
 		graphics.rotate(-angle);
-		playerMask.scale(100/256f);
+		graphics.scale(100/256f);
 		graphics.image(player, 0, 0);
 		graphics.popMatrix();
 		
