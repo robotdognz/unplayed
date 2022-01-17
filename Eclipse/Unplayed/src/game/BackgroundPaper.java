@@ -52,6 +52,7 @@ public class BackgroundPaper {
 //			}
 //		}
 		
+		// find x start position
 		startX = (int) Math.round((topLeft.x - (gridSize / 2)) / gridSize);
 		// find y start position;
 		startY = (int) Math.round((topLeft.y - (gridSize / 2)) / gridSize);
@@ -62,6 +63,12 @@ public class BackgroundPaper {
 
 		int xTile = endX - startX; // number of times to tile horizontally
 		int yTile = endY - startY; // number of times to tile vertically
+		
+		// convert to level dimensions
+		startX = startX * gridSize;
+		startY = startY * gridSize;
+		endX = endX * gridSize;
+		endY = endY * gridSize;
 
 		// texture
 		graphics.noStroke();
