@@ -8,6 +8,7 @@ import handlers.ImageHandler;
 import handlers.TextureCache;
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import processing.core.PImage;
 
 public class Image extends Editable {
 	private boolean hasTexture;
@@ -55,6 +56,48 @@ public class Image extends Editable {
 			graphics.fill(255, 0, 0, 150);
 			graphics.rectMode(CORNER);
 			graphics.rect(getX(), getY(), getWidth(), getHeight());
+		}
+	}
+
+	public void drawClipped(PGraphics graphics, Rectangle view, float scale) {
+
+		if (hasTexture) {
+
+			PImage image = imageTexture.getSprite(scale);
+			int imageStartX = 0;
+			int imageStartY = 0;
+			int imageEndX = image.width;
+			int imageEndY = image.height;
+
+			// texture isn't missing
+			if (flipX == 0 && flipY == 0 && angle == 0) {
+				graphics.imageMode(CORNERS);
+				graphics.image(image, Math.min(getTopLeft().x, view.getTopLeft().x),
+						Math.min(getTopLeft().y, view.getTopLeft().y),
+						Math.max(getBottomRight().x, view.getBottomRight().x),
+						Math.max(getBottomRight().y, view.getBottomRight().y), imageStartX, imageStartY, imageEndX,
+						imageEndY); // draw the tile
+			} else {
+				graphics.imageMode(CENTER);
+				graphics.pushMatrix();
+				graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
+				if (angle != 0) {
+					graphics.rotate(PApplet.radians(angle)); // rotate the image
+				}
+				if (flipX != 0 || flipY != 0) {
+					graphics.scale(flipX, flipY); // flip the image
+				}
+				graphics.image(image, 0, 0, getWidth(), getHeight()); // draw the image
+				graphics.popMatrix();
+			}
+		} else {
+			// texture is missing
+			graphics.noStroke();
+			graphics.fill(255, 0, 0, 150);
+			graphics.rectMode(CORNERS);
+			graphics.rect(Math.min(getTopLeft().x, view.getTopLeft().x), Math.min(getTopLeft().y, view.getTopLeft().y),
+					Math.max(getBottomRight().x, view.getBottomRight().x),
+					Math.max(getBottomRight().y, view.getBottomRight().y));
 		}
 	}
 

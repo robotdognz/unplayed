@@ -137,16 +137,16 @@ public class Page extends Editable {
 		if (game.player != null) {
 			boolean temp = false;
 			while (temp == false) {
-				if (game.player.getCenter().x - game.player.getWidth() * 0.7 > view.getBottomRight().x - 1) {
+				if (game.player.getCenter().x - game.player.getWidth() * 0.4 > view.getBottomRight().x) { // - 1
 					break;
 				}
-				if (game.player.getCenter().x + game.player.getWidth() * 0.7 < view.getTopLeft().x + 1) {
+				if (game.player.getCenter().x + game.player.getWidth() * 0.4 < view.getTopLeft().x) { // + 1
 					break;
 				}
-				if (game.player.getCenter().y - game.player.getWidth() * 0.7 > view.getBottomRight().y - 1) {
+				if (game.player.getCenter().y - game.player.getWidth() * 0.4 > view.getBottomRight().y) { // - 1
 					break;
 				}
-				if (game.player.getCenter().y + game.player.getWidth() * 0.7 < view.getTopLeft().y + 1) {
+				if (game.player.getCenter().y + game.player.getWidth() * 0.4 < view.getTopLeft().y) { // + 1
 					break;
 				}
 //				if (game.player.getCenter().x > view.getBottomRight().x) {
@@ -190,34 +190,6 @@ public class Page extends Editable {
 	public void draw(float scale) {
 		drawNew(scale);
 //		drawOld(scale);
-	}
-
-	private void drawNew2(float scale) {
-
-		if (redraw || playerVisible) {
-			redraw();
-			redraw = false;
-		}
-
-		p.pushMatrix();
-		p.translate(position.x, position.y);
-		p.scale(size); // size the page will appear in the page view
-		p.rotate(PApplet.radians(angle)); // rotate the page
-
-		// draw the shadow
-		p.translate(shadow, shadow);
-		p.fill(0, 40);
-		p.noStroke();
-		p.rectMode(CENTER);
-		p.rect(0, 0, view.getWidth(), view.getHeight());
-		p.translate(-shadow, -shadow);
-
-		// draw the page itself
-		p.scale(flipX, flipY); // flip the page
-		p.imageMode(CENTER);
-		p.image(pageGraphics, 0, 0); // draw the page
-
-		p.popMatrix();
 	}
 
 	private void redraw() {
@@ -386,9 +358,6 @@ public class Page extends Editable {
 		game.player.drawNoTransform(player, scale);
 		player.endDraw();
 		
-//		PImage test = game.player.getSprite(1);
-//		test.mask(playerMask);
-		
 		player.mask(playerMask);
 		
 		graphics.pushMatrix();
@@ -396,12 +365,9 @@ public class Page extends Editable {
 		graphics.translate(center.x, center.y);
 		graphics.rotate(-angle);
 		graphics.scale(100/256f);
-//		graphics.image(test, 0, 0);
 		graphics.image(player, 0, 0);
 		graphics.popMatrix();
 		
-		
-
 	}
 
 	private void drawOld(float scale) {
