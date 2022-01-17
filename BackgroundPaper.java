@@ -47,15 +47,15 @@ public class BackgroundPaper {
 		int xTile = (endX - startX) / gridSize; //0; // number of times to tile horizontally
 		int yTile = (endY - startY) / gridSize; //0; // number of times to tile vertically
 
-		for (int x = startX; x < endX; x += gridSize) {
-			xTile += 1;
+//		for (int x = startX; x < endX; x += gridSize) {
+//			xTile += 1;
 //			rightEdge = x + gridSize;
-		}
-
-		for (int y = startY; y < endY; y += gridSize) {
-			yTile += 1;
+//		}
+//
+//		for (int y = startY; y < endY; y += gridSize) {
+//			yTile += 1;
 //			bottomEdge = y + gridSize;
-		}
+//		}
 		
 
 		// texture
