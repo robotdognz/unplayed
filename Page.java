@@ -387,7 +387,7 @@ public class Page extends Editable {
 		graphics.pushMatrix();
 		graphics.imageMode(CENTER);
 		graphics.translate(center.x, center.y);
-		graphics.rotate(angle);
+		graphics.rotate(-angle);
 		graphics.image(player, 0, 0);
 		graphics.popMatrix();
 		
