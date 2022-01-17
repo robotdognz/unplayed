@@ -73,14 +73,16 @@ public class BackgroundPaper {
 		endY = endY * gridSize;
 
 		if (startX < topLeft.x) {
-			// get difference between startX and topLeft.x in gridSize units
-			float temp = (topLeft.x - startX) / gridSize;
+			// offset start by difference between startX and topLeft.x in texture units
+			xTileStart += (topLeft.x - startX) / gridSize;
 			// move rectangle left edge over to screen start
 			startX = topLeft.x;
-			// offset tile pattern start
-			xTileStart += temp;
-			// offset tile pattern end
-//			xTileEnd += temp;
+		}
+		if (startY < topLeft.y) {
+			// offset start by difference between startY and topLeft.y in texture units
+			yTileStart += (topLeft.y - startY) / gridSize;
+			// move rectangle top edge over to screen start
+			startY = topLeft.y;
 		}
 
 		// texture
