@@ -44,23 +44,19 @@ public class BackgroundPaper {
 		// find y end position
 		endY = (int) Math.round((bottomRight.y + (gridSize / 2)) / gridSize) * gridSize;
 
-		int xTile = 0; // number of times to tile horizontally
-		int yTile = 0; // number of times to tile vertically
-		int rightEdge = 0;
-		int bottomEdge = 0;
+		int xTile = (endX - startX) / gridSize; //0; // number of times to tile horizontally
+		int yTile = (endY - startY) / gridSize; //0; // number of times to tile vertically
 
 		for (int x = startX; x < endX; x += gridSize) {
 			xTile += 1;
-			rightEdge = x + gridSize;
+//			rightEdge = x + gridSize;
 		}
 
 		for (int y = startY; y < endY; y += gridSize) {
 			yTile += 1;
-			bottomEdge = y + gridSize;
+//			bottomEdge = y + gridSize;
 		}
 		
-		rightEdge = endX;
-		bottomEdge = endY;
 
 		// texture
 		graphics.noStroke();
@@ -69,9 +65,9 @@ public class BackgroundPaper {
 		graphics.textureWrap(REPEAT);
 		graphics.texture(texture.getPageViewBackground(scale));
 		graphics.vertex(startX, startY, 0, 0); // top left
-		graphics.vertex(rightEdge, startY, xTile, 0); // top right
-		graphics.vertex(rightEdge, bottomEdge, xTile, yTile); // bottom right
-		graphics.vertex(startX, bottomEdge, 0, yTile); // bottom left
+		graphics.vertex(endX, startY, xTile, 0); // top right
+		graphics.vertex(endX, endY, xTile, yTile); // bottom right
+		graphics.vertex(startX, endY, 0, yTile); // bottom left
 		graphics.endShape();
 
 
