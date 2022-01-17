@@ -380,7 +380,7 @@ public class Page extends Editable {
 		player.beginDraw();
 		player.translate(playerMask.width / 2, playerMask.height / 2); // set to center
 		player.background(255, 0);
-		player.scale(100/256);
+//		player.scale(100/256);
 		game.player.drawNoTransform(player, scale);
 		player.endDraw();
 		
