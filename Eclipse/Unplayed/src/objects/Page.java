@@ -49,6 +49,7 @@ public class Page extends Editable {
 	private boolean playerVisibleChanged;
 
 	// player drawing algorithm
+	private int playerRez;
 	private PGraphics player;
 	private PGraphics playerMask;
 
@@ -70,8 +71,9 @@ public class Page extends Editable {
 		this.shadow = 9;
 
 		// create player drawer
-		player = p.createGraphics(256, 256, P2D);
-		playerMask = p.createGraphics(256, 256, P2D);
+		playerRez = 256;
+		player = p.createGraphics(playerRez, playerRez, P2D);
+		playerMask = p.createGraphics(playerRez, playerRez, P2D);
 
 		setPosition(position);
 		createGraphics();
@@ -384,14 +386,18 @@ public class Page extends Editable {
 		game.player.drawNoTransform(player, scale);
 		player.endDraw();
 		
-		player.mask(playerMask);
+		PImage test = game.player.getSprite(1);
+		
+		test.mask(playerMask);
+//		player.mask(playerMask);
 		
 		graphics.pushMatrix();
 		graphics.imageMode(CENTER);
 		graphics.translate(center.x, center.y);
 		graphics.rotate(-angle);
 		graphics.scale(100/256f);
-		graphics.image(player, 0, 0);
+		graphics.image(test, 0, 0);
+//		graphics.image(player, 0, 0);
 		graphics.popMatrix();
 		
 		

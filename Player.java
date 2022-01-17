@@ -1475,18 +1475,6 @@ public class Player extends Editable {
 		return true;
 	}
 
-	public void drawInPlace(PGraphics graphics, float scale) {
-		if (hasTexture) {
-			float a = getDrawingAngle();
-			
-			graphics.pushMatrix();
-			graphics.rotate(-a);
-			graphics.imageMode(CENTER);
-			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
-			graphics.popMatrix();
-		}
-	}
-	
 	public void drawNoTransform(PGraphics graphics, float scale) {
 		if (hasTexture) {
 			graphics.imageMode(CENTER);
@@ -1494,16 +1482,24 @@ public class Player extends Editable {
 		}
 	}
 
+	public PImage getSprite(float scale) {
+		if (hasTexture) {
+			return tileTexture.getSprite(scale);
+		} else {
+			return null;
+		}
+	}
+
 	public float getDrawingAngle() {
 		float a = dynamicBody.getAngle();
-		
+
 		if (rotationSmooth != null) {
 			a = -PApplet.radians(rotationSmooth.getAngle());
 			if (rotationSmooth.isFinished()) {
 				rotationSmooth = null;
 			}
 		}
-		
+
 		return a;
 	}
 
