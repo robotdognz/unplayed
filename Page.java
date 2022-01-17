@@ -371,7 +371,7 @@ public class Page extends Editable {
 		
 		playerMask.noStroke();
 		playerMask.rotate(angle);
-		playerMask.scale(100/256f);
+		playerMask.scale(256/100f);
 		playerMask.fill(255); // white
 		playerMask.rect(xDiff, yDiff, view.getWidth(), view.getHeight());
 		playerMask.endDraw();
