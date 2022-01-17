@@ -70,8 +70,8 @@ public class Page extends Editable {
 		this.shadow = 9;
 
 		// create player drawer
-		player = p.createGraphics(256, 256, P2D);
-		playerMask = p.createGraphics(256, 256, P2D);
+		player = p.createGraphics(100, 100, P2D);
+		playerMask = p.createGraphics(100, 100, P2D);
 
 		setPosition(position);
 		createGraphics();
