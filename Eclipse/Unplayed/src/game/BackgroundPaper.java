@@ -80,7 +80,7 @@ public class BackgroundPaper {
 			// offset tile pattern start
 			xTileStart += temp;
 			// offset tile pattern end
-			xTileEnd += temp;
+//			xTileEnd += temp;
 		}
 
 		// texture
