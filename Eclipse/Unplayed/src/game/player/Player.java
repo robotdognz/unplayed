@@ -1486,6 +1486,13 @@ public class Player extends Editable {
 			graphics.popMatrix();
 		}
 	}
+	
+	public void drawNoTransform(PGraphics graphics, float scale) {
+		if (hasTexture) {
+			graphics.imageMode(CENTER);
+			graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
+		}
+	}
 
 	public float getDrawingAngle() {
 		float a = dynamicBody.getAngle();
