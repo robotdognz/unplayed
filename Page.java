@@ -356,6 +356,8 @@ public class Page extends Editable {
 	}
 
 	private void drawPlayer(PGraphics graphics, float scale) { // TODO: finish me
+		
+		
 		Vec2 center = game.player.getCenter();
 		float angle = game.player.getAngle();
 
@@ -368,14 +370,14 @@ public class Page extends Editable {
 		float yDiff = view.getY() - center.y;
 		
 		playerMask.noStroke();
-		playerMask.fill(255);
+		playerMask.fill(255); // white
 		playerMask.rect(xDiff, yDiff, view.getWidth(), view.getHeight());
 		playerMask.endDraw();
 		
 		// draw the player
 		player.beginDraw();
 		player.translate(playerMask.width / 2, playerMask.height / 2); // set to center
-		player.background(255,0);
+		player.background(0, 0);
 		game.player.drawInPlace(player, scale);
 		player.endDraw();
 		
