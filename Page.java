@@ -4,6 +4,8 @@ package objects;
 import java.util.HashSet;
 //import java.util.Set;
 
+import org.jbox2d.common.Vec2;
+
 import editor.Editor;
 import game.Game;
 
@@ -46,6 +48,10 @@ public class Page extends Editable {
 	private boolean playerVisible;
 	private boolean playerVisibleChanged;
 
+	// player drawing algorithm
+	private PGraphics player;
+	private PGraphics playerMask;
+
 	public Page(PApplet p, Game game, View view, PVector position) { // PVector topLeft, PVector bottomRight,
 		super(view.getTopLeft().x, view.getTopLeft().y, view.getWidth(), view.getHeight());
 		this.p = p;
@@ -62,6 +68,10 @@ public class Page extends Editable {
 
 		this.shadowOffset = 9;
 		this.shadow = 9;
+
+		// create player drawer
+		player = p.createGraphics(512, 512, P2D);
+		playerMask = p.createGraphics(512, 512, P2D);
 
 		setPosition(position);
 		createGraphics();
@@ -181,12 +191,11 @@ public class Page extends Editable {
 	}
 
 	private void drawNew2(float scale) {
-		
+
 		if (redraw || playerVisible) {
 			redraw();
 			redraw = false;
 		}
-		
 
 		p.pushMatrix();
 		p.translate(position.x, position.y);
@@ -208,7 +217,7 @@ public class Page extends Editable {
 
 		p.popMatrix();
 	}
-	
+
 	private void redraw() {
 		pageGraphics.beginDraw();
 		pageGraphics.background(240); // background
@@ -337,12 +346,44 @@ public class Page extends Editable {
 		}
 
 		// draw player and paper effect
-		if (game.player != null && showPlayer) {
+		if (playerVisible && game.player != null && showPlayer) {
+			drawPlayer(p.g);
 			game.player.draw(p.g, 3); // player scale/size
 		}
 		game.paper.draw(p.g, view, scale / size); // paper effect
 
 		p.popMatrix();
+	}
+
+	private void drawPlayer(PGraphics graphics) { // TODO: hasuh
+		Vec2 center = game.player.getCenter();
+
+		// draw the mask at the player position and add masking
+		playerMask.beginDraw();
+		playerMask.background(255); // black
+		playerMask.translate(playerMask.width / 2, playerMask.height / 2); // set to center
+
+
+
+		float xDiff = center.x - view.getX();
+		float yDiff = center.y - view.getY();
+		
+		playerMask.noStroke();
+		playerMask.fill(0);
+		
+		playerMask.rect(xDiff, yDiff, view.getWidth(), view.getHeight());
+
+
+		playerMask.endDraw();
+		
+		graphics.pushMatrix();
+		graphics.imageMode(CENTER);
+		graphics.translate(center.x, center.y);
+		graphics.image(playerMask, 0, 0);
+		graphics.popMatrix();
+		
+		
+
 	}
 
 	private void drawOld(float scale) {

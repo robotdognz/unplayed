@@ -1,10 +1,7 @@
 package game;
 
 import handlers.TextureCache;
-import objects.Rectangle;
 import processing.core.PGraphics;
-import processing.core.PImage;
-import processing.core.PShape;
 import processing.core.PVector;
 import processing.core.PApplet;
 
@@ -29,15 +26,10 @@ public class BackgroundPaper {
 //	int imageEndX;
 //	int imageEndY;
 
-//	PShape shape;
 
 	public BackgroundPaper(PApplet p, TextureCache texture) {
 		this.texture = texture;
 		gridSize = 1000; // 1000
-
-//		shape = p.createShape(RECT, 0, 0, gridSize, gridSize);
-//		shape.noStroke();
-//		shape.setTexture(texture.getPageViewBackground(1));
 
 	}
 
@@ -56,7 +48,7 @@ public class BackgroundPaper {
 		int yTile = 0; // 1;
 		int rightEdge = 0;
 		int bottomEdge = 0;
-//
+
 		for (int x = startX; x < endX; x += gridSize) {
 			xTile += 1;
 			rightEdge = x + gridSize;
@@ -79,24 +71,6 @@ public class BackgroundPaper {
 		graphics.vertex(startX, bottomEdge, 0, yTile); // bottom left
 		graphics.endShape();
 
-//		graphics.pushMatrix();
-//		graphics.translate(startX, startY);
-//		
-//		for (int y = startY; y < endY; y += gridSize) {
-//			int xDistance = 0;
-//			
-//			for (int x = startX; x < endX; x += gridSize) {
-//				
-//				graphics.shape(shape);
-//				
-//				graphics.translate(gridSize, 0);
-//				
-//				xDistance -= gridSize;
-//			}
-//			graphics.translate(xDistance, gridSize);
-//		}
-//		
-//		graphics.popMatrix();
 
 		// nested for loops to tile the images
 //		for (int y = startY; y < endY; y += gridSize) {
