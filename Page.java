@@ -70,8 +70,8 @@ public class Page extends Editable {
 		this.shadow = 9;
 
 		// create player drawer
-		player = p.createGraphics(100, 100, P2D);
-		playerMask = p.createGraphics(100, 100, P2D);
+		player = p.createGraphics(256, 256, P2D);
+		playerMask = p.createGraphics(256, 256, P2D);
 
 		setPosition(position);
 		createGraphics();
@@ -372,6 +372,7 @@ public class Page extends Editable {
 		playerMask.noStroke();
 		playerMask.fill(255); // white
 		playerMask.rotate(angle);
+		playerMask.scale(256/100);
 		playerMask.rect(xDiff, yDiff, view.getWidth(), view.getHeight());
 		playerMask.endDraw();
 		
@@ -379,6 +380,7 @@ public class Page extends Editable {
 		player.beginDraw();
 		player.translate(playerMask.width / 2, playerMask.height / 2); // set to center
 		player.background(255, 0);
+		player.scale(100/256);
 		game.player.drawNoTransform(player, scale);
 		player.endDraw();
 		
@@ -388,6 +390,7 @@ public class Page extends Editable {
 		graphics.imageMode(CENTER);
 		graphics.translate(center.x, center.y);
 		graphics.rotate(-angle);
+//		playerMask.scale(100/256);
 		graphics.image(player, 0, 0);
 		graphics.popMatrix();
 		
