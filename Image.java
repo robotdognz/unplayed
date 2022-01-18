@@ -68,10 +68,10 @@ public class Image extends Editable {
 		if (hasTexture) {
 
 			PImage image = imageTexture.getSprite(scale);
-			float startX = 0;
-			float startY = 0;
-			float endX = 0;
-			float endY = 0;
+			float startX = getTopLeft().x;
+			float startY = getTopLeft().y;
+			float endX = getBottomRight().x;
+			float endY = getBottomRight().y;
 			int imageStartX = 0;
 			int imageStartY = 0;
 			int imageEndX = image.width;
@@ -85,12 +85,11 @@ public class Image extends Editable {
 
 			// texture isn't missing
 //			if (flipX == 0 && flipY == 0 && angle == 0) {
+			
 			graphics.imageMode(CORNERS);
-			graphics.image(image, startX,
-					Math.max(getTopLeft().y, view.getTopLeft().y),
-					Math.min(getBottomRight().x, view.getBottomRight().x),
-					Math.min(getBottomRight().y, view.getBottomRight().y), imageStartX, imageStartY, imageEndX,
-					imageEndY); // draw the tile
+			// draw the tile
+			graphics.image(image, startX, startY, endX, endY, imageStartX, imageStartY, imageEndX, imageEndY); 
+			
 //			} else {
 //				graphics.imageMode(CENTER);
 //				graphics.pushMatrix();
