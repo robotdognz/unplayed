@@ -78,7 +78,7 @@ public class Image extends Editable {
 			int imageEndY = image.height;
 
 			if (getTopLeft().x < view.getTopLeft().x) {
-				float temp = ((view.getTopLeft().x - getTopLeft().x) / 100);
+				float temp = ((view.getTopLeft().x - getTopLeft().x) / getWidth());
 				startX = view.getTopLeft().x;
 				imageStartX += image.width * temp;
 			}
