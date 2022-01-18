@@ -92,7 +92,7 @@ public class Image extends Editable {
 				if (flipY == 1) {
 					imageStartY += image.height * temp;
 				} else {
-					imageStartY -= image.height * temp;
+					imageEndY -= image.height * temp;
 				}
 			}
 			if (getBottomRight().x > view.getBottomRight().x) {
@@ -110,7 +110,7 @@ public class Image extends Editable {
 				if (flipY == 1) {
 					imageEndY -= image.height * temp;
 				} else {
-					imageEndY += image.height * temp;
+					imageStartY += image.height * temp;
 				}
 			}
 //			if (flipX != 1) {
@@ -118,11 +118,11 @@ public class Image extends Editable {
 //				imageStartX = imageEndX;
 //				imageEndX = temp;
 //			}
-//			if (flipY != 1) {
-//				int temp = imageStartY;
-//				imageStartY = imageEndY;
-//				imageEndY = temp;
-//			}
+			if (flipY != 1) {
+				int temp = imageStartY;
+				imageStartY = imageEndY;
+				imageEndY = temp;
+			}
 
 			// draw the tile
 			graphics.imageMode(CORNERS);
