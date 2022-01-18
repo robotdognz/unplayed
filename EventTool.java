@@ -24,14 +24,12 @@ public class EventTool implements Tool {
 	private EditorSide editorSide;
 
 	public EventTool(PApplet p, Editor editor) {
-//		super(p, editor);
 		this.game = editor.game;
 		this.editor = editor;
 		this.texture = editor.texture;
 		this.editorSide = (EditorSide) editor.editorSide;
 	}
 
-//	@Override
 	public void touchMoved(PVector touch) {
 		if (!Editor.showPageView) { // world view
 			if (editor.point != null) {
@@ -41,7 +39,6 @@ public class EventTool implements Tool {
 						((PlayerEnd) editor.selected).setNewPlayerArea(editor.point.copy());
 						return;
 					}
-
 				}
 
 				// figure out what to insert
@@ -68,8 +65,6 @@ public class EventTool implements Tool {
 				}
 				editor.point = null;
 			}
-		} else { // page view
-//			edit = null;
 		}
 	}
 
@@ -153,7 +148,6 @@ public class EventTool implements Tool {
 		// if there is noting to check
 		if (getRectangles.size() < 1) {
 			editor.selected = null;
-//			edit = null;
 			return;
 		}
 
@@ -170,7 +164,6 @@ public class EventTool implements Tool {
 		if (foundAtPoint != null) {
 			// if it found an exact match
 			editor.selected = foundAtPoint;
-//			edit = null;
 			return;
 		} else {
 			// if there is no exact match, look for overlaps
@@ -192,7 +185,6 @@ public class EventTool implements Tool {
 				}
 				// select the first overlap
 				editor.selected = p;
-//				edit = null;
 				return;
 			}
 			// nothing was found, select nothing

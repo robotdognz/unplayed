@@ -11,15 +11,11 @@ public class Quadtree {
 	private Rectangle bounds;
 	public QuadNode root;
 	private int insertCount = 0;
-	
 	private int playerEndCount = 0;
-
-//	private HashSet<CameraChange> cameras; // easily accessible cameras
 
 	public Quadtree(Rectangle bounds) {
 		this.bounds = bounds;
 		root = new QuadNode(bounds, null, this); // top level node has null for parent
-//		cameras = new HashSet<CameraChange>();
 	}
 
 	public HashSet<Rectangle> retrieve(HashSet<Rectangle> returnObjects, Rectangle player) {
@@ -29,9 +25,6 @@ public class Quadtree {
 
 	public void insert(Rectangle current) {
 		insertCount++;
-//		if (current instanceof CameraChange) {
-//			cameras.add((CameraChange) current);
-//		}
 		root.nodeInsert(current);
 		if (current instanceof Tile) {
 			((Tile) current).create();
@@ -46,10 +39,6 @@ public class Quadtree {
 
 	public void remove(Rectangle current) {
 		insertCount--;
-//		if (current instanceof CameraChange) {
-//			cameras.remove((CameraChange) current);
-//			root.removeColliders((CameraChange) current);
-//		}
 		root.remove(current);
 		if (current instanceof Tile) {
 			((Tile) current).destroy();
@@ -74,7 +63,6 @@ public class Quadtree {
 		insertCount = 0;
 		playerEndCount = 0;
 		root = new QuadNode(bounds, null, this);
-//		cameras.clear();
 	}
 
 	public int size() {
@@ -95,8 +83,4 @@ public class Quadtree {
 		root.getAll(returnSet);
 		return returnSet;
 	}
-
-//	public Set<CameraChange> getCameras() {
-//		return Collections.unmodifiableSet(cameras);
-//	}
 }

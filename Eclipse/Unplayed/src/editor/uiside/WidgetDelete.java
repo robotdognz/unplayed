@@ -74,6 +74,9 @@ public class WidgetDelete extends Widget {
 							editor.world.insert(oldStart);
 						}
 						editor.game.setPlayerStart(null);
+						if (editor.game.player != null) {
+							editor.game.player.destroy();
+						}
 						editor.game.player = null;
 					}
 					// if the event is a player end

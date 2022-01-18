@@ -208,9 +208,6 @@ public class Editor {
 					if (selected instanceof Page || selected instanceof Background) {
 						selected.drawSelected(p.g);
 					}
-//					else if (selected instanceof CameraChange) {
-//						((CameraChange) selected).drawCameraArea(p.g);
-//					}
 				}
 				// draw tool effects
 				if (currentTool != null) {

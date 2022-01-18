@@ -44,12 +44,6 @@ public class Game {
 	public int screenSpaceOffset;
 	// screenSpaceOffset is for debug purposes, I believe (future Marco here), it
 	// can be used to decrease the rendering space
-	public Rectangle pageSpace; // TODO: implement this
-	// pageSpace is a subset of screen space that can be filled with pages
-	// this is used to keep the actual gameplay in the same aspect ratio across
-	// devices with different screen sizes, as well as prevent pages being drawn
-	// where the player should be using their fingers (this will only be a small
-	// strip on the bottom for standard aspect ratio phones e.g. s6)
 
 	// local variables for camera
 	public float newScale;
@@ -117,12 +111,6 @@ public class Game {
 		float screenSpaceHeight = convert.screenToLevel(p.height + screenSpaceOffset * 2);
 		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
 
-//		// calculate page space
-//		float aspectRatio = 1920 / 1080;
-//		float pageSpaceHeight = (screenSpace.getWidth() * aspectRatio) - (screenSpace.getWidth() / 10);
-//		float pageSpaceWidth = screenSpace.getWidth() - (screenSpace.getWidth() / 10);
-//		float pageSpaceVericalOffset = 0; // vertical
-
 		float camX = Camera.getCenter().x - newScale / 2;
 		cameraArea = new Rectangle(camX, bottomOfTopBar, newScale, topOfBottomBar - bottomOfTopBar);
 		newCameraArea = cameraArea.copy();
@@ -154,8 +142,7 @@ public class Game {
 		if (start != null) {
 			// set player start
 			playerStart = start;
-			// set start camera
-//			cameraAreaStart = start.getCameraArea(); //TODO: remove
+			// create new player
 			createPlayer(start);
 		}
 	}
@@ -174,9 +161,6 @@ public class Game {
 	}
 
 	public void startGame() {
-//		// only alter the camera if we're in game or play testing
-//		if (playerStart != null && Camera.getGame()) {
-//		}
 		// clear player
 		if (this.player != null) {
 			this.player.destroy();
@@ -199,7 +183,7 @@ public class Game {
 		placed.clear();
 		removed.clear();
 
-		// initialise player
+		// Initialize player
 		if (playerStart != null) {
 			createPlayer(playerStart);
 		}
@@ -212,11 +196,11 @@ public class Game {
 		Editor editor = app.getEditor();
 
 		if (editor == null) { // in a normal game
-			p.delay(180);
+			p.delay(180); //TODO: should never use delay()
 			app.nextLevel();
 		} else { // in the editor
 			editor.toast.showToast("Level Complete");
-			p.delay(400);
+			p.delay(400); //TODO: should never use delay()
 			startGame();
 		}
 	}
@@ -252,7 +236,7 @@ public class Game {
 		// if the next block the player will become has been found
 		if (found != null) {
 			// pause
-			p.delay(180);
+			p.delay(180); //TODO: should never use delay()
 
 			// update the checkpoints
 			this.playerCheckpoint = found;
