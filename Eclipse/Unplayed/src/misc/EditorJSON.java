@@ -35,7 +35,7 @@ public class EditorJSON {
 	}
 
 	public void save(Editor editor, String path) {
-		try {
+//		try {
 			values = new JSONArray();
 
 			saveWorldObjects(values, editor);
@@ -61,11 +61,11 @@ public class EditorJSON {
 			if (toast != null) {
 				toast.showToast("Level Saved");
 			}
-		} catch (Exception e) {
-			if (toast != null) {
-				toast.showToast(e.getMessage());
-			}
-		}
+//		} catch (Exception e) {
+//			if (toast != null) {
+//				toast.showToast(e.getMessage());
+//			}
+//		}
 	}
 
 	private void saveWorldObjects(JSONArray values, Editor editor) {
