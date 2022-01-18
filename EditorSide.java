@@ -38,7 +38,6 @@ public class EditorSide extends Toolbar {
 	private ArrayList<Widget> view;
 	private ArrayList<Widget> page;
 	private ArrayList<Widget> background;
-//	private ArrayList<Widget> cameraChange;
 	private ArrayList<Widget> playerEnd;
 	private ArrayList<Widget> spike;
 	private ArrayList<Widget> minimal; // for things that only require cross and tick
@@ -57,8 +56,6 @@ public class EditorSide extends Toolbar {
 		Widget adjustW = new WidgetAdjust(p, editor, this);
 		Widget levelendW = new WidgetPELevelEnd(p, editor, this);
 		Widget excludeW = new WidgetExcludeMenu(p, editor, this);
-//		Widget cameraAddW = new WidgetCameraAdd(p, editor, this);
-//		Widget cameraSubW = new WidgetCameraSub(p, editor, this);
 
 		// widgets for tiles
 		tile = new ArrayList<Widget>();
@@ -73,8 +70,8 @@ public class EditorSide extends Toolbar {
 		image.add(finishW);
 		image.add(flipHW);
 		image.add(flipVW);
-//		image.add(clockwiseW);
-//		image.add(counterClockwiseW);
+		image.add(clockwiseW);
+		image.add(counterClockwiseW);
 
 		// widgets for views
 		view = new ArrayList<Widget>();
@@ -97,13 +94,6 @@ public class EditorSide extends Toolbar {
 		background.add(flipHW);
 		background.add(flipVW);
 		background.add(adjustW);
-
-//		// widgets for cameraChange
-//		cameraChange = new ArrayList<Widget>();
-//		cameraChange.add(deleteW);
-//		cameraChange.add(finishW);
-//		cameraChange.add(cameraAddW);
-//		cameraChange.add(cameraSubW);
 
 		// widgets for playerEnd
 		playerEnd = new ArrayList<Widget>();
@@ -159,10 +149,6 @@ public class EditorSide extends Toolbar {
 			} else if (editor.selected instanceof Image) {
 				widgets = image;
 				adjust = false;
-//			}
-//			else if (editor.selected instanceof CameraChange) {
-//				widgets = cameraChange;
-//				adjust = false;
 			} else if (editor.selected instanceof PlayerEnd) {
 				widgets = playerEnd;
 				adjust = false;
