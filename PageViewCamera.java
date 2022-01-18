@@ -11,7 +11,8 @@ public class PageViewCamera {
 	static private PApplet p;
 
 	static private Rectangle pageArea; // always represents the current page area
-	static private float areaPadding; // amount to pad the camera around page area
+	static private float sideAreaPadding; // amount to pad the sides of the camera around page area
+	static private float bottomAreaPadding; // amount to pad the bottom of the camera around page area
 
 	static private Rectangle cameraArea;
 	static private Rectangle newCameraArea;
@@ -30,10 +31,11 @@ public class PageViewCamera {
 	public PageViewCamera(PApplet papplet) {
 		p = papplet;
 
+		sideAreaPadding = 100;
+		bottomAreaPadding = 300;
+		
 		// setup temp initial values
 		pageArea = new Rectangle(-400, -400, 900, 1000);
-
-		areaPadding = 100;
 
 		cameraArea = new Rectangle(-400, -400, 900, 1000);
 		newCameraArea = cameraArea.copy();
@@ -148,8 +150,8 @@ public class PageViewCamera {
 	}
 
 	private static void updateNewCamera() {
-		newCameraArea.setCorners(pageArea.getTopLeft().x - areaPadding, pageArea.getTopLeft().y - areaPadding,
-				pageArea.getBottomRight().x + areaPadding, pageArea.getBottomRight().y + areaPadding);
+		newCameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
+				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + bottomAreaPadding);
 	}
 
 	private static void updateNewCenter() {

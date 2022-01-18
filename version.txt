@@ -29,6 +29,8 @@
 -Added visualisation for auto camera logic to page view
 -Added auto camera to level editor, cameras no longer need to be manually defined
 -Implemented new page drawing algorithms, page view and standard gameplay should run better now
+-Removed all editor tools and logic assosiated with the old manual camera system
+-Adjusted editor run mode behaviour
 
 1.2.1: Improving physics and tuning player 'feel'
 
