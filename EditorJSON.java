@@ -39,7 +39,7 @@ public class EditorJSON {
 			values = new JSONArray();
 
 			saveWorldObjects(values, editor);
-			saveCameraChanges(values, editor);
+			savePlayerStart(values, editor);
 			saveRemoved(values, editor);
 			saveViews(values, editor);
 			saveBackgrounds(values, editor);
@@ -97,6 +97,9 @@ public class EditorJSON {
 				object.setString("file", (((Image) r).getFile()).toString());
 			} else if (r instanceof Event) { // events
 				object.setString("name", ((Event) r).getName());
+				if(r instanceof PlayerStart) {
+					continue;
+				}
 				if (r instanceof PlayerEnd) { // PlayerEnd
 					object.setString("type", "PlayerEnd");
 					object.setBoolean("end", ((PlayerEnd) r).getLevelEnd());
@@ -117,7 +120,7 @@ public class EditorJSON {
 		}
 	}
 
-	private void saveCameraChanges(JSONArray values, Editor editor) { // TODO: rename this
+	private void savePlayerStart(JSONArray values, Editor editor) {
 		HashSet<Rectangle> worldObjects = new HashSet<Rectangle>();
 		editor.game.world.getAll(worldObjects);
 
@@ -253,7 +256,7 @@ public class EditorJSON {
 			// load new level
 			loadTiles(values, game);
 			loadWorldObjects(values, game);
-			loadCameraChanges(values, game);
+			loadPlayerStart(values, game);
 			loadViews(values, game);
 			loadBackgrounds(values, game);
 
@@ -261,10 +264,10 @@ public class EditorJSON {
 				toast.showToast("Level Loaded");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			if (toast != null) {
 				toast.showToast(e.getMessage());
 			}
+			e.printStackTrace();
 		}
 	}
 
@@ -357,7 +360,7 @@ public class EditorJSON {
 		}
 	}
 
-	private void loadCameraChanges(JSONArray values, Game game) { // TODO: rename this
+	private void loadPlayerStart(JSONArray values, Game game) {
 		HashSet<Rectangle> worldObjects = new HashSet<Rectangle>();
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
