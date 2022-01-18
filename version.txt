@@ -3,7 +3,7 @@
 1.2.2: First 2021 build
 
 -Cleaned up a bunch of old dodgy code
--Fixed player getting stuck in tunnels and slots issue (animation smoothing system still needs some work)
+-Fixed player getting stuck in tunnels and slots issue
 -Implemented a debug message system
 -Added a check that prevents player wall jumping away from the wall when directly below a wall slot
 -Fixed edge case where player could get momentarily stuck in the intersection of a ground and wall slot
@@ -18,7 +18,7 @@
 	-wall boosting (jumping away from a wall while pull away from the wall)
 -Fixed edge case where player could get a ground jump while wall jumping
 -Improved wall jumping tolerences
--PlayerEnds no longer have manual rotation settings, this is taken care of automatically
+-PlayerEnd objects no longer have manual rotation settings, this is taken care of automatically
 -Tiles and spikes in the editor bottom toolbar now take on the most recently used angle
 -All levels rebuilt to work with new systems
 -Added background images to the level editor, these are used for adding tutorial and story content to the levels
@@ -28,6 +28,7 @@
 -Added temp hints to current demo levels
 -Added visualisation for auto camera logic to page view
 -Added auto camera to level editor, cameras no longer need to be manually defined
+-Implemented new page drawing algorithms, page view and standard gameplay should run better now
 
 1.2.1: Improving physics and tuning player 'feel'
 
