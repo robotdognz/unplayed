@@ -33,7 +33,7 @@ public class WidgetPlayMode extends Widget {
 			if (!Editor.showPageView) { //if we are not on the page view
 				editor.switchView();
 			}
-			game.startGame();
+//			game.startGame();
 		}
 	}
 
