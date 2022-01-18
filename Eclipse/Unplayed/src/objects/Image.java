@@ -83,7 +83,7 @@ public class Image extends Editable {
 				if (flipX == 1) {
 					imageStartX += image.width * temp;
 				} else {
-					imageStartX -= image.width * temp;
+					imageEndX -= image.width * temp;
 				}
 			}
 			if (getTopLeft().y < view.getTopLeft().y) {
@@ -101,7 +101,7 @@ public class Image extends Editable {
 				if (flipX == 1) {
 					imageEndX -= image.width * temp;
 				} else {
-					imageEndX += image.width * temp;
+					imageStartX += image.width * temp;
 				}
 			}
 			if (getBottomRight().y > view.getBottomRight().y) {
@@ -113,11 +113,11 @@ public class Image extends Editable {
 					imageStartY += image.height * temp;
 				}
 			}
-//			if (flipX != 1) {
-//				int temp = imageStartX;
-//				imageStartX = imageEndX;
-//				imageEndX = temp;
-//			}
+			if (flipX != 1) {
+				int temp = imageStartX;
+				imageStartX = imageEndX;
+				imageEndX = temp;
+			}
 			if (flipY != 1) {
 				int temp = imageStartY;
 				imageStartY = imageEndY;
