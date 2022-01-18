@@ -61,6 +61,10 @@ public class Image extends Editable {
 
 	public void drawClipped(PGraphics graphics, Rectangle view, float scale) {
 
+		// TODO: this can potentially be simplified by removing rotation completely, is
+		// it really needed?
+		// I'll leave it out for now and add it back in if I miss it
+
 		if (hasTexture) {
 
 			PImage image = imageTexture.getSprite(scale);
@@ -73,10 +77,16 @@ public class Image extends Editable {
 			int imageEndX = image.width;
 			int imageEndY = image.height;
 
+			if (getTopLeft().x < view.getTopLeft().x) {
+				float temp = ((view.getTopLeft().x - getTopLeft().x) / 100);
+				startX = view.getTopLeft().x;
+				imageStartX += image.width * temp;
+			}
+
 			// texture isn't missing
 //			if (flipX == 0 && flipY == 0 && angle == 0) {
 			graphics.imageMode(CORNERS);
-			graphics.image(image, Math.max(getTopLeft().x, view.getTopLeft().x),
+			graphics.image(image, startX,
 					Math.max(getTopLeft().y, view.getTopLeft().y),
 					Math.min(getBottomRight().x, view.getBottomRight().x),
 					Math.min(getBottomRight().y, view.getBottomRight().y), imageStartX, imageStartY, imageEndX,
