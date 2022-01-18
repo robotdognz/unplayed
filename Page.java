@@ -183,7 +183,7 @@ public class Page extends Editable {
 				continue;
 			}
 			if (r instanceof Image && showImages) {
-				((Image) r).draw(p.g, 3); // scale/size
+				((Image) r).drawClipped(p.g, view, 3); // scale/size
 			}
 		}
 		for (Rectangle r : pageObjects) { // draw tiles and events
