@@ -7,12 +7,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import android.content.Context;
 import android.content.res.AssetManager;
 import game.Game;
 import objects.Event;
-import objects.events.CameraChange;
 import objects.events.PlayerDeath;
 import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
@@ -342,16 +340,16 @@ public class TextureCache {
 		};
 		eventMap.put(playerDeathString, playerDeath);
 
-		// ----------------CameraChange----------------
-		final String cameraChangeString = "CameraChange";
-		File cameraChangeFile = new File(eventDir + "/Event_CameraChange.png");
-		EventHandler cameraChange = new EventHandler(p, this, cameraChangeFile) {
-			@Override
-			public Event makeEvent(int x, int y) {
-				return new CameraChange(game, p, texture, cameraChangeString, x, y);
-			}
-		};
-		eventMap.put(cameraChangeString, cameraChange);
+//		// ----------------CameraChange----------------
+//		final String cameraChangeString = "CameraChange";
+//		File cameraChangeFile = new File(eventDir + "/Event_CameraChange.png");
+//		EventHandler cameraChange = new EventHandler(p, this, cameraChangeFile) {
+//			@Override
+//			public Event makeEvent(int x, int y) {
+//				return new CameraChange(game, p, texture, cameraChangeString, x, y);
+//			}
+//		};
+//		eventMap.put(cameraChangeString, cameraChange);
 
 		// ----------------Spike----------------
 		final String spikeString = "Spike";

@@ -10,7 +10,6 @@ import misc.Converter;
 import objects.Background;
 import objects.Page;
 import objects.Rectangle;
-import objects.events.CameraChange;
 import processing.core.*;
 import static processing.core.PConstants.*;
 
@@ -119,17 +118,17 @@ public class PageView {
 			pageCamera.draw();
 		}
 
-		// draw existing cameras
-		if (!Camera.getGame()) {
-			for (CameraChange c : game.world.getCameras()) {
-				Rectangle area = c.getCameraArea();
-				p.noFill();
-				p.stroke(c.getColor());
-				p.strokeWeight(3);
-				p.rectMode(CORNERS);
-				p.rect(area.getX(), area.getY(), area.getBottomRight().x, area.getBottomRight().y);
-			}
-		}
+//		// draw existing cameras
+//		if (!Camera.getGame()) {
+//			for (CameraChange c : game.world.getCameras()) {
+//				Rectangle area = c.getCameraArea();
+//				p.noFill();
+//				p.stroke(c.getColor());
+//				p.strokeWeight(3);
+//				p.rectMode(CORNERS);
+//				p.rect(area.getX(), area.getY(), area.getBottomRight().x, area.getBottomRight().y);
+//			}
+//		}
 
 		p.popMatrix();
 

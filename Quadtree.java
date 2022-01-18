@@ -1,13 +1,9 @@
 package game;
 
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
-
 import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
-import objects.events.CameraChange;
 import objects.events.PlayerEnd;
 import processing.core.PApplet;
 
@@ -18,12 +14,12 @@ public class Quadtree {
 	
 	private int playerEndCount = 0;
 
-	private HashSet<CameraChange> cameras; // easily accessible cameras
+//	private HashSet<CameraChange> cameras; // easily accessible cameras
 
 	public Quadtree(Rectangle bounds) {
 		this.bounds = bounds;
 		root = new QuadNode(bounds, null, this); // top level node has null for parent
-		cameras = new HashSet<CameraChange>();
+//		cameras = new HashSet<CameraChange>();
 	}
 
 	public HashSet<Rectangle> retrieve(HashSet<Rectangle> returnObjects, Rectangle player) {
@@ -33,9 +29,9 @@ public class Quadtree {
 
 	public void insert(Rectangle current) {
 		insertCount++;
-		if (current instanceof CameraChange) {
-			cameras.add((CameraChange) current);
-		}
+//		if (current instanceof CameraChange) {
+//			cameras.add((CameraChange) current);
+//		}
 		root.nodeInsert(current);
 		if (current instanceof Tile) {
 			((Tile) current).create();
@@ -50,10 +46,10 @@ public class Quadtree {
 
 	public void remove(Rectangle current) {
 		insertCount--;
-		if (current instanceof CameraChange) {
-			cameras.remove((CameraChange) current);
-			root.removeColliders((CameraChange) current);
-		}
+//		if (current instanceof CameraChange) {
+//			cameras.remove((CameraChange) current);
+//			root.removeColliders((CameraChange) current);
+//		}
 		root.remove(current);
 		if (current instanceof Tile) {
 			((Tile) current).destroy();
@@ -78,7 +74,7 @@ public class Quadtree {
 		insertCount = 0;
 		playerEndCount = 0;
 		root = new QuadNode(bounds, null, this);
-		cameras.clear();
+//		cameras.clear();
 	}
 
 	public int size() {
@@ -100,7 +96,7 @@ public class Quadtree {
 		return returnSet;
 	}
 
-	public Set<CameraChange> getCameras() {
-		return Collections.unmodifiableSet(cameras);
-	}
+//	public Set<CameraChange> getCameras() {
+//		return Collections.unmodifiableSet(cameras);
+//	}
 }

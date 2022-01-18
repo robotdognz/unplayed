@@ -155,7 +155,7 @@ public class Game {
 			// set player start
 			playerStart = start;
 			// set start camera
-			cameraAreaStart = start.getCameraArea();
+//			cameraAreaStart = start.getCameraArea(); //TODO: remove
 			createPlayer(start);
 		}
 	}
@@ -177,7 +177,7 @@ public class Game {
 		// only alter the camera if we're in game or play testing
 		if (playerStart != null && Camera.getGame()) {
 			// setup start camera area
-			cameraAreaStart = playerStart.getCameraArea();
+//			cameraAreaStart = playerStart.getCameraArea(); //TODO: remove
 
 			// calculate values
 			PVector cameraTopLeft = cameraAreaStart.getTopLeft();

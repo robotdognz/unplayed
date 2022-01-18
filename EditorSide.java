@@ -1,10 +1,8 @@
 package editor.uiside;
 
 import static processing.core.PConstants.*;
-
 import java.util.ArrayList;
 import java.util.HashSet;
-
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
@@ -15,7 +13,6 @@ import objects.Page;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
-import objects.events.CameraChange;
 import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
 import objects.events.Spike;
@@ -41,7 +38,7 @@ public class EditorSide extends Toolbar {
 	private ArrayList<Widget> view;
 	private ArrayList<Widget> page;
 	private ArrayList<Widget> background;
-	private ArrayList<Widget> cameraChange;
+//	private ArrayList<Widget> cameraChange;
 	private ArrayList<Widget> playerEnd;
 	private ArrayList<Widget> spike;
 	private ArrayList<Widget> minimal; // for things that only require cross and tick
@@ -60,8 +57,8 @@ public class EditorSide extends Toolbar {
 		Widget adjustW = new WidgetAdjust(p, editor, this);
 		Widget levelendW = new WidgetPELevelEnd(p, editor, this);
 		Widget excludeW = new WidgetExcludeMenu(p, editor, this);
-		Widget cameraAddW = new WidgetCameraAdd(p, editor, this);
-		Widget cameraSubW = new WidgetCameraSub(p, editor, this);
+//		Widget cameraAddW = new WidgetCameraAdd(p, editor, this);
+//		Widget cameraSubW = new WidgetCameraSub(p, editor, this);
 
 		// widgets for tiles
 		tile = new ArrayList<Widget>();
@@ -101,12 +98,12 @@ public class EditorSide extends Toolbar {
 		background.add(flipVW);
 		background.add(adjustW);
 
-		// widgets for cameraChange
-		cameraChange = new ArrayList<Widget>();
-		cameraChange.add(deleteW);
-		cameraChange.add(finishW);
-		cameraChange.add(cameraAddW);
-		cameraChange.add(cameraSubW);
+//		// widgets for cameraChange
+//		cameraChange = new ArrayList<Widget>();
+//		cameraChange.add(deleteW);
+//		cameraChange.add(finishW);
+//		cameraChange.add(cameraAddW);
+//		cameraChange.add(cameraSubW);
 
 		// widgets for playerEnd
 		playerEnd = new ArrayList<Widget>();
@@ -162,9 +159,10 @@ public class EditorSide extends Toolbar {
 			} else if (editor.selected instanceof Image) {
 				widgets = image;
 				adjust = false;
-			} else if (editor.selected instanceof CameraChange) {
-				widgets = cameraChange;
-				adjust = false;
+//			}
+//			else if (editor.selected instanceof CameraChange) {
+//				widgets = cameraChange;
+//				adjust = false;
 			} else if (editor.selected instanceof PlayerEnd) {
 				widgets = playerEnd;
 				adjust = false;

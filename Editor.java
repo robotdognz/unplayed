@@ -2,9 +2,7 @@ package editor;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-
 import org.jbox2d.common.Vec2;
-
 import camera.Camera;
 import controllers.CameraControl;
 import controllers.Controller;
@@ -34,7 +32,6 @@ import objects.Page;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
-import objects.events.CameraChange;
 import processing.core.*;
 import ui.Menu;
 
@@ -210,9 +207,10 @@ public class Editor {
 				if (selected != null && !(controller instanceof PlayerControl)) {
 					if (selected instanceof Page || selected instanceof Background) {
 						selected.drawSelected(p.g);
-					} else if (selected instanceof CameraChange) {
-						((CameraChange) selected).drawCameraArea(p.g);
 					}
+//					else if (selected instanceof CameraChange) {
+//						((CameraChange) selected).drawCameraArea(p.g);
+//					}
 				}
 				// draw tool effects
 				if (currentTool != null) {

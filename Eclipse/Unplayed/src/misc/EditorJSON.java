@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
 import editor.Editor;
 import game.Game;
 import handlers.TextureCache;
@@ -16,8 +15,6 @@ import objects.Page;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
-import objects.events.CameraChange;
-import objects.events.CameraCollider;
 import objects.events.PlayerDeath;
 import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
@@ -100,9 +97,9 @@ public class EditorJSON {
 				object.setString("file", (((Image) r).getFile()).toString());
 			} else if (r instanceof Event) { // events
 				object.setString("name", ((Event) r).getName());
-				if (r instanceof CameraChange || r instanceof CameraCollider) {
-					continue;
-				}
+//				if (r instanceof CameraChange || r instanceof CameraCollider) {
+//					continue;
+//				}
 				if (r instanceof PlayerEnd) { // PlayerEnd
 					object.setString("type", "PlayerEnd");
 					object.setBoolean("end", ((PlayerEnd) r).getLevelEnd());
@@ -128,41 +125,41 @@ public class EditorJSON {
 		editor.game.world.getAll(worldObjects);
 
 		for (Rectangle r : worldObjects) {
-			if (r instanceof CameraChange) {
+			if (r instanceof PlayerStart) {
 				JSONObject object = new JSONObject();
 				object.setString("name", ((Event) r).getName());
 				object.setInt("pX", (int) r.getX());
 				object.setInt("pY", (int) r.getY());
-				object.setInt("pWidth", (int) r.getWidth());
-				object.setInt("pHeight", (int) r.getHeight());
-				object.setFloat("cameraTopLeftX", ((CameraChange) r).getCameraTopLeft().x);
-				object.setFloat("cameraTopLeftY", ((CameraChange) r).getCameraTopLeft().y);
-				object.setFloat("cameraBottomRightX", ((CameraChange) r).getCameraBottomRight().x);
-				object.setFloat("cameraBottomRightY", ((CameraChange) r).getCameraBottomRight().y);
-				object.setFloat("cameraZoom", ((CameraChange) r).getCameraZoom());
-				object.setFloat("edgeZoom", ((CameraChange) r).getEdgeZoom());
-				object.setInt("color", ((CameraChange) r).getColor());
-				JSONArray colliders = new JSONArray();
-				for (Rectangle rr : worldObjects) {
-					// if this is a collider and it belongs to the current CameraChange
-					if (!(rr instanceof CameraCollider)) {
-						continue;
-					}
-					if (((CameraCollider) rr).getCamera().equals(r)) {
-						JSONObject colliderObject = new JSONObject();
-						colliderObject.setInt("pX", (int) rr.getX());
-						colliderObject.setInt("pY", (int) rr.getY());
-						colliders.setJSONObject(colliders.size(), colliderObject);
-					}
-				}
-				object.setJSONArray("colliders", colliders);
+//				object.setInt("pWidth", (int) r.getWidth());
+//				object.setInt("pHeight", (int) r.getHeight());
+//				object.setFloat("cameraTopLeftX", ((CameraChange) r).getCameraTopLeft().x);
+//				object.setFloat("cameraTopLeftY", ((CameraChange) r).getCameraTopLeft().y);
+//				object.setFloat("cameraBottomRightX", ((CameraChange) r).getCameraBottomRight().x);
+//				object.setFloat("cameraBottomRightY", ((CameraChange) r).getCameraBottomRight().y);
+//				object.setFloat("cameraZoom", ((CameraChange) r).getCameraZoom());
+//				object.setFloat("edgeZoom", ((CameraChange) r).getEdgeZoom());
+//				object.setInt("color", ((CameraChange) r).getColor());
+//				JSONArray colliders = new JSONArray();
+//				for (Rectangle rr : worldObjects) {
+//					// if this is a collider and it belongs to the current CameraChange
+//					if (!(rr instanceof CameraCollider)) {
+//						continue;
+//					}
+//					if (((CameraCollider) rr).getCamera().equals(r)) {
+//						JSONObject colliderObject = new JSONObject();
+//						colliderObject.setInt("pX", (int) rr.getX());
+//						colliderObject.setInt("pY", (int) rr.getY());
+//						colliders.setJSONObject(colliders.size(), colliderObject);
+//					}
+//				}
+//				object.setJSONArray("colliders", colliders);
 
-				if (r instanceof PlayerStart) {
-					object.setString("type", "PlayerStart");
-					saveTile(values, ((PlayerStart) r).getRequired());
-				} else {
-					object.setString("type", "CameraChange");
-				}
+//				if (r instanceof PlayerStart) {
+				object.setString("type", "PlayerStart");
+				saveTile(values, ((PlayerStart) r).getRequired());
+//				} else {
+//					object.setString("type", "CameraChange");
+//				}
 
 				values.setJSONObject(values.size(), object); // add it on to the end
 			}
@@ -399,47 +396,45 @@ public class EditorJSON {
 			if (type.equals("CameraChange") || type.equals("PlayerStart")) {
 				int pX = object.getInt("pX");
 				int pY = object.getInt("pY");
-				int pWidth = object.getInt("pWidth");
-				int pHeight = object.getInt("pHeight");
+//				int pWidth = object.getInt("pWidth");
+//				int pHeight = object.getInt("pHeight");
 				String name = object.getString("name");
-				PVector cameraTopLeft = new PVector(object.getFloat("cameraTopLeftX"),
-						object.getFloat("cameraTopLeftY"));
-				PVector cameraBottomRight = new PVector(object.getFloat("cameraBottomRightX"),
-						object.getFloat("cameraBottomRightY"));
-//				float cameraZoom = object.getFloat("cameraZoom");
-//				float edgeZoom = object.getFloat("edgeZoom");
-				int color = object.getInt("color");
-				JSONArray colliders = object.getJSONArray("colliders");
-				CameraChange cc;
-				if (type.equals("PlayerStart")) {
-					cc = new PlayerStart(game, p, texture, name, pX, pY);
-				} else {
-					cc = new CameraChange(game, p, texture, name, pX, pY);
-				}
-				cc.setWidth(pWidth);
-				cc.setHeight(pHeight);
-				cc.setCameraTopLeft(cameraTopLeft);
-				cc.setCameraBottomRight(cameraBottomRight);
-//				cc.setCameraZoom(cameraZoom);
-//				cc.setEdgeZoom(edgeZoom);
-				cc.setColor(color);
+//				PVector cameraTopLeft = new PVector(object.getFloat("cameraTopLeftX"),
+//						object.getFloat("cameraTopLeftY"));
+//				PVector cameraBottomRight = new PVector(object.getFloat("cameraBottomRightX"),
+//						object.getFloat("cameraBottomRightY"));
+//				int color = object.getInt("color");
+//				JSONArray colliders = object.getJSONArray("colliders");
+//				CameraChange cc;
+//				if (type.equals("PlayerStart")) {
+//					cc = new PlayerStart(game, p, texture, name, pX, pY);
+//				} else {
+//					cc = new CameraChange(game, p, texture, name, pX, pY);
+//				}
+//				cc.setWidth(pWidth);
+//				cc.setHeight(pHeight);
+//				cc.setCameraTopLeft(cameraTopLeft);
+//				cc.setCameraBottomRight(cameraBottomRight);
+//				cc.setColor(color);
+
+				PlayerStart cc = new PlayerStart(game, p, texture, name, pX, pY);
 
 				worldObjects.add(cc); // add the camera change to the world
 
-				// create and add any colliders it has
-				try {
-					if (colliders.size() > 0) {
-						for (int j = 0; j < colliders.size(); j++) {
-							JSONObject jCollider = colliders.getJSONObject(j);
-							int cX = jCollider.getInt("pX");
-							int cY = jCollider.getInt("pY");
-							CameraCollider collider = new CameraCollider(game, cc, cX, cY);
-							worldObjects.add(collider);
-						}
-					}
-				} catch (Exception e) {
-
-				}
+//				// create and add any colliders it has
+//				try {
+//					if (colliders.size() > 0) {
+//						for (int j = 0; j < colliders.size(); j++) {
+//							JSONObject jCollider = colliders.getJSONObject(j);
+//							int cX = jCollider.getInt("pX");
+//							int cY = jCollider.getInt("pY");
+//							CameraCollider collider = new CameraCollider(game, cc, cX, cY);
+//							worldObjects.add(collider);
+//						}
+//					}
+//				} catch (Exception e) {
+//
+//				}
 			}
 		}
 		for (Rectangle r : worldObjects) {
@@ -542,7 +537,7 @@ public class EditorJSON {
 				}
 				background.setSize(size);
 				background.setAngle(angle);
-				
+
 				backgrounds.add(background);
 			}
 
