@@ -50,13 +50,13 @@ public class Game {
 //	public PVector newCenter;
 //	public float zoomSpeed = 0.1f; // 0.1 is the default
 
-	// local variables for camera tall screen space
-	private float newSubScale = 1;
+//	// local variables for camera tall screen space
+//	private float newSubScale = 1;
 
-	// variables for black border
-	public Rectangle cameraArea;
-	public Rectangle newCameraArea;
-	public float boarderZoomSpeed = 0.1f; // 0.1 is default
+//	// variables for black border
+//	public Rectangle cameraArea;
+//	public Rectangle newCameraArea;
+//	public float boarderZoomSpeed = 0.1f; // 0.1 is default
 
 	// box2d
 	public Box2DProcessing box2d;
@@ -70,12 +70,12 @@ public class Game {
 
 	public Game(PApplet p, AppLogic app, Camera c, TextureCache texture, Converter convert) {
 		// legacy variables from level class TODO: write these out eventually
-		PVector cameraTopLeft = new PVector(-400, -400);
-		PVector cameraBottomRight = new PVector(500, 600);
-		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
-		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-		PVector startCenter = new PVector(centerX, centerY);
-		int startScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
+//		PVector cameraTopLeft = new PVector(-400, -400);
+//		PVector cameraBottomRight = new PVector(500, 600);
+//		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
+//		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
+//		PVector startCenter = new PVector(centerX, centerY);
+//		int startScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
 //		int bottomOfTopBar = (int) cameraTopLeft.y;
 //		int topOfBottomBar = (int) cameraBottomRight.y;
 
@@ -99,9 +99,9 @@ public class Game {
 		paper = new MathsPaper(texture);
 
 		// camera
-		Camera.setScale(startScale);
+//		Camera.setScale(startScale);
 //		newScale = startScale;
-		Camera.setCenter(startCenter);
+//		Camera.setCenter(startCenter);
 //		newCenter = new PVector(Camera.getCenter().x, Camera.getCenter().y);
 
 		// calculate screen space
