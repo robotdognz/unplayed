@@ -76,8 +76,8 @@ public class EditorSide extends Toolbar {
 		image.add(finishW);
 		image.add(flipHW);
 		image.add(flipVW);
-		image.add(clockwiseW);
-		image.add(counterClockwiseW);
+//		image.add(clockwiseW);
+//		image.add(counterClockwiseW);
 
 		// widgets for views
 		view = new ArrayList<Widget>();

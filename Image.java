@@ -34,7 +34,7 @@ public class Image extends Editable {
 	public void draw(PGraphics graphics, float scale) {
 		if (hasTexture) {
 			// texture isn't missing
-			if (flipX == 0 && flipY == 0 && angle == 0) {
+			if (flipX == 1 && flipY == 1 && angle == 0) {
 				graphics.imageMode(CORNER);
 				graphics.image(imageTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight()); // draw the tile
 			} else {
@@ -44,7 +44,7 @@ public class Image extends Editable {
 				if (angle != 0) {
 					graphics.rotate(PApplet.radians(angle)); // rotate the image
 				}
-				if (flipX != 0 || flipY != 0) {
+				if (flipX != 1 || flipY != 1) {
 					graphics.scale(flipX, flipY); // flip the image
 				}
 				graphics.image(imageTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the image
@@ -124,26 +124,10 @@ public class Image extends Editable {
 				imageEndY = temp;
 			}
 
-			graphics.imageMode(CORNERS);
 			// draw the tile
+			graphics.imageMode(CORNERS);
 			graphics.image(image, startX, startY, endX, endY, imageStartX, imageStartY, imageEndX, imageEndY);
 
-			// texture isn't missing
-//			if (flipX == 0 && flipY == 0 && angle == 0) {
-
-//			} else {
-//				graphics.imageMode(CENTER);
-//				graphics.pushMatrix();
-//				graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
-//				if (angle != 0) {
-//					graphics.rotate(PApplet.radians(angle)); // rotate the image
-//				}
-//				if (flipX != 0 || flipY != 0) {
-//					graphics.scale(flipX, flipY); // flip the image
-//				}
-//				graphics.image(image, 0, 0, getWidth(), getHeight()); // draw the image
-//				graphics.popMatrix();
-//			}
 		} else {
 			// texture is missing
 			graphics.noStroke();
