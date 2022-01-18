@@ -82,6 +82,16 @@ public class Image extends Editable {
 				startX = view.getTopLeft().x;
 				imageStartX += image.width * temp;
 			}
+			if (getTopLeft().y < view.getTopLeft().y) {
+				float temp = ((view.getTopLeft().y - getTopLeft().y) / getHeight());
+				startY = view.getTopLeft().y;
+				imageStartY += image.height * temp;
+			}
+			if (getBottomRight().x > view.getBottomRight().x) {
+				float temp = ((getBottomRight().x - view.getBottomRight().x) / getWidth());
+				endX = view.getBottomRight().x;
+				imageEndX -= image.width * temp;
+			}
 
 			// texture isn't missing
 //			if (flipX == 0 && flipY == 0 && angle == 0) {
