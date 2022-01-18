@@ -64,32 +64,36 @@ public class Image extends Editable {
 		if (hasTexture) {
 
 			PImage image = imageTexture.getSprite(scale);
+			float startX = 0;
+			float startY = 0;
+			float endX = 0;
+			float endY = 0;
 			int imageStartX = 0;
 			int imageStartY = 0;
 			int imageEndX = image.width;
 			int imageEndY = image.height;
 
 			// texture isn't missing
-			if (flipX == 0 && flipY == 0 && angle == 0) {
-				graphics.imageMode(CORNERS);
-				graphics.image(image, Math.min(getTopLeft().x, view.getTopLeft().x),
-						Math.min(getTopLeft().y, view.getTopLeft().y),
-						Math.max(getBottomRight().x, view.getBottomRight().x),
-						Math.max(getBottomRight().y, view.getBottomRight().y), imageStartX, imageStartY, imageEndX,
-						imageEndY); // draw the tile
-			} else {
-				graphics.imageMode(CENTER);
-				graphics.pushMatrix();
-				graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
-				if (angle != 0) {
-					graphics.rotate(PApplet.radians(angle)); // rotate the image
-				}
-				if (flipX != 0 || flipY != 0) {
-					graphics.scale(flipX, flipY); // flip the image
-				}
-				graphics.image(image, 0, 0, getWidth(), getHeight()); // draw the image
-				graphics.popMatrix();
-			}
+//			if (flipX == 0 && flipY == 0 && angle == 0) {
+			graphics.imageMode(CORNERS);
+			graphics.image(image, Math.min(getTopLeft().x, view.getTopLeft().x),
+					Math.min(getTopLeft().y, view.getTopLeft().y),
+					Math.max(getBottomRight().x, view.getBottomRight().x),
+					Math.max(getBottomRight().y, view.getBottomRight().y), imageStartX, imageStartY, imageEndX,
+					imageEndY); // draw the tile
+//			} else {
+//				graphics.imageMode(CENTER);
+//				graphics.pushMatrix();
+//				graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
+//				if (angle != 0) {
+//					graphics.rotate(PApplet.radians(angle)); // rotate the image
+//				}
+//				if (flipX != 0 || flipY != 0) {
+//					graphics.scale(flipX, flipY); // flip the image
+//				}
+//				graphics.image(image, 0, 0, getWidth(), getHeight()); // draw the image
+//				graphics.popMatrix();
+//			}
 		} else {
 			// texture is missing
 			graphics.noStroke();
