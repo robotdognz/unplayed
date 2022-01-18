@@ -76,10 +76,10 @@ public class Image extends Editable {
 			// texture isn't missing
 //			if (flipX == 0 && flipY == 0 && angle == 0) {
 			graphics.imageMode(CORNERS);
-			graphics.image(image, Math.min(getTopLeft().x, view.getTopLeft().x),
-					Math.min(getTopLeft().y, view.getTopLeft().y),
-					Math.max(getBottomRight().x, view.getBottomRight().x),
-					Math.max(getBottomRight().y, view.getBottomRight().y), imageStartX, imageStartY, imageEndX,
+			graphics.image(image, Math.max(getTopLeft().x, view.getTopLeft().x),
+					Math.max(getTopLeft().y, view.getTopLeft().y),
+					Math.min(getBottomRight().x, view.getBottomRight().x),
+					Math.min(getBottomRight().y, view.getBottomRight().y), imageStartX, imageStartY, imageEndX,
 					imageEndY); // draw the tile
 //			} else {
 //				graphics.imageMode(CENTER);
