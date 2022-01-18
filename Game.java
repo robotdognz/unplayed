@@ -37,8 +37,8 @@ public class Game {
 	public Tile playerCheckpoint;
 
 	public Camera camera;
-	public Rectangle cameraAreaStart;
-	public Rectangle cameraAreaCheckpoint;
+//	public Rectangle cameraAreaStart;
+//	public Rectangle cameraAreaCheckpoint;
 
 	public Rectangle screenSpace;
 	public int screenSpaceOffset;
@@ -240,7 +240,7 @@ public class Game {
 
 			// update the checkpoints
 			this.playerCheckpoint = found;
-			this.cameraAreaCheckpoint = cameraArea.copy();
+//			this.cameraAreaCheckpoint = cameraArea.copy();
 
 			// make the matching tile to fill the slot
 			int tileX = (int) (Math.round((player.getCenter().x - player.getWidth() / 2) / 10) * 10);
