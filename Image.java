@@ -80,7 +80,11 @@ public class Image extends Editable {
 			if (getTopLeft().x < view.getTopLeft().x) {
 				float temp = ((view.getTopLeft().x - getTopLeft().x) / getWidth());
 				startX = view.getTopLeft().x;
-				imageStartX += image.width * temp;
+				if (flipX == 1) {
+					imageStartX += image.width * temp;
+				} else {
+					imageEndX -= image.width * temp;
+				}
 			}
 			if (getTopLeft().y < view.getTopLeft().y) {
 				float temp = ((view.getTopLeft().y - getTopLeft().y) / getHeight());
@@ -90,23 +94,27 @@ public class Image extends Editable {
 			if (getBottomRight().x > view.getBottomRight().x) {
 				float temp = ((getBottomRight().x - view.getBottomRight().x) / getWidth());
 				endX = view.getBottomRight().x;
-				imageEndX -= image.width * temp;
+				if (flipX == 1) {
+					imageEndX -= image.width * temp;
+				} else {
+					imageStartX += image.width * temp;
+				}
 			}
 			if (getBottomRight().y > view.getBottomRight().y) {
 				float temp = ((getBottomRight().y - view.getBottomRight().y) / getHeight());
 				endY = view.getBottomRight().y;
 				imageEndY -= image.height * temp;
 			}
-			if (flipX != 1) {
-				int temp = imageStartX;
-				imageStartX = imageEndX;
-				imageEndX = temp;
-			}
-			if (flipY != 1) {
-				int temp = imageStartY;
-				imageStartY = imageEndY;
-				imageEndY = temp;
-			}
+//			if (flipX != 1) {
+//				int temp = imageStartX;
+//				imageStartX = imageEndX;
+//				imageEndX = temp;
+//			}
+//			if (flipY != 1) {
+//				int temp = imageStartY;
+//				imageStartY = imageEndY;
+//				imageEndY = temp;
+//			}
 
 			graphics.imageMode(CORNERS);
 			// draw the tile
