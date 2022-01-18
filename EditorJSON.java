@@ -253,7 +253,7 @@ public class EditorJSON {
 			// load new level
 			loadTiles(values, game);
 			loadWorldObjects(values, game);
-			loadCameraChanges(values, game);
+//			loadCameraChanges(values, game);
 			loadViews(values, game);
 			loadBackgrounds(values, game);
 
