@@ -238,7 +238,7 @@ public class EditorJSON {
 	}
 
 	public void load(Game game, String path) {
-//		try {
+		try {
 			values = p.loadJSONArray(path);
 
 			// clear old level
@@ -253,18 +253,19 @@ public class EditorJSON {
 			// load new level
 			loadTiles(values, game);
 			loadWorldObjects(values, game);
-//			loadCameraChanges(values, game);
+			loadCameraChanges(values, game);
 			loadViews(values, game);
 			loadBackgrounds(values, game);
 
 			if (toast != null) {
 				toast.showToast("Level Loaded");
 			}
-//		} catch (Exception e) {
-//			if (toast != null) {
-//				toast.showToast(e.getMessage());
-//			}
-//		}
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (toast != null) {
+				toast.showToast(e.getMessage());
+			}
+		}
 	}
 
 	private void loadTiles(JSONArray values, Game game) {
