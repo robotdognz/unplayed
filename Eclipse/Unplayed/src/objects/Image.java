@@ -97,12 +97,12 @@ public class Image extends Editable {
 				endY = view.getBottomRight().y;
 				imageEndY -= image.height * temp;
 			}
-			if (flipX != 0) {
+			if (flipX != 1) {
 				int temp = imageStartX;
 				imageStartX = imageEndX;
 				imageEndX = temp;
 			}
-			if (flipY != 0) {
+			if (flipY != 1) {
 				int temp = imageStartY;
 				imageStartY = imageEndY;
 				imageEndY = temp;
