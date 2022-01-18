@@ -19,7 +19,9 @@ public class ImageHandler extends Handler implements Comparable<ImageHandler> {
 		} else if (otherArea < area) {
 			return 1;
 		} else {
-			return 0;
+			String fileName = getFile().toString();
+			String otherFileName = otherImageHandler.getFile().toString();
+			return fileName.compareTo(otherFileName);
 		}
 	}
 }
