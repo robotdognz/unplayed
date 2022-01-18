@@ -219,7 +219,7 @@ public class Page extends Editable {
 		p.popMatrix();
 	}
 
-	private void drawPlayer(PGraphics graphics, float scale) { // TODO: finish me
+	private void drawPlayer(PGraphics graphics, float scale) {
 
 		Vec2 center = game.player.getCenter();
 		float angle = game.player.getDrawingAngle();

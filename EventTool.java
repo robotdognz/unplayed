@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import editor.Editor;
 import editor.Editor.editorMode;
+import editor.Tool;
 import editor.uiside.EditorSide;
 import game.Game;
 import handlers.TextureCache;
@@ -16,19 +17,21 @@ import objects.events.PlayerStart;
 import processing.core.PApplet;
 import processing.core.PVector;
 
-public class EventTool extends AreaTool {
+public class EventTool implements Tool {
 	Game game;
 	TextureCache texture;
+	Editor editor;
 	private EditorSide editorSide;
 
 	public EventTool(PApplet p, Editor editor) {
-		super(p, editor);
+//		super(p, editor);
 		this.game = editor.game;
+		this.editor = editor;
 		this.texture = editor.texture;
 		this.editorSide = (EditorSide) editor.editorSide;
 	}
 
-	@Override
+//	@Override
 	public void touchMoved(PVector touch) {
 		if (!Editor.showPageView) { // world view
 			if (editor.point != null) {
@@ -40,27 +43,6 @@ public class EventTool extends AreaTool {
 					}
 
 				}
-
-//				// if editing CameraColliders
-//				if (editor.selected instanceof CameraChange) {
-//					if (editorSide.cameraEditMode == 1) {
-//						// add collider
-//						CameraCollider toInsert = new CameraCollider(game, (CameraChange) editor.selected,
-//								editor.point.getX(), (int) editor.point.getY());
-//						HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
-//						editor.world.retrieve(getRectangles, toInsert);
-//						addCollider(toInsert, getRectangles);
-//						return;
-//					} else if (editorSide.cameraEditMode == 2) {
-//						// remove collider
-//						CameraCollider toInsert = new CameraCollider(game, (CameraChange) editor.selected,
-//								editor.point.getX(), (int) editor.point.getY());
-//						HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
-//						editor.world.retrieve(getRectangles, toInsert);
-//						eraseCollider(toInsert, getRectangles);
-//						return;
-//					}
-//				}
 
 				// figure out what to insert
 				Event toInsert = null;
@@ -74,7 +56,6 @@ public class EventTool extends AreaTool {
 				}
 
 				// get all rectangles that overlap toInsert and pass them to the right method
-//				if (editor.point != null) {
 				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 				editor.world.retrieve(getRectangles, toInsert);
 
@@ -86,17 +67,9 @@ public class EventTool extends AreaTool {
 					select(toInsert, getRectangles);
 				}
 				editor.point = null;
-//				}
 			}
 		} else { // page view
-//			if (editor.selected != null && editor.selected instanceof CameraChange
-//					&& editor.eMode == editorMode.SELECT) {
-//				edit = ((CameraChange) editor.selected).getCameraArea();
-//
-//				super.touchMoved(touch);
-//			} else {
-			edit = null;
-//			}
+//			edit = null;
 		}
 	}
 
@@ -114,17 +87,6 @@ public class EventTool extends AreaTool {
 					foundAtPoint = (Event) p;
 					continue;
 				}
-//				// remove collider when player camera change or player start
-//				if (toInsert instanceof CameraChange && p instanceof CameraCollider) {
-//					editor.world.remove(p);
-//					continue;
-//				}
-//				// remove camera change when placing player start
-//				if (toInsert instanceof PlayerStart && p instanceof CameraChange) {
-//					editor.world.remove(p);
-//					continue;
-//				}
-
 			}
 		}
 		// prevent placing new event if a matching event is found at this spot
@@ -149,9 +111,6 @@ public class EventTool extends AreaTool {
 			if (!(p instanceof Event)) {
 				continue;
 			}
-//			if (p instanceof CameraCollider) {
-//				continue;
-//			}
 			if (p.getTopLeft().x > toInsert.getBottomRight().x - 1) {
 				continue;
 			}
@@ -194,7 +153,7 @@ public class EventTool extends AreaTool {
 		// if there is noting to check
 		if (getRectangles.size() < 1) {
 			editor.selected = null;
-			edit = null;
+//			edit = null;
 			return;
 		}
 
@@ -211,11 +170,7 @@ public class EventTool extends AreaTool {
 		if (foundAtPoint != null) {
 			// if it found an exact match
 			editor.selected = foundAtPoint;
-//			if (foundAtPoint instanceof CameraChange) {
-//				edit = ((CameraChange) foundAtPoint).getCameraArea();
-//			} else {
-			edit = null;
-//			}
+//			edit = null;
 			return;
 		} else {
 			// if there is no exact match, look for overlaps
@@ -223,9 +178,6 @@ public class EventTool extends AreaTool {
 				if (!(p instanceof Event)) {
 					continue;
 				}
-//				if (p instanceof CameraCollider) {
-//					continue;
-//				}
 				if (p.getTopLeft().x > toInsert.getBottomRight().x - 1) {
 					continue;
 				}
@@ -240,11 +192,7 @@ public class EventTool extends AreaTool {
 				}
 				// select the first overlap
 				editor.selected = p;
-//				if (foundAtPoint instanceof CameraChange) {
-//					edit = ((CameraChange) foundAtPoint).getCameraArea();
-//				} else {
-				edit = null;
-//				}
+//				edit = null;
 				return;
 			}
 			// nothing was found, select nothing
@@ -252,67 +200,12 @@ public class EventTool extends AreaTool {
 		}
 	}
 
-//	private void addCollider(CameraCollider toInsert, HashSet<Rectangle> getRectangles) {
-//		// find overlapping colliders
-//		Event foundAtPoint = null;
-//		for (Rectangle p : getRectangles) {
-//			if ((p instanceof CameraCollider || p instanceof CameraChange) && p.getTopLeft().x == toInsert.getX()
-//					&& p.getTopLeft().y == toInsert.getY()) {
-//				foundAtPoint = (Event) p;
-//			}
-//		}
-//		// remove what was found and place the new collider
-//		if (foundAtPoint != null) {
-//			// if there is a CameraChange in this spot, return
-//			if (foundAtPoint instanceof CameraChange) {
-//				return;
-//			}
-//			editor.world.remove(foundAtPoint);
-//		}
-//		editor.world.insert(toInsert);
-//	}
-
-//	private void eraseCollider(CameraCollider toInsert, HashSet<Rectangle> getRectangles) {
-//		for (Rectangle p : getRectangles) {
-//			// if the rectangle overlaps toInsert, remove it
-//			if (!(p instanceof CameraCollider)) {
-//				continue;
-//			}
-//			if (p.getTopLeft().x > toInsert.getBottomRight().x - 1) {
-//				continue;
-//			}
-//			if (p.getBottomRight().x < toInsert.getTopLeft().x + 1) {
-//				continue;
-//			}
-//			if (p.getTopLeft().y > toInsert.getBottomRight().y - 1) {
-//				continue;
-//			}
-//			if (p.getBottomRight().y < toInsert.getTopLeft().y + 1) {
-//				continue;
-//			}
-//
-//			editor.world.remove(p);
-//		}
-//	}
-
 	@Override
 	public void touchEnded(PVector touch) {
-//		if(editor.selected instanceof PlayerStart) {
-//			((PlayerStart) editor.selected).update();
-//		}
 	}
 
 	@Override
 	public void draw() {
-		// draw ui for editing camera area
-		if (Editor.showPageView && editor.eMode == Editor.editorMode.SELECT) { // pages
-			super.draw();
-		}
-//		// stop editing the camera change area if any of things aren't true
-//		if (editor.selected == null || !(editor.selected instanceof CameraChange)
-//				|| editor.eMode != editorMode.SELECT) {
-//			edit = null;
-//		}
 	}
 
 	@Override

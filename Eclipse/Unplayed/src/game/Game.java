@@ -174,40 +174,9 @@ public class Game {
 	}
 
 	public void startGame() {
-		// only alter the camera if we're in game or play testing
-		if (playerStart != null && Camera.getGame()) {
-			// setup start camera area
-//			cameraAreaStart = playerStart.getCameraArea(); //TODO: remove
-//
-//			// calculate values
-//			PVector cameraTopLeft = cameraAreaStart.getTopLeft();
-//			PVector cameraBottomRight = cameraAreaStart.getBottomRight();
-//			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
-//			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-//			PVector startCenter = new PVector(centerX, centerY);
-//			// apply values
-//			Camera.setScale(cameraAreaStart.getWidth()); // scale
-//			newScale = cameraAreaStart.getWidth(); // new scale
-//			Camera.setCenter(startCenter); // centre
-//			newCenter = new PVector(Camera.getCenter().x, Camera.getCenter().y); // new centre
-//			cameraArea = cameraAreaStart.copy(); // camera area
-//			newCameraArea = cameraArea.copy(); // new camera area
-//
-//			// make sure the camera sub scale is correct
-//			if ((cameraArea.getBottomRight().y - cameraArea.getTopLeft().y)
-//					/ (cameraArea.getBottomRight().x - cameraArea.getTopLeft().x) > (float) p.height
-//							/ (float) p.width) {
-//				// set the new sub scale
-//				newSubScale = ((float) p.height
-//						/ ((float) p.width / (float) (cameraArea.getBottomRight().x - cameraArea.getTopLeft().x)))
-//						/ (cameraArea.getBottomRight().y - cameraArea.getTopLeft().y);
-//
-//			} else {
-//				newSubScale = 1;
-//			}
-//			// set the scale
-//			Camera.setSubScale(newSubScale);
-		}
+//		// only alter the camera if we're in game or play testing
+//		if (playerStart != null && Camera.getGame()) {
+//		}
 		// clear player
 		if (this.player != null) {
 			this.player.destroy();

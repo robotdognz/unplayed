@@ -1,19 +1,17 @@
 package objects.events;
 
 import java.util.HashSet;
-
 import game.Game;
 import handlers.TextureCache;
 import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
-import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class PlayerStart extends Event {
 	private Tile required;
 
-	public PlayerStart(Game game, PApplet p, TextureCache texture, String name, float x, float y) {
+	public PlayerStart(Game game, TextureCache texture, String name, float x, float y) {
 		super(game, texture, name, false, x, y, 100, 100);
 		this.game = game;
 
