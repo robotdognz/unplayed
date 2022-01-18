@@ -70,12 +70,12 @@ public class Game {
 
 	public Game(PApplet p, AppLogic app, Camera c, TextureCache texture, Converter convert) {
 		// legacy variables from level class TODO: write these out eventually
-//		PVector cameraTopLeft = new PVector(-400, -400);
-//		PVector cameraBottomRight = new PVector(500, 600);
-//		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
-//		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-//		PVector startCenter = new PVector(centerX, centerY);
-//		int startScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
+		PVector cameraTopLeft = new PVector(-400, -400);
+		PVector cameraBottomRight = new PVector(500, 600);
+		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
+		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
+		PVector startCenter = new PVector(centerX, centerY);
+		int startScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
 //		int bottomOfTopBar = (int) cameraTopLeft.y;
 //		int topOfBottomBar = (int) cameraBottomRight.y;
 
@@ -98,18 +98,18 @@ public class Game {
 
 		paper = new MathsPaper(texture);
 
-//		// camera
-//		Camera.setScale(startScale);
+		// camera
+		Camera.setScale(startScale);
 //		newScale = startScale;
-//		Camera.setCenter(startCenter);
+		Camera.setCenter(startCenter);
 //		newCenter = new PVector(Camera.getCenter().x, Camera.getCenter().y);
-//
-//		// calculate screen space
-//		screenSpaceOffset = 0; // positive makes it larger, negative makes it smaller
-//		PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
-//		float screenSpaceWidth = convert.screenToLevel(p.width + screenSpaceOffset * 2);
-//		float screenSpaceHeight = convert.screenToLevel(p.height + screenSpaceOffset * 2);
-//		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
+
+		// calculate screen space
+		screenSpaceOffset = 0; // positive makes it larger, negative makes it smaller
+		PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
+		float screenSpaceWidth = convert.screenToLevel(p.width + screenSpaceOffset * 2);
+		float screenSpaceHeight = convert.screenToLevel(p.height + screenSpaceOffset * 2);
+		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
 //
 //		float camX = Camera.getCenter().x - newScale / 2;
 //		cameraArea = new Rectangle(camX, bottomOfTopBar, newScale, topOfBottomBar - bottomOfTopBar);
