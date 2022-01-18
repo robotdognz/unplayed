@@ -92,13 +92,18 @@ public class Image extends Editable {
 				endX = view.getBottomRight().x;
 				imageEndX -= image.width * temp;
 			}
-
-			// texture isn't missing
-//			if (flipX == 0 && flipY == 0 && angle == 0) {
+			if (getBottomRight().y > view.getBottomRight().y) {
+				float temp = ((getBottomRight().y - view.getBottomRight().y) / getHeight());
+				endY = view.getBottomRight().y;
+				imageEndY -= image.height * temp;
+			}
 			
 			graphics.imageMode(CORNERS);
 			// draw the tile
 			graphics.image(image, startX, startY, endX, endY, imageStartX, imageStartY, imageEndX, imageEndY); 
+
+			// texture isn't missing
+//			if (flipX == 0 && flipY == 0 && angle == 0) {
 			
 //			} else {
 //				graphics.imageMode(CENTER);
