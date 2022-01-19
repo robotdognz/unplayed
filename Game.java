@@ -360,7 +360,7 @@ public class Game {
 	}
 
 	public void step(float deltaTime) {
-		if (pauseTimer.isRunning()) {
+		if (pauseTimer.isFinished()) {
 			switch (pauseType) {
 			case NONE:
 				pauseTimer.stop();
