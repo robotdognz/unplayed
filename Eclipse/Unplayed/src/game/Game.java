@@ -175,6 +175,9 @@ public class Game {
 			endGame();
 			return;
 		}
+		
+		// pause
+		p.delay(180); //TODO: should never use delay()
 
 		HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
 		world.retrieve(returnObjects, playerArea);
@@ -199,8 +202,8 @@ public class Game {
 		}
 		// if the next block the player will become has been found
 		if (found != null) {
-			// pause
-			p.delay(180); //TODO: should never use delay()
+//			// pause
+//			p.delay(180);
 
 			// update the checkpoint
 			this.playerCheckpoint = found;
