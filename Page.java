@@ -216,7 +216,8 @@ public class Page extends Editable {
 		if (playerVisible && game.player != null && showPlayer) {
 			drawPlayer(p.g, 3);
 		}
-		game.paper.draw(p.g, view, scale / size, (int) size); // paper effect
+		// game.paper.draw(p.g, view, scale / size, (int) size);
+		game.paper.draw(p.g, view, scale, (int) size); // paper effect
 
 		p.popMatrix();
 	}
