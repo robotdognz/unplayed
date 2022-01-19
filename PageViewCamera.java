@@ -33,9 +33,9 @@ public class PageViewCamera {
 
 		sideAreaPadding = 100;
 		bottomAreaPadding = 300;
-		
+
 		// setup temp initial values
-		pageArea = new Rectangle(0, 0, 0, 0); //(-400, -400, 900, 1000);
+		pageArea = new Rectangle(0, 0, 0, 0); // (-400, -400, 900, 1000);
 
 		cameraArea = new Rectangle(0, 0, 0, 0);
 		newCameraArea = cameraArea.copy();
@@ -149,14 +149,34 @@ public class PageViewCamera {
 		updateNewScale();
 	}
 
+	public void initCamera(float minX, float minY, float maxX, float maxY) {
+		// update page area boundary
+		pageArea.setCorners(minX, minY, maxX, maxY);
+
+		// set camera
+		cameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
+				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + bottomAreaPadding);
+		// set center
+		int centerX = (int) ((newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) / 2
+				+ newCameraArea.getTopLeft().x);
+		int centerY = (int) ((newCameraArea.getTopLeft().y - newCameraArea.getBottomRight().y) / 2
+				+ newCameraArea.getBottomRight().y);
+		center.x = centerX;
+		center.y = centerY;
+		// set scale
+		scale = (int) Math.abs(newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x);
+	}
+
 	private static void updateNewCamera() {
 		newCameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
 				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + bottomAreaPadding);
 	}
 
 	private static void updateNewCenter() {
-		int centerX = (int) ((newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) / 2 + newCameraArea.getTopLeft().x);
-		int centerY = (int) ((newCameraArea.getTopLeft().y - newCameraArea.getBottomRight().y) / 2 + newCameraArea.getBottomRight().y);
+		int centerX = (int) ((newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) / 2
+				+ newCameraArea.getTopLeft().x);
+		int centerY = (int) ((newCameraArea.getTopLeft().y - newCameraArea.getBottomRight().y) / 2
+				+ newCameraArea.getBottomRight().y);
 		newCenter.x = centerX;
 		newCenter.y = centerY;
 	}

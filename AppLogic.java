@@ -149,6 +149,7 @@ public class AppLogic {
 			game.startGame();
 			runGame = true;
 			menu = null;
+			game.getPageView().initCamera();
 		}
 
 	}
