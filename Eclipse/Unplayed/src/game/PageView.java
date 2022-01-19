@@ -157,6 +157,7 @@ public class PageView {
 	public void initCamera() {
 		for (Page page : pages) {
 			page.step();
+			page.updateSizeFromView(); // recaulculate page corners
 		}
 		// update the camera zone
 		float minX = Float.POSITIVE_INFINITY;
@@ -165,7 +166,6 @@ public class PageView {
 		float maxY = Float.NEGATIVE_INFINITY;
 		int visiblePage = 0;
 		for (Page page : pages) {
-			page.updateCorners(); // recaulculate page corners
 			if (page.playerVisible()) {
 				// if this page has a visible player
 				visiblePage++;

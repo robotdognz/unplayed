@@ -341,6 +341,10 @@ public class Page extends Editable {
 	public float getSize() {
 		return size;
 	}
+	
+	public void updateSizeFromView() {
+		setCorners(view.getTopLeft(), view.getBottomRight());
+	}
 
 //	public Set<String> getExcluded() {
 //		return Collections.unmodifiableSet(excludedObjects);
@@ -355,7 +359,7 @@ public class Page extends Editable {
 	}
 
 	// --------------update the corner PVectors---------------
-	public void updateCorners() {
+	private void updateCorners() {
 		if (topLeft == null) {
 			// Initialize
 			topLeft = new PVector();
