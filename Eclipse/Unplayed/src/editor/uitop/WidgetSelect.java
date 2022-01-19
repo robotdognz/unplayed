@@ -1,6 +1,5 @@
 package editor.uitop;
 
-import camera.FreeCamera;
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;

@@ -4,7 +4,6 @@ import editor.Editor;
 import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
-import camera.FreeCamera;
 import controllers.EditorControl;
 
 public class WidgetErase extends Widget {
