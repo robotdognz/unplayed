@@ -19,7 +19,7 @@ public class MathsPaper {
 		// TODO: this could be made more efficient for pages because they draw the same
 		// every time, the numbers shouldn't be recalculated each frame
 
-		int gridSize = this.gridSize * gridMultiply;
+		int gridSize = this.gridSize / gridMultiply;
 
 		// find x start position
 		float startX = (int) Math.round((screen.getTopLeft().x - (gridSize / 2)) / gridSize);
