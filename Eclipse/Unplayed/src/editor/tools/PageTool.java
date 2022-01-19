@@ -42,6 +42,7 @@ public class PageTool extends AreaTool {
 		if (!Editor.showPageView) {// views
 			if (editor.selected != null && editor.selected instanceof View && editor.eMode == editorMode.SELECT) {
 				super.touchMoved(touch);
+				game.getPageView().initCamera();
 			} else {
 				edit = null;
 			}
