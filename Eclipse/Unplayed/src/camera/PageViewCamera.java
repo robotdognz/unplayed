@@ -26,7 +26,7 @@ public class PageViewCamera {
 	static private float subScale = 1; // defaults to 1
 	static private float newSubScale = 1; // defaults to 1
 
-	static private float zoomSpeed = 0.05f; // 0.1f is the default, lower is faster
+	static private float zoomSpeed = 0.05f; // lower is faster
 
 	public PageViewCamera(PApplet papplet) {
 		p = papplet;
@@ -37,7 +37,7 @@ public class PageViewCamera {
 		// setup temp initial values
 		pageArea = new Rectangle(-400, -400, 900, 1000);
 
-		cameraArea = new Rectangle(-400, -400, 900, 1000);
+		cameraArea = new Rectangle(-600, -600, 1300, 1400);
 		newCameraArea = cameraArea.copy();
 
 		center = new PVector(0, 0);

@@ -31,6 +31,7 @@
 -Implemented new page drawing algorithms, page view and standard gameplay should run better now
 -Removed all editor tools and logic assosiated with the old manual camera system
 -Adjusted editor run mode behaviour
+-Slotting in no longer causes the camera to stutter
 
 1.2.1: Improving physics and tuning player 'feel'
 
