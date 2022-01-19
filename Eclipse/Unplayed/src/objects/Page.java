@@ -45,6 +45,8 @@ public class Page extends Editable {
 	private PGraphics player;
 	private PGraphics playerMask;
 
+	private float actualSize = 1;
+
 	public Page(PApplet p, Game game, View view, PVector position) { // PVector topLeft, PVector bottomRight,
 		super(view.getTopLeft().x, view.getTopLeft().y, view.getWidth(), view.getHeight());
 		this.p = p;
@@ -214,7 +216,7 @@ public class Page extends Editable {
 		if (playerVisible && game.player != null && showPlayer) {
 			drawPlayer(p.g, 3);
 		}
-		game.paper.draw(p.g, view, scale / size, 2); // paper effect
+		game.paper.draw(p.g, view, scale / size, (int) size); // paper effect
 
 		p.popMatrix();
 	}
@@ -302,19 +304,37 @@ public class Page extends Editable {
 	}
 
 	public void setSize(float size) {
-		this.size = size;
+//		this.size = size;
+		this.actualSize = size;
+		this.size = Math.round(actualSize);
+
 		updateCorners();
 		updateShadow();
 	}
 
 	public void addSize(float size) {
-		if (this.size + size > 0.5) {
-			this.size += size;
+
+		if (this.actualSize + size >= 1 && this.actualSize + size <= 2) { // 0.5f
+			this.actualSize += size;
+			this.size = Math.round(actualSize);
+			
+		} else if (this.actualSize + size < 1) {
+			this.actualSize = 1;
+			this.size = Math.round(actualSize);
 		} else {
-			this.size = 0.5f;
+			this.actualSize = 2;
+			this.size = Math.round(actualSize);
 		}
 		updateCorners();
 		updateShadow();
+
+//		if (this.size + size > 1) { // 0.5f
+//			this.size += size;
+//		} else {
+//			this.size = 1; // 0.5f
+//		}
+//		updateCorners();
+//		updateShadow();
 	}
 
 	public float getSize() {
