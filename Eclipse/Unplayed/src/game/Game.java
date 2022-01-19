@@ -81,7 +81,7 @@ public class Game {
 
 		paper = new MathsPaper(texture);
 
-		pauseTimer = new CountdownTimer(0.400f);
+		pauseTimer = new CountdownTimer(1.0f);
 		pauseType = PauseType.NONE;
 
 		// calculate screen space
