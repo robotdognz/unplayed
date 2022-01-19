@@ -335,7 +335,7 @@ public class Editor {
 			}
 		}
 
-		game.paper.draw(p.g, game.screenSpace, currentScale);
+		game.paper.draw(p.g, game.screenSpace, currentScale, 1);
 
 		// draw tool effects
 		if (currentTool != null) {

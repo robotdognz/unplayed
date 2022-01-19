@@ -41,7 +41,6 @@ public class PageTool extends AreaTool {
 	public void touchMoved(PVector touch) {
 		if (!Editor.showPageView) {// views
 			if (editor.selected != null && editor.selected instanceof View && editor.eMode == editorMode.SELECT) {
-//				edit = editor.selected;
 				super.touchMoved(touch);
 			} else {
 				edit = null;
