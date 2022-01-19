@@ -16,6 +16,11 @@ public class PlayerControl implements Controller {
 
 	@Override
 	public void step(ArrayList<PVector> touch) {
+		// prevent input when game paused
+		if (game.isPaused()) {
+			return;
+		}
+
 		if (game.player != null) {
 			int left = 0;
 			int right = 0;
@@ -51,6 +56,11 @@ public class PlayerControl implements Controller {
 
 	@Override
 	public void touchStarted(PVector touch) {
+		// prevent input when game paused
+		if (game.isPaused()) {
+			return;
+		}
+
 		if (game.player != null) {
 			// jump if the last true touch was in the middle of the screen
 			if (

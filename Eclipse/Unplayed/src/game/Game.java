@@ -7,6 +7,7 @@ import editor.Editor;
 import game.player.Player;
 import handlers.TextureCache;
 import misc.Converter;
+import misc.CountdownTimer;
 import misc.MyContactListener;
 import objects.Rectangle;
 import objects.Tile;
@@ -35,6 +36,14 @@ public class Game {
 	private PageView pageView;
 	private PlayerStart playerStart;
 	public Tile playerCheckpoint;
+
+	private CountdownTimer pauseTimer; // used to pause game during puzzles
+	private PauseType pauseType;
+	private Rectangle playerAreaTemp;
+
+	private enum PauseType {
+		NEXT_LEVEL, RESTART_LEVEL, NEXT_PLAYER, NONE
+	}; // used to indicate what type of pause has happened
 
 	public Camera camera;
 
@@ -71,6 +80,9 @@ public class Game {
 		pageView = new PageView(p, this, texture, convert);
 
 		paper = new MathsPaper(texture);
+
+		pauseTimer = new CountdownTimer(0.400f);
+		pauseType = PauseType.NONE;
 
 		// calculate screen space
 		screenSpaceOffset = 0; // positive makes it larger, negative makes it smaller
@@ -160,12 +172,16 @@ public class Game {
 		Editor editor = app.getEditor();
 
 		if (editor == null) { // in a normal game
-			p.delay(180); //TODO: should never use delay()
-			app.nextLevel();
+//			p.delay(180); // TODO: should never use delay()
+//			app.nextLevel();
+			pauseTimer.start();
+			pauseType = PauseType.NEXT_LEVEL;
 		} else { // in the editor
 			editor.toast.showToast("Level Complete");
-			p.delay(400); //TODO: should never use delay()
-			startGame();
+//			p.delay(400); // TODO: should never use delay()
+//			startGame();
+			pauseTimer.start();
+			pauseType = PauseType.RESTART_LEVEL;
 		}
 	}
 
@@ -175,35 +191,81 @@ public class Game {
 			endGame();
 			return;
 		}
-		
-		// pause
-		p.delay(180); //TODO: should never use delay()
 
+		pauseTimer.start();
+		pauseType = PauseType.NEXT_PLAYER;
+		playerAreaTemp = playerArea.copy();
+
+//		// pause
+//		p.delay(180); // TODO: should never use delay()
+//
+//		HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
+//		world.retrieve(returnObjects, playerArea);
+//		Tile found = null;
+//		for (Rectangle r : returnObjects) {
+//			if (!(r instanceof Tile)) {
+//				continue;
+//			}
+//			if (r.getTopLeft().x > playerArea.getBottomRight().x - 1) {
+//				continue;
+//			}
+//			if (r.getBottomRight().x < playerArea.getTopLeft().x + 1) {
+//				continue;
+//			}
+//			if (r.getTopLeft().y > playerArea.getBottomRight().y - 1) {
+//				continue;
+//			}
+//			if (r.getBottomRight().y < playerArea.getTopLeft().y + 1) {
+//				continue;
+//			}
+//			found = ((Tile) r);
+//		}
+//		// if the next block the player will become has been found
+//		if (found != null) {
+//
+//			// update the checkpoint
+//			this.playerCheckpoint = found;
+//
+//			// make the matching tile to fill the slot
+//			int tileX = (int) (Math.round((player.getCenter().x - player.getWidth() / 2) / 10) * 10);
+//			int tileY = (int) (Math.round((player.getCenter().y - player.getHeight() / 2) / 10) * 10);
+//			Tile newTile = new Tile(box2d, texture, player.getFile(), tileX, tileY);
+//			newTile.setAngle(player.getAdjustedAngle());
+//			// insert the new tile into the world and add it to placed
+//			world.insert(newTile);
+//			placed.add(newTile);
+//
+//			// create the new player
+//			puzzlesCompleted++;
+//			createPlayer(found);
+//		}
+
+	}
+
+	private void nextPlayer() {
 		HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
-		world.retrieve(returnObjects, playerArea);
+		world.retrieve(returnObjects, playerAreaTemp);
 		Tile found = null;
 		for (Rectangle r : returnObjects) {
 			if (!(r instanceof Tile)) {
 				continue;
 			}
-			if (r.getTopLeft().x > playerArea.getBottomRight().x - 1) {
+			if (r.getTopLeft().x > playerAreaTemp.getBottomRight().x - 1) {
 				continue;
 			}
-			if (r.getBottomRight().x < playerArea.getTopLeft().x + 1) {
+			if (r.getBottomRight().x < playerAreaTemp.getTopLeft().x + 1) {
 				continue;
 			}
-			if (r.getTopLeft().y > playerArea.getBottomRight().y - 1) {
+			if (r.getTopLeft().y > playerAreaTemp.getBottomRight().y - 1) {
 				continue;
 			}
-			if (r.getBottomRight().y < playerArea.getTopLeft().y + 1) {
+			if (r.getBottomRight().y < playerAreaTemp.getTopLeft().y + 1) {
 				continue;
 			}
 			found = ((Tile) r);
 		}
 		// if the next block the player will become has been found
 		if (found != null) {
-//			// pause
-//			p.delay(180);
 
 			// update the checkpoint
 			this.playerCheckpoint = found;
@@ -221,7 +283,6 @@ public class Game {
 			puzzlesCompleted++;
 			createPlayer(found);
 		}
-
 	}
 
 	public void createPlayer(Rectangle playerArea) {
@@ -299,6 +360,25 @@ public class Game {
 	}
 
 	public void step(float deltaTime) {
+		if (pauseTimer.isRunning()) {
+			switch (pauseType) {
+			case NONE:
+				break;
+			case NEXT_LEVEL:
+				app.nextLevel();
+				pauseType = PauseType.NONE;
+				break;
+			case RESTART_LEVEL:
+				startGame();
+				pauseType = PauseType.NONE;
+				break;
+			case NEXT_PLAYER:
+				nextPlayer();
+				pauseType = PauseType.NONE;
+				break;
+			}
+		}
+
 		// step player non-physics logic
 		if (player != null) {
 			player.tumble = this.tumble;
@@ -322,7 +402,11 @@ public class Game {
 		float screenSpaceHeight = convert.screenToLevel(p.height + screenSpaceOffset * 2);
 		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
 
-		pageView.step(deltaTime); // step the page view
+		// step the pause timer
+		pauseTimer.deltaStep(deltaTime);
+
+		// step the page view
+		pageView.step(deltaTime);
 	}
 
 	public Player getPlayer() {
@@ -375,6 +459,10 @@ public class Game {
 		for (View view : views) {
 			this.views.add(view);
 		}
+	}
+
+	public boolean isPaused() {
+		return pauseTimer.isRunning();
 	}
 
 	private int calculateSteps(float elapsed) {
