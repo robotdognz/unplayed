@@ -355,7 +355,7 @@ public class Page extends Editable {
 	}
 
 	// --------------update the corner PVectors---------------
-	private void updateCorners() {
+	public void updateCorners() {
 		if (topLeft == null) {
 			// Initialize
 			topLeft = new PVector();

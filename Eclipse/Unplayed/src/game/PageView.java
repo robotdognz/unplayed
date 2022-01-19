@@ -165,6 +165,7 @@ public class PageView {
 		float maxY = Float.NEGATIVE_INFINITY;
 		int visiblePage = 0;
 		for (Page page : pages) {
+			page.updateCorners(); // recaulculate page corners
 			if (page.playerVisible()) {
 				// if this page has a visible player
 				visiblePage++;
