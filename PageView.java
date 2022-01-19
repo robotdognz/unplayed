@@ -155,35 +155,29 @@ public class PageView {
 	}
 
 	public void initCamera() {
-		boolean adjustCamera = false;
 		for (Page page : pages) {
 			page.step();
-			if (page.playerVisibilityChanged()) {
-				adjustCamera = true;
+		}
+		// update the camera zone
+		float minX = Float.POSITIVE_INFINITY;
+		float minY = Float.POSITIVE_INFINITY;
+		float maxX = Float.NEGATIVE_INFINITY;
+		float maxY = Float.NEGATIVE_INFINITY;
+		int visiblePage = 0;
+		for (Page page : pages) {
+			if (page.playerVisible()) {
+				// if this page has a visible player
+				visiblePage++;
+				minX = Math.min(minX, page.getLeftmostPoint());
+				minY = Math.min(minY, page.getTopmostPoint());
+				maxX = Math.max(maxX, page.getRightmostPoint());
+				maxY = Math.max(maxY, page.getBottommostPoint());
 			}
 		}
-		if (adjustCamera) {
-			// update the camera zone
-			float minX = Float.POSITIVE_INFINITY;
-			float minY = Float.POSITIVE_INFINITY;
-			float maxX = Float.NEGATIVE_INFINITY;
-			float maxY = Float.NEGATIVE_INFINITY;
-			int visiblePage = 0;
-			for (Page page : pages) {
-				if (page.playerVisible()) {
-					// if this page has a visible player
-					visiblePage++;
-					minX = Math.min(minX, page.getLeftmostPoint());
-					minY = Math.min(minY, page.getTopmostPoint());
-					maxX = Math.max(maxX, page.getRightmostPoint());
-					maxY = Math.max(maxY, page.getBottommostPoint());
-				}
-			}
 
-			// only update camera if player is visible somewhere
-			if (visiblePage > 0) {
-				pageCamera.initCamera(minX, minY, maxX, maxY);
-			}
+		// only update camera if player is visible somewhere
+		if (visiblePage > 0) {
+			pageCamera.initCamera(minX, minY, maxX, maxY);
 		}
 
 	}

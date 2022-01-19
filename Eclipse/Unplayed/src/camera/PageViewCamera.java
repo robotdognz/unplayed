@@ -153,9 +153,10 @@ public class PageViewCamera {
 		// update page area boundary
 		pageArea.setCorners(minX, minY, maxX, maxY);
 
-		// set camera
+		// set camera area
 		cameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
 				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + bottomAreaPadding);
+		newCameraArea = cameraArea.copy();
 		// set center
 		int centerX = (int) ((newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) / 2
 				+ newCameraArea.getTopLeft().x);
@@ -163,8 +164,10 @@ public class PageViewCamera {
 				+ newCameraArea.getBottomRight().y);
 		center.x = centerX;
 		center.y = centerY;
+		newCenter = center.copy();
 		// set scale
 		scale = (int) Math.abs(newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x);
+		newScale = scale;
 	}
 
 	private static void updateNewCamera() {
