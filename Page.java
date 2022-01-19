@@ -305,17 +305,18 @@ public class Page extends Editable {
 	}
 
 	public void setSize(float size) {
-//		this.size = size;
 		this.actualSize = size;
 		this.size = Math.round(actualSize);
 
+//		this.size = size;
+		
 		updateCorners();
 		updateShadow();
 	}
 
 	public void addSize(float size) {
 
-		if (this.actualSize + size >= 1 && this.actualSize + size <= 2) { // 0.5f
+		if (this.actualSize + size >= 1 && this.actualSize + size <= 2) {
 			this.actualSize += size;
 			this.size = Math.round(actualSize);
 			
@@ -326,16 +327,15 @@ public class Page extends Editable {
 			this.actualSize = 2;
 			this.size = Math.round(actualSize);
 		}
-		updateCorners();
-		updateShadow();
 
 //		if (this.size + size > 1) { // 0.5f
 //			this.size += size;
 //		} else {
 //			this.size = 1; // 0.5f
 //		}
-//		updateCorners();
-//		updateShadow();
+		
+		updateCorners();
+		updateShadow();
 	}
 
 	public float getSize() {

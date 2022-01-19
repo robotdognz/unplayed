@@ -1,5 +1,6 @@
 package editor.uitop;
 
+import camera.FreeCamera;
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
@@ -17,6 +18,7 @@ public class WidgetSelect extends Widget {
 	public void clicked() {
 		editor.eMode = Editor.editorMode.SELECT;
 		editor.controller = new EditorControl(p, editor);
+		editor.camera = new FreeCamera();
 	}
 
 	@Override

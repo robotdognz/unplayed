@@ -4,6 +4,7 @@ import editor.Editor;
 import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
+import camera.FreeCamera;
 import controllers.EditorControl;
 
 public class WidgetErase extends Widget {
@@ -17,6 +18,7 @@ public class WidgetErase extends Widget {
 	public void clicked() {
 		editor.eMode = Editor.editorMode.ERASE;
 		editor.controller = new EditorControl(p, editor);
+		editor.camera = new FreeCamera();
 	}
 
 	@Override
