@@ -6,7 +6,7 @@ import processing.core.PApplet;
 
 public class LaunchMenu extends Menu {
 	Game game;
-	String demo = "Start Demo";
+	String newGame = "New Game";
 	String editor = "Start Editor";
 	String quit = "Quit";
 
@@ -19,7 +19,7 @@ public class LaunchMenu extends Menu {
 		float buttonWidth = p.width / 2.88f; // 500
 		menuWidth = p.width / 2.182f; // 660
 		buttonDistance = p.width / 18; // 80
-		Button demoB = new Button(p.width / 2, buttonWidth, buttonHeight, demo);
+		Button demoB = new Button(p.width / 2, buttonWidth, buttonHeight, newGame);
 		Button editorB = new Button(p.width / 2, buttonWidth, buttonHeight, editor);
 		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
 		buttons.add(demoB);
@@ -32,7 +32,7 @@ public class LaunchMenu extends Menu {
 	@Override
 	public void click() {
 		for (Button b : buttons) {
-			if (b.click().equals(demo)) {
+			if (b.click().equals(newGame)) {
 				al.startGame();
 			} else if (b.click().equals(editor)) {
 

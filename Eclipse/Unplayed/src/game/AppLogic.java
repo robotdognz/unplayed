@@ -138,18 +138,20 @@ public class AppLogic {
 		Collections.sort(levels);
 	}
 
-	@SuppressWarnings("unused")
+//	@SuppressWarnings("unused")
 	public void startGame() {
 		currentLevel = 0;
 		EditorJSON json = new EditorJSON(p, texture, null);
 
 		if (levels != null && levels.size() > currentLevel) {
 			json.load(game, levels.get(currentLevel).toString());
-			Camera camera = new GameCamera();
+//			Camera camera = 
+			new GameCamera();
 			game.startGame();
 			runGame = true;
 			menu = null;
 			game.getPageView().initCamera();
+			// TODO: this is where the transition from title screen to game would happen
 		}
 
 	}
@@ -164,6 +166,7 @@ public class AppLogic {
 		} else {
 			runGame = false;
 			init();
+			// TODO: this is where it would start the transition back to the title screen
 		}
 
 	}
@@ -342,7 +345,7 @@ public class AppLogic {
 	}
 
 	public void quitPurge() {
-		// TODO: update this so it deletes directories etc
+		// should update this so it deletes directories etc
 
 		// purge resources
 		// root

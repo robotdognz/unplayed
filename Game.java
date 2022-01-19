@@ -140,15 +140,16 @@ public class Game {
 		// clear player
 		if (this.player != null) {
 			this.player.destroy();
+			player = null;
 		}
-		player = null;
+
 		// clear checkpoint
 		playerCheckpoint = null;
+
 		// reset removed and placed tiles
 		for (Tile t : placed) {
 			world.remove(t);
 		}
-
 		for (Tile t : removed) {
 			// don't insert tiles that were created by PlayerEnds
 			if (placed.contains(t)) {
@@ -187,11 +188,6 @@ public class Game {
 	}
 
 	public void endPuzzle(Rectangle playerArea) {
-//		// if already in the process of doing something, return
-//		if (pauseTimer.isRunning()) {
-//			return;
-//		}
-
 		if (world.playerEndCount() - puzzlesCompleted == 1) {
 			endGame();
 			return;
