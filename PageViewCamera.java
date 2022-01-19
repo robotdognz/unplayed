@@ -35,7 +35,7 @@ public class PageViewCamera {
 		bottomAreaPadding = 300;
 		
 		// setup temp initial values
-		pageArea = new Rectangle(-400, -400, 900, 1000);
+		pageArea = new Rectangle(-600, -600, 1300, 1400); //(-400, -400, 900, 1000);
 
 		cameraArea = new Rectangle(-600, -600, 1300, 1400);
 		newCameraArea = cameraArea.copy();
