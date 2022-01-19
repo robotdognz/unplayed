@@ -20,7 +20,6 @@ public class PlayerEnd extends Event {
 	private boolean levelEnd;
 	private Tile required;
 	private Rectangle newPlayerArea;
-//	private long lastTime = 0;
 	private PVector center; // used for checking against player position
 
 	public PlayerEnd(Game game, TextureCache texture, String name, float x, float y) {
@@ -162,16 +161,11 @@ public class PlayerEnd extends Event {
 
 		}
 
-//		// the player is perfectly in the slot
-//		// TODO: this lastTime + 2000 thing is a bit sus, maybe change that
-//		if (System.currentTimeMillis() > lastTime + 2000) {
-//			lastTime = System.currentTimeMillis();
 		if (levelEnd) { // if this is the end of the level
 			game.endGame();
 		} else { // if this is just part of the puzzle
 			game.endPuzzle(newPlayerArea);
 		}
-//		}
 	}
 
 }

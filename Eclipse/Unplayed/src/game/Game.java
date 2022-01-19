@@ -187,10 +187,10 @@ public class Game {
 	}
 
 	public void endPuzzle(Rectangle playerArea) {
-		// if already in the process of doing something, return
-		if (pauseTimer.isRunning()) {
-			return;
-		}
+//		// if already in the process of doing something, return
+//		if (pauseTimer.isRunning()) {
+//			return;
+//		}
 
 		if (world.playerEndCount() - puzzlesCompleted == 1) {
 			endGame();
