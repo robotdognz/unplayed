@@ -1,5 +1,6 @@
 package editor.uitop;
 
+import camera.FreeCamera;
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
@@ -26,6 +27,7 @@ public class WidgetEditorMode extends Widget {
 		if (active == false) {
 			active = true;
 			editor.controller = new EditorControl(p, editor);
+			editor.camera = new FreeCamera();
 		} else {
 //			sActive = !sActive; //old code for opening widget menu
 

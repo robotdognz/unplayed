@@ -18,7 +18,6 @@ public class WidgetErase extends Widget {
 	public void clicked() {
 		editor.eMode = Editor.editorMode.ERASE;
 		editor.controller = new EditorControl(p, editor);
-		editor.camera = new FreeCamera();
 	}
 
 	@Override
