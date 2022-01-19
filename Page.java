@@ -344,6 +344,7 @@ public class Page extends Editable {
 	
 	public void updateSizeFromView() {
 		setCorners(view.getTopLeft(), view.getBottomRight());
+		updateCorners();
 	}
 
 //	public Set<String> getExcluded() {
