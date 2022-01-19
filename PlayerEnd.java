@@ -158,6 +158,7 @@ public class PlayerEnd extends Event {
 		}
 
 		// the player is perfectly in the slot
+		// TODO: this lastTime + 2000 thing is a bit sus, maybe change that
 		if (System.currentTimeMillis() > lastTime + 2000) {
 			lastTime = System.currentTimeMillis();
 			if (levelEnd) { // if this is the end of the level

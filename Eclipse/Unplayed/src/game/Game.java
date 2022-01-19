@@ -81,7 +81,7 @@ public class Game {
 
 		paper = new MathsPaper(texture);
 
-		pauseTimer = new CountdownTimer(1.0f);
+		pauseTimer = new CountdownTimer(0.4f);
 		pauseType = PauseType.NONE;
 
 		// calculate screen space
@@ -169,23 +169,28 @@ public class Game {
 	}
 
 	public void endGame() {
+		// if already in the process of doing something, return
+		if (pauseTimer.isRunning()) {
+			return;
+		}
+
 		Editor editor = app.getEditor();
 
 		if (editor == null) { // in a normal game
-//			p.delay(180); // TODO: should never use delay()
-//			app.nextLevel();
 			pauseTimer.start();
 			pauseType = PauseType.NEXT_LEVEL;
 		} else { // in the editor
 			editor.toast.showToast("Level Complete");
-//			p.delay(400); // TODO: should never use delay()
-//			startGame();
 			pauseTimer.start();
 			pauseType = PauseType.RESTART_LEVEL;
 		}
 	}
 
 	public void endPuzzle(Rectangle playerArea) {
+		// if already in the process of doing something, return
+		if (pauseTimer.isRunning()) {
+			return;
+		}
 
 		if (world.playerEndCount() - puzzlesCompleted == 1) {
 			endGame();
@@ -195,51 +200,6 @@ public class Game {
 		pauseTimer.start();
 		pauseType = PauseType.NEXT_PLAYER;
 		playerAreaTemp = playerArea.copy();
-
-//		// pause
-//		p.delay(180); // TODO: should never use delay()
-//
-//		HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
-//		world.retrieve(returnObjects, playerArea);
-//		Tile found = null;
-//		for (Rectangle r : returnObjects) {
-//			if (!(r instanceof Tile)) {
-//				continue;
-//			}
-//			if (r.getTopLeft().x > playerArea.getBottomRight().x - 1) {
-//				continue;
-//			}
-//			if (r.getBottomRight().x < playerArea.getTopLeft().x + 1) {
-//				continue;
-//			}
-//			if (r.getTopLeft().y > playerArea.getBottomRight().y - 1) {
-//				continue;
-//			}
-//			if (r.getBottomRight().y < playerArea.getTopLeft().y + 1) {
-//				continue;
-//			}
-//			found = ((Tile) r);
-//		}
-//		// if the next block the player will become has been found
-//		if (found != null) {
-//
-//			// update the checkpoint
-//			this.playerCheckpoint = found;
-//
-//			// make the matching tile to fill the slot
-//			int tileX = (int) (Math.round((player.getCenter().x - player.getWidth() / 2) / 10) * 10);
-//			int tileY = (int) (Math.round((player.getCenter().y - player.getHeight() / 2) / 10) * 10);
-//			Tile newTile = new Tile(box2d, texture, player.getFile(), tileX, tileY);
-//			newTile.setAngle(player.getAdjustedAngle());
-//			// insert the new tile into the world and add it to placed
-//			world.insert(newTile);
-//			placed.add(newTile);
-//
-//			// create the new player
-//			puzzlesCompleted++;
-//			createPlayer(found);
-//		}
-
 	}
 
 	private void nextPlayer() {
