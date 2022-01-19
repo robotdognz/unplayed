@@ -363,18 +363,22 @@ public class Game {
 		if (pauseTimer.isRunning()) {
 			switch (pauseType) {
 			case NONE:
+				pauseTimer.stop();
 				break;
 			case NEXT_LEVEL:
 				app.nextLevel();
 				pauseType = PauseType.NONE;
+				pauseTimer.stop();
 				break;
 			case RESTART_LEVEL:
 				startGame();
 				pauseType = PauseType.NONE;
+				pauseTimer.stop();
 				break;
 			case NEXT_PLAYER:
 				nextPlayer();
 				pauseType = PauseType.NONE;
+				pauseTimer.stop();
 				break;
 			}
 		}
