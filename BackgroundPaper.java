@@ -13,7 +13,7 @@ public class BackgroundPaper {
 
 	public BackgroundPaper(PApplet p, TextureCache texture) {
 		this.texture = texture;
-		gridSize = 1000;
+		gridSize = 1500;
 
 	}
 
