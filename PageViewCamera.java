@@ -155,8 +155,8 @@ public class PageViewCamera {
 	}
 
 	private static void updateNewCenter() {
-		int centerX = (int) ((pageArea.getBottomRight().x - pageArea.getTopLeft().x) / 2 + pageArea.getTopLeft().x);
-		int centerY = (int) ((pageArea.getTopLeft().y - pageArea.getBottomRight().y) / 2 + pageArea.getBottomRight().y);
+		int centerX = (int) ((newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) / 2 + newCameraArea.getTopLeft().x);
+		int centerY = (int) ((newCameraArea.getTopLeft().y - newCameraArea.getBottomRight().y) / 2 + newCameraArea.getBottomRight().y);
 		newCenter.x = centerX;
 		newCenter.y = centerY;
 	}

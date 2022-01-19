@@ -6,9 +6,9 @@ public abstract class Camera {
 	static protected boolean game = true; // is the game class allowed to make changes to the camera
 
 	// variables for camera
-	static protected float scale = 400;
+	static protected float scale = 1000; // how many squares across to start with
 	static protected float subScale = 1; // defaults to 1
-	static protected PVector center = new PVector(0,0);
+	static protected PVector center = new PVector(0, 0);
 
 	public static boolean getGame() {
 		return game;

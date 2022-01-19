@@ -37,26 +37,11 @@ public class Game {
 	public Tile playerCheckpoint;
 
 	public Camera camera;
-//	public Rectangle cameraAreaStart;
-//	public Rectangle cameraAreaCheckpoint;
 
 	public Rectangle screenSpace;
 	public int screenSpaceOffset;
 	// screenSpaceOffset is for debug purposes, I believe (future Marco here), it
 	// can be used to decrease the rendering space
-
-//	// local variables for camera
-//	public float newScale;
-//	public PVector newCenter;
-//	public float zoomSpeed = 0.1f; // 0.1 is the default
-
-//	// local variables for camera tall screen space
-//	private float newSubScale = 1;
-
-//	// variables for black border
-//	public Rectangle cameraArea;
-//	public Rectangle newCameraArea;
-//	public float boarderZoomSpeed = 0.1f; // 0.1 is default
 
 	// box2d
 	public Box2DProcessing box2d;
@@ -69,17 +54,6 @@ public class Game {
 	float stepSize = 1f / 240f;
 
 	public Game(PApplet p, AppLogic app, Camera c, TextureCache texture, Converter convert) {
-		// legacy variables from level class TODO: write these out eventually
-//		PVector cameraTopLeft = new PVector(-400, -400);
-//		PVector cameraBottomRight = new PVector(500, 600);
-//		int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
-//		int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-//		PVector startCenter = new PVector(centerX, centerY);
-//		int startScale = (int) Math.abs(cameraBottomRight.x - cameraTopLeft.x);
-//		int bottomOfTopBar = (int) cameraTopLeft.y;
-//		int topOfBottomBar = (int) cameraBottomRight.y;
-
-		// actual game class starts here
 		this.p = p;
 		this.app = app;
 		this.camera = c;
@@ -98,22 +72,12 @@ public class Game {
 
 		paper = new MathsPaper(texture);
 
-		// camera
-//		Camera.setScale(startScale);
-//		newScale = startScale;
-//		Camera.setCenter(startCenter);
-//		newCenter = new PVector(Camera.getCenter().x, Camera.getCenter().y);
-
 		// calculate screen space
 		screenSpaceOffset = 0; // positive makes it larger, negative makes it smaller
 		PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
 		float screenSpaceWidth = convert.screenToLevel(p.width + screenSpaceOffset * 2);
 		float screenSpaceHeight = convert.screenToLevel(p.height + screenSpaceOffset * 2);
 		screenSpace = new Rectangle(topCorner.x, topCorner.y, screenSpaceWidth, screenSpaceHeight);
-//
-//		float camX = Camera.getCenter().x - newScale / 2;
-//		cameraArea = new Rectangle(camX, bottomOfTopBar, newScale, topOfBottomBar - bottomOfTopBar);
-//		newCameraArea = cameraArea.copy();
 
 		// box2d
 		buildWorld();
@@ -238,9 +202,8 @@ public class Game {
 			// pause
 			p.delay(180); //TODO: should never use delay()
 
-			// update the checkpoints
+			// update the checkpoint
 			this.playerCheckpoint = found;
-//			this.cameraAreaCheckpoint = cameraArea.copy();
 
 			// make the matching tile to fill the slot
 			int tileX = (int) (Math.round((player.getCenter().x - player.getWidth() / 2) / 10) * 10);
@@ -326,66 +289,10 @@ public class Game {
 		} else if (playerStart != null) { // if there is a player start
 			createPlayer(playerStart);
 		}
-//		if (cameraAreaCheckpoint != null) { // if there is a camera checkpoint
-//			// calculate values
-//			PVector cameraTopLeft = cameraAreaCheckpoint.getTopLeft();
-//			PVector cameraBottomRight = cameraAreaCheckpoint.getBottomRight();
-//			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
-//			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-//			// apply values
-//			newScale = cameraAreaCheckpoint.getWidth(); // new scale
-//			newCenter = new PVector(centerX, centerY); // new center
-//			newCameraArea = cameraAreaCheckpoint.copy(); // new camera area
-//		} else if (cameraAreaStart != null) { // if there is a camera start
-//			// calculate values
-//			PVector cameraTopLeft = cameraAreaStart.getTopLeft();
-//			PVector cameraBottomRight = cameraAreaStart.getBottomRight();
-//			int centerX = (int) ((cameraBottomRight.x - cameraTopLeft.x) / 2 + cameraTopLeft.x);
-//			int centerY = (int) ((cameraTopLeft.y - cameraBottomRight.y) / 2 + cameraBottomRight.y);
-//			// apply values
-//			newScale = cameraAreaStart.getWidth(); // new scale
-//			newCenter = new PVector(centerX, centerY); // new center
-//			newCameraArea = cameraAreaStart.copy(); // new camera area
-//		}
 	}
 
 	public void draw() {
 		pageView.draw();
-
-//		// draw black bars
-//		if (camera.getGame()) {
-//		
-//			// camera black border code
-//			p.pushMatrix(); // start working at game scale
-//			p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
-//		
-//			// camera position
-//			p.scale((float) p.width / (float) camera.getScale()); // width/screen fits the level scale to the screen
-//			p.scale(camera.getSubScale()); // apply offset for tall screen spaces
-//			p.translate(-camera.getCenter().x, -camera.getCenter().y); // moves the view around the level
-//		
-//			p.fill(20, 255); // 10, 255
-//			int barSize = 1000000;
-//			p.rectMode(CORNERS);
-//			p.noStroke();
-//
-//			// top bar
-//			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
-//					cameraArea.getTopLeft().y);
-//			// bottom bar
-//			p.rect(-barSize + camera.getCenter().x, cameraArea.getBottomRight().y, barSize + camera.getCenter().x,
-//					camera.getCenter().y + barSize);
-//			// left bar
-//			p.rect(-barSize + camera.getCenter().x, camera.getCenter().y - barSize, cameraArea.getTopLeft().x,
-//					camera.getCenter().y + barSize);
-//			// right bar
-//			p.rect(cameraArea.getBottomRight().x, camera.getCenter().y - barSize, barSize + camera.getCenter().x,
-//					camera.getCenter().y + barSize);
-//			p.rectMode(CORNER);
-//		
-//			p.popMatrix(); // start working at screen scale
-//		}
-
 	}
 
 	public void step(float deltaTime) {
@@ -406,9 +313,7 @@ public class Game {
 		}
 		box2d.world.clearForces();
 
-//		if (Camera.getGame()) {
-//			screenMovement(deltaTime);
-//		}
+		// update screen space
 		PVector topCorner = convert.screenToLevel(-screenSpaceOffset, -screenSpaceOffset);
 		float screenSpaceWidth = convert.screenToLevel(p.width + screenSpaceOffset * 2);
 		float screenSpaceHeight = convert.screenToLevel(p.height + screenSpaceOffset * 2);
@@ -416,52 +321,6 @@ public class Game {
 
 		pageView.step(deltaTime); // step the page view
 	}
-
-//	private void screenMovement(float deltaTime) {
-//		// tall screen space scaling (subScale)
-//		// uses the 'new...' versions of edge variables so that
-//		// scaling happens immediately instead of trailing the
-//		// other variables
-//
-//		if (Camera.getScale() != newScale || !cameraArea.sameDimensions(newCameraArea)) {
-//			// if there might be a difference in tall screen scale
-//			if ((newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y)
-//					/ (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) > (float) p.height
-//							/ (float) p.width) {
-//
-//				newSubScale = ((float) p.height
-//						/ ((float) p.width / (float) (newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x)))
-//						/ (newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y);
-//			} else {
-//				newSubScale = 1;
-//			}
-//		}
-//
-//		if (Camera.getSubScale() != newSubScale) {
-//			Camera.setSubScale(PApplet.lerp(Camera.getSubScale(), newSubScale, PApplet.exp(-(zoomSpeed / deltaTime)))); // -zoomSpeed
-//		}
-//		// main scale
-//		if (Camera.getScale() != newScale) {
-//			Camera.setScale(PApplet.lerp(Camera.getScale(), newScale, PApplet.exp(-(zoomSpeed / deltaTime))));
-//		}
-//		// translate
-//		if (Camera.getCenter() != newCenter) {
-//			Camera.setCenter(PVector.lerp(Camera.getCenter(), newCenter, PApplet.exp(-(zoomSpeed / deltaTime))));
-//		}
-//		// black border movement
-//		if (!cameraArea.sameDimensions(newCameraArea)) {
-//			float topLeftX = PApplet.lerp(cameraArea.getTopLeft().x, newCameraArea.getTopLeft().x,
-//					PApplet.exp(-(boarderZoomSpeed / deltaTime))); // -boarderZoomSpeed
-//			float topLeftY = PApplet.lerp(cameraArea.getTopLeft().y, newCameraArea.getTopLeft().y,
-//					PApplet.exp(-(boarderZoomSpeed / deltaTime)));
-//			float bottomRightX = PApplet.lerp(cameraArea.getBottomRight().x, newCameraArea.getBottomRight().x,
-//					PApplet.exp(-(boarderZoomSpeed / deltaTime)));
-//			float bottomRightY = PApplet.lerp(cameraArea.getBottomRight().y, newCameraArea.getBottomRight().y,
-//					PApplet.exp(-(boarderZoomSpeed / deltaTime)));
-//			cameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
-//		}
-//
-//	}
 
 	public Player getPlayer() {
 		return player;
