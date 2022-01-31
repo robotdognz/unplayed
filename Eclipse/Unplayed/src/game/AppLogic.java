@@ -41,7 +41,7 @@ public class AppLogic {
 	public Converter convert;
 	public TextureCache texture;
 
-	public Menu menu; // current menu
+	static public Menu menu; // current menu
 	public static boolean editorToggle; // is the editor enabled
 	public Game game; // holds the game class
 	public Controller controller; // holds the current controller
