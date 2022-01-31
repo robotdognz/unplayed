@@ -36,11 +36,11 @@ public class GameMenu extends Menu {
 	public void click() {
 		for (Button b : buttons) {
 			if (b.click().equals(resume)) {
-				al.menu = null; // remove pause menu
+				AppLogic.menu = null; // remove pause menu
 
 			} else if (b.click().equals(checkpoint)) {
 				al.game.restart();; // return to last checkpoint
-				al.menu = null; // remove pause menu
+				AppLogic.menu = null; // remove pause menu
 
 			} else if (b.click().equals(restart)) {
 				al.init(); // rebuild the game
