@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import camera.Camera;
 import camera.PageViewCamera;
+import editor.DebugOutput;
 import editor.Editor;
 import handlers.TextureCache;
 import misc.Converter;
@@ -138,6 +139,7 @@ public class PageView {
 
 			pageCamera.update(minX, minY, maxX, maxY);
 			menuAdded = false;
+			DebugOutput.pushMessage("Menu added", 1);
 
 		} else {
 			
