@@ -13,12 +13,12 @@ public class LaunchMenu extends Menu {
 	public LaunchMenu(PApplet p, Game game, AppLogic al) {
 		super(p, al);
 		this.game = game;
-		menuCenterX = p.width / 2;
-
-		buttonHeight = p.width / 7.2f; // 200
-		float buttonWidth = p.width / 2.88f; // 500
-		menuWidth = p.width / 2.182f; // 660
-		buttonDistance = p.width / 18; // 80
+//		menuCenterX = p.width / 2;
+//
+//		buttonHeight = p.width / 7.2f; // 200
+//		float buttonWidth = p.width / 2.88f; // 500
+//		menuWidth = p.width / 2.182f; // 660
+//		buttonDistance = p.width / 18; // 80
 		Button demoB = new Button(p.width / 2, buttonWidth, buttonHeight, newGame);
 		Button editorB = new Button(p.width / 2, buttonWidth, buttonHeight, editor);
 		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
@@ -26,7 +26,7 @@ public class LaunchMenu extends Menu {
 		buttons.add(editorB);
 		buttons.add(quitB);
 		constructMenu();
-		menuTopY = p.height / 2 - menuHeight / 2;
+//		menuTopY = p.height / 2 - menuHeight / 2;
 	}
 
 	@Override

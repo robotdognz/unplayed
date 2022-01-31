@@ -23,13 +23,13 @@ public abstract class Menu {
 	public Menu(PApplet p, AppLogic al) {
 		this.p = p;
 		this.al = al;
+		buttonWidth = p.width / 2.88f; // 500
 	}
 
 	protected void constructMenu() {
 		// get's called in the child class constructor
 		menuCenterX = p.width / 2;
 		buttonHeight = p.width / 7.2f; // 200
-		buttonWidth = p.width / 2.88f; // 500
 		menuWidth = p.width / 2.182f; // 660
 		buttonDistance = p.width / 18; // 80
 		
