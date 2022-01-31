@@ -24,7 +24,6 @@ public class PageView {
 
 	private PageViewCamera pageCamera;
 
-
 	public PageView(PApplet p, Game game, TextureCache texture, Converter convert) {
 		this.p = p;
 		this.convert = convert;
@@ -139,8 +138,10 @@ public class PageView {
 			pageCamera.update(minX, minY, maxX, maxY);
 			DebugOutput.pushMessage("Menu added", 1);
 
+		} else if (AppLogic.menuRemoved() == true) {
+			adjustCamera = true;
 		} else {
-			
+
 			for (Page page : pages) {
 				page.step();
 				if (page.playerVisibilityChanged()) {
@@ -149,7 +150,7 @@ public class PageView {
 			}
 
 		}
-		
+
 		if (adjustCamera) {
 			// update the camera zone
 			float minX = Float.POSITIVE_INFINITY;
