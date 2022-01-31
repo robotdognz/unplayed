@@ -200,6 +200,7 @@ public class AppLogic {
 	}
 
 	public void draw(float deltaTime) {
+		// This is the step method for the whole game, as well as the draw method
 
 		// touch screen
 		touches.clear();
@@ -213,15 +214,15 @@ public class AppLogic {
 		}
 
 		// step the game and editor
-		if (menu == null) {
-			// step editor or game controller depending on editor toggle
-			if (editorToggle && editor != null) {
-				editor.step(touches);
-			} else {
-				controller.step(touches);
-			}
-			game.step(deltaTime); // step game
+//		if (menu == null) {
+		// step editor or game controller depending on editor toggle
+		if (editorToggle && editor != null) {
+			editor.step(touches);
+		} else {
+			controller.step(touches);
 		}
+		game.step(deltaTime); // step game
+//		}
 
 		// draw the game
 		if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView)
