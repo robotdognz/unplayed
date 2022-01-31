@@ -35,7 +35,7 @@ public class WidgetPauseMenu extends Widget {
 //			previousStatus = app.gPaused;
 //			app.gPaused = true; // switch pause state
 			if (app.editor != null) {
-				AppLogic.menu = new EditorMenu(p, game, app, this);
+				AppLogic.menu = new EditorMenu(p, app, this);
 			} else {
 				AppLogic.menu = new GameMenu(p, game, app);
 			}

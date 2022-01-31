@@ -93,7 +93,7 @@ public class AppLogic {
 		getLevels();
 
 		runGame = false;
-		menu = new LaunchMenu(p, game, this);
+		menu = new LaunchMenu(p, this);
 		p.background(100);
 
 		// print android api version

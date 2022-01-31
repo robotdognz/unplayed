@@ -11,14 +11,14 @@ import static processing.core.PConstants.*;
 public abstract class Menu {
 	private PApplet p;
 	protected AppLogic al;
+	protected float buttonHeight = 0;
+	protected float buttonWidth = 0;
 	protected float menuTopY = 0;
 	protected float menuCenterX = 0;
 	protected float menuWidth = 0;
-	protected float buttonHeight = 0;
-	protected float buttonDistance = 0;
-	protected float buttonWidth = 0;
-	protected ArrayList<Button> buttons = new ArrayList<Button>();
 	protected float menuHeight = 0;
+	protected float buttonDistance = 0;
+	protected ArrayList<Button> buttons = new ArrayList<Button>();
 	
 	public Menu(PApplet p, AppLogic al) {
 		this.p = p;

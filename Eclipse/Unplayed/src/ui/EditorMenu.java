@@ -15,16 +15,11 @@ public class EditorMenu extends Menu {
 	String restart = "Main Menu";
 	String quit = "Quit and Purge";
 
-	public EditorMenu(PApplet p, Game game, AppLogic al, WidgetPauseMenu m) {
+	public EditorMenu(PApplet p, AppLogic al, WidgetPauseMenu m) {
 		super(p, al);
-		this.game = game;
+		this.game = al.game;
 		this.m = m;
 		
-//		menuCenterX = p.width / 2;
-//		buttonHeight = p.width / 7.2f; // 200
-//		float buttonWidth = p.width / 2.88f; // 500
-//		menuWidth = p.width / 2.182f; // 660
-//		buttonDistance = p.width / 18; // 80
 		Button resumeB = new Button(p.width / 2, buttonWidth, buttonHeight, resume);
 		Button editorB = new Button(p.width / 2, buttonWidth, buttonHeight, editor);
 		Button restartB = new Button(p.width / 2, buttonWidth, buttonHeight, restart);
@@ -34,7 +29,6 @@ public class EditorMenu extends Menu {
 		buttons.add(restartB);
 		buttons.add(quitB);
 		constructMenu();
-//		menuTopY = p.height / 2 - menuHeight / 2;
 	}
 
 	@Override
@@ -45,15 +39,6 @@ public class EditorMenu extends Menu {
 			} else if (b.click().equals(editor)) {
 				AppLogic.editorToggle = !AppLogic.editorToggle;
 				AppLogic.menu = null; // remove pause menu
-//				al.toggleEditor();
-				
-				
-				
-//				if (!app.editorToggle) {
-//					game.camera = new GameCamera();
-//				} else {
-//					game.camera = new FreeCamera();
-//				}
 			} else if (b.click().equals(restart)) {
 				al.init(); // rebuild the game
 			} else if (b.click().equals(quit)) {
