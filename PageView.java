@@ -10,6 +10,7 @@ import misc.Converter;
 import objects.Background;
 import objects.Page;
 import processing.core.*;
+import ui.Menu;
 
 public class PageView {
 	private PApplet p;
@@ -21,6 +22,8 @@ public class PageView {
 	private ArrayList<Background> backgrounds;
 
 	private PageViewCamera pageCamera;
+
+	public boolean menuAdded = false;
 
 	public PageView(PApplet p, Game game, TextureCache texture, Converter convert) {
 		this.p = p;
@@ -109,6 +112,10 @@ public class PageView {
 
 		}
 
+		if (AppLogic.menu != null) {
+			AppLogic.menu.drawPageView();
+		}
+
 		// draw auto generated camera
 		if (Editor.autoCameraSearch && !Camera.getGame()) {
 			pageCamera.draw();
@@ -120,13 +127,29 @@ public class PageView {
 
 	public void step(float deltaTime) {
 		boolean adjustCamera = false;
-		for (Page page : pages) {
-			page.step();
-			if (page.playerVisibilityChanged()) {
-				adjustCamera = true;
-			}
-		}
 
+		if (menuAdded == true) {
+			Menu menu = AppLogic.menu;
+
+			float minX = menu.getLeftmostPoint();
+			float minY = menu.getTopmostPoint();
+			float maxX = menu.getRightmostPoint();
+			float maxY = menu.getBottommostPoint();
+
+			pageCamera.update(minX, minY, maxX, maxY);
+			menuAdded = false;
+
+		} else {
+			
+			for (Page page : pages) {
+				page.step();
+				if (page.playerVisibilityChanged()) {
+					adjustCamera = true;
+				}
+			}
+
+		}
+		
 		if (adjustCamera) {
 			// update the camera zone
 			float minX = Float.POSITIVE_INFINITY;

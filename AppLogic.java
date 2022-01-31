@@ -43,7 +43,7 @@ public class AppLogic {
 
 	static public Menu menu; // current menu
 	public static boolean editorToggle; // is the editor enabled
-	public Game game; // holds the game class
+	static public Game game; // holds the game class
 	public Controller controller; // holds the current controller
 	public Editor editor; // holds the editor
 	public ArrayList<PVector> touches; // all the on screen touches
@@ -62,6 +62,13 @@ public class AppLogic {
 		this.activity = activity;
 		this.context = context;
 		editorToggle = false;
+	}
+
+	static public void setMenu(Menu newMenu) {
+		menu = newMenu;
+		if (game != null) {
+			game.getPageView().menuAdded = true;
+		}
 	}
 
 	public void init() {

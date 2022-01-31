@@ -3,6 +3,7 @@ package ui;
 import java.util.ArrayList;
 
 import game.AppLogic;
+import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -19,7 +20,10 @@ public abstract class Menu {
 	protected float menuHeight = 0;
 	protected float buttonDistance = 0;
 	protected ArrayList<Button> buttons = new ArrayList<Button>();
-	
+
+	// page view menu
+	protected Rectangle pageMenu;
+
 	public Menu(PApplet p, AppLogic al) {
 		this.p = p;
 		this.al = al;
@@ -29,11 +33,45 @@ public abstract class Menu {
 
 	protected void constructMenu() {
 		// get's called in the child class constructor
+
+		// create basic menu
 		menuCenterX = p.width / 2;
 		menuWidth = p.width / 2.182f; // 660
 		buttonDistance = p.width / 18; // 80
 		menuHeight = buttonDistance + (buttonHeight + buttonDistance) * buttons.size();
 		menuTopY = p.height / 2 - menuHeight / 2;
+
+		// create page view menu
+		pageMenu = new Rectangle(0, 0, 600, 800); // TODO: calculate actual dimensions
+	}
+	
+	// get the bounding box edges for the page
+	public float getLeftmostPoint() {
+//		return Math.min(Math.min(topLeft.x, topRight.x), Math.min(bottomLeft.x, bottomRight.x));
+		return pageMenu.getTopLeft().x;
+	}
+
+	public float getRightmostPoint() {
+//		return Math.max(Math.max(topLeft.x, topRight.x), Math.max(bottomLeft.x, bottomRight.x));
+		return pageMenu.getBottomRight().x;
+	}
+
+	public float getTopmostPoint() {
+//		return Math.min(Math.min(topLeft.y, topRight.y), Math.min(bottomLeft.y, bottomRight.y));
+		return pageMenu.getTopLeft().y;
+	}
+
+	public float getBottommostPoint() {
+//		return Math.max(Math.max(topLeft.y, topRight.y), Math.max(bottomLeft.y, bottomRight.y));
+		return pageMenu.getBottomRight().y;
+	}
+	
+	public void drawPageView() {
+		p.noStroke();
+		p.fill(150);
+		p.rectMode(CENTER);
+		p.rect(pageMenu.getX(), pageMenu.getY(), pageMenu.getWidth(), pageMenu.getHeight());
+		//TODO: add final logic to this method
 	}
 
 	public void draw() {

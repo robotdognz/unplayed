@@ -33,7 +33,7 @@ public class GameMenu extends Menu {
 				AppLogic.menu = null; // remove pause menu
 
 			} else if (b.click().equals(checkpoint)) {
-				al.game.restart();; // return to last checkpoint
+				AppLogic.game.restart();; // return to last checkpoint
 				AppLogic.menu = null; // remove pause menu
 
 			} else if (b.click().equals(restart)) {

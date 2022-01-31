@@ -12,7 +12,7 @@ public class LaunchMenu extends Menu {
 
 	public LaunchMenu(PApplet p, AppLogic al) {
 		super(p, al);
-		this.game = al.game;
+		this.game = AppLogic.game;
 		
 		Button demoB = new Button(p.width / 2, buttonWidth, buttonHeight, newGame);
 		Button editorB = new Button(p.width / 2, buttonWidth, buttonHeight, editor);

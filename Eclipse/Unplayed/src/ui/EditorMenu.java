@@ -17,7 +17,7 @@ public class EditorMenu extends Menu {
 
 	public EditorMenu(PApplet p, AppLogic al, WidgetPauseMenu m) {
 		super(p, al);
-		this.game = al.game;
+		this.game = AppLogic.game;
 		this.m = m;
 		
 		Button resumeB = new Button(p.width / 2, buttonWidth, buttonHeight, resume);
