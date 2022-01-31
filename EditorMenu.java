@@ -19,12 +19,12 @@ public class EditorMenu extends Menu {
 		super(p, al);
 		this.game = game;
 		this.m = m;
-		menuCenterX = p.width / 2;
-
-		buttonHeight = p.width / 7.2f; // 200
-		float buttonWidth = p.width / 2.88f; // 500
-		menuWidth = p.width / 2.182f; // 660
-		buttonDistance = p.width / 18; // 80
+		
+//		menuCenterX = p.width / 2;
+//		buttonHeight = p.width / 7.2f; // 200
+//		float buttonWidth = p.width / 2.88f; // 500
+//		menuWidth = p.width / 2.182f; // 660
+//		buttonDistance = p.width / 18; // 80
 		Button resumeB = new Button(p.width / 2, buttonWidth, buttonHeight, resume);
 		Button editorB = new Button(p.width / 2, buttonWidth, buttonHeight, editor);
 		Button restartB = new Button(p.width / 2, buttonWidth, buttonHeight, restart);
@@ -33,18 +33,18 @@ public class EditorMenu extends Menu {
 		buttons.add(editorB);
 		buttons.add(restartB);
 		buttons.add(quitB);
-		height();
-		menuTopY = p.height / 2 - menuHeight / 2;
+		constructMenu();
+//		menuTopY = p.height / 2 - menuHeight / 2;
 	}
 
 	@Override
 	public void click() {
 		for (Button b : buttons) {
 			if (b.click().equals(resume)) { // resume the game if resume button pressed
-				al.menu = null; // remove pause menu
+				AppLogic.menu = null; // remove pause menu
 			} else if (b.click().equals(editor)) {
 				AppLogic.editorToggle = !AppLogic.editorToggle;
-				al.menu = null; // remove pause menu
+				AppLogic.menu = null; // remove pause menu
 //				al.toggleEditor();
 				
 				

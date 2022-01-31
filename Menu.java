@@ -16,6 +16,7 @@ public abstract class Menu {
 	protected float menuWidth = 0;
 	protected float buttonHeight = 0;
 	protected float buttonDistance = 0;
+	protected float buttonWidth = 0;
 	protected ArrayList<Button> buttons = new ArrayList<Button>();
 	protected float menuHeight = 0;
 	
@@ -24,8 +25,17 @@ public abstract class Menu {
 		this.al = al;
 	}
 
-	protected void height() {
+	protected void constructMenu() {
+		// get's called in the child class constructor
+		menuCenterX = p.width / 2;
+		buttonHeight = p.width / 7.2f; // 200
+		buttonWidth = p.width / 2.88f; // 500
+		menuWidth = p.width / 2.182f; // 660
+		buttonDistance = p.width / 18; // 80
+		
 		menuHeight = buttonDistance + (buttonHeight + buttonDistance) * buttons.size();
+		
+		menuTopY = p.height / 2 - menuHeight / 2;
 	}
 
 	public void draw() {

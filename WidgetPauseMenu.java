@@ -35,9 +35,9 @@ public class WidgetPauseMenu extends Widget {
 //			previousStatus = app.gPaused;
 //			app.gPaused = true; // switch pause state
 			if (app.editor != null) {
-				app.menu = new EditorMenu(p, game, app, this);
+				AppLogic.menu = new EditorMenu(p, game, app, this);
 			} else {
-				app.menu = new GameMenu(p, game, app);
+				AppLogic.menu = new GameMenu(p, game, app);
 			}
 		}
 	}
@@ -45,7 +45,7 @@ public class WidgetPauseMenu extends Widget {
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (app.menu != null) {
+		if (AppLogic.menu != null) {
 			active = true;
 		} else {
 			active = false;

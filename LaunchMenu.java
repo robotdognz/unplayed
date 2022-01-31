@@ -25,7 +25,7 @@ public class LaunchMenu extends Menu {
 		buttons.add(demoB);
 		buttons.add(editorB);
 		buttons.add(quitB);
-		height();
+		constructMenu();
 		menuTopY = p.height / 2 - menuHeight / 2;
 	}
 

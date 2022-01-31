@@ -47,7 +47,7 @@ public class Page extends Editable {
 
 	private float actualSize = 1;
 
-	public Page(PApplet p, Game game, View view, PVector position) { // PVector topLeft, PVector bottomRight,
+	public Page(PApplet p, Game game, View view, PVector position) { 
 		super(view.getTopLeft().x, view.getTopLeft().y, view.getWidth(), view.getHeight());
 		this.p = p;
 		this.game = game;
