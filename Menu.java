@@ -42,7 +42,7 @@ public abstract class Menu {
 		menuTopY = p.height / 2 - menuHeight / 2;
 
 		// create page view menu
-		pageMenu = new Rectangle(0, 0, 600, 800); // TODO: calculate actual dimensions
+		pageMenu = new Rectangle(-300, -400, 600, 800); // TODO: calculate actual dimensions
 	}
 	
 	// get the bounding box edges for the page
@@ -69,7 +69,7 @@ public abstract class Menu {
 	public void drawPageView() {
 		p.noStroke();
 		p.fill(150);
-		p.rectMode(CENTER);
+		p.rectMode(CORNER);
 		p.rect(pageMenu.getX(), pageMenu.getY(), pageMenu.getWidth(), pageMenu.getHeight());
 		//TODO: add final logic to this method
 	}
