@@ -23,6 +23,13 @@ public abstract class Menu {
 
 	// page view menu
 	protected Rectangle pageMenu;
+	PVector position;
+	float angle = 0;
+	// Page corners relative to center, used to check if the page is on screen
+	PVector topLeft;
+	PVector topRight;
+	PVector bottomLeft;
+	PVector bottomRight;
 
 	public Menu(PApplet p, AppLogic al) {
 		this.p = p;
@@ -42,36 +49,75 @@ public abstract class Menu {
 		menuTopY = p.height / 2 - menuHeight / 2;
 
 		// create page view menu
-		pageMenu = new Rectangle(-300, -400, 600, 800); // TODO: calculate actual dimensions
+		float pageWidth = 600;
+		float pageHeight = 800;
+		position = new PVector(0, 0);
+		pageMenu = new Rectangle(position.x - pageWidth / 2, position.y - pageHeight / 2, pageWidth, pageHeight);
+		updateCorners();
+
 	}
-	
+
+	// --------------update the corner PVectors---------------
+	private void updateCorners() {
+		if (topLeft == null) {
+			// Initialize
+			topLeft = new PVector();
+			topRight = new PVector();
+			bottomLeft = new PVector();
+			bottomRight = new PVector();
+		}
+		// set values
+		topLeft.x = 0 - (pageMenu.getWidth() / 2);
+		topLeft.y = 0 - (pageMenu.getHeight() / 2);
+		topRight.x = 0 + (pageMenu.getWidth() / 2);
+		topRight.y = 0 - (pageMenu.getHeight() / 2);
+		bottomLeft.x = 0 - (pageMenu.getWidth() / 2);
+		bottomLeft.y = 0 + (pageMenu.getHeight() / 2);
+		bottomRight.x = 0 + (pageMenu.getWidth() / 2);
+		bottomRight.y = 0 + (pageMenu.getHeight() / 2);
+		// rotate
+		topLeft.rotate(PApplet.radians(angle));
+		topRight.rotate(PApplet.radians(angle));
+		bottomLeft.rotate(PApplet.radians(angle));
+		bottomRight.rotate(PApplet.radians(angle));
+		// translate
+		topLeft.x += position.x;
+		topLeft.y += position.y;
+		topRight.x += position.x;
+		topRight.y += position.y;
+		bottomLeft.x += position.x;
+		bottomLeft.y += position.y;
+		bottomRight.x += position.x;
+		bottomRight.y += position.y;
+	}
+
 	// get the bounding box edges for the page
 	public float getLeftmostPoint() {
-//		return Math.min(Math.min(topLeft.x, topRight.x), Math.min(bottomLeft.x, bottomRight.x));
-		return pageMenu.getTopLeft().x;
+		return Math.min(Math.min(topLeft.x, topRight.x), Math.min(bottomLeft.x, bottomRight.x));
+//		return pageMenu.getTopLeft().x;
 	}
 
 	public float getRightmostPoint() {
-//		return Math.max(Math.max(topLeft.x, topRight.x), Math.max(bottomLeft.x, bottomRight.x));
-		return pageMenu.getBottomRight().x;
+		return Math.max(Math.max(topLeft.x, topRight.x), Math.max(bottomLeft.x, bottomRight.x));
+//		return pageMenu.getBottomRight().x;
 	}
 
 	public float getTopmostPoint() {
-//		return Math.min(Math.min(topLeft.y, topRight.y), Math.min(bottomLeft.y, bottomRight.y));
-		return pageMenu.getTopLeft().y;
+		return Math.min(Math.min(topLeft.y, topRight.y), Math.min(bottomLeft.y, bottomRight.y));
+//		return pageMenu.getTopLeft().y;
 	}
 
 	public float getBottommostPoint() {
-//		return Math.max(Math.max(topLeft.y, topRight.y), Math.max(bottomLeft.y, bottomRight.y));
-		return pageMenu.getBottomRight().y;
+		return Math.max(Math.max(topLeft.y, topRight.y), Math.max(bottomLeft.y, bottomRight.y));
+//		return pageMenu.getBottomRight().y;
 	}
-	
+
 	public void drawPageView() {
 		p.noStroke();
 		p.fill(150);
 		p.rectMode(CORNER);
 		p.rect(pageMenu.getX(), pageMenu.getY(), pageMenu.getWidth(), pageMenu.getHeight());
-		//TODO: add final logic to this method
+		// TODO: add final logic to this method
 	}
 
 	public void draw() {
