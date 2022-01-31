@@ -24,6 +24,9 @@ public class PageView {
 
 	private PageViewCamera pageCamera;
 
+	private Menu storedMenu;
+	private boolean removeMenu = false;
+
 	public PageView(PApplet p, Game game, TextureCache texture, Converter convert) {
 		this.p = p;
 		this.convert = convert;
@@ -115,6 +118,16 @@ public class PageView {
 			AppLogic.getMenu().drawPageView();
 		}
 
+		// draw current menu, destroy it if it's off screen
+		if (storedMenu != null) {
+			storedMenu.drawPageView();
+			if (removeMenu == true && (storedMenu.leftOf(topLeft.x) || storedMenu.rightOf(bottomRight.x)
+					|| storedMenu.above(topLeft.y) || storedMenu.below(bottomRight.y))) {
+				removeMenu = false;
+				storedMenu = null;
+			}
+		}
+
 		// draw auto generated camera
 		if (Editor.autoCameraSearch && !Camera.getGame()) {
 			pageCamera.draw();
@@ -128,18 +141,22 @@ public class PageView {
 		boolean adjustCamera = false;
 
 		if (AppLogic.menuAdded() == true) {
-			Menu menu = AppLogic.getMenu();
+			storedMenu = AppLogic.getMenu();
+			removeMenu = false;
 
-			float minX = menu.getLeftmostPoint();
-			float minY = menu.getTopmostPoint();
-			float maxX = menu.getRightmostPoint();
-			float maxY = menu.getBottommostPoint();
+			float minX = storedMenu.getLeftmostPoint();
+			float minY = storedMenu.getTopmostPoint();
+			float maxX = storedMenu.getRightmostPoint();
+			float maxY = storedMenu.getBottommostPoint();
 
 			pageCamera.update(minX, minY, maxX, maxY);
+
 			DebugOutput.pushMessage("Menu added", 1);
 
 		} else if (AppLogic.menuRemoved() == true) {
+			removeMenu = true;
 			adjustCamera = true;
+
 		} else {
 
 			for (Page page : pages) {

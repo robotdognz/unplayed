@@ -51,10 +51,39 @@ public abstract class Menu {
 		// create page view menu
 		float pageWidth = 600;
 		float pageHeight = 800;
-		position = new PVector(0, 0);
+		position = new PVector(-1000, 0);
 		pageMenu = new Rectangle(position.x - pageWidth / 2, position.y - pageHeight / 2, pageWidth, pageHeight);
 		updateCorners();
 
+	}
+
+	public void drawPageView() {
+		p.noStroke();
+		p.fill(150);
+		p.rectMode(CORNER);
+		p.rect(pageMenu.getX(), pageMenu.getY(), pageMenu.getWidth(), pageMenu.getHeight());
+		// TODO: add final logic to this method
+	}
+
+	public void draw() {
+		p.noStroke();
+		p.fill(150);
+		p.rectMode(CORNER);
+		p.rect(menuCenterX - menuWidth / 2, menuTopY, menuWidth, menuHeight);
+		// draw the buttons
+		for (int i = 0; i < buttons.size(); i++) {
+			float y = menuTopY + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
+			buttons.get(i).draw(p, y);
+		}
+	}
+
+	public void hover(PVector lastTouch) {
+		for (Button b : buttons) {
+			b.hover(lastTouch);
+		}
+	}
+
+	public void click() {
 	}
 
 	// --------------update the corner PVectors---------------
@@ -94,50 +123,83 @@ public abstract class Menu {
 	// get the bounding box edges for the page
 	public float getLeftmostPoint() {
 		return Math.min(Math.min(topLeft.x, topRight.x), Math.min(bottomLeft.x, bottomRight.x));
-//		return pageMenu.getTopLeft().x;
 	}
 
 	public float getRightmostPoint() {
 		return Math.max(Math.max(topLeft.x, topRight.x), Math.max(bottomLeft.x, bottomRight.x));
-//		return pageMenu.getBottomRight().x;
 	}
 
 	public float getTopmostPoint() {
 		return Math.min(Math.min(topLeft.y, topRight.y), Math.min(bottomLeft.y, bottomRight.y));
-//		return pageMenu.getTopLeft().y;
 	}
 
 	public float getBottommostPoint() {
 		return Math.max(Math.max(topLeft.y, topRight.y), Math.max(bottomLeft.y, bottomRight.y));
-//		return pageMenu.getBottomRight().y;
 	}
 
-	public void drawPageView() {
-		p.noStroke();
-		p.fill(150);
-		p.rectMode(CORNER);
-		p.rect(pageMenu.getX(), pageMenu.getY(), pageMenu.getWidth(), pageMenu.getHeight());
-		// TODO: add final logic to this method
-	}
+	// ----------is this page off camera------------
 
-	public void draw() {
-		p.noStroke();
-		p.fill(150);
-		p.rectMode(CORNER);
-		p.rect(menuCenterX - menuWidth / 2, menuTopY, menuWidth, menuHeight);
-		// draw the buttons
-		for (int i = 0; i < buttons.size(); i++) {
-			float y = menuTopY + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-			buttons.get(i).draw(p, y);
+	public boolean leftOf(float x) {
+		if (topLeft.x > x) {
+			return false;
 		}
-	}
-
-	public void hover(PVector lastTouch) {
-		for (Button b : buttons) {
-			b.hover(lastTouch);
+		if (topRight.x > x) {
+			return false;
 		}
+		if (bottomLeft.x > x) {
+			return false;
+		}
+		if (bottomRight.x > x) {
+			return false;
+		}
+		return true;
 	}
 
-	public void click() {
+	public boolean rightOf(float x) {
+		if (topLeft.x < x) {
+			return false;
+		}
+		if (topRight.x < x) {
+			return false;
+		}
+		if (bottomLeft.x < x) {
+			return false;
+		}
+		if (bottomRight.x < x) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean above(float y) {
+		if (topLeft.y > y) {
+			return false;
+		}
+		if (topRight.y > y) {
+			return false;
+		}
+		if (bottomLeft.y > y) {
+			return false;
+		}
+		if (bottomRight.y > y) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean below(float y) {
+		if (topLeft.y < y) {
+			return false;
+		}
+		if (topRight.y < y) {
+			return false;
+		}
+		if (bottomLeft.y < y) {
+			return false;
+		}
+		if (bottomRight.y < y) {
+			return false;
+		}
+		return true;
 	}
 }
