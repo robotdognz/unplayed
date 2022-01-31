@@ -35,10 +35,10 @@ public class EditorMenu extends Menu {
 	public void click() {
 		for (Button b : buttons) {
 			if (b.click().equals(resume)) { // resume the game if resume button pressed
-				AppLogic.menu = null; // remove pause menu
+				AppLogic.removeMenu(); // remove pause menu
 			} else if (b.click().equals(editor)) {
 				AppLogic.editorToggle = !AppLogic.editorToggle;
-				AppLogic.menu = null; // remove pause menu
+				AppLogic.removeMenu(); // remove pause menu
 			} else if (b.click().equals(restart)) {
 				al.init(); // rebuild the game
 			} else if (b.click().equals(quit)) {

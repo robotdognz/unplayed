@@ -24,7 +24,6 @@ public class PageView {
 
 	private PageViewCamera pageCamera;
 
-	public boolean menuAdded = false;
 
 	public PageView(PApplet p, Game game, TextureCache texture, Converter convert) {
 		this.p = p;
@@ -113,8 +112,8 @@ public class PageView {
 
 		}
 
-		if (AppLogic.menu != null) {
-			AppLogic.menu.drawPageView();
+		if (AppLogic.hasMenu()) {
+			AppLogic.getMenu().drawPageView();
 		}
 
 		// draw auto generated camera
@@ -129,8 +128,8 @@ public class PageView {
 	public void step(float deltaTime) {
 		boolean adjustCamera = false;
 
-		if (menuAdded == true) {
-			Menu menu = AppLogic.menu;
+		if (AppLogic.menuAdded() == true) {
+			Menu menu = AppLogic.getMenu();
 
 			float minX = menu.getLeftmostPoint();
 			float minY = menu.getTopmostPoint();
@@ -138,7 +137,6 @@ public class PageView {
 			float maxY = menu.getBottommostPoint();
 
 			pageCamera.update(minX, minY, maxX, maxY);
-			menuAdded = false;
 			DebugOutput.pushMessage("Menu added", 1);
 
 		} else {

@@ -41,7 +41,10 @@ public class AppLogic {
 	public Converter convert;
 	public TextureCache texture;
 
-	static public Menu menu; // current menu
+	static private Menu menu; // current menu
+	static private boolean menuAdded = false;
+	static private boolean menuRemoved = false;
+
 	public static boolean editorToggle; // is the editor enabled
 	static public Game game; // holds the game class
 	public Controller controller; // holds the current controller
@@ -62,13 +65,6 @@ public class AppLogic {
 		this.activity = activity;
 		this.context = context;
 		editorToggle = false;
-	}
-
-	static public void setMenu(Menu newMenu) {
-		menu = newMenu;
-		if (game != null) {
-			game.getPageView().menuAdded = true;
-		}
 	}
 
 	public void init() {
@@ -344,6 +340,44 @@ public class AppLogic {
 				controller.onRotate(x, y, angle);
 			}
 		}
+	}
+	
+	
+	// menu
+	
+	static public boolean hasMenu() {
+		if (menu != null) {
+			return true;
+		}
+		return false;
+	}
+
+	static public void setMenu(Menu newMenu) {
+		menu = newMenu;
+		menuAdded = true;
+		menuRemoved = false;
+	}
+	
+	static public void removeMenu() {
+		menu = null;
+		menuAdded = false;
+		menuRemoved = true;
+	}
+	
+	static public Menu getMenu() {
+		return menu;
+	}
+	
+	static public boolean menuAdded() {
+		boolean temp = menuAdded;
+		menuAdded = false;
+		return temp;
+	}
+	
+	static public boolean menuRemoved() {
+		boolean temp = menuRemoved;
+		menuRemoved = false;
+		return temp;
 	}
 
 	// quit
