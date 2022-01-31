@@ -24,17 +24,15 @@ public abstract class Menu {
 		this.p = p;
 		this.al = al;
 		buttonWidth = p.width / 2.88f; // 500
+		buttonHeight = p.width / 7.2f; // 200
 	}
 
 	protected void constructMenu() {
 		// get's called in the child class constructor
 		menuCenterX = p.width / 2;
-		buttonHeight = p.width / 7.2f; // 200
 		menuWidth = p.width / 2.182f; // 660
 		buttonDistance = p.width / 18; // 80
-		
 		menuHeight = buttonDistance + (buttonHeight + buttonDistance) * buttons.size();
-		
 		menuTopY = p.height / 2 - menuHeight / 2;
 	}
 
