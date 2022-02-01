@@ -10,6 +10,7 @@ import handlers.TextureCache;
 import misc.Converter;
 import objects.Background;
 import objects.Page;
+import objects.Rectangle;
 import processing.core.*;
 import ui.Menu;
 
@@ -114,9 +115,9 @@ public class PageView {
 
 		}
 
-		if (AppLogic.hasMenu()) {
-			AppLogic.getMenu().drawPageView();
-		}
+//		if (AppLogic.hasMenu()) {
+//			AppLogic.getMenu().drawPageView();
+//		}
 
 		// draw current menu, destroy it if it's off screen
 		if (storedMenu != null) {
@@ -142,16 +143,32 @@ public class PageView {
 
 		if (AppLogic.menuAdded() == true) {
 			storedMenu = AppLogic.getMenu();
+
+			// build the page menu
+			float minX = Float.POSITIVE_INFINITY;
+			float minY = Float.POSITIVE_INFINITY;
+			float maxX = Float.NEGATIVE_INFINITY;
+			float maxY = Float.NEGATIVE_INFINITY;
+			for (Page page : pages) {
+
+				minX = Math.min(minX, page.getLeftmostPoint());
+				minY = Math.min(minY, page.getTopmostPoint());
+				maxX = Math.max(maxX, page.getRightmostPoint());
+				maxY = Math.max(maxY, page.getBottommostPoint());
+
+			}
+			Rectangle pageArea = new Rectangle(minX, minY, maxX - minX, maxY - minY);
+			storedMenu.buldPageMenu(pageCamera.getCenter(), pageArea, pageCamera);
+			
 			removeMenu = false;
 
-			float minX = storedMenu.getLeftmostPoint();
-			float minY = storedMenu.getTopmostPoint();
-			float maxX = storedMenu.getRightmostPoint();
-			float maxY = storedMenu.getBottommostPoint();
+			float menuMinX = storedMenu.getLeftmostPoint();
+			float menuMinY = storedMenu.getTopmostPoint();
+			float menuMaxX = storedMenu.getRightmostPoint();
+			float menuMaxY = storedMenu.getBottommostPoint();
+			pageCamera.update(menuMinX, menuMinY, menuMaxX, menuMaxY);
 
-			pageCamera.update(minX, minY, maxX, maxY);
-
-			DebugOutput.pushMessage("Menu added", 1);
+			DebugOutput.pushMessage("Page menu built", 1);
 
 		} else if (AppLogic.menuRemoved() == true) {
 			removeMenu = true;

@@ -2,6 +2,7 @@ package ui;
 
 import java.util.ArrayList;
 
+import camera.PageViewCamera;
 import game.AppLogic;
 import objects.Rectangle;
 import processing.core.PApplet;
@@ -40,21 +41,43 @@ public abstract class Menu {
 
 	protected void constructMenu() {
 		// get's called in the child class constructor
-
 		// create basic menu
 		menuCenterX = p.width / 2;
 		menuWidth = p.width / 2.182f; // 660
 		buttonDistance = p.width / 18; // 80
 		menuHeight = buttonDistance + (buttonHeight + buttonDistance) * buttons.size();
 		menuTopY = p.height / 2 - menuHeight / 2;
+	}
 
-		// create page view menu
+	public void buldPageMenu(PVector cameraCenter, Rectangle pageArea, PageViewCamera camera) {
 		float pageWidth = 600;
 		float pageHeight = 800;
-		position = new PVector(-1000, 0);
+
+		// figure out edge of page area that cameraCenter is closest to
+		float leftDiff = Math.abs(cameraCenter.x - pageArea.getTopLeft().x) + camera.getSideAreaPadding();
+		float rightDiff = Math.abs(pageArea.getBottomRight().x - cameraCenter.x) + camera.getSideAreaPadding();
+		float topDiff = Math.abs(cameraCenter.y - pageArea.getTopLeft().y) + camera.getSideAreaPadding();
+		float bottomDiff = Math.abs(pageArea.getBottomRight().y - cameraCenter.y) + camera.getBottomAreaPadding();
+
+		position = new PVector(0, 0);
+
+		if (leftDiff < rightDiff || leftDiff < topDiff || leftDiff < bottomDiff) {
+			// left
+			position = new PVector(-leftDiff, cameraCenter.y);
+		} else if (rightDiff < leftDiff || rightDiff < topDiff || rightDiff < bottomDiff) {
+			// right
+			position = new PVector(rightDiff, cameraCenter.y);
+		} else if (topDiff < leftDiff || topDiff < rightDiff || topDiff < bottomDiff) {
+			// top
+			position = new PVector(cameraCenter.x, -topDiff);
+		} else {
+			// bottom
+			position = new PVector(cameraCenter.x, bottomDiff);
+		}
+
+		// create page view menu
 		pageMenu = new Rectangle(position.x - pageWidth / 2, position.y - pageHeight / 2, pageWidth, pageHeight);
 		updateCorners();
-
 	}
 
 	public void drawPageView() {
