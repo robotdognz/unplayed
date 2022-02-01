@@ -11,7 +11,7 @@ import static processing.core.PConstants.*;
 
 public abstract class Menu {
 	public Menu child;
-	
+
 	private PApplet p;
 	protected float buttonHeight = 0;
 	protected float buttonWidth = 0;
@@ -79,11 +79,11 @@ public abstract class Menu {
 		}
 		updateCorners();
 	}
-	
+
 	public void buldPageMenu() {
 		float pageWidth = menuWidth; // 600;
 		float pageHeight = menuHeight; // 800;
-		
+
 		position = new PVector(0, 0);
 
 		// create page view menu and buttons
@@ -107,6 +107,10 @@ public abstract class Menu {
 		for (int i = 0; i < buttons.size(); i++) {
 			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2; // pageMenu.getY()
 			buttons.get(i).drawOnPage(p, position.x, y);
+		}
+
+		if (child != null) {
+			child.drawPageView();
 		}
 	}
 
@@ -143,9 +147,9 @@ public abstract class Menu {
 	public void click() {
 		// this gets overwritten by child classes
 	}
-	
+
 	public void activate() {
-		
+
 	}
 
 	// --------------update the corner PVectors---------------
