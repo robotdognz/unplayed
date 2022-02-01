@@ -214,13 +214,16 @@ public class AppLogic {
 		// step editor or game controller depending on editor toggle
 		if (editorToggle && editor != null) {
 			editor.step(touches);
+			if (menu == null) {
+				game.step(deltaTime); // step game and physics
+			}
 		} else {
 			if (menu == null) {
 				controller.step(touches);
 				game.step(deltaTime); // step game and physics
 			}
 		}
-		game.pageViewStep(deltaTime); // step camera etc
+		game.cameraStep(deltaTime); // step camera etc
 
 //		}
 

@@ -367,7 +367,7 @@ public class Game {
 
 	}
 
-	public void pageViewStep(float deltaTime) {
+	public void cameraStep(float deltaTime) {
 		// step the page view
 		pageView.step(deltaTime);
 	}
