@@ -6,8 +6,8 @@ public class LoadingMenu extends Menu {
 
 	public LoadingMenu(PApplet p) {
 		super(p);
-//		Button test = new Button(p.width / 2, buttonWidth, buttonHeight, "test");
-//		buttons.add(test);
+		Button test = new Button(p.width / 2, buttonWidth, buttonHeight, "test");
+		buttons.add(test);
 		
 		constructMenu();
 	}
