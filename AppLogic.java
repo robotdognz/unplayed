@@ -56,7 +56,6 @@ public class AppLogic {
 	public static float widgetSpacing; // size of gap between widgets
 	public static float widgetHeight;
 
-	private static boolean runGame;
 	private static ArrayList<File> levels;
 	private static int currentLevel;
 
@@ -95,7 +94,6 @@ public class AppLogic {
 
 		getLevels();
 
-		runGame = true; // false; //FIXME
 		menu = new LaunchMenu(p);
 		game.getPageView().initCamera();
 
@@ -155,7 +153,6 @@ public class AppLogic {
 			json.load(game, levels.get(currentLevel).toString());
 			new GameCamera();
 			game.startGame();
-			runGame = true;
 //			menu = null;
 			removeMenu();
 //			game.getPageView().initCamera();
@@ -173,7 +170,6 @@ public class AppLogic {
 			game.startGame();
 			// TODO: this is where level transition menu would be created
 		} else {
-			runGame = true; // false; FIXME
 			init();
 			// TODO: this is where it would start the transition back to the title screen
 		}
@@ -233,7 +229,7 @@ public class AppLogic {
 
 		// draw the game
 		if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView)
-				|| (editor == null && runGame)) { // || editor == null
+				|| (editor == null)) {
 			game.draw(); // draw the game
 		}
 
