@@ -78,7 +78,7 @@ public class AppLogic {
 		files = new FileChooser(activity);
 		vibe = new Vibe(context);
 
-		Camera camera = new FreeCamera(); // new GameCamera();
+		Camera camera = new GameCamera(); // new FreeCamera();
 		convert = new Converter(p);
 		game = new Game(p, this, camera, texture, convert);
 		texture.passGame(game);
@@ -141,14 +141,12 @@ public class AppLogic {
 		Collections.sort(levels);
 	}
 
-//	@SuppressWarnings("unused")
 	public void startGame() {
 		currentLevel = 0;
 		EditorJSON json = new EditorJSON(p, texture, null);
 
 		if (levels != null && levels.size() > currentLevel) {
 			json.load(game, levels.get(currentLevel).toString());
-//			Camera camera = 
 			new GameCamera();
 			game.startGame();
 			runGame = true;
@@ -166,6 +164,7 @@ public class AppLogic {
 		if (levels.size() > currentLevel) {
 			json.load(game, levels.get(currentLevel).toString());
 			game.startGame();
+			// TODO: this is where level transition menu would be created
 		} else {
 			runGame = false;
 			init();
@@ -210,9 +209,8 @@ public class AppLogic {
 		}
 
 		// step the game and editor
-//		if (menu == null) {
-		// step editor or game controller depending on editor toggle
 		if (editorToggle && editor != null) {
+			// step editor or game controller depending on editor toggle
 			editor.step(touches);
 			if (menu == null) {
 				game.step(deltaTime); // step game and physics
@@ -224,8 +222,6 @@ public class AppLogic {
 			}
 		}
 		game.cameraStep(deltaTime); // step camera etc
-
-//		}
 
 		// draw the game
 		if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView)
