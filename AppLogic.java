@@ -98,7 +98,6 @@ public class AppLogic {
 		runGame = true; //false; //FIXME
 		menu = new LaunchMenu(p, this);
 		game.getPageView().initCamera();
-//		menu.buldPageMenu();
 		
 		p.background(100);
 

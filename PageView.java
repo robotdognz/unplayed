@@ -213,6 +213,7 @@ public class PageView {
 
 	public void initCamera() {
 		if (AppLogic.hasMenu()) {
+			// initialize camera for menu
 			storedMenu = AppLogic.getMenu();
 			storedMenu.buldPageMenu();
 
@@ -222,10 +223,11 @@ public class PageView {
 			float menuMinY = storedMenu.getTopmostPoint();
 			float menuMaxX = storedMenu.getRightmostPoint();
 			float menuMaxY = storedMenu.getBottommostPoint();
-			pageCamera.update(menuMinX, menuMinY, menuMaxX, menuMaxY);
+			pageCamera.initCamera(menuMinX, menuMinY, menuMaxX, menuMaxY);
 
 			DebugOutput.pushMessage("Page menu built", 1);
 		} else {
+			// initialize camera for pages
 			for (Page page : pages) {
 				page.step();
 				page.updateSizeFromView(); // recaulculate page corners
