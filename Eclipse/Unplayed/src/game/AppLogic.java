@@ -96,7 +96,7 @@ public class AppLogic {
 		getLevels();
 
 		runGame = true; // false; //FIXME
-		setMenu(new LaunchMenu(p, this));
+		menu = new LaunchMenu(p, this);
 		game.getPageView().initCamera();
 
 		p.background(100);
