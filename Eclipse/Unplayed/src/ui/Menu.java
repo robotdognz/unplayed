@@ -65,14 +65,12 @@ public abstract class Menu {
 
 		if (leftDiff <= rightDiff) { // && leftDiff < topDiff && leftDiff < bottomDiff) {
 			// left
-			position = new PVector((cameraCenter.x - leftDiff - (pageWidth / 2) - offset) * camera.getSubScale(),
-					cameraCenter.y);
+			position = new PVector(cameraCenter.x - leftDiff - (pageWidth / 2) - offset, cameraCenter.y);
 
 		} else { // if (rightDiff < leftDiff) { // && rightDiff < topDiff && rightDiff <
 					// bottomDiff) {
 			// right
-			position = new PVector((cameraCenter.x + rightDiff + (pageWidth / 2) + offset) * camera.getSubScale(),
-					cameraCenter.y);
+			position = new PVector(cameraCenter.x + rightDiff + (pageWidth / 2) + offset, cameraCenter.y);
 
 		}
 //		} else if (topDiff < leftDiff && topDiff < rightDiff && topDiff < bottomDiff) {

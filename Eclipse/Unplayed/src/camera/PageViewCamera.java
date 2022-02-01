@@ -188,6 +188,10 @@ public class PageViewCamera {
 		newScale = (int) Math.abs(newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x);
 	}
 	
+	public Rectangle getCameraArea() {
+		return cameraArea;
+	}
+	
 	public float getSideAreaPadding() {
 		return sideAreaPadding;
 	}

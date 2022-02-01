@@ -122,8 +122,11 @@ public class PageView {
 		// draw current menu, destroy it if it's off screen
 		if (storedMenu != null) {
 			storedMenu.drawPageView();
-			if (removeMenu == true && (storedMenu.leftOf(topLeft.x) || storedMenu.rightOf(bottomRight.x)
-					|| storedMenu.above(topLeft.y) || storedMenu.below(bottomRight.y))) {
+
+			if (removeMenu == true && (storedMenu.leftOf(pageCamera.getCameraArea().getTopLeft().x)
+					|| storedMenu.rightOf(pageCamera.getCameraArea().getBottomRight().x)
+					|| storedMenu.above(pageCamera.getCameraArea().getTopLeft().y)
+					|| storedMenu.below(pageCamera.getCameraArea().getBottomRight().y))) {
 				removeMenu = false;
 				storedMenu = null;
 			}
@@ -159,7 +162,7 @@ public class PageView {
 			}
 			Rectangle pageArea = new Rectangle(minX, minY, maxX - minX, maxY - minY);
 			storedMenu.buldPageMenu(pageCamera.getCenter(), pageArea, pageCamera);
-			
+
 			removeMenu = false;
 
 			float menuMinX = storedMenu.getLeftmostPoint();
