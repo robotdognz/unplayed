@@ -179,14 +179,12 @@ public class AppLogic {
 	static public void toggleEditor() {
 		editorToggle = !editorToggle;
 		if (editorToggle) {
-//			if (editor == null) {
 			Camera camera = new FreeCamera();
 			DoToast toast = new DoToast(activity);
 			editor = new Editor(p, files, texture, game, camera, convert, toast);
-//			}
-
 		}
 		menu = null;
+		game.getPageView().clearMenus();
 	}
 
 	static public Editor getEditor() {

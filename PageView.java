@@ -295,6 +295,11 @@ public class PageView {
 	public void clearPages() {
 		this.pages.clear();
 	}
+	
+	public void clearMenus() {
+		storedMenu = null;
+		removeMenu = false;
+	}
 
 	public void addBackground(Background background) {
 		backgrounds.add(background);
