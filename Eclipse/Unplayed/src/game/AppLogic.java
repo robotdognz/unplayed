@@ -240,7 +240,7 @@ public class AppLogic {
 
 		// draw the menu
 		if (menu != null) {
-			if (Camera.getGame()) {
+			if (!Camera.getGame()) {
 				menu.draw();
 			}
 			menu.hover(lastTouch);
