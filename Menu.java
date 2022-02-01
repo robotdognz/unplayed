@@ -82,13 +82,14 @@ public abstract class Menu {
 		p.rect(pageMenu.getX(), pageMenu.getY(), pageMenu.getWidth(), pageMenu.getHeight());
 		// draw the buttons
 		for (int i = 0; i < buttons.size(); i++) {
-			float y = menuTopY + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-			buttons.get(i).draw(p, y);
+			float y = pageMenu.getY() + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
+			buttons.get(i).drawOnPage(p, position.x, y);
 		}
 		// TODO: add final logic to this method
 	}
 
 	public void draw() {
+		// used only in editor
 		p.noStroke();
 		p.fill(150);
 		p.rectMode(CORNER);
