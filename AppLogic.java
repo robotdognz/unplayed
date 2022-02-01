@@ -240,7 +240,9 @@ public class AppLogic {
 
 		// draw the menu
 		if (menu != null) {
-			menu.draw();
+			if (Camera.getGame()) {
+				menu.draw();
+			}
 			menu.hover(lastTouch);
 		}
 	}
@@ -341,10 +343,9 @@ public class AppLogic {
 			}
 		}
 	}
-	
-	
+
 	// menu
-	
+
 	static public boolean hasMenu() {
 		if (menu != null) {
 			return true;
@@ -357,23 +358,23 @@ public class AppLogic {
 		menuAdded = true;
 		menuRemoved = false;
 	}
-	
+
 	static public void removeMenu() {
 		menu = null;
 		menuAdded = false;
 		menuRemoved = true;
 	}
-	
+
 	static public Menu getMenu() {
 		return menu;
 	}
-	
+
 	static public boolean menuAdded() {
 		boolean temp = menuAdded;
 		menuAdded = false;
 		return temp;
 	}
-	
+
 	static public boolean menuRemoved() {
 		boolean temp = menuRemoved;
 		menuRemoved = false;
