@@ -113,8 +113,8 @@ public abstract class Menu {
 	public void hover(PVector lastTouch) {
 		if (Camera.getGame()) {
 			PVector levelTouch = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);
-			levelTouch.x += position.x;
-			levelTouch.y += position.y;
+			levelTouch.x -= position.x;
+			levelTouch.y -= position.y;
 			for (Button b : buttons) {
 				b.hoverPage(levelTouch);
 			}
