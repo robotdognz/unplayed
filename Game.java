@@ -23,7 +23,7 @@ public class Game {
 	public MathsPaper paper;
 	public Converter convert;
 	private TextureCache texture;
-	public AppLogic app;
+//	public AppLogic app;
 
 	public Quadtree world;
 	public ArrayList<Tile> removed; // holds the tiles that the player has become and have been removed from the
@@ -62,9 +62,9 @@ public class Game {
 	float accumulator = 0;
 	float stepSize = 1f / 240f;
 
-	public Game(PApplet p, AppLogic app, Camera c, TextureCache texture, Converter convert) {
+	public Game(PApplet p, Camera c, TextureCache texture, Converter convert) {
 		this.p = p;
-		this.app = app;
+//		this.app = app;
 		this.camera = c;
 		this.texture = texture;
 		this.convert = convert;
@@ -175,7 +175,7 @@ public class Game {
 			return;
 		}
 
-		Editor editor = app.getEditor();
+		Editor editor = AppLogic.getEditor();
 
 		if (editor == null) { // in a normal game
 			pauseTimer.start();
@@ -322,7 +322,7 @@ public class Game {
 				pauseTimer.stop();
 				break;
 			case NEXT_LEVEL:
-				app.nextLevel();
+				AppLogic.nextLevel();
 				pauseType = PauseType.NONE;
 				pauseTimer.stop();
 				break;

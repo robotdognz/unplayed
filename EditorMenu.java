@@ -15,8 +15,8 @@ public class EditorMenu extends Menu {
 	String restart = "Main Menu";
 	String quit = "Quit and Purge";
 
-	public EditorMenu(PApplet p, AppLogic al, WidgetPauseMenu m) {
-		super(p, al);
+	public EditorMenu(PApplet p, WidgetPauseMenu m) {
+		super(p);
 		this.game = AppLogic.game;
 		this.m = m;
 		
@@ -40,9 +40,9 @@ public class EditorMenu extends Menu {
 				AppLogic.editorToggle = !AppLogic.editorToggle;
 				AppLogic.removeMenu(); // remove pause menu
 			} else if (b.click().equals(restart)) {
-				al.init(); // rebuild the game
+				AppLogic.init(); // rebuild the game
 			} else if (b.click().equals(quit)) {
-				al.quitPurge(); // exit the game
+				AppLogic.quitPurge(); // exit the game
 			}
 		}
 	}

@@ -31,15 +31,15 @@ import ui.Widget;
 
 //handles all of the logic at the application level
 public class AppLogic {
-	private PApplet p;
-	private Activity activity;
-	private Context context;
+	private static PApplet p;
+	private static Activity activity;
+	private static Context context;
 
-	public KetaiGesture gesture;
-	public FileChooser files;
-	public Vibe vibe;
+	public static KetaiGesture gesture;
+	public static FileChooser files;
+	public static Vibe vibe;
 	static public Converter convert;
-	public TextureCache texture;
+	public static TextureCache texture;
 
 	static private Menu menu; // current menu
 	static private boolean menuAdded = false;
@@ -47,27 +47,27 @@ public class AppLogic {
 
 	public static boolean editorToggle; // is the editor enabled
 	static public Game game; // holds the game class
-	public Controller controller; // holds the current controller
-	public Editor editor; // holds the editor
-	public ArrayList<PVector> touches; // all the on screen touches
-	public PVector lastTouch; // the last on screen touch
+	public static Controller controller; // holds the current controller
+	public static Editor editor; // holds the editor
+	public static ArrayList<PVector> touches; // all the on screen touches
+	public static PVector lastTouch; // the last on screen touch
 
-	public ArrayList<Widget> widgets;
-	public float widgetSpacing; // size of gap between widgets
-	public float widgetHeight;
+	public static ArrayList<Widget> widgets;
+	public static float widgetSpacing; // size of gap between widgets
+	public static float widgetHeight;
 
-	private boolean runGame;
-	private ArrayList<File> levels;
-	private int currentLevel;
+	private static boolean runGame;
+	private static ArrayList<File> levels;
+	private static int currentLevel;
 
-	public AppLogic(PApplet p, Activity activity, Context context) {
-		this.p = p;
-		this.activity = activity;
-		this.context = context;
+	public AppLogic(PApplet papp, Activity masterActivity, Context masterContext) {
+		p = papp;
+		activity = masterActivity;
+		context = masterContext;
 		editorToggle = false;
 	}
 
-	public void init() {
+	static public void init() {
 		editorToggle = false; // editor is closed on startup
 		touches = new ArrayList<PVector>();
 		lastTouch = new PVector(0, 0);
@@ -80,7 +80,7 @@ public class AppLogic {
 
 		Camera camera = new GameCamera(); // new FreeCamera();
 		convert = new Converter(p);
-		game = new Game(p, this, camera, texture, convert);
+		game = new Game(p, camera, texture, convert);
 		texture.passGame(game);
 		controller = new PlayerControl(p, game);
 //		DoToast toast = new DoToast(activity);
@@ -96,7 +96,7 @@ public class AppLogic {
 		getLevels();
 
 		runGame = true; // false; //FIXME
-		menu = new LaunchMenu(p, this);
+		menu = new LaunchMenu(p);
 		game.getPageView().initCamera();
 
 		p.background(100);
@@ -104,8 +104,12 @@ public class AppLogic {
 		// print android api version
 		PApplet.println(android.os.Build.VERSION.SDK_INT);
 	}
+	
+	static public void titleScreen() {
+		init();
+	}
 
-	public void getLevels() {
+	static public void getLevels() {
 		levels = new ArrayList<File>();
 		// generate all the relative file paths
 		try {
@@ -143,7 +147,7 @@ public class AppLogic {
 		Collections.sort(levels);
 	}
 
-	public void startGame() {
+	static public void startGame() {
 		currentLevel = 0;
 		EditorJSON json = new EditorJSON(p, texture, null);
 
@@ -160,7 +164,7 @@ public class AppLogic {
 
 	}
 
-	public void nextLevel() {
+	static public void nextLevel() {
 		currentLevel++;
 		EditorJSON json = new EditorJSON(p, texture, null);
 
@@ -176,7 +180,7 @@ public class AppLogic {
 
 	}
 
-	public void toggleEditor() {
+	static public void toggleEditor() {
 		editorToggle = !editorToggle;
 		if (editorToggle) {
 			if (editor == null) {
@@ -190,15 +194,15 @@ public class AppLogic {
 		removeMenu();
 	}
 
-	public Editor getEditor() {
+	static public Editor getEditor() {
 		return editor;
 	}
 
-	public void setUri(Uri uri) {
+	static public void setUri(Uri uri) {
 		files.setUri(uri);
 	}
 
-	public void draw(float deltaTime) {
+	static public void draw(float deltaTime) {
 		// This is the step method for the whole game, as well as the draw method
 
 		// touch screen
@@ -254,7 +258,7 @@ public class AppLogic {
 		}
 	}
 
-	public void touchStarted() {
+	static public void touchStarted() {
 		// find true last touch
 		if (p.touches.length >= touches.size() && p.touches.length > 1) {
 			for (int i = 0; i < p.touches.length; i++) {
@@ -283,7 +287,7 @@ public class AppLogic {
 		}
 	}
 
-	public void touchEnded() {
+	static public void touchEnded() {
 		if (editorToggle && editor != null) {
 			editor.touchEnded(lastTouch);
 		} else {
@@ -297,7 +301,7 @@ public class AppLogic {
 		}
 	}
 
-	public void touchMoved() {
+	static public void touchMoved() {
 		if (menu == null) {
 			if (editorToggle && editor != null) {
 				editor.touchMoved(lastTouch, touches);
@@ -307,7 +311,7 @@ public class AppLogic {
 		}
 	}
 
-	public void onTap(float x, float y) {
+	static public void onTap(float x, float y) {
 		if (menu == null) {
 			if (editorToggle && editor != null) {
 				editor.onTap(x, y);
@@ -317,21 +321,21 @@ public class AppLogic {
 		}
 	}
 
-	public void onDoubleTap(float x, float y) {
+	static public void onDoubleTap(float x, float y) {
 
 	}
 
-	public void onFlick(float x, float y, float px, float py, float v) {
+	static public void onFlick(float x, float y, float px, float py, float v) {
 		// x/y start of flick
 		// px/yx end of flick
 		// v velocity of flick
 	}
 
-	public void onLongPress(float x, float y) {
+	static public void onLongPress(float x, float y) {
 
 	}
 
-	public void onPinch(float x, float y, float d) {
+	static public void onPinch(float x, float y, float d) {
 		if (menu == null) {
 			if (editorToggle && editor != null) {
 				editor.onPinch(touches, x, y, d);
@@ -341,7 +345,7 @@ public class AppLogic {
 		}
 	}
 
-	public void onRotate(float x, float y, float angle) {
+	static public void onRotate(float x, float y, float angle) {
 		if (menu == null) {
 			if (editorToggle && editor != null) {
 				editor.onRotate(x, y, angle);
@@ -403,11 +407,11 @@ public class AppLogic {
 
 	// quit
 
-	public void quit() {
+	static public void quit() {
 		activity.finish();
 	}
 
-	public void quitPurge() {
+	static public void quitPurge() {
 		// should update this so it deletes directories etc
 
 		// purge resources

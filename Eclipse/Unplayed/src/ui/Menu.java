@@ -1,10 +1,8 @@
 package ui;
 
 import java.util.ArrayList;
-
 import camera.Camera;
 import camera.PageViewCamera;
-import game.AppLogic;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -15,7 +13,6 @@ public abstract class Menu {
 	public Menu child;
 	
 	private PApplet p;
-	protected AppLogic al;
 	protected float buttonHeight = 0;
 	protected float buttonWidth = 0;
 	protected float menuTopY = 0;
@@ -35,9 +32,8 @@ public abstract class Menu {
 	PVector bottomLeft;
 	PVector bottomRight;
 
-	public Menu(PApplet p, AppLogic al) {
+	public Menu(PApplet p) {
 		this.p = p;
-		this.al = al;
 		buttonWidth = 400; // p.width / 2.88f; // 500
 		buttonHeight = 100; // p.width / 7.2f; // 200
 		buttonDistance = 100; // p.width / 18; // 80

@@ -8,16 +8,16 @@ public class GameMenu extends Menu {
 	Game game;
 	String resume = "Resume";
 	String checkpoint = "Checkpoint";
-	String restart = "Main Menu";
+	String titleScreen = "Main Menu";
 	String quit = "Quit";
 
-	public GameMenu(PApplet p, Game game, AppLogic al) {
-		super(p, al);
+	public GameMenu(PApplet p, Game game) {
+		super(p);
 		this.game = game;
 		
 		Button resumeB = new Button(p.width / 2, buttonWidth, buttonHeight, resume);
 		Button checkpointB = new Button(p.width / 2, buttonWidth, buttonHeight, checkpoint);
-		Button restartB = new Button(p.width / 2, buttonWidth, buttonHeight, restart);
+		Button restartB = new Button(p.width / 2, buttonWidth, buttonHeight, titleScreen);
 		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
 		buttons.add(resumeB);
 		buttons.add(checkpointB);
@@ -36,11 +36,11 @@ public class GameMenu extends Menu {
 				AppLogic.game.restart(); // return to last checkpoint
 				AppLogic.removeMenu(); // remove pause menu
 
-			} else if (b.click().equals(restart)) {
-				al.init(); // rebuild the game
+			} else if (b.click().equals(titleScreen)) {
+				AppLogic.titleScreen(); // rebuild the game
 
 			} else if (b.click().equals(quit)) {
-				al.quit(); // exit the game
+				AppLogic.quit(); // exit the game
 			}
 		}
 	}
