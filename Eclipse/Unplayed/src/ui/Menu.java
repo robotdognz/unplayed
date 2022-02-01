@@ -56,28 +56,29 @@ public abstract class Menu {
 		// figure out edge of page area that cameraCenter is closest to
 		float leftDiff = Math.abs(cameraCenter.x - pageArea.getTopLeft().x) + camera.getSideAreaPadding();
 		float rightDiff = Math.abs(pageArea.getBottomRight().x - cameraCenter.x) + camera.getSideAreaPadding();
-		float topDiff = Math.abs(cameraCenter.y - pageArea.getTopLeft().y) + camera.getSideAreaPadding();
-		float bottomDiff = Math.abs(pageArea.getBottomRight().y - cameraCenter.y) + camera.getBottomAreaPadding();
+//		float topDiff = Math.abs(cameraCenter.y - pageArea.getTopLeft().y) + camera.getSideAreaPadding();
+//		float bottomDiff = Math.abs(pageArea.getBottomRight().y - cameraCenter.y) + camera.getBottomAreaPadding();
 
 		position = new PVector(0, 0);
 
-		if (leftDiff < rightDiff && leftDiff < topDiff && leftDiff < bottomDiff) {
+		if (leftDiff <= rightDiff) { //&& leftDiff < topDiff && leftDiff < bottomDiff) {
 			// left
-			position = new PVector(cameraCenter.x - leftDiff, cameraCenter.y);
+			position = new PVector(cameraCenter.x - leftDiff - (pageWidth/2), cameraCenter.y);
 
-		} else if (rightDiff < leftDiff && rightDiff < topDiff && rightDiff < bottomDiff) {
+		} else { //if (rightDiff < leftDiff) { // && rightDiff < topDiff && rightDiff < bottomDiff) {
 			// right
-			position = new PVector(cameraCenter.x + rightDiff, cameraCenter.y);
-
-		} else if (topDiff < leftDiff && topDiff < rightDiff && topDiff < bottomDiff) {
-			// top
-			position = new PVector(cameraCenter.x, cameraCenter.y - topDiff);
-
-		} else {
-			// bottom
-			position = new PVector(cameraCenter.x, cameraCenter.y + bottomDiff);
+			position = new PVector(cameraCenter.x + rightDiff + (pageWidth/2), cameraCenter.y);
 
 		}
+//		} else if (topDiff < leftDiff && topDiff < rightDiff && topDiff < bottomDiff) {
+//			// top
+//			position = new PVector(cameraCenter.x, cameraCenter.y - topDiff);
+//
+//		} else {
+//			// bottom
+//			position = new PVector(cameraCenter.x, cameraCenter.y + bottomDiff);
+//
+//		}
 
 		// create page view menu
 		pageMenu = new Rectangle(position.x - pageWidth / 2, position.y - pageHeight / 2, pageWidth, pageHeight);
