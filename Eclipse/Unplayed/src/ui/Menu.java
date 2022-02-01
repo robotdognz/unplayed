@@ -50,8 +50,8 @@ public abstract class Menu {
 	}
 
 	public void buldPageMenu(PVector cameraCenter, Rectangle pageArea, PageViewCamera camera) {
-		float pageWidth = menuWidth; //600;
-		float pageHeight = menuHeight; //800;
+		float pageWidth = menuWidth; // 600;
+		float pageHeight = menuHeight; // 800;
 		float offset = 200;
 
 		// figure out side of pageArea that cameraCenter is closest to
@@ -80,6 +80,11 @@ public abstract class Menu {
 		p.fill(150);
 		p.rectMode(CORNER);
 		p.rect(pageMenu.getX(), pageMenu.getY(), pageMenu.getWidth(), pageMenu.getHeight());
+		// draw the buttons
+		for (int i = 0; i < buttons.size(); i++) {
+			float y = menuTopY + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
+			buttons.get(i).draw(p, y);
+		}
 		// TODO: add final logic to this method
 	}
 
