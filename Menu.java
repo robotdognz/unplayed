@@ -61,13 +61,13 @@ public abstract class Menu {
 
 		position = new PVector(0, 0);
 
-		if (leftDiff < rightDiff || leftDiff < topDiff || leftDiff < bottomDiff) {
+		if (leftDiff < rightDiff && leftDiff < topDiff && leftDiff < bottomDiff) {
 			// left
 			position = new PVector(-leftDiff, cameraCenter.y);
-		} else if (rightDiff < leftDiff || rightDiff < topDiff || rightDiff < bottomDiff) {
+		} else if (rightDiff < leftDiff && rightDiff < topDiff && rightDiff < bottomDiff) {
 			// right
 			position = new PVector(rightDiff, cameraCenter.y);
-		} else if (topDiff < leftDiff || topDiff < rightDiff || topDiff < bottomDiff) {
+		} else if (topDiff < leftDiff && topDiff < rightDiff && topDiff < bottomDiff) {
 			// top
 			position = new PVector(cameraCenter.x, -topDiff);
 		} else {
