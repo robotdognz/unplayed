@@ -23,9 +23,11 @@ import misc.EditorJSON;
 import misc.FileChooser;
 import misc.KetaiGesture;
 import misc.Vibe;
+import objects.Rectangle;
 import processing.core.*;
 import processing.event.TouchEvent;
 import ui.LaunchMenu;
+import ui.LoadingMenu;
 import ui.Menu;
 import ui.Widget;
 
@@ -145,7 +147,7 @@ public class AppLogic {
 		Collections.sort(levels);
 	}
 
-	static public void startGame() {
+	static public void newGame() {
 		currentLevel = 0;
 		EditorJSON json = new EditorJSON(p, texture, null);
 
@@ -153,10 +155,15 @@ public class AppLogic {
 			json.load(game, levels.get(currentLevel).toString());
 			new GameCamera();
 			game.startGame();
-//			menu = null;
-			removeMenu();
-//			game.getPageView().initCamera();
+//			removeMenu();
 			// TODO: this is where the transition from title screen to game would happen
+			
+			
+			Menu temp = new LoadingMenu(p);
+			Rectangle pageArea = game.getPageView().getArea();
+			
+			temp.buldPageMenu(lastTouch, pageArea, game.getPageView().getPageCamera());
+			setMenu(temp);
 		}
 
 	}

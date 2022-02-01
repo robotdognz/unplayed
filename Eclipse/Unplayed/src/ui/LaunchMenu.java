@@ -27,7 +27,7 @@ public class LaunchMenu extends Menu {
 	public void click() {
 		for (Button b : buttons) {
 			if (b.click().equals(newGame)) {
-				AppLogic.startGame();
+				AppLogic.newGame();
 			} else if (b.click().equals(editor)) {
 
 				AppLogic.toggleEditor();

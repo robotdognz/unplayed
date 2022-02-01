@@ -25,6 +25,10 @@ public class PageView {
 
 	private PageViewCamera pageCamera;
 
+	public PageViewCamera getPageCamera() {
+		return pageCamera;
+	}
+
 	private Menu storedMenu;
 	private boolean removeMenu = false;
 
@@ -232,7 +236,7 @@ public class PageView {
 			pageCamera.initCamera(menuMinX, menuMinY, menuMaxX, menuMaxY);
 
 			DebugOutput.pushMessage("Page menu built", 1);
-		} 
+		}
 //		else {
 //			// initialize camera for pages
 //			for (Page page : pages) {
@@ -262,6 +266,36 @@ public class PageView {
 //			}
 //		}
 
+	}
+
+	public Rectangle getArea() {
+		float minX = Float.POSITIVE_INFINITY;
+		float minY = Float.POSITIVE_INFINITY;
+		float maxX = Float.NEGATIVE_INFINITY;
+		float maxY = Float.NEGATIVE_INFINITY;
+		
+		// get area of pages
+		for (Page page : pages) {
+			minX = Math.min(minX, page.getLeftmostPoint());
+			minY = Math.min(minY, page.getTopmostPoint());
+			maxX = Math.max(maxX, page.getRightmostPoint());
+			maxY = Math.max(maxY, page.getBottommostPoint());
+		}
+
+		// add area for menu
+		if (storedMenu != null) {
+			minX = Math.min(minX, storedMenu.getLeftmostPoint());
+			minY = Math.min(minY, storedMenu.getTopmostPoint());
+			maxX = Math.max(maxX, storedMenu.getRightmostPoint());
+			maxY = Math.max(maxY, storedMenu.getBottommostPoint());
+		}
+		
+		float x = minX;
+		float y = minY;
+		float width = maxX - minX;
+		float height = maxY - minY;
+		
+		return new Rectangle(x, y, width, height);
 	}
 
 	public void forceRedraw() {
