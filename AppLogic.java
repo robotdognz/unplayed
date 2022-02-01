@@ -158,7 +158,7 @@ public class AppLogic {
 			runGame = true;
 //			menu = null;
 			removeMenu();
-			game.getPageView().initCamera();
+//			game.getPageView().initCamera();
 			// TODO: this is where the transition from title screen to game would happen
 		}
 
