@@ -115,11 +115,7 @@ public class PageView {
 
 		}
 
-//		if (AppLogic.hasMenu()) {
-//			AppLogic.getMenu().drawPageView();
-//		}
-
-		// draw current menu, destroy it if it's off screen
+		// draw current menu, destroy it if it's off camera
 		if (storedMenu != null) {
 			storedMenu.drawPageView();
 

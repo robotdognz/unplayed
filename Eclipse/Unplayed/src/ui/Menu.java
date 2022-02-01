@@ -35,8 +35,8 @@ public abstract class Menu {
 	public Menu(PApplet p, AppLogic al) {
 		this.p = p;
 		this.al = al;
-		buttonWidth = p.width / 2.88f; // 500
-		buttonHeight = p.width / 7.2f; // 200
+		buttonWidth = 400; //p.width / 2.88f; // 500
+		buttonHeight = 100; //p.width / 7.2f; // 200
 	}
 
 	protected void constructMenu() {
@@ -52,36 +52,23 @@ public abstract class Menu {
 	public void buldPageMenu(PVector cameraCenter, Rectangle pageArea, PageViewCamera camera) {
 		float pageWidth = 600;
 		float pageHeight = 800;
-
 		float offset = 200;
 
-		// figure out edge of page area that cameraCenter is closest to
+		// figure out side of pageArea that cameraCenter is closest to
 		float leftDiff = Math.abs(cameraCenter.x - pageArea.getTopLeft().x) + camera.getSideAreaPadding();
 		float rightDiff = Math.abs(pageArea.getBottomRight().x - cameraCenter.x) + camera.getSideAreaPadding();
-//		float topDiff = Math.abs(cameraCenter.y - pageArea.getTopLeft().y) + camera.getSideAreaPadding();
-//		float bottomDiff = Math.abs(pageArea.getBottomRight().y - cameraCenter.y) + camera.getBottomAreaPadding();
 
 		position = new PVector(0, 0);
 
-		if (leftDiff <= rightDiff) { // && leftDiff < topDiff && leftDiff < bottomDiff) {
+		if (leftDiff <= rightDiff) {
 			// left
 			position = new PVector(cameraCenter.x - leftDiff - (pageWidth / 2) - offset, cameraCenter.y);
 
-		} else { // if (rightDiff < leftDiff) { // && rightDiff < topDiff && rightDiff <
-					// bottomDiff) {
+		} else {
 			// right
 			position = new PVector(cameraCenter.x + rightDiff + (pageWidth / 2) + offset, cameraCenter.y);
 
 		}
-//		} else if (topDiff < leftDiff && topDiff < rightDiff && topDiff < bottomDiff) {
-//			// top
-//			position = new PVector(cameraCenter.x, cameraCenter.y - topDiff);
-//
-//		} else {
-//			// bottom
-//			position = new PVector(cameraCenter.x, cameraCenter.y + bottomDiff);
-//
-//		}
 
 		// create page view menu
 		pageMenu = new Rectangle(position.x - pageWidth / 2, position.y - pageHeight / 2, pageWidth, pageHeight);
