@@ -148,20 +148,24 @@ public class PageView {
 			storedMenu = AppLogic.getMenu();
 
 			// build the page menu
-			float minX = Float.POSITIVE_INFINITY;
-			float minY = Float.POSITIVE_INFINITY;
-			float maxX = Float.NEGATIVE_INFINITY;
-			float maxY = Float.NEGATIVE_INFINITY;
-			for (Page page : pages) {
+			if (pages.size() > 0) {
+				float minX = Float.POSITIVE_INFINITY;
+				float minY = Float.POSITIVE_INFINITY;
+				float maxX = Float.NEGATIVE_INFINITY;
+				float maxY = Float.NEGATIVE_INFINITY;
+				for (Page page : pages) {
 
-				minX = Math.min(minX, page.getLeftmostPoint());
-				minY = Math.min(minY, page.getTopmostPoint());
-				maxX = Math.max(maxX, page.getRightmostPoint());
-				maxY = Math.max(maxY, page.getBottommostPoint());
+					minX = Math.min(minX, page.getLeftmostPoint());
+					minY = Math.min(minY, page.getTopmostPoint());
+					maxX = Math.max(maxX, page.getRightmostPoint());
+					maxY = Math.max(maxY, page.getBottommostPoint());
 
+				}
+				Rectangle pageArea = new Rectangle(minX, minY, maxX - minX, maxY - minY);
+				storedMenu.buldPageMenu(pageCamera.getCenter(), pageArea, pageCamera);
+			} else {
+				storedMenu.buldPageMenu();
 			}
-			Rectangle pageArea = new Rectangle(minX, minY, maxX - minX, maxY - minY);
-			storedMenu.buldPageMenu(pageCamera.getCenter(), pageArea, pageCamera);
 
 			removeMenu = false;
 
@@ -273,7 +277,7 @@ public class PageView {
 		float minY = Float.POSITIVE_INFINITY;
 		float maxX = Float.NEGATIVE_INFINITY;
 		float maxY = Float.NEGATIVE_INFINITY;
-		
+
 		// get area of pages
 		for (Page page : pages) {
 			minX = Math.min(minX, page.getLeftmostPoint());
@@ -289,12 +293,12 @@ public class PageView {
 			maxX = Math.max(maxX, storedMenu.getRightmostPoint());
 			maxY = Math.max(maxY, storedMenu.getBottommostPoint());
 		}
-		
+
 		float x = minX;
 		float y = minY;
 		float width = maxX - minX;
 		float height = maxY - minY;
-		
+
 		return new Rectangle(x, y, width, height);
 	}
 
