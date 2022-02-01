@@ -73,10 +73,12 @@ public abstract class Menu {
 		}
 
 		// create page view menu and buttons
-		pageMenu = new Rectangle(position.x - pageWidth / 2, position.y - pageHeight / 2, pageWidth, pageHeight);
+//		pageMenu = new Rectangle(position.x - pageWidth / 2, position.y - pageHeight / 2, pageWidth, pageHeight);
+		pageMenu = new Rectangle(0 - pageWidth / 2, 0 - pageHeight / 2, pageWidth, pageHeight);
 		for (int i = 0; i < buttons.size(); i++) {
 			float y = pageMenu.getY() + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-			buttons.get(i).setupPageButton(position.x, y, buttonWidth, buttonHeight);
+			buttons.get(i).setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2, y, buttonWidth,
+					buttonHeight);
 		}
 		updateCorners();
 	}
@@ -84,11 +86,13 @@ public abstract class Menu {
 	public void drawPageView() {
 		p.noStroke();
 		p.fill(150);
-		p.rectMode(CORNER);
-		p.rect(pageMenu.getX(), pageMenu.getY(), pageMenu.getWidth(), pageMenu.getHeight());
+		p.rectMode(CENTER);
+		p.rect(position.x, position.y, pageMenu.getWidth(), pageMenu.getHeight());
 		// draw the buttons
+		float yStart = position.y - pageMenu.getHeight() / 2;
+
 		for (int i = 0; i < buttons.size(); i++) {
-			float y = pageMenu.getY() + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
+			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2; //pageMenu.getY()
 			buttons.get(i).drawOnPage(p, position.x, y);
 		}
 	}
@@ -108,8 +112,11 @@ public abstract class Menu {
 
 	public void hover(PVector lastTouch) {
 		if (Camera.getGame()) {
+			PVector levelTouch = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);
+			levelTouch.x += position.x;
+			levelTouch.y += position.y;
 			for (Button b : buttons) {
-				b.hoverPage(lastTouch);
+				b.hoverPage(levelTouch);
 			}
 		} else {
 			for (Button b : buttons) {
