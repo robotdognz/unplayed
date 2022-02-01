@@ -246,7 +246,9 @@ public class AppLogic {
 			if (!Camera.getGame()) {
 				menu.draw();
 			}
-			menu.hover(lastTouch);
+			if (lastTouch != null) {
+				menu.hover(lastTouch);
+			}
 		}
 	}
 
