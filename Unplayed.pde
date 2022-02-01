@@ -124,7 +124,7 @@ void onFlick(float x, float y, float px, float py, float v) {
 }
 
 void onLongPress(float x, float y) {
-  app.onLongPress(x, y);
+  AppLogic.onLongPress(x, y);
 }
 
 void onPinch(float x, float y, float d) {
