@@ -365,6 +365,9 @@ public class Game {
 		// step the pause timer
 		pauseTimer.deltaStep(deltaTime);
 
+	}
+
+	public void pageViewStep(float deltaTime) {
 		// step the page view
 		pageView.step(deltaTime);
 	}

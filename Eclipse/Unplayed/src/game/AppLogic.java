@@ -217,9 +217,11 @@ public class AppLogic {
 		} else {
 			if (menu == null) {
 				controller.step(touches);
+				game.step(deltaTime); // step game and physics
 			}
 		}
-		game.step(deltaTime); // step game
+		game.pageViewStep(deltaTime); // step camera etc
+
 //		}
 
 		// draw the game

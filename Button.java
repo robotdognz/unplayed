@@ -1,8 +1,6 @@
 package ui;
 
 import static processing.core.PConstants.*;
-
-import camera.PageViewCamera;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -82,9 +80,6 @@ public class Button {
 	}
 
 	public void hoverPage(PVector levelTouch) {
-		// TODO: finish this
-//		PVector levelTouch = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);
-
 		if (levelTouch.x >= pageButton.getTopLeft().x && levelTouch.y >= pageButton.getTopLeft().y
 				&& levelTouch.x <= pageButton.getBottomRight().x && levelTouch.y <= pageButton.getBottomRight().y) {
 			hover = true;
