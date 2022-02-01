@@ -71,7 +71,8 @@ public class PageViewCamera {
 		return pageArea.getBottomRight();
 	}
 
-	public void step(float deltaTime) {
+	public boolean step(float deltaTime) {
+		boolean temp = false;
 		if (!cameraArea.sameDimensions(newCameraArea)) { // camera is changing
 			// if there might be a difference in tall screen scale
 			if ((newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y)
@@ -88,14 +89,17 @@ public class PageViewCamera {
 		// vertical scale
 		if (subScale != newSubScale) {
 			subScale = PApplet.lerp(subScale, newSubScale, (float) (1 - Math.pow(zoomSpeed, deltaTime)));
+			temp = true;
 		}
 		// main scale
 		if (scale != newScale) {
 			scale = PApplet.lerp(scale, newScale, (float) (1 - Math.pow(zoomSpeed, deltaTime)));
+			temp = true;
 		}
 		// translate
 		if (center != newCenter) {
 			center = PVector.lerp(center, newCenter, (float) (1 - Math.pow(zoomSpeed, deltaTime)));
+			temp = true;
 		}
 		// black border movement
 		if (!cameraArea.sameDimensions(newCameraArea)) {
@@ -108,8 +112,10 @@ public class PageViewCamera {
 			float bottomRightY = PApplet.lerp(cameraArea.getBottomRight().y, newCameraArea.getBottomRight().y,
 					(float) (1 - Math.pow(zoomSpeed, deltaTime)));
 			cameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
+			temp = true;
 		}
 
+		return temp;
 	}
 
 	public void draw() {
@@ -187,11 +193,11 @@ public class PageViewCamera {
 	private static void updateNewScale() {
 		newScale = (int) Math.abs(newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x);
 	}
-	
+
 	public Rectangle getCameraArea() {
 		return cameraArea;
 	}
-	
+
 	public float getSideAreaPadding() {
 		return sideAreaPadding;
 	}
@@ -199,7 +205,7 @@ public class PageViewCamera {
 	public float getBottomAreaPadding() {
 		return bottomAreaPadding;
 	}
-	
+
 	static public PVector screenToLevel(float screenX, float screenY) {
 		PVector output = new PVector();
 		output.x = ((screenX - p.width / 2) / ((float) p.width / scale) / subScale) + center.x;

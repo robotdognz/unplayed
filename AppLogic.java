@@ -358,7 +358,10 @@ public class AppLogic {
 
 	static public void setMenu(Menu newMenu) {
 		if (menu != null) {
-			menu.child = newMenu;
+//			menu.child = newMenu;
+			Menu temp = menu;
+			menu = newMenu;
+			menu.child = temp;
 		} else {
 			menu = newMenu;
 		}
@@ -370,8 +373,9 @@ public class AppLogic {
 	static public void removeMenu() {
 		if (menu != null) {
 			if (menu.child != null) {
-				Menu temp = menu.child;
-				menu = temp;
+//				Menu temp = menu.child;
+//				menu = temp;
+				menu.child = null;
 			} else {
 				menu = null;
 			}

@@ -208,7 +208,8 @@ public class PageView {
 			}
 		}
 
-		pageCamera.step(deltaTime);
+		boolean temp = pageCamera.step(deltaTime);
+		
 	}
 
 	public void initCamera() {

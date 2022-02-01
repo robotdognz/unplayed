@@ -143,6 +143,10 @@ public abstract class Menu {
 	public void click() {
 		// this gets overwritten by child classes
 	}
+	
+	public void activate() {
+		
+	}
 
 	// --------------update the corner PVectors---------------
 	private void updateCorners() {
