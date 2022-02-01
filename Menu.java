@@ -12,6 +12,8 @@ import processing.core.PVector;
 import static processing.core.PConstants.*;
 
 public abstract class Menu {
+	public Menu child;
+	
 	private PApplet p;
 	protected AppLogic al;
 	protected float buttonHeight = 0;

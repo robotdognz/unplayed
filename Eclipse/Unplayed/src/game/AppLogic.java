@@ -95,10 +95,10 @@ public class AppLogic {
 
 		getLevels();
 
-		runGame = true; //false; //FIXME
-		menu = new LaunchMenu(p, this);
+		runGame = true; // false; //FIXME
+		setMenu(new LaunchMenu(p, this));
 		game.getPageView().initCamera();
-		
+
 		p.background(100);
 
 		// print android api version
@@ -152,7 +152,8 @@ public class AppLogic {
 			new GameCamera();
 			game.startGame();
 			runGame = true;
-			menu = null;
+//			menu = null;
+			removeMenu();
 			game.getPageView().initCamera();
 			// TODO: this is where the transition from title screen to game would happen
 		}
@@ -168,7 +169,7 @@ public class AppLogic {
 			game.startGame();
 			// TODO: this is where level transition menu would be created
 		} else {
-			runGame = true; //false; FIXME
+			runGame = true; // false; FIXME
 			init();
 			// TODO: this is where it would start the transition back to the title screen
 		}
@@ -185,7 +186,8 @@ public class AppLogic {
 			}
 
 		}
-		menu = null;
+//		menu = null;
+		removeMenu();
 	}
 
 	public Editor getEditor() {
@@ -359,13 +361,26 @@ public class AppLogic {
 	}
 
 	static public void setMenu(Menu newMenu) {
-		menu = newMenu;
+		if (menu != null) {
+			menu.child = newMenu;
+		} else {
+			menu = newMenu;
+		}
+		
 		menuAdded = true;
 		menuRemoved = false;
 	}
 
 	static public void removeMenu() {
-		menu = null;
+		if (menu != null) {
+			if (menu.child != null) {
+				Menu temp = menu.child;
+				menu = temp;
+			} else {
+				menu = null;
+			}
+		}
+
 		menuAdded = false;
 		menuRemoved = true;
 	}
