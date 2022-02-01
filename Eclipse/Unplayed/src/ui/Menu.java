@@ -63,16 +63,20 @@ public abstract class Menu {
 
 		if (leftDiff < rightDiff && leftDiff < topDiff && leftDiff < bottomDiff) {
 			// left
-			position = new PVector(-leftDiff, cameraCenter.y);
+			position = new PVector(cameraCenter.x - leftDiff, cameraCenter.y);
+
 		} else if (rightDiff < leftDiff && rightDiff < topDiff && rightDiff < bottomDiff) {
 			// right
-			position = new PVector(rightDiff, cameraCenter.y);
+			position = new PVector(cameraCenter.x + rightDiff, cameraCenter.y);
+
 		} else if (topDiff < leftDiff && topDiff < rightDiff && topDiff < bottomDiff) {
 			// top
-			position = new PVector(cameraCenter.x, -topDiff);
+			position = new PVector(cameraCenter.x, cameraCenter.y - topDiff);
+
 		} else {
 			// bottom
-			position = new PVector(cameraCenter.x, bottomDiff);
+			position = new PVector(cameraCenter.x, cameraCenter.y + bottomDiff);
+
 		}
 
 		// create page view menu
