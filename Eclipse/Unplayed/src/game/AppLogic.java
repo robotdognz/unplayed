@@ -102,7 +102,7 @@ public class AppLogic {
 		// print android api version
 		PApplet.println(android.os.Build.VERSION.SDK_INT);
 	}
-	
+
 	static public void titleScreen() {
 		init();
 	}
@@ -179,15 +179,14 @@ public class AppLogic {
 	static public void toggleEditor() {
 		editorToggle = !editorToggle;
 		if (editorToggle) {
-			if (editor == null) {
-				Camera camera = new FreeCamera();
-				DoToast toast = new DoToast(activity);
-				editor = new Editor(p, files, texture, game, camera, convert, toast);
-			}
+//			if (editor == null) {
+			Camera camera = new FreeCamera();
+			DoToast toast = new DoToast(activity);
+			editor = new Editor(p, files, texture, game, camera, convert, toast);
+//			}
 
 		}
-//		menu = null;
-		removeMenu();
+		menu = null;
 	}
 
 	static public Editor getEditor() {
@@ -228,8 +227,7 @@ public class AppLogic {
 		game.cameraStep(deltaTime); // step camera etc
 
 		// draw the game
-		if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView)
-				|| (editor == null)) {
+		if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView) || (editor == null)) {
 			game.draw(); // draw the game
 		}
 
@@ -366,7 +364,7 @@ public class AppLogic {
 		} else {
 			menu = newMenu;
 		}
-		
+
 		menuAdded = true;
 		menuRemoved = false;
 	}
