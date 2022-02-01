@@ -31,6 +31,8 @@ public abstract class Menu {
 	PVector topRight;
 	PVector bottomLeft;
 	PVector bottomRight;
+	
+	private boolean built = false;
 
 	public Menu(PApplet p) {
 		this.p = p;
@@ -78,6 +80,7 @@ public abstract class Menu {
 					buttonHeight);
 		}
 		updateCorners();
+		built = true;
 	}
 
 	public void buldPageMenu() {
@@ -94,6 +97,7 @@ public abstract class Menu {
 					buttonHeight);
 		}
 		updateCorners();
+		built = true;
 	}
 
 	public void drawPageView() {
@@ -109,7 +113,7 @@ public abstract class Menu {
 			buttons.get(i).drawOnPage(p, position.x, y);
 		}
 
-		if (child != null) {
+		if (child != null && child.isBuilt()) {
 			child.drawPageView();
 		}
 	}
@@ -267,5 +271,9 @@ public abstract class Menu {
 			return false;
 		}
 		return true;
+	}
+	
+	public boolean isBuilt() {
+		return built;
 	}
 }
