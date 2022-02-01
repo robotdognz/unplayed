@@ -3,7 +3,6 @@ package ui;
 import static processing.core.PConstants.*;
 
 import camera.PageViewCamera;
-import game.AppLogic;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;

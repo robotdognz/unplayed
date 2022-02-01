@@ -215,7 +215,9 @@ public class AppLogic {
 		if (editorToggle && editor != null) {
 			editor.step(touches);
 		} else {
-			controller.step(touches);
+			if (menu == null) {
+				controller.step(touches);
+			}
 		}
 		game.step(deltaTime); // step game
 //		}
