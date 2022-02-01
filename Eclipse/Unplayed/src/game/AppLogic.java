@@ -95,7 +95,7 @@ public class AppLogic {
 
 		getLevels();
 
-		runGame = false;
+		runGame = true; //false; //FIXME
 		menu = new LaunchMenu(p, this);
 		menu.buldPageMenu();
 		
@@ -168,7 +168,7 @@ public class AppLogic {
 			game.startGame();
 			// TODO: this is where level transition menu would be created
 		} else {
-			runGame = false;
+			runGame = true; //false; FIXME
 			init();
 			// TODO: this is where it would start the transition back to the title screen
 		}
