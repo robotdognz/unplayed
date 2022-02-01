@@ -161,11 +161,7 @@ public class AppLogic {
 			// TODO: this is where the transition from title screen to game would happen
 			
 			
-			Menu temp = new LoadingMenu(p);
-			Rectangle pageArea = game.getPageView().getArea();
-			
-			temp.buldPageMenu(lastTouch, pageArea, game.getPageView().getPageCamera());
-			setMenu(temp);
+			loadingScreen();
 		}
 
 	}
@@ -377,6 +373,14 @@ public class AppLogic {
 
 		menuAdded = true;
 		menuRemoved = false;
+	}
+	
+	static public void loadingScreen() {
+		Menu temp = new LoadingMenu(p);
+		Rectangle pageArea = game.getPageView().getArea();
+		
+		temp.buldPageMenu(lastTouch, pageArea, game.getPageView().getPageCamera());
+		setMenu(temp);
 	}
 
 	static public void removeMenu() {
