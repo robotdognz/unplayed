@@ -152,10 +152,12 @@ public class AppLogic {
 		EditorJSON json = new EditorJSON(p, texture, null);
 
 		if (levels != null && levels.size() > currentLevel) {
-			json.load(game, levels.get(currentLevel).toString());
-			new GameCamera();
-			game.startGame();
+//			json.load(game, levels.get(currentLevel).toString());
+//			new GameCamera();
+//			game.startGame();
 //			removeMenu();
+			
+			
 			// TODO: this is where the transition from title screen to game would happen
 			
 			
