@@ -2,6 +2,7 @@ package ui;
 
 import java.util.ArrayList;
 
+import camera.Camera;
 import camera.PageViewCamera;
 import game.AppLogic;
 import objects.Rectangle;
@@ -47,6 +48,7 @@ public abstract class Menu {
 		menuWidth = buttonWidth + buttonDistance * 2; // p.width / 2.182f; // 660
 		menuHeight = buttonDistance + (buttonHeight + buttonDistance) * buttons.size();
 		menuTopY = p.height / 2 - menuHeight / 2;
+
 	}
 
 	public void buldPageMenu(PVector cameraCenter, Rectangle pageArea, PageViewCamera camera) {
@@ -70,8 +72,12 @@ public abstract class Menu {
 
 		}
 
-		// create page view menu
+		// create page view menu and buttons
 		pageMenu = new Rectangle(position.x - pageWidth / 2, position.y - pageHeight / 2, pageWidth, pageHeight);
+		for (int i = 0; i < buttons.size(); i++) {
+			float y = pageMenu.getY() + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
+			buttons.get(i).setupPageButton(position.x, y, buttonWidth, buttonHeight);
+		}
 		updateCorners();
 	}
 
@@ -85,7 +91,6 @@ public abstract class Menu {
 			float y = pageMenu.getY() + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
 			buttons.get(i).drawOnPage(p, position.x, y);
 		}
-		// TODO: add final logic to this method
 	}
 
 	public void draw() {
@@ -102,12 +107,19 @@ public abstract class Menu {
 	}
 
 	public void hover(PVector lastTouch) {
-		for (Button b : buttons) {
-			b.hover(lastTouch);
+		if (Camera.getGame()) {
+			for (Button b : buttons) {
+				b.hoverPage(lastTouch);
+			}
+		} else {
+			for (Button b : buttons) {
+				b.hover(lastTouch);
+			}
 		}
 	}
 
 	public void click() {
+		// this gets overwritten by child classes
 	}
 
 	// --------------update the corner PVectors---------------

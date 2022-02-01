@@ -38,7 +38,7 @@ public class AppLogic {
 	public KetaiGesture gesture;
 	public FileChooser files;
 	public Vibe vibe;
-	public Converter convert;
+	static public Converter convert;
 	public TextureCache texture;
 
 	static private Menu menu; // current menu
