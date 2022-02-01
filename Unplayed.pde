@@ -41,7 +41,7 @@ void init() {
   }
 
   //initalise the game
-  app.init();
+  AppLogic.init();
 }
 
 //this is the only draw method that should have step logic in it
@@ -71,7 +71,7 @@ void draw() {
   }
 
   //testing.draw(); //draw touch events
-  app.draw(delta_time); //deltaFix
+  AppLogic.draw(delta_time); //deltaFix
 }
 
 @Override public String sketchPath(String where) {
@@ -100,27 +100,27 @@ void draw() {
 }
 
 void touchStarted() {
-  app.touchStarted();
+  AppLogic.touchStarted();
 }
 
 void touchEnded() {
-  app.touchEnded();
+  AppLogic.touchEnded();
 }
 
 void touchMoved() {
-  app.touchMoved();
+  AppLogic.touchMoved();
 }
 
 void onTap (float x, float y) {
-  app.onTap(x, y);
+  AppLogic.onTap(x, y);
 }
 
 void onDoubleTap(float x, float y) {
-  app.onDoubleTap(x, y);
+  AppLogic.onDoubleTap(x, y);
 }
 
 void onFlick(float x, float y, float px, float py, float v) {
-  app.onFlick(x, y, px, py, v);
+  AppLogic.onFlick(x, y, px, py, v);
 }
 
 void onLongPress(float x, float y) {
@@ -128,19 +128,19 @@ void onLongPress(float x, float y) {
 }
 
 void onPinch(float x, float y, float d) {
-  app.onPinch(x, y, d);
+  AppLogic.onPinch(x, y, d);
 }
 
 
 void onRotate(float x, float y, float angle) {
-  app.onRotate(x, y, angle);
+  AppLogic.onRotate(x, y, angle);
 }
 
 @SuppressWarnings("static-access")
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode == this.getActivity().RESULT_OK) {
       if (requestCode == SELECT_LEVEL) {
-        app.setUri(data.getData());
+        AppLogic.setUri(data.getData());
       }
     }
   }
