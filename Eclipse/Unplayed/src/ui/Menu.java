@@ -81,6 +81,22 @@ public abstract class Menu {
 		}
 		updateCorners();
 	}
+	
+	public void buldPageMenu() {
+		float pageWidth = menuWidth; // 600;
+		float pageHeight = menuHeight; // 800;
+		
+		position = new PVector(0, 0);
+
+		// create page view menu and buttons
+		pageMenu = new Rectangle(0 - pageWidth / 2, 0 - pageHeight / 2, pageWidth, pageHeight);
+		for (int i = 0; i < buttons.size(); i++) {
+			float y = pageMenu.getY() + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
+			buttons.get(i).setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2, y, buttonWidth,
+					buttonHeight);
+		}
+		updateCorners();
+	}
 
 	public void drawPageView() {
 		p.noStroke();
@@ -110,9 +126,6 @@ public abstract class Menu {
 	}
 
 	public void hover(PVector lastTouch) {
-		if(lastTouch == null) {
-			return;
-		}
 		if (Camera.getGame()) {
 			// interacting with in page view menu
 			PVector levelTouch = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);

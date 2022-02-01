@@ -97,6 +97,8 @@ public class AppLogic {
 
 		runGame = false;
 		menu = new LaunchMenu(p, this);
+		menu.buldPageMenu();
+		
 		p.background(100);
 
 		// print android api version
@@ -246,9 +248,7 @@ public class AppLogic {
 			if (!Camera.getGame()) {
 				menu.draw();
 			}
-			if (lastTouch != null) {
-				menu.hover(lastTouch);
-			}
+			menu.hover(lastTouch);
 		}
 	}
 
