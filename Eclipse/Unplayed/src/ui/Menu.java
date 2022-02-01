@@ -53,6 +53,8 @@ public abstract class Menu {
 		float pageWidth = 600;
 		float pageHeight = 800;
 
+		float offset = 200 * camera.getSubScale();
+
 		// figure out edge of page area that cameraCenter is closest to
 		float leftDiff = Math.abs(cameraCenter.x - pageArea.getTopLeft().x) + camera.getSideAreaPadding();
 		float rightDiff = Math.abs(pageArea.getBottomRight().x - cameraCenter.x) + camera.getSideAreaPadding();
@@ -61,13 +63,14 @@ public abstract class Menu {
 
 		position = new PVector(0, 0);
 
-		if (leftDiff <= rightDiff) { //&& leftDiff < topDiff && leftDiff < bottomDiff) {
+		if (leftDiff <= rightDiff) { // && leftDiff < topDiff && leftDiff < bottomDiff) {
 			// left
-			position = new PVector(cameraCenter.x - leftDiff - (pageWidth/2), cameraCenter.y);
+			position = new PVector(cameraCenter.x - leftDiff - (pageWidth / 2) - offset, cameraCenter.y);
 
-		} else { //if (rightDiff < leftDiff) { // && rightDiff < topDiff && rightDiff < bottomDiff) {
+		} else { // if (rightDiff < leftDiff) { // && rightDiff < topDiff && rightDiff <
+					// bottomDiff) {
 			// right
-			position = new PVector(cameraCenter.x + rightDiff + (pageWidth/2), cameraCenter.y);
+			position = new PVector(cameraCenter.x + rightDiff + (pageWidth / 2) + offset, cameraCenter.y);
 
 		}
 //		} else if (topDiff < leftDiff && topDiff < rightDiff && topDiff < bottomDiff) {
