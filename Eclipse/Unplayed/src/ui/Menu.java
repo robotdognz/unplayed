@@ -35,23 +35,23 @@ public abstract class Menu {
 	public Menu(PApplet p, AppLogic al) {
 		this.p = p;
 		this.al = al;
-		buttonWidth = 400; //p.width / 2.88f; // 500
-		buttonHeight = 100; //p.width / 7.2f; // 200
+		buttonWidth = 400; // p.width / 2.88f; // 500
+		buttonHeight = 100; // p.width / 7.2f; // 200
+		buttonDistance = 100; // p.width / 18; // 80
 	}
 
 	protected void constructMenu() {
 		// get's called in the child class constructor
 		// create basic menu
 		menuCenterX = p.width / 2;
-		menuWidth = p.width / 2.182f; // 660
-		buttonDistance = p.width / 18; // 80
+		menuWidth = buttonWidth + buttonDistance * 2; // p.width / 2.182f; // 660
 		menuHeight = buttonDistance + (buttonHeight + buttonDistance) * buttons.size();
 		menuTopY = p.height / 2 - menuHeight / 2;
 	}
 
 	public void buldPageMenu(PVector cameraCenter, Rectangle pageArea, PageViewCamera camera) {
-		float pageWidth = 600;
-		float pageHeight = 800;
+		float pageWidth = menuWidth; //600;
+		float pageHeight = menuHeight; //800;
 		float offset = 200;
 
 		// figure out side of pageArea that cameraCenter is closest to
