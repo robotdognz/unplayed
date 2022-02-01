@@ -212,30 +212,45 @@ public class PageView {
 	}
 
 	public void initCamera() {
-		for (Page page : pages) {
-			page.step();
-			page.updateSizeFromView(); // recaulculate page corners
-		}
-		// update the camera zone
-		float minX = Float.POSITIVE_INFINITY;
-		float minY = Float.POSITIVE_INFINITY;
-		float maxX = Float.NEGATIVE_INFINITY;
-		float maxY = Float.NEGATIVE_INFINITY;
-		int visiblePage = 0;
-		for (Page page : pages) {
-			if (page.playerVisible()) {
-				// if this page has a visible player
-				visiblePage++;
-				minX = Math.min(minX, page.getLeftmostPoint());
-				minY = Math.min(minY, page.getTopmostPoint());
-				maxX = Math.max(maxX, page.getRightmostPoint());
-				maxY = Math.max(maxY, page.getBottommostPoint());
-			}
-		}
+		if (AppLogic.hasMenu()) {
+			storedMenu = AppLogic.getMenu();
+			storedMenu.buldPageMenu();
 
-		// only update camera if player is visible somewhere
-		if (visiblePage > 0) {
-			pageCamera.initCamera(minX, minY, maxX, maxY);
+			removeMenu = false;
+
+			float menuMinX = storedMenu.getLeftmostPoint();
+			float menuMinY = storedMenu.getTopmostPoint();
+			float menuMaxX = storedMenu.getRightmostPoint();
+			float menuMaxY = storedMenu.getBottommostPoint();
+			pageCamera.update(menuMinX, menuMinY, menuMaxX, menuMaxY);
+
+			DebugOutput.pushMessage("Page menu built", 1);
+		} else {
+			for (Page page : pages) {
+				page.step();
+				page.updateSizeFromView(); // recaulculate page corners
+			}
+			// update the camera zone
+			float minX = Float.POSITIVE_INFINITY;
+			float minY = Float.POSITIVE_INFINITY;
+			float maxX = Float.NEGATIVE_INFINITY;
+			float maxY = Float.NEGATIVE_INFINITY;
+			int visiblePage = 0;
+			for (Page page : pages) {
+				if (page.playerVisible()) {
+					// if this page has a visible player
+					visiblePage++;
+					minX = Math.min(minX, page.getLeftmostPoint());
+					minY = Math.min(minY, page.getTopmostPoint());
+					maxX = Math.max(maxX, page.getRightmostPoint());
+					maxY = Math.max(maxY, page.getBottommostPoint());
+				}
+			}
+
+			// only update camera if player is visible somewhere
+			if (visiblePage > 0) {
+				pageCamera.initCamera(minX, minY, maxX, maxY);
+			}
 		}
 
 	}
