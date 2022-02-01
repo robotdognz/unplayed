@@ -2,7 +2,7 @@ package ui;
 
 import static processing.core.PConstants.*;
 
-import game.AppLogic;
+import camera.PageViewCamera;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -83,7 +83,7 @@ public class Button {
 
 	public void hoverPage(PVector lastTouch) {
 		// TODO: finish this
-		PVector levelTouch = AppLogic.convert.screenToLevel(lastTouch.x, lastTouch.y);
+		PVector levelTouch = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);
 
 		if (levelTouch.x >= pageButton.getTopLeft().x && levelTouch.y >= pageButton.getTopLeft().y
 				&& levelTouch.x <= pageButton.getBottomRight().x && levelTouch.y <= pageButton.getBottomRight().y) {

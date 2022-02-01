@@ -199,4 +199,11 @@ public class PageViewCamera {
 	public float getBottomAreaPadding() {
 		return bottomAreaPadding;
 	}
+	
+	static public PVector screenToLevel(float screenX, float screenY) {
+		PVector output = new PVector();
+		output.x = ((screenX - p.width / 2) / ((float) p.width / scale) / subScale) + center.x;
+		output.y = ((screenY - p.height / 2) / ((float) p.width / scale) / subScale) + center.y;
+		return output;
+	}
 }
