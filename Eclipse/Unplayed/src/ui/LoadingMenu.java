@@ -24,6 +24,8 @@ public class LoadingMenu extends Menu {
 			// snap to position relative to new level
 			// snap camera to position
 			alreadyUsed = true;
+		}else {
+			AppLogic.removeMenu();
 		}
 	}
 
