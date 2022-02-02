@@ -164,8 +164,12 @@ public class PageView {
 				Rectangle pageArea = new Rectangle(minX, minY, maxX - minX, maxY - minY);
 				storedMenu.buldPageMenu(pageCamera.getCenter(), pageArea, pageCamera);
 			} else {
-				Rectangle area = getArea();
-				storedMenu.buldPageMenu(pageCamera.getCenter(), area, pageCamera);
+				if (storedMenu.child == null) {
+					storedMenu.buldPageMenu();
+				} else {
+					Rectangle area = getArea();
+					storedMenu.buldPageMenu(pageCamera.getCenter(), area, pageCamera);
+				}
 			}
 
 			removeMenu = false;
@@ -289,10 +293,18 @@ public class PageView {
 
 		// add area for menu
 		if (storedMenu != null) {
-			minX = Math.min(minX, storedMenu.getLeftmostPoint());
-			minY = Math.min(minY, storedMenu.getTopmostPoint());
-			maxX = Math.max(maxX, storedMenu.getRightmostPoint());
-			maxY = Math.max(maxY, storedMenu.getBottommostPoint());
+			if (storedMenu.isBuilt()) {
+				minX = Math.min(minX, storedMenu.getLeftmostPoint());
+				minY = Math.min(minY, storedMenu.getTopmostPoint());
+				maxX = Math.max(maxX, storedMenu.getRightmostPoint());
+				maxY = Math.max(maxY, storedMenu.getBottommostPoint());
+			}
+			if (storedMenu.child != null && storedMenu.child.isBuilt()) {
+				minX = Math.min(minX, storedMenu.child.getLeftmostPoint());
+				minY = Math.min(minY, storedMenu.child.getTopmostPoint());
+				maxX = Math.max(maxX, storedMenu.child.getRightmostPoint());
+				maxY = Math.max(maxY, storedMenu.child.getBottommostPoint());
+			}
 		}
 
 		float x = minX;
