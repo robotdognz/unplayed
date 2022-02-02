@@ -225,6 +225,7 @@ public class PageView {
 		boolean temp = pageCamera.step(deltaTime);
 		// if the camera has finished moving
 		if (!temp && storedMenu != null) {
+			DebugOutput.pushMessage("Kill me!!!", 1);
 			storedMenu.activate();
 		}
 
