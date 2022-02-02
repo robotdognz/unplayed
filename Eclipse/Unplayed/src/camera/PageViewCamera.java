@@ -72,7 +72,7 @@ public class PageViewCamera {
 	}
 
 	public boolean step(float deltaTime) {
-		boolean temp = false;
+		boolean temp = true;
 		if (!cameraArea.sameDimensions(newCameraArea)) { // camera is changing
 			// if there might be a difference in tall screen scale
 			if ((newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y)
@@ -113,8 +113,8 @@ public class PageViewCamera {
 		
 		if (Math.abs(center.x - newCenter.x) < 0.5) {
 			// this only returns false when the numbers are very similar to each other
-			// which means that 
-			temp = true;
+			// which means that the camera isn't moving
+			temp = false;
 		}
 
 		return temp;
