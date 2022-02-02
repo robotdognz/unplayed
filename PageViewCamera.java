@@ -111,7 +111,7 @@ public class PageViewCamera {
 			cameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
 		}
 		
-		if (Math.abs(center.x - newCenter.x) < 0.5) {
+		if (Math.abs(center.x - newCenter.x) < 0.5 && Math.abs(center.y - newCenter.y) < 0.5) {
 			// this only returns false when the numbers are very similar to each other
 			// which means that the camera isn't moving
 			temp = false;
