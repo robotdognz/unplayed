@@ -149,21 +149,37 @@ public class AppLogic {
 
 	static public void newGame() {
 		currentLevel = 0;
-		EditorJSON json = new EditorJSON(p, texture, null);
+//		EditorJSON json = new EditorJSON(p, texture, null);
 
 		if (levels != null && levels.size() > currentLevel) {
 //			json.load(game, levels.get(currentLevel).toString());
 //			new GameCamera();
 //			game.startGame();
 //			removeMenu();
-			
-			
+
 			// TODO: this is where the transition from title screen to game would happen
-			
-			
+
 			loadingScreen();
 		}
 
+	}
+
+	static public void startLevel() {
+		if (editor != null) {
+			// we're in the editor
+			game.startGame();
+			return;
+		}
+
+		// not in the editor
+
+		EditorJSON json = new EditorJSON(p, texture, null);
+
+		if (levels != null && levels.size() > currentLevel) {
+			json.load(game, levels.get(currentLevel).toString());
+			new GameCamera();
+			game.startGame();
+		}
 	}
 
 	static public void nextLevel() {
@@ -374,11 +390,11 @@ public class AppLogic {
 		menuAdded = true;
 		menuRemoved = false;
 	}
-	
+
 	static public void loadingScreen() {
 		Menu temp = new LoadingMenu(p);
 		Rectangle pageArea = game.getPageView().getArea();
-		
+
 		temp.buldPageMenu(lastTouch, pageArea, game.getPageView().getPageCamera());
 		setMenu(temp);
 	}

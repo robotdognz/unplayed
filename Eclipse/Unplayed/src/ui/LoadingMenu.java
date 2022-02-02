@@ -21,6 +21,7 @@ public class LoadingMenu extends Menu {
 		child = null;
 
 		// load in the next level
+		AppLogic.startLevel();
 
 		// snap to position relative to new level
 		// snap camera to position
