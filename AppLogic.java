@@ -176,7 +176,7 @@ public class AppLogic {
 				json.load(game, levels.get(currentLevel).toString());
 				new GameCamera();
 				game.startGame();
-				game.step(0.01f);
+//				game.step(0.01f);
 //				menuRemoved = true;
 //				menuAdded = false;
 			}
@@ -241,6 +241,8 @@ public class AppLogic {
 		} else {
 			if (menu == null) {
 				controller.step(touches);
+				game.step(deltaTime); // step game and physics
+			} else if (menu instanceof LoadingMenu) {
 				game.step(deltaTime); // step game and physics
 			}
 		}
