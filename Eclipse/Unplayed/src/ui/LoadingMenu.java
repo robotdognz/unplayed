@@ -18,8 +18,8 @@ public class LoadingMenu extends Menu {
 		child = null;
 
 		// load in the next level
-		AppLogic.removeMenu(); // remove self
 		AppLogic.startLevel();
+		AppLogic.removeMenu(); // remove self
 
 		// snap to position relative to new level
 		// snap camera to position
