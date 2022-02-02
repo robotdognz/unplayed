@@ -176,8 +176,8 @@ public class AppLogic {
 				json.load(game, levels.get(currentLevel).toString());
 				new GameCamera();
 				game.startGame();
-				menuRemoved = true;
-				menuAdded = false;
+//				menuRemoved = true;
+//				menuAdded = false;
 			}
 		}
 	}
@@ -395,7 +395,7 @@ public class AppLogic {
 		Menu temp = new LoadingMenu(p);
 		Rectangle pageArea = game.getPageView().getArea();
 
-		temp.buldPageMenu(lastTouch, pageArea, game.getPageView().getPageCamera());
+		temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
 		setMenu(temp);
 	}
 
