@@ -89,17 +89,17 @@ public class PageViewCamera {
 		// vertical scale
 		if (subScale != newSubScale) {
 			subScale = PApplet.lerp(subScale, newSubScale, (float) (1 - Math.pow(zoomSpeed, deltaTime)));
-//			temp = true;
 		}
 		// main scale
 		if (scale != newScale) {
 			scale = PApplet.lerp(scale, newScale, (float) (1 - Math.pow(zoomSpeed, deltaTime)));
-//			temp = true;
 		}
 		// translate
 		if (center != newCenter) {
 			center = PVector.lerp(center, newCenter, (float) (1 - Math.pow(zoomSpeed, deltaTime)));
-//			temp = true;
+			if (Math.abs(center.x - newCenter.x) < 0.5) {
+				temp = true;
+			}
 		}
 		// black border movement
 		if (!cameraArea.sameDimensions(newCameraArea)) {
@@ -112,7 +112,6 @@ public class PageViewCamera {
 			float bottomRightY = PApplet.lerp(cameraArea.getBottomRight().y, newCameraArea.getBottomRight().y,
 					(float) (1 - Math.pow(zoomSpeed, deltaTime)));
 			cameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
-			temp = true;
 		}
 
 		return temp;
