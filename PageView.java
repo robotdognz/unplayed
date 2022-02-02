@@ -223,9 +223,12 @@ public class PageView {
 
 		// move the camera
 		boolean temp = pageCamera.step(deltaTime);
+		if (temp == false) {
+			DebugOutput.pushMessage("Kill me!!!", 1);
+		}
 		// if the camera has finished moving
 		if (!temp && storedMenu != null) {
-			DebugOutput.pushMessage("Kill me!!!", 1);
+
 			storedMenu.activate();
 		}
 
