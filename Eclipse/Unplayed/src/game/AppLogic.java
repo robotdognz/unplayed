@@ -179,6 +179,7 @@ public class AppLogic {
 //				game.step(0.01f);
 //				menuRemoved = true;
 //				menuAdded = false;
+				game.getPageView().setRemoveMenu(true);
 			}
 		}
 	}
@@ -242,9 +243,9 @@ public class AppLogic {
 			if (menu == null) {
 				controller.step(touches);
 				game.step(deltaTime); // step game and physics
-			} else if (menu instanceof LoadingMenu) {
-				game.step(deltaTime); // step game and physics
-			}
+			} // else if (menu instanceof LoadingMenu) {
+//				game.step(deltaTime); // step game and physics
+//			}
 		}
 		game.cameraStep(deltaTime); // step camera etc
 

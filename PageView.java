@@ -32,6 +32,10 @@ public class PageView {
 	private Menu storedMenu;
 	private boolean removeMenu = false;
 
+	public void setRemoveMenu(boolean removeMenu) {
+		this.removeMenu = removeMenu;
+	}
+
 	public PageView(PApplet p, Game game, TextureCache texture, Converter convert) {
 		this.p = p;
 		this.convert = convert;
