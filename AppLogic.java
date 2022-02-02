@@ -167,7 +167,7 @@ public class AppLogic {
 	static public void startLevel() {
 		if (editor != null) {
 			// we're in the editor
-			removeMenu();
+//			removeMenu();
 			game.startGame();
 		} else {
 			// not in the editor
