@@ -179,7 +179,6 @@ public class AppLogic {
 //				game.step(0.01f);
 //				menuRemoved = true;
 //				menuAdded = false;
-				game.getPageView().setRemoveMenu(true);
 			}
 		}
 	}
@@ -237,16 +236,17 @@ public class AppLogic {
 			// step editor or game controller depending on editor toggle
 			editor.step(touches);
 			if (menu == null) {
-				game.step(deltaTime); // step game and physics
+//				game.step(deltaTime); // step game and physics
 			}
 		} else {
 			if (menu == null) {
 				controller.step(touches);
-				game.step(deltaTime); // step game and physics
+//				game.step(deltaTime); // step game and physics
 			} // else if (menu instanceof LoadingMenu) {
 //				game.step(deltaTime); // step game and physics
 //			}
 		}
+		game.step(deltaTime); // step game and physics
 		game.cameraStep(deltaTime); // step camera etc
 
 		// draw the game
