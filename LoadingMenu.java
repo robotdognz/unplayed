@@ -21,8 +21,7 @@ public class LoadingMenu extends Menu {
 		child = null;
 
 		// load in the next level
-		AppLogic.removeMenu(); // remove pause menu
-		AppLogic.removeMenu(); // remove pause menu
+		AppLogic.removeMenu(); // remove self
 		AppLogic.startLevel();
 
 		// snap to position relative to new level
