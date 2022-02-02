@@ -168,18 +168,17 @@ public class AppLogic {
 		if (editor != null) {
 			// we're in the editor
 			game.startGame();
-			return;
-		}
+		} else {
+			// not in the editor
+			EditorJSON json = new EditorJSON(p, texture, null);
 
-		// not in the editor
-
-		EditorJSON json = new EditorJSON(p, texture, null);
-
-		if (levels != null && levels.size() > currentLevel) {
-			json.load(game, levels.get(currentLevel).toString());
-			new GameCamera();
-			game.startGame();
-			removeMenu();
+			if (levels != null && levels.size() > currentLevel) {
+				json.load(game, levels.get(currentLevel).toString());
+				new GameCamera();
+				game.startGame();
+				removeMenu();
+				removeMenu();
+			}
 		}
 	}
 
