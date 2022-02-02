@@ -5,12 +5,12 @@ import processing.core.PApplet;
 
 public class LoadingMenu extends Menu {
 	
-	String test = "test";
+//	String test = "test";
 
 	public LoadingMenu(PApplet p) {
 		super(p);
-		Button testb = new Button(p.width / 2, buttonWidth, buttonHeight, test);
-		buttons.add(testb);
+//		Button testb = new Button(p.width / 2, buttonWidth, buttonHeight, test);
+//		buttons.add(testb);
 		
 		constructMenu();
 	}
@@ -31,12 +31,12 @@ public class LoadingMenu extends Menu {
 	
 	@Override
 	public void click() {
-		for (Button b : buttons) {
-			if (b.click().equals(test)) {
-				AppLogic.removeMenu(); // remove pause menu
-				AppLogic.removeMenu(); // remove pause menu
-			}
-		}
+//		for (Button b : buttons) {
+//			if (b.click().equals(test)) {
+//				AppLogic.removeMenu(); // remove pause menu
+//				AppLogic.removeMenu(); // remove pause menu
+//			}
+//		}
 	}
 
 }
