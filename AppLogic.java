@@ -167,6 +167,7 @@ public class AppLogic {
 	static public void startLevel() {
 		if (editor != null) {
 			// we're in the editor
+			removeMenu();
 			game.startGame();
 		} else {
 			// not in the editor
@@ -176,6 +177,7 @@ public class AppLogic {
 				json.load(game, levels.get(currentLevel).toString());
 				new GameCamera();
 				game.startGame();
+				removeMenu();
 //				game.step(0.01f);
 //				menuRemoved = true;
 //				menuAdded = false;
