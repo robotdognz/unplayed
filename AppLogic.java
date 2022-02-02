@@ -177,7 +177,7 @@ public class AppLogic {
 				json.load(game, levels.get(currentLevel).toString());
 				new GameCamera();
 				game.startGame();
-//				removeMenu();
+				removeMenu();
 			}
 		}
 	}
