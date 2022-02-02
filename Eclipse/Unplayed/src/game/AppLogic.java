@@ -177,6 +177,7 @@ public class AppLogic {
 				new GameCamera();
 				game.startGame();
 				menuRemoved = true;
+				menuAdded = false;
 			}
 		}
 	}
