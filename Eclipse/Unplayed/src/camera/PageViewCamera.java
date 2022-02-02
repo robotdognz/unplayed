@@ -97,9 +97,6 @@ public class PageViewCamera {
 		// translate
 		if (center != newCenter) {
 			center = PVector.lerp(center, newCenter, (float) (1 - Math.pow(zoomSpeed, deltaTime)));
-			if (Math.abs(center.x - newCenter.x) < 0.5) {
-				temp = true;
-			}
 		}
 		// black border movement
 		if (!cameraArea.sameDimensions(newCameraArea)) {
@@ -112,6 +109,12 @@ public class PageViewCamera {
 			float bottomRightY = PApplet.lerp(cameraArea.getBottomRight().y, newCameraArea.getBottomRight().y,
 					(float) (1 - Math.pow(zoomSpeed, deltaTime)));
 			cameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
+		}
+		
+		if (Math.abs(center.x - newCenter.x) < 0.5) {
+			// this only returns false when the numbers are very similar to each other
+			// which means that 
+			temp = true;
 		}
 
 		return temp;
