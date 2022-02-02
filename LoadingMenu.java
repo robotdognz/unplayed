@@ -14,7 +14,7 @@ public class LoadingMenu extends Menu {
 
 	@Override
 	public void activate() {
-		if (!alreadyUsed) {
+//		if (!alreadyUsed) {
 			// remove any child menus
 			child = null;
 
@@ -25,7 +25,7 @@ public class LoadingMenu extends Menu {
 			// snap camera to position
 			
 			alreadyUsed = true;
-		}
+//		}
 	}
 
 }
