@@ -164,7 +164,8 @@ public class PageView {
 				Rectangle pageArea = new Rectangle(minX, minY, maxX - minX, maxY - minY);
 				storedMenu.buldPageMenu(pageCamera.getCenter(), pageArea, pageCamera);
 			} else {
-				storedMenu.buldPageMenu();
+				Rectangle area = getArea();
+				storedMenu.buldPageMenu(pageCamera.getCenter(), area, pageCamera);
 			}
 
 			removeMenu = false;
