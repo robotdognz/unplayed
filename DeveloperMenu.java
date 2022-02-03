@@ -36,7 +36,10 @@ public class DeveloperMenu extends Menu {
 			} else if (b.click().equals(back)) {
 //				game.emptyGame();
 //				AppLogic.titleScreen(); // open title screen menu
-				AppLogic.previousMenu();
+				if (!alreadyUsed) {
+					alreadyUsed = true;
+					AppLogic.previousMenu();
+				}
 			}
 		}
 	}

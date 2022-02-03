@@ -426,7 +426,7 @@ public class AppLogic {
 			// menu.child will become the new menu
 			// menu will become the new menu.child
 			Menu temp = menu;
-			menu = temp.child;
+			menu = menu.child;
 			menu.child = temp;
 		}
 		
