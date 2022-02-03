@@ -148,15 +148,6 @@ public abstract class Menu {
 		}
 	}
 
-	public void clearHover() {
-		for (Button b : buttons) {
-			b.clearHover();
-		}
-		if (child != null) {
-			child.clearHover();
-		}
-	}
-
 	public void click() {
 		// this gets overwritten by child classes
 	}

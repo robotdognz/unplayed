@@ -34,12 +34,7 @@ public class DeveloperMenu extends Menu {
 				// TODO: load folder of levels and play it as a campaign
 
 			} else if (b.click().equals(back)) {
-//				game.emptyGame();
-//				AppLogic.titleScreen(); // open title screen menu
-//				if (!alreadyUsed) {
-//					alreadyUsed = true;
-					AppLogic.previousMenu();
-//				}
+				AppLogic.previousMenu();
 			}
 		}
 	}

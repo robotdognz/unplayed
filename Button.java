@@ -70,10 +70,6 @@ public class Button {
 		}
 	}
 
-	public void clearHover() {
-		hover = false;
-	}
-
 	public void hover(PVector lastTouch) {
 		if (lastTouch.x >= xCenter - bWidth / 2 && lastTouch.y >= yCenter - bHeight / 2
 				&& lastTouch.x <= xCenter + bWidth / 2 && lastTouch.y <= yCenter + bHeight / 2) {
