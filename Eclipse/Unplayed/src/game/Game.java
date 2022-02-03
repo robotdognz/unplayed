@@ -175,7 +175,7 @@ public class Game {
 		HashSet<Rectangle> allObjects = new HashSet<Rectangle>();
 		world.getAll(allObjects);
 		for (Rectangle temp : allObjects) {
-			if (temp instanceof PlayerStart) {
+			if (temp instanceof PlayerEnd) {
 				((PlayerEnd) temp).reset();
 			}
 		}
