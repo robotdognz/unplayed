@@ -22,6 +22,8 @@ public class PlayerEnd extends Event {
 	private Rectangle newPlayerArea;
 	private PVector center; // used for checking against player position
 
+	private boolean alreadyUsed = false;
+
 	public PlayerEnd(Game game, TextureCache texture, String name, float x, float y) {
 		super(game, texture, name, false, x, y, 100, 100);
 
@@ -161,10 +163,13 @@ public class PlayerEnd extends Event {
 
 		}
 
-		if (levelEnd) { // if this is the end of the level
-			game.endGame();
-		} else { // if this is just part of the puzzle
-			game.endPuzzle(newPlayerArea);
+		if (!alreadyUsed) { // only ever do this once
+			alreadyUsed = true;
+			if (levelEnd) { // if this is the end of the level
+				game.endGame();
+			} else { // if this is just part of the puzzle
+				game.endPuzzle(newPlayerArea);
+			}
 		}
 	}
 

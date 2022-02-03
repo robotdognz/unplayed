@@ -157,6 +157,22 @@ public class AppLogic {
 
 	}
 
+	static public void nextLevel() {
+			currentLevel++;
+	//		EditorJSON json = new EditorJSON(p, texture, null);
+	
+			if (levels != null && levels.size() > currentLevel) {
+	//			json.load(game, levels.get(currentLevel).toString());
+	//			game.startGame();
+				loadingScreen();
+				// TODO: this is where level transition menu would be created
+			} else {
+				init();
+				// TODO: this is where it would start the transition back to the title screen
+			}
+	
+		}
+
 	static public void startLevel() {
 		if (editor != null) {
 			// we're in the editor
@@ -168,27 +184,18 @@ public class AppLogic {
 
 			if (levels != null && levels.size() > currentLevel) {
 				json.load(game, levels.get(currentLevel).toString());
-//				new GameCamera();
 				game.startGame();
 				removeMenu();
 			}
 		}
 	}
 
-	static public void nextLevel() {
-		currentLevel++;
-//		EditorJSON json = new EditorJSON(p, texture, null);
-
-		if (levels.size() > currentLevel) {
-//			json.load(game, levels.get(currentLevel).toString());
-//			game.startGame();
-			loadingScreen();
-			// TODO: this is where level transition menu would be created
-		} else {
-			init();
-			// TODO: this is where it would start the transition back to the title screen
-		}
-
+	static public void loadingScreen() {
+		Menu temp = new LoadingMenu(p);
+		Rectangle pageArea = game.getPageView().getArea();
+	
+		temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
+		setMenu(temp);
 	}
 
 	static public void toggleEditor() {
@@ -385,14 +392,6 @@ public class AppLogic {
 
 		menuAdded = true;
 		menuRemoved = false;
-	}
-
-	static public void loadingScreen() {
-		Menu temp = new LoadingMenu(p);
-		Rectangle pageArea = game.getPageView().getArea();
-
-		temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
-		setMenu(temp);
 	}
 
 	static public void removeMenu() {
