@@ -425,9 +425,9 @@ public class AppLogic {
 		if (menu != null && menu.child != null) {
 			// menu.child will become the new menu
 			// menu will become the new menu.child
-			Menu temp = menu;
+//			Menu temp = menu;
 			menu = menu.child;
-			menu.child = temp;
+//			menu.child = temp;
 		}
 		
 		// might need these?
