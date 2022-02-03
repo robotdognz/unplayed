@@ -120,6 +120,10 @@ public class PlayerEnd extends Event {
 	public void setLevelEnd(boolean levelEnd) {
 		this.levelEnd = levelEnd;
 	}
+	
+	public void reset() {
+		alreadyUsed = false;
+	}
 
 	@Override
 	public void activate() {

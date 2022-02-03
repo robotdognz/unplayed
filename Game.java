@@ -12,6 +12,7 @@ import misc.MyContactListener;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
+import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
 import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
@@ -169,6 +170,15 @@ public class Game {
 		}
 		placed.clear();
 		removed.clear();
+
+		// reset player ends
+		HashSet<Rectangle> allObjects = new HashSet<Rectangle>();
+		world.getAll(allObjects);
+		for (Rectangle temp : allObjects) {
+			if (temp instanceof PlayerStart) {
+				((PlayerEnd) temp).reset();
+			}
+		}
 
 		// Initialize player
 		if (playerStart != null) {

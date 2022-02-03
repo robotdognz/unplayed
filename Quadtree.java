@@ -31,8 +31,8 @@ public class Quadtree {
 		} else if (current instanceof Event) {
 			((Event) current).create();
 		}
-		
-		if(current instanceof PlayerEnd) {
+
+		if (current instanceof PlayerEnd) {
 			playerEndCount++;
 		}
 	}
@@ -45,8 +45,8 @@ public class Quadtree {
 		} else if (current instanceof Event) {
 			((Event) current).destroy();
 		}
-		
-		if(current instanceof PlayerEnd) {
+
+		if (current instanceof PlayerEnd) {
 			playerEndCount--;
 		}
 	}
@@ -74,7 +74,7 @@ public class Quadtree {
 	public int insertCount() {
 		return insertCount;
 	}
-	
+
 	public int playerEndCount() {
 		return playerEndCount;
 	}
