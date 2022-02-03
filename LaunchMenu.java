@@ -32,7 +32,7 @@ public class LaunchMenu extends Menu {
 				AppLogic.newGame();
 			} else if (b.click().equals(editor)) {
 
-				game.emptyGame();
+//				game.emptyGame();
 				AppLogic.toggleEditor();
 
 			} else if (b.click().equals(quit)) {
@@ -46,7 +46,7 @@ public class LaunchMenu extends Menu {
 		if (!alreadyUsed) {
 			alreadyUsed = true;
 			child = null; // remove any child menus
-			game.emptyGame();
+//			game.emptyGame();
 		}
 	}
 }
