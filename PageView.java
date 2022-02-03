@@ -147,28 +147,31 @@ public class PageView {
 		if (AppLogic.menuAdded() == true) {
 			storedMenu = AppLogic.getMenu();
 
-			// build the page menu
-			if (pages.size() > 0) {
-				float minX = Float.POSITIVE_INFINITY;
-				float minY = Float.POSITIVE_INFINITY;
-				float maxX = Float.NEGATIVE_INFINITY;
-				float maxY = Float.NEGATIVE_INFINITY;
-				for (Page page : pages) {
+			if (!storedMenu.isBuilt()) {
+				// build the page menu if it isn't already built
+				//TODO: this needs work
+				if (pages.size() > 0) {
+					float minX = Float.POSITIVE_INFINITY;
+					float minY = Float.POSITIVE_INFINITY;
+					float maxX = Float.NEGATIVE_INFINITY;
+					float maxY = Float.NEGATIVE_INFINITY;
+					for (Page page : pages) {
 
-					minX = Math.min(minX, page.getLeftmostPoint());
-					minY = Math.min(minY, page.getTopmostPoint());
-					maxX = Math.max(maxX, page.getRightmostPoint());
-					maxY = Math.max(maxY, page.getBottommostPoint());
+						minX = Math.min(minX, page.getLeftmostPoint());
+						minY = Math.min(minY, page.getTopmostPoint());
+						maxX = Math.max(maxX, page.getRightmostPoint());
+						maxY = Math.max(maxY, page.getBottommostPoint());
 
-				}
-				Rectangle pageArea = new Rectangle(minX, minY, maxX - minX, maxY - minY);
-				storedMenu.buldPageMenu(pageCamera.getCenter(), pageArea, pageCamera);
-			} else {
-				if (storedMenu.child == null) {
-					storedMenu.buldPageMenu();
+					}
+					Rectangle pageArea = new Rectangle(minX, minY, maxX - minX, maxY - minY);
+					storedMenu.buldPageMenu(pageCamera.getCenter(), pageArea, pageCamera);
 				} else {
-					Rectangle area = getArea();
-					storedMenu.buldPageMenu(pageCamera.getCenter(), area, pageCamera);
+					if (storedMenu.child == null) {
+						storedMenu.buldPageMenu();
+					} else {
+						Rectangle area = getArea();
+						storedMenu.buldPageMenu(pageCamera.getCenter(), area, pageCamera);
+					}
 				}
 			}
 
