@@ -30,7 +30,7 @@ public class LaunchMenu extends Menu {
 	public void click() {
 		for (Button b : buttons) {
 			if (b.click().equals(newGame)) {
-				child = null;
+				child = null; // clear any existing menus
 				AppLogic.newGame();
 			} else if (b.click().equals(editor)) {
 				if (!(child instanceof DeveloperMenu)) {
