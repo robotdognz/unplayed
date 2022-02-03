@@ -168,7 +168,7 @@ public class AppLogic {
 
 			if (levels != null && levels.size() > currentLevel) {
 				json.load(game, levels.get(currentLevel).toString());
-				new GameCamera();
+//				new GameCamera();
 				game.startGame();
 				removeMenu();
 			}
