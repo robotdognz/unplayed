@@ -106,14 +106,11 @@ public class AppLogic {
 	}
 
 	static public void titleScreen() {
-//		init();
-		
 		Menu temp = new LaunchMenu(p);
 		Rectangle pageArea = game.getPageView().getArea();
 
 		temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
 		setMenu(temp);
-		
 	}
 
 	static public void getLevels() {

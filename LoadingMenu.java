@@ -17,16 +17,14 @@ public class LoadingMenu extends Menu {
 	@Override
 	public void activate() {
 		if (!alreadyUsed) {
-			// remove any child menus
-			child = null;
-
-			// load in the next level
-			AppLogic.startLevel();
+			alreadyUsed = true;
+			child = null; // remove any child menus
+			AppLogic.startLevel(); // load in the next level
 
 			// snap to position relative to new level
 			// snap camera to position
 
-			alreadyUsed = true;
+			
 		}
 	}
 

@@ -10,10 +10,12 @@ public class LaunchMenu extends Menu {
 	String editor = "Start Editor";
 	String quit = "Quit";
 
+	boolean alreadyUsed = false;
+
 	public LaunchMenu(PApplet p) {
 		super(p);
 		this.game = AppLogic.game;
-		
+
 		Button demoB = new Button(p.width / 2, buttonWidth, buttonHeight, newGame);
 		Button editorB = new Button(p.width / 2, buttonWidth, buttonHeight, editor);
 		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
@@ -35,6 +37,15 @@ public class LaunchMenu extends Menu {
 			} else if (b.click().equals(quit)) {
 				AppLogic.quit(); // exit the game
 			}
+		}
+	}
+
+	@Override
+	public void activate() {
+		if (!alreadyUsed) {
+			alreadyUsed = true;
+			child = null; // remove any child menus
+			game.emptyGame();
 		}
 	}
 }

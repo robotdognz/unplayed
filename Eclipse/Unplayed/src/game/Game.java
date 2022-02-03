@@ -95,6 +95,15 @@ public class Game {
 		buildWorld();
 	}
 
+	public void emptyGame() {
+		world.clear(); // remove old world objects
+		placed.clear(); // removed tiles that have been inserted into slots
+		removed.clear(); // remove tiles that have become the player
+		clearPlayerStart(); // remove the player
+		pageView.clearPages(); // remove pages
+		pageView.clearBackgrounds(); // remove backgrounds
+	}
+
 	public void removePlayer() {
 		if (player == null) {
 			return;
