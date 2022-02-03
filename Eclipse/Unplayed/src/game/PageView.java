@@ -291,21 +291,35 @@ public class PageView {
 			maxY = Math.max(maxY, page.getBottommostPoint());
 		}
 
-		// add area for menu
-		if (storedMenu != null) {
-			if (storedMenu.isBuilt()) {
+		Menu temp = storedMenu;
+		while (temp != null) {
+			if (temp.isBuilt()) {
 				minX = Math.min(minX, storedMenu.getLeftmostPoint());
 				minY = Math.min(minY, storedMenu.getTopmostPoint());
 				maxX = Math.max(maxX, storedMenu.getRightmostPoint());
 				maxY = Math.max(maxY, storedMenu.getBottommostPoint());
 			}
-			if (storedMenu.child != null && storedMenu.child.isBuilt()) {
-				minX = Math.min(minX, storedMenu.child.getLeftmostPoint());
-				minY = Math.min(minY, storedMenu.child.getTopmostPoint());
-				maxX = Math.max(maxX, storedMenu.child.getRightmostPoint());
-				maxY = Math.max(maxY, storedMenu.child.getBottommostPoint());
-			}
+			temp = temp.child; // update current
 		}
+
+//		// add area for menu
+//		if (storedMenu != null) {
+//			if (storedMenu.isBuilt()) {
+//				minX = Math.min(minX, storedMenu.getLeftmostPoint());
+//				minY = Math.min(minY, storedMenu.getTopmostPoint());
+//				maxX = Math.max(maxX, storedMenu.getRightmostPoint());
+//				maxY = Math.max(maxY, storedMenu.getBottommostPoint());
+//			}
+//
+//			
+//
+//			if (storedMenu.child != null && storedMenu.child.isBuilt()) {
+//				minX = Math.min(minX, storedMenu.child.getLeftmostPoint());
+//				minY = Math.min(minY, storedMenu.child.getTopmostPoint());
+//				maxX = Math.max(maxX, storedMenu.child.getRightmostPoint());
+//				maxY = Math.max(maxY, storedMenu.child.getBottommostPoint());
+//			}
+//		}
 
 		float x = minX;
 		float y = minY;
