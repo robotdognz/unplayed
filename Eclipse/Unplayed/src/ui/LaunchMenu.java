@@ -32,11 +32,16 @@ public class LaunchMenu extends Menu {
 			if (b.click().equals(newGame)) {
 				AppLogic.newGame();
 			} else if (b.click().equals(editor)) {
-				Menu temp = new DeveloperMenu(p);
-				Rectangle pageArea = game.getPageView().getArea();
+				if (!(child instanceof DeveloperMenu)) {
+					Menu temp = new DeveloperMenu(p);
+					Rectangle pageArea = game.getPageView().getArea();
 
-				temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
-				AppLogic.addMenu(temp);
+					temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea,
+							game.getPageView().getPageCamera());
+					AppLogic.addMenu(temp);
+				} else {
+					AppLogic.previousMenu();
+				}
 
 			} else if (b.click().equals(quit)) {
 				AppLogic.quit(); // exit the game
@@ -47,8 +52,8 @@ public class LaunchMenu extends Menu {
 	@Override
 	public void activate() {
 //		if (!alreadyUsed) {
-			alreadyUsed = true;
-			child = null; // remove any child menus, launch should never have children
+		alreadyUsed = true;
+		child = null; // remove any child menus, launch should never have children
 //		}
 	}
 }

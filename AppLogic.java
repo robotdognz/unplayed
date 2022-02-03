@@ -427,15 +427,12 @@ public class AppLogic {
 			// menu will become the new menu.child
 			Menu temp = menu; // old head
 			menu = menu.child; // old body
-			
-			
+
 			temp.child = menu.child;
-			
-			
+
 			menu.child = temp;
-			
 		}
-		
+
 		// might need these?
 		menuAdded = true;
 		menuRemoved = false;

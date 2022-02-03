@@ -31,7 +31,7 @@ public abstract class Menu {
 	PVector topRight;
 	PVector bottomLeft;
 	PVector bottomRight;
-	
+
 	private boolean built = false;
 
 	public Menu(PApplet p) {
@@ -145,6 +145,15 @@ public abstract class Menu {
 			for (Button b : buttons) {
 				b.hover(lastTouch);
 			}
+		}
+	}
+
+	public void clearHover() {
+		for (Button b : buttons) {
+			b.clearHover();
+		}
+		if (child != null) {
+			child.clearHover();
 		}
 	}
 
@@ -272,7 +281,7 @@ public abstract class Menu {
 		}
 		return true;
 	}
-	
+
 	public boolean isBuilt() {
 		return built;
 	}
