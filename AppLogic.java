@@ -105,14 +105,6 @@ public class AppLogic {
 		PApplet.println(android.os.Build.VERSION.SDK_INT);
 	}
 
-	static public void titleScreen() {
-		Menu temp = new LaunchMenu(p);
-		Rectangle pageArea = game.getPageView().getArea();
-
-		temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
-		setMenu(temp);
-	}
-
 	static public void getLevels() {
 		levels = new ArrayList<File>();
 		// generate all the relative file paths
@@ -165,8 +157,6 @@ public class AppLogic {
 		if (levels != null && levels.size() > currentLevel) {
 			loadingScreen();
 		} else {
-//			init();
-			// TODO: this is where it would start the transition back to the title screen
 			titleScreen();
 		}
 	}
@@ -174,8 +164,8 @@ public class AppLogic {
 	static public void startLevel() {
 		if (editor != null) {
 			// we're in the editor
-			removeMenu();
 			game.startGame();
+			removeMenu();
 		} else {
 			// not in the editor
 			EditorJSON json = new EditorJSON(p, texture, null);
@@ -186,6 +176,14 @@ public class AppLogic {
 				removeMenu();
 			}
 		}
+	}
+
+	static public void titleScreen() {
+		Menu temp = new LaunchMenu(p);
+		Rectangle pageArea = game.getPageView().getArea();
+	
+		temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
+		setMenu(temp);
 	}
 
 	static public void loadingScreen() {
