@@ -165,8 +165,9 @@ public class AppLogic {
 		if (levels != null && levels.size() > currentLevel) {
 			loadingScreen();
 		} else {
-			init();
+//			init();
 			// TODO: this is where it would start the transition back to the title screen
+			titleScreen();
 		}
 	}
 
