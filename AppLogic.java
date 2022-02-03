@@ -172,7 +172,11 @@ public class AppLogic {
 
 			if (levels != null && levels.size() > currentLevel) {
 				json.load(game, levels.get(currentLevel).toString());
-//				game.startGame();
+				game.startGame(); // needed to reset game after loading in new level
+				
+				// TODO: offset newly loaded pages and backgrounds to just off screen
+				// TODO: force draw all assets
+				
 				removeMenu();
 			}
 		}
@@ -181,7 +185,7 @@ public class AppLogic {
 	static public void titleScreen() {
 		Menu temp = new LaunchMenu(p);
 		Rectangle pageArea = game.getPageView().getArea();
-	
+
 		temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
 		setMenu(temp);
 	}
