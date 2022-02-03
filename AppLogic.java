@@ -177,11 +177,12 @@ public class AppLogic {
 
 	static public void nextLevel() {
 		currentLevel++;
-		EditorJSON json = new EditorJSON(p, texture, null);
+//		EditorJSON json = new EditorJSON(p, texture, null);
 
 		if (levels.size() > currentLevel) {
-			json.load(game, levels.get(currentLevel).toString());
-			game.startGame();
+//			json.load(game, levels.get(currentLevel).toString());
+//			game.startGame();
+			loadingScreen();
 			// TODO: this is where level transition menu would be created
 		} else {
 			init();
