@@ -381,17 +381,8 @@ public class AppLogic {
 	}
 
 	static public void setMenu(Menu newMenu) {
-//		if (menu != null) {
-//			Menu temp = menu;
-//			while (temp.child != null) {
-//				temp = temp.child;
-//			}
-//			temp.child = newMenu;
-//			
-//		} else {
-//			menu = newMenu;
-//		}
-
+		// menus act as a linked list
+		// add to head
 		if (menu != null) {
 			Menu temp = menu;
 			menu = newMenu;
@@ -405,6 +396,8 @@ public class AppLogic {
 	}
 
 	static public void removeMenu() {
+		// menus act as a linked list
+		// remove from tail
 		if (menu != null) {
 
 			if (menu.child != null) {
