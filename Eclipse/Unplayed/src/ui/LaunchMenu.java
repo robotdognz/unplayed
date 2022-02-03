@@ -32,6 +32,7 @@ public class LaunchMenu extends Menu {
 				AppLogic.newGame();
 			} else if (b.click().equals(editor)) {
 
+				game.emptyGame();
 				AppLogic.toggleEditor();
 
 			} else if (b.click().equals(quit)) {

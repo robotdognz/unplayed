@@ -100,6 +100,7 @@ public class Game {
 		placed.clear(); // removed tiles that have been inserted into slots
 		removed.clear(); // remove tiles that have become the player
 		clearPlayerStart(); // remove the player
+		views.clear();
 		pageView.clearPages(); // remove pages
 		pageView.clearBackgrounds(); // remove backgrounds
 	}
