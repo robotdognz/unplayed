@@ -381,24 +381,24 @@ public class AppLogic {
 	}
 
 	static public void setMenu(Menu newMenu) {
-		if (menu != null) {
-			Menu temp = menu;
-			while (temp.child != null) {
-				temp = temp.child;
-			}
-			temp.child = newMenu;
-			
-		} else {
-			menu = newMenu;
-		}
-
 //		if (menu != null) {
 //			Menu temp = menu;
-//			menu = newMenu;
-//			menu.child = temp;
+//			while (temp.child != null) {
+//				temp = temp.child;
+//			}
+//			temp.child = newMenu;
+//			
 //		} else {
 //			menu = newMenu;
 //		}
+
+		if (menu != null) {
+			Menu temp = menu;
+			menu = newMenu;
+			menu.child = temp;
+		} else {
+			menu = newMenu;
+		}
 
 		menuAdded = true;
 		menuRemoved = false;
