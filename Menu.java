@@ -12,7 +12,7 @@ import static processing.core.PConstants.*;
 public abstract class Menu {
 	public Menu child;
 
-	private PApplet p;
+	protected PApplet p;
 	protected float buttonHeight = 0;
 	protected float buttonWidth = 0;
 	protected float menuTopY = 0;
