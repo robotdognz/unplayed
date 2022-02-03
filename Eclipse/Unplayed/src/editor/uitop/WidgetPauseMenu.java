@@ -30,9 +30,9 @@ public class WidgetPauseMenu extends Widget {
 		if (!active) {
 			active = true;
 			if (AppLogic.editor != null) {
-				AppLogic.setMenu(new EditorMenu(p, this));
+				AppLogic.addMenu(new EditorMenu(p, this));
 			} else {
-				AppLogic.setMenu(new GameMenu(p, game));
+				AppLogic.addMenu(new GameMenu(p, game));
 			}
 		}
 	}

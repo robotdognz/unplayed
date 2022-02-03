@@ -34,17 +34,11 @@ public class DeveloperMenu extends Menu {
 				// TODO: load folder of levels and play it as a campaign
 
 			} else if (b.click().equals(back)) {
-				game.emptyGame();
-				AppLogic.titleScreen(); // open title screen menu
+//				game.emptyGame();
+//				AppLogic.titleScreen(); // open title screen menu
+				AppLogic.previousMenu();
 			}
 		}
 	}
 
-	@Override
-	public void activate() {
-		if (!alreadyUsed) {
-			alreadyUsed = true;
-			child = null; // remove any child menus
-		}
-	}
 }

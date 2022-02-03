@@ -8,7 +8,6 @@ import processing.core.PApplet;
 public class LaunchMenu extends Menu {
 	Game game;
 	String newGame = "New Game";
-//	String editor = "Start Editor";
 	String editor = "Level Editor";
 	String quit = "Quit";
 
@@ -37,7 +36,7 @@ public class LaunchMenu extends Menu {
 				Rectangle pageArea = game.getPageView().getArea();
 
 				temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
-				AppLogic.setMenu(temp);
+				AppLogic.addMenu(temp);
 
 			} else if (b.click().equals(quit)) {
 				AppLogic.quit(); // exit the game
@@ -49,7 +48,7 @@ public class LaunchMenu extends Menu {
 	public void activate() {
 		if (!alreadyUsed) {
 			alreadyUsed = true;
-			child = null; // remove any child menus
+			child = null; // remove any child menus, launch should never have children
 		}
 	}
 }

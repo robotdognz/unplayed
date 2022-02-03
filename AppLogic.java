@@ -187,7 +187,7 @@ public class AppLogic {
 		Rectangle pageArea = game.getPageView().getArea();
 
 		temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
-		setMenu(temp);
+		addMenu(temp);
 	}
 
 	static public void loadingScreen() {
@@ -195,7 +195,7 @@ public class AppLogic {
 		Rectangle pageArea = game.getPageView().getArea();
 
 		temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
-		setMenu(temp);
+		addMenu(temp);
 	}
 
 	static public void toggleEditor() {
@@ -380,7 +380,7 @@ public class AppLogic {
 		return false;
 	}
 
-	static public void setMenu(Menu newMenu) {
+	static public void addMenu(Menu newMenu) {
 		// menus act as a linked list
 		// add to head
 		if (menu != null) {
@@ -413,15 +413,26 @@ public class AppLogic {
 				menu = null;
 			}
 
-//			if (menu.child != null) {
-//				menu.child = null;
-//			} else {
-//				menu = null;
-//			}
 		}
 
 		menuAdded = false;
 		menuRemoved = true;
+	}
+
+	static public void previousMenu() {
+		// menus act as a linked list
+		// remove head to return to previous menu
+		if (menu != null && menu.child != null) {
+			// menu.child will become the new menu
+			// menu will become the new menu.child
+			Menu temp = menu;
+			menu = temp.child;
+			menu.child = temp;
+		}
+		
+		// might need these?
+		menuAdded = true;
+		menuRemoved = false;
 	}
 
 	static public Menu getMenu() {
