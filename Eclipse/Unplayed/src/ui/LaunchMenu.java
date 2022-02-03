@@ -46,9 +46,9 @@ public class LaunchMenu extends Menu {
 
 	@Override
 	public void activate() {
-		if (!alreadyUsed) {
+//		if (!alreadyUsed) {
 			alreadyUsed = true;
 			child = null; // remove any child menus, launch should never have children
-		}
+//		}
 	}
 }
