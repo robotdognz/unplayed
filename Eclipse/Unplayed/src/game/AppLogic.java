@@ -173,10 +173,10 @@ public class AppLogic {
 			if (levels != null && levels.size() > currentLevel) {
 				json.load(game, levels.get(currentLevel).toString());
 				game.startGame(); // needed to reset game after loading in new level
-				
+
 				// TODO: offset newly loaded pages and backgrounds to just off screen
 				// TODO: force draw all assets
-				
+
 				removeMenu();
 			}
 		}
@@ -396,13 +396,25 @@ public class AppLogic {
 
 	static public void removeMenu() {
 		if (menu != null) {
+
 			if (menu.child != null) {
-//				Menu temp = menu.child;
-//				menu = temp;
-				menu.child = null;
+				Menu temp = menu;
+
+				while (temp.child.child != null) {
+					temp = temp.child;
+				}
+				
+				temp.child = null;
+
 			} else {
 				menu = null;
 			}
+
+//			if (menu.child != null) {
+//				menu.child = null;
+//			} else {
+//				menu = null;
+//			}
 		}
 
 		menuAdded = false;
