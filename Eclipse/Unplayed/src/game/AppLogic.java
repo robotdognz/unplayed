@@ -212,7 +212,7 @@ public class AppLogic {
 				
 				playerArea = game.getPageView().getPlayerVisibleArea();
 				pageAreaCenter = pageArea.getRectangleCenter();
-				PApplet.println("New center: " + offsetX + " " + offsetY);
+				PApplet.println("New center: " + playerAreaCenter.x + " " + playerAreaCenter.y);
 
 //				if (Math.abs(diff.x) >= Math.abs(diff.y)) {
 //					// more difference on x axis than y axis
