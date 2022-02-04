@@ -245,39 +245,8 @@ public class PageView {
 			float menuMinY = storedMenu.getTopmostPoint();
 			float menuMaxX = storedMenu.getRightmostPoint();
 			float menuMaxY = storedMenu.getBottommostPoint();
-			pageCamera.initCameraMenu(menuMinX, menuMinY, menuMaxX, menuMaxY);
-
-			DebugOutput.pushMessage("Page menu built", 1);
+			pageCamera.initCamera(menuMinX, menuMinY, menuMaxX, menuMaxY);
 		}
-//		else {
-//			// initialize camera for pages
-//			for (Page page : pages) {
-//				page.step();
-//				page.updateSizeFromView(); // recaulculate page corners
-//			}
-//			// update the camera zone
-//			float minX = Float.POSITIVE_INFINITY;
-//			float minY = Float.POSITIVE_INFINITY;
-//			float maxX = Float.NEGATIVE_INFINITY;
-//			float maxY = Float.NEGATIVE_INFINITY;
-//			int visiblePage = 0;
-//			for (Page page : pages) {
-//				if (page.playerVisible()) {
-//					// if this page has a visible player
-//					visiblePage++;
-//					minX = Math.min(minX, page.getLeftmostPoint());
-//					minY = Math.min(minY, page.getTopmostPoint());
-//					maxX = Math.max(maxX, page.getRightmostPoint());
-//					maxY = Math.max(maxY, page.getBottommostPoint());
-//				}
-//			}
-//
-//			// only update camera if player is visible somewhere
-//			if (visiblePage > 0) {
-//				pageCamera.initCamera(minX, minY, maxX, maxY);
-//			}
-//		}
-
 	}
 
 	public Rectangle getArea() {

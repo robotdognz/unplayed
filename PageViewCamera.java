@@ -171,28 +171,7 @@ public class PageViewCamera {
 		// update page area boundary
 		pageArea.setCorners(minX, minY, maxX, maxY);
 
-		// set camera area
-		cameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
-				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + bottomAreaPadding);
-		newCameraArea = cameraArea.copy();
-		// set center
-		int centerX = (int) ((newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) / 2
-				+ newCameraArea.getTopLeft().x);
-		int centerY = (int) ((newCameraArea.getTopLeft().y - newCameraArea.getBottomRight().y) / 2
-				+ newCameraArea.getBottomRight().y);
-		center.x = centerX;
-		center.y = centerY;
-		newCenter = center.copy();
-		// set scale
-		scale = (int) Math.abs(newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x);
-		newScale = scale;
-	}
-	
-	public void initCameraMenu(float minX, float minY, float maxX, float maxY) {
-		// update page area boundary
-		pageArea.setCorners(minX, minY, maxX, maxY);
-
-		// set camera area
+		// set camera area, doesn't use bottom area padding, assumes focusing on a menu
 		cameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
 				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + sideAreaPadding);
 		newCameraArea = cameraArea.copy();
