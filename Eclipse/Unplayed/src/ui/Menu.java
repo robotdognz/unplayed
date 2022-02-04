@@ -52,6 +52,10 @@ public abstract class Menu {
 	}
 
 	public void buldPageMenu(PVector cameraCenter, Rectangle pageArea, PageViewCamera camera) {
+
+		// TODO: this needs work, it should build the menu on the closest side and not
+		// use the current camera position
+
 		float pageWidth = menuWidth; // 600;
 		float pageHeight = menuHeight; // 800;
 		float offset = 200;
@@ -205,6 +209,14 @@ public abstract class Menu {
 
 	public float getBottommostPoint() {
 		return Math.max(Math.max(topLeft.y, topRight.y), Math.max(bottomLeft.y, bottomRight.y));
+	}
+
+	public Rectangle getArea() {
+		float x = getLeftmostPoint();
+		float y = getTopmostPoint();
+		float width = getRightmostPoint() - x;
+		float height = getBottommostPoint() - y;
+		return new Rectangle(x, y, width, height);
 	}
 
 	// ----------is this page off camera------------

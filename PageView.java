@@ -149,7 +149,6 @@ public class PageView {
 
 			if (!storedMenu.isBuilt()) {
 				// build the page menu if it isn't already built
-				//TODO: this needs work
 				if (pages.size() > 0) {
 					float minX = Float.POSITIVE_INFINITY;
 					float minY = Float.POSITIVE_INFINITY;
@@ -190,7 +189,6 @@ public class PageView {
 			adjustCamera = true;
 
 		} else {
-
 			for (Page page : pages) {
 				page.step();
 				if (page.playerVisibilityChanged()) {
@@ -201,26 +199,31 @@ public class PageView {
 		}
 
 		if (adjustCamera) {
-			// update the camera zone
-			float minX = Float.POSITIVE_INFINITY;
-			float minY = Float.POSITIVE_INFINITY;
-			float maxX = Float.NEGATIVE_INFINITY;
-			float maxY = Float.NEGATIVE_INFINITY;
-			int visiblePage = 0;
-			for (Page page : pages) {
-				if (page.playerVisible()) {
-					// if this page has a visible player
-					visiblePage++;
-					minX = Math.min(minX, page.getLeftmostPoint());
-					minY = Math.min(minY, page.getTopmostPoint());
-					maxX = Math.max(maxX, page.getRightmostPoint());
-					maxY = Math.max(maxY, page.getBottommostPoint());
-				}
-			}
-
-			// only update camera if player is visible somewhere
-			if (visiblePage > 0) {
-				pageCamera.update(minX, minY, maxX, maxY);
+//			// update the camera zone
+//			float minX = Float.POSITIVE_INFINITY;
+//			float minY = Float.POSITIVE_INFINITY;
+//			float maxX = Float.NEGATIVE_INFINITY;
+//			float maxY = Float.NEGATIVE_INFINITY;
+//			int visiblePage = 0;
+//			for (Page page : pages) {
+//				if (page.playerVisible()) {
+//					// if this page has a visible player
+//					visiblePage++;
+//					minX = Math.min(minX, page.getLeftmostPoint());
+//					minY = Math.min(minY, page.getTopmostPoint());
+//					maxX = Math.max(maxX, page.getRightmostPoint());
+//					maxY = Math.max(maxY, page.getBottommostPoint());
+//				}
+//			}
+//
+//			// only update camera if player is visible somewhere
+//			if (visiblePage > 0) {
+//				pageCamera.update(minX, minY, maxX, maxY);
+//			}
+			Rectangle area = getPlayerVisibleArea();
+			if (area != null) {
+				pageCamera.update(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,
+						area.getBottomRight().y);
 			}
 		}
 
@@ -231,6 +234,31 @@ public class PageView {
 			storedMenu.activate();
 		}
 
+	}
+
+	public Rectangle getPlayerVisibleArea() {
+		float minX = Float.POSITIVE_INFINITY;
+		float minY = Float.POSITIVE_INFINITY;
+		float maxX = Float.NEGATIVE_INFINITY;
+		float maxY = Float.NEGATIVE_INFINITY;
+		int visiblePage = 0;
+		for (Page page : pages) {
+			if (page.playerVisible()) {
+				// if this page has a visible player
+				visiblePage++;
+				minX = Math.min(minX, page.getLeftmostPoint());
+				minY = Math.min(minY, page.getTopmostPoint());
+				maxX = Math.max(maxX, page.getRightmostPoint());
+				maxY = Math.max(maxY, page.getBottommostPoint());
+			}
+		}
+
+		if (visiblePage > 0) {
+			Rectangle output = new Rectangle(minX, minY, maxX - minX, maxY - minY);
+			return output;
+		} else {
+			return null;
+		}
 	}
 
 	public void initCamera() {
@@ -359,5 +387,20 @@ public class PageView {
 
 	public void clearBackgrounds() {
 		this.backgrounds.clear();
+	}
+
+	public void offsetAll(float x, float y) {
+		for (Page p : pages) {
+			PVector pos = p.getPosition();
+			pos.x += x;
+			pos.y += y;
+			p.setPosition(pos);
+		}
+		for (Background b : backgrounds) {
+			PVector pos = b.getPosition();
+			pos.x += x;
+			pos.y += y;
+			b.setPosition(pos);
+		}
 	}
 }

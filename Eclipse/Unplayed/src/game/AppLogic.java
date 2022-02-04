@@ -175,6 +175,13 @@ public class AppLogic {
 				game.startGame(); // needed to reset game after loading in new level
 
 				// TODO: offset newly loaded pages and backgrounds to just off screen
+				// calculate offset
+				Rectangle pageArea = game.getPageView().getArea();
+				Rectangle playerArea = game.getPageView().getPlayerVisibleArea();
+				Rectangle menuArea = menu.getArea();
+//				pageArea.
+				game.getPageView().offsetAll(0, 0);
+				
 				// TODO: force draw all assets
 
 				removeMenu();
@@ -428,7 +435,7 @@ public class AppLogic {
 			Menu temp = menu; // old head
 			menu = menu.child; // old body, becomes new head
 			temp.child = menu.child; // make all children of old body children of old head
-			menu.child = temp;  // make old head child of new head
+			menu.child = temp; // make old head child of new head
 		}
 
 		// might need these?
