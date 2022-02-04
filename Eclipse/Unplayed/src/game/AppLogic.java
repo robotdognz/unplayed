@@ -229,6 +229,8 @@ public class AppLogic {
 				game.getPageView().offsetAll(offsetX, offsetY);
 
 				// TODO: force draw all assets
+				
+				// TODO: probably need some sort of delta time reset too
 
 				removeMenu();
 			}
