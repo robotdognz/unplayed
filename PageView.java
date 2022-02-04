@@ -181,7 +181,7 @@ public class PageView {
 			float menuMinY = storedMenu.getTopmostPoint();
 			float menuMaxX = storedMenu.getRightmostPoint();
 			float menuMaxY = storedMenu.getBottommostPoint();
-			pageCamera.update(menuMinX, menuMinY, menuMaxX, menuMaxY);
+			pageCamera.updateMenu(menuMinX, menuMinY, menuMaxX, menuMaxY);
 
 			DebugOutput.pushMessage("Page menu built", 1);
 

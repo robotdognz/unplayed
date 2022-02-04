@@ -156,6 +156,16 @@ public class PageViewCamera {
 		updateNewCenter();
 		updateNewScale();
 	}
+	
+	public void updateMenu(float minX, float minY, float maxX, float maxY) {
+		// update page area boundary
+		pageArea.setCorners(minX, minY, maxX, maxY);
+
+		// calculate center
+		updateNewCameraNoOffset();
+		updateNewCenter();
+		updateNewScale();
+	}
 
 	public void initCamera(float minX, float minY, float maxX, float maxY) {
 		// update page area boundary
@@ -181,6 +191,11 @@ public class PageViewCamera {
 	private static void updateNewCamera() {
 		newCameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
 				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + bottomAreaPadding);
+	}
+	
+	private static void updateNewCameraNoOffset() {
+		newCameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
+				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + sideAreaPadding);
 	}
 
 	private static void updateNewCenter() {
