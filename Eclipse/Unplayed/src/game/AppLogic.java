@@ -145,6 +145,8 @@ public class AppLogic {
 
 	static public void newGame() {
 		currentLevel = 0;
+		
+		game.emptyGame();
 
 		if (levels != null && levels.size() > currentLevel) {
 			loadingScreen();

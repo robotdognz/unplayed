@@ -10,7 +10,6 @@ public class LoadingMenu extends Menu {
 
 	public LoadingMenu(PApplet p) {
 		super(p);
-
 		constructMenu();
 	}
 
