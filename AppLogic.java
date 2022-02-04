@@ -174,6 +174,7 @@ public class AppLogic {
 				json.load(game, levels.get(currentLevel).toString());
 				game.startGame(); // needed to reset game after loading in new level
 				game.step(0.1f);
+				game.cameraStep(0.1f);
 
 				// TODO: offset newly loaded pages and backgrounds to just off screen
 				// calculate offset
