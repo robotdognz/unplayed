@@ -38,7 +38,7 @@ public class LaunchMenu extends Menu {
 					child = null;
 					// build new dev menu
 					Menu temp = new DeveloperMenu(p);
-					Rectangle pageArea = game.getPageView().getArea();
+					Rectangle pageArea = game.getPageView().getFullArea();
 
 					temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea,
 							game.getPageView().getPageCamera());
