@@ -207,6 +207,12 @@ public class AppLogic {
 				PApplet.println("Menu center: " + menuCenter.x + " " + menuCenter.y);
 				PApplet.println("Player center: " + playerAreaCenter.x + " " + playerAreaCenter.y);
 				PApplet.println("Offset amount: " + offsetX + " " + offsetY);
+				
+				game.getPageView().offsetAll(offsetX, offsetY);
+				
+				playerArea = game.getPageView().getPlayerVisibleArea();
+				pageAreaCenter = pageArea.getRectangleCenter();
+				PApplet.println("New center: " + offsetX + " " + offsetY);
 
 //				if (Math.abs(diff.x) >= Math.abs(diff.y)) {
 //					// more difference on x axis than y axis
@@ -237,7 +243,6 @@ public class AppLogic {
 //					offsetY = menuCenter.y - pageAreaCenter.y;
 //				}
 
-				game.getPageView().offsetAll(offsetX, offsetY);
 
 				// TODO: force draw all assets
 
