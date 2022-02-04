@@ -216,6 +216,8 @@ public class PageView {
 	}
 
 	public void stepPages() {
+		// used to run the pages so that visibility information etc can be accurately
+		// assessed, this is done by the level loading system
 		for (Page page : pages) {
 			page.step();
 		}
@@ -259,8 +261,6 @@ public class PageView {
 			float menuMaxX = storedMenu.getRightmostPoint();
 			float menuMaxY = storedMenu.getBottommostPoint();
 			pageCamera.initCamera(menuMinX, menuMinY, menuMaxX, menuMaxY);
-
-			PApplet.println("Camera reset");
 		}
 	}
 

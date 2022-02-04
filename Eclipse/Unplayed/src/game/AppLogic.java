@@ -174,10 +174,7 @@ public class AppLogic {
 			if (levels != null && levels.size() > currentLevel) {
 				json.load(game, levels.get(currentLevel).toString());
 				game.startGame(); // needed to reset game after loading in new level
-				// step the game and camera so we can pull values out of the level
-//				game.step(0.1f);
-//				game.cameraStep(0.1f);
-				
+				// step the loaded pages so we can access where the player is visible
 				game.getPageView().stepPages();
 
 				// TODO: offset newly loaded pages and backgrounds to just off screen
@@ -200,18 +197,13 @@ public class AppLogic {
 				offsetX = menuCenter.x - playerAreaCenter.x;
 				offsetY = menuCenter.y - playerAreaCenter.y;
 
-				PApplet.println(" ---- ");
-				
-				PVector menuPosition = menu.getPosition();
-				PApplet.println("Menu position: " + menuPosition.x + " " + menuPosition.y);
-				PApplet.println("Player center: " + playerAreaCenter.x + " " + playerAreaCenter.y);
-				PApplet.println("Offset amount: " + offsetX + " " + offsetY);
-				
-				game.getPageView().offsetAll(offsetX, offsetY);
-				
-				playerArea = game.getPageView().getPlayerVisibleArea();
-				playerAreaCenter = playerArea.getRectangleCenter();
-				PApplet.println("New center: " + playerAreaCenter.x + " " + playerAreaCenter.y);
+				if (diff.x <= 0) {
+					// move to off right edge of pageArea
+					
+				} else {
+					// move to off left edge of pageArea
+					
+				}
 
 //				if (Math.abs(diff.x) >= Math.abs(diff.y)) {
 //					// more difference on x axis than y axis
@@ -242,10 +234,11 @@ public class AppLogic {
 //					offsetY = menuCenter.y - pageAreaCenter.y;
 //				}
 
+				game.getPageView().offsetAll(offsetX, offsetY);
 
 				// TODO: force draw all assets
 
-				// TODO: probably need some sort of delta time reset too
+				// TODO: might need some sort of delta time reset too
 
 				removeMenu();
 			}
