@@ -199,6 +199,11 @@ public class AppLogic {
 				offsetY = menuCenter.y - playerAreaCenter.y;
 
 				PApplet.println(" ---- ");
+				if (menu instanceof LoadingMenu) {
+					PApplet.println("Yup");
+				} else {
+					PApplet.println("Nup");
+				}
 				PApplet.println("Menu center: " + menuCenter.x + " " + menuCenter.y);
 				PApplet.println("Player center: " + playerAreaCenter.x + " " + playerAreaCenter.y);
 				PApplet.println("Offset amount: " + offsetX + " " + offsetY);
