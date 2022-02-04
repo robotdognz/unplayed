@@ -210,6 +210,9 @@ public class AppLogic {
 				
 				game.getPageView().offsetAll(offsetX, offsetY);
 				
+				game.step(0.1f);
+				game.cameraStep(0.1f);
+				
 				playerArea = game.getPageView().getPlayerVisibleArea();
 				pageAreaCenter = pageArea.getRectangleCenter();
 				PApplet.println("New center: " + playerAreaCenter.x + " " + playerAreaCenter.y);
