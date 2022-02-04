@@ -212,7 +212,6 @@ public abstract class Menu {
 	}
 
 	public Rectangle getArea() {
-		updateCorners();
 		float x = getLeftmostPoint();
 		float y = getTopmostPoint();
 		float width = getRightmostPoint() - x;

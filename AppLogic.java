@@ -157,6 +157,7 @@ public class AppLogic {
 		if (levels != null && levels.size() > currentLevel) {
 			loadingScreen();
 		} else {
+			menu = null;
 			titleScreen();
 		}
 	}
