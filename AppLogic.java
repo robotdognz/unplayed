@@ -145,7 +145,7 @@ public class AppLogic {
 
 	static public void newGame() {
 		currentLevel = 0;
-		
+
 		if (levels != null && levels.size() > currentLevel) {
 			loadingScreen();
 		}
@@ -197,9 +197,12 @@ public class AppLogic {
 				float offsetY = 0;
 				offsetX = menuCenter.x - playerAreaCenter.x;
 				offsetY = menuCenter.y - playerAreaCenter.y;
-				
-				PApplet.println(offsetX + " " + offsetY);
-				
+
+				PApplet.println(" ---- ");
+				PApplet.println("Menu center: " + menuCenter.x + " " + menuCenter.y);
+				PApplet.println("Player center: " + playerAreaCenter.x + " " + playerAreaCenter.y);
+				PApplet.println("Offset amount: " + offsetX + " " + offsetY);
+
 //				if (Math.abs(diff.x) >= Math.abs(diff.y)) {
 //					// more difference on x axis than y axis
 //					if (diff.x <= 0) {
@@ -232,7 +235,7 @@ public class AppLogic {
 				game.getPageView().offsetAll(offsetX, offsetY);
 
 				// TODO: force draw all assets
-				
+
 				// TODO: probably need some sort of delta time reset too
 
 				removeMenu();
