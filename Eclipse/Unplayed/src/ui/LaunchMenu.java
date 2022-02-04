@@ -34,7 +34,9 @@ public class LaunchMenu extends Menu {
 				AppLogic.newGame();
 			} else if (b.click().equals(editor)) {
 				if (!(child instanceof DeveloperMenu)) {
-					child = null; // remove old menus
+					// remove old menus
+					child = null;
+					// build new dev menu
 					Menu temp = new DeveloperMenu(p);
 					Rectangle pageArea = game.getPageView().getArea();
 
@@ -51,8 +53,4 @@ public class LaunchMenu extends Menu {
 		}
 	}
 
-	@Override
-	public void activate() {
-		child = null; // remove any child menus, launch should never have children
-	}
 }

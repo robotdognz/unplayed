@@ -421,16 +421,14 @@ public class AppLogic {
 
 	static public void previousMenu() {
 		// menus act as a linked list
-		// remove head to return to previous menu
+		// swap the first and second menus in the list around
 		if (menu != null && menu.child != null) {
 			// menu.child will become the new menu
 			// menu will become the new menu.child
 			Menu temp = menu; // old head
-			menu = menu.child; // old body
-
-			temp.child = menu.child;
-
-			menu.child = temp;
+			menu = menu.child; // old body, becomes new head
+			temp.child = menu.child; // make all children of old body children of old head
+			menu.child = temp;  // make old head child of new head
 		}
 
 		// might need these?
