@@ -179,7 +179,7 @@ public class AppLogic {
 
 				// TODO: offset newly loaded pages and backgrounds to just off screen
 				// calculate offset
-				Rectangle pageArea = game.getPageView().getArea();
+				Rectangle pageArea = game.getPageView().getPageArea();
 				Rectangle playerArea = game.getPageView().getPlayerVisibleArea();
 				Rectangle menuArea = menu.getArea();
 
@@ -239,7 +239,7 @@ public class AppLogic {
 
 	static public void titleScreen() {
 		Menu temp = new LaunchMenu(p);
-		Rectangle pageArea = game.getPageView().getArea();
+		Rectangle pageArea = game.getPageView().getFullArea();
 
 		temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
 		addMenu(temp);
@@ -247,7 +247,7 @@ public class AppLogic {
 
 	static public void loadingScreen() {
 		Menu temp = new LoadingMenu(p);
-		Rectangle pageArea = game.getPageView().getArea();
+		Rectangle pageArea = game.getPageView().getFullArea();
 
 		temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
 		addMenu(temp);

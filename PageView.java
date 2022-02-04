@@ -168,7 +168,7 @@ public class PageView {
 					if (storedMenu.child == null) {
 						storedMenu.buldPageMenu();
 					} else {
-						Rectangle area = getArea();
+						Rectangle area = getFullArea();
 						storedMenu.buldPageMenu(pageCamera.getCenter(), area, pageCamera);
 					}
 				}
@@ -277,7 +277,7 @@ public class PageView {
 		}
 	}
 
-	public Rectangle getArea() {
+	public Rectangle getFullArea() {
 		float minX = Float.POSITIVE_INFINITY;
 		float minY = Float.POSITIVE_INFINITY;
 		float maxX = Float.NEGATIVE_INFINITY;
@@ -300,6 +300,28 @@ public class PageView {
 				maxY = Math.max(maxY, storedMenu.getBottommostPoint());
 			}
 			temp = temp.child; // update current
+		}
+
+		float x = minX;
+		float y = minY;
+		float width = maxX - minX;
+		float height = maxY - minY;
+
+		return new Rectangle(x, y, width, height);
+	}
+	
+	public Rectangle getPageArea() {
+		float minX = Float.POSITIVE_INFINITY;
+		float minY = Float.POSITIVE_INFINITY;
+		float maxX = Float.NEGATIVE_INFINITY;
+		float maxY = Float.NEGATIVE_INFINITY;
+
+		// get area of pages
+		for (Page page : pages) {
+			minX = Math.min(minX, page.getLeftmostPoint());
+			minY = Math.min(minY, page.getTopmostPoint());
+			maxX = Math.max(maxX, page.getRightmostPoint());
+			maxY = Math.max(maxY, page.getBottommostPoint());
 		}
 
 		float x = minX;
