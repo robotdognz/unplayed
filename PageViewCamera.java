@@ -162,7 +162,7 @@ public class PageViewCamera {
 		pageArea.setCorners(minX, minY, maxX, maxY);
 
 		// calculate center
-		updateNewCameraNoOffset();
+		updateNewCameraMenu();
 		updateNewCenter();
 		updateNewScale();
 	}
@@ -187,13 +187,34 @@ public class PageViewCamera {
 		scale = (int) Math.abs(newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x);
 		newScale = scale;
 	}
+	
+	public void initCameraMenu(float minX, float minY, float maxX, float maxY) {
+		// update page area boundary
+		pageArea.setCorners(minX, minY, maxX, maxY);
+
+		// set camera area
+		cameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
+				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + sideAreaPadding);
+		newCameraArea = cameraArea.copy();
+		// set center
+		int centerX = (int) ((newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) / 2
+				+ newCameraArea.getTopLeft().x);
+		int centerY = (int) ((newCameraArea.getTopLeft().y - newCameraArea.getBottomRight().y) / 2
+				+ newCameraArea.getBottomRight().y);
+		center.x = centerX;
+		center.y = centerY;
+		newCenter = center.copy();
+		// set scale
+		scale = (int) Math.abs(newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x);
+		newScale = scale;
+	}
 
 	private static void updateNewCamera() {
 		newCameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
 				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + bottomAreaPadding);
 	}
 	
-	private static void updateNewCameraNoOffset() {
+	private static void updateNewCameraMenu() {
 		newCameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
 				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + sideAreaPadding);
 	}
