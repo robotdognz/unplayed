@@ -199,11 +199,6 @@ public class AppLogic {
 				offsetY = menuCenter.y - playerAreaCenter.y;
 
 				PApplet.println(" ---- ");
-				if (menu instanceof LoadingMenu) {
-					PApplet.println("Yup");
-				} else {
-					PApplet.println("Nup");
-				}
 				
 				PVector menuPosition = menu.getPosition();
 				PApplet.println("Menu center: " + menuCenter.x + " " + menuCenter.y);
@@ -214,7 +209,7 @@ public class AppLogic {
 				game.getPageView().offsetAll(offsetX, offsetY);
 				
 //				game.step(0.1f);
-//				game.cameraStep(0.1f);
+				game.cameraStep(5f);
 				
 				playerArea = game.getPageView().getPlayerVisibleArea();
 				playerAreaCenter = playerArea.getRectangleCenter();
