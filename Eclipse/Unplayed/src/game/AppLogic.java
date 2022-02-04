@@ -192,8 +192,11 @@ public class AppLogic {
 
 				PVector menuCenter = menuArea.getRectangleCenter();
 
-				float offsetX = 700;
+				float offsetX = 0;
 				float offsetY = 0;
+				offsetX = menuCenter.x - playerAreaCenter.x;
+				offsetY = menuCenter.y - playerAreaCenter.y;
+				
 //				if (Math.abs(diff.x) >= Math.abs(diff.y)) {
 //					// more difference on x axis than y axis
 //					if (diff.x <= 0) {
