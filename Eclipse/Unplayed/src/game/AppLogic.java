@@ -175,8 +175,10 @@ public class AppLogic {
 				json.load(game, levels.get(currentLevel).toString());
 				game.startGame(); // needed to reset game after loading in new level
 				// step the game and camera so we can pull values out of the level
-				game.step(0.1f);
-				game.cameraStep(0.1f);
+//				game.step(0.1f);
+//				game.cameraStep(0.1f);
+				
+				game.getPageView().stepPages();
 
 				// TODO: offset newly loaded pages and backgrounds to just off screen
 				// calculate offset
@@ -201,15 +203,11 @@ public class AppLogic {
 				PApplet.println(" ---- ");
 				
 				PVector menuPosition = menu.getPosition();
-				PApplet.println("Menu center: " + menuCenter.x + " " + menuCenter.y);
 				PApplet.println("Menu position: " + menuPosition.x + " " + menuPosition.y);
 				PApplet.println("Player center: " + playerAreaCenter.x + " " + playerAreaCenter.y);
 				PApplet.println("Offset amount: " + offsetX + " " + offsetY);
 				
 				game.getPageView().offsetAll(offsetX, offsetY);
-				
-//				game.step(0.1f);
-				game.cameraStep(5f);
 				
 				playerArea = game.getPageView().getPlayerVisibleArea();
 				playerAreaCenter = playerArea.getRectangleCenter();

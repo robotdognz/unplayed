@@ -199,27 +199,6 @@ public class PageView {
 		}
 
 		if (adjustCamera) {
-//			// update the camera zone
-//			float minX = Float.POSITIVE_INFINITY;
-//			float minY = Float.POSITIVE_INFINITY;
-//			float maxX = Float.NEGATIVE_INFINITY;
-//			float maxY = Float.NEGATIVE_INFINITY;
-//			int visiblePage = 0;
-//			for (Page page : pages) {
-//				if (page.playerVisible()) {
-//					// if this page has a visible player
-//					visiblePage++;
-//					minX = Math.min(minX, page.getLeftmostPoint());
-//					minY = Math.min(minY, page.getTopmostPoint());
-//					maxX = Math.max(maxX, page.getRightmostPoint());
-//					maxY = Math.max(maxY, page.getBottommostPoint());
-//				}
-//			}
-//
-//			// only update camera if player is visible somewhere
-//			if (visiblePage > 0) {
-//				pageCamera.update(minX, minY, maxX, maxY);
-//			}
 			Rectangle area = getPlayerVisibleArea();
 			if (area != null) {
 				pageCamera.update(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,
@@ -234,6 +213,12 @@ public class PageView {
 			storedMenu.activate();
 		}
 
+	}
+
+	public void stepPages() {
+		for (Page page : pages) {
+			page.step();
+		}
 	}
 
 	public Rectangle getPlayerVisibleArea() {
@@ -274,7 +259,7 @@ public class PageView {
 			float menuMaxX = storedMenu.getRightmostPoint();
 			float menuMaxY = storedMenu.getBottommostPoint();
 			pageCamera.initCamera(menuMinX, menuMinY, menuMaxX, menuMaxY);
-			
+
 			PApplet.println("Camera reset");
 		}
 	}
@@ -311,7 +296,7 @@ public class PageView {
 
 		return new Rectangle(x, y, width, height);
 	}
-	
+
 	public Rectangle getPageArea() {
 		float minX = Float.POSITIVE_INFINITY;
 		float minY = Float.POSITIVE_INFINITY;
