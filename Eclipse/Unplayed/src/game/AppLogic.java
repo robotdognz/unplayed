@@ -192,36 +192,36 @@ public class AppLogic {
 
 				PVector menuCenter = menuArea.getRectangleCenter();
 
-				float offsetX = 0;
+				float offsetX = 700;
 				float offsetY = 0;
-				if (Math.abs(diff.x) >= Math.abs(diff.y)) {
-					// more difference on x axis than y axis
-					if (diff.x <= 0) {
-						// move to off right edge of pageArea
-
-						// difference between rightEdge of pageArea and leftEdge of menu
-
-					} else {
-						// move to off left edge of pageArea
-
-					}
-					
-					offsetX = menuCenter.x - pageAreaCenter.x;
-					offsetY = menuCenter.y - pageAreaCenter.y;
-
-				} else {
-					// more difference on y axis than x axis
-					if (diff.y <= 0) {
-						// move to off top edge of pageArea
-
-					} else {
-						// move to off bottom edge of pageArea
-
-					}
-
-					offsetX = menuCenter.x - pageAreaCenter.x;
-					offsetY = menuCenter.y - pageAreaCenter.y;
-				}
+//				if (Math.abs(diff.x) >= Math.abs(diff.y)) {
+//					// more difference on x axis than y axis
+//					if (diff.x <= 0) {
+//						// move to off right edge of pageArea
+//
+//						// difference between rightEdge of pageArea and leftEdge of menu
+//
+//					} else {
+//						// move to off left edge of pageArea
+//
+//					}
+//					
+//					offsetX = menuCenter.x - pageAreaCenter.x;
+//					offsetY = menuCenter.y - pageAreaCenter.y;
+//
+//				} else {
+//					// more difference on y axis than x axis
+//					if (diff.y <= 0) {
+//						// move to off top edge of pageArea
+//
+//					} else {
+//						// move to off bottom edge of pageArea
+//
+//					}
+//
+//					offsetX = menuCenter.x - pageAreaCenter.x;
+//					offsetY = menuCenter.y - pageAreaCenter.y;
+//				}
 
 				game.getPageView().offsetAll(offsetX, offsetY);
 
