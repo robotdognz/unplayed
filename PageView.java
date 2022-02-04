@@ -274,6 +274,8 @@ public class PageView {
 			float menuMaxX = storedMenu.getRightmostPoint();
 			float menuMaxY = storedMenu.getBottommostPoint();
 			pageCamera.initCamera(menuMinX, menuMinY, menuMaxX, menuMaxY);
+			
+			PApplet.println("Camera reset");
 		}
 	}
 
