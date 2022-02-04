@@ -173,6 +173,7 @@ public class AppLogic {
 			if (levels != null && levels.size() > currentLevel) {
 				json.load(game, levels.get(currentLevel).toString());
 				game.startGame(); // needed to reset game after loading in new level
+				// step the game and camera so we can pull values out of the level
 				game.step(0.1f);
 				game.cameraStep(0.1f);
 
@@ -188,7 +189,7 @@ public class AppLogic {
 				PVector diff = pageAreaCenter.copy();
 				diff.x -= playerAreaCenter.x;
 				diff.y -= playerAreaCenter.y;
-				
+
 				PVector menuCenter = menuArea.getRectangleCenter();
 
 				float offsetX = 0;
@@ -197,29 +198,29 @@ public class AppLogic {
 					// more difference on x axis than y axis
 					if (diff.x <= 0) {
 						// move to off right edge of pageArea
-						
-						
+
 						// difference between rightEdge of pageArea and leftEdge of menu
-						
-						
+
 					} else {
 						// move to off left edge of pageArea
-						
+
 					}
 					
+					offsetX = menuCenter.x - pageAreaCenter.x;
 					offsetY = menuCenter.y - pageAreaCenter.y;
 
 				} else {
 					// more difference on y axis than x axis
 					if (diff.y <= 0) {
 						// move to off top edge of pageArea
-						
+
 					} else {
 						// move to off bottom edge of pageArea
-						
+
 					}
-					
+
 					offsetX = menuCenter.x - pageAreaCenter.x;
+					offsetY = menuCenter.y - pageAreaCenter.y;
 				}
 
 				game.getPageView().offsetAll(offsetX, offsetY);
