@@ -146,8 +146,6 @@ public class AppLogic {
 	static public void newGame() {
 		currentLevel = 0;
 		
-		game.emptyGame();
-
 		if (levels != null && levels.size() > currentLevel) {
 			loadingScreen();
 		}
@@ -199,6 +197,8 @@ public class AppLogic {
 				float offsetY = 0;
 				offsetX = menuCenter.x - playerAreaCenter.x;
 				offsetY = menuCenter.y - playerAreaCenter.y;
+				
+				PApplet.println(offsetX + " " + offsetY);
 				
 //				if (Math.abs(diff.x) >= Math.abs(diff.y)) {
 //					// more difference on x axis than y axis
