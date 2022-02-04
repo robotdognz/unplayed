@@ -179,9 +179,49 @@ public class AppLogic {
 				Rectangle pageArea = game.getPageView().getArea();
 				Rectangle playerArea = game.getPageView().getPlayerVisibleArea();
 				Rectangle menuArea = menu.getArea();
-//				pageArea.
-				game.getPageView().offsetAll(0, 0);
+
+				// get edge of pageArea closest to center of playerArea
+				PVector playerAreaCenter = playerArea.getRectangleCenter();
+				PVector pageAreaCenter = pageArea.getRectangleCenter();
+				PVector diff = pageAreaCenter.copy();
+				diff.x -= playerAreaCenter.x;
+				diff.y -= playerAreaCenter.y;
 				
+				PVector menuCenter = menuArea.getRectangleCenter();
+
+				float offsetX = 0;
+				float offsetY = 0;
+				if (Math.abs(diff.x) >= Math.abs(diff.y)) {
+					// more difference on x axis than y axis
+					if (diff.x <= 0) {
+						// move to off right edge of pageArea
+						
+						
+						// difference between rightEdge of pageArea and leftEdge of menu
+						
+						
+					} else {
+						// move to off left edge of pageArea
+						
+					}
+					
+					offsetY = menuCenter.y - pageAreaCenter.y;
+
+				} else {
+					// more difference on y axis than x axis
+					if (diff.y <= 0) {
+						// move to off top edge of pageArea
+						
+					} else {
+						// move to off bottom edge of pageArea
+						
+					}
+					
+					offsetX = menuCenter.x - pageAreaCenter.x;
+				}
+
+				game.getPageView().offsetAll(offsetX, offsetY);
+
 				// TODO: force draw all assets
 
 				removeMenu();

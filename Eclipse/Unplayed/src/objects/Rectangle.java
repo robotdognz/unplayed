@@ -40,6 +40,10 @@ public class Rectangle {
 		return bottomRight;
 	}
 
+	public PVector getRectangleCenter() {
+		return new PVector(topLeft.x + width / 2, topLeft.y + height / 2);
+	}
+
 	// ------------setters
 	public void setX(float x) {
 		this.topLeft.x = x;
@@ -74,7 +78,7 @@ public class Rectangle {
 		this.bottomRight.x = topLeft.x + width;
 		this.bottomRight.y = topLeft.y + height;
 	}
-	
+
 	public void adjustTopLeft(PVector topLeft) {
 		this.topLeft.x = topLeft.x;
 		this.topLeft.y = topLeft.y;
