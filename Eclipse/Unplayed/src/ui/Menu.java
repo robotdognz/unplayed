@@ -218,6 +218,10 @@ public abstract class Menu {
 		float height = getBottommostPoint() - y;
 		return new Rectangle(x, y, width, height);
 	}
+	
+	public PVector getPosition(){
+		return position;
+	}
 
 	// ----------is this page off camera------------
 

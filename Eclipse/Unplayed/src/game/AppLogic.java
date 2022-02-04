@@ -204,7 +204,10 @@ public class AppLogic {
 				} else {
 					PApplet.println("Nup");
 				}
+				
+				PVector menuPosition = menu.getPosition();
 				PApplet.println("Menu center: " + menuCenter.x + " " + menuCenter.y);
+				PApplet.println("Menu position: " + menuPosition.x + " " + menuPosition.y);
 				PApplet.println("Player center: " + playerAreaCenter.x + " " + playerAreaCenter.y);
 				PApplet.println("Offset amount: " + offsetX + " " + offsetY);
 				
