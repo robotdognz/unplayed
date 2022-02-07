@@ -33,6 +33,10 @@ public abstract class Menu {
 	PVector bottomLeft;
 	PVector bottomRight;
 
+	private float size = 1;
+	private int shadowOffset; // the absolute amount to offset the shadow by
+	private int shadow; // the relative amount to offset the shadow by
+
 	private boolean built = false;
 
 	public Menu(PApplet p) {
@@ -40,6 +44,9 @@ public abstract class Menu {
 		buttonWidth = 400; // p.width / 2.88f; // 500
 		buttonHeight = 100; // p.width / 7.2f; // 200
 		buttonDistance = 100; // p.width / 18; // 80
+
+		this.shadowOffset = 9;
+		this.shadow = 9;
 	}
 
 	protected void constructMenu() {
@@ -85,6 +92,7 @@ public abstract class Menu {
 					buttonHeight);
 		}
 		updateCorners();
+		updateShadow();
 		built = true;
 	}
 
@@ -102,36 +110,44 @@ public abstract class Menu {
 					buttonHeight);
 		}
 		updateCorners();
+		updateShadow();
 		built = true;
 	}
 
+	private void updateShadow() {
+		this.shadow = (int) (shadowOffset / size);
+	}
+
 	public void drawPageView(float scale) {
-		p.noStroke();
-		p.fill(240); // 150
-		p.rectMode(CENTER);
-		p.rect(position.x, position.y, pageMenu.getWidth(), pageMenu.getHeight());
 
 		p.pushMatrix();
 		p.translate(position.x, position.y);
+		p.rotate(PApplet.radians(angle)); // rotate the page
+
+		// draw the shadow
+		p.translate(shadow, shadow);
+		p.fill(0, 40);
+		p.noStroke();
+		p.rectMode(CENTER);
+		p.rect(0, 0, menuWidth, menuHeight);
+		p.translate(-shadow, -shadow);
+
+		p.noStroke();
+		p.fill(240); // 150
+		p.rectMode(CENTER);
+		p.rect(0, 0, pageMenu.getWidth(), pageMenu.getHeight());
 		int gridSize = 400;
-
-		float startX = -menuWidth / 2; // pageMenu.getX();
+		float startX = menuWidth / 2;
 		// find y start position;
-		float startY = -menuHeight / 2; // pageMenu.getY();
+		float startY = menuHeight / 2;
 		// find x end position
-		float endX = menuWidth / 2; // (int) Math.round((menuWidth + (gridSize / 2)) / gridSize);
+		float endX = menuWidth / 2;
 		// find y end position
-		float endY = menuHeight / 2; // (int) Math.round((menuHeight + (gridSize / 2)) / gridSize);
-
+		float endY = menuHeight / 2;
 		float xTileStart = 0; // where to start horizontal tiling in texture units
 		float yTileStart = 0; // where to start vertical tiling in texture units
-		float xTileEnd = menuWidth/gridSize; //endX - startX; // where to end horizontal tiling in texture units
-		float yTileEnd = menuHeight/gridSize; //endY - startY; // where to end vertical tiling in texture units
-		// convert to level dimensions
-//		startX = startX * gridSize;
-//		startY = startY * gridSize;
-//		endX = endX * gridSize;
-//		endY = endY * gridSize;
+		float xTileEnd = menuWidth / gridSize; // endX - startX; // where to end horizontal tiling in texture units
+		float yTileEnd = menuHeight / gridSize; // endY - startY; // where to end vertical tiling in texture units
 		// texture
 		p.noStroke();
 		p.textureMode(NORMAL);
