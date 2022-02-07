@@ -120,6 +120,7 @@ public class AppLogic {
 	}
 	
 	static public void saveGame() {
+		savedLevel = currentLevel;
 		saveGame.putInt("level", currentLevel);
 	}
 
