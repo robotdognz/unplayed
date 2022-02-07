@@ -251,6 +251,14 @@ public class AppLogic {
 					page.draw(TextureCache.LOD64);
 					page.draw(TextureCache.LOD32);
 				}
+				
+				List<Background> tempBackgrounds = game.getPageView().getBackgrounds();
+				for (Background background : tempBackgrounds) {
+					background.draw(TextureCache.LOD256);
+					background.draw(TextureCache.LOD128);
+					background.draw(TextureCache.LOD64);
+					background.draw(TextureCache.LOD32);
+				}
 
 				// TODO: might need some sort of delta time reset too
 
