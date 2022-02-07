@@ -110,19 +110,19 @@ public class AppLogic {
 
 		// print android api version
 		PApplet.println(android.os.Build.VERSION.SDK_INT);
-		
+
 	}
-	
+
 	static public void getSaveGame() {
 		savedLevel = settings.getInt("level", 0);
 	}
-	
+
 	static public void updateSaveGame() {
-		savedLevel = currentLevel;
+		savedLevel = currentLevel + 1;
 		saveGame.putInt("level", currentLevel);
 		saveGame.apply();
 	}
-	
+
 	static public void clearSaveGame() {
 		saveGame.putInt("level", 0);
 		saveGame.apply();
@@ -165,9 +165,9 @@ public class AppLogic {
 
 		Collections.sort(levels);
 	}
-	
+
 	static public void continueGame() {
-		currentLevel = savedLevel;
+		currentLevel = savedLevel - 1;
 
 		if (levels != null && levels.size() > currentLevel) {
 			loadingScreen();
