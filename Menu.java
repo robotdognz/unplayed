@@ -117,7 +117,7 @@ public abstract class Menu {
 		setAngle();
 		built = true;
 	}
-	
+
 	private void setAngle() {
 		Random rd = new Random();
 		boolean rand = rd.nextBoolean();
@@ -166,8 +166,8 @@ public abstract class Menu {
 		float endY = menuHeight / 2;
 		float xTileStart = 0; // where to start horizontal tiling in texture units
 		float yTileStart = 0; // where to start vertical tiling in texture units
-		float xTileEnd = menuWidth / gridSize; // endX - startX; // where to end horizontal tiling in texture units
-		float yTileEnd = menuHeight / gridSize; // endY - startY; // where to end vertical tiling in texture units
+		float xTileEnd = menuWidth / gridSize; // where to end horizontal tiling in texture units
+		float yTileEnd = menuHeight / gridSize; // where to end vertical tiling in texture units
 		// texture
 		p.noStroke();
 		p.textureMode(NORMAL);
@@ -180,15 +180,15 @@ public abstract class Menu {
 		p.vertex(startX, endY, xTileStart, yTileEnd); // bottom left
 		p.endShape();
 
-		p.popMatrix();
-
 		// draw the buttons
-		float yStart = position.y - pageMenu.getHeight() / 2;
+		float yStart = -pageMenu.getHeight() / 2; // position.y - pageMenu.getHeight() / 2
 
 		for (int i = 0; i < buttons.size(); i++) {
-			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2; // pageMenu.getY()
+			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2; 
 			buttons.get(i).drawOnPage(p, position.x, y);
 		}
+
+		p.popMatrix();
 
 		if (child != null && child.isBuilt()) {
 			child.drawPageView(scale);

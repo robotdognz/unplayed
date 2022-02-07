@@ -9,25 +9,10 @@ public class LoadingMenu extends Menu {
 	// this boolean prevents this loading menu from infinitely restarting the level
 	// each frame. With this it is only used once
 
-//	float angle;
 
 	public LoadingMenu(PApplet p) {
 		super(p);
 		constructMenu();
-
-//		Random rd = new Random();
-//		boolean rand = rd.nextBoolean();
-//
-//		float offset = 15;
-//
-//		if (rand) {
-//			angleOffset = offset;
-//		} else {
-//			angleOffset = -offset;
-//		}
-//
-//		float range = 5;
-//		angleOffset += (float) (Math.random() * range) - (range / 2);
 	}
 
 	@Override
