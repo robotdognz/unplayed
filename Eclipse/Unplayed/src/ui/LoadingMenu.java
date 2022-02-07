@@ -9,9 +9,9 @@ public class LoadingMenu extends Menu {
 	// this boolean prevents this loading menu from infinitely restarting the level
 	// each frame. With this it is only used once
 
-
 	public LoadingMenu(PApplet p) {
 		super(p);
+		this.angleOffset = 10;
 		constructMenu();
 	}
 

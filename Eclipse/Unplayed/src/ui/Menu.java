@@ -40,15 +40,20 @@ public abstract class Menu {
 	private int shadow; // the relative amount to offset the shadow by
 
 	private boolean built = false;
+	float angleOffset; // used for random angle when created
+	
+	static boolean previousTilt = false;
+	
 
 	public Menu(PApplet p) {
 		this.p = p;
-		buttonWidth = 400; // p.width / 2.88f; // 500
-		buttonHeight = 100; // p.width / 7.2f; // 200
-		buttonDistance = 100; // p.width / 18; // 80
+		buttonWidth = 400;
+		buttonHeight = 100;
+		buttonDistance = 100;
 
 		this.shadowOffset = 9;
 		this.shadow = 9;
+		this.angleOffset = 8;
 	}
 
 	protected void constructMenu() {
@@ -66,8 +71,8 @@ public abstract class Menu {
 		// TODO: this needs work, it should build the menu on the closest side and not
 		// use the current camera position
 
-		float pageWidth = menuWidth; // 600;
-		float pageHeight = menuHeight; // 800;
+		float pageWidth = menuWidth;
+		float pageHeight = menuHeight;
 		float offset = 200;
 
 		// figure out side of pageArea that cameraCenter is closest to
@@ -119,15 +124,15 @@ public abstract class Menu {
 	}
 
 	private void setAngle() {
-		Random rd = new Random();
-		boolean rand = rd.nextBoolean();
+//		Random rd = new Random();
+//		boolean rand = rd.nextBoolean();
 
-		float offset = 10;
-
-		if (rand) {
-			angle = offset;
+		if (previousTilt) {
+			angle = angleOffset;
+			previousTilt = !previousTilt;
 		} else {
-			angle = -offset;
+			angle = -angleOffset;
+			previousTilt = !previousTilt;
 		}
 
 		float range = 5;
