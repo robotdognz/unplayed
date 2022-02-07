@@ -66,7 +66,7 @@ public abstract class Menu {
 
 		position = new PVector(0, 0);
 
-		if (leftDiff <= rightDiff) {
+		if (leftDiff < rightDiff) {
 			// left
 			position = new PVector(cameraCenter.x - leftDiff - (pageWidth / 2) - offset, cameraCenter.y);
 

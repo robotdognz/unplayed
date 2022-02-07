@@ -198,13 +198,13 @@ public class AppLogic {
 				offsetY = menuCenter.y - playerAreaCenter.y;
 
 				if (diff.x <= 0) {
-					// move to off right edge of pageArea
-
-					offsetX -= pageArea.getBottomRight().x - playerAreaCenter.x + menuArea.getWidth() / 2;
-
+					// move off to left edge of pageArea
+					offsetX -= pageArea.getBottomRight().x - playerAreaCenter.x + menuArea.getWidth() / 2 + 200;
+					// the 200 is 2x the camera edge padding, shouldn't be hard coded like this
 				} else {
-					// move to off left edge of pageArea
-					offsetX += playerAreaCenter.x - pageArea.getTopLeft().x + menuArea.getWidth() / 2;
+					// move off to right edge of pageArea
+					offsetX += playerAreaCenter.x - pageArea.getTopLeft().x + menuArea.getWidth() / 2 + 200;
+					// the 200 is 2x the camera edge padding, shouldn't be hard coded like this
 				}
 
 //				if (Math.abs(diff.x) >= Math.abs(diff.y)) {
