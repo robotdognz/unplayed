@@ -1,5 +1,7 @@
 package handlers;
 
+import static processing.core.PConstants.CENTER;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,11 +38,12 @@ public class TextureCache {
 	private PImage gridLOD16;
 	private PImage gridLOD8;
 
-//	private PImage pageViewBackground;
 	private PImage pageViewBackgroundLOD256;
 	private PImage pageViewBackgroundLOD128;
 	private PImage pageViewBackgroundLOD64;
 	private PImage pageViewBackgroundLOD32;
+	
+	static private PImage loadingText;
 
 	// level images
 	private File[] imagePaths;
@@ -85,6 +88,8 @@ public class TextureCache {
 		pageViewBackgroundLOD64.resize(64 * pvbSize, 64 * pvbSize);
 		pageViewBackgroundLOD32 = pageViewBackgroundLOD256.get();
 		pageViewBackgroundLOD32.resize(32 * pvbSize, 32 * pvbSize);
+		
+		loadingText = p.loadImage("LoadingScreen.png");
 
 		// level assets
 		loadLevelImages();
@@ -123,6 +128,11 @@ public class TextureCache {
 		} else {
 			return gridLOD256; // less than 4
 		}
+	}
+	
+	static public void drawLoadingText(PApplet p) {
+		p.imageMode(CENTER);
+		p.image(loadingText, 0, 0);
 	}
 
 	private void loadTiles() {
