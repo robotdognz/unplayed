@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import android.app.Activity;
 import android.content.Context;
@@ -17,7 +16,6 @@ import controllers.Controller;
 import controllers.PlayerControl;
 import editor.Editor;
 import editor.uitop.WidgetPauseMenu;
-import handlers.Handler;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.DoToast;
@@ -83,13 +81,11 @@ public class AppLogic {
 		files = new FileChooser(activity);
 		vibe = new Vibe(context);
 
-		Camera camera = new GameCamera(); // new FreeCamera();
+		Camera camera = new GameCamera();
 		convert = new Converter(p);
 		game = new Game(p, camera, texture, convert);
 		texture.passGame(game);
 		controller = new PlayerControl(p, game);
-//		DoToast toast = new DoToast(activity);
-//		editor = new Editor(p, files, texture, game, camera, convert, toast);
 		editor = null;
 
 		// setup non editor widget(s)
@@ -213,60 +209,38 @@ public class AppLogic {
 
 				game.getPageView().offsetAll(offsetX, offsetY);
 
-				// force draw all assets
-//				HashSet<Handler> levelHandlers = new HashSet<Handler>();
-//				HashSet<Rectangle> world = new HashSet<Rectangle>();
-//				game.world.getAll(world);
-//				for (Rectangle rect : world) {
-//					if (rect instanceof Tile) {
-//						Handler handler = ((Tile) rect).getHandler();
-//						levelHandlers.add(handler);
-//						continue;
-//					}
-//					if (rect instanceof Image) {
-//						Handler handler = ((Image) rect).getHandler();
-//						levelHandlers.add(handler);
-//						continue;
-//					}
-//					if (rect instanceof Event) {
-//						Handler handler = ((Event) rect).getHandler();
-//						levelHandlers.add(handler);
-//						continue;
-//					}
-//				}
-//				for (Handler handler : levelHandlers) {
-//					handler.drawAll();
-//				}
-//				p.image(TextureCache.getGrid(65), 0, 0);
-//				p.image(TextureCache.getGrid(33), 0, 0);
-//				p.image(TextureCache.getGrid(17), 0, 0);
-//				p.image(TextureCache.getGrid(9), 0, 0);
-//				p.image(TextureCache.getGrid(5), 0, 0);
-//				p.image(TextureCache.getGrid(3), 0, 0);
-//				p.image(TextureCache.getPageViewBackground(17), 0, 0);
-//				p.image(TextureCache.getPageViewBackground(9), 0, 0);
-//				p.image(TextureCache.getPageViewBackground(5), 0, 0);
-//				p.image(TextureCache.getPageViewBackground(3), 0, 0);
-
+				// force draw all assets in level
 				List<Page> tempPages = game.getPageView().getPages();
+				p.pushMatrix();
+				p.translate(p.width / 2, p.height / 2);
 				for (Page page : tempPages) {
+					p.pushMatrix();
+					PVector pos = page.getPosition();
+					p.translate(pos.x, pos.y);
 					page.draw(TextureCache.LOD256);
 					page.draw(TextureCache.LOD128);
 					page.draw(TextureCache.LOD64);
 					page.draw(TextureCache.LOD32);
+					p.popMatrix();
 				}
-
 				List<Background> tempBackgrounds = game.getPageView().getBackgrounds();
 				for (Background background : tempBackgrounds) {
+					p.pushMatrix();
+					PVector pos = background.getPosition();
+					p.translate(pos.x, pos.y);
 					background.draw(TextureCache.LOD256);
 					background.draw(TextureCache.LOD128);
 					background.draw(TextureCache.LOD64);
 					background.draw(TextureCache.LOD32);
+					p.popMatrix();
 				}
+				p.popMatrix();
 
 				// prevent animation jump by skipping the next frame
 				skipNextFrame = true;
 
+				// remove the loading menu from this class, it will be kept in the page view
+				// until it is off screen
 				removeMenu();
 			}
 		}
