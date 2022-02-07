@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.Random;
+
 import game.AppLogic;
 import handlers.TextureCache;
 import processing.core.PApplet;
@@ -15,8 +17,19 @@ public class LoadingMenu extends Menu {
 		super(p);
 		constructMenu();
 
-		float range = 20;
-		angleOffset = (float) (Math.random() * range) - (range / 2);
+		Random rd = new Random();
+		boolean rand = rd.nextBoolean();
+
+		float offset = 30;
+
+		if (rand) {
+			angleOffset = offset;
+		} else {
+			angleOffset = -offset;
+		}
+
+//		float range = 20;
+//		angleOffset = (float) (Math.random() * range) - (range / 2);
 	}
 
 	@Override
