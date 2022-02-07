@@ -7,11 +7,11 @@ import processing.core.PGraphics;
 import static processing.core.PConstants.*;
 
 public class MathsPaper {
-	private TextureCache texture;
+//	private TextureCache texture;
 	int gridSize;
 
 	public MathsPaper(TextureCache texture) {
-		this.texture = texture;
+//		this.texture = texture;
 		gridSize = 400;
 	}
 
@@ -72,7 +72,7 @@ public class MathsPaper {
 		graphics.textureMode(NORMAL);
 		graphics.beginShape();
 		graphics.textureWrap(REPEAT);
-		graphics.texture(texture.getGrid(scale));
+		graphics.texture(TextureCache.getGrid(scale));
 		graphics.vertex(startX, startY, xTileStart, yTileStart); // top left
 		graphics.vertex(endX, startY, xTileEnd, yTileStart); // top right
 		graphics.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right

@@ -33,25 +33,23 @@ public class LoadingMenu extends Menu {
 	}
 
 	@Override
-	public void drawPageView() {
+	public void drawPageView(float scale) {
 
 		p.pushMatrix();
-//		p.imageMode(CENTER);
 		p.translate(position.x, position.y);
 		p.rotate(PApplet.radians(angleOffset));
 		TextureCache.drawLoadingText(p);
 		p.popMatrix();
-		// draw the buttons
 
 		if (child != null && child.isBuilt()) {
-			child.drawPageView();
+			child.drawPageView(scale);
 		}
 	}
 
 	@Override
 	public void draw() {
 		// used only in editor
-		drawPageView();
+		drawPageView(4);
 	}
 
 	@Override

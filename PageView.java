@@ -121,7 +121,7 @@ public class PageView {
 
 		// draw current menu, destroy it if it's off camera
 		if (storedMenu != null) {
-			storedMenu.drawPageView();
+			storedMenu.drawPageView(currentScale);
 
 			if (removeMenu == true && (storedMenu.leftOf(pageCamera.getCameraArea().getTopLeft().x)
 					|| storedMenu.rightOf(pageCamera.getCameraArea().getBottomRight().x)

@@ -3,6 +3,7 @@ package ui;
 import java.util.ArrayList;
 import camera.Camera;
 import camera.PageViewCamera;
+import handlers.TextureCache;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -104,11 +105,41 @@ public abstract class Menu {
 		built = true;
 	}
 
-	public void drawPageView() {
+	public void drawPageView(float scale) {
 		p.noStroke();
 		p.fill(150);
 		p.rectMode(CENTER);
 		p.rect(position.x, position.y, pageMenu.getWidth(), pageMenu.getHeight());
+
+		int gridSize = 400;
+		float startX = 0;
+		// find y start position;
+		float startY = 0;
+		// find x end position
+		float endX = (int) Math.round((menuWidth + (gridSize / 2)) / gridSize);
+		// find y end position
+		float endY = (int) Math.round((menuHeight + (gridSize / 2)) / gridSize);
+		float xTileStart = 0; // where to start horizontal tiling in texture units
+		float yTileStart = 0; // where to start vertical tiling in texture units
+		float xTileEnd = endX - startX; // where to end horizontal tiling in texture units
+		float yTileEnd = endY - startY; // where to end vertical tiling in texture units
+		// convert to level dimensions
+		startX = startX * gridSize;
+		startY = startY * gridSize;
+		endX = endX * gridSize;
+		endY = endY * gridSize;
+		// texture
+		p.noStroke();
+		p.textureMode(NORMAL);
+		p.beginShape();
+		p.textureWrap(REPEAT);
+		p.texture(TextureCache.getGrid(scale));
+		p.vertex(startX, startY, xTileStart, yTileStart); // top left
+		p.vertex(endX, startY, xTileEnd, yTileStart); // top right
+		p.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right
+		p.vertex(startX, endY, xTileStart, yTileEnd); // bottom left
+		p.endShape();
+
 		// draw the buttons
 		float yStart = position.y - pageMenu.getHeight() / 2;
 
@@ -118,7 +149,7 @@ public abstract class Menu {
 		}
 
 		if (child != null && child.isBuilt()) {
-			child.drawPageView();
+			child.drawPageView(scale);
 		}
 	}
 
@@ -218,8 +249,8 @@ public abstract class Menu {
 		float height = getBottommostPoint() - y;
 		return new Rectangle(x, y, width, height);
 	}
-	
-	public PVector getPosition(){
+
+	public PVector getPosition() {
 		return position;
 	}
 

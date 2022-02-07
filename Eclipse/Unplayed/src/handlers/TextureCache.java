@@ -31,12 +31,12 @@ public class TextureCache {
 	public int LOD32 = 64;
 
 	// paper textures
-	private PImage gridLOD256;
-	private PImage gridLOD128;
-	private PImage gridLOD64;
-	private PImage gridLOD32;
-	private PImage gridLOD16;
-	private PImage gridLOD8;
+	static private PImage gridLOD256;
+	static private PImage gridLOD128;
+	static private PImage gridLOD64;
+	static private PImage gridLOD32;
+	static private PImage gridLOD16;
+	static private PImage gridLOD8;
 
 	private PImage pageViewBackgroundLOD256;
 	private PImage pageViewBackgroundLOD128;
@@ -114,7 +114,7 @@ public class TextureCache {
 		}
 	}
 
-	public PImage getGrid(float scale) {
+	static public PImage getGrid(float scale) {
 		if (scale > 64) {
 			return gridLOD8; // larger than 64
 		} else if (scale > 32) {
