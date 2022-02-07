@@ -122,7 +122,7 @@ public abstract class Menu {
 		Random rd = new Random();
 		boolean rand = rd.nextBoolean();
 
-		float offset = 15;
+		float offset = 10;
 
 		if (rand) {
 			angle = offset;
@@ -152,10 +152,21 @@ public abstract class Menu {
 		p.rect(0, 0, menuWidth, menuHeight);
 		p.translate(-shadow, -shadow);
 
+		// draw white background
 		p.noStroke();
-		p.fill(240); // 150
+		p.fill(240);
 		p.rectMode(CENTER);
 		p.rect(0, 0, pageMenu.getWidth(), pageMenu.getHeight());
+
+		// draw the buttons
+		float yStart = -pageMenu.getHeight() / 2; // position.y - pageMenu.getHeight() / 2
+
+		for (int i = 0; i < buttons.size(); i++) {
+			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
+			buttons.get(i).drawOnPage(p, 0, y); // p, position.x, y
+		}
+
+		// draw grid paper
 		int gridSize = 400;
 		float startX = -menuWidth / 2;
 		// find y start position;
@@ -179,14 +190,6 @@ public abstract class Menu {
 		p.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right
 		p.vertex(startX, endY, xTileStart, yTileEnd); // bottom left
 		p.endShape();
-
-		// draw the buttons
-		float yStart = -pageMenu.getHeight() / 2; // position.y - pageMenu.getHeight() / 2
-
-		for (int i = 0; i < buttons.size(); i++) {
-			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-			buttons.get(i).drawOnPage(p, 0, y); // p, position.x, y
-		}
 
 		p.popMatrix();
 
@@ -229,13 +232,12 @@ public abstract class Menu {
 //				return;
 //			}
 
-
 			// interacting with in page view menu
 //			PVector levelTouch = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);
 //			levelTouch.x -= position.x;
 //			levelTouch.y -= position.y;
 			for (Button b : buttons) {
-				b.hoverPage(point); //levelTouch
+				b.hoverPage(point); // levelTouch
 			}
 		} else {
 			// interacting with menu overlay
