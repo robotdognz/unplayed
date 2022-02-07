@@ -32,6 +32,11 @@
 -Removed all editor tools and logic assosiated with the old manual camera system
 -Adjusted editor run mode behaviour
 -Slotting in no longer causes the camera to stutter
+-All menus have been updated to match the design language used in the rest of the game
+-Menus now appear in the world instead of on top of gameplay
+-Gameplay is now paused correctly when opening a menu
+-Added loading screen between levels to hide lag spike caused by loading in the next level
+-Assets in levels are now force loaded at level start instead of when acessed, to minimise lag spikes
 
 1.2.1: Improving physics and tuning player 'feel'
 

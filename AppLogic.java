@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import camera.Camera;
@@ -60,6 +61,9 @@ public class AppLogic {
 
 	private static ArrayList<File> levels;
 	private static int currentLevel;
+	private static SharedPreferences settings;
+	public static SharedPreferences.Editor saveGame;
+	public static int savedLevel = 0;
 
 	private static boolean skipNextFrame = false;
 
@@ -103,6 +107,20 @@ public class AppLogic {
 
 		// print android api version
 		PApplet.println(android.os.Build.VERSION.SDK_INT);
+		
+		// setup shared preferences (used for save games)
+//		SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+		settings = activity.getPreferences(0);
+		saveGame = settings.edit();
+//		saveGame.putInt("level", 0);
+	}
+	
+	static public void getSaveGame() {
+		savedLevel = settings.getInt("level", 0);
+	}
+	
+	static public void saveGame() {
+		saveGame.putInt("level", currentLevel);
 	}
 
 	static public void getLevels() {
@@ -142,6 +160,14 @@ public class AppLogic {
 
 		Collections.sort(levels);
 	}
+	
+	static public void continueGame() {
+		currentLevel = savedLevel;
+
+		if (levels != null && levels.size() > currentLevel) {
+			loadingScreen();
+		}
+	}
 
 	static public void newGame() {
 		currentLevel = 0;
@@ -158,6 +184,7 @@ public class AppLogic {
 			loadingScreen();
 		} else {
 			menu = null;
+			saveGame.putInt("level", 0); // clear save game
 			titleScreen();
 		}
 	}
@@ -211,6 +238,8 @@ public class AppLogic {
 
 				// force draw all assets in level
 				List<Page> tempPages = game.getPageView().getPages();
+				p.pushMatrix();
+				p.translate(p.width / 2, p.height / 2);
 				for (Page page : tempPages) {
 					p.pushMatrix();
 					PVector pos = page.getPosition();
@@ -232,6 +261,7 @@ public class AppLogic {
 					background.draw(TextureCache.LOD32);
 					p.popMatrix();
 				}
+				p.popMatrix();
 
 				// prevent animation jump by skipping the next frame
 				skipNextFrame = true;

@@ -7,6 +7,7 @@ import processing.core.PApplet;
 
 public class LaunchMenu extends Menu {
 	Game game;
+	String continueGame = "Continue";
 	String newGame = "New Game";
 	String editor = "Level Editor";
 	String quit = "Quit";
@@ -20,6 +21,12 @@ public class LaunchMenu extends Menu {
 		Button demoB = new Button(p.width / 2, buttonWidth, buttonHeight, newGame);
 		Button editorB = new Button(p.width / 2, buttonWidth, buttonHeight, editor);
 		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
+
+		AppLogic.getSaveGame();
+		if (AppLogic.savedLevel > 0) {
+			Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
+			buttons.add(continueB);
+		}
 		buttons.add(demoB);
 		buttons.add(editorB);
 		buttons.add(quitB);
@@ -29,7 +36,10 @@ public class LaunchMenu extends Menu {
 	@Override
 	public void click() {
 		for (Button b : buttons) {
-			if (b.click().equals(newGame)) {
+			if (b.click().equals(continueGame)) {
+				child = null; // clear any existing menus
+				AppLogic.continueGame();
+			}else if (b.click().equals(newGame)) {
 				child = null; // clear any existing menus
 				AppLogic.newGame();
 			} else if (b.click().equals(editor)) {
