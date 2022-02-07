@@ -117,9 +117,14 @@ public class AppLogic {
 		savedLevel = settings.getInt("level", 0);
 	}
 	
-	static public void saveGame() {
+	static public void updateSaveGame() {
 		savedLevel = currentLevel;
 		saveGame.putInt("level", currentLevel);
+		saveGame.apply();
+	}
+	
+	static public void clearSaveGame() {
+		saveGame.putInt("level", 0);
 		saveGame.apply();
 	}
 
@@ -184,7 +189,7 @@ public class AppLogic {
 			loadingScreen();
 		} else {
 			menu = null;
-			saveGame.putInt("level", 0); // clear save game
+			clearSaveGame(); // clear save game
 			titleScreen();
 		}
 	}
