@@ -111,6 +111,8 @@ public abstract class Menu {
 		p.rectMode(CENTER);
 		p.rect(position.x, position.y, pageMenu.getWidth(), pageMenu.getHeight());
 
+		p.pushMatrix();
+		p.translate(position.x, position.y);
 		int gridSize = 400;
 		float startX = 0; //pageMenu.getX();
 		// find y start position;
@@ -139,6 +141,8 @@ public abstract class Menu {
 		p.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right
 		p.vertex(startX, endY, xTileStart, yTileEnd); // bottom left
 		p.endShape();
+		
+		p.popMatrix();
 
 		// draw the buttons
 		float yStart = position.y - pageMenu.getHeight() / 2;
