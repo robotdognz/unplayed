@@ -74,25 +74,25 @@ public abstract class Handler {
 	}
 
 	public PImage getSprite(float scale) {
-		if (scale > texture.LOD32) {
+		if (scale > TextureCache.LOD32) {
 			if (LOD16 == null) {
 				LOD16 = LOD256.get(); // 16
 				LOD16.resize(16 * width, 16 * height);
 			}
 			return LOD16;
-		} else if (scale > texture.LOD64) {
+		} else if (scale > TextureCache.LOD64) {
 			if (LOD32 == null) {
 				LOD32 = LOD256.get(); // 32
 				LOD32.resize(32 * width, 32 * height);
 			}
 			return LOD32;
-		} else if (scale > texture.LOD128) {
+		} else if (scale > TextureCache.LOD128) {
 			if (LOD64 == null) {
 				LOD64 = LOD256.get(); // 64
 				LOD64.resize(64 * width, 64 * height);
 			}
 			return LOD64;
-		} else if (scale > texture.LOD256) {
+		} else if (scale > TextureCache.LOD256) {
 			if (LOD128 == null) {
 				LOD128 = LOD256.get(); // 16
 				LOD128.resize(128 * width, 128 * height);
@@ -135,9 +135,9 @@ public abstract class Handler {
 	}
 	
 	public void drawAll() {
-		p.image(getSprite(texture.LOD32), 0, 0, 100, 100);
-		p.image(getSprite(texture.LOD64), 0, 0, 100, 100);
-		p.image(getSprite(texture.LOD128), 0, 0, 100, 100);
-		p.image(getSprite(texture.LOD256), 0, 0, 100, 100);
+		p.image(getSprite(TextureCache.LOD32), 0, 0, 100, 100);
+		p.image(getSprite(TextureCache.LOD64), 0, 0, 100, 100);
+		p.image(getSprite(TextureCache.LOD128), 0, 0, 100, 100);
+		p.image(getSprite(TextureCache.LOD256), 0, 0, 100, 100);
 	}
 }

@@ -25,10 +25,10 @@ public class TextureCache {
 	private Context context;
 
 	// LODs
-	public int LOD256 = 4;
-	public int LOD128 = 8;
-	public int LOD64 = 16;
-	public int LOD32 = 64;
+	static public int LOD256 = 4;
+	static public int LOD128 = 8;
+	static public int LOD64 = 16;
+	static public int LOD32 = 64;
 
 	// paper textures
 	static private PImage gridLOD256;

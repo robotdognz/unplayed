@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-
+import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -16,7 +15,6 @@ import camera.GameCamera;
 import controllers.Controller;
 import controllers.PlayerControl;
 import editor.Editor;
-import handlers.Handler;
 import editor.uitop.WidgetPauseMenu;
 import handlers.TextureCache;
 import misc.Converter;
@@ -212,39 +210,47 @@ public class AppLogic {
 				game.getPageView().offsetAll(offsetX, offsetY);
 
 				// force draw all assets
-				HashSet<Handler> levelHandlers = new HashSet<Handler>();
-				HashSet<Rectangle> world = new HashSet<Rectangle>();
-				game.world.getAll(world);
-				for (Rectangle rect : world) {
-					if (rect instanceof Tile) {
-						Handler handler = ((Tile) rect).getHandler();
-						levelHandlers.add(handler);
-						continue;
-					}
-					if (rect instanceof Image) {
-						Handler handler = ((Image) rect).getHandler();
-						levelHandlers.add(handler);
-						continue;
-					}
-					if (rect instanceof Event) {
-						Handler handler = ((Event) rect).getHandler();
-						levelHandlers.add(handler);
-						continue;
-					}
+//				HashSet<Handler> levelHandlers = new HashSet<Handler>();
+//				HashSet<Rectangle> world = new HashSet<Rectangle>();
+//				game.world.getAll(world);
+//				for (Rectangle rect : world) {
+//					if (rect instanceof Tile) {
+//						Handler handler = ((Tile) rect).getHandler();
+//						levelHandlers.add(handler);
+//						continue;
+//					}
+//					if (rect instanceof Image) {
+//						Handler handler = ((Image) rect).getHandler();
+//						levelHandlers.add(handler);
+//						continue;
+//					}
+//					if (rect instanceof Event) {
+//						Handler handler = ((Event) rect).getHandler();
+//						levelHandlers.add(handler);
+//						continue;
+//					}
+//				}
+//				for (Handler handler : levelHandlers) {
+//					handler.drawAll();
+//				}
+//				p.image(TextureCache.getGrid(65), 0, 0);
+//				p.image(TextureCache.getGrid(33), 0, 0);
+//				p.image(TextureCache.getGrid(17), 0, 0);
+//				p.image(TextureCache.getGrid(9), 0, 0);
+//				p.image(TextureCache.getGrid(5), 0, 0);
+//				p.image(TextureCache.getGrid(3), 0, 0);
+//				p.image(TextureCache.getPageViewBackground(17), 0, 0);
+//				p.image(TextureCache.getPageViewBackground(9), 0, 0);
+//				p.image(TextureCache.getPageViewBackground(5), 0, 0);
+//				p.image(TextureCache.getPageViewBackground(3), 0, 0);
+
+				List<Page> tempPages = game.getPageView().getPages();
+				for (Page page : tempPages) {
+					page.draw(TextureCache.LOD256);
+					page.draw(TextureCache.LOD128);
+					page.draw(TextureCache.LOD64);
+					page.draw(TextureCache.LOD32);
 				}
-				for (Handler handler : levelHandlers) {
-					handler.drawAll();
-				}
-				p.image(TextureCache.getGrid(65), 0, 0);
-				p.image(TextureCache.getGrid(33), 0, 0);
-				p.image(TextureCache.getGrid(17), 0, 0);
-				p.image(TextureCache.getGrid(9), 0, 0);
-				p.image(TextureCache.getGrid(5), 0, 0);
-				p.image(TextureCache.getGrid(3), 0, 0);
-				p.image(TextureCache.getPageViewBackground(17), 0, 0);
-				p.image(TextureCache.getPageViewBackground(9), 0, 0);
-				p.image(TextureCache.getPageViewBackground(5), 0, 0);
-				p.image(TextureCache.getPageViewBackground(3), 0, 0);
 
 				// TODO: might need some sort of delta time reset too
 
