@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import android.app.Activity;
 import android.content.Context;
@@ -16,6 +17,7 @@ import controllers.Controller;
 import controllers.PlayerControl;
 import editor.Editor;
 import editor.uitop.WidgetPauseMenu;
+import handlers.Handler;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.DoToast;
@@ -60,6 +62,8 @@ public class AppLogic {
 
 	private static ArrayList<File> levels;
 	private static int currentLevel;
+
+	private static boolean skipNextFrame = false;
 
 	public AppLogic(PApplet papp, Activity masterActivity, Context masterContext) {
 		p = papp;
@@ -210,39 +214,39 @@ public class AppLogic {
 				game.getPageView().offsetAll(offsetX, offsetY);
 
 				// force draw all assets
-//				HashSet<Handler> levelHandlers = new HashSet<Handler>();
-//				HashSet<Rectangle> world = new HashSet<Rectangle>();
-//				game.world.getAll(world);
-//				for (Rectangle rect : world) {
-//					if (rect instanceof Tile) {
-//						Handler handler = ((Tile) rect).getHandler();
-//						levelHandlers.add(handler);
-//						continue;
-//					}
-//					if (rect instanceof Image) {
-//						Handler handler = ((Image) rect).getHandler();
-//						levelHandlers.add(handler);
-//						continue;
-//					}
-//					if (rect instanceof Event) {
-//						Handler handler = ((Event) rect).getHandler();
-//						levelHandlers.add(handler);
-//						continue;
-//					}
-//				}
-//				for (Handler handler : levelHandlers) {
-//					handler.drawAll();
-//				}
-//				p.image(TextureCache.getGrid(65), 0, 0);
-//				p.image(TextureCache.getGrid(33), 0, 0);
-//				p.image(TextureCache.getGrid(17), 0, 0);
-//				p.image(TextureCache.getGrid(9), 0, 0);
-//				p.image(TextureCache.getGrid(5), 0, 0);
-//				p.image(TextureCache.getGrid(3), 0, 0);
-//				p.image(TextureCache.getPageViewBackground(17), 0, 0);
-//				p.image(TextureCache.getPageViewBackground(9), 0, 0);
-//				p.image(TextureCache.getPageViewBackground(5), 0, 0);
-//				p.image(TextureCache.getPageViewBackground(3), 0, 0);
+				HashSet<Handler> levelHandlers = new HashSet<Handler>();
+				HashSet<Rectangle> world = new HashSet<Rectangle>();
+				game.world.getAll(world);
+				for (Rectangle rect : world) {
+					if (rect instanceof Tile) {
+						Handler handler = ((Tile) rect).getHandler();
+						levelHandlers.add(handler);
+						continue;
+					}
+					if (rect instanceof Image) {
+						Handler handler = ((Image) rect).getHandler();
+						levelHandlers.add(handler);
+						continue;
+					}
+					if (rect instanceof Event) {
+						Handler handler = ((Event) rect).getHandler();
+						levelHandlers.add(handler);
+						continue;
+					}
+				}
+				for (Handler handler : levelHandlers) {
+					handler.drawAll();
+				}
+				p.image(TextureCache.getGrid(65), 0, 0);
+				p.image(TextureCache.getGrid(33), 0, 0);
+				p.image(TextureCache.getGrid(17), 0, 0);
+				p.image(TextureCache.getGrid(9), 0, 0);
+				p.image(TextureCache.getGrid(5), 0, 0);
+				p.image(TextureCache.getGrid(3), 0, 0);
+				p.image(TextureCache.getPageViewBackground(17), 0, 0);
+				p.image(TextureCache.getPageViewBackground(9), 0, 0);
+				p.image(TextureCache.getPageViewBackground(5), 0, 0);
+				p.image(TextureCache.getPageViewBackground(3), 0, 0);
 
 				List<Page> tempPages = game.getPageView().getPages();
 				for (Page page : tempPages) {
@@ -251,7 +255,7 @@ public class AppLogic {
 					page.draw(TextureCache.LOD64);
 					page.draw(TextureCache.LOD32);
 				}
-				
+
 				List<Background> tempBackgrounds = game.getPageView().getBackgrounds();
 				for (Background background : tempBackgrounds) {
 					background.draw(TextureCache.LOD256);
@@ -261,6 +265,7 @@ public class AppLogic {
 				}
 
 				// TODO: might need some sort of delta time reset too
+				skipNextFrame = true;
 
 				removeMenu();
 			}
@@ -305,6 +310,11 @@ public class AppLogic {
 	static public void draw(float deltaTime) {
 		// This is the step method for the whole game, as well as the draw method
 
+		if (skipNextFrame) {
+			skipNextFrame = false;
+			return;
+		}
+
 		// touch screen
 		touches.clear();
 		for (TouchEvent.Pointer t : p.touches) {
@@ -327,9 +337,7 @@ public class AppLogic {
 			if (menu == null) {
 				controller.step(touches);
 				game.step(deltaTime); // step game and physics
-			} // else if (menu instanceof LoadingMenu) {
-//				game.step(deltaTime); // step game and physics
-//			}
+			}
 		}
 		game.cameraStep(deltaTime); // step camera etc
 
