@@ -100,10 +100,8 @@ public class AppLogic {
 
 		getLevels();
 		// setup shared preferences (used for save games)
-//		SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
 		settings = activity.getPreferences(0);
 		saveGame = settings.edit();
-//		saveGame.putInt("level", 0);
 
 		menu = new LaunchMenu(p);
 		game.getPageView().initCamera();
@@ -122,6 +120,7 @@ public class AppLogic {
 	static public void saveGame() {
 		savedLevel = currentLevel;
 		saveGame.putInt("level", currentLevel);
+		saveGame.apply();
 	}
 
 	static public void getLevels() {
