@@ -216,18 +216,18 @@ public abstract class Menu {
 			point.y -= position.y;
 			point.rotate(PApplet.radians(-angle));
 
-			if (-(menuWidth / 2) * size > point.x) {
-				return;
-			}
-			if ((menuWidth / 2) * size < point.x) {
-				return;
-			}
-			if (-(menuHeight / 2) * size > point.y) {
-				return;
-			}
-			if ((menuHeight / 2) * size < point.y) {
-				return;
-			}
+//			if (-(menuWidth / 2) * size > point.x) {
+//				return;
+//			}
+//			if ((menuWidth / 2) * size < point.x) {
+//				return;
+//			}
+//			if (-(menuHeight / 2) * size > point.y) {
+//				return;
+//			}
+//			if ((menuHeight / 2) * size < point.y) {
+//				return;
+//			}
 
 
 			// interacting with in page view menu
