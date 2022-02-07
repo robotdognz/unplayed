@@ -128,10 +128,10 @@ public abstract class Menu {
 		float xTileEnd = 1; //endX - startX; // where to end horizontal tiling in texture units
 		float yTileEnd = 1; //endY - startY; // where to end vertical tiling in texture units
 		// convert to level dimensions
-		startX = startX * gridSize;
-		startY = startY * gridSize;
-		endX = endX * gridSize;
-		endY = endY * gridSize;
+//		startX = startX * gridSize;
+//		startY = startY * gridSize;
+//		endX = endX * gridSize;
+//		endY = endY * gridSize;
 		// texture
 		p.noStroke();
 		p.textureMode(NORMAL);
