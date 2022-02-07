@@ -185,7 +185,7 @@ public abstract class Menu {
 
 		for (int i = 0; i < buttons.size(); i++) {
 			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2; 
-			buttons.get(i).drawOnPage(p, position.x, y);
+			buttons.get(i).drawOnPage(p, 0, y); //p, position.x, y
 		}
 
 		p.popMatrix();
