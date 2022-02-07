@@ -99,6 +99,11 @@ public class AppLogic {
 		widgetHeight = p.displayWidth / 12; // 120
 
 		getLevels();
+		// setup shared preferences (used for save games)
+//		SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+		settings = activity.getPreferences(0);
+		saveGame = settings.edit();
+//		saveGame.putInt("level", 0);
 
 		menu = new LaunchMenu(p);
 		game.getPageView().initCamera();
@@ -108,11 +113,6 @@ public class AppLogic {
 		// print android api version
 		PApplet.println(android.os.Build.VERSION.SDK_INT);
 		
-		// setup shared preferences (used for save games)
-//		SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
-		settings = activity.getPreferences(0);
-		saveGame = settings.edit();
-//		saveGame.putInt("level", 0);
 	}
 	
 	static public void getSaveGame() {
