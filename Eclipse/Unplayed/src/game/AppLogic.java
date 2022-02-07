@@ -119,7 +119,7 @@ public class AppLogic {
 
 	static public void updateSaveGame() {
 		savedLevel = currentLevel + 1;
-		saveGame.putInt("level", currentLevel);
+		saveGame.putInt("level", savedLevel);
 		saveGame.apply();
 	}
 
