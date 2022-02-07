@@ -8,11 +8,9 @@ import processing.core.PApplet;
 import static processing.core.PConstants.*;
 
 public class BackgroundPaper {
-	private TextureCache texture;
 	int gridSize;
 
-	public BackgroundPaper(PApplet p, TextureCache texture) {
-		this.texture = texture;
+	public BackgroundPaper(PApplet p) {
 		gridSize = 1100;
 
 	}
@@ -72,7 +70,7 @@ public class BackgroundPaper {
 		graphics.textureMode(NORMAL);
 		graphics.beginShape();
 		graphics.textureWrap(REPEAT);
-		graphics.texture(texture.getPageViewBackground(scale));
+		graphics.texture(TextureCache.getPageViewBackground(scale));
 		graphics.vertex(startX, startY, xTileStart, yTileStart); // top left
 		graphics.vertex(endX, startY, xTileEnd, yTileStart); // top right
 		graphics.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right

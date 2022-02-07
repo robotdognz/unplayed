@@ -163,7 +163,7 @@ public class Tile extends Editable implements Comparable<Tile> {
 			staticBody = null;
 		}
 	}
-	
+
 	public TileHandler getHandler() {
 		return tileTexture;
 	}
@@ -174,7 +174,8 @@ public class Tile extends Editable implements Comparable<Tile> {
 			if (angle == 0) {
 				graphics.tint(255, 100);
 				graphics.imageMode(CORNER);
-				graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight()); // draw the tile
+//				graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight()); // draw the tile
+				tileTexture.draw(graphics, getX(), getY(), getWidth(), getHeight(), scale); // draw the tile
 				graphics.noTint();
 			} else {
 				graphics.pushMatrix();
@@ -182,7 +183,8 @@ public class Tile extends Editable implements Comparable<Tile> {
 				graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
 				graphics.rotate(PApplet.radians(angle)); // rotate the tile
 				graphics.imageMode(CENTER);
-				graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
+//				graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
+				tileTexture.draw(graphics, 0, 0, getWidth(), getHeight(), scale);
 				graphics.noTint();
 				graphics.popMatrix();
 			}
@@ -201,14 +203,15 @@ public class Tile extends Editable implements Comparable<Tile> {
 			// texture isn't missing
 			if (angle == 0) {
 				graphics.imageMode(CORNER);
-				graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight()); // draw the tile
+//				graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight()); // draw the tile
+				tileTexture.draw(graphics, getX(), getY(), getWidth(), getHeight(), scale); // draw the tile
 			} else {
 				graphics.pushMatrix();
 				graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
 				graphics.rotate(PApplet.radians(angle)); // rotate the tile
 				graphics.imageMode(CENTER);
 //				graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
-				tileTexture.draw(graphics, getWidth(), getHeight(), scale);
+				tileTexture.draw(graphics, 0, 0, getWidth(), getHeight(), scale); // draw the tile
 				graphics.popMatrix();
 			}
 		} else {
@@ -232,7 +235,7 @@ public class Tile extends Editable implements Comparable<Tile> {
 			return null;
 		}
 	}
-	
+
 	public int getRotationMode() {
 		if (tileTexture != null) {
 			return tileTexture.getRotationMode();

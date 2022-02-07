@@ -38,10 +38,10 @@ public class TextureCache {
 	static private PImage gridLOD16;
 	static private PImage gridLOD8;
 
-	private PImage pageViewBackgroundLOD256;
-	private PImage pageViewBackgroundLOD128;
-	private PImage pageViewBackgroundLOD64;
-	private PImage pageViewBackgroundLOD32;
+	static private PImage pageViewBackgroundLOD256;
+	static private PImage pageViewBackgroundLOD128;
+	static private PImage pageViewBackgroundLOD64;
+	static private PImage pageViewBackgroundLOD32;
 	
 	static private PImage loadingText;
 
@@ -102,7 +102,7 @@ public class TextureCache {
 		this.game = game;
 	}
 
-	public PImage getPageViewBackground(float scale) {
+	static public PImage getPageViewBackground(float scale) {
 		if (scale > 16) {
 			return pageViewBackgroundLOD32; // between 16 and 32
 		} else if (scale > 8) {

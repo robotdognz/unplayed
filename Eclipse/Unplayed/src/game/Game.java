@@ -80,7 +80,7 @@ public class Game {
 
 		pageView = new PageView(p, this, texture, convert);
 
-		paper = new MathsPaper(texture);
+		paper = new MathsPaper();
 
 		pauseTimer = new CountdownTimer(0.4f);
 		pauseType = PauseType.NONE;

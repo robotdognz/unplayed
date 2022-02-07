@@ -130,9 +130,8 @@ public abstract class Handler {
 		}
 	}
 
-	public void draw(PGraphics graphics, float width, float height, float scale) {
-		graphics.imageMode(CENTER);
-		graphics.image(getSprite(scale), 0, 0, width, height);
+	public void draw(PGraphics graphics, float x, float y, float width, float height, float scale) {
+		graphics.image(getSprite(scale), x, y, width, height);
 	}
 	
 	public void drawAll() {

@@ -7,11 +7,9 @@ import processing.core.PGraphics;
 import static processing.core.PConstants.*;
 
 public class MathsPaper {
-//	private TextureCache texture;
 	int gridSize;
 
-	public MathsPaper(TextureCache texture) {
-//		this.texture = texture;
+	public MathsPaper() {
 		gridSize = 400;
 	}
 

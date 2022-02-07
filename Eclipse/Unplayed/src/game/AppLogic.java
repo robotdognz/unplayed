@@ -179,6 +179,7 @@ public class AppLogic {
 				// step the loaded pages so we can access where the player is visible
 				game.getPageView().stepPages();
 
+				// move loaded level so that it's just off screen
 				// calculate offset
 				Rectangle pageArea = game.getPageView().getPageArea();
 				Rectangle playerArea = game.getPageView().getPlayerVisibleArea();
@@ -210,8 +211,7 @@ public class AppLogic {
 
 				game.getPageView().offsetAll(offsetX, offsetY);
 
-				// TODO: force draw all assets
-
+				// force draw all assets
 				HashSet<Handler> levelHandlers = new HashSet<Handler>();
 				HashSet<Rectangle> world = new HashSet<Rectangle>();
 				game.world.getAll(world);
@@ -232,10 +232,19 @@ public class AppLogic {
 						continue;
 					}
 				}
-
 				for (Handler handler : levelHandlers) {
 					handler.drawAll();
 				}
+				p.image(TextureCache.getGrid(65), 0, 0);
+				p.image(TextureCache.getGrid(33), 0, 0);
+				p.image(TextureCache.getGrid(17), 0, 0);
+				p.image(TextureCache.getGrid(9), 0, 0);
+				p.image(TextureCache.getGrid(5), 0, 0);
+				p.image(TextureCache.getGrid(3), 0, 0);
+				p.image(TextureCache.getPageViewBackground(17), 0, 0);
+				p.image(TextureCache.getPageViewBackground(9), 0, 0);
+				p.image(TextureCache.getPageViewBackground(5), 0, 0);
+				p.image(TextureCache.getPageViewBackground(3), 0, 0);
 
 				// TODO: might need some sort of delta time reset too
 
