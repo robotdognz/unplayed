@@ -20,7 +20,7 @@ public class LoadingMenu extends Menu {
 		Random rd = new Random();
 		boolean rand = rd.nextBoolean();
 
-		float offset = 30;
+		float offset = 15;
 
 		if (rand) {
 			angleOffset = offset;
@@ -28,8 +28,8 @@ public class LoadingMenu extends Menu {
 			angleOffset = -offset;
 		}
 
-//		float range = 20;
-//		angleOffset = (float) (Math.random() * range) - (range / 2);
+		float range = 5;
+		angleOffset += (float) (Math.random() * range) - (range / 2);
 	}
 
 	@Override
