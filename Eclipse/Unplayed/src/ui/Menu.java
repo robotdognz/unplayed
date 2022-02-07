@@ -93,9 +93,9 @@ public abstract class Menu {
 			buttons.get(i).setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2, y, buttonWidth,
 					buttonHeight);
 		}
-		updateCorners();
 		updateShadow();
 		setAngle();
+		updateCorners();
 		built = true;
 	}
 
@@ -112,9 +112,9 @@ public abstract class Menu {
 			buttons.get(i).setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2, y, buttonWidth,
 					buttonHeight);
 		}
-		updateCorners();
 		updateShadow();
 		setAngle();
+		updateCorners();
 		built = true;
 	}
 
@@ -184,8 +184,8 @@ public abstract class Menu {
 		float yStart = -pageMenu.getHeight() / 2; // position.y - pageMenu.getHeight() / 2
 
 		for (int i = 0; i < buttons.size(); i++) {
-			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2; 
-			buttons.get(i).drawOnPage(p, 0, y); //p, position.x, y
+			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
+			buttons.get(i).drawOnPage(p, 0, y); // p, position.x, y
 		}
 
 		p.popMatrix();
@@ -210,12 +210,32 @@ public abstract class Menu {
 
 	public void hover(PVector lastTouch) {
 		if (Camera.getGame()) {
+
+			PVector point = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);
+			point.x -= position.x;
+			point.y -= position.y;
+			point.rotate(PApplet.radians(-angle));
+
+			if (-(menuWidth / 2) * size > point.x) {
+				return;
+			}
+			if ((menuWidth / 2) * size < point.x) {
+				return;
+			}
+			if (-(menuHeight / 2) * size > point.y) {
+				return;
+			}
+			if ((menuHeight / 2) * size < point.y) {
+				return;
+			}
+
+
 			// interacting with in page view menu
-			PVector levelTouch = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);
-			levelTouch.x -= position.x;
-			levelTouch.y -= position.y;
+//			PVector levelTouch = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);
+//			levelTouch.x -= position.x;
+//			levelTouch.y -= position.y;
 			for (Button b : buttons) {
-				b.hoverPage(levelTouch);
+				b.hoverPage(point); //levelTouch
 			}
 		} else {
 			// interacting with menu overlay
