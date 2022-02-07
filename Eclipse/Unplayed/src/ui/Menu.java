@@ -107,24 +107,26 @@ public abstract class Menu {
 
 	public void drawPageView(float scale) {
 		p.noStroke();
-		p.fill(240); //150
+		p.fill(240); // 150
 		p.rectMode(CENTER);
 		p.rect(position.x, position.y, pageMenu.getWidth(), pageMenu.getHeight());
 
 		p.pushMatrix();
 		p.translate(position.x, position.y);
 		int gridSize = 400;
-		float startX = 0; //pageMenu.getX();
+
+		float startX = -menuWidth / 2; // pageMenu.getX();
 		// find y start position;
-		float startY = 0; //pageMenu.getY();
+		float startY = -menuHeight / 2; // pageMenu.getY();
 		// find x end position
-		float endX = (int) Math.round((menuWidth + (gridSize / 2)) / gridSize);
+		float endX = menuWidth / 2; // (int) Math.round((menuWidth + (gridSize / 2)) / gridSize);
 		// find y end position
-		float endY = (int) Math.round((menuHeight + (gridSize / 2)) / gridSize);
+		float endY = menuHeight / 2; // (int) Math.round((menuHeight + (gridSize / 2)) / gridSize);
+
 		float xTileStart = 0; // where to start horizontal tiling in texture units
 		float yTileStart = 0; // where to start vertical tiling in texture units
-		float xTileEnd = endX - startX; // where to end horizontal tiling in texture units
-		float yTileEnd = endY - startY; // where to end vertical tiling in texture units
+		float xTileEnd = 1; //endX - startX; // where to end horizontal tiling in texture units
+		float yTileEnd = 1; //endY - startY; // where to end vertical tiling in texture units
 		// convert to level dimensions
 		startX = startX * gridSize;
 		startY = startY * gridSize;
@@ -141,7 +143,7 @@ public abstract class Menu {
 		p.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right
 		p.vertex(startX, endY, xTileStart, yTileEnd); // bottom left
 		p.endShape();
-		
+
 		p.popMatrix();
 
 		// draw the buttons
