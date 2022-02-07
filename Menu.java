@@ -1,6 +1,8 @@
 package ui;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 import camera.Camera;
 import camera.PageViewCamera;
 import handlers.TextureCache;
@@ -93,6 +95,7 @@ public abstract class Menu {
 		}
 		updateCorners();
 		updateShadow();
+		setAngle();
 		built = true;
 	}
 
@@ -111,7 +114,24 @@ public abstract class Menu {
 		}
 		updateCorners();
 		updateShadow();
+		setAngle();
 		built = true;
+	}
+	
+	private void setAngle() {
+		Random rd = new Random();
+		boolean rand = rd.nextBoolean();
+
+		float offset = 15;
+
+		if (rand) {
+			angle = offset;
+		} else {
+			angle = -offset;
+		}
+
+		float range = 5;
+		angle += (float) (Math.random() * range) - (range / 2);
 	}
 
 	private void updateShadow() {

@@ -1,7 +1,5 @@
 package ui;
 
-import java.util.Random;
-
 import game.AppLogic;
 import handlers.TextureCache;
 import processing.core.PApplet;
@@ -11,25 +9,25 @@ public class LoadingMenu extends Menu {
 	// this boolean prevents this loading menu from infinitely restarting the level
 	// each frame. With this it is only used once
 
-	float angleOffset;
+//	float angle;
 
 	public LoadingMenu(PApplet p) {
 		super(p);
 		constructMenu();
 
-		Random rd = new Random();
-		boolean rand = rd.nextBoolean();
-
-		float offset = 15;
-
-		if (rand) {
-			angleOffset = offset;
-		} else {
-			angleOffset = -offset;
-		}
-
-		float range = 5;
-		angleOffset += (float) (Math.random() * range) - (range / 2);
+//		Random rd = new Random();
+//		boolean rand = rd.nextBoolean();
+//
+//		float offset = 15;
+//
+//		if (rand) {
+//			angleOffset = offset;
+//		} else {
+//			angleOffset = -offset;
+//		}
+//
+//		float range = 5;
+//		angleOffset += (float) (Math.random() * range) - (range / 2);
 	}
 
 	@Override
@@ -37,7 +35,7 @@ public class LoadingMenu extends Menu {
 
 		p.pushMatrix();
 		p.translate(position.x, position.y);
-		p.rotate(PApplet.radians(angleOffset));
+		p.rotate(PApplet.radians(angle));
 		TextureCache.drawLoadingText(p);
 		p.popMatrix();
 
