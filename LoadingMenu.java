@@ -9,17 +9,23 @@ public class LoadingMenu extends Menu {
 	// this boolean prevents this loading menu from infinitely restarting the level
 	// each frame. With this it is only used once
 
+	float angleOffset;
+
 	public LoadingMenu(PApplet p) {
 		super(p);
 		constructMenu();
+
+		float range = 20;
+		angleOffset = (float) (Math.random() * range) - (range / 2);
 	}
-	
+
 	@Override
 	public void drawPageView() {
-		
+
 		p.pushMatrix();
 //		p.imageMode(CENTER);
 		p.translate(position.x, position.y);
+		p.rotate(PApplet.radians(angleOffset));
 		TextureCache.drawLoadingText(p);
 		p.popMatrix();
 		// draw the buttons
@@ -28,7 +34,7 @@ public class LoadingMenu extends Menu {
 			child.drawPageView();
 		}
 	}
-	
+
 	@Override
 	public void draw() {
 		// used only in editor
