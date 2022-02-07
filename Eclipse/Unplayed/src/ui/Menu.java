@@ -137,9 +137,9 @@ public abstract class Menu {
 		p.rectMode(CENTER);
 		p.rect(0, 0, pageMenu.getWidth(), pageMenu.getHeight());
 		int gridSize = 400;
-		float startX = menuWidth / 2;
+		float startX = -menuWidth / 2;
 		// find y start position;
-		float startY = menuHeight / 2;
+		float startY = -menuHeight / 2;
 		// find x end position
 		float endX = menuWidth / 2;
 		// find y end position
