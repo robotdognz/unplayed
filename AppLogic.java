@@ -200,7 +200,7 @@ public class AppLogic {
 				if (diff.x <= 0) {
 					// move to off right edge of pageArea
 
-					offsetX -= playerAreaCenter.x - pageArea.getTopLeft().x - menuArea.getWidth() / 2;
+					offsetX -= playerAreaCenter.x - pageArea.getTopLeft().x + menuArea.getWidth() / 2;
 
 				} else {
 					// move to off left edge of pageArea
