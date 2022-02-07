@@ -125,8 +125,8 @@ public abstract class Menu {
 
 		float xTileStart = 0; // where to start horizontal tiling in texture units
 		float yTileStart = 0; // where to start vertical tiling in texture units
-		float xTileEnd = 1; //endX - startX; // where to end horizontal tiling in texture units
-		float yTileEnd = 1; //endY - startY; // where to end vertical tiling in texture units
+		float xTileEnd = menuWidth/gridSize; //endX - startX; // where to end horizontal tiling in texture units
+		float yTileEnd = menuHeight/gridSize; //endY - startY; // where to end vertical tiling in texture units
 		// convert to level dimensions
 //		startX = startX * gridSize;
 //		startY = startY * gridSize;
