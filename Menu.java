@@ -107,14 +107,14 @@ public abstract class Menu {
 
 	public void drawPageView(float scale) {
 		p.noStroke();
-		p.fill(150);
+		p.fill(240); //150
 		p.rectMode(CENTER);
 		p.rect(position.x, position.y, pageMenu.getWidth(), pageMenu.getHeight());
 
 		int gridSize = 400;
-		float startX = 0;
+		float startX = pageMenu.getX();
 		// find y start position;
-		float startY = 0;
+		float startY = pageMenu.getY();
 		// find x end position
 		float endX = (int) Math.round((menuWidth + (gridSize / 2)) / gridSize);
 		// find y end position
