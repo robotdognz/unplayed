@@ -1,8 +1,6 @@
 package ui;
 
 import java.util.ArrayList;
-import java.util.Random;
-
 import camera.Camera;
 import camera.PageViewCamera;
 import handlers.TextureCache;
@@ -124,9 +122,6 @@ public abstract class Menu {
 	}
 
 	private void setAngle() {
-//		Random rd = new Random();
-//		boolean rand = rd.nextBoolean();
-
 		if (previousTilt) {
 			angle = angleOffset;
 			previousTilt = !previousTilt;

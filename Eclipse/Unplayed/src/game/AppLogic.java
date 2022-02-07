@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,6 +16,7 @@ import camera.GameCamera;
 import controllers.Controller;
 import controllers.PlayerControl;
 import editor.Editor;
+import handlers.Handler;
 import editor.uitop.WidgetPauseMenu;
 import handlers.TextureCache;
 import misc.Converter;
@@ -23,7 +25,7 @@ import misc.EditorJSON;
 import misc.FileChooser;
 import misc.KetaiGesture;
 import misc.Vibe;
-import objects.Rectangle;
+import objects.*;
 import processing.core.*;
 import processing.event.TouchEvent;
 import ui.LaunchMenu;
@@ -177,7 +179,6 @@ public class AppLogic {
 				// step the loaded pages so we can access where the player is visible
 				game.getPageView().stepPages();
 
-				// TODO: offset newly loaded pages and backgrounds to just off screen
 				// calculate offset
 				Rectangle pageArea = game.getPageView().getPageArea();
 				Rectangle playerArea = game.getPageView().getPlayerVisibleArea();
@@ -207,38 +208,34 @@ public class AppLogic {
 					// the 200 is 2x the camera edge padding, shouldn't be hard coded like this
 				}
 
-//				if (Math.abs(diff.x) >= Math.abs(diff.y)) {
-//					// more difference on x axis than y axis
-//					if (diff.x <= 0) {
-//						// move to off right edge of pageArea
-//
-//						// difference between rightEdge of pageArea and leftEdge of menu
-//
-//					} else {
-//						// move to off left edge of pageArea
-//
-//					}
-//					
-//					offsetX = menuCenter.x - pageAreaCenter.x;
-//					offsetY = menuCenter.y - pageAreaCenter.y;
-//
-//				} else {
-//					// more difference on y axis than x axis
-//					if (diff.y <= 0) {
-//						// move to off top edge of pageArea
-//
-//					} else {
-//						// move to off bottom edge of pageArea
-//
-//					}
-//
-//					offsetX = menuCenter.x - pageAreaCenter.x;
-//					offsetY = menuCenter.y - pageAreaCenter.y;
-//				}
-
 				game.getPageView().offsetAll(offsetX, offsetY);
 
 				// TODO: force draw all assets
+
+				HashSet<Handler> levelHandlers = new HashSet<Handler>();
+				HashSet<Rectangle> world = new HashSet<Rectangle>();
+				game.world.getAll(world);
+				for (Rectangle rect : world) {
+					if (rect instanceof Tile) {
+						Handler handler = ((Tile) rect).getHandler();
+						levelHandlers.add(handler);
+						continue;
+					}
+					if (rect instanceof Image) {
+						Handler handler = ((Image) rect).getHandler();
+						levelHandlers.add(handler);
+						continue;
+					}
+					if (rect instanceof Event) {
+						Handler handler = ((Event) rect).getHandler();
+						levelHandlers.add(handler);
+						continue;
+					}
+				}
+
+				for (Handler handler : levelHandlers) {
+					handler.drawAll();
+				}
 
 				// TODO: might need some sort of delta time reset too
 

@@ -207,7 +207,8 @@ public class Tile extends Editable implements Comparable<Tile> {
 				graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
 				graphics.rotate(PApplet.radians(angle)); // rotate the tile
 				graphics.imageMode(CENTER);
-				graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
+//				graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the tile
+				tileTexture.draw(graphics, getWidth(), getHeight(), scale);
 				graphics.popMatrix();
 			}
 		} else {

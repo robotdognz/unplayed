@@ -6,6 +6,7 @@ import java.io.File;
 
 import editor.DebugOutput;
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import processing.core.PImage;
 
 public abstract class Handler {
@@ -67,7 +68,7 @@ public abstract class Handler {
 			DebugOutput.pushMessage("" + angle, 2);
 		}
 	}
-	
+
 	public int getEditorAngle() {
 		return editorRotation;
 	}
@@ -127,5 +128,17 @@ public abstract class Handler {
 		} else {
 			p.image(getSprite(6), pX, pY, widthRenderRatio * size, heightRenderRatio * size);
 		}
+	}
+
+	public void draw(PGraphics graphics, float width, float height, float scale) {
+		graphics.imageMode(CENTER);
+		graphics.image(getSprite(scale), 0, 0, width, height);
+	}
+	
+	public void drawAll() {
+		p.image(getSprite(texture.LOD32), 0, 0, 100, 100);
+		p.image(getSprite(texture.LOD64), 0, 0, 100, 100);
+		p.image(getSprite(texture.LOD128), 0, 0, 100, 100);
+		p.image(getSprite(texture.LOD256), 0, 0, 100, 100);
 	}
 }

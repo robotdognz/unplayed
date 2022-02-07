@@ -1,9 +1,7 @@
 package objects;
 
 import static processing.core.PConstants.*;
-
 import java.io.File;
-
 import handlers.ImageHandler;
 import handlers.TextureCache;
 import processing.core.PApplet;
@@ -29,6 +27,10 @@ public class Image extends Editable {
 		} else {
 			hasTexture = false;
 		}
+	}
+	
+	public ImageHandler getHandler() {
+		return imageTexture;
 	}
 
 	public void draw(PGraphics graphics, float scale) {
