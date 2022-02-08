@@ -245,7 +245,6 @@ public class AppLogic {
 				List<Page> tempPages = game.getPageView().getPages();
 				p.pushMatrix();
 				p.translate(p.width / 2, p.height / 2);
-				p.rect(0, 0, 400, 400);
 				for (Page page : tempPages) {
 					page.step();
 					p.pushMatrix();
@@ -256,7 +255,6 @@ public class AppLogic {
 					page.draw(TextureCache.LOD64);
 					page.draw(TextureCache.LOD32);
 					p.popMatrix();
-					p.delay(200);
 				}
 				List<Background> tempBackgrounds = game.getPageView().getBackgrounds();
 				for (Background background : tempBackgrounds) {
@@ -268,7 +266,6 @@ public class AppLogic {
 					background.draw(TextureCache.LOD64);
 					background.draw(TextureCache.LOD32);
 					p.popMatrix();
-					p.delay(200);
 				}
 				p.popMatrix();
 
@@ -381,6 +378,8 @@ public class AppLogic {
 				menu.hover(lastTouch);
 			}
 
+		}else {
+			p.delay(1000);
 		}
 	}
 
