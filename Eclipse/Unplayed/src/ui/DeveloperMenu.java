@@ -29,6 +29,7 @@ public class DeveloperMenu extends Menu {
 	public void click() {
 		for (Button b : buttons) {
 			if (b.click().equals(editor)) {
+				game.emptyGame();
 				AppLogic.toggleEditor();
 			} else if (b.click().equals(folder)) {
 				// TODO: load folder of levels and play it as a campaign
