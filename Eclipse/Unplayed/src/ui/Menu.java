@@ -199,11 +199,12 @@ public abstract class Menu {
 
 	public void draw() {
 		// used only in editor
-		p.noStroke();
-		p.fill(150);
+		p.stroke(10);
+		p.fill(240);
 		p.rectMode(CORNER);
 		p.rect(menuCenterX - menuWidth / 2, menuTopY, menuWidth, menuHeight);
 		// draw the buttons
+		p.noStroke();
 		for (int i = 0; i < buttons.size(); i++) {
 			float y = menuTopY + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
 			buttons.get(i).draw(p, y);
@@ -211,20 +212,6 @@ public abstract class Menu {
 		
 		p.pushMatrix();
 		p.translate(menuCenterX, menuTopY + menuHeight/2);
-
-		// draw white background
-		p.stroke(4);
-		p.fill(240);
-		p.rectMode(CENTER);
-		p.rect(0, 0, pageMenu.getWidth(), pageMenu.getHeight());
-
-		// draw the buttons
-		float yStart = -pageMenu.getHeight() / 2; // position.y - pageMenu.getHeight() / 2
-
-		for (int i = 0; i < buttons.size(); i++) {
-			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-			buttons.get(i).drawOnPage(p, 0, y); // p, position.x, y
-		}
 
 		// draw grid paper
 		int gridSize = 400;
