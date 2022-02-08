@@ -64,7 +64,7 @@ void draw() {
     splash = 2;
     return;
   } else if (splash == 2) { //initalize game
-    delay(400);
+    delay(736);
     init();
     splash = 3;
     return;
