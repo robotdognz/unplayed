@@ -53,7 +53,7 @@ public abstract class Menu {
 		this.shadow = 9;
 		this.angleOffset = 5;
 		
-		setAngle(5);
+		setAngle(0);
 	}
 
 	protected void constructMenu() {
