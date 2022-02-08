@@ -37,7 +37,6 @@ public class GameMenu extends Menu {
 				AppLogic.removeMenu(); // remove pause menu
 
 			} else if (b.click().equals(titleScreen)) {
-				AppLogic.updateSaveGame();
 				game.emptyGame();
 				AppLogic.titleScreen(); // open title screen menu
 

@@ -270,6 +270,9 @@ public class AppLogic {
 
 				// prevent animation jump by skipping the next frame
 				skipNextFrame = true;
+				
+				// update save game to this level
+				updateSaveGame();
 
 				// remove the loading menu from this class, it will be kept in the page view
 				// until it is off screen
