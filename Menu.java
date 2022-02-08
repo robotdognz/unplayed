@@ -210,7 +210,7 @@ public abstract class Menu {
 //		}
 		
 		p.pushMatrix();
-		p.translate(menuCenterX, menuTopY - menuHeight/2);
+		p.translate(menuCenterX, menuTopY + menuHeight/2);
 
 		// draw white background
 		p.stroke(4);
