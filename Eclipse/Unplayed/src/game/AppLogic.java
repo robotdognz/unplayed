@@ -274,7 +274,7 @@ public class AppLogic {
 
 				// prevent animation jump by skipping the next frame
 				skipNextFrame = true;
-				
+
 				// update save game to this level
 				updateSaveGame();
 
@@ -353,30 +353,34 @@ public class AppLogic {
 			}
 		}
 		game.cameraStep(deltaTime); // step camera etc
+		
+		if (!skipNextFrame) { //TODO: this is just for testing
 
-		// draw the game
-		if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView) || (editor == null)) {
-			game.draw(); // draw the game
-		}
+			// draw the game
+			if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView) || (editor == null)) {
+				game.draw(); // draw the game
+			}
 
-		if (editorToggle && editor != null) {
-			editor.draw(deltaTime, lastTouch, menu);
-		} else {
-			for (int i = 0; i < widgets.size(); i++) {
-				widgets.get(i).draw(deltaTime, widgetSpacing * (i + 1), widgetHeight);
-				widgets.get(i).updateActive();
-				if (menu == null) {
-					widgets.get(i).hover(lastTouch);
+			if (editorToggle && editor != null) {
+				editor.draw(deltaTime, lastTouch, menu);
+			} else {
+				for (int i = 0; i < widgets.size(); i++) {
+					widgets.get(i).draw(deltaTime, widgetSpacing * (i + 1), widgetHeight);
+					widgets.get(i).updateActive();
+					if (menu == null) {
+						widgets.get(i).hover(lastTouch);
+					}
 				}
 			}
-		}
 
-		// draw the menu
-		if (menu != null) {
-			if (!Camera.getGame()) {
-				menu.draw();
+			// draw the menu
+			if (menu != null) {
+				if (!Camera.getGame()) {
+					menu.draw();
+				}
+				menu.hover(lastTouch);
 			}
-			menu.hover(lastTouch);
+
 		}
 	}
 
