@@ -245,6 +245,7 @@ public class AppLogic {
 				List<Page> tempPages = game.getPageView().getPages();
 				p.pushMatrix();
 				p.translate(p.width / 2, p.height / 2);
+				p.rect(0, 0, 400, 400);
 				for (Page page : tempPages) {
 					page.step();
 					p.pushMatrix();
