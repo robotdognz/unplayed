@@ -255,6 +255,7 @@ public class AppLogic {
 					page.draw(TextureCache.LOD64);
 					page.draw(TextureCache.LOD32);
 					p.popMatrix();
+					p.delay(200);
 				}
 				List<Background> tempBackgrounds = game.getPageView().getBackgrounds();
 				for (Background background : tempBackgrounds) {
@@ -266,6 +267,7 @@ public class AppLogic {
 					background.draw(TextureCache.LOD64);
 					background.draw(TextureCache.LOD32);
 					p.popMatrix();
+					p.delay(200);
 				}
 				p.popMatrix();
 
