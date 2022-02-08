@@ -104,6 +104,7 @@ public class Game {
 		views.clear();
 		pageView.clearPages(); // remove pages
 		pageView.clearBackgrounds(); // remove backgrounds
+		buildWorld(); // rebuild world
 	}
 
 	public void removePlayer() {
