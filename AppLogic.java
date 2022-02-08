@@ -249,7 +249,7 @@ public class AppLogic {
 					page.step();
 					p.pushMatrix();
 					PVector pos = page.getPosition();
-					p.translate(pos.x, pos.y);
+					p.translate(-pos.x, -pos.y);
 					page.draw(TextureCache.LOD256);
 					page.draw(TextureCache.LOD128);
 					page.draw(TextureCache.LOD64);
@@ -260,7 +260,7 @@ public class AppLogic {
 				for (Background background : tempBackgrounds) {
 					p.pushMatrix();
 					PVector pos = background.getPosition();
-					p.translate(pos.x, pos.y);
+					p.translate(-pos.x, -pos.y);
 					background.draw(TextureCache.LOD256);
 					background.draw(TextureCache.LOD128);
 					background.draw(TextureCache.LOD64);
