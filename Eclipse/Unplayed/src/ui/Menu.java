@@ -199,7 +199,8 @@ public abstract class Menu {
 
 	public void draw() {
 		// used only in editor
-		p.stroke(10);
+		p.stroke(0);
+		p.strokeWeight(6);
 		p.fill(240);
 		p.rectMode(CORNER);
 		p.rect(menuCenterX - menuWidth / 2, menuTopY, menuWidth, menuHeight);
