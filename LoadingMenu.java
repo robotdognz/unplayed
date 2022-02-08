@@ -31,8 +31,6 @@ public class LoadingMenu extends Menu {
 
 	@Override
 	public void draw() {
-		// used only in editor
-//		drawPageView(4);
 	}
 
 	@Override
