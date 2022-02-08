@@ -64,14 +64,14 @@ void draw() {
     splash = 2;
     return;
   } else if (splash == 2) { //initalize game
-    //delay(736);
+    delay(400);
     init();
     splash = 3;
     return;
   }
 
   //testing.draw(); //draw touch events
-  AppLogic.draw(delta_time); //deltaFix
+  AppLogic.draw(delta_time);
 }
 
 @Override public String sketchPath(String where) {
