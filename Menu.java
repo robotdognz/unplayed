@@ -51,7 +51,9 @@ public abstract class Menu {
 
 		this.shadowOffset = 9;
 		this.shadow = 9;
-		this.angleOffset = 8;
+		this.angleOffset = 5;
+		
+		setAngle(5);
 	}
 
 	protected void constructMenu() {
@@ -97,7 +99,6 @@ public abstract class Menu {
 					buttonHeight);
 		}
 		updateShadow();
-		setAngle();
 		updateCorners();
 		built = true;
 	}
@@ -116,12 +117,11 @@ public abstract class Menu {
 					buttonHeight);
 		}
 		updateShadow();
-		setAngle();
 		updateCorners();
 		built = true;
 	}
 
-	private void setAngle() {
+	private void setAngle(float range) {
 		if (previousTilt) {
 			angle = angleOffset;
 			previousTilt = !previousTilt;
@@ -130,7 +130,6 @@ public abstract class Menu {
 			previousTilt = !previousTilt;
 		}
 
-		float range = 5;
 		angle += (float) (Math.random() * range) - (range / 2);
 	}
 
