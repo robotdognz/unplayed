@@ -246,6 +246,7 @@ public class AppLogic {
 				p.pushMatrix();
 				p.translate(p.width / 2, p.height / 2);
 				for (Page page : tempPages) {
+					page.step();
 					p.pushMatrix();
 					PVector pos = page.getPosition();
 					p.translate(pos.x, pos.y);
