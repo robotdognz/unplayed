@@ -198,60 +198,60 @@ public abstract class Menu {
 	}
 
 	public void draw() {
-//		// used only in editor
-//		p.noStroke();
-//		p.fill(150);
-//		p.rectMode(CORNER);
-//		p.rect(menuCenterX - menuWidth / 2, menuTopY, menuWidth, menuHeight);
-//		// draw the buttons
-//		for (int i = 0; i < buttons.size(); i++) {
-//			float y = menuTopY + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-//			buttons.get(i).draw(p, y);
-//		}
-		
-		p.pushMatrix();
-		p.translate(menuCenterX, menuTopY + menuHeight/2);
-
-		// draw white background
-		p.stroke(4);
-		p.fill(240);
-		p.rectMode(CENTER);
-		p.rect(0, 0, pageMenu.getWidth(), pageMenu.getHeight());
-
-		// draw the buttons
-		float yStart = -pageMenu.getHeight() / 2; // position.y - pageMenu.getHeight() / 2
-
-		for (int i = 0; i < buttons.size(); i++) {
-			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-			buttons.get(i).drawOnPage(p, 0, y); // p, position.x, y
-		}
-
-		// draw grid paper
-		int gridSize = 400;
-		float startX = -menuWidth / 2;
-		// find y start position;
-		float startY = -menuHeight / 2;
-		// find x end position
-		float endX = menuWidth / 2;
-		// find y end position
-		float endY = menuHeight / 2;
-		float xTileStart = 0; // where to start horizontal tiling in texture units
-		float yTileStart = 0; // where to start vertical tiling in texture units
-		float xTileEnd = menuWidth / gridSize; // where to end horizontal tiling in texture units
-		float yTileEnd = menuHeight / gridSize; // where to end vertical tiling in texture units
-		// texture
+		// used only in editor
 		p.noStroke();
-		p.textureMode(NORMAL);
-		p.beginShape();
-		p.textureWrap(REPEAT);
-		p.texture(TextureCache.getGrid(4));
-		p.vertex(startX, startY, xTileStart, yTileStart); // top left
-		p.vertex(endX, startY, xTileEnd, yTileStart); // top right
-		p.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right
-		p.vertex(startX, endY, xTileStart, yTileEnd); // bottom left
-		p.endShape();
-
-		p.popMatrix();
+		p.fill(150);
+		p.rectMode(CORNER);
+		p.rect(menuCenterX - menuWidth / 2, menuTopY, menuWidth, menuHeight);
+		// draw the buttons
+		for (int i = 0; i < buttons.size(); i++) {
+			float y = menuTopY + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
+			buttons.get(i).draw(p, y);
+		}
+		
+//		p.pushMatrix();
+//		p.translate(menuCenterX, menuTopY + menuHeight/2);
+//
+//		// draw white background
+//		p.stroke(4);
+//		p.fill(240);
+//		p.rectMode(CENTER);
+//		p.rect(0, 0, pageMenu.getWidth(), pageMenu.getHeight());
+//
+//		// draw the buttons
+//		float yStart = -pageMenu.getHeight() / 2; // position.y - pageMenu.getHeight() / 2
+//
+//		for (int i = 0; i < buttons.size(); i++) {
+//			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
+//			buttons.get(i).drawOnPage(p, 0, y); // p, position.x, y
+//		}
+//
+//		// draw grid paper
+//		int gridSize = 400;
+//		float startX = -menuWidth / 2;
+//		// find y start position;
+//		float startY = -menuHeight / 2;
+//		// find x end position
+//		float endX = menuWidth / 2;
+//		// find y end position
+//		float endY = menuHeight / 2;
+//		float xTileStart = 0; // where to start horizontal tiling in texture units
+//		float yTileStart = 0; // where to start vertical tiling in texture units
+//		float xTileEnd = menuWidth / gridSize; // where to end horizontal tiling in texture units
+//		float yTileEnd = menuHeight / gridSize; // where to end vertical tiling in texture units
+//		// texture
+//		p.noStroke();
+//		p.textureMode(NORMAL);
+//		p.beginShape();
+//		p.textureWrap(REPEAT);
+//		p.texture(TextureCache.getGrid(4));
+//		p.vertex(startX, startY, xTileStart, yTileStart); // top left
+//		p.vertex(endX, startY, xTileEnd, yTileStart); // top right
+//		p.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right
+//		p.vertex(startX, endY, xTileStart, yTileEnd); // bottom left
+//		p.endShape();
+//
+//		p.popMatrix();
 	}
 
 	public void hover(PVector lastTouch) {
