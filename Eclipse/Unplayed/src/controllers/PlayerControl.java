@@ -26,17 +26,17 @@ public class PlayerControl implements Controller {
 			int right = 0;
 //			int middle = 0; // used for jumps
 			for (PVector t : touch) {
-				// if (t.y >= height/3) {
+				if (t.y >= p.height / 3) {
 //				if (t.x > p.width * 0.25f && t.x < p.width * 0.75f) { // middle chunk of screen
 //					middle++;
 //				}
-				if (t.x < p.width * 0.25f) { // / 4) { // left chunk of screen
-					left++;
+					if (t.x < p.width * 0.25f) { // / 4) { // left chunk of screen
+						left++;
+					}
+					if (t.x > p.width * 0.75f) { // (p.width / 4) * 3) { // right chunk of screen
+						right++;
+					}
 				}
-				if (t.x > p.width * 0.75f) { // (p.width / 4) * 3) { // right chunk of screen
-					right++;
-				}
-				// }
 			}
 			if (left > right) {
 				game.player.left();
@@ -63,11 +63,7 @@ public class PlayerControl implements Controller {
 
 		if (game.player != null) {
 			// jump if the last true touch was in the middle of the screen
-			if (
-			// lastTouch.y >= height/3 &&
-			touch.x > p.width / 4 && touch.x < (p.width / 4) * 3) { // TODO: check if this works, it used to directly
-																	// access
-																	// lastTouch
+			if (touch.y >= p.height / 3 && touch.x > p.width / 4 && touch.x < (p.width / 4) * 3) {
 				game.player.jump();
 			}
 		}
