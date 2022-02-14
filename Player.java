@@ -38,7 +38,7 @@ public class Player extends Editable {
 	private float density; // the player's density
 	private float friction; // the player's friction
 
-	public boolean tumble; // is the player in physics tumble mode
+//	public boolean tumble; // is the player in physics tumble mode
 
 	public int groundContacts; // the number of grounds touching the player's body
 	public int leftWallContacts; // the number of left walls touching the player's body
@@ -124,7 +124,7 @@ public class Player extends Editable {
 		this.friction = 0.6f; // from 0 to 1
 		this.density = 1; // from 0 to 1
 
-		this.tumble = true;
+//		this.tumble = true;
 
 		this.vibration = new PlayerVibration();
 
@@ -154,9 +154,9 @@ public class Player extends Editable {
 		// movement / jumping values
 		this.movementSpeed = 60.0f;
 		this.jumpPower = 120;
-		this.wallJumpPower = 48; // 0.4f;
-		this.wallJumpAwayPower = 30; // 0.25f;
-		this.wallBoostPower = 102; // 0.85f;
+		this.wallJumpPower = 48; // 48;
+		this.wallJumpAwayPower = 30; //30;
+		this.wallBoostPower = 70; // 102;
 
 		this.extraJump = false;
 
@@ -484,15 +484,14 @@ public class Player extends Editable {
 			return;
 		}
 
-		// TODO: find out which way is best
-		if (tumble) {
-			// check the player isn't spinning
-			float av = dynamicBody.getAngularVelocity();
-			if (Math.abs(av) >= 2) {
-				destroyAllBarriers(true);
-				return;
-			}
+//		if (tumble) {
+		// check the player isn't spinning
+		float av = dynamicBody.getAngularVelocity();
+		if (Math.abs(av) >= 2) {
+			destroyAllBarriers(true);
+			return;
 		}
+//		}
 
 		// run the algorithms
 		// if tunnel checking locks the player's rotation, the other algorithms
@@ -652,9 +651,9 @@ public class Player extends Editable {
 
 		// check velocity is appropriate
 		// player is moving or trying to move on the x axis
-		if (!((left || right) || (Math.abs(vel.x) >= 20))) { // 4 10
+		if (!((left || right) || (Math.abs(vel.x) >= 20))) { // 4 // 10
 			destroyGroundBarrier(resetRotation);
-			checkGroundSlotsStatic(pos, vel, resetRotation); // FIXME: testing without locking static player
+			checkGroundSlotsStatic(pos, vel, resetRotation);
 			return;
 		}
 
@@ -1368,7 +1367,8 @@ public class Player extends Editable {
 
 					} else { // no direction left wall
 
-						xImpulse = (dynamicBody.getMass() * wallJumpAwayPower);
+//						xImpulse = (dynamicBody.getMass() * wallJumpAwayPower);
+						xImpulse = (dynamicBody.getMass() * wallBoostPower);
 						// reset horizontal speed
 						dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 						// turn off timer
@@ -1411,7 +1411,8 @@ public class Player extends Editable {
 
 					} else { // no direction right wall
 
-						xImpulse = -(dynamicBody.getMass() * wallJumpAwayPower);
+//						xImpulse = -(dynamicBody.getMass() * wallJumpAwayPower);
+						xImpulse = -(dynamicBody.getMass() * wallBoostPower);
 						// reset horizontal speed
 						dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 						// turn off timer

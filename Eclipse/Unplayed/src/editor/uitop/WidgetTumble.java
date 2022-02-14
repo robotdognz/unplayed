@@ -13,16 +13,16 @@ public class WidgetTumble extends Widget {
 
 	@Override
 	public void clicked() {
-		editor.game.tumble = !editor.game.tumble;
+//		editor.game.tumble = !editor.game.tumble;
 	}
 
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (editor.game.tumble) {
-			active = true;
-		} else {
-			active = false;
-		}
+//		if (editor.game.tumble) {
+//			active = true;
+//		} else {
+//			active = false;
+//		}
 	}
 }

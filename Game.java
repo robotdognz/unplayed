@@ -57,7 +57,7 @@ public class Game {
 	public Box2DProcessing box2d;
 	public ContactListener contactListener;
 
-	public boolean tumble = true; // should the player tumble when being corrected into a slot
+//	public boolean tumble = true; // should the player tumble when being corrected into a slot
 
 	// delta time
 	float accumulator = 0;
@@ -363,7 +363,7 @@ public class Game {
 
 		// step player non-physics logic
 		if (player != null) {
-			player.tumble = this.tumble;
+//			player.tumble = this.tumble;
 			player.step(deltaTime);
 		}
 
