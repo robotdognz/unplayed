@@ -1343,11 +1343,12 @@ public class Player extends Editable {
 //					// pushing into right wall
 //					extraJump = false;
 //				}
-				
-				if (extraJump) {
-					yImpulse = dynamicBody.getMass() * jumpPower;
-					extraJump = false;
-				}else if (leftWallContacts > rightWallContacts || leftWallTimer.isRunning()) {
+
+//				if (extraJump) {
+//					yImpulse = dynamicBody.getMass() * jumpPower;
+//					extraJump = false;
+//				}else 
+				if (leftWallContacts > rightWallContacts || leftWallTimer.isRunning()) {
 					// touching left wall
 
 					if (left) { // pushing into left wall
