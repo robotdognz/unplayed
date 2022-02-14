@@ -567,10 +567,10 @@ public class Player extends Editable {
 
 		// create a list of relevant tiles
 		// edges of player
-		float leftEdge = pos.x - getWidth() / 2 - 0.6f; // 0.5f
-		float rightEdge = pos.x + getWidth() / 2 + 0.6f;
-		float topEdge = pos.y - getHeight() / 2 - 0.6f;
-		float bottomEdge = pos.y + getHeight() / 2 + 0.6f;
+		float leftEdge = pos.x - getWidth() / 2 - 0.8f; // 0.5f
+		float rightEdge = pos.x + getWidth() / 2 + 0.8f;
+		float topEdge = pos.y - getHeight() / 2 - 0.8f;
+		float bottomEdge = pos.y + getHeight() / 2 + 0.8f;
 
 		for (Tile t : sensorContacts) {
 			// tile left edge larger than player right edge
