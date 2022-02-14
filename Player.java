@@ -652,9 +652,9 @@ public class Player extends Editable {
 
 		// check velocity is appropriate
 		// player is moving or trying to move on the x axis
-		if (!((left || right) || (Math.abs(vel.x) >= 4))) { // 4   10
+		if (!((left || right) || (Math.abs(vel.x) >= 4))) { // 4 10
 			destroyGroundBarrier(resetRotation);
-			checkGroundSlotsStatic(pos, vel, resetRotation); //FIXME: testing without locking static player
+			checkGroundSlotsStatic(pos, vel, resetRotation); // FIXME: testing without locking static player
 			return;
 		}
 
@@ -769,7 +769,8 @@ public class Player extends Editable {
 		float angle = PApplet.degrees(dynamicBody.getAngle());
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
-		if(Math.abs(vel.y) > 0.5 || Math.abs(vel.x) > 0.5 || angleRemainder < 1) {
+		float av = dynamicBody.getAngularVelocity();
+		if (Math.abs(av) > 0.1 || Math.abs(vel.y) > 0.5 || Math.abs(vel.x) > 0.5 || angleRemainder < 1) {
 			destroyGroundBarrier(resetRotation);
 			return;
 		}
