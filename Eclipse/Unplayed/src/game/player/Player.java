@@ -156,7 +156,7 @@ public class Player extends Editable {
 		this.jumpPower = 120;
 		this.wallJumpPower = 48; // 48;
 		this.wallJumpAwayPower = 30; // 30;
-		this.wallBoostPower = 70; // 102;
+		this.wallBoostPower = 90; // 102;
 
 		this.extraJump = false;
 
@@ -352,20 +352,20 @@ public class Player extends Editable {
 
 		if (!roofBoostTimer.isRunning() && (left || pushLeftTimer.isRunning())) {
 
-//			if (rightWallBoostTimer.isRunning()) {
-//				float xImpulse = -(dynamicBody.getMass() * wallBoostPower);
-//				// reset horizontal speed
-//				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
-//				// apply impulse
-//				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, 0), dynamicBody.getWorldCenter(), true);
-//				// timers
-//				rightStickTimer.stop();
-//				rightWallBoostTimer.stop();
-//				jumpTimer.start();
-//
-////				DebugOutput.pushMessage("Boost off right wall (padded)", 2);
-//				return;
-//			}
+			if (rightWallBoostTimer.isRunning()) {
+				float xImpulse = -(dynamicBody.getMass() * wallBoostPower);
+				// reset horizontal speed
+				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
+				// apply impulse
+				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, 0), dynamicBody.getWorldCenter(), true);
+				// timers
+				rightStickTimer.stop();
+				rightWallBoostTimer.stop();
+				jumpTimer.start();
+
+//				DebugOutput.pushMessage("Boost off right wall (padded)", 2);
+				return;
+			}
 
 			if (vel.x >= -movementSpeed) {
 				// standard movement
@@ -381,20 +381,20 @@ public class Player extends Editable {
 
 		} else if (!roofBoostTimer.isRunning() && (right || pushRightTimer.isRunning())) {
 
-//			if (leftWallBoostTimer.isRunning()) {
-//				float xImpulse = (dynamicBody.getMass() * wallBoostPower);
-//				// reset horizontal speed
-//				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
-//				// apply impulse
-//				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, 0), dynamicBody.getWorldCenter(), true);
-//				// timers
-//				leftStickTimer.stop();
-//				leftWallBoostTimer.stop();
-//				jumpTimer.start();
-//
-////				DebugOutput.pushMessage("Boost off left wall (padded)", 2);
-//				return;
-//			}
+			if (leftWallBoostTimer.isRunning()) {
+				float xImpulse = (dynamicBody.getMass() * wallBoostPower);
+				// reset horizontal speed
+				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
+				// apply impulse
+				dynamicBody.applyLinearImpulse(new Vec2(xImpulse, 0), dynamicBody.getWorldCenter(), true);
+				// timers
+				leftStickTimer.stop();
+				leftWallBoostTimer.stop();
+				jumpTimer.start();
+
+//				DebugOutput.pushMessage("Boost off left wall (padded)", 2);
+				return;
+			}
 
 			if (vel.x <= movementSpeed) {
 				// standard movement
@@ -1343,11 +1343,11 @@ public class Player extends Editable {
 //					// pushing into right wall
 //					extraJump = false;
 //				}
-
 //				if (extraJump) {
 //					yImpulse = dynamicBody.getMass() * jumpPower;
 //					extraJump = false;
 //				}else 
+				
 				if (leftWallContacts > rightWallContacts || leftWallTimer.isRunning()) {
 					// touching left wall
 
@@ -1380,8 +1380,8 @@ public class Player extends Editable {
 
 					} else { // no direction left wall
 
-//						xImpulse = (dynamicBody.getMass() * wallJumpAwayPower);
-						xImpulse = (dynamicBody.getMass() * wallBoostPower);
+						xImpulse = (dynamicBody.getMass() * wallJumpAwayPower);
+//						xImpulse = (dynamicBody.getMass() * wallBoostPower);
 						// reset horizontal speed
 						dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 						// turn off timer
@@ -1424,8 +1424,8 @@ public class Player extends Editable {
 
 					} else { // no direction right wall
 
-//						xImpulse = -(dynamicBody.getMass() * wallJumpAwayPower);
-						xImpulse = -(dynamicBody.getMass() * wallBoostPower);
+						xImpulse = -(dynamicBody.getMass() * wallJumpAwayPower);
+//						xImpulse = -(dynamicBody.getMass() * wallBoostPower);
 						// reset horizontal speed
 						dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 						// turn off timer
