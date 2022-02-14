@@ -652,7 +652,7 @@ public class Player extends Editable {
 
 		// check velocity is appropriate
 		// player is moving or trying to move on the x axis
-		if (!((left || right) || (Math.abs(vel.x) >= 4))) { // 4 10
+		if (!((left || right) || (Math.abs(vel.x) >= 10))) { // 4 10
 			destroyGroundBarrier(resetRotation);
 			checkGroundSlotsStatic(pos, vel, resetRotation); // FIXME: testing without locking static player
 			return;
