@@ -301,6 +301,9 @@ public class Editor {
 			}
 			((Image) r).draw(p.g, currentScale);
 		}
+		if (game.player != null) { // draw the player on top of images, behind tiles
+			game.player.draw(p.g, currentScale);
+		}
 		for (Rectangle r : screenObjects) { // draw tiles on top of images
 			if (!(r instanceof Tile)) {
 				continue;
@@ -320,9 +323,6 @@ public class Editor {
 			((Tile) r).draw(p.g, currentScale);
 		}
 
-		if (game.player != null) { // draw the player on top of tiles and images
-			game.player.draw(p.g, currentScale);
-		}
 
 		if (viewVis) { // draw the views behind events
 			for (View view : game.views) {
