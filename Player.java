@@ -1335,14 +1335,22 @@ public class Player extends Editable {
 
 			if (!verticalTunnel) {
 				// the player is not in a tunnel
+				if ((leftWallContacts > rightWallContacts || leftWallTimer.isRunning()) && left) {
+					// pushing into left wall
+					extraJump = false;
+				}
+				if ((rightWallContacts > leftWallContacts || rightWallTimer.isRunning()) && right) {
+					// pushing into right wall
+					extraJump = false;
+				}
+				
 				if (extraJump) {
 					yImpulse = dynamicBody.getMass() * jumpPower;
 					extraJump = false;
-				} else if (leftWallContacts > rightWallContacts || leftWallTimer.isRunning()) {
+				}else if (leftWallContacts > rightWallContacts || leftWallTimer.isRunning()) {
 					// touching left wall
 
 					if (left) { // pushing into left wall
-						extraJump = false;
 						if (!checkForWallSlotsJump(true)) {
 							// normal wall jump
 
@@ -1388,7 +1396,6 @@ public class Player extends Editable {
 					// touching right wall
 
 					if (right) { // pushing into right wall
-						extraJump = false;
 						if (!checkForWallSlotsJump(false)) {
 							// normal wall jump
 
