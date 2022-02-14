@@ -567,10 +567,10 @@ public class Player extends Editable {
 
 		// create a list of relevant tiles
 		// edges of player
-		float leftEdge = pos.x - getWidth() / 2 - 0.8f; // 0.5f
-		float rightEdge = pos.x + getWidth() / 2 + 0.8f;
-		float topEdge = pos.y - getHeight() / 2 - 0.8f;
-		float bottomEdge = pos.y + getHeight() / 2 + 0.8f;
+		float leftEdge = pos.x - getWidth() / 2 - 0.5f; // 0.5f
+		float rightEdge = pos.x + getWidth() / 2 + 0.5f;
+		float topEdge = pos.y - getHeight() / 2 - 0.5f;
+		float bottomEdge = pos.y + getHeight() / 2 + 0.5f;
 
 		for (Tile t : sensorContacts) {
 			// tile left edge larger than player right edge
@@ -652,9 +652,9 @@ public class Player extends Editable {
 
 		// check velocity is appropriate
 		// player is moving or trying to move on the x axis
-		if (!((left || right) || (Math.abs(vel.x) >= 10))) { // 4
+		if (!((left || right) || (Math.abs(vel.x) >= 4))) { // 4   10
 			destroyGroundBarrier(resetRotation);
-//			checkGroundSlotsStatic(pos, vel, resetRotation); //FIXME: testing without locking static player
+			checkGroundSlotsStatic(pos, vel, resetRotation); //FIXME: testing without locking static player
 			return;
 		}
 
@@ -764,6 +764,16 @@ public class Player extends Editable {
 	}
 
 	private void checkGroundSlotsStatic(PVector pos, Vec2 vel, boolean resetRotation) {
+
+		// calculate angles
+		float angle = PApplet.degrees(dynamicBody.getAngle());
+		float angleRounded = Math.round(angle / 90) * 90;
+		float angleRemainder = Math.abs(angle - angleRounded);
+		if(Math.abs(vel.y) > 0.5 || Math.abs(vel.x) > 0.5 || angleRemainder < 1) {
+			destroyGroundBarrier(resetRotation);
+			return;
+		}
+
 		// player is still or falling on the y axis
 		if (!(vel.y <= 2)) {
 			destroyGroundBarrier(resetRotation);
