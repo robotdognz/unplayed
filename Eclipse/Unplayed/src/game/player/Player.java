@@ -654,8 +654,7 @@ public class Player extends Editable {
 
 		pseudoGround = false;
 
-		// check velocity is appropriate
-		// player is moving or trying to move on the x axis
+		// check player is moving or trying to move on the x axis
 		if (!((left || right) || (Math.abs(vel.x) >= 20))) { // 4 // 10
 			destroyGroundBarrier(resetRotation);
 			if (checkGroundSlotsStatic(pos, vel, resetRotation)) {
@@ -778,7 +777,7 @@ public class Player extends Editable {
 
 		if (Math.abs(av) > 0.001 || Math.abs(vel.y) > 0.5 || Math.abs(vel.x) > 0.5 || angleRemainder < 1) {
 			destroyGroundBarrier(resetRotation);
-			return false;
+			return true;
 		}
 
 		// create a list of relevant tiles sorted by x position
@@ -845,7 +844,7 @@ public class Player extends Editable {
 
 		// conditions wern't met, remove the barrier
 		destroyGroundBarrier(resetRotation);
-		return false;
+		return true;
 	}
 
 	private void checkForWallSlots(PVector pos, Vec2 vel, boolean resetRotation) {
