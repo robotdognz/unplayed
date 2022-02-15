@@ -653,7 +653,7 @@ public class Player extends Editable {
 		// player is moving or trying to move on the x axis
 		if (!((left || right) || (Math.abs(vel.x) >= 20))) { // 4 // 10
 			destroyGroundBarrier(resetRotation);
-//			checkGroundSlotsStatic(pos, vel, resetRotation);
+			checkGroundSlotsStatic(pos, vel, resetRotation);
 			return;
 		}
 
@@ -769,7 +769,7 @@ public class Player extends Editable {
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
 		float av = dynamicBody.getAngularVelocity();
-		if (Math.abs(av) > 0.001 || Math.abs(vel.y) > 0.5 || Math.abs(vel.x) > 0.5 || angleRemainder < 1) {
+		if (Math.abs(av) > 0.001  || Math.abs(vel.x) > 0.5 || angleRemainder < 1) { //|| Math.abs(vel.y) > 0.5
 			destroyGroundBarrier(resetRotation);
 			return;
 		}
