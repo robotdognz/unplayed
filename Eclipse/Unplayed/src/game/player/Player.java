@@ -14,6 +14,7 @@ import misc.PlayerTileXComparator;
 import objects.Editable;
 import objects.Event;
 import objects.Tile;
+import editor.DebugOutput;
 import editor.Editor;
 import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
@@ -783,14 +784,15 @@ public class Player extends Editable {
 					// found a tile roughly on the same level as the player
 					if (Math.abs((t.getX() + t.getWidth() * 0.5) - pos.x) < t.getWidth() * 1.5) {
 						// this tile is close to the player on the x axis
-						destroyGroundBarrier(resetRotation);
 						if (t.getX() < pos.x) {
 							// to the left
-							dynamicBody.applyLinearImpulse(new Vec2(-100, 0), dynamicBody.getWorldCenter(), true);
+							dynamicBody.applyLinearImpulse(new Vec2(dynamicBody.getMass() * -100, 0), dynamicBody.getWorldCenter(), true);
 						} else {
 							// to the right
-							dynamicBody.applyLinearImpulse(new Vec2(100, 0), dynamicBody.getWorldCenter(), true);
+							dynamicBody.applyLinearImpulse(new Vec2(dynamicBody.getMass() * 100, 0), dynamicBody.getWorldCenter(), true);
 						}
+						DebugOutput.pushMessage("BOOOM!", 1);
+						destroyGroundBarrier(resetRotation);
 						return;
 					}
 				}
