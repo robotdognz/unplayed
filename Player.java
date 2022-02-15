@@ -774,14 +774,6 @@ public class Player extends Editable {
 			return;
 		}
 
-//		// player is still or falling on the y axis
-//		if (!(vel.y <= 2)) {
-//			destroyGroundBarrier(resetRotation);
-//			return;
-//		}
-
-//		boolean stop = false;
-
 		// create a list of relevant tiles sorted by x position
 		for (Tile t : sensorContacts) {
 
@@ -791,8 +783,14 @@ public class Player extends Editable {
 					// found a tile roughly on the same level as the player
 					if (Math.abs((t.getX() + t.getWidth() * 0.5) - pos.x) < t.getWidth() * 1.5) {
 						// this tile is close to the player on the x axis
-//						stop = true;
 						destroyGroundBarrier(resetRotation);
+						if (t.getX() < pos.x) {
+							// to the left
+							dynamicBody.applyLinearImpulse(new Vec2(-15, 0), dynamicBody.getWorldCenter(), true);
+						} else {
+							// to the right
+							dynamicBody.applyLinearImpulse(new Vec2(15, 0), dynamicBody.getWorldCenter(), true);
+						}
 						return;
 					}
 				}
