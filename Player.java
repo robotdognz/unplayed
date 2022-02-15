@@ -183,8 +183,8 @@ public class Player extends Editable {
 		this.rightWallBoostTimer = new CountdownTimer(0.120f);
 		// how long to keep pushing into a wall after a standard wall jump, or when
 		// jumping up into a wall slot
-		this.pushLeftTimer = new CountdownTimer(0.200f);
-		this.pushRightTimer = new CountdownTimer(0.200f);
+		this.pushLeftTimer = new CountdownTimer(0.150f); //0.200f
+		this.pushRightTimer = new CountdownTimer(0.150f); //0.200f
 
 		create();
 	}
@@ -651,6 +651,8 @@ public class Player extends Editable {
 	}
 
 	private void checkForGroundSlots(PVector pos, Vec2 vel, boolean resetRotation) {
+		
+		pseudoGround = false;
 
 		// check velocity is appropriate
 		// player is moving or trying to move on the x axis
@@ -767,13 +769,12 @@ public class Player extends Editable {
 
 	private void checkGroundSlotsStatic(PVector pos, Vec2 vel, boolean resetRotation) {
 		
-		pseudoGround = false;
-
 		// calculate angles
 		float angle = PApplet.degrees(dynamicBody.getAngle());
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
 		float av = dynamicBody.getAngularVelocity();
+		
 		if (Math.abs(av) > 0.001 || Math.abs(vel.y) > 0.5 || Math.abs(vel.x) > 0.5 || angleRemainder < 1) {
 			destroyGroundBarrier(resetRotation);
 			return;
@@ -790,14 +791,16 @@ public class Player extends Editable {
 						// this tile is close to the player on the x axis
 						if (t.getX() < pos.x) {
 							// to the left
-//							pushLeftTimer.start();
-//							left = true;
+							if(!pushLeftTimer.isRunning()) {
+								pushLeftTimer.start();
+							}
 						} else {
 							// to the right
-//							pushRightTimer.start();
-//							right = true;
+							if(!pushRightTimer.isRunning()) {
+								pushRightTimer.start();
+							}
 						}
-						pseudoGround = true;
+//						pseudoGround = true;
 //						extraJump = true;
 //						// TODO: trying to fix the edge case
 						DebugOutput.pushMessage("BOOOM!", 1);
