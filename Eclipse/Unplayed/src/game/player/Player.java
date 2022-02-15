@@ -791,8 +791,10 @@ public class Player extends Editable {
 						// this tile is close to the player on the x axis
 						if (t.getX() < pos.x) {
 							// to the left
+							left = true;
 						} else {
 							// to the right
+							right = true;
 						}
 						pseudoGround = true;
 						// TODO: trying to fix the edge case
