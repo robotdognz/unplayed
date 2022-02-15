@@ -657,9 +657,9 @@ public class Player extends Editable {
 		// check player is moving or trying to move on the x axis
 		if (!((left || right) || (Math.abs(vel.x) >= 20))) { // 4 // 10
 			destroyGroundBarrier(resetRotation);
-			if (checkGroundSlotsStatic(pos, vel, resetRotation)) {
-				return;
-			}
+			checkGroundSlotsStatic(pos, vel, resetRotation);
+			return;
+
 		}
 
 		boolean direction = true; // true = left, false = right
@@ -767,7 +767,7 @@ public class Player extends Editable {
 		destroyGroundBarrier(resetRotation);
 	}
 
-	private boolean checkGroundSlotsStatic(PVector pos, Vec2 vel, boolean resetRotation) {
+	private void checkGroundSlotsStatic(PVector pos, Vec2 vel, boolean resetRotation) {
 
 		// calculate angles
 		float angle = PApplet.degrees(dynamicBody.getAngle());
@@ -777,7 +777,7 @@ public class Player extends Editable {
 
 		if (Math.abs(av) > 0.001 || Math.abs(vel.y) > 0.5 || Math.abs(vel.x) > 0.5 || angleRemainder < 1) {
 			destroyGroundBarrier(resetRotation);
-			return true;
+			return;
 		}
 
 		// create a list of relevant tiles sorted by x position
@@ -789,18 +789,18 @@ public class Player extends Editable {
 					// found a tile roughly on the same level as the player
 					if (Math.abs((t.getX() + t.getWidth() * 0.5) - pos.x) < t.getWidth() * 1.5) {
 						// this tile is close to the player on the x axis
-						if (t.getX() < pos.x) {
-							// to the left
-							left = true;
-						} else {
-							// to the right
-							right = true;
-						}
+//						if (t.getX() < pos.x) {
+//							// to the left
+//							left = true;
+//						} else {
+//							// to the right
+//							right = true;
+//						}
 						pseudoGround = true;
 						// TODO: trying to fix the edge case
 						DebugOutput.pushMessage("BOOOM!", 1);
 						destroyGroundBarrier(resetRotation);
-						return false;
+						return;
 					}
 				}
 				continue;
@@ -838,7 +838,7 @@ public class Player extends Editable {
 					dynamicBody.setFixedRotation(true);
 					dynamicBody.setAngularVelocity(0);
 
-					return true;
+					return;
 				}
 			}
 			previousX = t.getX();
@@ -846,7 +846,7 @@ public class Player extends Editable {
 
 		// conditions wern't met, remove the barrier
 		destroyGroundBarrier(resetRotation);
-		return true;
+		return;
 	}
 
 	private void checkForWallSlots(PVector pos, Vec2 vel, boolean resetRotation) {
