@@ -44,6 +44,8 @@ public class Player extends Editable {
 	public int groundContacts; // the number of grounds touching the player's body
 	public int leftWallContacts; // the number of left walls touching the player's body
 	public int rightWallContacts; // the number of right walls touching the player's body
+	
+	public boolean pseudoGround = false; // pretend we are touching the ground
 
 	private ArrayList<Event> events; // list of events touching the player
 	private PlayerVibration vibration; // vibration system
@@ -764,6 +766,8 @@ public class Player extends Editable {
 	}
 
 	private void checkGroundSlotsStatic(PVector pos, Vec2 vel, boolean resetRotation) {
+		
+		pseudoGround = false;
 
 		// calculate angles
 		float angle = PApplet.degrees(dynamicBody.getAngle());
@@ -787,12 +791,13 @@ public class Player extends Editable {
 						if (t.getX() < pos.x) {
 							// to the left
 //							pushLeftTimer.start();
-							left = true;
+//							left = true;
 						} else {
 							// to the right
-							pushRightTimer.start();
-							right = true;
+//							pushRightTimer.start();
+//							right = true;
 						}
+						pseudoGround = true;
 //						extraJump = true;
 //						// TODO: trying to fix the edge case
 						DebugOutput.pushMessage("BOOOM!", 1);
@@ -1317,7 +1322,7 @@ public class Player extends Editable {
 		float xImpulse = 0;
 		float yImpulse = 0;
 
-		if (groundContacts > 0 || groundTimer.isRunning()) {
+		if (groundContacts > 0 || groundTimer.isRunning() || pseudoGround) {
 			// player is touching the ground
 
 			// if the player is in a horizontal tunnel, but not at a tunnel intersection
