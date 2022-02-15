@@ -40,6 +40,9 @@
 -Level pages are now dynamically repositioned when loading in a new level, to make the process apear seamless
 -Assets in levels are now force loaded at level start instead of when acessed, to minimise lag spikes
 -Added basic savegame functionality
+-Removed tumble option from player, this is now the default behaviour
+-Removed player locked rotation when sitting on top of a slot
+-Extended tumble physics to enable rotating in ground slots and more natural animations
 
 1.2.1: Improving physics and tuning player 'feel'
 
