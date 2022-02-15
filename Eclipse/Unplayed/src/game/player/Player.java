@@ -786,13 +786,15 @@ public class Player extends Editable {
 						// this tile is close to the player on the x axis
 						if (t.getX() < pos.x) {
 							// to the left
-							pushLeftTimer.start();
+//							pushLeftTimer.start();
+							left = true;
 						} else {
 							// to the right
 							pushRightTimer.start();
+							right = true;
 						}
 //						extraJump = true;
-//						jjj
+//						// TODO: trying to fix the edge case
 						DebugOutput.pushMessage("BOOOM!", 1);
 						destroyGroundBarrier(resetRotation);
 						return;
