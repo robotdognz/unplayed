@@ -789,12 +789,12 @@ public class Player extends Editable {
 			if (t.getY() < pos.y) {
 				if (t.getBottomRight().y > pos.y) {
 					// found a tile roughly on the same level as the player
-//					if (Math.abs((t.getX() + t.getWidth() / 2) - pos.x) < t.getWidth()) {
+					if (Math.abs((t.getX() + t.getWidth() * 0.5) - pos.x) < t.getWidth() * 1.5) {
 						// this tile is close to the player on the x axis
 //						stop = true;
 						destroyGroundBarrier(resetRotation);
 						return;
-//					}
+					}
 				}
 				continue;
 			}
