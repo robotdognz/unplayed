@@ -659,7 +659,7 @@ public class Player extends Editable {
 		if (!((left || right) || (Math.abs(vel.x) >= 20))) { // 4 // 10
 			destroyGroundBarrier(resetRotation);
 			checkGroundSlotsStatic(pos, vel, resetRotation);
-			return;
+//			return;
 		}
 
 		boolean direction = true; // true = left, false = right
