@@ -786,10 +786,12 @@ public class Player extends Editable {
 						// this tile is close to the player on the x axis
 						if (t.getX() < pos.x) {
 							// to the left
-							dynamicBody.applyLinearImpulse(new Vec2(dynamicBody.getMass() * -100, 0), dynamicBody.getWorldCenter(), true);
+//							dynamicBody.applyLinearImpulse(new Vec2(dynamicBody.getMass() * -100, 0), dynamicBody.getWorldCenter(), true);
+							dynamicBody.setLinearVelocity(new Vec2(-100, dynamicBody.getLinearVelocity().y));
 						} else {
 							// to the right
-							dynamicBody.applyLinearImpulse(new Vec2(dynamicBody.getMass() * 100, 0), dynamicBody.getWorldCenter(), true);
+//							dynamicBody.applyLinearImpulse(new Vec2(dynamicBody.getMass() * 100, 0), dynamicBody.getWorldCenter(), true);
+							dynamicBody.setLinearVelocity(new Vec2(50, dynamicBody.getLinearVelocity().y));
 						}
 						DebugOutput.pushMessage("BOOOM!", 1);
 						destroyGroundBarrier(resetRotation);
