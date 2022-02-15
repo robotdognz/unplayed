@@ -44,7 +44,7 @@ public class Player extends Editable {
 	public int groundContacts; // the number of grounds touching the player's body
 	public int leftWallContacts; // the number of left walls touching the player's body
 	public int rightWallContacts; // the number of right walls touching the player's body
-	
+
 	public boolean pseudoGround = false; // pretend we are touching the ground
 
 	private ArrayList<Event> events; // list of events touching the player
@@ -183,8 +183,8 @@ public class Player extends Editable {
 		this.rightWallBoostTimer = new CountdownTimer(0.120f);
 		// how long to keep pushing into a wall after a standard wall jump, or when
 		// jumping up into a wall slot
-		this.pushLeftTimer = new CountdownTimer(0.150f); //0.200f
-		this.pushRightTimer = new CountdownTimer(0.150f); //0.200f
+		this.pushLeftTimer = new CountdownTimer(0.150f); // 0.200f
+		this.pushRightTimer = new CountdownTimer(0.150f); // 0.200f
 
 		create();
 	}
@@ -651,15 +651,16 @@ public class Player extends Editable {
 	}
 
 	private void checkForGroundSlots(PVector pos, Vec2 vel, boolean resetRotation) {
-		
+
 		pseudoGround = false;
 
 		// check velocity is appropriate
 		// player is moving or trying to move on the x axis
 		if (!((left || right) || (Math.abs(vel.x) >= 20))) { // 4 // 10
 			destroyGroundBarrier(resetRotation);
-			checkGroundSlotsStatic(pos, vel, resetRotation);
-//			return;
+			if (checkGroundSlotsStatic(pos, vel, resetRotation)) {
+				return;
+			}
 		}
 
 		boolean direction = true; // true = left, false = right
@@ -767,17 +768,17 @@ public class Player extends Editable {
 		destroyGroundBarrier(resetRotation);
 	}
 
-	private void checkGroundSlotsStatic(PVector pos, Vec2 vel, boolean resetRotation) {
-		
+	private boolean checkGroundSlotsStatic(PVector pos, Vec2 vel, boolean resetRotation) {
+
 		// calculate angles
 		float angle = PApplet.degrees(dynamicBody.getAngle());
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
 		float av = dynamicBody.getAngularVelocity();
-		
+
 		if (Math.abs(av) > 0.001 || Math.abs(vel.y) > 0.5 || Math.abs(vel.x) > 0.5 || angleRemainder < 1) {
 			destroyGroundBarrier(resetRotation);
-			return;
+			return false;
 		}
 
 		// create a list of relevant tiles sorted by x position
@@ -795,10 +796,10 @@ public class Player extends Editable {
 							// to the right
 						}
 						pseudoGround = true;
-//						// TODO: trying to fix the edge case
+						// TODO: trying to fix the edge case
 						DebugOutput.pushMessage("BOOOM!", 1);
 						destroyGroundBarrier(resetRotation);
-						return;
+						return false;
 					}
 				}
 				continue;
@@ -836,7 +837,7 @@ public class Player extends Editable {
 					dynamicBody.setFixedRotation(true);
 					dynamicBody.setAngularVelocity(0);
 
-					return;
+					return true;
 				}
 			}
 			previousX = t.getX();
@@ -844,6 +845,7 @@ public class Player extends Editable {
 
 		// conditions wern't met, remove the barrier
 		destroyGroundBarrier(resetRotation);
+		return false;
 	}
 
 	private void checkForWallSlots(PVector pos, Vec2 vel, boolean resetRotation) {
