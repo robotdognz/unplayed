@@ -786,10 +786,10 @@ public class Player extends Editable {
 						destroyGroundBarrier(resetRotation);
 						if (t.getX() < pos.x) {
 							// to the left
-							dynamicBody.applyLinearImpulse(new Vec2(-15, 0), dynamicBody.getWorldCenter(), true);
+							dynamicBody.applyLinearImpulse(new Vec2(-100, 0), dynamicBody.getWorldCenter(), true);
 						} else {
 							// to the right
-							dynamicBody.applyLinearImpulse(new Vec2(15, 0), dynamicBody.getWorldCenter(), true);
+							dynamicBody.applyLinearImpulse(new Vec2(100, 0), dynamicBody.getWorldCenter(), true);
 						}
 						return;
 					}
