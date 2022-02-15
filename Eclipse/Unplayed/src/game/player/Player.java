@@ -653,7 +653,7 @@ public class Player extends Editable {
 		// player is moving or trying to move on the x axis
 		if (!((left || right) || (Math.abs(vel.x) >= 20))) { // 4 // 10
 			destroyGroundBarrier(resetRotation);
-			checkGroundSlotsStatic(pos, vel, resetRotation);
+//			checkGroundSlotsStatic(pos, vel, resetRotation);
 			return;
 		}
 
