@@ -769,21 +769,33 @@ public class Player extends Editable {
 		float angleRounded = Math.round(angle / 90) * 90;
 		float angleRemainder = Math.abs(angle - angleRounded);
 		float av = dynamicBody.getAngularVelocity();
-		if (Math.abs(av) > 0.001  || Math.abs(vel.x) > 0.5 || angleRemainder < 1) { //|| Math.abs(vel.y) > 0.5
+		if (Math.abs(av) > 0.001 || Math.abs(vel.y) > 0.5 || Math.abs(vel.x) > 0.5 || angleRemainder < 1) {
 			destroyGroundBarrier(resetRotation);
 			return;
 		}
 
-		// player is still or falling on the y axis
-		if (!(vel.y <= 2)) {
-			destroyGroundBarrier(resetRotation);
-			return;
-		}
+//		// player is still or falling on the y axis
+//		if (!(vel.y <= 2)) {
+//			destroyGroundBarrier(resetRotation);
+//			return;
+//		}
+
+//		boolean stop = false;
 
 		// create a list of relevant tiles sorted by x position
 		for (Tile t : sensorContacts) {
+
 			// skip this tile if the top of it is above the player's midpoint
 			if (t.getY() < pos.y) {
+				if (t.getBottomRight().y > pos.y) {
+					// found a tile roughly on the same level as the player
+					if (Math.abs((t.getX() + t.getWidth() / 2) - pos.x) < t.getWidth()) {
+						// this tile is close to the player on the x axis
+//						stop = true;
+						destroyGroundBarrier(resetRotation);
+						return;
+					}
+				}
 				continue;
 			}
 
@@ -1347,7 +1359,7 @@ public class Player extends Editable {
 //					yImpulse = dynamicBody.getMass() * jumpPower;
 //					extraJump = false;
 //				}else 
-				
+
 				if (leftWallContacts > rightWallContacts || leftWallTimer.isRunning()) {
 					// touching left wall
 
