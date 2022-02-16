@@ -791,11 +791,11 @@ public class Player extends Editable {
 						// this tile is close to the player on the x axis
 						if (t.getX() < pos.x) {
 							// to the left
-                            dynamicBody.setLinearVelocity(new Vec2(-50, dynamicBody.getLinearVelocity().y));
+                            dynamicBody.setLinearVelocity(new Vec2(-20, dynamicBody.getLinearVelocity().y));
                             continue;
 						} else {
 							// to the right
-							dynamicBody.setLinearVelocity(new Vec2(50, dynamicBody.getLinearVelocity().y));
+							dynamicBody.setLinearVelocity(new Vec2(20, dynamicBody.getLinearVelocity().y));
                             continue;
 						}
 //						pseudoGround = true;
