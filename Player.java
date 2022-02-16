@@ -775,7 +775,7 @@ public class Player extends Editable {
 		float angleRemainder = Math.abs(angle - angleRounded);
 		float av = dynamicBody.getAngularVelocity();
 
-		if (Math.abs(av) > 0.001 || Math.abs(vel.y) > 0.5 || Math.abs(vel.x) > 0.5 || angleRemainder < 1) {
+		if (Math.abs(av) > 0.001 || Math.abs(vel.y) > 0.5 || Math.abs(vel.x) > 0.5 || angleRemainder < 0.5) { //angleRemainder < 1
 			destroyGroundBarrier(resetRotation);
 			return;
 		}
