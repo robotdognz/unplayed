@@ -785,17 +785,19 @@ public class Player extends Editable {
 
 			// skip this tile if the top of it is above the player's midpoint
 			if (t.getY() < pos.y) {
+				
+				// check for edge case where the slot is up against a wall
 				if (t.getBottomRight().y > pos.y) {
 					// found a tile roughly on the same level as the player
 					if (Math.abs((t.getX() + t.getWidth() * 0.5) - pos.x) < t.getWidth() * 1.5) {
 						// this tile is close to the player on the x axis
 						if (t.getX() < pos.x) {
 							// to the left
-							dynamicBody.setLinearVelocity(new Vec2(-25, dynamicBody.getLinearVelocity().y)); // -30
+							dynamicBody.setLinearVelocity(new Vec2(-27, dynamicBody.getLinearVelocity().y)); // -30
 							continue;
 						} else {
 							// to the right
-							dynamicBody.setLinearVelocity(new Vec2(25, dynamicBody.getLinearVelocity().y)); // 30
+							dynamicBody.setLinearVelocity(new Vec2(27, dynamicBody.getLinearVelocity().y)); // 30
 							continue;
 						}
 						
@@ -804,6 +806,7 @@ public class Player extends Editable {
 //						return;
 					}
 				}
+				
 				continue;
 			}
 
