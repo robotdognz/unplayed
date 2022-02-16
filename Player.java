@@ -789,18 +789,20 @@ public class Player extends Editable {
 					// found a tile roughly on the same level as the player
 					if (Math.abs((t.getX() + t.getWidth() * 0.5) - pos.x) < t.getWidth() * 1.5) {
 						// this tile is close to the player on the x axis
-//						if (t.getX() < pos.x) {
-//							// to the left
-//							left = true;
-//						} else {
-//							// to the right
-//							right = true;
-//						}
-						pseudoGround = true;
-						// TODO: trying to fix the edge case
-						DebugOutput.pushMessage("BOOOM!", 1);
-						destroyGroundBarrier(resetRotation);
-						return;
+						if (t.getX() < pos.x) {
+							// to the left
+                            dynamicBody.setLinearVelocity(new Vec2(-100, dynamicBody.getLinearVelocity().y));
+                            continue;
+						} else {
+							// to the right
+							dynamicBody.setLinearVelocity(new Vec2(100, dynamicBody.getLinearVelocity().y));
+                            continue;
+						}
+//						pseudoGround = true;
+//						// TODO: trying to fix the edge case
+//						DebugOutput.pushMessage("BOOOM!", 1);
+//						destroyGroundBarrier(resetRotation);
+//						return;
 					}
 				}
 				continue;
