@@ -652,7 +652,7 @@ public class Player extends Editable {
 	private void checkForGroundSlots(PVector pos, Vec2 vel, boolean resetRotation) {
 
 		pseudoGround = false;
-		
+
 		int speed = 10;
 
 		// check player is moving or trying to move on the x axis
@@ -663,7 +663,7 @@ public class Player extends Editable {
 			return;
 		}
 
-		boolean direction; // true = left, false = right
+		boolean direction = false; // true = left, false = right
 //		if (left || vel.x <= -4) {
 //			direction = true;
 //		} else if (right || vel.x >= 4) {
@@ -671,22 +671,33 @@ public class Player extends Editable {
 //		}
 
 		if (!left && !right) {
-			if (vel.x <= -speed) {
-				direction = true;
-			} else if (vel.x >= speed) {
-				direction = false;
-			} else {
-				destroyGroundBarrier(resetRotation);
-				return;
-			}
-		} else if (vel.x <= -speed) {
-			direction = true;
-		} else if (vel.x >= speed) {
-			direction = false;
-		} else {
 			destroyGroundBarrier(resetRotation);
 			return;
+		} else {
+			if (left) {
+				direction = true;
+			} else if (right) {
+				direction = false;
+			}
 		}
+
+//		if (!left && !right) {
+//			if (vel.x <= -speed) {
+//				direction = true;
+//			} else if (vel.x >= speed) {
+//				direction = false;
+//			} else {
+//				destroyGroundBarrier(resetRotation);
+//				return;
+//			}
+//		} else if (vel.x <= -speed) {
+//			direction = true;
+//		} else if (vel.x >= speed) {
+//			direction = false;
+//		} else {
+//			destroyGroundBarrier(resetRotation);
+//			return;
+//		}
 
 		// player is still or falling on the y axis
 		if (!(vel.y <= 2)) {
@@ -813,11 +824,11 @@ public class Player extends Editable {
 						// this tile is close to the player on the x axis
 						if (t.getX() < pos.x) {
 							// to the left
-							dynamicBody.setLinearVelocity(new Vec2(-15, dynamicBody.getLinearVelocity().y)); // -25
+							dynamicBody.setLinearVelocity(new Vec2(-20, dynamicBody.getLinearVelocity().y)); // -25
 							continue;
 						} else {
 							// to the right
-							dynamicBody.setLinearVelocity(new Vec2(15, dynamicBody.getLinearVelocity().y)); // 25
+							dynamicBody.setLinearVelocity(new Vec2(20, dynamicBody.getLinearVelocity().y)); // 25
 							continue;
 						}
 
