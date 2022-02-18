@@ -662,9 +662,16 @@ public class Player extends Editable {
 		}
 
 		boolean direction = true; // true = left, false = right
+//		if (left || vel.x <= -4) {
+//			direction = true;
+//		} else if (right || vel.x >= 4) {
+//			direction = false;
+//		}
+
 		if (left || vel.x <= -4) {
 			direction = true;
-		} else if (right || vel.x >= 4) {
+		}
+		if (right || vel.x >= 4) {
 			direction = false;
 		}
 
@@ -775,7 +782,7 @@ public class Player extends Editable {
 		float av = dynamicBody.getAngularVelocity();
 
 		// angleRemainder < 1
-		if (Math.abs(av) > 0.001 || Math.abs(vel.y) > 0.5 || Math.abs(vel.x) > 0.5 || angleRemainder < 0.5) { 
+		if (Math.abs(av) > 0.001 || Math.abs(vel.y) > 0.5 || Math.abs(vel.x) > 0.5 || angleRemainder < 0.5) {
 			destroyGroundBarrier(resetRotation);
 			return;
 		}
@@ -785,7 +792,7 @@ public class Player extends Editable {
 
 			// skip this tile if the top of it is above the player's midpoint
 			if (t.getY() < pos.y) {
-				
+
 				// check for edge case where the slot is up against a wall
 				if (t.getBottomRight().y > pos.y) {
 					// found a tile roughly on the same level as the player
@@ -800,13 +807,13 @@ public class Player extends Editable {
 							dynamicBody.setLinearVelocity(new Vec2(25, dynamicBody.getLinearVelocity().y)); // 30
 							continue;
 						}
-						
+
 //						pseudoGround = true;
 //						destroyGroundBarrier(resetRotation);
 //						return;
 					}
 				}
-				
+
 				continue;
 			}
 
