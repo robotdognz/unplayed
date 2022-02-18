@@ -670,9 +670,11 @@ public class Player extends Editable {
 
 		if (left || vel.x <= -4) {
 			direction = true;
-		}
-		if (right || vel.x >= 4) {
+		} else if (right || vel.x >= 4) {
 			direction = false;
+		} else {
+			destroyGroundBarrier(resetRotation);
+			return;
 		}
 
 		// player is still or falling on the y axis
