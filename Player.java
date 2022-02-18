@@ -668,9 +668,18 @@ public class Player extends Editable {
 //			direction = false;
 //		}
 
-		if (left || vel.x <= -4) {
+		if (!left && !right) {
+			if (vel.x <= -4) {
+				direction = true;
+			} else if (vel.x >= 4) {
+				direction = false;
+			} else {
+				destroyGroundBarrier(resetRotation);
+				return;
+			}
+		} else if (left) {
 			direction = true;
-		} else if (right || vel.x >= 4) {
+		} else if (right) {
 			direction = false;
 		} else {
 			destroyGroundBarrier(resetRotation);
