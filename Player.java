@@ -654,7 +654,7 @@ public class Player extends Editable {
 		pseudoGround = false;
 
 		// check player is moving or trying to move on the x axis
-		if (!((left || right) || (Math.abs(vel.x) >= 20))) { // 4 // 10
+		if (!((left || right) || (Math.abs(vel.x) >= 10))) { // 4 // 10 // 20
 			destroyGroundBarrier(resetRotation);
 			checkGroundSlotsStatic(pos, vel, resetRotation);
 			return;
@@ -677,23 +677,16 @@ public class Player extends Editable {
 //				destroyGroundBarrier(resetRotation);
 //				return;
 //			}
-//		} else if (left) {
-//			direction = true;
-//		} else if (right) {
-//			direction = false;
-//		} else {
+//		} else 
+		if (left) {
+			direction = true;
+		} else if (right) {
+			direction = false;
+		} 
+//		else {
 //			destroyGroundBarrier(resetRotation);
 //			return;
 //		}
-		
-		if (vel.x <= -4) {
-			direction = true;
-		} else if (vel.x >= 4) {
-			direction = false;
-		} else {
-			destroyGroundBarrier(resetRotation);
-			return;
-		}
 
 		// player is still or falling on the y axis
 		if (!(vel.y <= 2)) {
