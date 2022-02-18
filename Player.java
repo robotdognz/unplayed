@@ -668,18 +668,27 @@ public class Player extends Editable {
 //			direction = false;
 //		}
 
-		if (!left && !right) {
-			if (vel.x <= -4) {
-				direction = true;
-			} else if (vel.x >= 4) {
-				direction = false;
-			} else {
-				destroyGroundBarrier(resetRotation);
-				return;
-			}
-		} else if (left) {
+//		if (!left && !right) {
+//			if (vel.x <= -4) {
+//				direction = true;
+//			} else if (vel.x >= 4) {
+//				direction = false;
+//			} else {
+//				destroyGroundBarrier(resetRotation);
+//				return;
+//			}
+//		} else if (left) {
+//			direction = true;
+//		} else if (right) {
+//			direction = false;
+//		} else {
+//			destroyGroundBarrier(resetRotation);
+//			return;
+//		}
+		
+		if (vel.x <= -4) {
 			direction = true;
-		} else if (right) {
+		} else if (vel.x >= 4) {
 			direction = false;
 		} else {
 			destroyGroundBarrier(resetRotation);
