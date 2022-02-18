@@ -652,17 +652,18 @@ public class Player extends Editable {
 	private void checkForGroundSlots(PVector pos, Vec2 vel, boolean resetRotation) {
 
 		pseudoGround = false;
+		
+		int speed = 10;
 
 		// check player is moving or trying to move on the x axis
 		// no direction pressed and absolute speed less than 10
-		if (!((left || right) || (Math.abs(vel.x) >= 10))) { // 4 // 10 // 20
+		if (!((left || right) || (Math.abs(vel.x) >= speed))) { // 4 // 10 // 20
 			destroyGroundBarrier(resetRotation);
 			checkGroundSlotsStatic(pos, vel, resetRotation);
 			return;
-
 		}
 
-		boolean direction = true; // true = left, false = right
+		boolean direction; // true = left, false = right
 //		if (left || vel.x <= -4) {
 //			direction = true;
 //		} else if (right || vel.x >= 4) {
@@ -670,17 +671,17 @@ public class Player extends Editable {
 //		}
 
 		if (!left && !right) {
-			if (vel.x <= -4) {
+			if (vel.x <= -speed) {
 				direction = true;
-			} else if (vel.x >= 4) {
+			} else if (vel.x >= speed) {
 				direction = false;
 			} else {
 				destroyGroundBarrier(resetRotation);
 				return;
 			}
-		} else if (vel.x <= -4) {
+		} else if (vel.x <= -speed) {
 			direction = true;
-		} else if (vel.x >= 4) {
+		} else if (vel.x >= speed) {
 			direction = false;
 		} else {
 			destroyGroundBarrier(resetRotation);
@@ -812,11 +813,11 @@ public class Player extends Editable {
 						// this tile is close to the player on the x axis
 						if (t.getX() < pos.x) {
 							// to the left
-							dynamicBody.setLinearVelocity(new Vec2(-10, dynamicBody.getLinearVelocity().y)); // -25
+							dynamicBody.setLinearVelocity(new Vec2(-15, dynamicBody.getLinearVelocity().y)); // -25
 							continue;
 						} else {
 							// to the right
-							dynamicBody.setLinearVelocity(new Vec2(10, dynamicBody.getLinearVelocity().y)); // 25
+							dynamicBody.setLinearVelocity(new Vec2(15, dynamicBody.getLinearVelocity().y)); // 25
 							continue;
 						}
 
