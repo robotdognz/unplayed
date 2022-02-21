@@ -14,7 +14,6 @@ import misc.PlayerTileXComparator;
 import objects.Editable;
 import objects.Event;
 import objects.Tile;
-import editor.DebugOutput;
 import editor.Editor;
 import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
@@ -47,7 +46,6 @@ public class Player extends Editable {
 
 	private ArrayList<Event> events; // list of events touching the player
 	private PlayerVibration vibration; // vibration system
-	private PlayerVelocityHistory<Vec2> history; // history of player velocity
 
 	// environment checking
 	public boolean showChecking = false;
@@ -159,8 +157,6 @@ public class Player extends Editable {
 		this.wallBoostPower = 90; // 102;
 
 		this.extraJump = false;
-
-		this.history = new PlayerVelocityHistory<Vec2>(60);
 
 		// timers
 
@@ -330,15 +326,11 @@ public class Player extends Editable {
 		pushLeftTimer.deltaStep(delta);
 		pushRightTimer.deltaStep(delta);
 
-		// update velocity history (used for calculating rotation smooth speed)
-		Vec2 vel = dynamicBody.getLinearVelocity(); // TODO: this doesn't need to be here
-		
-
 		// run checks
 		checkJumps();
 		checkTiles();
 
-		vel = dynamicBody.getLinearVelocity();
+		Vec2 vel = dynamicBody.getLinearVelocity();
 
 		// boost up if touching roof barrier
 		if (touchingRoofBarrier) {
@@ -563,18 +555,6 @@ public class Player extends Editable {
 			// only if there is a reasonable difference
 			if (Math.abs(oldAngle - newAngle) > 2) {
 				rotationSmooth = new RotationSmooth(oldAngle, newAngle, vibration.getImpactHistory());
-
-				// find largest recent speed
-				Vec2 largest = new Vec2(0, 0);
-				for (Vec2 vec : history) {
-					if (Math.abs(vec.x) + Math.abs(vec.y) > Math.abs(largest.x) + Math.abs(largest.y)) {
-						largest = vec;
-					}
-				}
-				DebugOutput.pushMessage(
-						"" + ((Math.abs(largest.x) + Math.abs(largest.y)) * 20) + " - " + vibration.getImpactHistory(),
-						2);
-				DebugOutput.pushMessage("" + history.size(), 2);
 			}
 
 		}
@@ -1527,16 +1507,6 @@ public class Player extends Editable {
 	public void step(float deltaTime) {
 		vibration.step(deltaTime);
 		
-		Vec2 vel = dynamicBody.getLinearVelocity();
-		history.add(vel);
-//		Vec2 largest = new Vec2(0, 0);
-//		for (Vec2 vec : history) {
-//			if (Math.abs(vec.x) + Math.abs(vec.y) > Math.abs(largest.x) + Math.abs(largest.y)) {
-//				largest = vec;
-//			}
-//		}
-//		DebugOutput.pushMessage("" + (Math.abs(largest.x) + Math.abs(largest.y)), 0.2f); 
-
 		if (rotationSmooth != null) {
 			rotationSmooth.deltaStep(deltaTime);
 		}
