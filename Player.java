@@ -681,24 +681,6 @@ public class Player extends Editable {
 			}
 		}
 
-//		if (!left && !right) {
-//			if (vel.x <= -speed) {
-//				direction = true;
-//			} else if (vel.x >= speed) {
-//				direction = false;
-//			} else {
-//				destroyGroundBarrier(resetRotation);
-//				return;
-//			}
-//		} else if (vel.x <= -speed) {
-//			direction = true;
-//		} else if (vel.x >= speed) {
-//			direction = false;
-//		} else {
-//			destroyGroundBarrier(resetRotation);
-//			return;
-//		}
-
 		// player is still or falling on the y axis
 		if (!(vel.y <= 2)) {
 			destroyGroundBarrier(resetRotation);
@@ -822,19 +804,19 @@ public class Player extends Editable {
 					// found a tile roughly on the same level as the player
 					if (Math.abs((t.getX() + t.getWidth() * 0.5) - pos.x) < t.getWidth() * 1.5) {
 						// this tile is close to the player on the x axis
-						if (t.getX() < pos.x) {
-							// to the left
-							dynamicBody.setLinearVelocity(new Vec2(-20, dynamicBody.getLinearVelocity().y)); // -25
-							continue;
-						} else {
-							// to the right
-							dynamicBody.setLinearVelocity(new Vec2(20, dynamicBody.getLinearVelocity().y)); // 25
-							continue;
-						}
+//						if (t.getX() < pos.x) {
+//							// to the left
+//							dynamicBody.setLinearVelocity(new Vec2(-20, dynamicBody.getLinearVelocity().y)); // -25
+//							continue;
+//						} else {
+//							// to the right
+//							dynamicBody.setLinearVelocity(new Vec2(20, dynamicBody.getLinearVelocity().y)); // 25
+//							continue;
+//						}
 
-//						pseudoGround = true;
-//						destroyGroundBarrier(resetRotation);
-//						return;
+						pseudoGround = true;
+						destroyGroundBarrier(resetRotation);
+						return;
 					}
 				}
 
