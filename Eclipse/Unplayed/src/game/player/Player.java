@@ -332,7 +332,7 @@ public class Player extends Editable {
 
 		// update velocity history (used for calculating rotation smooth speed)
 		Vec2 vel = dynamicBody.getLinearVelocity(); // TODO: this doesn't need to be here
-		DebugOutput.pushMessage("" + (Math.abs(vel.x)+Math.abs(vel.y)), 0.2f); 
+		
 
 		// run checks
 		checkJumps();
@@ -340,6 +340,14 @@ public class Player extends Editable {
 
 		vel = dynamicBody.getLinearVelocity();
 		history.add(vel);
+		
+		Vec2 largest = new Vec2(0, 0);
+		for (Vec2 vec : history) {
+			if (Math.abs(vec.x) + Math.abs(vec.y) > Math.abs(largest.x) + Math.abs(largest.y)) {
+				largest = vec;
+			}
+		}
+		DebugOutput.pushMessage("" + (Math.abs(largest.x) + Math.abs(largest.y)), 0.2f); 
 
 		// boost up if touching roof barrier
 		if (touchingRoofBarrier) {
