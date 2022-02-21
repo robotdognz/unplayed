@@ -332,6 +332,7 @@ public class Player extends Editable {
 
 		// update velocity history (used for calculating rotation smooth speed)
 		Vec2 vel = dynamicBody.getLinearVelocity(); // TODO: this doesn't need to be here
+		DebugOutput.pushMessage("" + (Math.abs(vel.x)+Math.abs(vel.y)), 0.2f); 
 
 		// run checks
 		checkJumps();
