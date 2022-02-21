@@ -573,7 +573,7 @@ public class Player extends Editable {
 				}
 			}
 
-			DebugOutput.pushMessage("" + largest, 2);
+			DebugOutput.pushMessage("" + (Math.abs(largest.x) + Math.abs(largest.y)) + " - " + vibration.getImpactHistory(), 2);
 
 		}
 	}
