@@ -14,6 +14,7 @@ import misc.PlayerTileXComparator;
 import objects.Editable;
 import objects.Event;
 import objects.Tile;
+import editor.DebugOutput;
 import editor.Editor;
 import processing.core.*;
 import shiffman.box2d.Box2DProcessing;
@@ -38,8 +39,6 @@ public class Player extends Editable {
 	private float density; // the player's density
 	private float friction; // the player's friction
 
-//	public boolean tumble; // is the player in physics tumble mode
-
 	public int groundContacts; // the number of grounds touching the player's body
 	public int leftWallContacts; // the number of left walls touching the player's body
 	public int rightWallContacts; // the number of right walls touching the player's body
@@ -48,6 +47,7 @@ public class Player extends Editable {
 
 	private ArrayList<Event> events; // list of events touching the player
 	private PlayerVibration vibration; // vibration system
+	private PlayerVelocityHistory<Vec2> history; // history of player velocity
 
 	// environment checking
 	public boolean showChecking = false;
@@ -126,8 +126,6 @@ public class Player extends Editable {
 		this.friction = 0.6f; // from 0 to 1
 		this.density = 1; // from 0 to 1
 
-//		this.tumble = true;
-
 		this.vibration = new PlayerVibration();
 
 		// environment checking
@@ -161,6 +159,8 @@ public class Player extends Editable {
 		this.wallBoostPower = 90; // 102;
 
 		this.extraJump = false;
+
+		this.history = new PlayerVelocityHistory<Vec2>(5);
 
 		// timers
 
@@ -330,11 +330,15 @@ public class Player extends Editable {
 		pushLeftTimer.deltaStep(delta);
 		pushRightTimer.deltaStep(delta);
 
+		// update velocity history (used for calculating rotation smooth speed)
+		Vec2 vel = dynamicBody.getLinearVelocity();
+		history.add(vel);
+
 		// run checks
 		checkJumps();
 		checkTiles();
 
-		Vec2 vel = dynamicBody.getLinearVelocity();
+		vel = dynamicBody.getLinearVelocity();
 
 		// boost up if touching roof barrier
 		if (touchingRoofBarrier) {
@@ -560,6 +564,16 @@ public class Player extends Editable {
 			if (Math.abs(oldAngle - newAngle) > 2) {
 				rotationSmooth = new RotationSmooth(oldAngle, newAngle, vibration.getImpactHistory());
 			}
+
+			// find largest recent speed
+			Vec2 largest = new Vec2();
+			for (Vec2 vec : history) {
+				if (vec.x + vec.y > largest.x + largest.y) {
+					largest = vec;
+				}
+			}
+
+			DebugOutput.pushMessage("" + largest, 2);
 
 		}
 	}
