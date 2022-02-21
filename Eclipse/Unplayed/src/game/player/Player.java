@@ -160,7 +160,7 @@ public class Player extends Editable {
 
 		this.extraJump = false;
 
-		this.history = new PlayerVelocityHistory<Vec2>(20);
+		this.history = new PlayerVelocityHistory<Vec2>(60);
 
 		// timers
 
