@@ -568,7 +568,7 @@ public class Player extends Editable {
 			// find largest recent speed
 			Vec2 largest = new Vec2();
 			for (Vec2 vec : history) {
-				if (vec.x + vec.y > largest.x + largest.y) {
+				if (Math.abs(vec.x) + Math.abs(vec.y) > Math.abs(largest.x) + Math.abs(largest.y)) {
 					largest = vec;
 				}
 			}
