@@ -331,7 +331,7 @@ public class Player extends Editable {
 		pushRightTimer.deltaStep(delta);
 
 		// update velocity history (used for calculating rotation smooth speed)
-		Vec2 vel = dynamicBody.getLinearVelocity();
+		Vec2 vel = dynamicBody.getLinearVelocity(); // TODO: this doesn't need to be here
 
 		// run checks
 		checkJumps();
@@ -565,7 +565,7 @@ public class Player extends Editable {
 				rotationSmooth = new RotationSmooth(oldAngle, newAngle, vibration.getImpactHistory());
 
 				// find largest recent speed
-				Vec2 largest = new Vec2(0,0);
+				Vec2 largest = new Vec2(0, 0);
 				for (Vec2 vec : history) {
 					if (Math.abs(vec.x) + Math.abs(vec.y) > Math.abs(largest.x) + Math.abs(largest.y)) {
 						largest = vec;
@@ -574,6 +574,7 @@ public class Player extends Editable {
 				DebugOutput.pushMessage(
 						"" + ((Math.abs(largest.x) + Math.abs(largest.y)) * 20) + " - " + vibration.getImpactHistory(),
 						2);
+				DebugOutput.pushMessage("" + history.size(), 2);
 			}
 
 		}
