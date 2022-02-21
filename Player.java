@@ -160,7 +160,7 @@ public class Player extends Editable {
 
 		this.extraJump = false;
 
-		this.history = new PlayerVelocityHistory<Vec2>(10);
+		this.history = new PlayerVelocityHistory<Vec2>(20);
 
 		// timers
 
@@ -563,17 +563,18 @@ public class Player extends Editable {
 			// only if there is a reasonable difference
 			if (Math.abs(oldAngle - newAngle) > 2) {
 				rotationSmooth = new RotationSmooth(oldAngle, newAngle, vibration.getImpactHistory());
-			}
 
-			// find largest recent speed
-			Vec2 largest = new Vec2();
-			for (Vec2 vec : history) {
-				if (Math.abs(vec.x) + Math.abs(vec.y) > Math.abs(largest.x) + Math.abs(largest.y)) {
-					largest = vec;
+				// find largest recent speed
+				Vec2 largest = new Vec2();
+				for (Vec2 vec : history) {
+					if (Math.abs(vec.x) + Math.abs(vec.y) > Math.abs(largest.x) + Math.abs(largest.y)) {
+						largest = vec;
+					}
 				}
+				DebugOutput.pushMessage(
+						"" + ((Math.abs(largest.x) + Math.abs(largest.y)) * 20) + " - " + vibration.getImpactHistory(),
+						2);
 			}
-
-			DebugOutput.pushMessage("" + (Math.abs(largest.x) + Math.abs(largest.y)) + " - " + vibration.getImpactHistory(), 2);
 
 		}
 	}
