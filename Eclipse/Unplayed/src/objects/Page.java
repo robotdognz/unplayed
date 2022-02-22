@@ -37,7 +37,7 @@ public class Page extends Editable {
 	public boolean showImages;
 
 	// player visibility
-	private boolean playerVisible;
+	private boolean playerVisibleExternal;
 	private boolean playerVisibleChanged;
 
 	// player drawing algorithm
@@ -133,13 +133,13 @@ public class Page extends Editable {
 				temp = true;
 			}
 
-			if (temp != playerVisible) {
-				playerVisible = temp;
+			if (temp != playerVisibleExternal) {
+				playerVisibleExternal = temp;
 				playerVisibleChanged = true;
 			}
 
 		} else {
-			playerVisible = false;
+			playerVisibleExternal = false;
 		}
 	}
 
@@ -227,6 +227,23 @@ public class Page extends Editable {
 			}
 		}
 
+		boolean playerVisible = false;
+		while (playerVisible == false) {
+			if (game.player.getCenter().x - game.player.getWidth() * 0.6 > view.getBottomRight().x) { // - 1
+				break;
+			}
+			if (game.player.getCenter().x + game.player.getWidth() * 0.6 < view.getTopLeft().x) { // + 1
+				break;
+			}
+			if (game.player.getCenter().y - game.player.getWidth() * 0.6 > view.getBottomRight().y) { // - 1
+				break;
+			}
+			if (game.player.getCenter().y + game.player.getWidth() * 0.6 < view.getTopLeft().y) { // + 1
+				break;
+			}
+			playerVisible = true;
+		}
+
 		// draw player and paper effect
 		if (playerVisible && game.player != null && showPlayer) {
 			drawPlayer(p.g, 3);
@@ -279,7 +296,7 @@ public class Page extends Editable {
 
 	public void drawCorners() {
 		// draw page corners
-		if (Editor.autoCameraSearch && playerVisible) {
+		if (Editor.autoCameraSearch && playerVisibleExternal) {
 			p.rectMode(CENTER);
 			p.fill(255, 0, 0);
 			p.rect(topLeft.x, topLeft.y, 10, 10);
@@ -304,7 +321,7 @@ public class Page extends Editable {
 	}
 
 	public boolean playerVisible() {
-		return playerVisible;
+		return playerVisibleExternal;
 	}
 
 	@Override
