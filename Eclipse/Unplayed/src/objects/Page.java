@@ -47,7 +47,7 @@ public class Page extends Editable {
 
 	private float actualSize = 1;
 
-	public Page(PApplet p, Game game, View view, PVector position) { 
+	public Page(PApplet p, Game game, View view, PVector position) {
 		super(view.getTopLeft().x, view.getTopLeft().y, view.getWidth(), view.getHeight());
 		this.p = p;
 		this.game = game;
@@ -144,18 +144,34 @@ public class Page extends Editable {
 //	}
 
 	public void draw(float scale) {
+
+//		// draw the page
+//		p.pushMatrix();
+//		p.translate(position.x, position.y);
+//		p.scale(size); // size the page will appear in the page view
+//		p.rotate(PApplet.radians(angle)); // rotate the page
+//
+//		// draw the shadow
+//		p.translate(shadow, shadow);
+//		p.fill(0, 40);
+//		p.noStroke();
+//		p.rectMode(CENTER);
+//		p.rect(0, 0, view.getWidth(), view.getHeight());
+//		p.translate(-shadow, -shadow);
+
 		// draw the page
 		p.pushMatrix();
 		p.translate(position.x, position.y);
 		p.scale(size); // size the page will appear in the page view
-		p.rotate(PApplet.radians(angle)); // rotate the page
 
 		// draw the shadow
 		p.translate(shadow, shadow);
 		p.fill(0, 40);
 		p.noStroke();
 		p.rectMode(CENTER);
+		p.rotate(PApplet.radians(angle)); // rotate the page
 		p.rect(0, 0, view.getWidth(), view.getHeight());
+		p.rotate(PApplet.radians(-angle)); // rotate the page
 		p.translate(-shadow, -shadow);
 
 		// draw the page itself
@@ -309,7 +325,7 @@ public class Page extends Editable {
 		this.size = Math.round(actualSize);
 
 //		this.size = size;
-		
+
 		updateCorners();
 		updateShadow();
 	}
@@ -319,7 +335,7 @@ public class Page extends Editable {
 		if (this.actualSize + size >= 1 && this.actualSize + size <= 2) {
 			this.actualSize += size;
 			this.size = Math.round(actualSize);
-			
+
 		} else if (this.actualSize + size < 1) {
 			this.actualSize = 1;
 			this.size = Math.round(actualSize);
@@ -333,7 +349,7 @@ public class Page extends Editable {
 //		} else {
 //			this.size = 1; // 0.5f
 //		}
-		
+
 		updateCorners();
 		updateShadow();
 	}
@@ -341,7 +357,7 @@ public class Page extends Editable {
 	public float getSize() {
 		return size;
 	}
-	
+
 	public void updateSizeFromView() {
 		setCorners(view.getTopLeft(), view.getBottomRight());
 		updateCorners();
