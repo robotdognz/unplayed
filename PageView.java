@@ -320,7 +320,10 @@ public class PageView {
 	}
 
 	public void forceRedraw() {
-		// TODO: either remove this method, or repurpose it
+		// force recalculate pages sizes
+		for (Page page : pages) {
+			page.updateSizeFromView();
+		}
 	}
 
 	public void addPage(Page page) {

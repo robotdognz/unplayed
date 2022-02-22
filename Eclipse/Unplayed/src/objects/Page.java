@@ -173,6 +173,7 @@ public class Page extends Editable {
 		p.rect(0, 0, view.getWidth(), view.getHeight());
 		p.rotate(PApplet.radians(-angle)); // rotate the page
 		p.translate(-shadow, -shadow);
+		p.rotate(PApplet.radians(angle)); // rotate the page
 
 		// draw the page itself
 		p.scale(flipX, flipY); // flip the page
