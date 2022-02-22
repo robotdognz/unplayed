@@ -3,7 +3,6 @@ package controllers;
 import java.util.ArrayList;
 import editor.Editor;
 import game.AppLogic;
-import misc.Converter;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -11,7 +10,6 @@ import processing.core.PVector;
 public class EditorControl implements Controller {
 	private PApplet p;
 	private Editor editor;
-	private Converter convert;
 
 	public EditorControl(PApplet p, Editor editor) {
 		this.p = p;
@@ -43,7 +41,7 @@ public class EditorControl implements Controller {
 		}
 
 		// calculate position in level
-		PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+		PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
 		//// round so blocks snap to grid
 		float finalX = Math.round((placement.x - 50) / snapNo) * snapNo;
 		float finalY = Math.round((placement.y - 50) / snapNo) * snapNo;
