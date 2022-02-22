@@ -228,20 +228,22 @@ public class Page extends Editable {
 		}
 
 		boolean playerVisible = false;
-		while (playerVisible == false) {
-			if (game.player.getCenter().x - game.player.getWidth() * 0.6 > view.getBottomRight().x) { // - 1
-				break;
+		if (game.player != null) {
+			while (playerVisible == false) {
+				if (game.player.getCenter().x - game.player.getWidth() * 0.6 > view.getBottomRight().x) { // - 1
+					break;
+				}
+				if (game.player.getCenter().x + game.player.getWidth() * 0.6 < view.getTopLeft().x) { // + 1
+					break;
+				}
+				if (game.player.getCenter().y - game.player.getWidth() * 0.6 > view.getBottomRight().y) { // - 1
+					break;
+				}
+				if (game.player.getCenter().y + game.player.getWidth() * 0.6 < view.getTopLeft().y) { // + 1
+					break;
+				}
+				playerVisible = true;
 			}
-			if (game.player.getCenter().x + game.player.getWidth() * 0.6 < view.getTopLeft().x) { // + 1
-				break;
-			}
-			if (game.player.getCenter().y - game.player.getWidth() * 0.6 > view.getBottomRight().y) { // - 1
-				break;
-			}
-			if (game.player.getCenter().y + game.player.getWidth() * 0.6 < view.getTopLeft().y) { // + 1
-				break;
-			}
-			playerVisible = true;
 		}
 
 		// draw player and paper effect
