@@ -2,10 +2,9 @@ package editor.uiside;
 
 import java.util.HashSet;
 import java.util.List;
-
 import editor.Editor;
 import editor.Toolbar;
-import game.Game;
+import game.AppLogic;
 import objects.Background;
 import objects.Event;
 import objects.Image;
@@ -19,11 +18,9 @@ import processing.core.PApplet;
 import ui.Widget;
 
 public class WidgetDelete extends Widget {
-	Game game;
 
 	public WidgetDelete(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
-		this.game = editor.game;
 		icon = p.loadImage(folder + "deleteButton.png");
 	}
 
@@ -34,7 +31,7 @@ public class WidgetDelete extends Widget {
 				if (editor.selected instanceof Tile) {
 					// check if the selected tile is contained inside a PlayerStart or PlayerEnd
 					HashSet<Rectangle> returnSet = new HashSet<Rectangle>();
-					game.getWorld().retrieve(returnSet, editor.selected);
+					AppLogic.game.getWorld().retrieve(returnSet, editor.selected);
 					for (Rectangle r : returnSet) {
 						if (!(r instanceof PlayerStart || r instanceof PlayerEnd)) {
 							continue;
@@ -50,10 +47,10 @@ public class WidgetDelete extends Widget {
 							if (required != null && editor.selected.equals(required)) {
 								((PlayerStart) r).setRequired(null);
 							}
-							if (game.player != null) {
-								game.player.destroy();
+							if (AppLogic.game.player != null) {
+								AppLogic.game.player.destroy();
 							}
-							game.player = null;
+							AppLogic.game.player = null;
 						} else {
 							Tile required = ((PlayerEnd) r).getRequired();
 							if (required != null && editor.selected.equals(required)) {
@@ -63,9 +60,9 @@ public class WidgetDelete extends Widget {
 						break;
 					}
 					// remove the tile from the world
-					game.world.remove(editor.selected);
+					AppLogic.game.world.remove(editor.selected);
 				} else if (editor.selected instanceof Image) {
-					game.world.remove(editor.selected);
+					AppLogic.game.world.remove(editor.selected);
 				} else if (editor.selected instanceof Event) {
 					// if the event is a player start
 					if (editor.selected instanceof PlayerStart) {
@@ -73,11 +70,11 @@ public class WidgetDelete extends Widget {
 						if (oldStart != null) {
 							editor.world.insert(oldStart);
 						}
-						editor.game.setPlayerStart(null);
-						if (editor.game.player != null) {
-							editor.game.player.destroy();
+						AppLogic.game.setPlayerStart(null);
+						if (AppLogic.game.player != null) {
+							AppLogic.game.player.destroy();
 						}
-						editor.game.player = null;
+						AppLogic.game.player = null;
 					}
 					// if the event is a player end
 					if (editor.selected instanceof PlayerEnd) {
@@ -87,10 +84,10 @@ public class WidgetDelete extends Widget {
 						}
 					}
 					// remove the event from the world
-					game.world.remove(editor.selected);
+					AppLogic.game.world.remove(editor.selected);
 				} else if (editor.selected instanceof View) {
 					// remove matching the pages
-					List<Page> pages = game.getPageView().getPages();
+					List<Page> pages = AppLogic.game.getPageView().getPages();
 					for (int i = pages.size() - 1; i >= 0; --i) {
 
 						if (pages.get(i).getView().equals(editor.selected)) {
@@ -100,13 +97,13 @@ public class WidgetDelete extends Widget {
 					}
 
 					// remove the view
-					game.views.remove(editor.selected);
+					AppLogic.game.views.remove(editor.selected);
 				}
 			} else { // page view
 				if (editor.selected instanceof Page) {
-					game.getPageView().removePage((Page) editor.selected);
+					AppLogic.game.getPageView().removePage((Page) editor.selected);
 				} else if (editor.selected instanceof Background) {
-					game.getPageView().removeBackground((Background) editor.selected);
+					AppLogic.game.getPageView().removeBackground((Background) editor.selected);
 				}
 			}
 			// deselect the object

@@ -303,7 +303,7 @@ public class AppLogic {
 		if (editorToggle) {
 			Camera camera = new FreeCamera();
 			DoToast toast = new DoToast(activity);
-			editor = new Editor(p, files, texture, game, camera, convert, toast);
+			editor = new Editor(p, camera, toast);
 		}
 		menu = null;
 		game.getPageView().clearMenus();

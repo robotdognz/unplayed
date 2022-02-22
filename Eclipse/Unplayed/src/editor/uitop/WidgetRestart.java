@@ -2,29 +2,27 @@ package editor.uitop;
 
 import editor.Editor;
 import editor.Toolbar;
-import game.Game;
+import game.AppLogic;
 import processing.core.PApplet;
 import ui.Widget;
 
 public class WidgetRestart extends Widget {
-	Game game;
 
 	public WidgetRestart(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "ResetGame.png");
 		closeAfterSubWidget = true;
-		game = editor.game;
 	}
 
 	@Override
 	public void clicked() {
-		game.startGame();
+		AppLogic.game.startGame();
 
 	}
 
 	@Override
 	public void updateActive() {
-		if (game.player != null) {
+		if (AppLogic.game.player != null) {
 			available = true;
 		} else {
 			available = false;

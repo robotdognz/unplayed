@@ -5,22 +5,20 @@ import camera.GameCamera;
 import controllers.PlayerControl;
 import editor.Editor;
 import editor.Toolbar;
-import game.Game;
+import game.AppLogic;
 import game.PageView;
 import processing.core.PApplet;
 import ui.Widget;
 
 public class WidgetPlayMode extends Widget {
 	boolean previousStatus = false;
-	Game game;
 	PageView pageView;
 
 	public WidgetPlayMode(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "Pause.png");
 		closeAfterSubWidget = true;
-		game = editor.game;
-		pageView = game.getPageView();
+		pageView = AppLogic.game.getPageView();
 	}
 
 	@Override
@@ -29,8 +27,8 @@ public class WidgetPlayMode extends Widget {
 			editor.camera = new FreeCamera();
 		} else {
 			editor.camera = new GameCamera();
-			if (game.player != null) {
-				editor.controller = new PlayerControl(p, editor.game);
+			if (AppLogic.game.player != null) {
+				editor.controller = new PlayerControl(p, AppLogic.game);
 				pageView.updateVisiblePages();
 			}
 			if (!Editor.showPageView) { // if we are not on the page view

@@ -6,10 +6,8 @@ import editor.Editor;
 import editor.Tool;
 import editor.Editor.editorMode;
 import editor.uiside.EditorSide;
-import game.Game;
+import game.AppLogic;
 import game.PageView;
-import handlers.TextureCache;
-import misc.Converter;
 import objects.Background;
 import objects.Image;
 import objects.Rectangle;
@@ -18,11 +16,7 @@ import processing.core.PVector;
 
 public class ImageTool implements Tool {
 	Editor editor;
-	Game game;
-	TextureCache texture;
-
 	PApplet p;
-	private Converter convert;
 	private EditorSide editorSide;
 	private Background currentBackground;
 	private PageView pageView;
@@ -30,11 +24,8 @@ public class ImageTool implements Tool {
 	public ImageTool(PApplet p, Editor editor) {
 		this.p = p;
 		this.editor = editor;
-		this.game = editor.game;
-		this.texture = editor.texture;
 		this.editorSide = (EditorSide) editor.editorSide;
-		this.pageView = game.getPageView();
-		this.convert = editor.convert;
+		this.pageView = AppLogic.game.getPageView();
 		this.currentBackground = null;
 	}
 
@@ -50,7 +41,7 @@ public class ImageTool implements Tool {
 					// TODO: textures are stored in grid amounts 1x1 etc, whereas actual world
 					// objects are stored as 100x100 etc. This should be fixed so everything uses
 					// the 1x1 system. Then remove the * 100 from the below line
-					toInsert = new Image(texture, editor.currentImage.getFile(), (int) editor.point.getX(),
+					toInsert = new Image(AppLogic.texture, editor.currentImage.getFile(), (int) editor.point.getX(),
 							(int) editor.point.getY(), editor.currentImage.getWidth() * 100,
 							editor.currentImage.getHeight() * 100);
 				} else {
@@ -77,14 +68,14 @@ public class ImageTool implements Tool {
 			if (!editorSide.adjust) {
 				if (editor.eMode == editorMode.ADD) {
 					if (currentBackground == null) {
-						PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+						PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
 						// offset placement by 50
 						float finalX = placement.x - 50;
 						float finalY = placement.y - 50;
 						PVector center = new PVector(finalX, finalY);
-						currentBackground = new Background(p, texture, editor.currentBackground.getFile(), center);
+						currentBackground = new Background(p, AppLogic.texture, editor.currentBackground.getFile(), center);
 					} else {
-						PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+						PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
 						// round so blocks snap to grid
 						float finalX = placement.x - 50;
 						float finalY = placement.y - 50;
@@ -97,8 +88,8 @@ public class ImageTool implements Tool {
 				if (editor.selected != null && editor.selected instanceof Background) {
 					float xDist = p.mouseX - p.pmouseX;
 					float yDist = p.mouseY - p.pmouseY;
-					xDist = convert.screenToLevel(xDist / 3);
-					yDist = convert.screenToLevel(yDist / 3);
+					xDist = AppLogic.convert.screenToLevel(xDist / 3);
+					yDist = AppLogic.convert.screenToLevel(yDist / 3);
 					((Background) editor.selected).addPosition(xDist, yDist);
 				}
 			}
@@ -236,7 +227,7 @@ public class ImageTool implements Tool {
 	}
 
 	private void eraseBackground() {
-		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
+		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
 		Background found = pageView.getBackground(mouse.x, mouse.y);
 		if (found != null) {
 			pageView.removeBackground(found);
@@ -247,7 +238,7 @@ public class ImageTool implements Tool {
 	}
 
 	private void selectBackground() {
-		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
+		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
 		Background found = pageView.getBackground(mouse.x, mouse.y);
 		if (found != null) {
 			editor.selected = found; // select it
@@ -275,11 +266,11 @@ public class ImageTool implements Tool {
 		// background resize
 		if (Editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Background) {
-				((Background) editor.selected).addSize(convert.screenToLevel(d) / 500);
+				((Background) editor.selected).addSize(AppLogic.convert.screenToLevel(d) / 500);
 				// TODO: figure out what the 500 should be
 
 				// old code
-				PVector center = convert.screenToLevel(x, y);
+				PVector center = AppLogic.convert.screenToLevel(x, y);
 				((Background) editor.selected).setPosition(center);
 
 			}

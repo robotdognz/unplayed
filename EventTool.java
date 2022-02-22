@@ -6,8 +6,7 @@ import editor.Editor;
 import editor.Editor.editorMode;
 import editor.Tool;
 import editor.uiside.EditorSide;
-import game.Game;
-import handlers.TextureCache;
+import game.AppLogic;
 import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
@@ -18,15 +17,11 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 public class EventTool implements Tool {
-	Game game;
-	TextureCache texture;
 	Editor editor;
 	private EditorSide editorSide;
 
 	public EventTool(PApplet p, Editor editor) {
-		this.game = editor.game;
 		this.editor = editor;
-		this.texture = editor.texture;
 		this.editorSide = (EditorSide) editor.editorSide;
 	}
 
@@ -124,11 +119,11 @@ public class EventTool implements Tool {
 				if (oldStart != null) {
 					editor.world.insert(oldStart);
 				}
-				editor.game.setPlayerStart(null);
-				if (editor.game.player != null) {
-					editor.game.player.destroy();
+				AppLogic.game.setPlayerStart(null);
+				if (AppLogic.game.player != null) {
+					AppLogic.game.player.destroy();
 				}
-				editor.game.player = null;
+				AppLogic.game.player = null;
 			}
 			if (p instanceof PlayerEnd) {
 				Tile oldEnd = ((PlayerEnd) p).getRequired();

@@ -2,18 +2,16 @@ package editor.uitop;
 
 import editor.Editor;
 import editor.Toolbar;
-import misc.FileChooser;
+import game.AppLogic;
 import processing.core.PApplet;
 import ui.Widget;
 
 public class WidgetLoad extends Widget {
-	private FileChooser files;
 	private EditorTop editorTop;
 
 	public WidgetLoad(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		editorTop = (EditorTop) parent;
-		files = editor.files;
 		closeAfterSubWidget = true;
 		icon = p.loadImage(folder + "load.png");
 	}
@@ -21,7 +19,7 @@ public class WidgetLoad extends Widget {
 	@Override
 	public void clicked() {
 		// request the file
-		files.createLoadFile();
+		AppLogic.files.createLoadFile();
 		editorTop.loading = true;
 		editorTop.saving = false;
 		p.delay(500); // delay so animation happens after the file browser is open
@@ -32,10 +30,10 @@ public class WidgetLoad extends Widget {
 		super.updateActive();
 		// step
 		if (editorTop.loading) {
-			if (files.hasUri()) {
+			if (AppLogic.files.hasUri()) {
 				// load the level
-				String file = files.getPath();
-				editor.eJSON.load(editor.game, file);
+				String file = AppLogic.files.getPath();
+				editor.eJSON.load(AppLogic.game, file);
 				// deselect old objects
 				editor.currentTile = null;
 				editor.currentImage = null;
@@ -44,7 +42,7 @@ public class WidgetLoad extends Widget {
 				editor.currentPage = null;
 				editor.selected = null;
 				// restart the game
-				editor.game.startGame();
+				AppLogic.game.startGame();
 //				if(Editor.showPageView) {
 //					editor.game.getPageView().forceRedraw();
 //				}

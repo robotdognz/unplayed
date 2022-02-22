@@ -1,12 +1,9 @@
 package editor.tools;
 
 import static processing.core.PConstants.*;
-
 import java.util.ArrayList;
-
 import editor.Editor;
 import editor.Tool;
-import misc.Converter;
 import editor.Editor.editorMode;
 import objects.Rectangle;
 import processing.core.PApplet;
@@ -15,7 +12,6 @@ import processing.core.PVector;
 public class AreaTool implements Tool {
 	protected PApplet p;
 	protected Editor editor;
-	protected Converter convert;
 
 	private Rectangle start;
 	private Rectangle end;
@@ -27,7 +23,6 @@ public class AreaTool implements Tool {
 	public AreaTool(PApplet p, Editor editor) {
 		this.p = p;
 		this.editor = editor;
-		this.convert = editor.convert;
 
 		start = null;
 		end = null;

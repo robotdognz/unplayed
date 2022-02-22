@@ -1,9 +1,8 @@
 package controllers;
 
 import java.util.ArrayList;
-
 import editor.Editor;
-import game.Game;
+import game.AppLogic;
 import misc.Converter;
 import objects.Rectangle;
 import processing.core.PApplet;
@@ -12,19 +11,16 @@ import processing.core.PVector;
 public class EditorControl implements Controller {
 	private PApplet p;
 	private Editor editor;
-	private Game game;
 	private Converter convert;
 
 	public EditorControl(PApplet p, Editor editor) {
 		this.p = p;
 		this.editor = editor;
-		this.game = editor.game;
-		this.convert = game.convert;
 	}
 
 	@Override
 	public void step(ArrayList<PVector> touch) {
-		game.stopPlayer();
+		AppLogic.game.stopPlayer();
 	}
 
 	@Override

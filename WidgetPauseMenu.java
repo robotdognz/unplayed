@@ -11,18 +11,15 @@ import ui.Widget;
 
 public class WidgetPauseMenu extends Widget {
 	private boolean previousStatus = false;
-	private Game game;
 
 	public WidgetPauseMenu(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "exit.png");
-		game = editor.game;
 	}
 
 	public WidgetPauseMenu(PApplet p, Game game, Toolbar parent) {
 		super(p, null, parent);
 		icon = p.loadImage(folder + "exit.png");
-		this.game = game;
 	}
 
 	@Override
@@ -32,7 +29,7 @@ public class WidgetPauseMenu extends Widget {
 			if (AppLogic.editor != null) {
 				AppLogic.addMenu(new EditorMenu(p, this));
 			} else {
-				AppLogic.addMenu(new GameMenu(p, game));
+				AppLogic.addMenu(new GameMenu(p, AppLogic.game));
 			}
 		}
 	}

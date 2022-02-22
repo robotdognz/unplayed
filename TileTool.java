@@ -2,12 +2,10 @@ package editor.tools;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-
 import editor.Editor;
 import editor.Tool;
 import editor.Editor.editorMode;
-import game.Game;
-import handlers.TextureCache;
+import game.AppLogic;
 import objects.Rectangle;
 import objects.Tile;
 import objects.events.PlayerEnd;
@@ -16,13 +14,9 @@ import processing.core.PVector;
 
 public class TileTool implements Tool {
 	Editor editor;
-	Game game;
-	TextureCache texture;
 
 	public TileTool(Editor editor) {
 		this.editor = editor;
-		this.game = editor.game;
-		this.texture = editor.texture;
 	}
 
 	@Override
@@ -33,7 +27,7 @@ public class TileTool implements Tool {
 			Tile toInsert = null;
 			if (editor.currentTile != null) {
 				// create correct tile
-				toInsert = new Tile(game.box2d, texture, editor.currentTile.getFile(), (int) editor.point.getX(),
+				toInsert = new Tile(AppLogic.game.box2d, AppLogic.texture, editor.currentTile.getFile(), (int) editor.point.getX(),
 						(int) editor.point.getY());
 				toInsert.setAngle(editor.currentTile.getEditorAngle());
 			} else {
@@ -81,7 +75,7 @@ public class TileTool implements Tool {
 		if (editor.currentTile != null) {
 
 			// check if there is a tile in this position in game.removed
-			for (Tile t : game.removed) {
+			for (Tile t : AppLogic.game.removed) {
 				if (toInsert.getTopLeft().x > t.getBottomRight().x - 1) {
 					continue;
 				}
@@ -141,7 +135,7 @@ public class TileTool implements Tool {
 			}
 
 			// check if the tile is also in game.placed, if so, prevent removing it
-			if (game.placed != null && game.placed.contains(p)) {
+			if (AppLogic.game.placed != null && AppLogic.game.placed.contains(p)) {
 				continue;
 			}
 
@@ -155,7 +149,7 @@ public class TileTool implements Tool {
 				if (required != null && required.equals(editor.selected)) {
 					editor.selected = null;
 				}
-				game.removePlayer();
+				AppLogic.game.removePlayer();
 				((PlayerStart) p).setRequired(null);
 			} else if (p instanceof PlayerEnd) {
 				Tile required = ((PlayerEnd) p).getRequired();

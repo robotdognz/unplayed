@@ -16,6 +16,7 @@ import editor.Editor.editorMode;
 import editor.tools.EventTool;
 import editor.tools.ImageTool;
 import editor.tools.TileTool;
+import game.AppLogic;
 import editor.tools.PageTool;
 import handlers.BackgroundHandler;
 import handlers.EventHandler;
@@ -77,7 +78,7 @@ public class EditorBottom extends Toolbar {
 		this.images = texture.getImageList();
 		this.backgrounds = texture.getBackgroundList();
 		this.events = texture.getEventList();
-		this.views = editor.game.views;
+		this.views = AppLogic.game.views;
 
 		int boundsHeight = (int) (p.width / 4.11f); // 350
 		super.bounds = new Rectangle(0, p.height - boundsHeight, p.width, boundsHeight);

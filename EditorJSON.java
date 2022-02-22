@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import editor.Editor;
+import game.AppLogic;
 import game.Game;
 import handlers.TextureCache;
 import objects.Background;
@@ -70,7 +71,7 @@ public class EditorJSON {
 
 	private void saveWorldObjects(JSONArray values, Editor editor) {
 		HashSet<Rectangle> worldObjects = new HashSet<Rectangle>();
-		editor.game.world.getAll(worldObjects);
+		AppLogic.game.world.getAll(worldObjects);
 
 		for (Rectangle r : worldObjects) {
 			JSONObject object = new JSONObject();
@@ -85,8 +86,8 @@ public class EditorJSON {
 			}
 
 			if (r instanceof Tile) { // tiles
-				if (editor.game.placed != null) {
-					if (editor.game.placed.contains(r)) {
+				if (AppLogic.game.placed != null) {
+					if (AppLogic.game.placed.contains(r)) {
 						continue;
 					}
 				}
@@ -122,7 +123,7 @@ public class EditorJSON {
 
 	private void savePlayerStart(JSONArray values, Editor editor) {
 		HashSet<Rectangle> worldObjects = new HashSet<Rectangle>();
-		editor.game.world.getAll(worldObjects);
+		AppLogic.game.world.getAll(worldObjects);
 
 		for (Rectangle r : worldObjects) {
 			if (r instanceof PlayerStart) {
@@ -156,8 +157,8 @@ public class EditorJSON {
 	}
 
 	private void saveRemoved(JSONArray values, Editor editor) {
-		ArrayList<Tile> removed = editor.game.removed;
-		ArrayList<Tile> placed = editor.game.placed;
+		ArrayList<Tile> removed = AppLogic.game.removed;
+		ArrayList<Tile> placed = AppLogic.game.placed;
 		if (removed != null) {
 			for (Tile t : removed) {
 				// if this tile was placed by a PlayerEnd, don't save it
@@ -181,8 +182,8 @@ public class EditorJSON {
 	}
 
 	private void saveViews(JSONArray values, Editor editor) {
-		ArrayList<View> views = editor.game.views;
-		List<Page> pages = editor.game.getPageView().getPages();
+		ArrayList<View> views = AppLogic.game.views;
+		List<Page> pages = AppLogic.game.getPageView().getPages();
 
 		for (View view : views) {
 			JSONObject object = new JSONObject();
@@ -220,7 +221,7 @@ public class EditorJSON {
 	}
 
 	private void saveBackgrounds(JSONArray values, Editor editor) {
-		List<Background> backgrounds = editor.game.getPageView().getBackgrounds();
+		List<Background> backgrounds = AppLogic.game.getPageView().getBackgrounds();
 
 		for (Background background : backgrounds) {
 			JSONObject object = new JSONObject();

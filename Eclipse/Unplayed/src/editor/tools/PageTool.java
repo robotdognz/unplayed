@@ -1,25 +1,20 @@
 package editor.tools;
 
-import game.Game;
+import game.AppLogic;
 import game.PageView;
-import misc.Converter;
 import objects.Page;
 import objects.Rectangle;
 import objects.View;
 import processing.core.PApplet;
 import processing.core.PVector;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import editor.Editor;
 import editor.Editor.editorMode;
 import editor.uiside.EditorSide;
 
 public class PageTool extends AreaTool {
 	// extends AreaTool because it functions like an AreaTool when making views
-	private Converter convert;
-	private Game game;
 	private EditorSide editorSide;
 	private PageView pageView;
 	private Page currentPage;
@@ -30,10 +25,8 @@ public class PageTool extends AreaTool {
 
 	public PageTool(PApplet p, Editor editor) {
 		super(p, editor);
-		this.game = editor.game;
 		this.editorSide = (EditorSide) editor.editorSide;
-		this.pageView = game.getPageView();
-		this.convert = editor.convert;
+		this.pageView = AppLogic.game.getPageView();
 		this.currentPage = null;
 	}
 
@@ -42,7 +35,7 @@ public class PageTool extends AreaTool {
 		if (!Editor.showPageView) {// views
 			if (editor.selected != null && editor.selected instanceof View && editor.eMode == editorMode.SELECT) {
 				super.touchMoved(touch);
-				game.getPageView().initCamera();
+				AppLogic.game.getPageView().initCamera();
 			} else {
 				edit = null;
 			}
@@ -52,14 +45,14 @@ public class PageTool extends AreaTool {
 				if (editor.eMode == editorMode.ADD) {
 					if (editor.currentView != null) {
 						if (currentPage == null) {
-							PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+							PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
 							// offset placement by 50
 							float finalX = placement.x - 50;
 							float finalY = placement.y - 50;
 							PVector center = new PVector(finalX, finalY);
-							currentPage = new Page(p, game, editor.currentView, center);
+							currentPage = new Page(p, AppLogic.game, editor.currentView, center);
 						} else {
-							PVector placement = convert.screenToLevel(p.mouseX, p.mouseY);
+							PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
 							// round so blocks snap to grid
 							float finalX = placement.x - 50;
 							float finalY = placement.y - 50;
@@ -73,8 +66,8 @@ public class PageTool extends AreaTool {
 				if (editor.selected != null && editor.selected instanceof Page) {
 					float xDist = p.mouseX - p.pmouseX;
 					float yDist = p.mouseY - p.pmouseY;
-					xDist = convert.screenToLevel(xDist / 3);
-					yDist = convert.screenToLevel(yDist / 3);
+					xDist = AppLogic.convert.screenToLevel(xDist / 3);
+					yDist = AppLogic.convert.screenToLevel(yDist / 3);
 					((Page) editor.selected).addPosition(xDist, yDist);
 				}
 			}
@@ -110,10 +103,10 @@ public class PageTool extends AreaTool {
 		// page resize
 		if (Editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
-				((Page) editor.selected).addSize(convert.screenToLevel(d) / 500); // TODO: figure out what the 500
+				((Page) editor.selected).addSize(AppLogic.convert.screenToLevel(d) / 500); // TODO: figure out what the 500
 																					// should be
 				// old code
-				PVector center = convert.screenToLevel(x, y);
+				PVector center = AppLogic.convert.screenToLevel(x, y);
 				((Page) editor.selected).setPosition(center);
 
 //				if (pX != 0 && pY != 0) {
@@ -145,7 +138,7 @@ public class PageTool extends AreaTool {
 		Rectangle result = (Rectangle) super.getResult();
 		if (result != null) {
 			// check if there is already a matching view
-			for (View view : game.views) {
+			for (View view : AppLogic.game.views) {
 				// if matching view found select it and return
 				if (view.getX() != result.getX()) {
 					continue;
@@ -167,18 +160,18 @@ public class PageTool extends AreaTool {
 			// no existing match found, make a new view
 			View newView = new View(p, (int) result.getX(), (int) result.getY(), (int) result.getWidth(),
 					(int) result.getHeight());
-			game.views.add(newView); // add the view
+			AppLogic.game.views.add(newView); // add the view
 			editor.selected = newView; // select the view
 			editor.currentView = newView;
 		}
 	}
 
 	private void eraseView() {
-		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
-		View found = game.getView(mouse.x, mouse.y);
+		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
+		View found = AppLogic.game.getView(mouse.x, mouse.y);
 		if (found != null) {
 			// remove the view
-			game.views.remove(found);
+			AppLogic.game.views.remove(found);
 			// deselect it if it is selected
 			if (found.equals(editor.selected)) {
 				editor.selected = null;
@@ -203,8 +196,8 @@ public class PageTool extends AreaTool {
 	}
 
 	private void selectView() {
-		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
-		View found = game.getView(mouse.x, mouse.y);
+		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
+		View found = AppLogic.game.getView(mouse.x, mouse.y);
 		if (found != null) {
 			editor.selected = found;
 			editor.currentView = found;
@@ -225,7 +218,7 @@ public class PageTool extends AreaTool {
 	}
 
 	private void erasePage() {
-		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
+		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
 		Page found = pageView.getPage(mouse.x, mouse.y);
 		if (found != null) {
 			pageView.removePage(found);
@@ -236,12 +229,12 @@ public class PageTool extends AreaTool {
 	}
 
 	private void selectPage() {
-		PVector mouse = convert.screenToLevel(p.mouseX, p.mouseY);
+		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
 		Page found = pageView.getPage(mouse.x, mouse.y);
 		if (found != null) {
 			editor.selected = found; // select it
 			// set current view to corresponding view
-			for (View view : game.views) {
+			for (View view : AppLogic.game.views) {
 				if (view.getX() != found.getX()) {
 					continue;
 				}

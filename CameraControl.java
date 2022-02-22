@@ -4,29 +4,24 @@ import java.util.ArrayList;
 
 import camera.Camera;
 import editor.Editor;
-import game.Game;
-import misc.Converter;
+import game.AppLogic;
 import processing.core.PApplet;
 import processing.core.PVector;
 
 public class CameraControl implements Controller {
 	private PApplet p;
-	private Game game;
 	private Editor editor;
-	private Converter convert;
 	int maxZoomSpeed;
 
 	public CameraControl(PApplet p, Editor editor) {
 		this.p = p;
 		this.editor = editor;
-		this.game = editor.game;
-		this.convert = game.convert;
 		maxZoomSpeed = 150;
 	}
 
 	@Override
 	public void step(ArrayList<PVector> touch) {
-		game.stopPlayer();
+		AppLogic.game.stopPlayer();
 	}
 
 	@Override
@@ -42,7 +37,7 @@ public class CameraControl implements Controller {
 		if (touches.size() == 1) {
 			float moveX = (p.pmouseX - p.mouseX) / 3;
 			float moveY = (p.pmouseY - p.mouseY) / 3;
-			PVector diff = new PVector(convert.screenToLevel(moveX), convert.screenToLevel(moveY));
+			PVector diff = new PVector(AppLogic.convert.screenToLevel(moveX), AppLogic.convert.screenToLevel(moveY));
 			Camera.setCenter(Camera.getCenter().add(diff));
 		}
 	}
@@ -59,13 +54,13 @@ public class CameraControl implements Controller {
 		}
 
 		if (touch.size() == 2) {
-			float newScale = Camera.getScale() - convert.screenToLevel(d);
-			float newTotalScale = convert.getTotalFromScale(newScale);
+			float newScale = Camera.getScale() - AppLogic.convert.screenToLevel(d);
+			float newTotalScale = AppLogic.convert.getTotalFromScale(newScale);
 			if (newTotalScale < editor.minZoom) {
-				newScale = convert.getScaleFromTotal(editor.minZoom);
+				newScale = AppLogic.convert.getScaleFromTotal(editor.minZoom);
 			}
 			if (newTotalScale > editor.maxZoom) {
-				newScale = convert.getScaleFromTotal(editor.maxZoom);
+				newScale = AppLogic.convert.getScaleFromTotal(editor.maxZoom);
 			}
 			Camera.setScale(newScale);
 		}

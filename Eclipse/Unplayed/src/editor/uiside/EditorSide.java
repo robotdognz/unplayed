@@ -6,6 +6,7 @@ import java.util.HashSet;
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
+import game.AppLogic;
 import objects.Background;
 import objects.Editable;
 import objects.Image;
@@ -286,7 +287,7 @@ public class EditorSide extends Toolbar {
 					((Tile) editor.selected).getHandler().setEditorAngle(selectedAngle);
 
 					HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
-					editor.game.world.retrieve(returnObjects, editor.selected);
+					AppLogic.game.world.retrieve(returnObjects, editor.selected);
 					for (Rectangle r : returnObjects) {
 						if (!(r instanceof PlayerStart)) {
 							continue;
@@ -298,9 +299,9 @@ public class EditorSide extends Toolbar {
 						if (ps.getY() != editor.selected.getY()) {
 							continue;
 						}
-						if (editor.game.playerCheckpoint == null) {
+						if (AppLogic.game.playerCheckpoint == null) {
 							float tileAngle = ((Editable) editor.selected).getAngle();
-							editor.game.player.setAngle(tileAngle);
+							AppLogic.game.player.setAngle(tileAngle);
 							return;
 						}
 

@@ -3,26 +3,24 @@ package editor.uitop;
 import controllers.PlayerControl;
 import editor.Editor;
 import editor.Toolbar;
-import game.Game;
+import game.AppLogic;
 import processing.core.PApplet;
 import ui.Widget;
 
 public class WidgetPlayerControl extends Widget {
-	Game game;
 	
 	public WidgetPlayerControl(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "playerControls.png");
-		this.game = editor.game;
 	}
 
 	@Override
 	public void clicked() {
-		if (game.player != null) {
+		if (AppLogic.game.player != null) {
 			if (!active) {
-				editor.controller = new PlayerControl(p, editor.game);
+				editor.controller = new PlayerControl(p, AppLogic.game);
 			} else {
-				editor.game.restart();
+				AppLogic.game.restart();
 			}
 		}
 	}

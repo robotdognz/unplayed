@@ -12,19 +12,16 @@ import editor.tools.TileTool;
 import editor.uibottom.EditorBottom;
 import editor.uiside.EditorSide;
 import editor.uitop.EditorTop;
-import game.Game;
+import game.AppLogic;
 import game.PageView;
 import game.Quadtree;
 import game.player.Player;
 import handlers.BackgroundHandler;
 import handlers.EventHandler;
 import handlers.ImageHandler;
-import handlers.TextureCache;
 import handlers.TileHandler;
-import misc.Converter;
 import misc.DoToast;
 import misc.EditorJSON;
-import misc.FileChooser;
 import objects.Background;
 import objects.Event;
 import objects.Image;
@@ -41,11 +38,7 @@ public class Editor {
 	public boolean nextTouchInactive = false;
 
 	private PApplet p;
-	public TextureCache texture;
-	public Converter convert;
 	public DoToast toast;
-	public FileChooser files;
-	public Game game;
 	PageView pageView;
 	public Quadtree world;
 	public Camera camera;
@@ -67,7 +60,7 @@ public class Editor {
 	public boolean controllerActive = true; // is the current controller active
 	public Rectangle point = null; // holds the current selection point in the game world
 	public boolean eventVis; // are events visible
-	
+
 	public boolean viewVis; // are the views being drawn in level view
 
 	// editor settings
@@ -108,22 +101,17 @@ public class Editor {
 	public static boolean tileSearch; // display the logic for searching for slots
 	public static boolean autoCameraSearch; // display the logic for searching for pages to draw
 
-	public Editor(PApplet p, FileChooser files, TextureCache texture, Game game, Camera camera, Converter convert,
-			DoToast toast) {
+	public Editor(PApplet p, Camera camera, DoToast toast) {
 		this.p = p;
-		this.texture = texture;
-		this.convert = convert;
 		this.toast = toast;
-		this.files = files;
-		this.game = game;
-		this.pageView = game.getPageView();
-		this.world = game.getWorld();
+		this.pageView = AppLogic.game.getPageView();
+		this.world = AppLogic.game.getWorld();
 		this.camera = camera;
 		this.controller = new CameraControl(p, this);
 		this.editorTop = new EditorTop(p, this);
-		this.editorBottom = new EditorBottom(p, this, texture);
+		this.editorBottom = new EditorBottom(p, this, AppLogic.texture);
 		this.editorSide = new EditorSide(p, this);
-		this.eJSON = new EditorJSON(p, texture, toast);
+		this.eJSON = new EditorJSON(p, AppLogic.texture, toast);
 
 		this.currentTool = new TileTool(this);
 		this.eMode = editorMode.ADD;
@@ -170,7 +158,7 @@ public class Editor {
 		} else {
 			// get objects to draw in level build view
 			screenObjects.clear();
-			world.retrieve(screenObjects, game.screenSpace);
+			world.retrieve(screenObjects, AppLogic.game.screenSpace);
 		}
 
 		if (!(controller instanceof EditorControl)) {
@@ -178,11 +166,11 @@ public class Editor {
 		}
 
 		// this is jank as hell
-		if (game.player != null) {
+		if (AppLogic.game.player != null) {
 			if (tileSearch) {
-				game.player.showChecking = true;
+				AppLogic.game.player.showChecking = true;
 			} else {
-				game.player.showChecking = false;
+				AppLogic.game.player.showChecking = false;
 			}
 		}
 
@@ -228,7 +216,7 @@ public class Editor {
 			p.fill(80);
 			p.textSize(textSize);
 			p.textAlign(CENTER, CENTER);
-			if (game.player != null) {
+			if (AppLogic.game.player != null) {
 				Vec2 vel = Player.dynamicBody.getLinearVelocity();
 				float aVel = Player.dynamicBody.getAngularVelocity();
 				p.text("Velocity x: " + PApplet.nf(Math.abs(vel.x), 1, 2) + " y: " + PApplet.nf(Math.abs(vel.y), 1, 2)
@@ -237,19 +225,19 @@ public class Editor {
 				float angle = PApplet.degrees(Player.dynamicBody.getAngle());
 				p.text("Angle: " + PApplet.nf(angle, 1, 4), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 7);
-				p.text("ground: " + game.player.groundContacts + " left wall: " + game.player.leftWallContacts
-						+ " right wall: " + game.player.rightWallContacts, p.width / 2,
+				p.text("ground: " + AppLogic.game.player.groundContacts + " left wall: " + AppLogic.game.player.leftWallContacts
+						+ " right wall: " + AppLogic.game.player.rightWallContacts, p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 6);
 			}
-			if (game.placed != null) {
-				p.text("Placed: " + game.placed.size(), p.width / 2,
+			if (AppLogic.game.placed != null) {
+				p.text("Placed: " + AppLogic.game.placed.size(), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 5);
 			}
-			if (game.removed != null) {
-				p.text("Removed: " + game.removed.size(), p.width / 2,
+			if (AppLogic.game.removed != null) {
+				p.text("Removed: " + AppLogic.game.removed.size(), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 4);
 			}
-			p.text(PApplet.nf(convert.getScale(), 1, 2), p.width / 2,
+			p.text(PApplet.nf(AppLogic.convert.getScale(), 1, 2), p.width / 2,
 					p.height - editorBottom.getHeight() - textSize * 3);
 			p.text("FPS: " + PApplet.nf(this.frame, 1, 2), p.width / 2,
 					p.height - editorBottom.getHeight() - textSize * 2);
@@ -271,13 +259,13 @@ public class Editor {
 		p.scale(Camera.getSubScale()); // apply offset for tall screen spaces
 		p.translate(-Camera.getCenter().x, -Camera.getCenter().y); // moves the view around the level
 
-		float currentScale = convert.getScale();
+		float currentScale = AppLogic.convert.getScale();
 
 		p.background(240);
 
 		// find corners of camera
-		PVector currentTopLeft = game.screenSpace.getTopLeft();
-		PVector currentBottomRight = game.screenSpace.getBottomRight();
+		PVector currentTopLeft = AppLogic.game.screenSpace.getTopLeft();
+		PVector currentBottomRight = AppLogic.game.screenSpace.getBottomRight();
 
 		// draw player and environment
 		// TODO: this system is not great, I need to change this so it only eliminates
@@ -320,12 +308,12 @@ public class Editor {
 			((Tile) r).draw(p.g, currentScale);
 		}
 
-		if (game.player != null) { // draw the player on top of tiles and images
-			game.player.draw(p.g, currentScale);
+		if (AppLogic.game.player != null) { // draw the player on top of tiles and images
+			AppLogic.game.player.draw(p.g, currentScale);
 		}
 
 		if (viewVis) { // draw the views behind events
-			for (View view : game.views) {
+			for (View view : AppLogic.game.views) {
 				view.draw(p.g);
 			}
 		}
@@ -335,7 +323,7 @@ public class Editor {
 			}
 		}
 
-		game.paper.draw(p.g, game.screenSpace, currentScale, 1);
+		AppLogic.game.paper.draw(p.g, AppLogic.game.screenSpace, currentScale, 1);
 
 		// draw tool effects
 		if (currentTool != null) {
@@ -343,10 +331,10 @@ public class Editor {
 		}
 
 		// draw quad tree logic for testing
-		if (quadVis && game.player != null) {
+		if (quadVis && AppLogic.game.player != null) {
 			world.draw(p);
 			p.fill(0, 0, 0, 150);
-			for (Rectangle r : game.playerObjects) {
+			for (Rectangle r : AppLogic.game.playerObjects) {
 				p.rect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
 			}
 //			p.rect(game.player.getPlayerArea().getX(), game.player.getPlayerArea().getY(),
