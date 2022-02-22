@@ -24,6 +24,7 @@ public class PageView {
 	private ArrayList<Background> backgrounds;
 
 	private PageViewCamera pageCamera;
+	private Rectangle previousPageArea; // used when switching between menu and level when player isn't visible
 
 	public PageViewCamera getPageCamera() {
 		return pageCamera;
@@ -42,6 +43,8 @@ public class PageView {
 
 		this.pages = new ArrayList<Page>();
 		this.backgrounds = new ArrayList<Background>();
+		
+		this.previousPageArea = null;
 	}
 
 	public void draw() {
@@ -210,7 +213,7 @@ public class PageView {
 		}
 
 	}
-	
+
 	public void updateVisiblePages() {
 		Rectangle area = getPlayerVisibleArea();
 		if (area != null) {
@@ -246,9 +249,10 @@ public class PageView {
 
 		if (visiblePage > 0) {
 			Rectangle output = new Rectangle(minX, minY, maxX - minX, maxY - minY);
+			this.previousPageArea = output;
 			return output;
 		} else {
-			return null;
+			return previousPageArea;
 		}
 	}
 
