@@ -117,16 +117,16 @@ public class Page extends Editable {
 //				if (game.player.getCenter().y + game.player.getWidth() * 0.4 < view.getTopLeft().y) { // + 1
 //					break;
 //				}
-				if (game.player.getCenter().x > view.getBottomRight().x) { // - 1
+				if (game.player.getCenter().x - game.player.getWidth() * 0.1 > view.getBottomRight().x) { // - 1
 					break;
 				}
-				if (game.player.getCenter().x < view.getTopLeft().x) { // + 1
+				if (game.player.getCenter().x + game.player.getWidth() * 0.1 < view.getTopLeft().x) { // + 1
 					break;
 				}
-				if (game.player.getCenter().y > view.getBottomRight().y) { // - 1
+				if (game.player.getCenter().y - game.player.getWidth() * 0.1 > view.getBottomRight().y) { // - 1
 					break;
 				}
-				if (game.player.getCenter().y < view.getTopLeft().y) { // + 1
+				if (game.player.getCenter().y + game.player.getWidth() * 0.1 < view.getTopLeft().y) { // + 1
 					break;
 				}
 

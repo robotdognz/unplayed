@@ -199,11 +199,7 @@ public class PageView {
 		}
 
 		if (adjustCamera) {
-			Rectangle area = getPlayerVisibleArea();
-			if (area != null) {
-				pageCamera.update(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,
-						area.getBottomRight().y);
-			}
+			updateVisiblePages();
 		}
 
 		// move the camera
@@ -213,6 +209,14 @@ public class PageView {
 			storedMenu.activate();
 		}
 
+	}
+	
+	public void updateVisiblePages() {
+		Rectangle area = getPlayerVisibleArea();
+		if (area != null) {
+			pageCamera.update(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,
+					area.getBottomRight().y);
+		}
 	}
 
 	public void stepPages() {

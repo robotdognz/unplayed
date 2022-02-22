@@ -31,11 +31,11 @@ public class WidgetPlayMode extends Widget {
 			editor.camera = new GameCamera();
 			if (game.player != null) {
 				editor.controller = new PlayerControl(p, editor.game);
+				pageView.updateVisiblePages();
 			}
 			if (!Editor.showPageView) { // if we are not on the page view
 				editor.switchView();
 			}
-//			game.getPageView().initCamera();
 		}
 	}
 
