@@ -188,7 +188,7 @@ public class Page extends Editable {
 				continue;
 			}
 			if (r instanceof Image && showImages) {
-				((Image) r).drawClipped(p.g, view, scale/size); // 3
+				((Image) r).drawClipped(p.g, view, 3); // scale/size
 			}
 		}
 		for (Rectangle r : pageObjects) { // draw tiles and events
@@ -208,16 +208,16 @@ public class Page extends Editable {
 				continue;
 			}
 			if (r instanceof Tile && showTiles) {
-				((Tile) r).draw(p.g, scale/size); // 3
+				((Tile) r).draw(p.g, 3); // scale/size
 			}
 			if (r instanceof Event && ((Event) r).visible && showObstacles) {
-				((Event) r).draw(p.g, scale/size); // 3
+				((Event) r).draw(p.g, 3); // scale/size
 			}
 		}
 
 		// draw player and paper effect
 		if (playerVisible && game.player != null && showPlayer) {
-			drawPlayer(p.g, scale/size);
+			drawPlayer(p.g, 3);
 		}
 		// game.paper.draw(p.g, view, scale / size, (int) size);
 		game.paper.draw(p.g, view, scale, (int) size); // paper effect
