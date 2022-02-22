@@ -145,20 +145,6 @@ public class Page extends Editable {
 
 	public void draw(float scale) {
 
-//		// draw the page
-//		p.pushMatrix();
-//		p.translate(position.x, position.y);
-//		p.scale(size); // size the page will appear in the page view
-//		p.rotate(PApplet.radians(angle)); // rotate the page
-//
-//		// draw the shadow
-//		p.translate(shadow, shadow);
-//		p.fill(0, 40);
-//		p.noStroke();
-//		p.rectMode(CENTER);
-//		p.rect(0, 0, view.getWidth(), view.getHeight());
-//		p.translate(-shadow, -shadow);
-
 		// draw the page
 		p.pushMatrix();
 		p.translate(position.x, position.y);
@@ -202,7 +188,7 @@ public class Page extends Editable {
 				continue;
 			}
 			if (r instanceof Image && showImages) {
-				((Image) r).drawClipped(p.g, view, 3); // scale/size
+				((Image) r).drawClipped(p.g, view, scale/size); // 3
 			}
 		}
 		for (Rectangle r : pageObjects) { // draw tiles and events
@@ -222,16 +208,16 @@ public class Page extends Editable {
 				continue;
 			}
 			if (r instanceof Tile && showTiles) {
-				((Tile) r).draw(p.g, 3); // scale/size
+				((Tile) r).draw(p.g, scale/size); // 3
 			}
 			if (r instanceof Event && ((Event) r).visible && showObstacles) {
-				((Event) r).draw(p.g, 3); // scale/size
+				((Event) r).draw(p.g, scale/size); // 3
 			}
 		}
 
 		// draw player and paper effect
 		if (playerVisible && game.player != null && showPlayer) {
-			drawPlayer(p.g, 3);
+			drawPlayer(p.g, scale/size);
 		}
 		// game.paper.draw(p.g, view, scale / size, (int) size);
 		game.paper.draw(p.g, view, scale, (int) size); // paper effect

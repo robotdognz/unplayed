@@ -45,9 +45,9 @@ public class WidgetLoad extends Widget {
 				editor.selected = null;
 				// restart the game
 				editor.game.startGame();
-				if(Editor.showPageView) {
-					editor.game.getPageView().forceRedraw();
-				}
+//				if(Editor.showPageView) {
+//					editor.game.getPageView().forceRedraw();
+//				}
 				// end loading
 				editorTop.loading = false;
 			}
