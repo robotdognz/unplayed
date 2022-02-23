@@ -64,6 +64,7 @@ public class AppLogic {
 	private static SharedPreferences settings;
 	public static SharedPreferences.Editor saveGame;
 	public static int savedLevel = 0;
+	public static boolean externalLevels = false; // true if running an external level folder
 
 	private static boolean skipNextFrame = false;
 
@@ -118,6 +119,11 @@ public class AppLogic {
 	}
 
 	static public void updateSaveGame() {
+		if (externalLevels) {
+			// return if we're running an external campaign, so as not to overwrite main
+			// campaign progress
+			return;
+		}
 		savedLevel = currentLevel + 1;
 		saveGame.putInt("level", savedLevel);
 		saveGame.apply();
@@ -164,10 +170,12 @@ public class AppLogic {
 		}
 
 		Collections.sort(levels);
+		externalLevels = false;
 	}
-	
+
 	static public void setLevels(ArrayList<File> newLevels) {
 		levels = newLevels;
+		externalLevels = true;
 	}
 
 	static public void continueGame() {

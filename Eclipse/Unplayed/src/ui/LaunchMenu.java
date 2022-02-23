@@ -38,6 +38,7 @@ public class LaunchMenu extends Menu {
 		for (Button b : buttons) {
 			if (b.click().equals(continueGame)) {
 				child = null; // clear any existing menus
+				AppLogic.getLevels(); // load default levels
 				AppLogic.continueGame();
 			}else if (b.click().equals(newGame)) {
 				child = null; // clear any existing menus
