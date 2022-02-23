@@ -130,6 +130,11 @@ public class AppLogic {
 	}
 
 	static public void clearSaveGame() {
+		if (externalLevels) {
+			// return if we're running an external campaign, so as not to overwrite main
+			// campaign progress
+			return;
+		}
 		saveGame.putInt("level", 0);
 		saveGame.apply();
 	}
