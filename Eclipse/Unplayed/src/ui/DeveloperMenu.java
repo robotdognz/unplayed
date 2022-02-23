@@ -16,7 +16,7 @@ public class DeveloperMenu extends Menu {
 	String back = "Back";
 
 	boolean loadingFile = false; // true if this menu should start loading a campaign from a file
-//	boolean askedForPermission = false; // true if this menu has asked for file permissions
+	boolean askedForPermission = false; // true if this menu has asked for file permissions
 //	boolean alreadyUsed = false;
 
 	public DeveloperMenu(PApplet p) {
@@ -86,12 +86,11 @@ public class DeveloperMenu extends Menu {
 		// I'm using this against it's original purpose. There is no step method, so I'm
 		// going to use this instead
 
-//		// check and get permissions
-//		if (!askedForPermission) {
-//			if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
-//				p.requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-//			}
-//		}
+		// check and get permissions
+		if (!askedForPermission) {
+			getPermission();
+			askedForPermission = true;
+		}
 
 		if (loadingFile) {
 			if (AppLogic.files.hasUri()) {
