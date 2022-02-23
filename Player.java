@@ -494,6 +494,7 @@ public class Player extends Editable {
 		// run the algorithms
 		// if tunnel checking locks the player's rotation, the other algorithms
 		// shouldn't unlock it, that's what the resetRotation variable is for
+		// restRotation = false means subsequent algorithms can't unlock rotation
 		PVector pos = box2d.getBodyPixelCoordPVector(dynamicBody);
 		Vec2 vel = dynamicBody.getLinearVelocity();
 		boolean resetRotation = checkTunnel(pos);
@@ -649,7 +650,7 @@ public class Player extends Editable {
 
 		pseudoGround = false;
 
-		int speed = 4; //10
+		int speed = 10; // 10
 
 		// check player is moving or trying to move on the x axis
 		// no direction pressed and absolute x speed less than 'speed'
@@ -665,9 +666,11 @@ public class Player extends Editable {
 //		} else if (right || vel.x >= 4) {
 //			direction = false;
 //		}
+		
+		//restRotation == false
 
 		if (!left && !right) {
-			if (Math.abs(vel.x) <= speed) {
+			if (Math.abs(vel.x) <= 4) {
 				destroyGroundBarrier(resetRotation);
 				return;
 			}
