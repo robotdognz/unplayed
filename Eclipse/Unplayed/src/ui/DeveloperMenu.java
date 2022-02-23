@@ -2,6 +2,8 @@ package ui;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import game.AppLogic;
 import game.Game;
@@ -43,7 +45,6 @@ public class DeveloperMenu extends Menu {
 
 				// load a level in a folder. Load all levels in that folder alphabetically
 				// starting from the selected level. Send that list to AppLogic
-				
 
 			} else if (b.click().equals(back)) {
 				AppLogic.previousMenu();
@@ -60,22 +61,26 @@ public class DeveloperMenu extends Menu {
 			if (AppLogic.files.hasUri()) {
 				File f = new File(AppLogic.files.getPath());
 //				String folder = AppLogic.files.getPath().toString();
-				
-				String fileName = f.getName(); //get current file on it's own
-				String folder = f.toString().replace(fileName, ""); //get base folder on it's own
-				
-				PApplet.print(f + "\n");
-				PApplet.print(fileName + "\n"); 
-				PApplet.print(folder + "\n"); 
-				
-				ArrayList<File> levels = new ArrayList<File>();
-				
+
+				String fileName = f.getName(); // get current file on it's own
+				String folder = f.toString().replace(fileName, ""); // get base folder on it's own
+
+//				PApplet.print(f + "\n");
+				PApplet.print("\n");
+				PApplet.print(fileName + "\n");
+				PApplet.print(folder + "\n");
+				PApplet.print("\n");
+
 				File levelPath = new File(folder);
 				File[] absoluteFiles = levelPath.listFiles();
-				for (int i = 0; i < absoluteFiles.length; i++) {
-					PApplet.print(absoluteFiles[i].toString() + "\n");
+
+				ArrayList<File> levels = new ArrayList<File>(Arrays.asList(absoluteFiles));
+				Collections.sort(levels);
+
+				for (int i = levels.size() - 1; i > 0; i--) {
+					PApplet.print(levels.get(i).toString() + "\n");
 				}
-				
+
 				loadingFile = false;
 			}
 		}
