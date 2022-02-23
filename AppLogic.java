@@ -165,6 +165,10 @@ public class AppLogic {
 
 		Collections.sort(levels);
 	}
+	
+	static public void setLevels(ArrayList<File> newLevels) {
+		levels = newLevels;
+	}
 
 	static public void continueGame() {
 		currentLevel = savedLevel - 1;

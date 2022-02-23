@@ -84,30 +84,19 @@ public class DeveloperMenu extends Menu {
 					}
 				}
 
-//				for (int i = 0; i < levels.size(); i++) {
-//					if (levels.get(i).equals(selectedFile)) {
-//
-//					}
-//				}
-//
-//				int selectedFileIndex = -1;
-//				boolean removeAfter = false;
-//				for (int i = levels.size() - 1; i >= 0; i--) {
-//					if (removeAfter) {
-//						levels.remove(i);
-//					}
-//					if (levels.get(i).equals(selectedFile)) {
-//						selectedFileIndex = i;
-//						PApplet.print(i);
-//					}
-//				}
-
 				// print remaining levels, for testing
 				for (File level : levels) {
 					PApplet.print(level.toString() + "\n");
 				}
+				
+				// pass found levels to AppLogic
+				AppLogic.setLevels(levels);
 
+				// end loading
 				loadingFile = false;
+				
+				child = null; // clear any existing menus
+				AppLogic.newGame(); // start game
 			}
 		}
 

@@ -41,7 +41,8 @@ public class LaunchMenu extends Menu {
 				AppLogic.continueGame();
 			}else if (b.click().equals(newGame)) {
 				child = null; // clear any existing menus
-				AppLogic.newGame();
+				AppLogic.getLevels(); // load default levels
+				AppLogic.newGame(); // start game
 			} else if (b.click().equals(editor)) {
 				if (!(child instanceof DeveloperMenu)) {
 					// remove old menus
