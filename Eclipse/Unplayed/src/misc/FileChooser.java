@@ -78,7 +78,7 @@ public class FileChooser {
 		Intent intent = new Intent();
 		// intent.setType("application/json");
 		intent.setType("*/*");
-		intent.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
+		intent.setAction(Intent.ACTION_GET_CONTENT);
 		activity.startActivityForResult(Intent.createChooser(intent, "Select Folder"), SELECT_FOLDER);
 	}
 
