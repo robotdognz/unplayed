@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import game.AppLogic;
 import game.Game;
@@ -60,18 +61,20 @@ public class DeveloperMenu extends Menu {
 				File f = new File(AppLogic.files.getPath());
 //				String folder = AppLogic.files.getPath().toString();
 				
-				String fileName = f.getName();
-				String folder = f.toString().replace(fileName, "");
+				String fileName = f.getName(); //get current file on it's own
+				String folder = f.toString().replace(fileName, ""); //get base folder on it's own
 				
-				PApplet.print(f);
-				PApplet.print(fileName);
-				PApplet.print(folder);
-				//get base on it's own
-				//get current file on it's own
+				PApplet.print(f + "\n");
+				PApplet.print(fileName + "\n"); 
+				PApplet.print(folder + "\n"); 
 				
+				ArrayList<File> levels = new ArrayList<File>();
 				
-//				folder = folder.replace(base + '/', "");
-				
+				File levelPath = new File(folder);
+				File[] absoluteFiles = levelPath.listFiles();
+				for (int i = 0; i < absoluteFiles.length; i++) {
+					PApplet.print(absoluteFiles[i].toString() + "\n");
+				}
 				
 				loadingFile = false;
 			}
