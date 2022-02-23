@@ -99,7 +99,7 @@ public class AppLogic {
 		widgetSpacing = p.width / (widgets.size() + 1);
 		widgetHeight = p.displayWidth / 12; // 120
 
-		getLevels();
+//		getLevels();
 		// setup shared preferences (used for save games)
 		settings = activity.getPreferences(0);
 		saveGame = settings.edit();

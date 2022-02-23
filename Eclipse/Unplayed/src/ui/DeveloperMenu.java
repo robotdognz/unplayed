@@ -12,12 +12,12 @@ import processing.core.PApplet;
 public class DeveloperMenu extends Menu {
 	Game game;
 	String editor = "Start Editor";
-	String folder = "Load Folder";
+	String folder = "Load Level";
 	String back = "Back";
 
-	boolean loadingFile = true;
-
-	boolean alreadyUsed = false;
+	boolean loadingFile = false; // true if this menu should start loading a campaign from a file
+//	boolean askedForPermission = false; // true if this menu has asked for file permissions
+//	boolean alreadyUsed = false;
 
 	public DeveloperMenu(PApplet p) {
 		super(p);
@@ -36,26 +36,46 @@ public class DeveloperMenu extends Menu {
 	public void click() {
 		for (Button b : buttons) {
 			if (b.click().equals(editor)) {
+				
+				if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
+					p.requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+					return;
+				}
+
 				game.emptyGame();
 				AppLogic.toggleEditor();
 			} else if (b.click().equals(folder)) {
-				// TODO: load folder of levels and play it as a campaign
+				
+				if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
+					p.requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+					return;
+				}
+				
 				AppLogic.files.createLoadFile();
 				loadingFile = true;
-
-				// load a level in a folder. Load all levels in that folder alphabetically
-				// starting from the selected level. Send that list to AppLogic
-
 			} else if (b.click().equals(back)) {
 				AppLogic.previousMenu();
 			}
 		}
 	}
 
+//	private void getPermission() {
+//		if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
+//			p.requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+//		}
+//	}
+
 	@Override
 	public void activate() {
 		// I'm using this against it's original purpose. There is no step method, so I'm
 		// going to use this instead
+
+//		// check and get permissions
+//		if (!askedForPermission) {
+//			if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
+//				p.requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+//			}
+//		}
 
 		if (loadingFile) {
 			if (AppLogic.files.hasUri()) {
@@ -88,18 +108,16 @@ public class DeveloperMenu extends Menu {
 				for (File level : levels) {
 					PApplet.print(level.toString() + "\n");
 				}
-				
+
 				// pass found levels to AppLogic
 				AppLogic.setLevels(levels);
 
 				// end loading
 				loadingFile = false;
-				
+
 				child = null; // clear any existing menus
 				AppLogic.newGame(); // start game
 			}
 		}
-
 	}
-
 }

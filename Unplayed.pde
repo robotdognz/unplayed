@@ -36,9 +36,9 @@ void init() {
   app = new AppLogic(this, activity, context);
 
   //check and get permissions
-  if (!hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
-    requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-  }
+  //if (!hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
+  //  requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+  //}
 
   //initalise the game
   AppLogic.init();
