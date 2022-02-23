@@ -34,6 +34,7 @@ public class EditorTop extends Toolbar {
 		Widget cameraW = new WidgetCameraControl(p, editor, this);
 		Widget editModeW = new WidgetEditorMode(p, editor, this);
 		Widget extraW = new WidgetExtra(p, editor, this);
+		Widget menuW = new WidgetPauseMenu(p, editor, this);
 
 		widgets.add(saveW);
 		widgets.add(pageW);
@@ -41,6 +42,7 @@ public class EditorTop extends Toolbar {
 		widgets.add(cameraW);
 		widgets.add(editModeW);
 		widgets.add(extraW);
+		widgets.add(menuW);
 
 		super.widgetSpacing = p.width / 8;
 		super.widgetOffset = (p.width - widgetSpacing * 5) / 2;
