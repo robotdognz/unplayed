@@ -36,11 +36,6 @@ public class DeveloperMenu extends Menu {
 	public void click() {
 		for (Button b : buttons) {
 			if (b.click().equals(editor)) {
-
-//				if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
-//					p.requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-//					return;
-//				}
 				if (!getPermission()) {
 					return;
 				}
@@ -48,7 +43,6 @@ public class DeveloperMenu extends Menu {
 				game.emptyGame();
 				AppLogic.toggleEditor();
 			} else if (b.click().equals(folder)) {
-
 				if (!getPermission()) {
 					return;
 				}
@@ -59,26 +53,6 @@ public class DeveloperMenu extends Menu {
 				AppLogic.previousMenu();
 			}
 		}
-	}
-
-	private boolean getPermission() {
-
-		if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
-
-			// find out if the user has permanently blocked this permission
-			boolean test = AppLogic.activity
-					.shouldShowRequestPermissionRationale("android.permission.WRITE_EXTERNAL_STORAGE");
-
-			if (!test) {
-				AppLogic.toast.showToast(
-						"File permissions permanently denied, please change permissions in your phone's app settings");
-				return false; // don't have permission
-			}
-
-			p.requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-			return false; // don't have permission
-		}
-		return true; // do have permission
 	}
 
 	@Override

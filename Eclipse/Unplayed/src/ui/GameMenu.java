@@ -9,6 +9,7 @@ public class GameMenu extends Menu {
 	String resume = "Resume";
 	String checkpoint = "Checkpoint";
 	String titleScreen = "Main Menu";
+	String edit = "Level Editor";
 	String quit = "Quit";
 
 	public GameMenu(PApplet p, Game game) {
@@ -17,11 +18,13 @@ public class GameMenu extends Menu {
 		
 		Button resumeB = new Button(p.width / 2, buttonWidth, buttonHeight, resume);
 		Button checkpointB = new Button(p.width / 2, buttonWidth, buttonHeight, checkpoint);
-		Button restartB = new Button(p.width / 2, buttonWidth, buttonHeight, titleScreen);
+		Button titleScreenB = new Button(p.width / 2, buttonWidth, buttonHeight, titleScreen);
+		Button editB = new Button(p.width / 2, buttonWidth, buttonHeight, edit);
 		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
 		buttons.add(resumeB);
 		buttons.add(checkpointB);
-		buttons.add(restartB);
+		buttons.add(titleScreenB);
+		buttons.add(editB);
 		buttons.add(quitB);
 		constructMenu();
 	}
@@ -39,6 +42,13 @@ public class GameMenu extends Menu {
 			} else if (b.click().equals(titleScreen)) {
 				game.emptyGame();
 				AppLogic.titleScreen(); // open title screen menu
+
+			} else if (b.click().equals(edit)) {
+				if (!getPermission()) {
+					return;
+				}
+				
+				AppLogic.toggleEditor(); // enable the editor
 
 			} else if (b.click().equals(quit)) {
 				AppLogic.quit(); // exit the game
