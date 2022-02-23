@@ -36,21 +36,23 @@ public class DeveloperMenu extends Menu {
 	public void click() {
 		for (Button b : buttons) {
 			if (b.click().equals(editor)) {
-				
-				if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
-					p.requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+
+//				if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
+//					p.requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+//					return;
+//				}
+				if (!getPermission()) {
 					return;
 				}
 
 				game.emptyGame();
 				AppLogic.toggleEditor();
 			} else if (b.click().equals(folder)) {
-				
-				if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
-					p.requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+
+				if (!getPermission()) {
 					return;
 				}
-				
+
 				AppLogic.files.createLoadFile();
 				loadingFile = true;
 			} else if (b.click().equals(back)) {
@@ -59,11 +61,22 @@ public class DeveloperMenu extends Menu {
 		}
 	}
 
-//	private void getPermission() {
-//		if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
-//			p.requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-//		}
-//	}
+	private boolean getPermission() {
+
+		boolean test = AppLogic.activity
+				.shouldShowRequestPermissionRationale("android.permission.WRITE_EXTERNAL_STORAGE");
+		if (test) {
+			AppLogic.toast.showToast("True");
+		} else {
+			AppLogic.toast.showToast("False");
+		}
+
+		if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
+			p.requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+			return false; // don't have permission
+		}
+		return true; // do have permission
+	}
 
 	@Override
 	public void activate() {

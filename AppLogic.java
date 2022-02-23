@@ -35,7 +35,7 @@ import ui.Widget;
 //handles all of the logic at the application level
 public class AppLogic {
 	private static PApplet p;
-	private static Activity activity;
+	public static Activity activity;
 	private static Context context;
 
 	public static KetaiGesture gesture;
@@ -43,6 +43,8 @@ public class AppLogic {
 	public static Vibe vibe;
 	static public Converter convert;
 	public static TextureCache texture;
+	
+	static public DoToast toast;
 
 	static private Menu menu; // current menu
 	static private boolean menuAdded = false;
@@ -72,6 +74,7 @@ public class AppLogic {
 		p = papp;
 		activity = masterActivity;
 		context = masterContext;
+		toast = new DoToast(activity);
 		editorToggle = false;
 	}
 
@@ -319,7 +322,7 @@ public class AppLogic {
 		editorToggle = !editorToggle;
 		if (editorToggle) {
 			Camera camera = new FreeCamera();
-			DoToast toast = new DoToast(activity);
+//			toast = new DoToast(activity);
 			editor = new Editor(p, camera, toast);
 		}
 		menu = null;
