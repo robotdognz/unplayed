@@ -10,6 +10,8 @@ public class DeveloperMenu extends Menu {
 	String folder = "Load Folder";
 	String back = "Back";
 
+	boolean loadingFile = true;
+
 	boolean alreadyUsed = false;
 
 	public DeveloperMenu(PApplet p) {
@@ -34,11 +36,26 @@ public class DeveloperMenu extends Menu {
 			} else if (b.click().equals(folder)) {
 				// TODO: load folder of levels and play it as a campaign
 				AppLogic.files.createLoadFolder();
-				PApplet.print(AppLogic.files.getPath().toString());
+				loadingFile = true;
+
 			} else if (b.click().equals(back)) {
 				AppLogic.previousMenu();
 			}
 		}
+	}
+
+	@Override
+	public void activate() {
+		// I'm using this against it's original purpose. There is no step method, so I'm
+		// going to use this instead
+
+		if (loadingFile) {
+			if (AppLogic.files.hasUri()) {
+				PApplet.print(AppLogic.files.getPath().toString());
+				loadingFile = false;
+			}
+		}
+
 	}
 
 }
