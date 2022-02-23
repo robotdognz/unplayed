@@ -59,11 +59,11 @@ public class DeveloperMenu extends Menu {
 
 		if (loadingFile) {
 			if (AppLogic.files.hasUri()) {
-				File f = new File(AppLogic.files.getPath());
+				File selectedFile = new File(AppLogic.files.getPath());
 //				String folder = AppLogic.files.getPath().toString();
 
-				String fileName = f.getName(); // get current file on it's own
-				String folder = f.toString().replace(fileName, ""); // get base folder on it's own
+				String fileName = selectedFile.getName(); // get current file on it's own
+				String folder = selectedFile.toString().replace(fileName, ""); // get base folder on it's own
 
 //				PApplet.print(f + "\n");
 				PApplet.print("\n");
@@ -77,8 +77,15 @@ public class DeveloperMenu extends Menu {
 				ArrayList<File> levels = new ArrayList<File>(Arrays.asList(absoluteFiles));
 				Collections.sort(levels);
 
-				for (int i = levels.size() - 1; i > 0; i--) {
-					PApplet.print(levels.get(i).toString() + "\n");
+				for (int i = levels.size() - 1; i >= 0; i--) {
+//					PApplet.print(levels.get(i).toString() + "\n");
+					if (levels.get(i).equals(selectedFile)) {
+						PApplet.print(i);
+					}
+				}
+
+				for (File level : levels) {
+					PApplet.print(level.toString() + "\n");
 				}
 
 				loadingFile = false;
