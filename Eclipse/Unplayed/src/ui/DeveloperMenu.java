@@ -86,11 +86,11 @@ public class DeveloperMenu extends Menu {
 		// I'm using this against it's original purpose. There is no step method, so I'm
 		// going to use this instead
 
-		// check and get permissions
-		if (!askedForPermission) {
-			getPermission();
-			askedForPermission = true;
-		}
+//		// check and get permissions
+//		if (!askedForPermission) {
+//			getPermission();
+//			askedForPermission = true;
+//		}
 
 		if (loadingFile) {
 			if (AppLogic.files.hasUri()) {
