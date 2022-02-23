@@ -666,18 +666,29 @@ public class Player extends Editable {
 //		} else if (right || vel.x >= 4) {
 //			direction = false;
 //		}
-		
-		//restRotation == false
+
+		// restRotation == false
 
 		if (!left && !right) {
-			if (Math.abs(vel.x) <= 4) {
+//			if (Math.abs(vel.x) <= 4) {
+//				destroyGroundBarrier(resetRotation);
+//				return;
+//			}
+//			if (vel.x < 0) {
+//				direction = true;
+//			} else {
+//				direction = false;
+//			}
+
+			if (!resetRotation) { // in tunnel
+				if (vel.x < 0) {
+					direction = true;
+				} else if (vel.x > 0) {
+					direction = false;
+				}
+			} else { // not in tunnel
 				destroyGroundBarrier(resetRotation);
 				return;
-			}
-			if (vel.x < 0) {
-				direction = true;
-			} else {
-				direction = false;
 			}
 		} else {
 			if (left) {
