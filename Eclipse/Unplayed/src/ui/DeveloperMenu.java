@@ -66,9 +66,10 @@ public class DeveloperMenu extends Menu {
 		// find out if the user has permanently blocked this permission
 		boolean test = AppLogic.activity
 				.shouldShowRequestPermissionRationale("android.permission.WRITE_EXTERNAL_STORAGE");
-		
+
 		if (!test) {
-			AppLogic.toast.showToast("File permissions denied, please change permissions in app settings");
+			AppLogic.toast.showToast(
+					"File permissions permanently denied, please change permissions in your phone's app settings");
 			return false; // don't have permission
 		}
 
