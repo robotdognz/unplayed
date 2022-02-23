@@ -35,7 +35,7 @@ public class DeveloperMenu extends Menu {
 				AppLogic.toggleEditor();
 			} else if (b.click().equals(folder)) {
 				// TODO: load folder of levels and play it as a campaign
-				AppLogic.files.createLoadFolder();
+				AppLogic.files.createLoadFile();
 				loadingFile = true;
 
 			} else if (b.click().equals(back)) {
