@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 
 public class FileChooser {
 	private static final int SELECT_FILE = 1;
+	private static final int SELECT_FOLDER = 2;
 
 	private Activity activity;
 	private Context context;
@@ -23,23 +24,23 @@ public class FileChooser {
 		this.activity = activity;
 		context = activity.getApplicationContext();
 	}
-	
+
 	public void setUri(Uri uri) {
 		this.uri = uri;
 	}
-	
+
 	public void removeUri() {
 		uri = null;
 	}
-	
+
 	public boolean hasUri() {
 		if (uri != null) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
-	
+
 	public String getPath() {
 		if (uri != null) {
 			String path = getPathFromUri(context, uri);
@@ -50,10 +51,10 @@ public class FileChooser {
 
 	// open file saver
 	public void createSaveFile() {
-		uri = null; //remove uri
-		
+		uri = null; // remove uri
+
 		Intent intent = new Intent();
-		//intent.setType("application/json");
+		// intent.setType("application/json");
 		intent.setType("*/*");
 		intent.setAction(Intent.ACTION_CREATE_DOCUMENT);
 		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_FILE);
@@ -61,16 +62,25 @@ public class FileChooser {
 
 	// open file loader
 	public void createLoadFile() {
-		uri = null; //remove uri
-		
+		uri = null; // remove uri
+
 		Intent intent = new Intent();
-		//intent.setType("application/json");
+		// intent.setType("application/json");
 		intent.setType("*/*");
 		intent.setAction(Intent.ACTION_GET_CONTENT);
 		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_FILE);
 	}
 
-	
+	// open folder loader
+	public void createLoadFolder() {
+		uri = null; // remove uri
+
+		Intent intent = new Intent();
+		// intent.setType("application/json");
+		intent.setType("*/*");
+		intent.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
+		activity.startActivityForResult(Intent.createChooser(intent, "Select Folder"), SELECT_FOLDER);
+	}
 
 	// ----------convert uri to correct file path-----------
 
@@ -79,8 +89,9 @@ public class FileChooser {
 
 		final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
-		//TODO: can probably remove the code for kitkat, old af and our app needs newer phones
-		
+		// TODO: can probably remove the code for kitkat, old af and our app needs newer
+		// phones
+
 		// DocumentProvider
 		if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
 			// ExternalStorageProvider
