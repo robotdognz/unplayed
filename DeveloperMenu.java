@@ -1,5 +1,7 @@
 package ui;
 
+import java.io.File;
+
 import game.AppLogic;
 import game.Game;
 import processing.core.PApplet;
@@ -38,6 +40,10 @@ public class DeveloperMenu extends Menu {
 				AppLogic.files.createLoadFile();
 				loadingFile = true;
 
+				// load a level in a folder. Load all levels in that folder alphabetically
+				// starting from the selected level. Send that list to AppLogic
+				
+
 			} else if (b.click().equals(back)) {
 				AppLogic.previousMenu();
 			}
@@ -51,7 +57,22 @@ public class DeveloperMenu extends Menu {
 
 		if (loadingFile) {
 			if (AppLogic.files.hasUri()) {
-				PApplet.print(AppLogic.files.getPath().toString());
+				File f = new File(AppLogic.files.getPath());
+//				String folder = AppLogic.files.getPath().toString();
+				
+				String fileName = f.getName();
+				String folder = f.toString().replace(fileName, "");
+				
+				PApplet.print(f);
+				PApplet.print(fileName);
+				PApplet.print(folder);
+				//get base on it's own
+				//get current file on it's own
+				
+				
+//				folder = folder.replace(base + '/', "");
+				
+				
 				loadingFile = false;
 			}
 		}

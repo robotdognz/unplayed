@@ -13,7 +13,7 @@ import android.provider.MediaStore;
 
 public class FileChooser {
 	private static final int SELECT_FILE = 1;
-	private static final int SELECT_FOLDER = 2;
+//	private static final int SELECT_FOLDER = 2;
 
 	private Activity activity;
 	private Context context;
@@ -71,16 +71,16 @@ public class FileChooser {
 		activity.startActivityForResult(Intent.createChooser(intent, "Select Level"), SELECT_FILE);
 	}
 
-	// open folder loader
-	public void createLoadFolder() {
-		uri = null; // remove uri
-
-		Intent intent = new Intent();
-		// intent.setType("application/json");
-		intent.setType("*/*");
-		intent.setAction(Intent.ACTION_GET_CONTENT);
-		activity.startActivityForResult(Intent.createChooser(intent, "Select Folder"), SELECT_FOLDER);
-	}
+//	// open folder loader
+//	public void createLoadFolder() {
+//		uri = null; // remove uri
+//
+//		Intent intent = new Intent();
+//		// intent.setType("application/json");
+//		intent.setType("file/*");
+//		intent.setAction(Intent.ACTION_GET_CONTENT);
+//		activity.startActivityForResult(Intent.createChooser(intent, "Select Folder"), SELECT_FOLDER);
+//	}
 
 	// ----------convert uri to correct file path-----------
 
