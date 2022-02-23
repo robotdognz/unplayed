@@ -45,7 +45,7 @@ public class EditorTop extends Toolbar {
 		widgets.add(menuW);
 
 		super.widgetSpacing = p.width / 8;
-		super.widgetOffset = (p.width - widgetSpacing * 5) / 2;
+		super.widgetOffset = (p.width - widgetSpacing * 6) / 2; //(p.width - widgetSpacing * 5) / 2;
 
 		super.bounds = new Rectangle(0, 0, p.width, (int) (p.width / 6.5)); //(int) (p.width / 7.2)
 
