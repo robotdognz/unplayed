@@ -34,6 +34,7 @@ public class DeveloperMenu extends Menu {
 			} else if (b.click().equals(folder)) {
 				// TODO: load folder of levels and play it as a campaign
 				AppLogic.files.createLoadFolder();
+				PApplet.print(AppLogic.files.getPath().toString());
 			} else if (b.click().equals(back)) {
 				AppLogic.previousMenu();
 			}
