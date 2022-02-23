@@ -8,7 +8,7 @@ import org.jbox2d.common.Vec2;
 
 import editor.Editor;
 import game.Game;
-
+import objects.events.PlayerEnd;
 import processing.core.*;
 import static processing.core.PConstants.*;
 
@@ -184,7 +184,7 @@ public class Page extends Editable {
 
 		// draw tiles and images
 		for (Rectangle r : pageObjects) { // draw images
-			if (!(r instanceof Image)) {
+			if (!(r instanceof Image || r instanceof PlayerEnd)) {
 				continue;
 			}
 			if (r.getTopLeft().x > view.getBottomRight().x - 1) {
@@ -201,6 +201,10 @@ public class Page extends Editable {
 			}
 			if (r instanceof Image && showImages) {
 				((Image) r).drawClipped(p.g, view, 3); // scale/size
+				continue;
+			}
+			if (r instanceof PlayerEnd) {
+				((PlayerEnd) r).drawPageView(p.g, 3);
 			}
 		}
 		for (Rectangle r : pageObjects) { // draw tiles and events
@@ -221,6 +225,7 @@ public class Page extends Editable {
 			}
 			if (r instanceof Tile && showTiles) {
 				((Tile) r).draw(p.g, 3); // scale/size
+				continue;
 			}
 			if (r instanceof Event && ((Event) r).visible && showObstacles) {
 				((Event) r).draw(p.g, 3); // scale/size

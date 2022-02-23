@@ -56,6 +56,8 @@ public class PlayerEnd extends Event {
 
 	@Override
 	public void draw(PGraphics graphics, float scale) {
+		// used for the level view in editor
+
 		if (required != null) {
 			required.drawTransparent(graphics, scale);
 		}
@@ -66,6 +68,15 @@ public class PlayerEnd extends Event {
 					newPlayerArea.getY() + newPlayerArea.getHeight() / 2);
 		}
 		super.draw(graphics, scale);
+	}
+
+	public void drawPageView(PGraphics graphics, float scale) {
+		// used for the page view
+
+		graphics.pushMatrix();
+		graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
+		TextureCache.drawPlayerEnd(graphics, getWidth(), getHeight());
+		graphics.popMatrix();
 	}
 
 	private void arrow(PGraphics graphics, float x1, float y1, float x2, float y2) {
@@ -120,7 +131,7 @@ public class PlayerEnd extends Event {
 	public void setLevelEnd(boolean levelEnd) {
 		this.levelEnd = levelEnd;
 	}
-	
+
 	public void reset() {
 		alreadyUsed = false;
 	}

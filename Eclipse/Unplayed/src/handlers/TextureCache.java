@@ -37,13 +37,13 @@ public class TextureCache {
 	static private PImage gridLOD32;
 	static private PImage gridLOD16;
 	static private PImage gridLOD8;
-
 	static private PImage pageViewBackgroundLOD256;
 	static private PImage pageViewBackgroundLOD128;
 	static private PImage pageViewBackgroundLOD64;
 	static private PImage pageViewBackgroundLOD32;
-	
+
 	static private PImage loadingText;
+	static private PImage playerEnd;
 
 	// level images
 	private File[] imagePaths;
@@ -88,8 +88,9 @@ public class TextureCache {
 		pageViewBackgroundLOD64.resize(64 * pvbSize, 64 * pvbSize);
 		pageViewBackgroundLOD32 = pageViewBackgroundLOD256.get();
 		pageViewBackgroundLOD32.resize(32 * pvbSize, 32 * pvbSize);
-		
+
 		loadingText = p.loadImage("LoadingScreen.png");
+		playerEnd = p.loadImage("playerEndBackground.png");
 
 		// level assets
 		loadLevelImages();
@@ -129,10 +130,15 @@ public class TextureCache {
 			return gridLOD256; // less than 4
 		}
 	}
-	
+
 	static public void drawLoadingText(PApplet p) {
 		p.imageMode(CENTER);
 		p.image(loadingText, 0, 0);
+	}
+
+	static public void drawPlayerEnd(PGraphics graphics, float width, float height) {
+		graphics.imageMode(CENTER);
+		graphics.image(playerEnd, 0, 0, width, height);
 	}
 
 	private void loadTiles() {
