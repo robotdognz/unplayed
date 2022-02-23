@@ -183,7 +183,7 @@ public class Page extends Editable {
 		p.translate((float) -(view.getX() + view.getWidth() * 0.5), (float) -(view.getY() + view.getHeight() * 0.5));
 
 		// draw tiles and images
-		for (Rectangle r : pageObjects) { // draw images
+		for (Rectangle r : pageObjects) { // draw images and player end backgrounds
 			if (!(r instanceof Image || r instanceof PlayerEnd)) {
 				continue;
 			}

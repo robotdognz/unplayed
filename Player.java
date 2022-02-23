@@ -667,8 +667,15 @@ public class Player extends Editable {
 //		}
 
 		if (!left && !right) {
-			destroyGroundBarrier(resetRotation);
-			return;
+			if (Math.abs(vel.x) <= speed) {
+				destroyGroundBarrier(resetRotation);
+				return;
+			}
+			if (vel.x < 0) {
+				direction = true;
+			} else {
+				direction = false;
+			}
 		} else {
 			if (left) {
 				direction = true;
@@ -1506,7 +1513,7 @@ public class Player extends Editable {
 
 	public void step(float deltaTime) {
 		vibration.step(deltaTime);
-		
+
 		if (rotationSmooth != null) {
 			rotationSmooth.deltaStep(deltaTime);
 		}
