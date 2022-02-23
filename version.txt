@@ -43,6 +43,8 @@
 -Removed tumble option from player, this is now the default behaviour
 -Removed player locked rotation when sitting on top of a slot
 -Extended tumble physics to enable rotating in ground slots and more natural animations
+-Improved permission checks needed for saving and loading levels
+-Added option to open current level in editor from the pause menu
 
 1.2.1: Improving physics and tuning player 'feel'
 
