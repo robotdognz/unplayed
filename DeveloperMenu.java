@@ -59,31 +59,50 @@ public class DeveloperMenu extends Menu {
 
 		if (loadingFile) {
 			if (AppLogic.files.hasUri()) {
-				File selectedFile = new File(AppLogic.files.getPath());
-//				String folder = AppLogic.files.getPath().toString();
-
+				File selectedFile = new File(AppLogic.files.getPath()); // selected file path
 				String fileName = selectedFile.getName(); // get current file on it's own
 				String folder = selectedFile.toString().replace(fileName, ""); // get base folder on it's own
 
-//				PApplet.print(f + "\n");
+				// print for testing
 				PApplet.print("\n");
 				PApplet.print(fileName + "\n");
 				PApplet.print(folder + "\n");
 				PApplet.print("\n");
 
+				// get all files in folder
 				File levelPath = new File(folder);
 				File[] absoluteFiles = levelPath.listFiles();
-
 				ArrayList<File> levels = new ArrayList<File>(Arrays.asList(absoluteFiles));
 				Collections.sort(levels);
 
-				for (int i = levels.size() - 1; i >= 0; i--) {
-//					PApplet.print(levels.get(i).toString() + "\n");
-					if (levels.get(i).equals(selectedFile)) {
-						PApplet.print(i);
+				// remove levels before selected level
+				while (true) {
+					if (levels.get(0).equals(selectedFile)) {
+						break;
+					} else {
+						levels.remove(0);
 					}
 				}
 
+//				for (int i = 0; i < levels.size(); i++) {
+//					if (levels.get(i).equals(selectedFile)) {
+//
+//					}
+//				}
+//
+//				int selectedFileIndex = -1;
+//				boolean removeAfter = false;
+//				for (int i = levels.size() - 1; i >= 0; i--) {
+//					if (removeAfter) {
+//						levels.remove(i);
+//					}
+//					if (levels.get(i).equals(selectedFile)) {
+//						selectedFileIndex = i;
+//						PApplet.print(i);
+//					}
+//				}
+
+				// print remaining levels, for testing
 				for (File level : levels) {
 					PApplet.print(level.toString() + "\n");
 				}
