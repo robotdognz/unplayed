@@ -649,10 +649,10 @@ public class Player extends Editable {
 
 		pseudoGround = false;
 
-		int speed = 10;
+		int speed = 4; //10
 
 		// check player is moving or trying to move on the x axis
-		// no direction pressed and absolute speed less than 10
+		// no direction pressed and absolute x speed less than 'speed'
 		if (!((left || right) || (Math.abs(vel.x) >= speed))) { // 4 // 10 // 20
 			destroyGroundBarrier(resetRotation);
 			checkGroundSlotsStatic(pos, vel, resetRotation);
