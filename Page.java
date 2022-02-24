@@ -52,7 +52,7 @@ public class Page extends PageViewObject {
 	private float actualSize = 1;
 
 	public Page(PApplet p, Game game, View view, PVector position) {
-		super(p, view.getTopLeft(), view.getWidth(), view.getHeight());
+		super(p, position, view.getWidth(), view.getHeight());
 		this.p = p;
 		this.game = game;
 		this.view = view;
