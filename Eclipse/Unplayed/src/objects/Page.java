@@ -421,39 +421,39 @@ public class Page extends PageViewObject {
 		this.shadow = (int) (shadowOffset / size);
 	}
 
-	// --------------update the corner PVectors---------------
-	private void updateCorners() {
-		if (topLeft == null) {
-			// Initialize
-			topLeft = new PVector();
-			topRight = new PVector();
-			bottomLeft = new PVector();
-			bottomRight = new PVector();
-		}
-		// set values
-		topLeft.x = 0 - (getWidth() / 2) * size;
-		topLeft.y = 0 - (getHeight() / 2) * size;
-		topRight.x = 0 + (getWidth() / 2) * size;
-		topRight.y = 0 - (getHeight() / 2) * size;
-		bottomLeft.x = 0 - (getWidth() / 2) * size;
-		bottomLeft.y = 0 + (getHeight() / 2) * size;
-		bottomRight.x = 0 + (getWidth() / 2) * size;
-		bottomRight.y = 0 + (getHeight() / 2) * size;
-		// rotate
-		topLeft.rotate(PApplet.radians(angle));
-		topRight.rotate(PApplet.radians(angle));
-		bottomLeft.rotate(PApplet.radians(angle));
-		bottomRight.rotate(PApplet.radians(angle));
-		// translate
-		topLeft.x += position.x;
-		topLeft.y += position.y;
-		topRight.x += position.x;
-		topRight.y += position.y;
-		bottomLeft.x += position.x;
-		bottomLeft.y += position.y;
-		bottomRight.x += position.x;
-		bottomRight.y += position.y;
-	}
+//	// --------------update the corner PVectors---------------
+//	private void updateCorners() {
+//		if (topLeft == null) {
+//			// Initialize
+//			topLeft = new PVector();
+//			topRight = new PVector();
+//			bottomLeft = new PVector();
+//			bottomRight = new PVector();
+//		}
+//		// set values
+//		topLeft.x = 0 - (getWidth() / 2) * size;
+//		topLeft.y = 0 - (getHeight() / 2) * size;
+//		topRight.x = 0 + (getWidth() / 2) * size;
+//		topRight.y = 0 - (getHeight() / 2) * size;
+//		bottomLeft.x = 0 - (getWidth() / 2) * size;
+//		bottomLeft.y = 0 + (getHeight() / 2) * size;
+//		bottomRight.x = 0 + (getWidth() / 2) * size;
+//		bottomRight.y = 0 + (getHeight() / 2) * size;
+//		// rotate
+//		topLeft.rotate(PApplet.radians(angle));
+//		topRight.rotate(PApplet.radians(angle));
+//		bottomLeft.rotate(PApplet.radians(angle));
+//		bottomRight.rotate(PApplet.radians(angle));
+//		// translate
+//		topLeft.x += position.x;
+//		topLeft.y += position.y;
+//		topRight.x += position.x;
+//		topRight.y += position.y;
+//		bottomLeft.x += position.x;
+//		bottomLeft.y += position.y;
+//		bottomRight.x += position.x;
+//		bottomRight.y += position.y;
+//	}
 
 //	// ------------is a point inside the page-------------
 //	public boolean isInside(float x, float y) {

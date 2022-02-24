@@ -97,7 +97,7 @@ public class PageViewObject extends Editable {
 	}
 
 	// --------------update the corner PVectors---------------
-	private void updateCorners() {
+	protected void updateCorners() {
 		if (topLeft == null) {
 			// Initialize
 			topLeft = new PVector();
