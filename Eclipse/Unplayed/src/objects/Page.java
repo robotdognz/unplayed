@@ -26,13 +26,13 @@ public class Page extends PageViewObject {
 
 	private int shadowOffset; // the absolute amount to offset the shadow by
 	private int shadow; // the relative amount to offset the shadow by
-	private PVector position; // center of the page in page view
+//	private PVector position; // center of the page in page view
 
 	// Page corners relative to center, used to check if the page is on screen
-	PVector topLeft;
-	PVector topRight;
-	PVector bottomLeft;
-	PVector bottomRight;
+//	PVector topLeft;
+//	PVector topRight;
+//	PVector bottomLeft;
+//	PVector bottomRight;
 
 	// exclusion booleans
 	public boolean showPlayer;

@@ -10,13 +10,13 @@ import processing.core.PVector;
 public class Background extends PageViewObject {
 	private PApplet p;
 
-	private PVector position; // center of the background in page view
+//	private PVector position; // center of the background in page view
 
-	// Page corners relative to center, used to check if the page is on screen
-	PVector topLeft;
-	PVector topRight;
-	PVector bottomLeft;
-	PVector bottomRight;
+//	// Page corners relative to center, used to check if the page is on screen
+//	PVector topLeft;
+//	PVector topRight;
+//	PVector bottomLeft;
+//	PVector bottomRight;
 
 	private boolean hasTexture;
 	private BackgroundHandler backgroundTexture;

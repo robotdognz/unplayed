@@ -8,7 +8,7 @@ import processing.core.PVector;
 
 public class PageViewObject extends Editable {
 	protected PApplet p;
-	private PVector position; // center of the background in page view
+	protected PVector position; // center of the background in page view
 
 	// Page corners relative to center, used to check if the page is on screen
 	PVector topLeft;
