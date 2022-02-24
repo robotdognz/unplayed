@@ -1,8 +1,10 @@
 package objects;
 
+import java.util.ArrayList;
 //import java.util.Collections;
 import java.util.HashSet;
 //import java.util.Set;
+import java.util.List;
 
 import org.jbox2d.common.Vec2;
 
@@ -12,13 +14,15 @@ import objects.events.PlayerEnd;
 import processing.core.*;
 import static processing.core.PConstants.*;
 
-public class Page extends Editable {
-	private PApplet p;
+public class Page extends PageViewObject {
+//	private PApplet p;
 	private Game game;
 	private View view;
 	private HashSet<Rectangle> pageObjects;
 	// private HashSet<String> excludedObjects; // a list of rectangle strings to
 	// exclude while drawing
+
+	private List<PageViewObject> children;
 
 	private int shadowOffset; // the absolute amount to offset the shadow by
 	private int shadow; // the relative amount to offset the shadow by
@@ -48,7 +52,7 @@ public class Page extends Editable {
 	private float actualSize = 1;
 
 	public Page(PApplet p, Game game, View view, PVector position) {
-		super(view.getTopLeft().x, view.getTopLeft().y, view.getWidth(), view.getHeight());
+		super(p, view.getTopLeft(), view.getWidth(), view.getHeight());
 		this.p = p;
 		this.game = game;
 		this.view = view;
@@ -69,29 +73,48 @@ public class Page extends Editable {
 		player = p.createGraphics(playerRez, playerRez, P2D);
 		playerMask = p.createGraphics(playerRez, playerRez, P2D);
 
+		// setup children
+		children = new ArrayList<PageViewObject>();
+
 		setPosition(position);
 		updateCorners();
 	}
 
-	public PVector getPosition() {
-		return position;
+	public List<PageViewObject> getChildren() {
+		return children;
 	}
 
-	public void setPosition(PVector pos) {
-		if (position == null) {
-			this.position = pos;
-		} else {
-			this.position.x = pos.x;
-			this.position.y = pos.y;
+	public void setChildren(List<PageViewObject> children) {
+		this.children = children;
+	}
+
+	public void addOrRemoveChild(PageViewObject child) {
+		if (children.contains(child)) {
+			children.remove(child);
+			return;
 		}
-		updateCorners();
+		children.add(child);
 	}
 
-	public void addPosition(float x, float y) {
-		this.position.x += x;
-		this.position.y += y;
-		updateCorners();
-	}
+//	public PVector getPosition() {
+//		return position;
+//	}
+//
+//	public void setPosition(PVector pos) {
+//		if (position == null) {
+//			this.position = pos;
+//		} else {
+//			this.position.x = pos.x;
+//			this.position.y = pos.y;
+//		}
+//		updateCorners();
+//	}
+//
+//	public void addPosition(float x, float y) {
+//		this.position.x += x;
+//		this.position.y += y;
+//		updateCorners();
+//	}
 
 	public void step() {
 		// get objects visible to this page
@@ -313,36 +336,36 @@ public class Page extends Editable {
 		}
 	}
 
-	@Override
-	public void drawSelected(PGraphics g) {
-		g.pushMatrix();
-		g.noFill();
-		g.stroke(255, 0, 0); // selection color
-		g.strokeWeight(2);
-		g.translate(position.x, position.y);
-		g.scale(size); // size the page will appear in the page view
-		g.rotate(PApplet.radians(angle)); // angle of the page
-		g.rectMode(CENTER);
-		g.rect(0, 0, getWidth(), getHeight());
-		g.popMatrix();
-	}
+//	@Override
+//	public void drawSelected(PGraphics g) {
+//		g.pushMatrix();
+//		g.noFill();
+//		g.stroke(255, 0, 0); // selection color
+//		g.strokeWeight(2);
+//		g.translate(position.x, position.y);
+//		g.scale(size); // size the page will appear in the page view
+//		g.rotate(PApplet.radians(angle)); // angle of the page
+//		g.rectMode(CENTER);
+//		g.rect(0, 0, getWidth(), getHeight());
+//		g.popMatrix();
+//	}
 
 	public boolean playerVisible() {
 		return playerVisibleExternal;
 	}
 
-	@Override
-	public void setAngle(float angle) {
-		super.setAngle(angle);
-		updateCorners();
-	}
-
-	@Override
-	public void addAngle(float angle) {
-		super.addAngle(angle);
-		updateCorners();
-	}
-
+//	@Override
+//	public void setAngle(float angle) {
+//		super.setAngle(angle);
+//		updateCorners();
+//	}
+//
+//	@Override
+//	public void addAngle(float angle) {
+//		super.addAngle(angle);
+//		updateCorners();
+//	}
+//
 	public void setSize(float size) {
 		this.actualSize = size;
 		this.size = Math.round(actualSize);
@@ -376,10 +399,10 @@ public class Page extends Editable {
 		updateCorners();
 		updateShadow();
 	}
-
-	public float getSize() {
-		return size;
-	}
+//
+//	public float getSize() {
+//		return size;
+//	}
 
 	public void updateSizeFromView() {
 		setCorners(view.getTopLeft(), view.getBottomRight());
@@ -432,109 +455,109 @@ public class Page extends Editable {
 		bottomRight.y += position.y;
 	}
 
-	// ------------is a point inside the page-------------
-	public boolean isInside(float x, float y) {
-		PVector point = new PVector(x, y);
-		point.x -= position.x;
-		point.y -= position.y;
-		point.rotate(PApplet.radians(-angle));
-
-		if (-(getWidth() / 2) * size > point.x) {
-			return false;
-		}
-		if ((getWidth() / 2) * size < point.x) {
-			return false;
-		}
-		if (-(getHeight() / 2) * size > point.y) {
-			return false;
-		}
-		if ((getHeight() / 2) * size < point.y) {
-			return false;
-		}
-
-		return true;
-	}
-
-	// get the bounding box edges for the page
-	public float getLeftmostPoint() {
-		return Math.min(Math.min(topLeft.x, topRight.x), Math.min(bottomLeft.x, bottomRight.x));
-	}
-
-	public float getRightmostPoint() {
-		return Math.max(Math.max(topLeft.x, topRight.x), Math.max(bottomLeft.x, bottomRight.x));
-	}
-
-	public float getTopmostPoint() {
-		return Math.min(Math.min(topLeft.y, topRight.y), Math.min(bottomLeft.y, bottomRight.y));
-	}
-
-	public float getBottommostPoint() {
-		return Math.max(Math.max(topLeft.y, topRight.y), Math.max(bottomLeft.y, bottomRight.y));
-	}
-
-	// ----------is this page off camera------------
-
-	public boolean leftOf(float x) {
-		if (topLeft.x > x) {
-			return false;
-		}
-		if (topRight.x > x) {
-			return false;
-		}
-		if (bottomLeft.x > x) {
-			return false;
-		}
-		if (bottomRight.x > x) {
-			return false;
-		}
-		return true;
-	}
-
-	public boolean rightOf(float x) {
-		if (topLeft.x < x) {
-			return false;
-		}
-		if (topRight.x < x) {
-			return false;
-		}
-		if (bottomLeft.x < x) {
-			return false;
-		}
-		if (bottomRight.x < x) {
-			return false;
-		}
-		return true;
-	}
-
-	public boolean above(float y) {
-		if (topLeft.y > y) {
-			return false;
-		}
-		if (topRight.y > y) {
-			return false;
-		}
-		if (bottomLeft.y > y) {
-			return false;
-		}
-		if (bottomRight.y > y) {
-			return false;
-		}
-		return true;
-	}
-
-	public boolean below(float y) {
-		if (topLeft.y < y) {
-			return false;
-		}
-		if (topRight.y < y) {
-			return false;
-		}
-		if (bottomLeft.y < y) {
-			return false;
-		}
-		if (bottomRight.y < y) {
-			return false;
-		}
-		return true;
-	}
+//	// ------------is a point inside the page-------------
+//	public boolean isInside(float x, float y) {
+//		PVector point = new PVector(x, y);
+//		point.x -= position.x;
+//		point.y -= position.y;
+//		point.rotate(PApplet.radians(-angle));
+//
+//		if (-(getWidth() / 2) * size > point.x) {
+//			return false;
+//		}
+//		if ((getWidth() / 2) * size < point.x) {
+//			return false;
+//		}
+//		if (-(getHeight() / 2) * size > point.y) {
+//			return false;
+//		}
+//		if ((getHeight() / 2) * size < point.y) {
+//			return false;
+//		}
+//
+//		return true;
+//	}
+//
+//	// get the bounding box edges for the page
+//	public float getLeftmostPoint() {
+//		return Math.min(Math.min(topLeft.x, topRight.x), Math.min(bottomLeft.x, bottomRight.x));
+//	}
+//
+//	public float getRightmostPoint() {
+//		return Math.max(Math.max(topLeft.x, topRight.x), Math.max(bottomLeft.x, bottomRight.x));
+//	}
+//
+//	public float getTopmostPoint() {
+//		return Math.min(Math.min(topLeft.y, topRight.y), Math.min(bottomLeft.y, bottomRight.y));
+//	}
+//
+//	public float getBottommostPoint() {
+//		return Math.max(Math.max(topLeft.y, topRight.y), Math.max(bottomLeft.y, bottomRight.y));
+//	}
+//
+//	// ----------is this page off camera------------
+//
+//	public boolean leftOf(float x) {
+//		if (topLeft.x > x) {
+//			return false;
+//		}
+//		if (topRight.x > x) {
+//			return false;
+//		}
+//		if (bottomLeft.x > x) {
+//			return false;
+//		}
+//		if (bottomRight.x > x) {
+//			return false;
+//		}
+//		return true;
+//	}
+//
+//	public boolean rightOf(float x) {
+//		if (topLeft.x < x) {
+//			return false;
+//		}
+//		if (topRight.x < x) {
+//			return false;
+//		}
+//		if (bottomLeft.x < x) {
+//			return false;
+//		}
+//		if (bottomRight.x < x) {
+//			return false;
+//		}
+//		return true;
+//	}
+//
+//	public boolean above(float y) {
+//		if (topLeft.y > y) {
+//			return false;
+//		}
+//		if (topRight.y > y) {
+//			return false;
+//		}
+//		if (bottomLeft.y > y) {
+//			return false;
+//		}
+//		if (bottomRight.y > y) {
+//			return false;
+//		}
+//		return true;
+//	}
+//
+//	public boolean below(float y) {
+//		if (topLeft.y < y) {
+//			return false;
+//		}
+//		if (topRight.y < y) {
+//			return false;
+//		}
+//		if (bottomLeft.y < y) {
+//			return false;
+//		}
+//		if (bottomRight.y < y) {
+//			return false;
+//		}
+//		return true;
+//	}
 }
