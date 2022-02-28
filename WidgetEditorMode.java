@@ -12,6 +12,7 @@ import ui.Widget;
 public class WidgetEditorMode extends Widget {
 
 	protected PImage externalToolIcon;
+	private boolean externalTool = false;
 
 	public WidgetEditorMode(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
@@ -36,6 +37,12 @@ public class WidgetEditorMode extends Widget {
 			editor.camera = new FreeCamera();
 		} else {
 
+			if (externalTool) {
+				subWidgets.get(2).clicked();
+				externalTool = false;
+				return;
+			}
+
 			for (int i = 0; i < subWidgets.size(); i++) {
 				Widget w = subWidgets.get(i);
 
@@ -57,7 +64,9 @@ public class WidgetEditorMode extends Widget {
 	public void updateActive() {
 		if (editor.currentTool instanceof ExternalTool) {
 			this.icon = externalToolIcon;
+			externalTool = true;
 		} else if (subWidgets.size() > 0) {
+			externalTool = false;
 			for (Widget w : subWidgets) {
 				w.updateActive();
 				if (iconIsCurrentSubWidget && w.isActive()) {
