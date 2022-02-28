@@ -15,7 +15,8 @@ public class WidgetImageMode extends Widget {
 
 	@Override
 	public void clicked() {
-		editor.editorSide.clearExternalModes();
+//		editor.editorSide.clearExternalModes();
+		editor.selected = null;
 		editor.currentTool = new ImageTool(p, editor);
 	}
 
