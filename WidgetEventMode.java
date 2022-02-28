@@ -15,6 +15,7 @@ public class WidgetEventMode extends Widget {
 
 	@Override
 	public void clicked() {
+		editor.editorSide.clearExternalModes();
 		editor.currentTool = new EventTool(p, editor);
 	}
 

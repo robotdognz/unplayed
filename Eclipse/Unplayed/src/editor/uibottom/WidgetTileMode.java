@@ -16,6 +16,7 @@ public class WidgetTileMode extends Widget {
 
 	@Override
 	public void clicked() {
+		editor.editorSide.clearExternalModes();
 		editor.currentTool = new TileTool(editor);
 	}
 

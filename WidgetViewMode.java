@@ -16,6 +16,7 @@ public class WidgetViewMode extends Widget {
 
 	@Override
 	public void clicked() {
+		editor.editorSide.clearExternalModes();
 		editor.currentTool = new PageTool(p, editor);
 	}
 

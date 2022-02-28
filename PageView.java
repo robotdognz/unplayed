@@ -256,6 +256,8 @@ public class PageView {
 				minY = Math.min(minY, page.getTopmostPoint());
 				maxX = Math.max(maxX, page.getRightmostPoint());
 				maxY = Math.max(maxY, page.getBottommostPoint());
+				
+				//TODO: do area for children of this page
 			}
 		}
 
