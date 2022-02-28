@@ -147,6 +147,16 @@ public class EditorSide extends Toolbar {
 			editor.eMode = editorMode.SELECT;
 		}
 	}
+	
+	public void adjustMode() {
+		adjust = true;
+		addChild = false;
+	}
+	
+	public void addChildMode() {
+		addChild = true;
+		adjust = false;
+	}
 
 	public void reset() {
 		if (editor.selected != null && !previousSelected.equals(editor.selected.getClass().toString())) {
