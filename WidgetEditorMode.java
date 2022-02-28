@@ -4,6 +4,7 @@ import camera.FreeCamera;
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
+import editor.Editor.editorMode;
 import editor.tools.ExternalTool;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -11,13 +12,13 @@ import ui.Widget;
 
 public class WidgetEditorMode extends Widget {
 
-	protected PImage externalToolIcon;
-	private boolean externalTool = false;
+	protected PImage externalModeIcon;
+	private boolean externalMode = false;
 
 	public WidgetEditorMode(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "PlaceBlock.png");
-		externalToolIcon = p.loadImage(folder + "diamond.png");
+		externalModeIcon = p.loadImage(folder + "diamond.png");
 		iconIsCurrentSubWidget = true;
 		Widget w1 = new WidgetAdd(p, editor, parent);
 		Widget w2 = new WidgetErase(p, editor, parent);
@@ -37,9 +38,9 @@ public class WidgetEditorMode extends Widget {
 			editor.camera = new FreeCamera();
 		} else {
 
-			if (externalTool) {
+			if (editor.eMode == editorMode.EXTERNAL) {
 				subWidgets.get(2).clicked();
-				externalTool = false;
+				externalMode = false;
 				return;
 			}
 
@@ -62,11 +63,11 @@ public class WidgetEditorMode extends Widget {
 
 	@Override
 	public void updateActive() {
-		if (editor.currentTool instanceof ExternalTool) {
-			this.icon = externalToolIcon;
-			externalTool = true;
+		if (editor.eMode == editorMode.EXTERNAL) {
+			this.icon = externalModeIcon;
+//			externalMode = true;
 		} else if (subWidgets.size() > 0) {
-			externalTool = false;
+//			externalMode = false;
 			for (Widget w : subWidgets) {
 				w.updateActive();
 				if (iconIsCurrentSubWidget && w.isActive()) {

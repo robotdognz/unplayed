@@ -468,7 +468,7 @@ public class Editor {
 	}
 
 	public enum editorMode {
-		ADD, ERASE, SELECT
+		ADD, ERASE, SELECT, EXTERNAL
 	}
 
 	public enum imagePlane {
