@@ -28,7 +28,6 @@ public class WidgetAdjust extends Widget {
 				available = true;
 				if (toolbar.adjust) {
 					active = true;
-//					editor.currentTool = new ExternalTool();
 					editor.eMode = editorMode.EXTERNAL;
 				} else {
 					active = false;
@@ -44,7 +43,13 @@ public class WidgetAdjust extends Widget {
 
 	@Override
 	public void clicked() {
-		toolbar.adjust = !toolbar.adjust;
+		if (toolbar.adjust) {
+			editor.editorSide.clearExternalModes();
+		} else {
+			toolbar.adjust = true;
+		}
+
+//		toolbar.adjust = !toolbar.adjust;
 	}
 
 }

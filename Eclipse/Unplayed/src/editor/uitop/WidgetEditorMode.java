@@ -5,7 +5,6 @@ import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
 import editor.Editor.editorMode;
-import editor.tools.ExternalTool;
 import processing.core.PApplet;
 import processing.core.PImage;
 import ui.Widget;
@@ -13,7 +12,6 @@ import ui.Widget;
 public class WidgetEditorMode extends Widget {
 
 	protected PImage externalModeIcon;
-	private boolean externalMode = false;
 
 	public WidgetEditorMode(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
@@ -40,7 +38,7 @@ public class WidgetEditorMode extends Widget {
 
 			if (editor.eMode == editorMode.EXTERNAL) {
 				subWidgets.get(2).clicked();
-				externalMode = false;
+				editor.editorSide.clearExternalModes();
 				return;
 			}
 
@@ -65,9 +63,7 @@ public class WidgetEditorMode extends Widget {
 	public void updateActive() {
 		if (editor.eMode == editorMode.EXTERNAL) {
 			this.icon = externalModeIcon;
-//			externalMode = true;
 		} else if (subWidgets.size() > 0) {
-//			externalMode = false;
 			for (Widget w : subWidgets) {
 				w.updateActive();
 				if (iconIsCurrentSubWidget && w.isActive()) {
