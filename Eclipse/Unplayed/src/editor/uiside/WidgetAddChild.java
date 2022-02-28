@@ -43,11 +43,8 @@ public class WidgetAddChild extends Widget {
 		if (toolbar.addChild) {
 			editor.editorSide.clearExternalModes();
 		} else {
-//			toolbar.addChild = true;
 			toolbar.addChildMode();
 		}
-
-//		toolbar.adjust = !toolbar.adjust;
 	}
 
 }

@@ -296,6 +296,14 @@ public class Page extends PageViewObject {
 
 	}
 
+	@Override
+	public void drawSelected(PGraphics g) {
+		super.drawSelected(g);
+		for (PageViewObject object : children) {
+			object.drawSelectedAsChild(g);
+		}
+	}
+
 	public void drawCorners() {
 		// draw page corners
 		if (Editor.autoCameraSearch && playerVisibleExternal) {

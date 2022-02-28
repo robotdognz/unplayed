@@ -393,6 +393,21 @@ public class PageView {
 		this.pageViewObjects.clear();
 	}
 
+	public PageViewObject getPageViewObject(float x, float y) {
+		if (pageViewObjects.size() < 1) {
+			return null;
+		}
+		for (PageViewObject object : pageViewObjects) {
+			// return the first overlap
+			if (object.isInside(x, y)) {
+				return object;
+			}
+			
+		}
+
+		return null;
+	}
+
 	public Page getPage(float x, float y) {
 		if (pageViewObjects.size() < 1) {
 			return null;

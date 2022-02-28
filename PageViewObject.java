@@ -95,6 +95,19 @@ public class PageViewObject extends Editable {
 		g.rect(0, 0, getWidth(), getHeight());
 		g.popMatrix();
 	}
+	
+	public void drawSelectedAsChild(PGraphics g) {
+		g.pushMatrix();
+		g.noFill();
+		g.stroke(0, 255, 0); // selection color
+		g.strokeWeight(2);
+		g.translate(position.x, position.y);
+		g.scale(size); // size the page will appear in the page view
+		g.rotate(PApplet.radians(angle)); // angle of the page
+		g.rectMode(CENTER);
+		g.rect(0, 0, getWidth(), getHeight());
+		g.popMatrix();
+	}
 
 	// --------------update the corner PVectors---------------
 	protected void updateCorners() {

@@ -86,16 +86,20 @@ public class PageTool extends AreaTool {
 				selectView();
 			}
 		} else {// pages
-			if (!editorSide.adjust) {
-				if (editor.eMode == editorMode.ADD) {
-					addPage();
-				} else if (editor.eMode == editorMode.ERASE) {
-					erasePage();
-				} else if (editor.eMode == editorMode.SELECT) {
-					selectPage();
+//			if (!editorSide.adjust) {
+			if (editor.eMode == editorMode.ADD) {
+				addPage();
+			} else if (editor.eMode == editorMode.ERASE) {
+				erasePage();
+			} else if (editor.eMode == editorMode.SELECT) {
+				selectPage();
+			} else if (editor.eMode == editorMode.EXTERNAL) {
+				if (editorSide.addChild) {
+					addOrRemoveChild();
 				}
-				currentPage = null;
 			}
+			currentPage = null;
+//			}
 		}
 	}
 
@@ -104,8 +108,9 @@ public class PageTool extends AreaTool {
 		// page resize
 		if (Editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
-				((Page) editor.selected).addSize(AppLogic.convert.screenToLevel(d) / 500); // TODO: figure out what the 500
-																					// should be
+				((Page) editor.selected).addSize(AppLogic.convert.screenToLevel(d) / 500); // TODO: figure out what the
+																							// 500
+				// should be
 				// old code
 				PVector center = AppLogic.convert.screenToLevel(x, y);
 				((Page) editor.selected).setPosition(center);
@@ -182,7 +187,7 @@ public class PageTool extends AreaTool {
 			List<PageViewObject> pages = pageView.getPageViewObjects();
 			for (int i = pages.size() - 1; i >= 0; --i) {
 				// only check actual pages
-				if(!(pages.get(i) instanceof Page)) {
+				if (!(pages.get(i) instanceof Page)) {
 					continue;
 				}
 				Page page = (Page) pages.get(i);
@@ -258,6 +263,17 @@ public class PageTool extends AreaTool {
 			}
 		} else {
 			editor.selected = null;
+		}
+	}
+
+	private void addOrRemoveChild() {
+		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
+		PageViewObject found = pageView.getPageViewObject(mouse.x, mouse.y);
+		if (found != null && !editor.selected.equals(found)) {
+			if(editor.selected instanceof Page) {
+				Page page = (Page) editor.selected;
+				page.addOrRemoveChild(found);
+			}
 		}
 	}
 

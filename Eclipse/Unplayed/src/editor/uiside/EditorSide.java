@@ -168,27 +168,21 @@ public class EditorSide extends Toolbar {
 			} else if (editor.selected instanceof View) {
 				widgets = view;
 //				adjust = false;
-//				clearExternalModes(false);
 			} else if (editor.selected instanceof Tile) {
 				widgets = tile;
 //				adjust = false;
-//				clearExternalModes(false);
 			} else if (editor.selected instanceof Image) {
 				widgets = image;
 //				adjust = false;
-//				clearExternalModes(false);
 			} else if (editor.selected instanceof PlayerEnd) {
 				widgets = playerEnd;
 //				adjust = false;
-//				clearExternalModes(false);
 			} else if (editor.selected instanceof Spike) {
 				widgets = spike;
 //				adjust = false;
-//				clearExternalModes(false);
 			} else {
 				widgets = minimal;
 //				adjust = false;
-//				clearExternalModes(false);
 			}
 			cameraEditMode = 0;
 
