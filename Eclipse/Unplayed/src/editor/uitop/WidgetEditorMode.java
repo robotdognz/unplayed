@@ -4,13 +4,19 @@ import camera.FreeCamera;
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
+import editor.tools.ExternalTool;
 import processing.core.PApplet;
+import processing.core.PImage;
 import ui.Widget;
 
 public class WidgetEditorMode extends Widget {
+
+	protected PImage externalToolIcon;
+
 	public WidgetEditorMode(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "PlaceBlock.png");
+		externalToolIcon = p.loadImage(folder + "diamond.png");
 		iconIsCurrentSubWidget = true;
 		Widget w1 = new WidgetAdd(p, editor, parent);
 		Widget w2 = new WidgetErase(p, editor, parent);
@@ -29,7 +35,6 @@ public class WidgetEditorMode extends Widget {
 			editor.controller = new EditorControl(p, editor);
 			editor.camera = new FreeCamera();
 		} else {
-//			sActive = !sActive; //old code for opening widget menu
 
 			for (int i = 0; i < subWidgets.size(); i++) {
 				Widget w = subWidgets.get(i);
@@ -50,7 +55,17 @@ public class WidgetEditorMode extends Widget {
 
 	@Override
 	public void updateActive() {
-		super.updateActive();
+		if (editor.currentTool instanceof ExternalTool) {
+			this.icon = externalToolIcon;
+		} else if (subWidgets.size() > 0) {
+			for (Widget w : subWidgets) {
+				w.updateActive();
+				if (iconIsCurrentSubWidget && w.isActive()) {
+					this.icon = w.getIcon();
+				}
+			}
+		}
+
 		if (editor.controller instanceof EditorControl) {
 			active = true;
 		} else {

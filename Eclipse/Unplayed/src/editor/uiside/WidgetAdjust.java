@@ -2,6 +2,7 @@ package editor.uiside;
 
 import editor.Editor;
 import editor.Toolbar;
+import editor.tools.ExternalTool;
 import objects.Background;
 import objects.Page;
 import objects.events.PlayerEnd;
@@ -27,6 +28,7 @@ public class WidgetAdjust extends Widget {
 				available = true;
 				if (toolbar.adjust) {
 					active = true;
+					editor.currentTool = new ExternalTool();
 				} else {
 					active = false;
 				}

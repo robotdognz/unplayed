@@ -21,7 +21,7 @@ public class Page extends PageViewObject {
 	// private HashSet<String> excludedObjects; // a list of rectangle strings to
 	// exclude while drawing
 
-	private List<PageViewObject> children;
+	private List<PageViewObject> children; // all the pageViewObjects that should be visible with this page
 
 	private int shadowOffset; // the absolute amount to offset the shadow by
 	private int shadow; // the relative amount to offset the shadow by
@@ -311,6 +311,7 @@ public class Page extends PageViewObject {
 	public boolean playerVisible() {
 		return playerVisibleExternal;
 	}
+
 //
 	public void setSize(float size) {
 		this.actualSize = size;
