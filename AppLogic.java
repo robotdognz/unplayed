@@ -43,7 +43,7 @@ public class AppLogic {
 	public static Vibe vibe;
 	static public Converter convert;
 	public static TextureCache texture;
-	
+
 	static public DoToast toast;
 
 	static private Menu menu; // current menu
@@ -262,29 +262,20 @@ public class AppLogic {
 				game.getPageView().offsetAll(offsetX, offsetY);
 
 				// force draw all assets in level
-				List<Page> tempPages = game.getPageView().getPages();
+				List<PageViewObject> tempPageViewObjects = game.getPageView().getPageViewObjects();
 				p.pushMatrix();
 				p.translate(p.width / 2, p.height / 2);
-				for (Page page : tempPages) {
-					page.step();
+				for (PageViewObject object : tempPageViewObjects) {
+					if (object instanceof Page) {
+						((Page) object).step();
+					}
 					p.pushMatrix();
-					PVector pos = page.getPosition();
+					PVector pos = object.getPosition();
 					p.translate(-pos.x, -pos.y);
-					page.draw(TextureCache.LOD256);
-					page.draw(TextureCache.LOD128);
-					page.draw(TextureCache.LOD64);
-					page.draw(TextureCache.LOD32);
-					p.popMatrix();
-				}
-				List<Background> tempBackgrounds = game.getPageView().getBackgrounds();
-				for (Background background : tempBackgrounds) {
-					p.pushMatrix();
-					PVector pos = background.getPosition();
-					p.translate(-pos.x, -pos.y);
-					background.draw(TextureCache.LOD256);
-					background.draw(TextureCache.LOD128);
-					background.draw(TextureCache.LOD64);
-					background.draw(TextureCache.LOD32);
+					object.draw(TextureCache.LOD256);
+					object.draw(TextureCache.LOD128);
+					object.draw(TextureCache.LOD64);
+					object.draw(TextureCache.LOD32);
 					p.popMatrix();
 				}
 				p.popMatrix();

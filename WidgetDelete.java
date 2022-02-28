@@ -5,10 +5,10 @@ import java.util.List;
 import editor.Editor;
 import editor.Toolbar;
 import game.AppLogic;
-import objects.Background;
 import objects.Event;
 import objects.Image;
 import objects.Page;
+import objects.PageViewObject;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
@@ -87,10 +87,15 @@ public class WidgetDelete extends Widget {
 					AppLogic.game.world.remove(editor.selected);
 				} else if (editor.selected instanceof View) {
 					// remove matching the pages
-					List<Page> pages = AppLogic.game.getPageView().getPages();
+					List<PageViewObject> pages = AppLogic.game.getPageView().getPageViewObjects();
 					for (int i = pages.size() - 1; i >= 0; --i) {
+						// only do for actual pages
+						if (!(pages.get(i) instanceof Page)) {
+							continue;
+						}
+						Page page = (Page) pages.get(i);
 
-						if (pages.get(i).getView().equals(editor.selected)) {
+						if (page.getView().equals(editor.selected)) {
 							pages.remove(i);
 						}
 
@@ -100,10 +105,8 @@ public class WidgetDelete extends Widget {
 					AppLogic.game.views.remove(editor.selected);
 				}
 			} else { // page view
-				if (editor.selected instanceof Page) {
-					AppLogic.game.getPageView().removePage((Page) editor.selected);
-				} else if (editor.selected instanceof Background) {
-					AppLogic.game.getPageView().removeBackground((Background) editor.selected);
+				if (editor.selected instanceof PageViewObject) {
+					AppLogic.game.getPageView().removePageViewObject((Page) editor.selected);
 				}
 			}
 			// deselect the object

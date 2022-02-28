@@ -219,7 +219,7 @@ public class ImageTool implements Tool {
 
 	private void addBackground() {
 		if (currentBackground != null) { // if there is something to create a page from
-			pageView.addBackground(currentBackground);
+			pageView.addPageViewObject(currentBackground);
 			editor.selected = currentBackground;
 			editorSide.adjust = true;
 			editor.eMode = Editor.editorMode.SELECT;
@@ -230,7 +230,7 @@ public class ImageTool implements Tool {
 		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
 		Background found = pageView.getBackground(mouse.x, mouse.y);
 		if (found != null) {
-			pageView.removeBackground(found);
+			pageView.removePageViewObject(found);
 			if (found.equals(editor.selected)) {
 				editor.selected = null;
 			}

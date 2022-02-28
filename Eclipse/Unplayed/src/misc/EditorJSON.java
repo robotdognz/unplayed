@@ -13,6 +13,7 @@ import objects.Editable;
 import objects.Event;
 import objects.Image;
 import objects.Page;
+import objects.PageViewObject;
 import objects.Rectangle;
 import objects.Tile;
 import objects.View;
@@ -98,7 +99,7 @@ public class EditorJSON {
 				object.setString("file", (((Image) r).getFile()).toString());
 			} else if (r instanceof Event) { // events
 				object.setString("name", ((Event) r).getName());
-				if(r instanceof PlayerStart) {
+				if (r instanceof PlayerStart) {
 					continue;
 				}
 				if (r instanceof PlayerEnd) { // PlayerEnd
@@ -183,7 +184,7 @@ public class EditorJSON {
 
 	private void saveViews(JSONArray values, Editor editor) {
 		ArrayList<View> views = AppLogic.game.views;
-		List<Page> pages = AppLogic.game.getPageView().getPages();
+		List<PageViewObject> pages = AppLogic.game.getPageView().getPageViewObjects();
 
 		for (View view : views) {
 			JSONObject object = new JSONObject();
@@ -195,22 +196,28 @@ public class EditorJSON {
 			object.setInt("pHeight", (int) view.getHeight());
 
 			JSONArray viewPages = new JSONArray();
-			for (Page page : pages) {
+			for (PageViewObject pageViewObject : pages) {
+				// only check actual pages
+				if (!(pageViewObject instanceof Page)) {
+					continue;
+				}
+				Page page = (Page) pageViewObject;
+				
 				// if this page belongs to this view
 				if (view.equals(page.getView())) {
-					JSONObject pageObject = new JSONObject();
-					pageObject.setInt("centerX", (int) page.getPosition().x);
-					pageObject.setInt("centerY", (int) page.getPosition().y);
-					pageObject.setFloat("size", page.getSize());
-					pageObject.setFloat("angle", page.getAngle());
-					pageObject.setBoolean("flipH", page.isFlippedH());
-					pageObject.setBoolean("flipV", page.isFlippedV());
-					pageObject.setBoolean("showPlayer", page.showPlayer);
-					pageObject.setBoolean("showObstacles", page.showObstacles);
-					pageObject.setBoolean("showTiles", page.showTiles);
-					pageObject.setBoolean("showImages", page.showImages);
+					JSONObject pageJsonObject = new JSONObject();
+					pageJsonObject.setInt("centerX", (int) page.getPosition().x);
+					pageJsonObject.setInt("centerY", (int) page.getPosition().y);
+					pageJsonObject.setFloat("size", page.getSize());
+					pageJsonObject.setFloat("angle", page.getAngle());
+					pageJsonObject.setBoolean("flipH", page.isFlippedH());
+					pageJsonObject.setBoolean("flipV", page.isFlippedV());
+					pageJsonObject.setBoolean("showPlayer", page.showPlayer);
+					pageJsonObject.setBoolean("showObstacles", page.showObstacles);
+					pageJsonObject.setBoolean("showTiles", page.showTiles);
+					pageJsonObject.setBoolean("showImages", page.showImages);
 
-					viewPages.setJSONObject(viewPages.size(), pageObject);
+					viewPages.setJSONObject(viewPages.size(), pageJsonObject);
 				}
 			}
 			object.setJSONArray("pages", viewPages);
@@ -221,9 +228,14 @@ public class EditorJSON {
 	}
 
 	private void saveBackgrounds(JSONArray values, Editor editor) {
-		List<Background> backgrounds = AppLogic.game.getPageView().getBackgrounds();
+		List<PageViewObject> backgrounds = AppLogic.game.getPageView().getPageViewObjects();
 
-		for (Background background : backgrounds) {
+		for (PageViewObject backgroundObject : backgrounds) {
+			if(!(backgroundObject instanceof Background)) {
+				continue;
+			}
+			Background background = (Background) backgroundObject;
+			
 			JSONObject object = new JSONObject();
 			object.setString("type", "background");
 			object.setInt("centerX", (int) background.getPosition().x);
@@ -259,6 +271,7 @@ public class EditorJSON {
 			loadTiles(values, game);
 			loadWorldObjects(values, game);
 			loadPlayerStart(values, game);
+			game.getPageView().clearPageViewObjects();
 			loadViews(values, game);
 			loadBackgrounds(values, game);
 
@@ -382,7 +395,7 @@ public class EditorJSON {
 
 	private void loadViews(JSONArray values, Game game) {
 		ArrayList<View> views = new ArrayList<View>();
-		ArrayList<Page> pages = new ArrayList<Page>();
+		ArrayList<PageViewObject> pages = new ArrayList<PageViewObject>();
 
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
@@ -444,11 +457,11 @@ public class EditorJSON {
 			}
 		}
 		game.setViews(views);
-		game.getPageView().setPages(pages);
+		game.getPageView().addPageViewObjects(pages);
 	}
 
 	private void loadBackgrounds(JSONArray values, Game game) {
-		ArrayList<Background> backgrounds = new ArrayList<Background>();
+		ArrayList<PageViewObject> backgrounds = new ArrayList<PageViewObject>();
 
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
@@ -481,7 +494,7 @@ public class EditorJSON {
 
 		}
 
-		game.getPageView().setBackgrounds(backgrounds);
+		game.getPageView().addPageViewObjects(backgrounds);
 	}
 
 }

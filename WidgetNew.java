@@ -28,8 +28,7 @@ public class WidgetNew extends Widget {
 		AppLogic.game.player = null;
 		AppLogic.game.world.clear();
 		AppLogic.game.views.clear();
-		AppLogic.game.getPageView().clearPages();
-		AppLogic.game.getPageView().clearBackgrounds();
+		AppLogic.game.getPageView().clearPageViewObjects();
 		// clear box2d
 		AppLogic.game.buildWorld();
 		// clear selected

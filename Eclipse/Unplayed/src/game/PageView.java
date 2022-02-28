@@ -10,6 +10,7 @@ import handlers.TextureCache;
 import misc.Converter;
 import objects.Background;
 import objects.Page;
+import objects.PageViewObject;
 import objects.Rectangle;
 import processing.core.*;
 import ui.Menu;
@@ -20,8 +21,9 @@ public class PageView {
 
 	private BackgroundPaper paper;
 
-	private ArrayList<Page> pages;
-	private ArrayList<Background> backgrounds;
+//	private ArrayList<Page> pages;
+//	private ArrayList<Background> backgrounds;
+	private ArrayList<PageViewObject> pageViewObjects;
 
 	private PageViewCamera pageCamera;
 	private Rectangle previousPageArea; // used when switching between menu and level when player isn't visible
@@ -41,9 +43,10 @@ public class PageView {
 
 		this.paper = new BackgroundPaper(p);
 
-		this.pages = new ArrayList<Page>();
-		this.backgrounds = new ArrayList<Background>();
-		
+//		this.pages = new ArrayList<Page>();
+//		this.backgrounds = new ArrayList<Background>();
+		this.pageViewObjects = new ArrayList<PageViewObject>();
+
 		this.previousPageArea = null;
 	}
 
@@ -84,7 +87,10 @@ public class PageView {
 		paper.draw(p.getGraphics(), topLeft, bottomRight, currentScale); // background paper effect
 
 		// draw backgrounds that are inside that area
-		for (Background background : backgrounds) {
+		for (PageViewObject background : pageViewObjects) {
+			if (!(background instanceof Background)) {
+				continue;
+			}
 			if (background.leftOf(topLeft.x)) {
 				continue;
 			}
@@ -101,7 +107,10 @@ public class PageView {
 			background.draw(currentScale);
 		}
 		// draw pages that are inside that area
-		for (Page page : pages) {
+		for (PageViewObject page : pageViewObjects) {
+			if (!(page instanceof Page)) {
+				continue;
+			}
 			if (page.leftOf(topLeft.x)) {
 				continue;
 			}
@@ -117,7 +126,7 @@ public class PageView {
 
 			page.draw(currentScale);
 			if (Editor.autoCameraSearch && !Camera.getGame()) {
-				page.drawCorners();
+				((Page) page).drawCorners();
 			}
 
 		}
@@ -152,20 +161,9 @@ public class PageView {
 
 			if (!storedMenu.isBuilt()) {
 				// build the page menu if it isn't already built
-				if (pages.size() > 0) {
-					float minX = Float.POSITIVE_INFINITY;
-					float minY = Float.POSITIVE_INFINITY;
-					float maxX = Float.NEGATIVE_INFINITY;
-					float maxY = Float.NEGATIVE_INFINITY;
-					for (Page page : pages) {
+				Rectangle pageArea = getPageArea();
 
-						minX = Math.min(minX, page.getLeftmostPoint());
-						minY = Math.min(minY, page.getTopmostPoint());
-						maxX = Math.max(maxX, page.getRightmostPoint());
-						maxY = Math.max(maxY, page.getBottommostPoint());
-
-					}
-					Rectangle pageArea = new Rectangle(minX, minY, maxX - minX, maxY - minY);
+				if (pageArea != null) {
 					storedMenu.buldPageMenu(pageCamera.getCenter(), pageArea, pageCamera);
 				} else {
 					if (storedMenu.child == null) {
@@ -192,7 +190,12 @@ public class PageView {
 			adjustCamera = true;
 
 		} else {
-			for (Page page : pages) {
+			for (PageViewObject object : pageViewObjects) {
+				if (!(object instanceof Page)) {
+					continue;
+				}
+				Page page = (Page) object;
+
 				page.step();
 				if (page.playerVisibilityChanged()) {
 					adjustCamera = true;
@@ -225,7 +228,11 @@ public class PageView {
 	public void stepPages() {
 		// used to run the pages so that visibility information etc can be accurately
 		// assessed, this is done by the level loading system
-		for (Page page : pages) {
+		for (PageViewObject object : pageViewObjects) {
+			if (!(object instanceof Page)) {
+				continue;
+			}
+			Page page = (Page) object;
 			page.step();
 		}
 	}
@@ -236,7 +243,12 @@ public class PageView {
 		float maxX = Float.NEGATIVE_INFINITY;
 		float maxY = Float.NEGATIVE_INFINITY;
 		int visiblePage = 0;
-		for (Page page : pages) {
+		for (PageViewObject object : pageViewObjects) {
+			if (!(object instanceof Page)) {
+				continue;
+			}
+			Page page = (Page) object;
+
 			if (page.playerVisible()) {
 				// if this page has a visible player
 				visiblePage++;
@@ -279,7 +291,12 @@ public class PageView {
 		float maxY = Float.NEGATIVE_INFINITY;
 
 		// get area of pages
-		for (Page page : pages) {
+		for (PageViewObject object : pageViewObjects) {
+			if (!(object instanceof Page)) {
+				continue;
+			}
+			Page page = (Page) object;
+
 			minX = Math.min(minX, page.getLeftmostPoint());
 			minY = Math.min(minY, page.getTopmostPoint());
 			maxX = Math.max(maxX, page.getRightmostPoint());
@@ -311,12 +328,24 @@ public class PageView {
 		float maxX = Float.NEGATIVE_INFINITY;
 		float maxY = Float.NEGATIVE_INFINITY;
 
+		int pageCount = 0;
 		// get area of pages
-		for (Page page : pages) {
+		for (PageViewObject object : pageViewObjects) {
+			if (!(object instanceof Page)) {
+				continue;
+			}
+			Page page = (Page) object;
+
 			minX = Math.min(minX, page.getLeftmostPoint());
 			minY = Math.min(minY, page.getTopmostPoint());
 			maxX = Math.max(maxX, page.getRightmostPoint());
 			maxY = Math.max(maxY, page.getBottommostPoint());
+
+			pageCount++;
+		}
+
+		if (pageCount == 0) {
+			return null;
 		}
 
 		float x = minX;
@@ -329,44 +358,14 @@ public class PageView {
 
 	public void forceRedraw() {
 		// force recalculate pages sizes
-		for (Page page : pages) {
+		for (PageViewObject object : pageViewObjects) {
+			if (!(object instanceof Page)) {
+				continue;
+			}
+			Page page = (Page) object;
+
 			page.updateSizeFromView();
 		}
-	}
-
-	public void addPage(Page page) {
-		pages.add(page);
-	}
-
-	public void removePage(Page page) {
-		pages.remove(page);
-	}
-
-	public Page getPage(float x, float y) {
-		if (pages.size() < 1) {
-			return null;
-		}
-		for (Page page : pages) {
-			// return the first overlap
-			if (page.isInside(x, y)) {
-				return page;
-			}
-
-		}
-
-		return null;
-	}
-
-	public List<Page> getPages() {
-		return pages;
-	}
-
-	public void setPages(ArrayList<Page> pages) {
-		this.pages = pages;
-	}
-
-	public void clearPages() {
-		this.pages.clear();
 	}
 
 	public void clearMenus() {
@@ -374,22 +373,37 @@ public class PageView {
 		removeMenu = false;
 	}
 
-	public void addBackground(Background background) {
-		backgrounds.add(background);
+	public void addPageViewObject(PageViewObject object) {
+		pageViewObjects.add(object);
 	}
 
-	public void removeBackground(Background background) {
-		backgrounds.remove(background);
+	public void addPageViewObjects(List<PageViewObject> objects) {
+		pageViewObjects.addAll(objects);
 	}
 
-	public Background getBackground(float x, float y) {
-		if (backgrounds.size() < 1) {
+	public void removePageViewObject(PageViewObject object) {
+		pageViewObjects.remove(object);
+	}
+
+	public List<PageViewObject> getPageViewObjects() {
+		return pageViewObjects;
+	}
+
+	public void clearPageViewObjects() {
+		this.pageViewObjects.clear();
+	}
+
+	public Page getPage(float x, float y) {
+		if (pageViewObjects.size() < 1) {
 			return null;
 		}
-		for (Background background : backgrounds) {
+		for (PageViewObject object : pageViewObjects) {
+			if (!(object instanceof Page)) {
+				continue;
+			}
 			// return the first overlap
-			if (background.isInside(x, y)) {
-				return background;
+			if (((Page) object).isInside(x, y)) {
+				return (Page) object;
 			}
 
 		}
@@ -397,30 +411,30 @@ public class PageView {
 		return null;
 	}
 
-	public List<Background> getBackgrounds() {
-		return backgrounds;
-	}
+	public Background getBackground(float x, float y) {
+		if (pageViewObjects.size() < 1) {
+			return null;
+		}
+		for (PageViewObject object : pageViewObjects) {
+			if (!(object instanceof Background)) {
+				continue;
+			}
+			// return the first overlap
+			if (((Background) object).isInside(x, y)) {
+				return (Background) object;
+			}
 
-	public void setBackgrounds(ArrayList<Background> backgrounds) {
-		this.backgrounds = backgrounds;
-	}
+		}
 
-	public void clearBackgrounds() {
-		this.backgrounds.clear();
+		return null;
 	}
 
 	public void offsetAll(float x, float y) {
-		for (Page p : pages) {
-			PVector pos = p.getPosition();
+		for (PageViewObject object : pageViewObjects) {
+			PVector pos = object.getPosition();
 			pos.x += x;
 			pos.y += y;
-			p.setPosition(pos);
-		}
-		for (Background b : backgrounds) {
-			PVector pos = b.getPosition();
-			pos.x += x;
-			pos.y += y;
-			b.setPosition(pos);
+			object.setPosition(pos);
 		}
 	}
 }

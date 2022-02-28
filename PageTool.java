@@ -3,6 +3,7 @@ package editor.tools;
 import game.AppLogic;
 import game.PageView;
 import objects.Page;
+import objects.PageViewObject;
 import objects.Rectangle;
 import objects.View;
 import processing.core.PApplet;
@@ -178,12 +179,17 @@ public class PageTool extends AreaTool {
 			}
 
 			// remove matching the pages
-			List<Page> pages = pageView.getPages();
+			List<PageViewObject> pages = pageView.getPageViewObjects();
 			for (int i = pages.size() - 1; i >= 0; --i) {
+				// only check actual pages
+				if(!(pages.get(i) instanceof Page)) {
+					continue;
+				}
+				Page page = (Page) pages.get(i);
 
-				if (pages.get(i).getView().equals(found)) {
+				if (page.getView().equals(found)) {
 					// deselect the page if it is selected
-					if (pages.get(i).equals(editor.selected)) {
+					if (page.equals(editor.selected)) {
 						editor.selected = null;
 					}
 					// remove the page
@@ -210,7 +216,7 @@ public class PageTool extends AreaTool {
 
 	private void addPage() {
 		if (currentPage != null) { // if there is something to create a page from
-			pageView.addPage(currentPage);
+			pageView.addPageViewObject(currentPage);
 			editor.selected = currentPage;
 			editorSide.adjust = true;
 			editor.eMode = Editor.editorMode.SELECT;
@@ -221,7 +227,7 @@ public class PageTool extends AreaTool {
 		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
 		Page found = pageView.getPage(mouse.x, mouse.y);
 		if (found != null) {
-			pageView.removePage(found);
+			pageView.removePageViewObject(found);
 			if (found.equals(editor.selected)) {
 				editor.selected = null;
 			}

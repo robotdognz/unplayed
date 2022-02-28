@@ -103,8 +103,7 @@ public class Game {
 		clearPlayerStart(); // remove the player
 		playerCheckpoint = null; /// remove checkpoint
 		views.clear();
-		pageView.clearPages(); // remove pages
-		pageView.clearBackgrounds(); // remove backgrounds
+		pageView.clearPageViewObjects(); // remove pages and backgrounds
 		buildWorld(); // rebuild world
 	}
 
