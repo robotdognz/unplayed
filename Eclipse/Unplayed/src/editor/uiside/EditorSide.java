@@ -138,10 +138,10 @@ public class EditorSide extends Toolbar {
 		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, widgetSpacing, height);
 	}
 
-	public void clearExternalModes(boolean resetMode) {
+	public void clearExternalModes() {
 		adjust = false;
 		addChild = false;
-		if (resetMode && editor.eMode == editorMode.EXTERNAL) {
+		if (editor.eMode == editorMode.EXTERNAL) {
 			editor.eMode = editorMode.SELECT;
 		}
 	}
@@ -208,7 +208,7 @@ public class EditorSide extends Toolbar {
 		// step - reset the side toolbar's options and abort drawing if nothing selected
 		reset();
 		if (editor.selected == null) {
-			clearExternalModes(true);
+			clearExternalModes();
 			return;
 		}
 
