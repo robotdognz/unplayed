@@ -44,7 +44,7 @@ public class WidgetAdjust extends Widget {
 	@Override
 	public void clicked() {
 		if (toolbar.adjust) {
-			editor.editorSide.clearExternalModes();
+			editor.editorSide.clearExternalModes(true);
 		} else {
 			toolbar.adjust = true;
 		}

@@ -9,10 +9,10 @@ import objects.events.PlayerEnd;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class WidgetAdjust extends Widget {
+public class WidgetAddChild extends Widget {
 	EditorSide toolbar;
 
-	public WidgetAdjust(PApplet p, Editor editor, Toolbar parent) {
+	public WidgetAddChild(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		toolbar = (EditorSide) parent;
 		icon = p.loadImage(folder + "move.png");

@@ -47,7 +47,7 @@ public abstract class Toolbar {
 	public void step() {
 	}
 	
-	public void clearExternalModes() {
+	public void clearExternalModes(boolean resetMode) {
 	}
 
 	public void draw(PVector touch, Menu menu, float deltaTime) {

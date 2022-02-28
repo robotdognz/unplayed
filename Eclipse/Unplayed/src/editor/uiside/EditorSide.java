@@ -29,6 +29,7 @@ public class EditorSide extends Toolbar {
 	private PImage middle;
 	private PImage bottom;
 	public boolean adjust; // are we adjusting a Page or a PlayerEnd
+	public boolean addChild; // are we adding children to a page
 	public int cameraEditMode; // 0 = not editing, 1 = adding, 2 = removing
 
 	private String previousSelected = "";
@@ -126,7 +127,9 @@ public class EditorSide extends Toolbar {
 
 		widgetX = p.width / 18;
 
-		this.adjust = false; // are we adjusting a page?
+		this.adjust = false; // are we adjusting a page or player end
+		this.addChild = false; // are we adding children to a page
+		
 		// load sprites
 		this.top = p.requestImage(folder + "icn_SideTabTop.png");
 		this.middle = p.requestImage(folder + "icn_SideTabMiddle.png");
@@ -135,9 +138,10 @@ public class EditorSide extends Toolbar {
 		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, widgetSpacing, height);
 	}
 
-	public void clearExternalModes() {
+	public void clearExternalModes(boolean resetMode) {
 		adjust = false;
-		if (editor.eMode == editorMode.EXTERNAL) {
+		addChild = false;
+		if (resetMode && editor.eMode == editorMode.EXTERNAL) {
 			editor.eMode = editorMode.SELECT;
 		}
 	}
@@ -151,22 +155,28 @@ public class EditorSide extends Toolbar {
 				widgets = background;
 			} else if (editor.selected instanceof View) {
 				widgets = view;
-				adjust = false;
+//				adjust = false;
+//				clearExternalModes(false);
 			} else if (editor.selected instanceof Tile) {
 				widgets = tile;
-				adjust = false;
+//				adjust = false;
+//				clearExternalModes(false);
 			} else if (editor.selected instanceof Image) {
 				widgets = image;
-				adjust = false;
+//				adjust = false;
+//				clearExternalModes(false);
 			} else if (editor.selected instanceof PlayerEnd) {
 				widgets = playerEnd;
-				adjust = false;
+//				adjust = false;
+//				clearExternalModes(false);
 			} else if (editor.selected instanceof Spike) {
 				widgets = spike;
-				adjust = false;
+//				adjust = false;
+//				clearExternalModes(false);
 			} else {
 				widgets = minimal;
-				adjust = false;
+//				adjust = false;
+//				clearExternalModes(false);
 			}
 			cameraEditMode = 0;
 
@@ -198,7 +208,7 @@ public class EditorSide extends Toolbar {
 		// step - reset the side toolbar's options and abort drawing if nothing selected
 		reset();
 		if (editor.selected == null) {
-			clearExternalModes();
+			clearExternalModes(true);
 			return;
 		}
 
@@ -324,6 +334,7 @@ public class EditorSide extends Toolbar {
 	public boolean isLevelEnd() {
 		if (editor.selected != null) {
 			if (editor.selected instanceof PlayerEnd) {
+				clearExternalModes();
 				return ((PlayerEnd) editor.selected).getLevelEnd();
 			}
 		}

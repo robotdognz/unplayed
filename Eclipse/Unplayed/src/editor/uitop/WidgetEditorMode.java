@@ -38,7 +38,7 @@ public class WidgetEditorMode extends Widget {
 
 			if (editor.eMode == editorMode.EXTERNAL) {
 				subWidgets.get(2).clicked();
-				editor.editorSide.clearExternalModes();
+				editor.editorSide.clearExternalModes(true);
 				return;
 			}
 
