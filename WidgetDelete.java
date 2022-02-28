@@ -106,7 +106,7 @@ public class WidgetDelete extends Widget {
 				}
 			} else { // page view
 				if (editor.selected instanceof PageViewObject) {
-					AppLogic.game.getPageView().removePageViewObject((Page) editor.selected);
+					AppLogic.game.getPageView().removePageViewObject((PageViewObject) editor.selected);
 				}
 			}
 			// deselect the object
