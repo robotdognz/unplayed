@@ -6,6 +6,7 @@ import java.util.HashSet;
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
+import editor.Editor.editorMode;
 import game.AppLogic;
 import objects.Background;
 import objects.Editable;
@@ -133,9 +134,12 @@ public class EditorSide extends Toolbar {
 
 		super.bounds = new Rectangle(0, p.height / 2 - (height) / 2, widgetSpacing, height);
 	}
-	
+
 	public void clearExternalModes() {
 		adjust = false;
+		if (editor.eMode == editorMode.EXTERNAL) {
+			editor.eMode = editorMode.SELECT;
+		}
 	}
 
 	public void reset() {
