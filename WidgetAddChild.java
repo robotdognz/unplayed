@@ -3,9 +3,7 @@ package editor.uiside;
 import editor.Editor;
 import editor.Editor.editorMode;
 import editor.Toolbar;
-import objects.Background;
 import objects.Page;
-import objects.events.PlayerEnd;
 import processing.core.PApplet;
 import ui.Widget;
 
@@ -15,7 +13,7 @@ public class WidgetAddChild extends Widget {
 	public WidgetAddChild(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		toolbar = (EditorSide) parent;
-		icon = p.loadImage(folder + "move.png");
+		icon = p.loadImage(folder + "Add.png");
 	}
 
 	@Override
@@ -23,10 +21,9 @@ public class WidgetAddChild extends Widget {
 		super.updateActive();
 		if (editor.selected != null) { // if there is something selected
 			// if it's a Page or a Background, or a PlayerEnd that is not a level end
-			if (editor.selected instanceof Page || editor.selected instanceof Background
-					|| (editor.selected instanceof PlayerEnd && !((PlayerEnd) editor.selected).getLevelEnd())) {
+			if (editor.selected instanceof Page) {
 				available = true;
-				if (toolbar.adjust) {
+				if (toolbar.addChild) {
 					active = true;
 					editor.eMode = editorMode.EXTERNAL;
 				} else {
@@ -43,10 +40,10 @@ public class WidgetAddChild extends Widget {
 
 	@Override
 	public void clicked() {
-		if (toolbar.adjust) {
+		if (toolbar.addChild) {
 			editor.editorSide.clearExternalModes();
 		} else {
-			toolbar.adjust = true;
+			toolbar.addChild = true;
 		}
 
 //		toolbar.adjust = !toolbar.adjust;

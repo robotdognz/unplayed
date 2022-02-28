@@ -57,6 +57,7 @@ public class EditorSide extends Toolbar {
 		Widget clockwiseW = new WidgetRotateClockwise(p, editor, this);
 		Widget counterClockwiseW = new WidgetRotateCounterClockwise(p, editor, this);
 		Widget adjustW = new WidgetAdjust(p, editor, this);
+		Widget addChildW = new WidgetAddChild(p, editor, this);
 		Widget levelendW = new WidgetPELevelEnd(p, editor, this);
 		Widget excludeW = new WidgetExcludeMenu(p, editor, this);
 
@@ -88,6 +89,7 @@ public class EditorSide extends Toolbar {
 		page.add(flipHW);
 		page.add(flipVW);
 		page.add(adjustW);
+		page.add(addChildW);
 		page.add(excludeW);
 
 		// widgets for pages
