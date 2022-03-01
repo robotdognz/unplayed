@@ -536,6 +536,8 @@ public class EditorJSON {
 								continue;
 							}
 							
+							PApplet.print("Found a page with a child");
+							
 							// get page information, used for finding a match in level
 							JSONObject jPage = viewPages.getJSONObject(j);
 							int parentCenterX = jPage.getInt("centerX");
