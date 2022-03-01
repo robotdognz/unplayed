@@ -531,7 +531,7 @@ public class EditorJSON {
 						for (int j = 0; j < viewPages.size(); j++) {
 
 							JSONArray pageChildren = object.getJSONArray("children");
-							if (pageChildren != null && pageChildren.size() < 1) {
+							if (pageChildren == null || pageChildren.size() < 1) {
 								// if this page has no children, go to next page
 								continue;
 							}
