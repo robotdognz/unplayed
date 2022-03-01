@@ -531,6 +531,7 @@ public class EditorJSON {
 					if (viewPages != null && viewPages.size() > 0) {
 						// for each page made from this view, find it in the level
 						for (int j = 0; j < viewPages.size(); j++) {
+							PApplet.print("checking a page");
 
 							JSONArray pageChildren = object.getJSONArray("children");
 							if (pageChildren == null || pageChildren.size() < 1) {
