@@ -232,7 +232,12 @@ public class EditorBottom extends Toolbar {
 				if (x > leftEdge && x < rightEdge) {
 
 					if (editor.currentTool instanceof TileTool) {
-						editor.currentTile = (TileHandler) objects.get(i);
+						if (Editor.showPageView) {
+							//TODO: loading screens
+							editor.currentLoading = (LoadingHandler) objects.get(i);
+						} else {
+							editor.currentTile = (TileHandler) objects.get(i);
+						}
 					} else if (editor.currentTool instanceof ImageTool) {
 
 						if (Editor.showPageView) {
@@ -277,7 +282,7 @@ public class EditorBottom extends Toolbar {
 					}
 
 				} else {
-					
+
 					float objectsWidth = tiles.size() * selectionArea.getHeight();
 					if (objectsWidth > selectionArea.getWidth()) {
 						// scroll
@@ -293,7 +298,6 @@ public class EditorBottom extends Toolbar {
 					}
 
 				}
-
 
 			} else if (editor.currentTool instanceof ImageTool) {
 
