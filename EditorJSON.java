@@ -519,6 +519,8 @@ public class EditorJSON {
 
 		// get all the page view objects currently in the level
 		List<PageViewObject> pageViewObjects = game.getPageView().getPageViewObjects();
+		
+		PApplet.print("Checking for children");
 
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
