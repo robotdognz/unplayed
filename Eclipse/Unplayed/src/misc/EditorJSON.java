@@ -7,6 +7,7 @@ import java.util.List;
 import editor.Editor;
 import game.AppLogic;
 import game.Game;
+import handlers.LoadingHandler;
 import handlers.TextureCache;
 import objects.Background;
 import objects.Editable;
@@ -45,6 +46,7 @@ public class EditorJSON {
 			saveRemoved(values, editor);
 			saveViews(values, editor);
 			saveBackgrounds(values, editor);
+			saveLoading(values, editor);
 
 			File file;
 			if (path.matches(".+.unplayed$")) {
@@ -267,6 +269,19 @@ public class EditorJSON {
 
 	}
 
+	private void saveLoading(JSONArray values, Editor editor) {
+		LoadingHandler loading = AppLogic.game.currentLoading;
+		if (loading == null) {
+			return;
+		}
+
+		JSONObject object = new JSONObject();
+		object.setString("type", "loading");
+		object.setString("file", loading.getFile().toString());
+
+		values.setJSONObject(values.size(), object); // add it on to the end
+	}
+
 	public void load(Game game, String path) {
 		try {
 			values = p.loadJSONArray(path);
@@ -285,6 +300,7 @@ public class EditorJSON {
 			loadViews(values, game);
 			loadBackgrounds(values, game);
 			loadPageChildren(values, game);
+			loadLoading(values, game);
 
 			if (toast != null) {
 				toast.showToast("Level Loaded");
@@ -513,7 +529,7 @@ public class EditorJSON {
 
 		// get all the page view objects currently in the level
 		List<PageViewObject> pageViewObjects = game.getPageView().getPageViewObjects();
-		
+
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
 			String type = object.getString("type");
@@ -530,7 +546,7 @@ public class EditorJSON {
 								// if this page has no children, go to next page
 								continue;
 							}
-							
+
 							// get page information, used for finding a match in level
 							int parentCenterX = jPage.getInt("centerX");
 							int parentCenterY = jPage.getInt("centerY");
@@ -581,6 +597,23 @@ public class EditorJSON {
 				}
 			}
 		}
+	}
+
+	private void loadLoading(JSONArray values, Game game) {
+		for (int i = 0; i < values.size(); i++) {
+			JSONObject object = values.getJSONObject(i);
+			String type = object.getString("type");
+			if (type.equals("loading")) {
+				File textureFile = new File(object.getString("file"));
+				LoadingHandler loading = AppLogic.texture.getLoadingMap().get(textureFile);
+				game.currentLoading = loading;
+				// found a loading, set it and return
+				return;
+			}
+		}
+
+		// no loading found, set to null (which uses default)
+		game.currentLoading = null;
 	}
 
 }
