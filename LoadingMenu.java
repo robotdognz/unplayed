@@ -1,5 +1,7 @@
 package ui;
 
+import static processing.core.PConstants.CENTER;
+
 import game.AppLogic;
 import handlers.LoadingHandler;
 import handlers.TextureCache;
@@ -32,7 +34,9 @@ public class LoadingMenu extends Menu {
 		p.translate(position.x, position.y);
 		p.rotate(PApplet.radians(angle));
 		if (loading != null) {
-			loading.draw(p.g, 0, 0, loading.getWidth(), loading.getHeight(), scale);
+//			loading.draw(p.g, 0, 0, loading.getWidth(), loading.getHeight(), scale);
+			p.imageMode(CENTER);
+			p.image(loading.getSprite(3), 0, 0);
 		} else {
 			TextureCache.drawLoadingText(p);
 		}

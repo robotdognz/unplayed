@@ -1,7 +1,6 @@
 package handlers;
 
 import java.io.File;
-
 import processing.core.PApplet;
 
 public class LoadingHandler extends Handler implements Comparable<LoadingHandler> {
@@ -16,5 +15,5 @@ public class LoadingHandler extends Handler implements Comparable<LoadingHandler
 		String name = datapath.toString();
 		return name.compareTo(otherName);
 	}
-
+	
 }
