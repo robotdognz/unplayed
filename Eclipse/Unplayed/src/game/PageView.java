@@ -127,6 +127,10 @@ public class PageView {
 			page.draw(currentScale);
 			if (Editor.autoCameraSearch && !Camera.getGame()) {
 				((Page) page).drawCorners();
+				List<PageViewObject> children = ((Page) page).getChildren();
+				for (PageViewObject child : children) {
+					child.drawCornersAsChild();
+				}
 			}
 
 		}
@@ -257,7 +261,7 @@ public class PageView {
 				maxX = Math.max(maxX, page.getRightmostPoint());
 				maxY = Math.max(maxY, page.getBottommostPoint());
 
-				// TODO: do area for children of this page
+				// do area for this page's children
 				List<PageViewObject> children = page.getChildren();
 				for (PageViewObject child : children) {
 					minX = Math.min(minX, child.getLeftmostPoint());

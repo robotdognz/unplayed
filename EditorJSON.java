@@ -202,7 +202,7 @@ public class EditorJSON {
 					continue;
 				}
 				Page page = (Page) pageViewObject;
-				
+
 				// if this page belongs to this view
 				if (view.equals(page.getView())) {
 					JSONObject pageJsonObject = new JSONObject();
@@ -216,6 +216,20 @@ public class EditorJSON {
 					pageJsonObject.setBoolean("showObstacles", page.showObstacles);
 					pageJsonObject.setBoolean("showTiles", page.showTiles);
 					pageJsonObject.setBoolean("showImages", page.showImages);
+
+					// TODO: save children of this page
+					List<PageViewObject> children = page.getChildren();
+					if (children.size() > 0) {
+						JSONArray pageChildren = new JSONArray();
+						for (PageViewObject child : children) {
+							JSONObject pageChild = new JSONObject();
+							pageChild.setString("type", child.getName());
+							pageChild.setFloat("centerX", (int) child.getPosition().x);
+							pageChild.setInt("centerY", (int) child.getPosition().y);
+							pageChildren.setJSONObject(pageChildren.size(), pageChild);
+						}
+						pageJsonObject.setJSONArray("children", pageChildren);
+					}
 
 					viewPages.setJSONObject(viewPages.size(), pageJsonObject);
 				}
@@ -231,11 +245,11 @@ public class EditorJSON {
 		List<PageViewObject> backgrounds = AppLogic.game.getPageView().getPageViewObjects();
 
 		for (PageViewObject backgroundObject : backgrounds) {
-			if(!(backgroundObject instanceof Background)) {
+			if (!(backgroundObject instanceof Background)) {
 				continue;
 			}
 			Background background = (Background) backgroundObject;
-			
+
 			JSONObject object = new JSONObject();
 			object.setString("type", "background");
 			object.setInt("centerX", (int) background.getPosition().x);
@@ -274,6 +288,7 @@ public class EditorJSON {
 			game.getPageView().clearPageViewObjects();
 			loadViews(values, game);
 			loadBackgrounds(values, game);
+			loadPageChildren(values, game);
 
 			if (toast != null) {
 				toast.showToast("Level Loaded");
@@ -445,6 +460,8 @@ public class EditorJSON {
 
 							}
 
+							// TODO: load children
+
 							pages.add(page);
 						}
 					}
@@ -458,6 +475,7 @@ public class EditorJSON {
 		}
 		game.setViews(views);
 		game.getPageView().addPageViewObjects(pages);
+
 	}
 
 	private void loadBackgrounds(JSONArray values, Game game) {
@@ -495,6 +513,78 @@ public class EditorJSON {
 		}
 
 		game.getPageView().addPageViewObjects(backgrounds);
+	}
+
+	private void loadPageChildren(JSONArray values2, Game game) {
+
+		ArrayList<PageViewObject> pageViewObjects = new ArrayList<PageViewObject>();
+
+		// TODO Auto-generated method stub
+		for (int i = 0; i < values.size(); i++) {
+			JSONObject object = values.getJSONObject(i);
+			String type = object.getString("type");
+			if (type.equals("view")) {
+				JSONArray viewPages = object.getJSONArray("pages");
+				try {
+					if (viewPages.size() > 0) {
+						// for each page made from this view, find it in the level
+						for (int j = 0; j < viewPages.size(); j++) {
+							JSONObject jPage = viewPages.getJSONObject(j);
+							int parentCenterX = jPage.getInt("centerX");
+							int parentCenterY = jPage.getInt("centerY");
+							PVector parentCenter = new PVector(parentCenterX, parentCenterY);
+
+							JSONArray pageChildren = object.getJSONArray("children");
+							if (pageChildren.size() < 1) {
+								// if this page has no children, go to next page
+								continue;
+							}
+
+							for (PageViewObject pageViewObject : pageViewObjects) {
+								if (!(pageViewObject instanceof Page)) {
+									continue;
+								}
+
+								Page parentPage = (Page) pageViewObject;
+
+								if (parentPage.getPosition() == parentCenter) {
+									// found the matching page in the level
+
+									// find matching children
+									for (int k = 0; k < viewPages.size(); k++) {
+										// load current child information
+										JSONObject jChild = viewPages.getJSONObject(k);
+										String jChildType = object.getString("type");
+										int childCenterX = jChild.getInt("centerX");
+										int childCenterY = jChild.getInt("centerY");
+										PVector jChildCenter = new PVector(childCenterX, childCenterY);
+
+										// find matching child in level
+										for (PageViewObject pageViewObjectChild : pageViewObjects) {
+											if (!jChildType.equals(pageViewObjectChild.getName())) {
+												continue;
+											}
+
+											if (pageViewObjectChild.getPosition() != jChildCenter) {
+												continue;
+											}
+
+											// we have a match
+											parentPage.addOrRemoveChild(pageViewObjectChild);
+										}
+									}
+
+								}
+							}
+						}
+					}
+				} catch (Exception e) {
+					if (toast != null) {
+						toast.showToast(e.getMessage());
+					}
+				}
+			}
+		}
 	}
 
 }

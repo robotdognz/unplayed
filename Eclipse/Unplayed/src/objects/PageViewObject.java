@@ -1,7 +1,6 @@
 package objects;
 
 import static processing.core.PConstants.CENTER;
-
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PVector;
@@ -82,6 +81,7 @@ public class PageViewObject extends Editable {
 
 	}
 
+
 	@Override
 	public void drawSelected(PGraphics g) {
 		g.pushMatrix();
@@ -95,7 +95,7 @@ public class PageViewObject extends Editable {
 		g.rect(0, 0, getWidth(), getHeight());
 		g.popMatrix();
 	}
-	
+
 	public void drawSelectedAsChild(PGraphics g) {
 		g.pushMatrix();
 		g.noFill();
@@ -107,6 +107,16 @@ public class PageViewObject extends Editable {
 		g.rectMode(CENTER);
 		g.rect(0, 0, getWidth(), getHeight());
 		g.popMatrix();
+	}
+	
+	public void drawCornersAsChild() {
+		// draw page corners
+		p.rectMode(CENTER);
+		p.fill(0, 255, 0);
+		p.rect(topLeft.x, topLeft.y, 10, 10);
+		p.rect(topRight.x, topRight.y, 10, 10);
+		p.rect(bottomLeft.x, bottomLeft.y, 10, 10);
+		p.rect(bottomRight.x, bottomRight.y, 10, 10);
 	}
 
 	// --------------update the corner PVectors---------------

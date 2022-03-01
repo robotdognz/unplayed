@@ -1,14 +1,9 @@
 package objects;
 
 import java.util.ArrayList;
-//import java.util.Collections;
 import java.util.HashSet;
-//import java.util.Set;
 import java.util.List;
-
 import org.jbox2d.common.Vec2;
-
-import editor.Editor;
 import game.Game;
 import objects.events.PlayerEnd;
 import processing.core.*;
@@ -306,7 +301,7 @@ public class Page extends PageViewObject {
 
 	public void drawCorners() {
 		// draw page corners
-		if (Editor.autoCameraSearch && playerVisibleExternal) {
+		if (playerVisibleExternal) { // Editor.autoCameraSearch && playerVisibleExternal
 			p.rectMode(CENTER);
 			p.fill(255, 0, 0);
 			p.rect(topLeft.x, topLeft.y, 10, 10);
@@ -370,6 +365,11 @@ public class Page extends PageViewObject {
 
 	private void updateShadow() {
 		this.shadow = (int) (shadowOffset / size);
+	}
+	
+	@Override
+	public String getName() {
+		return "Page";
 	}
 
 }
