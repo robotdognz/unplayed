@@ -231,7 +231,7 @@ public class AppLogic {
 
 				// move loaded level so that it's just off screen
 				// calculate offset
-				Rectangle pageArea = game.getPageView().getPageArea();
+				Rectangle pageArea = game.getPageView().getLevelArea();
 				Rectangle playerArea = game.getPageView().getPlayerVisibleArea();
 				Rectangle menuArea = menu.getArea();
 

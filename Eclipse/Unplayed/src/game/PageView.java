@@ -161,7 +161,7 @@ public class PageView {
 
 			if (!storedMenu.isBuilt()) {
 				// build the page menu if it isn't already built
-				Rectangle pageArea = getPageArea();
+				Rectangle pageArea = getLevelArea();
 
 				if (pageArea != null) {
 					storedMenu.buldPageMenu(pageCamera.getCenter(), pageArea, pageCamera);
@@ -331,29 +331,24 @@ public class PageView {
 		return new Rectangle(x, y, width, height);
 	}
 
-	public Rectangle getPageArea() {
+	public Rectangle getLevelArea() {
 		float minX = Float.POSITIVE_INFINITY;
 		float minY = Float.POSITIVE_INFINITY;
 		float maxX = Float.NEGATIVE_INFINITY;
 		float maxY = Float.NEGATIVE_INFINITY;
 
-		int pageCount = 0;
-		// get area of pages
+		int objectCount = 0;
+		// get area of objects in level
 		for (PageViewObject object : pageViewObjects) {
-			if (!(object instanceof Page)) {
-				continue;
-			}
-			Page page = (Page) object;
+			minX = Math.min(minX, object.getLeftmostPoint());
+			minY = Math.min(minY, object.getTopmostPoint());
+			maxX = Math.max(maxX, object.getRightmostPoint());
+			maxY = Math.max(maxY, object.getBottommostPoint());
 
-			minX = Math.min(minX, page.getLeftmostPoint());
-			minY = Math.min(minY, page.getTopmostPoint());
-			maxX = Math.max(maxX, page.getRightmostPoint());
-			maxY = Math.max(maxY, page.getBottommostPoint());
-
-			pageCount++;
+			objectCount++;
 		}
 
-		if (pageCount == 0) {
+		if (objectCount == 0) {
 			return null;
 		}
 
