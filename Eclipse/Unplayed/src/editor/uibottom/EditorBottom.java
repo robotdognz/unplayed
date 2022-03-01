@@ -22,6 +22,7 @@ import handlers.BackgroundHandler;
 import handlers.EventHandler;
 import handlers.Handler;
 import handlers.ImageHandler;
+import handlers.LoadingHandler;
 import handlers.TextureCache;
 import handlers.TileHandler;
 
@@ -40,6 +41,8 @@ public class EditorBottom extends Toolbar {
 	private float imageOffset;
 	private ArrayList<BackgroundHandler> backgrounds; // backgrounds
 	private float backgroundOffset;
+	private ArrayList<LoadingHandler> loadings; // loading screens
+	private float loadingOffset;
 	private ArrayList<EventHandler> events; // events
 	private float eventOffset;
 	public ArrayList<View> views;// views
@@ -77,6 +80,7 @@ public class EditorBottom extends Toolbar {
 		this.tiles = texture.getTileList();
 		this.images = texture.getImageList();
 		this.backgrounds = texture.getBackgroundList();
+		this.loadings = texture.getLoadingList();
 		this.events = texture.getEventList();
 		this.views = AppLogic.game.views;
 
@@ -121,9 +125,16 @@ public class EditorBottom extends Toolbar {
 		Float offset = 0.0f;
 		Object currentHandler = null;
 		if (editor.currentTool instanceof TileTool) {
-			objects.addAll(tiles);
-			offset = tileOffset;
-			currentHandler = editor.currentTile;
+			if (Editor.showPageView) {
+				objects.addAll(loadings);
+				offset = loadingOffset;
+				currentHandler = editor.currentLoading;
+				// TODO: add loading screens
+			} else {
+				objects.addAll(tiles);
+				offset = tileOffset;
+				currentHandler = editor.currentTile;
+			}
 		} else if (editor.currentTool instanceof ImageTool) {
 
 			if (Editor.showPageView) {
@@ -187,8 +198,15 @@ public class EditorBottom extends Toolbar {
 			ArrayList<Object> objects = new ArrayList<Object>(); // current objects to draw in the scroll bar
 			Float offset = 0.0f;
 			if (editor.currentTool instanceof TileTool) {
-				objects.addAll(tiles);
-				offset = tileOffset;
+				if (Editor.showPageView) {
+					// TODO: loading screens
+					objects.addAll(loadings);
+					offset = loadingOffset;
+				} else {
+					objects.addAll(tiles);
+					offset = tileOffset;
+				}
+
 			} else if (editor.currentTool instanceof ImageTool) {
 
 				if (Editor.showPageView) {
@@ -241,19 +259,42 @@ public class EditorBottom extends Toolbar {
 	public void touchMoved(ArrayList<PVector> touch) {
 		if (touch.size() == 1 && p.mouseY >= selectionArea.getY()) {
 			if (editor.currentTool instanceof TileTool) {
-				float objectsWidth = tiles.size() * selectionArea.getHeight();
-				if (objectsWidth > selectionArea.getWidth()) {
-					// scroll
-					tileOffset += (p.pmouseX - p.mouseX) / 3;
-					// prevent scrolling off right edge
-					if (tileOffset > objectsWidth - selectionArea.getWidth() + 1) {
-						tileOffset = objectsWidth - selectionArea.getWidth();
+				if (Editor.showPageView) {
+
+					// TODO: loading screens
+					float objectsWidth = loadings.size() * selectionArea.getHeight();
+					if (objectsWidth > selectionArea.getWidth()) {
+						// scroll
+						loadingOffset += (p.pmouseX - p.mouseX) / 3;
+						// prevent scrolling off right edge
+						if (loadingOffset > objectsWidth - selectionArea.getWidth() + 1) {
+							loadingOffset = objectsWidth - selectionArea.getWidth();
+						}
+						// prevent scrolling off left edge
+						if (loadingOffset < 0) {
+							loadingOffset = 0;
+						}
 					}
-					// prevent scrolling off left edge
-					if (tileOffset < 0) {
-						tileOffset = 0;
+
+				} else {
+					
+					float objectsWidth = tiles.size() * selectionArea.getHeight();
+					if (objectsWidth > selectionArea.getWidth()) {
+						// scroll
+						tileOffset += (p.pmouseX - p.mouseX) / 3;
+						// prevent scrolling off right edge
+						if (tileOffset > objectsWidth - selectionArea.getWidth() + 1) {
+							tileOffset = objectsWidth - selectionArea.getWidth();
+						}
+						// prevent scrolling off left edge
+						if (tileOffset < 0) {
+							tileOffset = 0;
+						}
 					}
+
 				}
+
+
 			} else if (editor.currentTool instanceof ImageTool) {
 
 				if (Editor.showPageView) {

@@ -19,6 +19,7 @@ import game.player.Player;
 import handlers.BackgroundHandler;
 import handlers.EventHandler;
 import handlers.ImageHandler;
+import handlers.LoadingHandler;
 import handlers.TileHandler;
 import misc.DoToast;
 import misc.EditorJSON;
@@ -75,6 +76,7 @@ public class Editor {
 	public ImageHandler currentImage = null;
 	public BackgroundHandler currentBackground = null;
 	public EventHandler currentEvent = null;
+	public LoadingHandler currentLoading = null;
 	public View currentView = null;
 	public Page currentPage = null;
 
