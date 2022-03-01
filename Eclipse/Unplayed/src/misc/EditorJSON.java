@@ -551,6 +551,8 @@ public class EditorJSON {
 
 								if (parentPage.getPosition().equals(parentCenter)) {
 									// found the matching page in the level
+									
+									PApplet.print("Found a match: ", + parentCenter.x + " - " + parentPage.getPosition().x);
 
 									// find matching children
 									for (int k = 0; k < pageChildren.size(); k++) {

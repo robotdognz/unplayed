@@ -269,8 +269,8 @@ public class PageTool extends AreaTool {
 	private void addOrRemoveChild() {
 		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
 		PageViewObject found = pageView.getPageViewObject(mouse.x, mouse.y);
-		if (found != null && !editor.selected.equals(found)) {
-			if(editor.selected instanceof Page) {
+		if (found != null && editor.selected != null && !editor.selected.equals(found)) {
+			if (editor.selected instanceof Page) {
 				Page page = (Page) editor.selected;
 				page.addOrRemoveChild(found);
 			}
