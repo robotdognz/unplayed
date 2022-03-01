@@ -181,7 +181,7 @@ public class EditorBottom extends Toolbar {
 		// select object
 		if (y >= selectionArea.getY() - 10) { // the 10 acts as padding so clicking on widgets doesn't select stuff
 			editor.controller = new EditorControl(p, editor);
-//			editor.eMode = editorMode.ADD;
+			editor.eMode = editorMode.ADD;
 
 			// figure out what type is being clicked on
 			ArrayList<Object> objects = new ArrayList<Object>(); // current objects to draw in the scroll bar
