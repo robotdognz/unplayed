@@ -179,7 +179,7 @@ public class EditorBottom extends Toolbar {
 	@Override
 	public void onTap(float x, float y) {
 		// select object
-		if (y >= selectionArea.getY()) {
+		if (y >= selectionArea.getY() - 10) { // the 10 acts as padding so clicking on widgets doesn't select stuff
 			editor.controller = new EditorControl(p, editor);
 //			editor.eMode = editorMode.ADD;
 
@@ -207,10 +207,10 @@ public class EditorBottom extends Toolbar {
 				offset = viewOffset;
 			}
 
-			if (objects.size() < 1) {
-				editor.eMode = editorMode.ADD;
-				return;
-			}
+//			if (objects.size() < 1) {
+//				editor.eMode = editorMode.ADD;
+//				return;
+//			}
 
 			// click on that object
 			for (int i = 0; i < objects.size(); i++) {
@@ -218,7 +218,7 @@ public class EditorBottom extends Toolbar {
 				float rightEdge = selectionArea.getX() + (i + 1) * selectionArea.getHeight() - offset;
 				if (x > leftEdge && x < rightEdge) {
 
-					editor.eMode = editorMode.ADD;
+//					editor.eMode = editorMode.ADD;
 
 					if (editor.currentTool instanceof TileTool) {
 						editor.currentTile = (TileHandler) objects.get(i);
