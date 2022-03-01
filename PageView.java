@@ -256,8 +256,15 @@ public class PageView {
 				minY = Math.min(minY, page.getTopmostPoint());
 				maxX = Math.max(maxX, page.getRightmostPoint());
 				maxY = Math.max(maxY, page.getBottommostPoint());
-				
-				//TODO: do area for children of this page
+
+				// TODO: do area for children of this page
+				List<PageViewObject> children = page.getChildren();
+				for (PageViewObject child : children) {
+					minX = Math.min(minX, child.getLeftmostPoint());
+					minY = Math.min(minY, child.getTopmostPoint());
+					maxX = Math.max(maxX, child.getRightmostPoint());
+					maxY = Math.max(maxY, child.getBottommostPoint());
+				}
 			}
 		}
 
@@ -404,7 +411,7 @@ public class PageView {
 			if (object.isInside(x, y)) {
 				return object;
 			}
-			
+
 		}
 
 		return null;
