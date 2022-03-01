@@ -515,8 +515,9 @@ public class EditorJSON {
 		game.getPageView().addPageViewObjects(backgrounds);
 	}
 
-	private void loadPageChildren(JSONArray values2, Game game) {
+	private void loadPageChildren(JSONArray values, Game game) {
 
+		// get all the page view objects currently in the level
 		List<PageViewObject> pageViewObjects = game.getPageView().getPageViewObjects();
 
 		for (int i = 0; i < values.size(); i++) {
@@ -525,19 +526,21 @@ public class EditorJSON {
 			if (type.equals("view")) {
 				JSONArray viewPages = object.getJSONArray("pages");
 				try {
-					if (viewPages.size() > 0) {
+					if (viewPages != null && viewPages.size() > 0) {
 						// for each page made from this view, find it in the level
 						for (int j = 0; j < viewPages.size(); j++) {
-							JSONObject jPage = viewPages.getJSONObject(j);
-							int parentCenterX = jPage.getInt("centerX");
-							int parentCenterY = jPage.getInt("centerY");
-							PVector parentCenter = new PVector(parentCenterX, parentCenterY);
 
 							JSONArray pageChildren = object.getJSONArray("children");
 							if (pageChildren != null && pageChildren.size() < 1) {
 								// if this page has no children, go to next page
 								continue;
 							}
+							
+							// get page information, used for finding a match in level
+							JSONObject jPage = viewPages.getJSONObject(j);
+							int parentCenterX = jPage.getInt("centerX");
+							int parentCenterY = jPage.getInt("centerY");
+							PVector parentCenter = new PVector(parentCenterX, parentCenterY);
 
 							for (PageViewObject pageViewObject : pageViewObjects) {
 								if (!(pageViewObject instanceof Page)) {
@@ -550,9 +553,9 @@ public class EditorJSON {
 									// found the matching page in the level
 
 									// find matching children
-									for (int k = 0; k < viewPages.size(); k++) {
+									for (int k = 0; k < pageChildren.size(); k++) {
 										// load current child information
-										JSONObject jChild = viewPages.getJSONObject(k);
+										JSONObject jChild = pageChildren.getJSONObject(k);
 										String jChildType = object.getString("type");
 										int childCenterX = jChild.getInt("centerX");
 										int childCenterY = jChild.getInt("centerY");
