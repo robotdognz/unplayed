@@ -369,7 +369,7 @@ public class Page extends PageViewObject {
 	
 	@Override
 	public String getName() {
-		return "Page";
+		return "page";
 	}
 
 }

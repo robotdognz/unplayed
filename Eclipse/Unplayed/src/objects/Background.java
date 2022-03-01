@@ -64,7 +64,7 @@ public class Background extends PageViewObject {
 
 	@Override
 	public String getName() {
-		return "Background";
+		return "background";
 	}
 
 	public File getFile() {
