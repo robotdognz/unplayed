@@ -271,11 +271,7 @@ public class EditorJSON {
 		try {
 			values = p.loadJSONArray(path);
 
-//			// clear old level
-//			game.world.clear(); // remove old world objects
-//			game.placed.clear(); // removed tiles that have been inserted into slots
-//			game.removed.clear(); // remove tiles that have become the player
-//			game.clearPlayerStart(); // remove the player
+			// clear old level
 			game.emptyGame();
 
 			// box2d

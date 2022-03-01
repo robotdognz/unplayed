@@ -302,6 +302,8 @@ public class AppLogic {
 	}
 
 	static public void loadingScreen() {
+		//TODO: make loading screen from current loading handler
+		
 		Menu temp = new LoadingMenu(p);
 		Rectangle pageArea = game.getPageView().getFullArea();
 
@@ -313,7 +315,6 @@ public class AppLogic {
 		editorToggle = !editorToggle;
 		if (editorToggle) {
 			Camera camera = new FreeCamera();
-//			toast = new DoToast(activity);
 			editor = new Editor(p, camera, toast);
 		}
 		menu = null;
