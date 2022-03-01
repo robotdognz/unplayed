@@ -547,7 +547,7 @@ public class EditorJSON {
 
 								Page parentPage = (Page) pageViewObject;
 
-								if (parentPage.getPosition() == parentCenter) {
+								if (parentPage.getPosition().equals(parentCenter)) {
 									// found the matching page in the level
 
 									// find matching children
@@ -565,7 +565,7 @@ public class EditorJSON {
 												continue;
 											}
 
-											if (pageViewObjectChild.getPosition() != jChildCenter) {
+											if (!pageViewObjectChild.getPosition().equals(jChildCenter)) {
 												continue;
 											}
 
