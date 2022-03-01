@@ -304,7 +304,7 @@ public class AppLogic {
 	static public void loadingScreen() {
 		//TODO: make loading screen from current loading handler
 		
-		Menu temp = new LoadingMenu(p);
+		Menu temp = new LoadingMenu(p, game.currentLoading);
 		Rectangle pageArea = game.getPageView().getFullArea();
 
 		temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());

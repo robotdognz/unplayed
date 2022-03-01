@@ -5,6 +5,7 @@ import java.util.HashSet;
 import camera.Camera;
 import editor.Editor;
 import game.player.Player;
+import handlers.LoadingHandler;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.CountdownTimer;
@@ -41,6 +42,8 @@ public class Game {
 	private CountdownTimer pauseTimer; // used to pause game during puzzles
 	private PauseType pauseType;
 	private Rectangle playerAreaTemp;
+	
+	public LoadingHandler currentLoading = null;
 
 	private enum PauseType {
 		NEXT_LEVEL, RESTART_LEVEL, NEXT_PLAYER, NONE
@@ -105,6 +108,8 @@ public class Game {
 		views.clear();
 		pageView.clearPageViewObjects(); // remove pages and backgrounds
 		buildWorld(); // rebuild world
+		
+		currentLoading = null;
 	}
 
 	public void removePlayer() {

@@ -128,7 +128,8 @@ public class EditorBottom extends Toolbar {
 			if (Editor.showPageView) {
 				objects.addAll(loadings);
 				offset = loadingOffset;
-				currentHandler = editor.currentLoading;
+//				currentHandler = editor.currentLoading;
+				currentHandler = AppLogic.game.currentLoading;
 			} else {
 				objects.addAll(tiles);
 				offset = tileOffset;
@@ -191,7 +192,8 @@ public class EditorBottom extends Toolbar {
 		// select object
 		if (y >= selectionArea.getY() + 70) { // the 70 acts as padding so clicking on widgets doesn't select stuff
 			editor.controller = new EditorControl(p, editor);
-//			editor.eMode = editorMode.ADD;
+			// editor.eMode = editorMode.ADD; this is in the below so it doesn't happen when
+			// selecting a loading screen
 
 			// figure out what type is being clicked on
 			ArrayList<Object> objects = new ArrayList<Object>(); // current objects to draw in the scroll bar
@@ -234,7 +236,9 @@ public class EditorBottom extends Toolbar {
 
 					if (editor.currentTool instanceof TileTool) {
 						if (Editor.showPageView) {
-							editor.currentLoading = (LoadingHandler) objects.get(i);
+//							editor.currentLoading = (LoadingHandler) objects.get(i);
+							AppLogic.game.currentLoading = (LoadingHandler) objects.get(i);
+							
 						} else {
 							editor.currentTile = (TileHandler) objects.get(i);
 						}
