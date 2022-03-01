@@ -76,6 +76,9 @@ public class Page extends PageViewObject {
 	}
 
 	public void addOrRemoveChild(PageViewObject child) {
+		if (child == null) {
+			return;
+		}
 		if (children.contains(child)) {
 			children.remove(child);
 			return;
@@ -366,7 +369,7 @@ public class Page extends PageViewObject {
 	private void updateShadow() {
 		this.shadow = (int) (shadowOffset / size);
 	}
-	
+
 	@Override
 	public String getName() {
 		return "page";

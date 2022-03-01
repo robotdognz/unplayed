@@ -517,9 +517,8 @@ public class EditorJSON {
 
 	private void loadPageChildren(JSONArray values2, Game game) {
 
-		ArrayList<PageViewObject> pageViewObjects = new ArrayList<PageViewObject>();
+		List<PageViewObject> pageViewObjects = game.getPageView().getPageViewObjects();
 
-		// TODO Auto-generated method stub
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
 			String type = object.getString("type");
