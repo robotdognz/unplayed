@@ -520,7 +520,7 @@ public class EditorJSON {
 		// get all the page view objects currently in the level
 		List<PageViewObject> pageViewObjects = game.getPageView().getPageViewObjects();
 		
-		PApplet.print("Checking for children");
+		PApplet.print("Checking for children\n");
 
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
@@ -531,18 +531,18 @@ public class EditorJSON {
 					if (viewPages != null && viewPages.size() > 0) {
 						// for each page made from this view, find it in the level
 						for (int j = 0; j < viewPages.size(); j++) {
-							PApplet.print("checking a page");
+							PApplet.print("checking a page\n");
 
-							JSONArray pageChildren = object.getJSONArray("children");
+							JSONObject jPage = viewPages.getJSONObject(j);
+							JSONArray pageChildren = jPage.getJSONArray("children");
 							if (pageChildren == null || pageChildren.size() < 1) {
 								// if this page has no children, go to next page
 								continue;
 							}
 							
-							PApplet.print("Found a page with a child");
+							PApplet.print("Found a page with a child\n");
 							
 							// get page information, used for finding a match in level
-							JSONObject jPage = viewPages.getJSONObject(j);
 							int parentCenterX = jPage.getInt("centerX");
 							int parentCenterY = jPage.getInt("centerY");
 							PVector parentCenter = new PVector(parentCenterX, parentCenterY);
@@ -557,7 +557,7 @@ public class EditorJSON {
 								if (parentPage.getPosition().equals(parentCenter)) {
 									// found the matching page in the level
 									
-									PApplet.print("Found a match: ", + parentCenter.x + " - " + parentPage.getPosition().x);
+									PApplet.print("Found a match: ", + parentCenter.x + " - " + parentPage.getPosition().x + "\n");
 
 									// find matching children
 									for (int k = 0; k < pageChildren.size(); k++) {
