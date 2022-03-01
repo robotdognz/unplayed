@@ -179,7 +179,7 @@ public class EditorBottom extends Toolbar {
 	@Override
 	public void onTap(float x, float y) {
 		// select object
-		if (y >= selectionArea.getY() + 30) { // the 30 acts as padding so clicking on widgets doesn't select stuff
+		if (y >= selectionArea.getY() + 100) { // the 100 acts as padding so clicking on widgets doesn't select stuff
 			editor.controller = new EditorControl(p, editor);
 			editor.eMode = editorMode.ADD;
 
