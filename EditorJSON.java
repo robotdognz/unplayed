@@ -217,7 +217,7 @@ public class EditorJSON {
 					pageJsonObject.setBoolean("showTiles", page.showTiles);
 					pageJsonObject.setBoolean("showImages", page.showImages);
 
-					// TODO: save children of this page
+					// save children of this page
 					List<PageViewObject> children = page.getChildren();
 					if (children.size() > 0) {
 						JSONArray pageChildren = new JSONArray();
@@ -460,8 +460,6 @@ public class EditorJSON {
 
 							}
 
-							// TODO: load children
-
 							pages.add(page);
 						}
 					}
@@ -520,8 +518,6 @@ public class EditorJSON {
 		// get all the page view objects currently in the level
 		List<PageViewObject> pageViewObjects = game.getPageView().getPageViewObjects();
 		
-		PApplet.print("Checking for children\n");
-
 		for (int i = 0; i < values.size(); i++) {
 			JSONObject object = values.getJSONObject(i);
 			String type = object.getString("type");
@@ -531,7 +527,6 @@ public class EditorJSON {
 					if (viewPages != null && viewPages.size() > 0) {
 						// for each page made from this view, find it in the level
 						for (int j = 0; j < viewPages.size(); j++) {
-							PApplet.print("checking a page\n");
 
 							JSONObject jPage = viewPages.getJSONObject(j);
 							JSONArray pageChildren = jPage.getJSONArray("children");
@@ -539,8 +534,6 @@ public class EditorJSON {
 								// if this page has no children, go to next page
 								continue;
 							}
-							
-							PApplet.print("Found a page with a child\n");
 							
 							// get page information, used for finding a match in level
 							int parentCenterX = jPage.getInt("centerX");
@@ -556,8 +549,6 @@ public class EditorJSON {
 
 								if (parentPage.getPosition().equals(parentCenter)) {
 									// found the matching page in the level
-									
-									PApplet.print("Found a matching parent: ", + parentCenter.x + " - " + parentPage.getPosition().x + "\n");
 
 									// find matching children
 									for (int k = 0; k < pageChildren.size(); k++) {
@@ -577,8 +568,6 @@ public class EditorJSON {
 											if (!pageViewObjectChild.getPosition().equals(jChildCenter)) {
 												continue;
 											}
-											
-											PApplet.print("Found a matching child: ", + jChildCenter.x + " - " + pageViewObjectChild.getPosition().x + "\n");
 
 											// we have a match
 											parentPage.addOrRemoveChild(pageViewObjectChild);
