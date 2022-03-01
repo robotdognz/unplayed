@@ -557,13 +557,13 @@ public class EditorJSON {
 								if (parentPage.getPosition().equals(parentCenter)) {
 									// found the matching page in the level
 									
-									PApplet.print("Found a match: ", + parentCenter.x + " - " + parentPage.getPosition().x + "\n");
+									PApplet.print("Found a matching parent: ", + parentCenter.x + " - " + parentPage.getPosition().x + "\n");
 
 									// find matching children
 									for (int k = 0; k < pageChildren.size(); k++) {
 										// load current child information
 										JSONObject jChild = pageChildren.getJSONObject(k);
-										String jChildType = object.getString("type");
+										String jChildType = jChild.getString("type");
 										int childCenterX = jChild.getInt("centerX");
 										int childCenterY = jChild.getInt("centerY");
 										PVector jChildCenter = new PVector(childCenterX, childCenterY);
@@ -577,6 +577,8 @@ public class EditorJSON {
 											if (!pageViewObjectChild.getPosition().equals(jChildCenter)) {
 												continue;
 											}
+											
+											PApplet.print("Found a matching child: ", + jChildCenter.x + " - " + pageViewObjectChild.getPosition().x + "\n");
 
 											// we have a match
 											parentPage.addOrRemoveChild(pageViewObjectChild);
