@@ -181,7 +181,7 @@ public class EditorBottom extends Toolbar {
 		// select object
 		if (y >= selectionArea.getY()) {
 			editor.controller = new EditorControl(p, editor);
-			editor.eMode = editorMode.ADD;
+//			editor.eMode = editorMode.ADD;
 
 			// figure out what type is being clicked on
 			ArrayList<Object> objects = new ArrayList<Object>(); // current objects to draw in the scroll bar
@@ -207,11 +207,19 @@ public class EditorBottom extends Toolbar {
 				offset = viewOffset;
 			}
 
+			if (objects.size() < 1) {
+				editor.eMode = editorMode.ADD;
+				return;
+			}
+
 			// click on that object
 			for (int i = 0; i < objects.size(); i++) {
 				float leftEdge = selectionArea.getX() + (i) * selectionArea.getHeight() - offset;
 				float rightEdge = selectionArea.getX() + (i + 1) * selectionArea.getHeight() - offset;
 				if (x > leftEdge && x < rightEdge) {
+
+					editor.eMode = editorMode.ADD;
+
 					if (editor.currentTool instanceof TileTool) {
 						editor.currentTile = (TileHandler) objects.get(i);
 					} else if (editor.currentTool instanceof ImageTool) {
@@ -232,6 +240,7 @@ public class EditorBottom extends Toolbar {
 					}
 				}
 			}
+
 		}
 	}
 
