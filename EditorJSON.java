@@ -535,7 +535,7 @@ public class EditorJSON {
 							PVector parentCenter = new PVector(parentCenterX, parentCenterY);
 
 							JSONArray pageChildren = object.getJSONArray("children");
-							if (pageChildren.size() < 1) {
+							if (pageChildren != null && pageChildren.size() < 1) {
 								// if this page has no children, go to next page
 								continue;
 							}
