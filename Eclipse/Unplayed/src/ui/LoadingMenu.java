@@ -16,8 +16,12 @@ public class LoadingMenu extends Menu {
 		super(p);
 		this.angleOffset = 10;
 		if (loading != null) {
-			MenuObject loadingImage = new MenuObject(loading.getWidth()*100, loading.getHeight()*100, loading);
+			float imageWidth = loading.getWidth() * 100 * 4;
+			float imageHeight = loading.getHeight() * 100 * 4;
+			MenuObject loadingImage = new MenuObject(imageWidth, imageHeight, loading);
+			
 			objects.add(loadingImage);
+			
 			// TODO: get button information from loading
 			Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
 			objects.add(continueB);
@@ -25,8 +29,12 @@ public class LoadingMenu extends Menu {
 
 			if (AppLogic.texture.getLoadingList().size() > 0) {
 				LoadingHandler temp = AppLogic.texture.getLoadingList().get(0);
-				MenuObject loadingImage = new MenuObject(temp.getWidth()*100, temp.getHeight()*100, temp);
+				float imageWidth = temp.getWidth() * 100 * 4;
+				float imageHeight = temp.getHeight() * 100 * 4;
+				MenuObject loadingImage = new MenuObject(imageWidth, imageHeight, temp);
+				
 				objects.add(loadingImage);
+				
 				// TODO: get button information from loading
 				Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
 				objects.add(continueB);
@@ -44,7 +52,7 @@ public class LoadingMenu extends Menu {
 			p.pushMatrix();
 			p.translate(position.x, position.y);
 			p.rotate(PApplet.radians(angle)); // rotate the page
-			
+
 			// draw the images and buttons
 			p.imageMode(CENTER);
 			float objectYPosition = -pageMenu.getHeight() / 2;

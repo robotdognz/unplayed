@@ -67,11 +67,17 @@ public abstract class Menu {
 		// get's called in the child class constructor
 		// create basic menu
 		menuCenterX = p.width / 2;
-		menuWidth = buttonWidth + buttonDistance * 2;
+		menuWidth = buttonDistance * 2; //buttonWidth + buttonDistance * 2;
 		menuHeight = buttonDistance;
+		float largestWidth = 0;
 		for (MenuObject object : objects) {
 			menuHeight += object.getHeight() + buttonDistance;
+			if (object.getWidth() > largestWidth) {
+				largestWidth = object.getWidth();
+			}
 		}
+		menuWidth += largestWidth;
+		
 		menuTopY = p.height / 2 - menuHeight / 2;
 
 	}
