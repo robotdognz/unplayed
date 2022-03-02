@@ -2,6 +2,7 @@ package ui;
 
 import game.AppLogic;
 import game.Game;
+import handlers.Handler;
 import objects.Rectangle;
 import processing.core.PApplet;
 
@@ -32,7 +33,8 @@ public class LaunchMenu extends Menu {
 		objects.add(quitB);
 
 		// TODO: testing
-		MenuObject test = new MenuObject(buttonWidth, buttonHeight * 2);
+		Handler h = AppLogic.texture.getBackgroundList().get(0);
+		MenuObject test = new MenuObject(buttonWidth, buttonHeight * 2, h);
 		objects.add(test);
 
 		constructMenu();

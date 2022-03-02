@@ -154,14 +154,6 @@ public abstract class Menu {
 		p.translate(position.x, position.y);
 		p.rotate(PApplet.radians(angle)); // rotate the page
 
-//		// draw the shadow
-//		p.translate(shadow, shadow);
-//		p.fill(0, 40);
-//		p.noStroke();
-//		p.rectMode(CENTER);
-//		p.rect(0, 0, menuWidth, menuHeight);
-//		p.translate(-shadow, -shadow);
-
 		// draw the shadow
 		p.translate(shadow, shadow);
 		p.fill(0, 40);
@@ -182,6 +174,7 @@ public abstract class Menu {
 		// draw the buttons
 		float yStart = -pageMenu.getHeight() / 2; // position.y - pageMenu.getHeight() / 2
 
+		p.imageMode(CENTER);
 		for (int i = 0; i < objects.size(); i++) {
 			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
 			objects.get(i).drawOnPage(p, 0, y); // p, position.x, y
