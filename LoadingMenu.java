@@ -3,7 +3,6 @@ package ui;
 import static processing.core.PConstants.CENTER;
 import game.AppLogic;
 import handlers.LoadingHandler;
-import handlers.TextureCache;
 import processing.core.PApplet;
 
 public class LoadingMenu extends Menu {
@@ -21,19 +20,19 @@ public class LoadingMenu extends Menu {
 
 		if (loading != null) {
 			// we have a valid loading handler to build from
-			float imageWidth = loading.getWidth() * 100 * 4;
-			float imageHeight = loading.getHeight() * 100 * 4;
+			float imageWidth = loading.getWidth() * 100 * 3; // 4
+			float imageHeight = loading.getHeight() * 100 * 3; // 4
 			loadingImage = new MenuObject(imageWidth, imageHeight, loading);
 			// TODO: get button information from loading
-			button = true;
+			button = loading.hasButton();
 		} else {
 			// no valid loading handler provided, get default
 			LoadingHandler temp = AppLogic.texture.getLoadingList().get(0);
-			float imageWidth = temp.getWidth() * 100 * 4;
-			float imageHeight = temp.getHeight() * 100 * 4;
+			float imageWidth = temp.getWidth() * 100 * 3; // 4
+			float imageHeight = temp.getHeight() * 100 * 3; // 4
 			loadingImage = new MenuObject(imageWidth, imageHeight, temp);
 			// TODO: get button information from loading
-			button = false;
+			button = temp.hasButton();
 		}
 
 		objects.add(loadingImage);
@@ -67,15 +66,16 @@ public class LoadingMenu extends Menu {
 
 			p.popMatrix();
 
-		} else {
-
-			p.pushMatrix();
-			p.translate(position.x, position.y);
-			p.rotate(PApplet.radians(angle));
-			TextureCache.drawLoadingText(p);
-			p.popMatrix();
-
 		}
+//		else {
+//
+//			p.pushMatrix();
+//			p.translate(position.x, position.y);
+//			p.rotate(PApplet.radians(angle));
+//			TextureCache.drawLoadingText(p);
+//			p.popMatrix();
+//
+//		}
 
 		if (child != null && child.isBuilt()) {
 			child.drawPageView(scale);

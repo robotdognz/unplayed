@@ -363,16 +363,16 @@ public class TextureCache {
 		ArrayList<Integer> temp = new ArrayList<Integer>(); // holds the numbers found in the file name
 		for (File file : loadingPaths) {
 			String path = file.getAbsolutePath();
-			if (path.matches(".+([0-9]+)x([0-9]+)\\.png$")) { // check file ends with number "x" number ".png"
+			if (path.matches(".+([0-9]+)x([0-9]+)_([0-9])\\.png$")) { // check file ends with number "x" number ".png"
 				Pattern pattern = Pattern.compile("\\d+");
 				Matcher m = pattern.matcher(path);
 				while (m.find()) {
 					int i = Integer.parseInt(m.group());
 					temp.add(i);
 				}
-				if (temp.size() >= 2) {
+				if (temp.size() >= 3) {
 					loadingMap.put(file,
-							new LoadingHandler(p, this, file, temp.get(temp.size() - 2), temp.get(temp.size() - 1)));
+							new LoadingHandler(p, this, file, temp.get(temp.size() - 3), temp.get(temp.size() - 2), temp.get(temp.size() - 1)));
 				}
 			}
 			temp.clear();
