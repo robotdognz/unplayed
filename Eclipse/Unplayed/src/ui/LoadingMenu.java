@@ -8,6 +8,7 @@ import processing.core.PApplet;
 
 public class LoadingMenu extends Menu {
 	String continueGame = "Continue";
+	boolean button;
 	boolean alreadyUsed = false;
 	// this boolean prevents this loading menu from infinitely restarting the level
 	// each frame. With this it is only used once
@@ -15,30 +16,31 @@ public class LoadingMenu extends Menu {
 	public LoadingMenu(PApplet p, LoadingHandler loading) {
 		super(p);
 		this.angleOffset = 10;
+
+		MenuObject loadingImage;
+
 		if (loading != null) {
+			// we have a valid loading handler to build from
 			float imageWidth = loading.getWidth() * 100 * 4;
 			float imageHeight = loading.getHeight() * 100 * 4;
-			MenuObject loadingImage = new MenuObject(imageWidth, imageHeight, loading);
-			
-			objects.add(loadingImage);
-			
+			loadingImage = new MenuObject(imageWidth, imageHeight, loading);
 			// TODO: get button information from loading
+			button = true;
+		} else {
+			// no valid loading handler provided, get default
+			LoadingHandler temp = AppLogic.texture.getLoadingList().get(0);
+			float imageWidth = temp.getWidth() * 100 * 4;
+			float imageHeight = temp.getHeight() * 100 * 4;
+			loadingImage = new MenuObject(imageWidth, imageHeight, temp);
+			// TODO: get button information from loading
+			button = true;
+		}
+
+		objects.add(loadingImage);
+
+		if (button) {
 			Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
 			objects.add(continueB);
-		} else {
-
-			if (AppLogic.texture.getLoadingList().size() > 0) {
-				LoadingHandler temp = AppLogic.texture.getLoadingList().get(0);
-				float imageWidth = temp.getWidth() * 100 * 4;
-				float imageHeight = temp.getHeight() * 100 * 4;
-				MenuObject loadingImage = new MenuObject(imageWidth, imageHeight, temp);
-				
-				objects.add(loadingImage);
-				
-				// TODO: get button information from loading
-				Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
-				objects.add(continueB);
-			}
 		}
 
 		constructMenu();
@@ -83,10 +85,24 @@ public class LoadingMenu extends Menu {
 	@Override
 	public void draw() {
 	}
+	
+	public void click() {
+		for (MenuObject object : objects) {
+			if (!(object instanceof Button)) {
+				continue;
+			}
+			Button b = (Button) object;
+
+			if (b.click().equals(continueGame)) {
+				child = null; // remove any child menus
+				AppLogic.startLevel(); // load in the next level
+			}
+		}
+	}
 
 	@Override
 	public void activate() {
-		if (!alreadyUsed) { // prevent this being triggered multiple times
+		if (!button && !alreadyUsed) { // prevent this being triggered multiple times
 			alreadyUsed = true;
 			child = null; // remove any child menus
 			AppLogic.startLevel(); // load in the next level
