@@ -99,7 +99,6 @@ public abstract class Menu {
 		}
 
 		// create page view menu and buttons
-		pageMenu = new Rectangle(0 - menuWidth / 2, 0 - menuHeight / 2, menuWidth, menuHeight);
 		setupMenuContents();
 	}
 
@@ -115,24 +114,11 @@ public abstract class Menu {
 	private void setupMenuContents() {
 		// create page view menu and buttons
 		pageMenu = new Rectangle(0 - menuWidth / 2, 0 - menuHeight / 2, menuWidth, menuHeight);
-//		for (int i = 0; i < objects.size(); i++) {
-//			float y = pageMenu.getY() + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-//
-//			MenuObject object = objects.get(i);
-//			if (!(object instanceof Button)) {
-//				continue;
-//			}
-//
-//			Button button = (Button) object;
-//
-//			button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2, y);
-//		}
 
 		float objectYPosition = pageMenu.getY();
 		for (MenuObject object : objects) {
 			objectYPosition += buttonDistance;
 			float objectHeight = object.getHeight();
-//			object.drawOnPage(p, 0, objectYPosition + objectHeight * 0.5f);
 
 			if (object instanceof Button) {
 				Button button = (Button) object;

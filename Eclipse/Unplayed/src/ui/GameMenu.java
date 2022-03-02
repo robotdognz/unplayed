@@ -9,7 +9,7 @@ public class GameMenu extends Menu {
 	String resume = "Resume";
 	String checkpoint = "Checkpoint";
 	String titleScreen = "Main Menu";
-	String edit = "Level Editor";
+	String edit = "Edit Level";
 	String quit = "Quit";
 
 	public GameMenu(PApplet p, Game game) {
