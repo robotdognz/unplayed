@@ -46,6 +46,7 @@
 -Improved permission checks needed for saving and loading levels
 -Added option to open current level in editor from the pause menu
 -Added child objects to pages, this is used for more control of the camera
+-Levels can now be assigned specific loading screen images in the editor, this is used for narrative and tutorials
 
 1.2.1: Improving physics and tuning player 'feel'
 

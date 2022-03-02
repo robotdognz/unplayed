@@ -607,7 +607,7 @@ public class EditorJSON {
 				File textureFile = new File(object.getString("file"));
 				LoadingHandler loading = AppLogic.texture.getLoadingMap().get(textureFile);
 				game.currentLoading = loading;
-				// found a loading, set it and return
+				// found a loading (null if no matching key), set it and return
 				return;
 			}
 		}

@@ -278,6 +278,10 @@ public class AppLogic {
 					object.draw(TextureCache.LOD32);
 					p.popMatrix();
 				}
+				// force draw next loading screen
+				if (game.currentLoading != null) {
+					game.currentLoading.drawAll();
+				}
 				p.popMatrix();
 
 				// prevent animation jump by skipping the next frame
@@ -302,8 +306,8 @@ public class AppLogic {
 	}
 
 	static public void loadingScreen() {
-		//TODO: make loading screen from current loading handler
-		
+		// TODO: make loading screen from current loading handler
+
 		Menu temp = new LoadingMenu(p, game.currentLoading);
 		Rectangle pageArea = game.getPageView().getFullArea();
 
