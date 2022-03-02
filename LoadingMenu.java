@@ -46,25 +46,21 @@ public class LoadingMenu extends Menu {
 	@Override
 	public void drawPageView(float scale) {
 
-		if (objects.size() > 0) {
+		p.pushMatrix();
+		p.translate(position.x, position.y);
+		p.rotate(PApplet.radians(angle)); // rotate the page
 
-			p.pushMatrix();
-			p.translate(position.x, position.y);
-			p.rotate(PApplet.radians(angle)); // rotate the page
-
-			// draw the images and buttons
-			p.imageMode(CENTER);
-			float objectYPosition = -pageMenu.getHeight() / 2;
-			for (MenuObject object : objects) {
-				objectYPosition += buttonDistance;
-				float objectHeight = object.getHeight();
-				object.drawOnPage(p, 0, objectYPosition + objectHeight * 0.5f);
-				objectYPosition += objectHeight;
-			}
-
-			p.popMatrix();
-
+		// draw the images and buttons
+		p.imageMode(CENTER);
+		float objectYPosition = -pageMenu.getHeight() / 2;
+		for (MenuObject object : objects) {
+			objectYPosition += buttonDistance;
+			float objectHeight = object.getHeight();
+			object.drawOnPage(p, 0, objectYPosition + objectHeight * 0.5f);
+			objectYPosition += objectHeight;
 		}
+
+		p.popMatrix();
 
 		if (child != null && child.isBuilt()) {
 			child.drawPageView(scale);
