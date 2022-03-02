@@ -26,6 +26,7 @@ public class GameMenu extends Menu {
 		objects.add(titleScreenB);
 		objects.add(editB);
 		objects.add(quitB);
+		
 		constructMenu();
 	}
 

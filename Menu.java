@@ -67,8 +67,13 @@ public abstract class Menu {
 		// get's called in the child class constructor
 		// create basic menu
 		menuCenterX = p.width / 2;
-		menuWidth = buttonWidth + buttonDistance * 2; // p.width / 2.182f; // 660
-		menuHeight = buttonDistance + (buttonHeight + buttonDistance) * objects.size();
+		menuWidth = buttonWidth + buttonDistance * 2;
+//		menuHeight = buttonDistance + (buttonHeight + buttonDistance) * objects.size();
+		float height = buttonDistance;
+		for (MenuObject object : objects) {
+			height += object.getHeight() + buttonDistance;
+		}
+		menuHeight = height;
 		menuTopY = p.height / 2 - menuHeight / 2;
 
 	}
@@ -111,14 +116,14 @@ public abstract class Menu {
 		pageMenu = new Rectangle(0 - menuWidth / 2, 0 - menuHeight / 2, menuWidth, menuHeight);
 		for (int i = 0; i < objects.size(); i++) {
 			float y = pageMenu.getY() + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-			
+
 			MenuObject object = objects.get(i);
-			if(!(object instanceof Button)) {
+			if (!(object instanceof Button)) {
 				continue;
 			}
-			
+
 			Button button = (Button) object;
-			
+
 			button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2, y);
 			// ,buttonWidth,buttonHeight);
 		}

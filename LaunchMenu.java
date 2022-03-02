@@ -30,6 +30,11 @@ public class LaunchMenu extends Menu {
 		objects.add(demoB);
 		objects.add(editorB);
 		objects.add(quitB);
+
+		// TODO: testing
+		MenuObject test = new MenuObject(buttonWidth, buttonHeight * 2);
+		objects.add(test);
+
 		constructMenu();
 	}
 
