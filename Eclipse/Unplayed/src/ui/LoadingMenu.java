@@ -3,6 +3,7 @@ package ui;
 import static processing.core.PConstants.CENTER;
 import game.AppLogic;
 import handlers.LoadingHandler;
+import handlers.TextureCache;
 import processing.core.PApplet;
 
 public class LoadingMenu extends Menu {
@@ -29,8 +30,8 @@ public class LoadingMenu extends Menu {
 				MenuObject loadingImage = new MenuObject(temp.getWidth(), temp.getHeight(), temp);
 				objects.add(loadingImage);
 				// TODO: get button information from loading
-//				Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
-//				objects.add(continueB);
+				Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
+				objects.add(continueB);
 			}
 		}
 
@@ -53,7 +54,6 @@ public class LoadingMenu extends Menu {
 				objectYPosition += buttonDistance;
 				float objectHeight = object.getHeight();
 				object.drawOnPage(p, 0, objectYPosition + objectHeight * 0.5f);
-
 				objectYPosition += objectHeight;
 			}
 
@@ -61,16 +61,11 @@ public class LoadingMenu extends Menu {
 
 		} else {
 
-//			p.pushMatrix();
-//			p.translate(position.x, position.y);
-//			p.rotate(PApplet.radians(angle));
-//			if (loading != null) {
-//				p.imageMode(CENTER);
-//				loading.draw(p.g, 0, 0, 3);
-//			} else {
-//				TextureCache.drawLoadingText(p);
-//			}
-//			p.popMatrix();
+			p.pushMatrix();
+			p.translate(position.x, position.y);
+			p.rotate(PApplet.radians(angle));
+			TextureCache.drawLoadingText(p);
+			p.popMatrix();
 
 		}
 
