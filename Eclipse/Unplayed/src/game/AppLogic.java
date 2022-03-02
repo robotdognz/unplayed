@@ -382,10 +382,11 @@ public class AppLogic {
 				game.step(deltaTime); // step game and physics
 			}
 		}
-		game.cameraStep(deltaTime); // step camera etc
 		if (startLevel) {
 			startLevel = false;
 			startLevel();
+		} else {
+			game.cameraStep(deltaTime); // step camera etc
 		}
 
 		// draw the game
