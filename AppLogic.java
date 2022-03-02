@@ -339,6 +339,17 @@ public class AppLogic {
 
 		if (skipNextFrame) {
 			skipNextFrame = false;
+			// draw the game
+			if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView) || (editor == null)) {
+				game.draw(); // draw the game
+			}
+			// draw the menu
+			if (menu != null) {
+				if (!Camera.getGame()) {
+					menu.draw();
+				}
+				menu.hover(lastTouch);
+			}
 			return;
 		}
 
