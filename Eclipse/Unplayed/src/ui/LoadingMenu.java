@@ -7,7 +7,6 @@ import handlers.TextureCache;
 import processing.core.PApplet;
 
 public class LoadingMenu extends Menu {
-//	private LoadingHandler loading = null;
 	String continueGame = "Continue";
 	boolean alreadyUsed = false;
 	// this boolean prevents this loading menu from infinitely restarting the level
@@ -15,10 +14,9 @@ public class LoadingMenu extends Menu {
 
 	public LoadingMenu(PApplet p, LoadingHandler loading) {
 		super(p);
-//		this.loading = loading;
 		this.angleOffset = 10;
 		if (loading != null) {
-			MenuObject loadingImage = new MenuObject(loading.getWidth(), loading.getHeight(), loading);
+			MenuObject loadingImage = new MenuObject(loading.getWidth()*100, loading.getHeight()*100, loading);
 			objects.add(loadingImage);
 			// TODO: get button information from loading
 			Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
@@ -27,7 +25,7 @@ public class LoadingMenu extends Menu {
 
 			if (AppLogic.texture.getLoadingList().size() > 0) {
 				LoadingHandler temp = AppLogic.texture.getLoadingList().get(0);
-				MenuObject loadingImage = new MenuObject(temp.getWidth(), temp.getHeight(), temp);
+				MenuObject loadingImage = new MenuObject(temp.getWidth()*100, temp.getHeight()*100, temp);
 				objects.add(loadingImage);
 				// TODO: get button information from loading
 				Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
@@ -46,8 +44,8 @@ public class LoadingMenu extends Menu {
 			p.pushMatrix();
 			p.translate(position.x, position.y);
 			p.rotate(PApplet.radians(angle)); // rotate the page
-			// draw the buttons
-			// draw the buttons
+			
+			// draw the images and buttons
 			p.imageMode(CENTER);
 			float objectYPosition = -pageMenu.getHeight() / 2;
 			for (MenuObject object : objects) {
