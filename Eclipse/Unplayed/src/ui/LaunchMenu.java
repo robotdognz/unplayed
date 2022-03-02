@@ -19,7 +19,7 @@ public class LaunchMenu extends Menu {
 		super(p);
 		this.game = AppLogic.game;
 
-		Button demoB = new Button(p.width / 2, buttonWidth, buttonHeight, newGame);
+		Button newGameB = new Button(p.width / 2, buttonWidth, buttonHeight, newGame);
 		Button editorB = new Button(p.width / 2, buttonWidth, buttonHeight, editor);
 		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
 
@@ -28,8 +28,7 @@ public class LaunchMenu extends Menu {
 			Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
 			objects.add(continueB);
 		}
-		objects.add(demoB);
-		objects.add(editorB);
+		objects.add(newGameB);
 		
 		// TODO: testing
 		Handler h = AppLogic.texture.getBackgroundList().get(0);
@@ -38,6 +37,7 @@ public class LaunchMenu extends Menu {
 		MenuObject test = new MenuObject(width, height, h);
 		objects.add(test);
 		
+		objects.add(editorB);
 		objects.add(quitB);
 
 		constructMenu();
