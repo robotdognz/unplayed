@@ -310,9 +310,9 @@ public class AppLogic {
 		// TODO: make loading screen from current loading handler
 
 		LoadingHandler loading = game.currentLoading;
-		if (loading == null && texture.getLoadingList().size() > 0) {
-			loading = texture.getLoadingList().get(0);
-		}
+//		if (loading == null && texture.getLoadingList().size() > 0) {
+//			loading = texture.getLoadingList().get(0);
+//		}
 
 		Menu temp = new LoadingMenu(p, loading);
 		Rectangle pageArea = game.getPageView().getFullArea();

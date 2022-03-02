@@ -1,14 +1,12 @@
 package ui;
 
 import static processing.core.PConstants.CENTER;
-
 import game.AppLogic;
 import handlers.LoadingHandler;
-import handlers.TextureCache;
 import processing.core.PApplet;
 
 public class LoadingMenu extends Menu {
-	private LoadingHandler loading = null;
+//	private LoadingHandler loading = null;
 	String continueGame = "Continue";
 	boolean alreadyUsed = false;
 	// this boolean prevents this loading menu from infinitely restarting the level
@@ -16,7 +14,7 @@ public class LoadingMenu extends Menu {
 
 	public LoadingMenu(PApplet p, LoadingHandler loading) {
 		super(p);
-		this.loading = loading;
+//		this.loading = loading;
 		this.angleOffset = 10;
 		if (loading != null) {
 			MenuObject loadingImage = new MenuObject(loading.getWidth(), loading.getHeight(), loading);
@@ -24,6 +22,16 @@ public class LoadingMenu extends Menu {
 			// TODO: get button information from loading
 			Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
 			objects.add(continueB);
+		} else {
+
+			if (AppLogic.texture.getLoadingList().size() > 0) {
+				LoadingHandler temp = AppLogic.texture.getLoadingList().get(0);
+				MenuObject loadingImage = new MenuObject(temp.getWidth(), temp.getHeight(), temp);
+				objects.add(loadingImage);
+				// TODO: get button information from loading
+//				Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
+//				objects.add(continueB);
+			}
 		}
 
 		constructMenu();
@@ -32,31 +40,37 @@ public class LoadingMenu extends Menu {
 	@Override
 	public void drawPageView(float scale) {
 
-		if (objects.size() > 1) {
+		if (objects.size() > 0) {
 
 			p.pushMatrix();
 			p.translate(position.x, position.y);
 			p.rotate(PApplet.radians(angle)); // rotate the page
 			// draw the buttons
-			p.noStroke();
-			for (int i = 0; i < objects.size(); i++) {
-				float y = menuTopY + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-				objects.get(i).draw(p, y);
+			// draw the buttons
+			p.imageMode(CENTER);
+			float objectYPosition = -pageMenu.getHeight() / 2;
+			for (MenuObject object : objects) {
+				objectYPosition += buttonDistance;
+				float objectHeight = object.getHeight();
+				object.drawOnPage(p, 0, objectYPosition + objectHeight * 0.5f);
+
+				objectYPosition += objectHeight;
 			}
+
 			p.popMatrix();
 
 		} else {
 
-			p.pushMatrix();
-			p.translate(position.x, position.y);
-			p.rotate(PApplet.radians(angle));
-			if (loading != null) {
-				p.imageMode(CENTER);
-				loading.draw(p.g, 0, 0, 3);
-			} else {
-				TextureCache.drawLoadingText(p);
-			}
-			p.popMatrix();
+//			p.pushMatrix();
+//			p.translate(position.x, position.y);
+//			p.rotate(PApplet.radians(angle));
+//			if (loading != null) {
+//				p.imageMode(CENTER);
+//				loading.draw(p.g, 0, 0, 3);
+//			} else {
+//				TextureCache.drawLoadingText(p);
+//			}
+//			p.popMatrix();
 
 		}
 
