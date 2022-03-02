@@ -173,7 +173,7 @@ public class EditorBottom extends Toolbar {
 						selectionArea.getHeight());
 			}
 			if (object instanceof Handler) {
-				((Handler) object).draw(
+				((Handler) object).drawEditor(
 						selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
 						selectionArea.getY() + selectionArea.getHeight() / 2, size);
 			} else if (object instanceof View) {

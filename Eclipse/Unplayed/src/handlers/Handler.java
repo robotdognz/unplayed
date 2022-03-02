@@ -115,7 +115,7 @@ public abstract class Handler {
 		return height;
 	}
 
-	public void draw(float pX, float pY, float size) {
+	public void drawEditor(float pX, float pY, float size) {
 		// calculate how to scale the image so it appears in the editor bottom scroll
 		// bar correctly and draw the scaled image
 		if (editorRotation != 0) {
@@ -128,6 +128,10 @@ public abstract class Handler {
 		} else {
 			p.image(getSprite(6), pX, pY, widthRenderRatio * size, heightRenderRatio * size);
 		}
+	}
+	
+	public void draw(PGraphics graphics, float x, float y, float scale) {
+		graphics.image(getSprite(scale), x, y);
 	}
 
 	public void draw(PGraphics graphics, float x, float y, float width, float height, float scale) {

@@ -28,7 +28,8 @@ public class LoadingMenu extends Menu {
 		p.rotate(PApplet.radians(angle));
 		if (loading != null) {
 			p.imageMode(CENTER);
-			p.image(loading.getSprite(3), 0, 0);
+//			p.image(loading.getSprite(3), 0, 0);
+			loading.draw(p.g, 0, 0, 3);
 		} else {
 			TextureCache.drawLoadingText(p);
 		}
