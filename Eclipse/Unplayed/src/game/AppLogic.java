@@ -287,21 +287,6 @@ public class AppLogic {
 				}
 				p.popMatrix();
 
-//				// draw game and menu on top of the above forced rendering, this is so that you
-//				// don't see the forced rendering on screen when clicking on the continue button
-//				// (which calls this method outside of the draw loop and therefore force draws
-//				// on
-//				// top of the last frame)
-//				if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView) || (editor == null)) {
-//					game.draw(); // draw the game
-//				}
-//				if (menu != null) {
-//					if (!Camera.getGame()) {
-//						menu.draw();
-//					}
-//					menu.hover(lastTouch);
-//				}
-
 				// prevent animation jump by skipping the next frame
 				skipNextFrame = true;
 
@@ -356,6 +341,7 @@ public class AppLogic {
 
 		if (skipNextFrame) {
 			skipNextFrame = false;
+			return;
 		}
 
 		// touch screen
@@ -382,11 +368,10 @@ public class AppLogic {
 				game.step(deltaTime); // step game and physics
 			}
 		}
+		game.cameraStep(deltaTime); // step camera movement
 		if (startLevel) {
 			startLevel = false;
 			startLevel();
-		} else {
-			game.cameraStep(deltaTime); // step camera etc
 		}
 
 		// draw the game
@@ -671,6 +656,8 @@ public class AppLogic {
 	}
 
 	public static void setStartLevel() {
+		// used to make the draw/step loop run the startGame() method in it's next
+		// iteration
 		AppLogic.startLevel = true;
 	}
 
