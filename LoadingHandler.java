@@ -8,7 +8,7 @@ public class LoadingHandler extends Handler implements Comparable<LoadingHandler
 
 	public LoadingHandler(PApplet p, TextureCache texture, File file, int width, int height, int button) {
 		super(p, texture, file, width, height);
-		if(button == 1) {
+		if (button == 1) {
 			hasButton = true;
 		}
 	}
@@ -23,5 +23,5 @@ public class LoadingHandler extends Handler implements Comparable<LoadingHandler
 	public boolean hasButton() {
 		return hasButton;
 	}
-	
+
 }
