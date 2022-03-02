@@ -85,7 +85,7 @@ public class LoadingMenu extends Menu {
 	@Override
 	public void draw() {
 	}
-	
+
 	@Override
 	public void click() {
 		for (MenuObject object : objects) {
@@ -96,7 +96,7 @@ public class LoadingMenu extends Menu {
 
 			if (b.click().equals(continueGame)) {
 				child = null; // remove any child menus
-				AppLogic.startLevel(); // load in the next level
+				AppLogic.setStartLevel(); // trigger loading in the next level
 			}
 		}
 	}

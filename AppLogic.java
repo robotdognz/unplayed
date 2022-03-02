@@ -69,7 +69,9 @@ public class AppLogic {
 	public static int savedLevel = 0;
 	public static boolean externalLevels = false; // true if running an external level folder
 
-	private static boolean skipNextFrame = false;
+	private static boolean skipNextFrame = false; // skips running for a step so we don't see force drawn assets or a
+													// lag spike
+	private static boolean startLevel = false; // run start level this frame
 
 	public AppLogic(PApplet papp, Activity masterActivity, Context masterContext) {
 		p = papp;
@@ -287,7 +289,8 @@ public class AppLogic {
 
 				// draw game and menu on top of the above forced rendering, this is so that you
 				// don't see the forced rendering on screen when clicking on the continue button
-				// (which calls this method outside of the draw loop and therefore force draws on
+				// (which calls this method outside of the draw loop and therefore force draws
+				// on
 				// top of the last frame)
 				if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView) || (editor == null)) {
 					game.draw(); // draw the game
@@ -380,6 +383,10 @@ public class AppLogic {
 			}
 		}
 		game.cameraStep(deltaTime); // step camera etc
+		if (startLevel) {
+			startLevel = false;
+			startLevel();
+		}
 
 		// draw the game
 		if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView) || (editor == null)) {
@@ -660,6 +667,10 @@ public class AppLogic {
 			}
 		}
 		quit();
+	}
+
+	public static void setStartLevel() {
+		AppLogic.startLevel = true;
 	}
 
 }
