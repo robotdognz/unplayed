@@ -33,7 +33,7 @@ public class LoadingMenu extends Menu {
 			float imageHeight = temp.getHeight() * 100 * 4;
 			loadingImage = new MenuObject(imageWidth, imageHeight, temp);
 			// TODO: get button information from loading
-			button = true;
+			button = false;
 		}
 
 		objects.add(loadingImage);
@@ -86,6 +86,7 @@ public class LoadingMenu extends Menu {
 	public void draw() {
 	}
 	
+	@Override
 	public void click() {
 		for (MenuObject object : objects) {
 			if (!(object instanceof Button)) {
