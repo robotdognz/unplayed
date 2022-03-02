@@ -35,6 +35,8 @@ public class LoadingMenu extends Menu {
 		if (objects.size() > 1) {
 
 			p.pushMatrix();
+			p.translate(position.x, position.y);
+			p.rotate(PApplet.radians(angle)); // rotate the page
 			// draw the buttons
 			p.noStroke();
 			for (int i = 0; i < objects.size(); i++) {
