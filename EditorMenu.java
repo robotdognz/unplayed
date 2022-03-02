@@ -26,17 +26,22 @@ public class EditorMenu extends Menu {
 		Button restartB = new Button(p.width / 2, buttonWidth, buttonHeight, restart);
 		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
 		Button loadingB = new Button(p.width / 2, buttonWidth, buttonHeight, loading);
-		buttons.add(resumeB);
-		buttons.add(editorB);
-		buttons.add(restartB);
-		buttons.add(quitB);
-		buttons.add(loadingB);
+		objects.add(resumeB);
+		objects.add(editorB);
+		objects.add(restartB);
+		objects.add(quitB);
+		objects.add(loadingB);
 		constructMenu();
 	}
 
 	@Override
 	public void click() {
-		for (Button b : buttons) {
+		for (MenuObject object : objects) {
+			if (!(object instanceof Button)) {
+				continue;
+			}
+			Button b = (Button) object;
+			
 			if (b.click().equals(resume)) { // resume the game if resume button pressed
 				AppLogic.removeMenu(); // remove pause menu
 			} else if (b.click().equals(editor)) {

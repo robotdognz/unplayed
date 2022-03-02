@@ -25,22 +25,27 @@ public class LaunchMenu extends Menu {
 		AppLogic.getSaveGame();
 		if (AppLogic.savedLevel > 0) {
 			Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
-			buttons.add(continueB);
+			objects.add(continueB);
 		}
-		buttons.add(demoB);
-		buttons.add(editorB);
-		buttons.add(quitB);
+		objects.add(demoB);
+		objects.add(editorB);
+		objects.add(quitB);
 		constructMenu();
 	}
 
 	@Override
 	public void click() {
-		for (Button b : buttons) {
+		for (MenuObject object : objects) {
+			if (!(object instanceof Button)) {
+				continue;
+			}
+			Button b = (Button) object;
+
 			if (b.click().equals(continueGame)) {
 				child = null; // clear any existing menus
 				AppLogic.getLevels(); // load default levels
 				AppLogic.continueGame();
-			}else if (b.click().equals(newGame)) {
+			} else if (b.click().equals(newGame)) {
 				child = null; // clear any existing menus
 				AppLogic.getLevels(); // load default levels
 				AppLogic.newGame(); // start game

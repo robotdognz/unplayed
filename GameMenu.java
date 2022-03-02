@@ -21,17 +21,22 @@ public class GameMenu extends Menu {
 		Button titleScreenB = new Button(p.width / 2, buttonWidth, buttonHeight, titleScreen);
 		Button editB = new Button(p.width / 2, buttonWidth, buttonHeight, edit);
 		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
-		buttons.add(resumeB);
-		buttons.add(checkpointB);
-		buttons.add(titleScreenB);
-		buttons.add(editB);
-		buttons.add(quitB);
+		objects.add(resumeB);
+		objects.add(checkpointB);
+		objects.add(titleScreenB);
+		objects.add(editB);
+		objects.add(quitB);
 		constructMenu();
 	}
 
 	@Override
 	public void click() {
-		for (Button b : buttons) {
+		for (MenuObject object : objects) {
+			if (!(object instanceof Button)) {
+				continue;
+			}
+			Button b = (Button) object;
+			
 			if (b.click().equals(resume)) {
 				AppLogic.removeMenu(); // remove pause menu
 

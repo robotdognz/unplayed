@@ -26,15 +26,20 @@ public class DeveloperMenu extends Menu {
 		Button editorB = new Button(p.width / 2, buttonWidth, buttonHeight, editor);
 		Button folderB = new Button(p.width / 2, buttonWidth, buttonHeight, folder);
 		Button backB = new Button(p.width / 2, buttonWidth, buttonHeight, back);
-		buttons.add(editorB);
-		buttons.add(folderB);
-		buttons.add(backB);
+		objects.add(editorB);
+		objects.add(folderB);
+		objects.add(backB);
 		constructMenu();
 	}
 
 	@Override
 	public void click() {
-		for (Button b : buttons) {
+		for (MenuObject object : objects) {
+			if (!(object instanceof Button)) {
+				continue;
+			}
+			Button b = (Button) object;
+
 			if (b.click().equals(editor)) {
 				if (!getPermission()) {
 					return;

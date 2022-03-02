@@ -5,23 +5,24 @@ import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
 
-public class Button {
+public class Button extends MenuObject {
 	private float xCenter;
 	private float yCenter = 0;
-	private float bWidth, bHeight;
+//	private float bWidth, bHeight;
 	private String text;
 	private boolean hover = false;
 
 	private Rectangle pageButton;
 
 	public Button(float xCenter, float bWidth, float bHeight, String text) {
+		super(bWidth, bHeight);
 		this.xCenter = xCenter;
-		this.bWidth = bWidth;
-		this.bHeight = bHeight;
+//		this.bWidth = bWidth;
+//		this.bHeight = bHeight;
 		this.text = text;
 	}
 
-	public void setupPageButton(float centerX, float centerY, float width, float height) {
+	public void setupPageButton(float centerX, float centerY) {// , float width, float height) {
 		pageButton = new Rectangle(centerX - width / 2, centerY - height / 2, width, height);
 	}
 
@@ -35,7 +36,7 @@ public class Button {
 			p.fill(100);
 		}
 		p.rectMode(CENTER);
-		p.rect(xCenter, yCenter, bWidth, bHeight);
+		p.rect(xCenter, yCenter, width, height);
 		p.rectMode(CORNER);
 		p.fill(50);
 		int textSize = p.width / 24; // 60;
@@ -53,7 +54,7 @@ public class Button {
 			p.fill(100);
 		}
 		p.rectMode(CENTER);
-		p.rect(xCenter, yCenter, bWidth, bHeight);
+		p.rect(xCenter, yCenter, width, height);
 		p.rectMode(CORNER);
 		p.fill(50);
 		int textSize = p.width / 24; // 60;
@@ -71,8 +72,8 @@ public class Button {
 	}
 
 	public void hover(PVector lastTouch) {
-		if (lastTouch.x >= xCenter - bWidth / 2 && lastTouch.y >= yCenter - bHeight / 2
-				&& lastTouch.x <= xCenter + bWidth / 2 && lastTouch.y <= yCenter + bHeight / 2) {
+		if (lastTouch.x >= xCenter - width / 2 && lastTouch.y >= yCenter - height / 2
+				&& lastTouch.x <= xCenter + width / 2 && lastTouch.y <= yCenter + height / 2) {
 			hover = true;
 		} else {
 			hover = false;

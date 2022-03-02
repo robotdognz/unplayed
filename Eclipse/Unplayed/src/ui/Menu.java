@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import camera.Camera;
 import camera.PageViewCamera;
 import game.AppLogic;
+import handlers.Handler;
 import handlers.TextureCache;
 import objects.Rectangle;
 import processing.core.PApplet;
@@ -22,7 +23,9 @@ public abstract class Menu {
 	protected float menuWidth = 0;
 	protected float menuHeight = 0;
 	protected float buttonDistance = 0;
-	protected ArrayList<Button> buttons = new ArrayList<Button>();
+	protected ArrayList<MenuObject> objects = new ArrayList<MenuObject>();
+
+	protected Handler image = null;
 
 	// page view menu
 	protected Rectangle pageMenu;
@@ -40,9 +43,8 @@ public abstract class Menu {
 
 	private boolean built = false;
 	float angleOffset; // used for random angle when created
-	
+
 	static boolean previousTilt = false;
-	
 
 	public Menu(PApplet p) {
 		this.p = p;
@@ -53,8 +55,12 @@ public abstract class Menu {
 		this.shadowOffset = 9;
 		this.shadow = 9;
 		this.angleOffset = 5;
-		
+
 		setAngle(0);
+	}
+
+	public void setImage(Handler handler) {
+		this.image = handler;
 	}
 
 	protected void constructMenu() {
@@ -62,7 +68,7 @@ public abstract class Menu {
 		// create basic menu
 		menuCenterX = p.width / 2;
 		menuWidth = buttonWidth + buttonDistance * 2; // p.width / 2.182f; // 660
-		menuHeight = buttonDistance + (buttonHeight + buttonDistance) * buttons.size();
+		menuHeight = buttonDistance + (buttonHeight + buttonDistance) * objects.size();
 		menuTopY = p.height / 2 - menuHeight / 2;
 
 	}
@@ -72,50 +78,49 @@ public abstract class Menu {
 		// TODO: this needs work, it should build the menu on the closest side and not
 		// use the current camera position
 
-		float pageWidth = menuWidth;
-		float pageHeight = menuHeight;
-		float offset = 200;
+		position = new PVector(0, 0);
 
 		// figure out side of pageArea that cameraCenter is closest to
 		float leftDiff = Math.abs(cameraCenter.x - pageArea.getTopLeft().x) + camera.getSideAreaPadding();
 		float rightDiff = Math.abs(pageArea.getBottomRight().x - cameraCenter.x) + camera.getSideAreaPadding();
-
-		position = new PVector(0, 0);
+		float offset = 200;
 
 		if (leftDiff < rightDiff) {
 			// left
-			position = new PVector(cameraCenter.x - leftDiff - (pageWidth / 2) - offset, cameraCenter.y);
-
+			position = new PVector(cameraCenter.x - leftDiff - (menuWidth / 2) - offset, cameraCenter.y);
 		} else {
 			// right
-			position = new PVector(cameraCenter.x + rightDiff + (pageWidth / 2) + offset, cameraCenter.y);
-
+			position = new PVector(cameraCenter.x + rightDiff + (menuWidth / 2) + offset, cameraCenter.y);
 		}
 
 		// create page view menu and buttons
-		pageMenu = new Rectangle(0 - pageWidth / 2, 0 - pageHeight / 2, pageWidth, pageHeight);
-		for (int i = 0; i < buttons.size(); i++) {
-			float y = pageMenu.getY() + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-			buttons.get(i).setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2, y, buttonWidth,
-					buttonHeight);
-		}
-		updateShadow();
-		updateCorners();
-		built = true;
+		pageMenu = new Rectangle(0 - menuWidth / 2, 0 - menuHeight / 2, menuWidth, menuHeight);
+		setupMenuContents();
 	}
 
 	public void buldPageMenu() {
-		float pageWidth = menuWidth; // 600;
-		float pageHeight = menuHeight; // 800;
 
 		position = new PVector(0, 0);
 
 		// create page view menu and buttons
-		pageMenu = new Rectangle(0 - pageWidth / 2, 0 - pageHeight / 2, pageWidth, pageHeight);
-		for (int i = 0; i < buttons.size(); i++) {
+		setupMenuContents();
+	}
+
+	private void setupMenuContents() {
+		// create page view menu and buttons
+		pageMenu = new Rectangle(0 - menuWidth / 2, 0 - menuHeight / 2, menuWidth, menuHeight);
+		for (int i = 0; i < objects.size(); i++) {
 			float y = pageMenu.getY() + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-			buttons.get(i).setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2, y, buttonWidth,
-					buttonHeight);
+			
+			MenuObject object = objects.get(i);
+			if(!(object instanceof Button)) {
+				continue;
+			}
+			
+			Button button = (Button) object;
+			
+			button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2, y);
+			// ,buttonWidth,buttonHeight);
 		}
 		updateShadow();
 		updateCorners();
@@ -161,9 +166,9 @@ public abstract class Menu {
 		// draw the buttons
 		float yStart = -pageMenu.getHeight() / 2; // position.y - pageMenu.getHeight() / 2
 
-		for (int i = 0; i < buttons.size(); i++) {
+		for (int i = 0; i < objects.size(); i++) {
 			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-			buttons.get(i).drawOnPage(p, 0, y); // p, position.x, y
+			objects.get(i).drawOnPage(p, 0, y); // p, position.x, y
 		}
 
 		// draw grid paper
@@ -207,13 +212,13 @@ public abstract class Menu {
 		p.rect(menuCenterX - menuWidth / 2, menuTopY, menuWidth, menuHeight);
 		// draw the buttons
 		p.noStroke();
-		for (int i = 0; i < buttons.size(); i++) {
+		for (int i = 0; i < objects.size(); i++) {
 			float y = menuTopY + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-			buttons.get(i).draw(p, y);
+			objects.get(i).draw(p, y);
 		}
-		
+
 		p.pushMatrix();
-		p.translate(menuCenterX, menuTopY + menuHeight/2);
+		p.translate(menuCenterX, menuTopY + menuHeight / 2);
 
 		// draw grid paper
 		int gridSize = 400;
@@ -268,13 +273,19 @@ public abstract class Menu {
 //			PVector levelTouch = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);
 //			levelTouch.x -= position.x;
 //			levelTouch.y -= position.y;
-			for (Button b : buttons) {
-				b.hoverPage(point); // levelTouch
+			for (MenuObject object : objects) {
+				if (!(object instanceof Button)) {
+					continue;
+				}
+				((Button) object).hoverPage(point); // levelTouch
 			}
 		} else {
 			// interacting with menu overlay
-			for (Button b : buttons) {
-				b.hover(lastTouch);
+			for (MenuObject object : objects) {
+				if (!(object instanceof Button)) {
+					continue;
+				}
+				((Button) object).hover(lastTouch);
 			}
 		}
 	}
@@ -286,7 +297,7 @@ public abstract class Menu {
 	public void activate() {
 
 	}
-	
+
 	protected boolean getPermission() {
 
 		if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
