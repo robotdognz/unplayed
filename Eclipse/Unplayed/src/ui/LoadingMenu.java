@@ -88,8 +88,9 @@ public class LoadingMenu extends Menu {
 
 	@Override
 	public void activate() {
-		// shouldn't need to press the 'continue' button if in the editor
-		if ((!button || AppLogic.editor != null) && !alreadyUsed) { // prevent this being triggered multiple times
+		// shouldn't need to press the 'continue' button if in the editor, to prevent
+		// editor locking up
+		if ((!button || AppLogic.editorToggle) && !alreadyUsed) { // prevent this being triggered multiple times
 			alreadyUsed = true;
 			child = null; // remove any child menus
 			AppLogic.startLevel(); // load in the next level
