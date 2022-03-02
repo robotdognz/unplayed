@@ -68,17 +68,17 @@ public abstract class Menu {
 		// create basic menu
 		menuCenterX = p.width / 2;
 		menuWidth = buttonWidth + buttonDistance * 2;
-//		menuHeight = buttonDistance + (buttonHeight + buttonDistance) * objects.size();
-		float height = buttonDistance;
+		menuHeight = buttonDistance;
 		for (MenuObject object : objects) {
-			height += object.getHeight() + buttonDistance;
+			menuHeight += object.getHeight() + buttonDistance;
 		}
-		menuHeight = height;
 		menuTopY = p.height / 2 - menuHeight / 2;
 
 	}
 
 	public void buldPageMenu(PVector cameraCenter, Rectangle pageArea, PageViewCamera camera) {
+		// called when there is a level on screen and we want to construct a menu off
+		// screen
 
 		// TODO: this needs work, it should build the menu on the closest side and not
 		// use the current camera position
@@ -104,6 +104,7 @@ public abstract class Menu {
 	}
 
 	public void buldPageMenu() {
+		// called when we just want to make a menu in the middle of the screen
 
 		position = new PVector(0, 0);
 
@@ -125,7 +126,6 @@ public abstract class Menu {
 			Button button = (Button) object;
 
 			button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2, y);
-			// ,buttonWidth,buttonHeight);
 		}
 		updateShadow();
 		updateCorners();
@@ -154,13 +154,24 @@ public abstract class Menu {
 		p.translate(position.x, position.y);
 		p.rotate(PApplet.radians(angle)); // rotate the page
 
+//		// draw the shadow
+//		p.translate(shadow, shadow);
+//		p.fill(0, 40);
+//		p.noStroke();
+//		p.rectMode(CENTER);
+//		p.rect(0, 0, menuWidth, menuHeight);
+//		p.translate(-shadow, -shadow);
+
 		// draw the shadow
 		p.translate(shadow, shadow);
 		p.fill(0, 40);
 		p.noStroke();
 		p.rectMode(CENTER);
+		p.rotate(PApplet.radians(angle)); // rotate the page
 		p.rect(0, 0, menuWidth, menuHeight);
+		p.rotate(PApplet.radians(-angle)); // rotate the page
 		p.translate(-shadow, -shadow);
+		p.rotate(PApplet.radians(angle)); // rotate the page
 
 		// draw white background
 		p.noStroke();
