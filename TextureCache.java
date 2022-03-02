@@ -1,7 +1,5 @@
 package handlers;
 
-import static processing.core.PConstants.CENTER;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +41,7 @@ public class TextureCache {
 	static private PImage pageViewBackgroundLOD32;
 
 //	static private PImage loadingText;
-	static private PImage playerEnd;
+//	static private PImage playerEnd;
 
 	// level images
 	private File[] imagePaths;
@@ -93,7 +91,7 @@ public class TextureCache {
 		pageViewBackgroundLOD32 = pageViewBackgroundLOD256.get();
 		pageViewBackgroundLOD32.resize(32 * pvbSize, 32 * pvbSize);
 
-		playerEnd = p.loadImage("playerEndBackground.png");
+//		playerEnd = p.loadImage("playerEndBackground.png");
 
 		// level assets
 		loadLevelImages();
@@ -140,10 +138,10 @@ public class TextureCache {
 //		p.image(loadingText, 0, 0);
 //	}
 
-	static public void drawPlayerEnd(PGraphics graphics, float width, float height) {
-		graphics.imageMode(CENTER);
-		graphics.image(playerEnd, 0, 0, width, height);
-	}
+//	static public void drawPlayerEnd(PGraphics graphics, float width, float height) {
+//		graphics.imageMode(CENTER);
+//		graphics.image(playerEnd, 0, 0, width, height);
+//	}
 
 	private void loadTiles() {
 
