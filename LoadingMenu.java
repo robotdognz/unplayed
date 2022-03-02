@@ -8,22 +8,15 @@ import handlers.TextureCache;
 import processing.core.PApplet;
 
 public class LoadingMenu extends Menu {
+	private LoadingHandler loading = null;
 	boolean alreadyUsed = false;
 	// this boolean prevents this loading menu from infinitely restarting the level
 	// each frame. With this it is only used once
 
-	LoadingHandler loading = null;
-
-//	public LoadingMenu(PApplet p) {
-//		super(p);
-//		this.angleOffset = 10;
-//		constructMenu();
-//	}
-
 	public LoadingMenu(PApplet p, LoadingHandler loading) {
 		super(p);
-		this.angleOffset = 10;
 		this.loading = loading;
+		this.angleOffset = 10;
 		constructMenu();
 	}
 
@@ -34,7 +27,6 @@ public class LoadingMenu extends Menu {
 		p.translate(position.x, position.y);
 		p.rotate(PApplet.radians(angle));
 		if (loading != null) {
-//			loading.draw(p.g, 0, 0, loading.getWidth(), loading.getHeight(), scale);
 			p.imageMode(CENTER);
 			p.image(loading.getSprite(3), 0, 0);
 		} else {
