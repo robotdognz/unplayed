@@ -30,14 +30,15 @@ public class LaunchMenu extends Menu {
 		}
 		objects.add(demoB);
 		objects.add(editorB);
-		objects.add(quitB);
-
+		
 		// TODO: testing
 		Handler h = AppLogic.texture.getBackgroundList().get(0);
 		float width = h.getWidth()*100;
 		float height = h.getHeight()*100;
-		MenuObject test = new MenuObject(width, height * 2, h); //buttonWidth, buttonHeight * 2
+		MenuObject test = new MenuObject(width, height, h);
 		objects.add(test);
+		
+		objects.add(quitB);
 
 		constructMenu();
 	}

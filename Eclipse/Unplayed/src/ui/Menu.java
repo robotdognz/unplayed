@@ -172,10 +172,7 @@ public abstract class Menu {
 		p.rect(0, 0, pageMenu.getWidth(), pageMenu.getHeight());
 
 		// draw the buttons
-//		float yStart = -pageMenu.getHeight() / 2; // position.y - pageMenu.getHeight() / 2
-
 		p.imageMode(CENTER);
-
 		float objectYPosition = -pageMenu.getHeight() / 2;
 		for (MenuObject object : objects) {
 			objectYPosition += buttonDistance;
@@ -184,10 +181,6 @@ public abstract class Menu {
 			
 			objectYPosition += objectHeight;
 		}
-//		for (int i = 0; i < objects.size(); i++) {
-//			float y = yStart + buttonDistance + (buttonHeight + buttonDistance) * i + buttonHeight / 2;
-//			objects.get(i).drawOnPage(p, 0, y); // p, position.x, y
-//		}
 
 		// draw grid paper
 		int gridSize = 400;
