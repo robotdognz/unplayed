@@ -42,7 +42,7 @@ public class TextureCache {
 	static private PImage pageViewBackgroundLOD64;
 	static private PImage pageViewBackgroundLOD32;
 
-	static private PImage loadingText;
+//	static private PImage loadingText;
 	static private PImage playerEnd;
 
 	// level images
@@ -93,7 +93,6 @@ public class TextureCache {
 		pageViewBackgroundLOD32 = pageViewBackgroundLOD256.get();
 		pageViewBackgroundLOD32.resize(32 * pvbSize, 32 * pvbSize);
 
-		loadingText = p.loadImage("LoadingScreen.png");
 		playerEnd = p.loadImage("playerEndBackground.png");
 
 		// level assets
@@ -136,10 +135,10 @@ public class TextureCache {
 		}
 	}
 
-	static public void drawLoadingText(PApplet p) {
-		p.imageMode(CENTER);
-		p.image(loadingText, 0, 0);
-	}
+//	static public void drawLoadingText(PApplet p) {
+//		p.imageMode(CENTER);
+//		p.image(loadingText, 0, 0);
+//	}
 
 	static public void drawPlayerEnd(PGraphics graphics, float width, float height) {
 		graphics.imageMode(CENTER);

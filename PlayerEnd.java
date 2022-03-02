@@ -6,6 +6,7 @@ import java.util.HashSet;
 
 import org.jbox2d.common.Vec2;
 
+import game.AppLogic;
 import game.Game;
 import game.player.Player;
 import handlers.TextureCache;
@@ -75,7 +76,8 @@ public class PlayerEnd extends Event {
 
 		graphics.pushMatrix();
 		graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
-		TextureCache.drawPlayerEnd(graphics, getWidth(), getHeight());
+//		TextureCache.drawPlayerEnd(graphics, getWidth(), getHeight());
+		AppLogic.texture.getImageList().get(0).draw(graphics, 0, 0, getWidth(), getHeight(), scale);
 		graphics.popMatrix();
 	}
 

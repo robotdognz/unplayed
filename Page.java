@@ -13,8 +13,8 @@ public class Page extends PageViewObject {
 	private Game game;
 	private View view;
 	private HashSet<Rectangle> pageObjects;
-	// private HashSet<String> excludedObjects; // a list of rectangle strings to
-	// exclude while drawing
+	// private HashSet<PVector> excludedTiles; // a list of tiles to exclude while
+	// drawing
 
 	private List<PageViewObject> children; // all the pageViewObjects that should be visible with this page
 
@@ -143,10 +143,6 @@ public class Page extends PageViewObject {
 		return temp;
 
 	}
-
-//	public void exclude(Rectangle object) {
-//		excludedObjects.add(object.toString());
-//	}
 
 	public void draw(float scale) {
 
@@ -357,10 +353,6 @@ public class Page extends PageViewObject {
 		setCorners(view.getTopLeft(), view.getBottomRight());
 		updateCorners();
 	}
-
-//	public Set<String> getExcluded() {
-//		return Collections.unmodifiableSet(excludedObjects);
-//	}
 
 	public View getView() {
 		return view;

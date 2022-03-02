@@ -8,17 +8,14 @@ import processing.core.PVector;
 public class Button extends MenuObject {
 	private float xCenter;
 	private float yCenter = 0;
-//	private float bWidth, bHeight;
 	private String text;
 	private boolean hover = false;
 
 	private Rectangle pageButton;
 
-	public Button(float xCenter, float bWidth, float bHeight, String text) {
-		super(bWidth, bHeight);
+	public Button(float xCenter, float width, float height, String text) {
+		super(width, height);
 		this.xCenter = xCenter;
-//		this.bWidth = bWidth;
-//		this.bHeight = bHeight;
 		this.text = text;
 	}
 
