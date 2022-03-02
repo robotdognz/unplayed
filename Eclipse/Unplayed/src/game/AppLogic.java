@@ -17,6 +17,7 @@ import controllers.Controller;
 import controllers.PlayerControl;
 import editor.Editor;
 import editor.uitop.WidgetPauseMenu;
+import handlers.LoadingHandler;
 import handlers.TextureCache;
 import misc.Converter;
 import misc.DoToast;
@@ -308,7 +309,12 @@ public class AppLogic {
 	static public void loadingScreen() {
 		// TODO: make loading screen from current loading handler
 
-		Menu temp = new LoadingMenu(p, game.currentLoading);
+		LoadingHandler loading = game.currentLoading;
+		if (loading == null && texture.getLoadingList().size() > 0) {
+			loading = texture.getLoadingList().get(0);
+		}
+
+		Menu temp = new LoadingMenu(p, loading);
 		Rectangle pageArea = game.getPageView().getFullArea();
 
 		temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
