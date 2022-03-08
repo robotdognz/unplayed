@@ -21,9 +21,8 @@ public class PageView {
 
 	private BackgroundPaper paper;
 
-//	private ArrayList<Page> pages;
-//	private ArrayList<Background> backgrounds;
 	private ArrayList<PageViewObject> pageViewObjects;
+	private int pages;
 
 	private PageViewCamera pageCamera;
 	private Rectangle previousPageArea; // used when switching between menu and level when player isn't visible
@@ -43,9 +42,8 @@ public class PageView {
 
 		this.paper = new BackgroundPaper(p);
 
-//		this.pages = new ArrayList<Page>();
-//		this.backgrounds = new ArrayList<Background>();
 		this.pageViewObjects = new ArrayList<PageViewObject>();
+		this.pages = 0;
 
 		this.previousPageArea = null;
 	}
@@ -385,14 +383,27 @@ public class PageView {
 
 	public void addPageViewObject(PageViewObject object) {
 		pageViewObjects.add(object);
+		if (object instanceof Page) {
+			this.pages++;
+		}
 	}
 
 	public void addPageViewObjects(List<PageViewObject> objects) {
 		pageViewObjects.addAll(objects);
+		pages = 0;
+		for (PageViewObject object : pageViewObjects) {
+			if (object instanceof Page) {
+				this.pages++;
+			}
+		}
 	}
 
 	public void removePageViewObject(PageViewObject object) {
-		pageViewObjects.remove(object);
+		if (pageViewObjects.remove(object)) {
+			if (object instanceof Page) {
+				this.pages--;
+			}
+		}
 	}
 
 	public List<PageViewObject> getPageViewObjects() {
@@ -401,6 +412,7 @@ public class PageView {
 
 	public void clearPageViewObjects() {
 		this.pageViewObjects.clear();
+		this.pages = 0;
 	}
 
 	public PageViewObject getPageViewObject(float x, float y) {
@@ -434,6 +446,10 @@ public class PageView {
 		}
 
 		return null;
+	}
+
+	public int getPageCount() {
+		return pages;
 	}
 
 	public Background getBackground(float x, float y) {
