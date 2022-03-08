@@ -1,5 +1,6 @@
 package ui;
 
+import camera.FreeCamera;
 import editor.uitop.WidgetPauseMenu;
 import game.Game;
 import game.AppLogic;
@@ -9,7 +10,7 @@ public class EditorMenu extends Menu {
 	Game game;
 	WidgetPauseMenu m; // TODO rename this
 	String resume = "Resume";
-	String editor = "Toggle Editor";
+	String editor = "Edit Level";
 	String restart = "Main Menu";
 	String quit = "Reset Game";
 //	String loading = "Loading";
@@ -47,6 +48,7 @@ public class EditorMenu extends Menu {
 			} else if (b.click().equals(editor)) {
 				AppLogic.editorToggle = !AppLogic.editorToggle;
 				AppLogic.removeMenu(); // remove pause menu
+				AppLogic.editor.camera = new FreeCamera(); // testing
 			} else if (b.click().equals(restart)) {
 				AppLogic.init(); // rebuild the game
 			} else if (b.click().equals(quit)) {
