@@ -23,37 +23,26 @@ public class WidgetPlayMode extends Widget {
 
 	@Override
 	public void clicked() {
-//		if (active) {
-//			editor.camera = new FreeCamera();
-//		} else {
 		editor.camera = new GameCamera();
 		AppLogic.toggleEditor();
 		if (AppLogic.game.player != null) {
 			editor.controller = new PlayerControl(p, AppLogic.game);
 			pageView.updateVisiblePages();
 		}
-		if (!Editor.showPageView) { // if we are not on the page view
-			editor.switchView();
-		}
+//		if (!Editor.showPageView) { // if we are not on the page view
+//			editor.switchView();
 //		}
 	}
 
 	@Override
 	public void updateActive() {
 		super.updateActive();
+		// only works if there is at least one page in the page view and there is a
+		// player to control
 		if (pageView.getPageCount() > 0 && AppLogic.game.player != null) {
 			available = true;
 		} else {
 			available = false;
 		}
-
-//		if (editor.camera instanceof FreeCamera || !Editor.showPageView) {
-//			active = false;
-//			if (editor.camera instanceof GameCamera) {
-//				editor.camera = new FreeCamera();
-//			}
-//		} else {
-//			active = true;
-//		}
 	}
 }
