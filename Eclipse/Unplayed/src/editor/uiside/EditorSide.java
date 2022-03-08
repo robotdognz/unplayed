@@ -4,6 +4,7 @@ import static processing.core.PConstants.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import controllers.EditorControl;
+import editor.DebugOutput;
 import editor.Editor;
 import editor.Toolbar;
 import editor.Editor.editorMode;
@@ -149,6 +150,7 @@ public class EditorSide extends Toolbar {
 	}
 	
 	public void adjustMode() {
+		DebugOutput.pushMessage("Adjust mode enabled", 3);
 		adjust = true;
 		addChild = false;
 	}
