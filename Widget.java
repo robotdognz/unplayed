@@ -252,6 +252,12 @@ public abstract class Widget {
 		return subWidgets;
 	}
 
+	public void reset() {
+		for (Widget w : subWidgets) {
+			w.setPosition(position);
+		}
+	}
+
 	public void updateActive() {
 		// this method should also be used to update 'available'
 		if (subWidgets.size() > 0) {

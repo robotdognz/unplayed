@@ -467,6 +467,11 @@ public class Editor {
 			pageView.forceRedraw();
 		}
 	}
+	
+	public void resetUI() {
+		editorTop.resetWidgets();
+		editorSide.resetWidgets();
+	}
 
 	public enum editorMode {
 		ADD, ERASE, SELECT, EXTERNAL

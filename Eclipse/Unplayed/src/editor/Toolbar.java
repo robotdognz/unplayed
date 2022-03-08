@@ -76,4 +76,10 @@ public abstract class Toolbar {
 	public float getHeight() {
 		return 0;
 	}
+	
+	public void resetWidgets() {
+		for(Widget w : widgets) {
+			w.reset();
+		}
+	}
 }

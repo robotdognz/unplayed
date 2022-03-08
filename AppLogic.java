@@ -338,6 +338,7 @@ public class AppLogic {
 		if (editorToggle) {
 			Camera camera = new FreeCamera();
 			editor = new Editor(p, camera, toast);
+			editor.resetUI();
 		}
 		menu = null;
 		game.getPageView().clearMenus();
