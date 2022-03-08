@@ -92,7 +92,7 @@ public class LoadingMenu extends Menu {
 		// editor locking up
 		
 		// alreadyUsed prevents this being triggered multiple times
-		if (!button && !alreadyUsed) { //(!button || AppLogic.editorToggle)
+		if (!button && !alreadyUsed) {
 			alreadyUsed = true;
 			child = null; // remove any child menus
 			AppLogic.startLevel(); // load in the next level

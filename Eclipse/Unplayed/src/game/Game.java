@@ -3,7 +3,6 @@ package game;
 import java.util.ArrayList;
 import java.util.HashSet;
 import camera.Camera;
-import editor.Editor;
 import game.player.Player;
 import handlers.LoadingHandler;
 import handlers.TextureCache;
@@ -25,7 +24,6 @@ public class Game {
 	public MathsPaper paper;
 	public Converter convert;
 	private TextureCache texture;
-//	public AppLogic app;
 
 	public Quadtree world;
 	public ArrayList<Tile> removed; // holds the tiles that the player has become and have been removed from the
@@ -42,7 +40,7 @@ public class Game {
 	private CountdownTimer pauseTimer; // used to pause game during puzzles
 	private PauseType pauseType;
 	private Rectangle playerAreaTemp;
-	
+
 	public LoadingHandler currentLoading = null;
 
 	private enum PauseType {
@@ -108,7 +106,7 @@ public class Game {
 		views.clear();
 		pageView.clearPageViewObjects(); // remove pages and backgrounds
 		buildWorld(); // rebuild world
-		
+
 		currentLoading = null;
 	}
 
@@ -201,13 +199,16 @@ public class Game {
 			return;
 		}
 
-		Editor editor = AppLogic.getEditor();
+//		Editor editor = AppLogic.getEditor();
 
-		if (editor == null) { // in a normal game
+		if (AppLogic.getEditor() == null) { // in a normal game
 			pauseTimer.start();
 			pauseType = PauseType.NEXT_LEVEL;
 		} else { // in the editor
-			editor.toast.showToast("Level Complete");
+			if (AppLogic.editorToggle) {
+//				editor.toast.showToast("Level Complete");
+				AppLogic.toast.showToast("Level Complete");
+			}
 			pauseTimer.start();
 			pauseType = PauseType.RESTART_LEVEL;
 		}
@@ -353,7 +354,6 @@ public class Game {
 				pauseTimer.stop();
 				break;
 			case RESTART_LEVEL:
-//				AppLogic.startLevel();
 				AppLogic.restartLevel();
 				pauseType = PauseType.NONE;
 				pauseTimer.stop();
@@ -368,7 +368,6 @@ public class Game {
 
 		// step player non-physics logic
 		if (player != null) {
-//			player.tumble = this.tumble;
 			player.step(deltaTime);
 		}
 
