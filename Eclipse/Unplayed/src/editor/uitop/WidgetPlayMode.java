@@ -1,6 +1,5 @@
 package editor.uitop;
 
-import camera.FreeCamera;
 import camera.GameCamera;
 import controllers.PlayerControl;
 import editor.Editor;
@@ -29,9 +28,6 @@ public class WidgetPlayMode extends Widget {
 			editor.controller = new PlayerControl(p, AppLogic.game);
 			pageView.updateVisiblePages();
 		}
-//		if (!Editor.showPageView) { // if we are not on the page view
-//			editor.switchView();
-//		}
 	}
 
 	@Override

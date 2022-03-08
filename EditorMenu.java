@@ -26,12 +26,12 @@ public class EditorMenu extends Menu {
 		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
 //		Button loadingB = new Button(p.width / 2, buttonWidth, buttonHeight, loading);
 		objects.add(resumeB);
-		objects.add(editorB);
+		if (!AppLogic.editorToggle) {
+			objects.add(editorB);
+		}
 		objects.add(restartB);
 		objects.add(quitB);
-//		if (!AppLogic.editorToggle) {
 //		objects.add(loadingB);
-//		}
 		constructMenu();
 	}
 
