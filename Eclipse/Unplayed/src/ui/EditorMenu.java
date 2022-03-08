@@ -47,8 +47,10 @@ public class EditorMenu extends Menu {
 				AppLogic.removeMenu(); // remove pause menu
 			} else if (b.click().equals(editor)) {
 				AppLogic.editorToggle = !AppLogic.editorToggle;
+				AppLogic.editor.resetUI();
+//				AppLogic.toggleEditor();
 				AppLogic.removeMenu(); // remove pause menu
-				AppLogic.editor.camera = new FreeCamera(); // testing
+				AppLogic.editor.camera = new FreeCamera(); // back to editor camera
 			} else if (b.click().equals(restart)) {
 				AppLogic.init(); // rebuild the game
 			} else if (b.click().equals(quit)) {
