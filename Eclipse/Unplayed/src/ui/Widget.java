@@ -253,6 +253,9 @@ public abstract class Widget {
 	}
 
 	public void reset() {
+		if (position == null) {
+			return;
+		}
 		for (Widget w : subWidgets) {
 			w.setPosition(position);
 		}
