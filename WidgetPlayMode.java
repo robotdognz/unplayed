@@ -27,6 +27,7 @@ public class WidgetPlayMode extends Widget {
 			editor.camera = new FreeCamera();
 		} else {
 			editor.camera = new GameCamera();
+			AppLogic.toggleEditor();
 			if (AppLogic.game.player != null) {
 				editor.controller = new PlayerControl(p, AppLogic.game);
 				pageView.updateVisiblePages();
@@ -40,12 +41,6 @@ public class WidgetPlayMode extends Widget {
 	@Override
 	public void updateActive() {
 		super.updateActive();
-//		if (game.player != null && pageView.getPages().size() > 0) {
-//			available = true;
-//		} else {
-//			available = false;
-//			return;
-//		}
 		if (editor.camera instanceof FreeCamera || !Editor.showPageView) {
 			active = false;
 			if (editor.camera instanceof GameCamera) {
