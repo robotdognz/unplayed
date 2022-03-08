@@ -226,6 +226,11 @@ public class PageView {
 		if (area != null) {
 			pageCamera.update(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,
 					area.getBottomRight().y);
+		} else {
+			// no pages with visible player, just do whole level instead
+			area = getFullArea();
+			pageCamera.update(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,
+					area.getBottomRight().y);
 		}
 	}
 
@@ -399,11 +404,25 @@ public class PageView {
 	}
 
 	public void removePageViewObject(PageViewObject object) {
+
 		if (pageViewObjects.remove(object)) {
+			// if it was removed
 			if (object instanceof Page) {
+				// if the removed was a page
 				this.pages--;
 			}
+
+			// remove this object as a child from all pages
+			for (PageViewObject pvo : pageViewObjects) {
+				if (!(pvo instanceof Page)) {
+					continue;
+				}
+				Page page = (Page) pvo;
+				page.removeChild(object);
+			}
 		}
+
+		resetSystems();
 	}
 
 	public List<PageViewObject> getPageViewObjects() {
@@ -477,5 +496,9 @@ public class PageView {
 			pos.y += y;
 			object.setPosition(pos);
 		}
+	}
+
+	public void resetSystems() {
+		previousPageArea = null;
 	}
 }

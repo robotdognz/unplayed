@@ -85,6 +85,16 @@ public class Page extends PageViewObject {
 		}
 		children.add(child);
 	}
+	
+	public void removeChild(PageViewObject child) {
+		if (child == null) {
+			return;
+		}
+		if (children.contains(child)) {
+			children.remove(child);
+			return;
+		}
+	}
 
 	public void step() {
 		// get objects visible to this page
