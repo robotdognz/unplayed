@@ -136,11 +136,11 @@ public class AppLogic {
 	}
 
 	static public void clearSaveGame() {
-		if (externalLevels) {
-			// return if we're running an external campaign, so as not to overwrite main
-			// campaign progress
-			return;
-		}
+//		if (externalLevels) {
+//			// return if we're running an external campaign, so as not to overwrite main
+//			// campaign progress
+//			return;
+//		}
 		saveGame.putInt("level", 0);
 		saveGame.apply();
 	}
@@ -212,7 +212,10 @@ public class AppLogic {
 			loadingScreen();
 		} else {
 			menu = null;
-			clearSaveGame(); // clear save game
+			if (!externalLevels) {
+				// only clear save game if we're not running an external campaign
+				clearSaveGame();
+			}
 			titleScreen();
 		}
 	}
@@ -652,9 +655,9 @@ public class AppLogic {
 				file.delete();
 			}
 		}
-		// clear save game TODO
+		// clear save game
 		clearSaveGame();
-		// quit
+		// quit the game
 		quit();
 	}
 
