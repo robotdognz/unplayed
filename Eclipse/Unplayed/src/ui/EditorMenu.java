@@ -1,7 +1,5 @@
 package ui;
 
-//import camera.FreeCamera;
-//import camera.GameCamera;
 import editor.uitop.WidgetPauseMenu;
 import game.Game;
 import game.AppLogic;
@@ -9,7 +7,7 @@ import processing.core.PApplet;
 
 public class EditorMenu extends Menu {
 	Game game;
-	WidgetPauseMenu m; //TODO rename this
+	WidgetPauseMenu m; // TODO rename this
 	String resume = "Resume";
 	String editor = "Toggle Editor";
 	String restart = "Main Menu";
@@ -20,7 +18,7 @@ public class EditorMenu extends Menu {
 		super(p);
 		this.game = AppLogic.game;
 		this.m = m;
-		
+
 		Button resumeB = new Button(p.width / 2, buttonWidth, buttonHeight, resume);
 		Button editorB = new Button(p.width / 2, buttonWidth, buttonHeight, editor);
 		Button restartB = new Button(p.width / 2, buttonWidth, buttonHeight, restart);
@@ -30,7 +28,9 @@ public class EditorMenu extends Menu {
 		objects.add(editorB);
 		objects.add(restartB);
 		objects.add(quitB);
+//		if (!AppLogic.editorToggle) {
 		objects.add(loadingB);
+//		}
 		constructMenu();
 	}
 
@@ -41,7 +41,7 @@ public class EditorMenu extends Menu {
 				continue;
 			}
 			Button b = (Button) object;
-			
+
 			if (b.click().equals(resume)) { // resume the game if resume button pressed
 				AppLogic.removeMenu(); // remove pause menu
 			} else if (b.click().equals(editor)) {

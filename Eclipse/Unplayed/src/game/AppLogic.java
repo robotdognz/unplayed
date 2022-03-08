@@ -219,6 +219,11 @@ public class AppLogic {
 			titleScreen();
 		}
 	}
+	
+	static public void restartLevel() {
+		// used when running level in editor
+		loadingScreen();
+	}
 
 	static public void startLevel() {
 		if (editor != null) {

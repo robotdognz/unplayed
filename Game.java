@@ -353,7 +353,8 @@ public class Game {
 				pauseTimer.stop();
 				break;
 			case RESTART_LEVEL:
-				AppLogic.startLevel();
+//				AppLogic.startLevel();
+				AppLogic.restartLevel();
 				pauseType = PauseType.NONE;
 				pauseTimer.stop();
 				break;
