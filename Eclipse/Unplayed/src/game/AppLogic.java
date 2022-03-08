@@ -652,6 +652,9 @@ public class AppLogic {
 				file.delete();
 			}
 		}
+		// clear save game TODO
+		clearSaveGame();
+		// quit
 		quit();
 	}
 

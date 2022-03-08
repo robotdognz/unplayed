@@ -147,7 +147,6 @@ public class EditorSide extends Toolbar {
 		if (editor.eMode == editorMode.EXTERNAL) {
 			editor.eMode = editorMode.SELECT;
 		}
-		DebugOutput.pushMessage("External modes cleaed", 3);
 	}
 	
 	public void adjustMode() {
@@ -170,22 +169,16 @@ public class EditorSide extends Toolbar {
 				widgets = background;
 			} else if (editor.selected instanceof View) {
 				widgets = view;
-//				adjust = false;
 			} else if (editor.selected instanceof Tile) {
 				widgets = tile;
-//				adjust = false;
 			} else if (editor.selected instanceof Image) {
 				widgets = image;
-//				adjust = false;
 			} else if (editor.selected instanceof PlayerEnd) {
 				widgets = playerEnd;
-//				adjust = false;
 			} else if (editor.selected instanceof Spike) {
 				widgets = spike;
-//				adjust = false;
 			} else {
 				widgets = minimal;
-//				adjust = false;
 			}
 			cameraEditMode = 0;
 

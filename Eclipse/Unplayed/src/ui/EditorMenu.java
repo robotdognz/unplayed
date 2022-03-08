@@ -13,7 +13,7 @@ public class EditorMenu extends Menu {
 	String resume = "Resume";
 	String editor = "Toggle Editor";
 	String restart = "Main Menu";
-	String quit = "Quit and Purge";
+	String quit = "Reset Game";
 	String loading = "Loading";
 
 	public EditorMenu(PApplet p, WidgetPauseMenu m) {
