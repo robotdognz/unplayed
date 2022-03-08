@@ -147,6 +147,7 @@ public class EditorSide extends Toolbar {
 		if (editor.eMode == editorMode.EXTERNAL) {
 			editor.eMode = editorMode.SELECT;
 		}
+		DebugOutput.pushMessage("External modes cleaed", 3);
 	}
 	
 	public void adjustMode() {
