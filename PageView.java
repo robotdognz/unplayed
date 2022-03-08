@@ -227,8 +227,31 @@ public class PageView {
 			pageCamera.update(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,
 					area.getBottomRight().y);
 		} else {
-			// no pages with visible player, just do whole level instead
-			area = getFullArea();
+			// no pages with visible player, just do whole level instead, minus menus
+			float minX = Float.POSITIVE_INFINITY;
+			float minY = Float.POSITIVE_INFINITY;
+			float maxX = Float.NEGATIVE_INFINITY;
+			float maxY = Float.NEGATIVE_INFINITY;
+
+			// get area of pages
+			for (PageViewObject object : pageViewObjects) {
+				if (!(object instanceof Page)) {
+					continue;
+				}
+				Page page = (Page) object;
+
+				minX = Math.min(minX, page.getLeftmostPoint());
+				minY = Math.min(minY, page.getTopmostPoint());
+				maxX = Math.max(maxX, page.getRightmostPoint());
+				maxY = Math.max(maxY, page.getBottommostPoint());
+			}
+
+			float x = minX;
+			float y = minY;
+			float width = maxX - minX;
+			float height = maxY - minY;
+
+			area = new Rectangle(x, y, width, height);
 			pageCamera.update(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,
 					area.getBottomRight().y);
 		}
