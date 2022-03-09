@@ -194,20 +194,20 @@ public class TileTool implements Tool {
 		if (foundAtPoint != null) {
 			// if it found an exact match
 			editor.selected = foundAtPoint;
-			updateHandlerRotationAndSelected(foundAtPoint);
+			updateHandler(foundAtPoint);
 		} else if (foundStart != null) {
 			// if it found a PlayerStart
 			Tile required = foundStart.getRequired();
 			if (required != null) {
 				editor.selected = required;
-				updateHandlerRotationAndSelected(required);
+				updateHandler(required);
 			}
 		} else if (foundEnd != null) {
 			// if it found a PlayerEnd
 			Tile required = foundEnd.getRequired();
 			if (required != null) {
 				editor.selected = required;
-				updateHandlerRotationAndSelected(required);
+				updateHandler(required);
 			}
 		} else {
 			// if there is no exact match, look for overlaps
@@ -229,7 +229,7 @@ public class TileTool implements Tool {
 				}
 				// select the first overlap
 				editor.selected = p;
-				updateHandlerRotationAndSelected((Tile) p);
+				updateHandler((Tile) p);
 				return;
 			}
 			// nothing was found, select nothing
@@ -237,7 +237,7 @@ public class TileTool implements Tool {
 		}
 	}
 
-	private void updateHandlerRotationAndSelected(Tile tile) {
+	private void updateHandler(Tile tile) {
 		float angle = tile.getAngle();
 		TileHandler handler = tile.getHandler();
 		handler.setEditorAngle(angle);

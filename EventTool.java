@@ -7,12 +7,14 @@ import editor.Editor.editorMode;
 import editor.Tool;
 import editor.uiside.EditorSide;
 import game.AppLogic;
+import handlers.EventHandler;
 import objects.Event;
 import objects.Rectangle;
 import objects.Tile;
 import objects.events.PlayerDeath;
 import objects.events.PlayerEnd;
 import objects.events.PlayerStart;
+import objects.events.Spike;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -159,6 +161,9 @@ public class EventTool implements Tool {
 		if (foundAtPoint != null) {
 			// if it found an exact match
 			editor.selected = foundAtPoint;
+			if (foundAtPoint instanceof Event) {
+				updateHandler((Event) foundAtPoint);
+			}
 			return;
 		} else {
 			// if there is no exact match, look for overlaps
@@ -180,11 +185,21 @@ public class EventTool implements Tool {
 				}
 				// select the first overlap
 				editor.selected = p;
+				updateHandler((Event) p);
 				return;
 			}
 			// nothing was found, select nothing
 			editor.selected = null;
 		}
+	}
+
+	private void updateHandler(Event event) {
+		EventHandler handler = event.getHandler();
+		if (event instanceof Spike) {
+			float angle = ((Spike) event).getAngle();
+			handler.setEditorAngle(angle);
+		}
+		editor.currentEvent = handler;
 	}
 
 	@Override
