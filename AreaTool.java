@@ -10,6 +10,7 @@ import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
 import controllers.EditorControl;
+import objects.View;
 
 public class AreaTool implements Tool {
 	protected PApplet p;
@@ -170,7 +171,7 @@ public class AreaTool implements Tool {
 			p.rect(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
 			p.rectMode(CORNER);
 		}
-		if (edit != null && editor.controller instanceof EditorControl) {
+		if (edit != null && editor.controller instanceof EditorControl && editor.selected instanceof View) {
 			p.noStroke();
 			p.fill(255, 0, 0);
 			p.rectMode(CENTER);
