@@ -20,6 +20,7 @@ import handlers.BackgroundHandler;
 import handlers.EventHandler;
 import handlers.ImageHandler;
 import handlers.TileHandler;
+import misc.CountdownTimer;
 import misc.DoToast;
 import misc.EditorJSON;
 import objects.Background;
@@ -102,6 +103,8 @@ public class Editor {
 	public static boolean tileSearch; // display the logic for searching for slots
 	public static boolean autoCameraSearch; // display the logic for searching for pages to draw
 
+	private CountdownTimer tapTimer;
+
 	public Editor(PApplet p, Camera camera, DoToast toast) {
 		this.p = p;
 		this.toast = toast;
@@ -137,9 +140,12 @@ public class Editor {
 
 		// Initialize screen objects set
 		screenObjects = new HashSet<Rectangle>();
+
+		tapTimer = new CountdownTimer(0.2f);
 	}
 
-	public void step(ArrayList<PVector> touches) {
+	public void step(ArrayList<PVector> touches, float deltaTime) {
+		tapTimer.deltaStep(deltaTime);
 
 		editorTop.step();
 		editorBottom.step();
@@ -442,7 +448,12 @@ public class Editor {
 	}
 
 	public void onTap(float x, float y) {
-		editorBottom.onTap(x, y);
+		if (tapTimer.isRunning()) {
+			return;
+		} else {
+			editorBottom.onTap(x, y);
+			tapTimer.start();
+		}
 	}
 
 	public void switchView() {

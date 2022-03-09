@@ -65,7 +65,7 @@ public abstract class Handler {
 	public void setEditorAngle(float angle) {
 		if (isRotatable) {
 			editorRotation = (int) angle;
-			DebugOutput.pushMessage("" + angle, 2);
+			DebugOutput.pushMessage("" + angle, 1);
 		}
 	}
 

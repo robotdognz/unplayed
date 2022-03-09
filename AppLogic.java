@@ -374,7 +374,7 @@ public class AppLogic {
 		// step the game and editor
 		if (editorToggle && editor != null) {
 			// step editor or game controller depending on editor toggle
-			editor.step(touches);
+			editor.step(touches, deltaTime);
 			if (menu == null) {
 				game.step(deltaTime); // step game and physics
 			}
@@ -472,7 +472,7 @@ public class AppLogic {
 	static public void onTap(float x, float y) {
 		if (menu == null) {
 			if (editorToggle && editor != null) {
-				DebugOutput.pushMessage("Did tap", 2);
+				DebugOutput.pushMessage("Did tap", 0.5f);
 				editor.onTap(x, y);
 			} else {
 				// controller.onTap(x, y);
