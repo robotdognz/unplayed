@@ -265,7 +265,7 @@ public class PageTool extends AreaTool {
 	@Override
 	public void draw() {
 		if (!Editor.showPageView) { // views
-			if (editor.selected instanceof View) {
+			if (editor.selected == null || editor.selected instanceof View) {
 				super.draw();
 			}
 		} else { // pages
