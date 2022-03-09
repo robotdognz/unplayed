@@ -17,7 +17,7 @@ public class WidgetFinish extends Widget {
 	@Override
 	public void clicked() {
 		editor.selected = null;
-		toolbar.adjust = false;
+//		toolbar.adjust = false;
 
 	}
 
