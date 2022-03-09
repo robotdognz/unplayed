@@ -17,6 +17,9 @@ public class WidgetSelect extends Widget {
 	public void clicked() {
 		editor.eMode = Editor.editorMode.SELECT;
 		editor.controller = new EditorControl(p, editor);
+
+		// new code, for use when drop-down menu is enabled
+		editor.editorSide.clearExternalModes();
 	}
 
 	@Override

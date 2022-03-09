@@ -31,37 +31,45 @@ public class WidgetEditorMode extends Widget {
 	@Override
 	public void clicked() {
 		super.clicked();
-		active = true;
+		if (active == false) {
+			active = true;
+			editor.controller = new EditorControl(p, editor);
+			editor.camera = new FreeCamera();
+		}
+
+//		clickedOld();
 	}
-//	public void clicked() {
-//		if (active == false) {
-//			active = true;
-//			editor.controller = new EditorControl(p, editor);
-//			editor.camera = new FreeCamera();
-//		} else {
-//
-//			if (editor.eMode == editorMode.EXTERNAL) {
-//				subWidgets.get(2).clicked();
-//				editor.editorSide.clearExternalModes();
-//				return;
-//			}
-//
-//			for (int i = 0; i < subWidgets.size(); i++) {
-//				Widget w = subWidgets.get(i);
-//
-//				// found active widget
-//				if (w.isActive()) {
-//					if (i + 1 < subWidgets.size()) {
-//						subWidgets.get(i + 1).clicked();
-//						return;
-//					} else {
-//						subWidgets.get(0).clicked();
-//						return;
-//					}
-//				}
-//			}
-//		}
-//	}
+
+	public void clickedOld() {
+		// old code that made the widget work without a drop-down menu
+		if (active == false) {
+			active = true;
+			editor.controller = new EditorControl(p, editor);
+			editor.camera = new FreeCamera();
+		} else {
+
+			if (editor.eMode == editorMode.EXTERNAL) {
+				subWidgets.get(2).clicked();
+				editor.editorSide.clearExternalModes();
+				return;
+			}
+
+			for (int i = 0; i < subWidgets.size(); i++) {
+				Widget w = subWidgets.get(i);
+
+				// found active widget
+				if (w.isActive()) {
+					if (i + 1 < subWidgets.size()) {
+						subWidgets.get(i + 1).clicked();
+						return;
+					} else {
+						subWidgets.get(0).clicked();
+						return;
+					}
+				}
+			}
+		}
+	}
 
 	@Override
 	public void updateActive() {
