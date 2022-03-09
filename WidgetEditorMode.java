@@ -16,7 +16,7 @@ public class WidgetEditorMode extends Widget {
 	public WidgetEditorMode(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "PlaceBlock.png");
-		externalModeIcon = p.loadImage(folder + "diamond.png");
+		externalModeIcon = p.loadImage(folder + "EditSelected.png");
 		iconIsCurrentSubWidget = true;
 		Widget w1 = new WidgetAdd(p, editor, parent);
 		Widget w2 = new WidgetErase(p, editor, parent);
