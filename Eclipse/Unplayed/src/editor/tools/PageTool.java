@@ -222,7 +222,7 @@ public class PageTool extends AreaTool {
 			pageView.addPageViewObject(currentPage);
 			editor.selected = currentPage;
 			editorSide.adjust = true;
-			editor.eMode = Editor.editorMode.SELECT;
+//			editor.eMode = Editor.editorMode.SELECT;
 		}
 	}
 
