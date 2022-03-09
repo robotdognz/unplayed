@@ -146,7 +146,6 @@ public class EditorSide extends Toolbar {
 		adjust = false;
 		addChild = false;
 		if (editor.eMode == editorMode.EXTERNAL) {
-//			editor.eMode = editorMode.SELECT;
 			editor.eMode = ((EditorTop) editor.editorTop).getEditingMode();
 		}
 	}
