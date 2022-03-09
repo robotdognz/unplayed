@@ -125,9 +125,9 @@ public class Rectangle {
 		g.rectMode(CORNER);
 		g.rect(getX(), getY(), getWidth(), getHeight());
 	}
-	
+
 	public int getSelectionStrokeWeight(float scale) {
-		return (int) scale;
+		return (int) scale / 4;
 	}
 
 	public String getName() {

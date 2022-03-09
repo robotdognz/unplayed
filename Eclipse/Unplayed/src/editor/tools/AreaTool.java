@@ -160,7 +160,7 @@ public class AreaTool implements Tool {
 			p.rectMode(CORNERS);
 			p.noFill();
 			p.stroke(255, 0, 0);
-			p.strokeWeight(4);
+			p.strokeWeight(4); //FIXME: should be dynamic?
 			p.rect(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
 			p.rectMode(CORNER);
 		}
