@@ -162,8 +162,8 @@ public class EditorBottom extends Toolbar {
 		p.rectMode(CENTER);
 		p.translate(-offset, 0);
 
-		float areaHeight = selectionArea.getHeight(); // also used for object width
-		float currentY = selectionArea.getY() + areaHeight * 0.5f; // y position for object
+		float objectWidth = selectionArea.getHeight();
+		float currentY = selectionArea.getY() + objectWidth * 0.5f; // y position for object
 		float areaLeftEdge = selectionArea.getTopLeft().x;
 		float areaRightEdge = selectionArea.getBottomRight().x;
 
@@ -171,11 +171,11 @@ public class EditorBottom extends Toolbar {
 			Object object = objects.get(i);
 
 			// x position for object
-			float currentX = areaLeftEdge + areaHeight * 0.5f + (i * areaHeight);
+			float currentX = areaLeftEdge + objectWidth * 0.5f + (i * objectWidth);
 
 			// check if the object is off screen, if so, don't draw it
-			float objectLeftEdge = currentX - areaHeight * 0.5f;
-			float objectRightEdge = currentX + areaHeight * 0.5f;
+			float objectLeftEdge = (currentX - objectWidth * 0.5f) - offset;
+			float objectRightEdge = (currentX + objectWidth * 0.5f) - offset;
 			if (objectLeftEdge > areaRightEdge || objectRightEdge < areaLeftEdge) {
 				continue;
 			}
@@ -184,7 +184,7 @@ public class EditorBottom extends Toolbar {
 				// draw highlight behind
 				p.noStroke();
 				p.fill(0, 0, 0, 120);
-				p.rect(currentX, currentY, areaHeight, areaHeight);
+				p.rect(currentX, currentY, objectWidth, objectWidth);
 			}
 
 			if (object instanceof Handler) {
