@@ -86,7 +86,6 @@ public class PageTool extends AreaTool {
 				selectView();
 			}
 		} else {// pages
-//			if (!editorSide.adjust) {
 			if (editor.eMode == editorMode.ADD) {
 				addPage();
 			} else if (editor.eMode == editorMode.ERASE) {
@@ -99,7 +98,6 @@ public class PageTool extends AreaTool {
 				}
 			}
 			currentPage = null;
-//			}
 		}
 	}
 
@@ -245,21 +243,25 @@ public class PageTool extends AreaTool {
 		if (found != null) {
 			editor.selected = found; // select it
 			// set current view to corresponding view
-			for (View view : AppLogic.game.views) {
-				if (view.getX() != found.getX()) {
-					continue;
-				}
-				if (view.getY() != found.getY()) {
-					continue;
-				}
-				if (view.getWidth() != found.getWidth()) {
-					continue;
-				}
-				if (view.getHeight() != found.getHeight()) {
-					continue;
-				}
-				editor.currentView = view;
-				return;
+//			for (View view : AppLogic.game.views) {
+//				if (view.getX() != found.getX()) {
+//					continue;
+//				}
+//				if (view.getY() != found.getY()) {
+//					continue;
+//				}
+//				if (view.getWidth() != found.getWidth()) {
+//					continue;
+//				}
+//				if (view.getHeight() != found.getHeight()) {
+//					continue;
+//				}
+//				editor.currentView = view;
+//				return;
+//			}
+			if (found instanceof Page) {
+				Page page = (Page) found;
+				editor.currentView = page.getView();
 			}
 		} else {
 			editor.selected = null;
