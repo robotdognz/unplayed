@@ -164,16 +164,19 @@ public class EditorBottom extends Toolbar {
 
 		float areaHeight = selectionArea.getHeight(); // also used for object width
 		float currentY = selectionArea.getY() + areaHeight * 0.5f; // y position for object
+		float areaLeftEdge = selectionArea.getTopLeft().x;
+		float areaRightEdge = selectionArea.getBottomRight().x;
 
 		for (int i = 0; i < objects.size(); i++) {
 			Object object = objects.get(i);
 
 			// x position for object
-			float currentX = selectionArea.getX() + areaHeight * 0.5f + (i * areaHeight);
+			float currentX = areaLeftEdge + areaHeight * 0.5f + (i * areaHeight);
 
-			// don't draw if off screen
-			if (currentX + areaHeight * 0.5 < selectionArea.getX()
-					|| currentX - areaHeight * 0.5 > selectionArea.getBottomRight().x) {
+			// check if the object is off screen, if so, don't draw it
+			float objectLeftEdge = currentX + areaHeight * 0.5f;
+			float objectRightEdge = currentX - areaHeight * 0.5f;
+			if (objectRightEdge < areaLeftEdge || objectLeftEdge > areaRightEdge) {
 				continue;
 			}
 
