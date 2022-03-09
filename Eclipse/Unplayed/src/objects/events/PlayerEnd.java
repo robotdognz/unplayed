@@ -104,8 +104,8 @@ public class PlayerEnd extends Event {
 	}
 
 	@Override
-	public void drawSelected(PGraphics g) {
-		super.drawSelected(g);
+	public void drawSelected(PGraphics g, float scale) {
+		super.drawSelected(g, scale);
 		if (!levelEnd) {
 			drawNewPlayerArea(g);
 		}

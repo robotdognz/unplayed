@@ -301,30 +301,27 @@ public class Page extends PageViewObject {
 	}
 
 	@Override
-	public void drawSelected(PGraphics g) {
-		super.drawSelected(g);
+	public void drawSelected(PGraphics g, float scale) {
+		super.drawSelected(g, scale);
 		for (PageViewObject object : children) {
-			object.drawSelectedAsChild(g);
+			object.drawSelectedAsChild(g, scale);
 		}
 	}
 
 	public void drawCorners() {
 		// draw page corners
-//		if (playerVisibleExternal) { // Editor.autoCameraSearch && playerVisibleExternal
 		p.rectMode(CENTER);
 		p.fill(255, 0, 0);
 		p.rect(topLeft.x, topLeft.y, 20, 20);
 		p.rect(topRight.x, topRight.y, 20, 20);
 		p.rect(bottomLeft.x, bottomLeft.y, 20, 20);
 		p.rect(bottomRight.x, bottomRight.y, 20, 20);
-//		}
 	}
 
 	public boolean playerVisible() {
 		return playerVisibleExternal;
 	}
 
-//
 	public void setSize(float size) {
 		this.actualSize = size;
 		this.size = Math.round(actualSize);

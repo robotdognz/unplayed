@@ -185,6 +185,7 @@ public class Editor {
 		} else {
 			// draw on screen tool information
 			if (!Camera.getGame()) {
+				float currentScale = AppLogic.convert.getScale();
 				// start working at game scale
 				p.pushMatrix();
 				p.translate(p.width / 2, p.height / 2);
@@ -195,7 +196,7 @@ public class Editor {
 				// draw selection box around selected object
 				if (selected != null && !(controller instanceof PlayerControl)) {
 					if (selected instanceof Page || selected instanceof Background) {
-						selected.drawSelected(p.g);
+						selected.drawSelected(p.g, currentScale);
 					}
 				}
 				// draw tool effects
@@ -359,7 +360,7 @@ public class Editor {
 		// draw selection box around selected object
 		if (selected != null && !(selected instanceof Page || selected instanceof Background)
 				&& !(controller instanceof PlayerControl)) {
-			selected.drawSelected(p.g);
+			selected.drawSelected(p.g, currentScale);
 		}
 
 		p.popMatrix(); // start working at screen scale

@@ -118,12 +118,16 @@ public class Rectangle {
 		this.height = this.bottomRight.y - this.topLeft.y;
 	}
 
-	public void drawSelected(PGraphics g) {
+	public void drawSelected(PGraphics g, float scale) {
 		g.noFill();
-		g.stroke(255, 0, 0); // selection color
-		g.strokeWeight(2);
+		g.stroke(255, 0, 0); // selection color, red
+		g.strokeWeight(getSelectionStrokeWeight(scale));
 		g.rectMode(CORNER);
 		g.rect(getX(), getY(), getWidth(), getHeight());
+	}
+	
+	public int getSelectionStrokeWeight(float scale) {
+		return (int) scale;
 	}
 
 	public String getName() {

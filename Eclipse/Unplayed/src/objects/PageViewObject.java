@@ -83,11 +83,11 @@ public class PageViewObject extends Editable {
 
 
 	@Override
-	public void drawSelected(PGraphics g) {
+	public void drawSelected(PGraphics g, float scale) {
 		g.pushMatrix();
 		g.noFill();
-		g.stroke(255, 0, 0); // selection color
-		g.strokeWeight(2);
+		g.stroke(255, 0, 0); // selection color, red
+		g.strokeWeight(getSelectionStrokeWeight(scale));
 		g.translate(position.x, position.y);
 		g.scale(size); // size the page will appear in the page view
 		g.rotate(PApplet.radians(angle)); // angle of the page
@@ -96,11 +96,11 @@ public class PageViewObject extends Editable {
 		g.popMatrix();
 	}
 
-	public void drawSelectedAsChild(PGraphics g) {
+	public void drawSelectedAsChild(PGraphics g, float scale) {
 		g.pushMatrix();
 		g.noFill();
-		g.stroke(0, 255, 0); // selection color
-		g.strokeWeight(2);
+		g.stroke(0, 255, 0); // selection color, green
+		g.strokeWeight(getSelectionStrokeWeight(scale));
 		g.translate(position.x, position.y);
 		g.scale(size); // size the page will appear in the page view
 		g.rotate(PApplet.radians(angle)); // angle of the page
