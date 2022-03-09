@@ -128,7 +128,6 @@ public class EditorBottom extends Toolbar {
 			if (Editor.showPageView) {
 				objects.addAll(loadings);
 				offset = loadingOffset;
-//				currentHandler = editor.currentLoading;
 				currentHandler = AppLogic.game.currentLoading;
 			} else {
 				objects.addAll(tiles);
@@ -162,24 +161,33 @@ public class EditorBottom extends Toolbar {
 		p.imageMode(CENTER);
 		p.rectMode(CENTER);
 		p.translate(-offset, 0);
+		
+		float currentY = selectionArea.getY() + selectionArea.getHeight() / 2;
+		
 		for (int i = 0; i < objects.size(); i++) {
 			Object object = objects.get(i);
+
+			float currentX = selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight();
+
 			if (object.equals(currentHandler)) { // if this is the selected object
 				// draw highlight behind
 				p.noStroke();
 				p.fill(0, 0, 0, 120);
-				p.rect(selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
-						selectionArea.getY() + selectionArea.getHeight() / 2, selectionArea.getHeight(),
-						selectionArea.getHeight());
+//				p.rect(selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
+//						selectionArea.getY() + selectionArea.getHeight() / 2, selectionArea.getHeight(),
+//						selectionArea.getHeight());
+				p.rect(currentX, currentY, selectionArea.getHeight(), selectionArea.getHeight());
 			}
 			if (object instanceof Handler) {
-				((Handler) object).drawEditor(
-						selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
-						selectionArea.getY() + selectionArea.getHeight() / 2, size);
+//				((Handler) object).drawEditor(
+//						selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
+//						selectionArea.getY() + selectionArea.getHeight() / 2, size);
+				((Handler) object).drawEditor(currentX, currentY, size);
 			} else if (object instanceof View) {
-				((View) object).drawToolbar(
-						selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
-						selectionArea.getY() + selectionArea.getHeight() / 2, size);
+//				((View) object).drawToolbar(
+//						selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
+//						selectionArea.getY() + selectionArea.getHeight() / 2, size);
+				((View) object).drawToolbar(currentX, currentY, size);
 			}
 		}
 		p.imageMode(CORNER);
