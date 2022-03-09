@@ -127,7 +127,7 @@ public class Rectangle {
 	}
 
 	public int getSelectionStrokeWeight(float scale) {
-		return (int) scale / 4;
+		return (int) scale / 2;
 	}
 
 	public String getName() {
