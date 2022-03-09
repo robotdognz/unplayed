@@ -167,6 +167,25 @@ public class EditorBottom extends Toolbar {
 		float areaLeftEdge = selectionArea.getTopLeft().x;
 		float areaRightEdge = selectionArea.getBottomRight().x;
 
+		// TODO tap function icon system
+		PImage cornerIcon = null;
+		boolean selectedOnly = false;
+		if (Editor.showPageView) { // in page view
+
+		} else { // in level view
+			// pencil in corners of views
+			if (editor.currentTool instanceof TileTool) {
+				if (editor.eMode == editorMode.ADD || editor.controller instanceof EditorControl) {
+					folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
+					cornerIcon = p.loadImage(folder + "rotateClockwise.png");
+					selectedOnly = true;
+				}
+			} else if (editor.currentTool instanceof PageTool) {
+				folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
+				cornerIcon = p.loadImage(folder + "PlaceBlock.png");
+			}
+		}
+
 		for (int i = 0; i < objects.size(); i++) {
 			Object object = objects.get(i);
 
@@ -192,6 +211,10 @@ public class EditorBottom extends Toolbar {
 
 			} else if (object instanceof View) {
 				((View) object).drawToolbar(currentX, currentY, size);
+				if (cornerIcon != null) {
+					p.imageMode(CENTER);
+					p.image(cornerIcon, currentX, currentY, 10, 10);
+				}
 
 			}
 		}

@@ -67,7 +67,7 @@ public class Editor {
 	public boolean snap = true; // things placed in the level will snap to grid
 	public Tool currentTool;
 	public editorMode eMode;
-	public imagePlane eImagePlane;
+//	public imagePlane eImagePlane;
 	public static boolean showPageView = false; // are we seeing the page view
 
 	// current object to put into level
@@ -116,7 +116,7 @@ public class Editor {
 
 		this.currentTool = new TileTool(this);
 		this.eMode = editorMode.ADD;
-		this.eImagePlane = imagePlane.LEVEL;
+//		this.eImagePlane = imagePlane.LEVEL;
 		this.eventVis = true;
 		quadVis = false;
 		this.viewVis = true;
@@ -483,7 +483,7 @@ public class Editor {
 		ADD, ERASE, SELECT, EXTERNAL
 	}
 
-	public enum imagePlane {
-		BACK, LEVEL, FRONT
-	}
+//	public enum imagePlane {
+//		BACK, LEVEL, FRONT
+//	}
 }

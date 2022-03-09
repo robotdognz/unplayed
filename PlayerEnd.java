@@ -150,10 +150,10 @@ public class PlayerEnd extends Event {
 		}
 
 		Vec2 playerPos = player.getCenter();
-		if (Math.abs(playerPos.x - center.x) > 3) { // 0.5f
+		if (Math.abs(playerPos.x - center.x) > 4) { // 0.5f
 			return;
 		}
-		if (Math.abs(playerPos.y - center.y) > 3) { // 0.5f
+		if (Math.abs(playerPos.y - center.y) > 4) { // 0.5f
 			return;
 		}
 		if (required != null) {
