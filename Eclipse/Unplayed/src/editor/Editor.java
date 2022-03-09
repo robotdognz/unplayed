@@ -387,13 +387,13 @@ public class Editor {
 	}
 
 	public void touchEnded(PVector touch) {
-		editorTop.touchEnded();
-		editorBottom.touchEnded();
-		editorSide.touchEnded();
 
 		if (nextTouchInactive) {
 			nextTouchInactive = false;
 		}
+		editorTop.touchEnded();
+		editorBottom.touchEnded();
+		editorSide.touchEnded();
 
 		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
 				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
