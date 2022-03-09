@@ -174,9 +174,9 @@ public class EditorBottom extends Toolbar {
 			float currentX = areaLeftEdge + areaHeight * 0.5f + (i * areaHeight);
 
 			// check if the object is off screen, if so, don't draw it
-			float objectLeftEdge = currentX + areaHeight * 0.5f;
-			float objectRightEdge = currentX - areaHeight * 0.5f;
-			if (objectRightEdge < areaLeftEdge || objectLeftEdge > areaRightEdge) {
+			float objectLeftEdge = currentX - areaHeight * 0.5f;
+			float objectRightEdge = currentX + areaHeight * 0.5f;
+			if (objectLeftEdge > areaRightEdge || objectRightEdge < areaLeftEdge) {
 				continue;
 			}
 
