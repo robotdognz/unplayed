@@ -205,16 +205,16 @@ public class EditorBottom extends Toolbar {
 					objects.addAll(loadings);
 					offset = loadingOffset;
 				} else {
-					editor.editorSide.clearExternalModes();
-					editor.eMode = editorMode.ADD;
+//					editor.editorSide.clearExternalModes();
+//					editor.eMode = editorMode.ADD;
 
 					objects.addAll(tiles);
 					offset = tileOffset;
 				}
 
 			} else if (editor.currentTool instanceof ImageTool) {
-				editor.editorSide.clearExternalModes();
-				editor.eMode = editorMode.ADD;
+//				editor.editorSide.clearExternalModes();
+//				editor.eMode = editorMode.ADD;
 
 				if (Editor.showPageView) {
 					objects.addAll(backgrounds);
@@ -225,14 +225,20 @@ public class EditorBottom extends Toolbar {
 				}
 
 			} else if (editor.currentTool instanceof EventTool) {
-				editor.editorSide.clearExternalModes();
-				editor.eMode = editorMode.ADD;
+//				editor.editorSide.clearExternalModes();
+//				editor.eMode = editorMode.ADD;
 
 				objects.addAll(events);
 				offset = eventOffset;
+
 			} else if (editor.currentTool instanceof PageTool) {
-				editor.editorSide.clearExternalModes();
-				editor.eMode = editorMode.ADD;
+				if (Editor.showPageView) {
+					// do nothing in page view
+				} else {
+					// pencil tool when clicking on no view in level view
+					editor.editorSide.clearExternalModes();
+					editor.eMode = editorMode.ADD;
+				}
 
 				objects.addAll(views);
 				offset = viewOffset;
@@ -250,6 +256,10 @@ public class EditorBottom extends Toolbar {
 
 						} else {
 							editor.currentTile = (TileHandler) objects.get(i);
+							
+							// switch to pencil mode when selecting a new tile
+							editor.editorSide.clearExternalModes();
+							editor.eMode = editorMode.ADD;
 						}
 					} else if (editor.currentTool instanceof ImageTool) {
 
@@ -257,10 +267,17 @@ public class EditorBottom extends Toolbar {
 							editor.currentBackground = (BackgroundHandler) objects.get(i);
 						} else {
 							editor.currentImage = (ImageHandler) objects.get(i);
+							
+							// switch to pencil mode when selecting a new image
+							clearExternalModes();
+							editor.eMode = editorMode.ADD;
 						}
 
 					} else if (editor.currentTool instanceof EventTool) {
 						editor.currentEvent = (EventHandler) objects.get(i);
+						
+						editor.editorSide.clearExternalModes();
+						editor.eMode = editorMode.ADD;
 
 					} else if (editor.currentTool instanceof PageTool) {
 						editor.currentView = (View) objects.get(i);

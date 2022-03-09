@@ -32,9 +32,8 @@ public class WidgetEditorMode extends Widget {
 	public void clicked() {
 		if (active == false) {
 			// not currently active
-			active = true;
-			editor.controller = new EditorControl(p, editor);
-//			editor.camera = new FreeCamera();
+			active = true; // activate
+			editor.controller = new EditorControl(p, editor); // editor control mode
 		} else {
 			// currently active
 			super.clicked(); // run default code, open menu
@@ -43,7 +42,7 @@ public class WidgetEditorMode extends Widget {
 
 	public void clickedOld() {
 		// old code that made the widget work without a drop-down menu
-		
+
 		if (active == false) {
 			// not currently active
 			active = true;
