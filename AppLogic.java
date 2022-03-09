@@ -15,6 +15,7 @@ import camera.FreeCamera;
 import camera.GameCamera;
 import controllers.Controller;
 import controllers.PlayerControl;
+import editor.DebugOutput;
 import editor.Editor;
 import editor.uitop.WidgetPauseMenu;
 import handlers.LoadingHandler;
@@ -471,6 +472,7 @@ public class AppLogic {
 	static public void onTap(float x, float y) {
 		if (menu == null) {
 			if (editorToggle && editor != null) {
+				DebugOutput.pushMessage("Did tap", 2);
 				editor.onTap(x, y);
 			} else {
 				// controller.onTap(x, y);
