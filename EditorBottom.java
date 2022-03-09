@@ -232,7 +232,9 @@ public class EditorBottom extends Toolbar {
 				offset = eventOffset;
 			} else if (editor.currentTool instanceof PageTool) {
 				editor.editorSide.clearExternalModes();
-				editor.eMode = editorMode.ADD;
+				if (Editor.showPageView) {
+					editor.eMode = editorMode.ADD;
+				}
 
 				objects.addAll(views);
 				offset = viewOffset;
