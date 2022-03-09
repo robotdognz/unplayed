@@ -9,6 +9,7 @@ import game.AppLogic;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
+import controllers.EditorControl;
 
 public class AreaTool implements Tool {
 	protected PApplet p;
@@ -163,17 +164,16 @@ public class AreaTool implements Tool {
 			p.rectMode(CORNERS);
 			p.noFill();
 			p.stroke(255, 0, 0);
-
 			int strokeWeight = (int) currentScale / 2;
-			p.strokeWeight(strokeWeight); // FIXME: should be dynamic?
+			p.strokeWeight(strokeWeight); 
 			p.rect(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
 			p.rectMode(CORNER);
 		}
-		if (edit != null) {
+		if (edit != null && editor.controller instanceof EditorControl) {
 			p.noStroke();
 			p.fill(255, 0, 0);
 			p.rectMode(CENTER);
-			int resizeBoxSize = (int) currentScale * 4; // 30
+			int resizeBoxSize = (int) currentScale * 4;
 			p.rect(edit.getX(), edit.getY(), resizeBoxSize, resizeBoxSize); // topLeft
 			p.rect(edit.getBottomRight().x, edit.getBottomRight().y, resizeBoxSize, resizeBoxSize); // bottomRight
 			p.rectMode(CORNER);
