@@ -232,9 +232,12 @@ public class EditorBottom extends Toolbar {
 				offset = eventOffset;
 			} else if (editor.currentTool instanceof PageTool) {
 				editor.editorSide.clearExternalModes();
-				if (Editor.showPageView) {
+//				if (Editor.showPageView) {
 					editor.eMode = editorMode.ADD;
-				}
+//				} else {
+//					// select mode so that you can resize the view right away
+//					editor.eMode = editorMode.SELECT;
+//				}
 
 				objects.addAll(views);
 				offset = viewOffset;
@@ -268,6 +271,10 @@ public class EditorBottom extends Toolbar {
 						editor.currentView = (View) objects.get(i);
 						if (!Editor.showPageView) {
 							editor.selected = (View) objects.get(i);
+							// select mode so that you can resize the view right away
+							editor.eMode = editorMode.SELECT;
+						} else {
+
 						}
 					}
 				}
