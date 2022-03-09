@@ -81,7 +81,6 @@ public class PageViewObject extends Editable {
 
 	}
 
-
 	@Override
 	public void drawSelected(PGraphics g, float scale) {
 		g.pushMatrix();
@@ -108,13 +107,12 @@ public class PageViewObject extends Editable {
 		g.rect(0, 0, getWidth(), getHeight());
 		g.popMatrix();
 	}
-	
+
 	@Override
 	public int getSelectionStrokeWeight(float scale) {
-		return Math.min(2, (int) (scale/size) / 2);
-//		size
+		return Math.min(2, (int) (size / scale)); // / 2
 	}
-	
+
 	public void drawCornersAsChild() {
 		// draw page corners
 		p.rectMode(CENTER);
