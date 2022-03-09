@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import editor.Editor;
 import editor.Toolbar;
+import editor.Editor.editorMode;
 import objects.Rectangle;
 import processing.core.*;
 import static processing.core.PConstants.*;
@@ -18,6 +19,8 @@ public class EditorTop extends Toolbar {
 	private int widgetY; // distance from top of screen
 	private float uiExtraWidth;
 	private float uiExtraHeight;
+
+	private Widget modeWidget;
 
 	public EditorTop(PApplet p, Editor editor) {
 		super(p, editor);
@@ -43,6 +46,8 @@ public class EditorTop extends Toolbar {
 		widgets.add(editModeW);
 		widgets.add(extraW);
 		widgets.add(menuW);
+
+		modeWidget = editModeW;
 
 		super.widgetSpacing = p.width / 8;
 		super.widgetOffset = (p.width - widgetSpacing * 6) / 2;
@@ -78,7 +83,7 @@ public class EditorTop extends Toolbar {
 					}
 				}
 			}
-			widgets.get(i).draw(deltaTime, widgetOffset + widgetSpacing * i, widgetY); //FIXME: send delta time
+			widgets.get(i).draw(deltaTime, widgetOffset + widgetSpacing * i, widgetY); // FIXME: send delta time
 			widgets.get(i).updateActive();
 			if (menu == null) {
 				widgets.get(i).hover(touch);
@@ -104,9 +109,19 @@ public class EditorTop extends Toolbar {
 			widgets.get(i).click();
 		}
 	}
-	
+
 	@Override
 	public float getHeight() {
 		return bounds.getHeight();
+	}
+
+	public Editor.editorMode getEditingMode() {
+		ArrayList<Widget> children = modeWidget.getChildren();
+		for (int i = 0; i < children.size(); i++) {
+			if (children.get(i).isActive()) {
+				return editorMode.values()[i];
+			}
+		}
+		return editorMode.SELECT;
 	}
 }

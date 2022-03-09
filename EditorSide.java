@@ -24,6 +24,7 @@ import processing.core.PImage;
 import processing.core.PVector;
 import ui.Menu;
 import ui.Widget;
+import editor.uitop.EditorTop;
 
 public class EditorSide extends Toolbar {
 	private PImage top;
@@ -132,7 +133,7 @@ public class EditorSide extends Toolbar {
 
 		this.adjust = false; // are we adjusting a page or player end
 		this.addChild = false; // are we adding children to a page
-		
+
 		// load sprites
 		this.top = p.requestImage(folder + "icn_SideTabTop.png");
 		this.middle = p.requestImage(folder + "icn_SideTabMiddle.png");
@@ -145,16 +146,17 @@ public class EditorSide extends Toolbar {
 		adjust = false;
 		addChild = false;
 		if (editor.eMode == editorMode.EXTERNAL) {
-			editor.eMode = editorMode.SELECT;
+//			editor.eMode = editorMode.SELECT;
+			editor.eMode = ((EditorTop) editor.editorTop).getEditingMode();
 		}
 	}
-	
+
 	public void adjustMode() {
 		DebugOutput.pushMessage("Adjust mode enabled", 3);
 		adjust = true;
 		addChild = false;
 	}
-	
+
 	public void addChildMode() {
 		addChild = true;
 		adjust = false;
