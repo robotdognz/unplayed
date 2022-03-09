@@ -18,6 +18,7 @@ public class WidgetFinish extends Widget {
 	public void clicked() {
 		editor.selected = null;
 //		toolbar.adjust = false;
+		editor.nextTouchInactive = true;
 
 	}
 
