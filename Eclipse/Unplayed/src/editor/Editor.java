@@ -227,8 +227,9 @@ public class Editor {
 				float angle = PApplet.degrees(Player.dynamicBody.getAngle());
 				p.text("Angle: " + PApplet.nf(angle, 1, 4), p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 7);
-				p.text("ground: " + AppLogic.game.player.groundContacts + " left wall: " + AppLogic.game.player.leftWallContacts
-						+ " right wall: " + AppLogic.game.player.rightWallContacts, p.width / 2,
+				p.text("ground: " + AppLogic.game.player.groundContacts + " left wall: "
+						+ AppLogic.game.player.leftWallContacts + " right wall: "
+						+ AppLogic.game.player.rightWallContacts, p.width / 2,
 						p.height - editorBottom.getHeight() - textSize * 6);
 			}
 			if (AppLogic.game.placed != null) {
@@ -391,10 +392,14 @@ public class Editor {
 		if (nextTouchInactive) {
 			nextTouchInactive = false;
 		}
+		
 		editorTop.touchEnded();
 		editorBottom.touchEnded();
 		editorSide.touchEnded();
-
+		
+		if (nextTouchInactive) { // don't do controller if next touch inactive
+			return;
+		}
 		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
 				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
 			controller.touchEnded(touch); // Controls for touch moved event
@@ -468,7 +473,7 @@ public class Editor {
 			pageView.forceRedraw();
 		}
 	}
-	
+
 	public void resetUI() {
 		editorTop.resetWidgets();
 		editorSide.resetWidgets();
