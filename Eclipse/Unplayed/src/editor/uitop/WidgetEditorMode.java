@@ -28,7 +28,11 @@ public class WidgetEditorMode extends Widget {
 		hasSActive = true;
 	}
 
-//	@Override
+	@Override
+	public void clicked() {
+		super.clicked();
+		active = true;
+	}
 //	public void clicked() {
 //		if (active == false) {
 //			active = true;
