@@ -6,6 +6,7 @@ import editor.Editor;
 import editor.Tool;
 import editor.Editor.editorMode;
 import game.AppLogic;
+import handlers.TileHandler;
 import objects.Rectangle;
 import objects.Tile;
 import objects.events.PlayerEnd;
@@ -193,20 +194,20 @@ public class TileTool implements Tool {
 		if (foundAtPoint != null) {
 			// if it found an exact match
 			editor.selected = foundAtPoint;
-			updateHandlerRotation(foundAtPoint);
+			updateHandlerRotationAndSelected(foundAtPoint);
 		} else if (foundStart != null) {
 			// if it found a PlayerStart
 			Tile required = foundStart.getRequired();
 			if (required != null) {
 				editor.selected = required;
-				updateHandlerRotation(required);
+				updateHandlerRotationAndSelected(required);
 			}
 		} else if (foundEnd != null) {
 			// if it found a PlayerEnd
 			Tile required = foundEnd.getRequired();
 			if (required != null) {
 				editor.selected = required;
-				updateHandlerRotation(required);
+				updateHandlerRotationAndSelected(required);
 			}
 		} else {
 			// if there is no exact match, look for overlaps
@@ -228,7 +229,7 @@ public class TileTool implements Tool {
 				}
 				// select the first overlap
 				editor.selected = p;
-				updateHandlerRotation((Tile) p);
+				updateHandlerRotationAndSelected((Tile) p);
 				return;
 			}
 			// nothing was found, select nothing
@@ -236,9 +237,11 @@ public class TileTool implements Tool {
 		}
 	}
 
-	private void updateHandlerRotation(Tile tile) {
+	private void updateHandlerRotationAndSelected(Tile tile) {
 		float angle = tile.getAngle();
-		tile.getHandler().setEditorAngle(angle);
+		TileHandler handler = tile.getHandler();
+		handler.setEditorAngle(angle);
+		editor.currentTile = handler;
 	}
 
 	@Override
