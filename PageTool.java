@@ -106,9 +106,9 @@ public class PageTool extends AreaTool {
 		// page resize
 		if (Editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
-				((Page) editor.selected).addSize(AppLogic.convert.screenToLevel(d) / 500); 
+				((Page) editor.selected).addSize(AppLogic.convert.screenToLevel(d) / 500);
 				// TODO: figure out what the 500 should be
-				
+
 				PVector center = AppLogic.convert.screenToLevel(x, y);
 				((Page) editor.selected).setPosition(center);
 
@@ -265,7 +265,9 @@ public class PageTool extends AreaTool {
 	@Override
 	public void draw() {
 		if (!Editor.showPageView) { // views
-			super.draw();
+			if (editor.selected instanceof View) {
+				super.draw();
+			}
 		} else { // pages
 			if (currentPage != null) {
 				currentPage.step();
