@@ -164,8 +164,9 @@ public class AreaTool implements Tool {
 			p.rectMode(CORNERS);
 			p.noFill();
 			p.stroke(255, 0, 0);
+			// calculate the line thickness of the selection area
 			int strokeWeight = (int) currentScale / 2;
-			p.strokeWeight(strokeWeight); 
+			p.strokeWeight(strokeWeight);
 			p.rect(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
 			p.rectMode(CORNER);
 		}
@@ -173,6 +174,7 @@ public class AreaTool implements Tool {
 			p.noStroke();
 			p.fill(255, 0, 0);
 			p.rectMode(CENTER);
+			// calculate the size of the view resize drag points
 			int resizeBoxSize = (int) currentScale * 4;
 			p.rect(edit.getX(), edit.getY(), resizeBoxSize, resizeBoxSize); // topLeft
 			p.rect(edit.getBottomRight().x, edit.getBottomRight().y, resizeBoxSize, resizeBoxSize); // bottomRight

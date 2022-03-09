@@ -27,8 +27,8 @@ public class TileTool implements Tool {
 			Tile toInsert = null;
 			if (editor.currentTile != null) {
 				// create correct tile
-				toInsert = new Tile(AppLogic.game.box2d, AppLogic.texture, editor.currentTile.getFile(), (int) editor.point.getX(),
-						(int) editor.point.getY());
+				toInsert = new Tile(AppLogic.game.box2d, AppLogic.texture, editor.currentTile.getFile(),
+						(int) editor.point.getX(), (int) editor.point.getY());
 				toInsert.setAngle(editor.currentTile.getEditorAngle());
 			} else {
 				// use blank tile
@@ -193,17 +193,20 @@ public class TileTool implements Tool {
 		if (foundAtPoint != null) {
 			// if it found an exact match
 			editor.selected = foundAtPoint;
+			updateHandlerRotation(foundAtPoint);
 		} else if (foundStart != null) {
 			// if it found a PlayerStart
 			Tile required = foundStart.getRequired();
 			if (required != null) {
 				editor.selected = required;
+				updateHandlerRotation(required);
 			}
 		} else if (foundEnd != null) {
 			// if it found a PlayerEnd
 			Tile required = foundEnd.getRequired();
 			if (required != null) {
 				editor.selected = required;
+				updateHandlerRotation(required);
 			}
 		} else {
 			// if there is no exact match, look for overlaps
@@ -225,11 +228,17 @@ public class TileTool implements Tool {
 				}
 				// select the first overlap
 				editor.selected = p;
+				updateHandlerRotation((Tile) p);
 				return;
 			}
 			// nothing was found, select nothing
 			editor.selected = null;
 		}
+	}
+
+	private void updateHandlerRotation(Tile tile) {
+		float angle = tile.getAngle();
+		tile.getHandler().setEditorAngle(angle);
 	}
 
 	@Override
