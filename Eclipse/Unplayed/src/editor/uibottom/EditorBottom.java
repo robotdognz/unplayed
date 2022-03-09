@@ -161,33 +161,35 @@ public class EditorBottom extends Toolbar {
 		p.imageMode(CENTER);
 		p.rectMode(CENTER);
 		p.translate(-offset, 0);
-		
-		float currentY = selectionArea.getY() + selectionArea.getHeight() / 2;
-		
+
+		float areaHeight = selectionArea.getHeight(); // also used for object width
+		float currentY = selectionArea.getY() + areaHeight * 0.5f; // y position for object
+
 		for (int i = 0; i < objects.size(); i++) {
 			Object object = objects.get(i);
 
-			float currentX = selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight();
+			// x position for object
+			float currentX = selectionArea.getX() + areaHeight * 0.5f + (i * areaHeight);
+
+			// don't draw if off screen
+			if (currentX + areaHeight * 0.5 < selectionArea.getX()
+					|| currentX - areaHeight * 0.5 > selectionArea.getBottomRight().x) {
+				continue;
+			}
 
 			if (object.equals(currentHandler)) { // if this is the selected object
 				// draw highlight behind
 				p.noStroke();
 				p.fill(0, 0, 0, 120);
-//				p.rect(selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
-//						selectionArea.getY() + selectionArea.getHeight() / 2, selectionArea.getHeight(),
-//						selectionArea.getHeight());
-				p.rect(currentX, currentY, selectionArea.getHeight(), selectionArea.getHeight());
+				p.rect(currentX, currentY, areaHeight, areaHeight);
 			}
+
 			if (object instanceof Handler) {
-//				((Handler) object).drawEditor(
-//						selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
-//						selectionArea.getY() + selectionArea.getHeight() / 2, size);
 				((Handler) object).drawEditor(currentX, currentY, size);
+
 			} else if (object instanceof View) {
-//				((View) object).drawToolbar(
-//						selectionArea.getX() + selectionArea.getHeight() / 2 + i * selectionArea.getHeight(),
-//						selectionArea.getY() + selectionArea.getHeight() / 2, size);
 				((View) object).drawToolbar(currentX, currentY, size);
+
 			}
 		}
 		p.imageMode(CORNER);
@@ -199,7 +201,6 @@ public class EditorBottom extends Toolbar {
 	public void onTap(float x, float y) {
 		// select object
 		if (y >= selectionArea.getY() + 70) { // the 70 acts as padding so clicking on widgets doesn't select stuff
-//			editor.controller = new EditorControl(p, editor);
 
 			// figure out what type is being clicked on
 			ArrayList<Object> objects = new ArrayList<Object>(); // current objects to draw in the scroll bar
@@ -284,6 +285,11 @@ public class EditorBottom extends Toolbar {
 						if (Editor.showPageView) {
 							View view = (View) objects.get(i);
 							editor.currentView = view;
+
+							// enable add mode so that you can place the page right away
+							editor.controller = new EditorControl(p, editor);
+							editor.editorSide.clearExternalModes();
+							editor.eMode = editorMode.ADD;
 
 						} else {
 							View view = (View) objects.get(i);
