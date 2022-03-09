@@ -76,7 +76,13 @@ public class EventTool implements Tool {
 			if (p instanceof Event && p.getTopLeft().x == toInsert.getX() && p.getTopLeft().y == toInsert.getY()) {
 
 				if (toInsert.getClass().equals(p.getClass())) {
-					foundAtPoint = (Event) p;
+					// found an object in spot with same class as toInsert
+					if (toInsert instanceof Spike) {
+						// overwrite spikes with spikes
+						editor.world.remove(p);
+					} else {
+						foundAtPoint = (Event) p;
+					}
 					continue;
 				}
 			}
