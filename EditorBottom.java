@@ -47,7 +47,7 @@ public class EditorBottom extends Toolbar {
 	private float eventOffset;
 	public ArrayList<View> views;// views
 	private float viewOffset;
-	
+
 	private PImage iconBackground;
 
 	public EditorBottom(PApplet p, Editor editor, TextureCache texture) {
@@ -88,7 +88,7 @@ public class EditorBottom extends Toolbar {
 
 		int boundsHeight = (int) (p.width / 4.11f); // 350
 		super.bounds = new Rectangle(0, p.height - boundsHeight, p.width, boundsHeight);
-		
+
 		String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
 		iconBackground = p.loadImage(folder + "inactive.png");
 	}
@@ -174,13 +174,12 @@ public class EditorBottom extends Toolbar {
 
 		// tap function icon system
 		PImage cornerIcon = null;
-//		PImage iconBackground = p.loadImage(folder + "inactive.png");
 		if (Editor.showPageView) { // in page view
 
 		} else { // in level view
 			// pencil in corners of views
 			if (editor.currentTool instanceof TileTool) {
-				if (editor.eMode == Editor.editorMode.ADD || editor.controller instanceof EditorControl) {
+				if (editor.eMode == Editor.editorMode.ADD && editor.controller instanceof EditorControl) {
 					String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
 					cornerIcon = p.loadImage(folder + "rotateClockwise.png");
 				}
@@ -214,26 +213,12 @@ public class EditorBottom extends Toolbar {
 				((Handler) object).drawEditor(currentX, currentY, size);
 				if (cornerIcon != null && object instanceof TileHandler && object.equals(currentHandler)) {
 					drawFunctionIcon(cornerIcon, currentX, currentY, objectWidth);
-//					p.imageMode(CENTER);
-//					p.image(iconBackground, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f),
-//							size * 0.4f, size * 0.4f);
-//					p.tint(75);
-//					p.image(cornerIcon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f,
-//							size * 0.3f);
-//					p.noTint();
 				}
 
 			} else if (object instanceof View) {
 				((View) object).drawToolbar(currentX, currentY, size);
 				if (cornerIcon != null) {
 					drawFunctionIcon(cornerIcon, currentX, currentY, objectWidth);
-//					p.imageMode(CENTER);
-//					p.image(iconBackground, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f),
-//							size * 0.4f, size * 0.4f);
-//					p.tint(75);
-//					p.image(cornerIcon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f,
-//							size * 0.3f);
-//					p.noTint();
 				}
 
 			}
@@ -242,14 +227,13 @@ public class EditorBottom extends Toolbar {
 		p.rectMode(CORNER);
 		p.popMatrix();
 	}
-	
+
 	private void drawFunctionIcon(PImage icon, float currentX, float currentY, float objectWidth) {
 		p.imageMode(CENTER);
-		p.image(iconBackground, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f),
-				size * 0.4f, size * 0.4f);
+		p.image(iconBackground, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.4f,
+				size * 0.4f);
 		p.tint(75);
-		p.image(icon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f,
-				size * 0.3f);
+		p.image(icon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f, size * 0.3f);
 		p.noTint();
 	}
 
@@ -310,6 +294,19 @@ public class EditorBottom extends Toolbar {
 							AppLogic.game.currentLoading = (LoadingHandler) objects.get(i);
 
 						} else {
+							// TODO: implement 90 degree rotate function
+
+							if (objects.get(i).equals(editor.currentTile)) {
+								// clicking on the already selected tile
+								if (editor.eMode == Editor.editorMode.ADD
+										&& editor.controller instanceof EditorControl) {
+									// parameters are correct for rotation to happen
+									TileHandler currentHandler = (TileHandler) objects.get(i);
+									int angle = currentHandler.getEditorAngle() + 90;
+									currentHandler.setEditorAngle(angle);
+								}
+							}
+
 							editor.currentTile = (TileHandler) objects.get(i);
 
 							// switch to pencil mode when selecting a new tile
