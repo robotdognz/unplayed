@@ -47,6 +47,8 @@ public class EditorBottom extends Toolbar {
 	private float eventOffset;
 	public ArrayList<View> views;// views
 	private float viewOffset;
+	
+	private PImage iconBackground;
 
 	public EditorBottom(PApplet p, Editor editor, TextureCache texture) {
 		super(p, editor);
@@ -86,6 +88,9 @@ public class EditorBottom extends Toolbar {
 
 		int boundsHeight = (int) (p.width / 4.11f); // 350
 		super.bounds = new Rectangle(0, p.height - boundsHeight, p.width, boundsHeight);
+		
+		String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
+		iconBackground = p.loadImage(folder + "inactive.png");
 	}
 
 	@Override
@@ -169,17 +174,18 @@ public class EditorBottom extends Toolbar {
 
 		// tap function icon system
 		PImage cornerIcon = null;
-		String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
-		PImage iconBackground = p.loadImage(folder + "inactive.png");
+//		PImage iconBackground = p.loadImage(folder + "inactive.png");
 		if (Editor.showPageView) { // in page view
 
 		} else { // in level view
 			// pencil in corners of views
 			if (editor.currentTool instanceof TileTool) {
-				if (editor.eMode == editorMode.ADD || editor.controller instanceof EditorControl) {
+				if (editor.eMode == Editor.editorMode.ADD || editor.controller instanceof EditorControl) {
+					String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
 					cornerIcon = p.loadImage(folder + "rotateClockwise.png");
 				}
 			} else if (editor.currentTool instanceof PageTool) {
+				String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
 				cornerIcon = p.loadImage(folder + "PlaceBlock.png");
 			}
 		}
@@ -207,25 +213,27 @@ public class EditorBottom extends Toolbar {
 			if (object instanceof Handler) {
 				((Handler) object).drawEditor(currentX, currentY, size);
 				if (cornerIcon != null && object instanceof TileHandler && object.equals(currentHandler)) {
-					p.imageMode(CENTER);
-					p.image(iconBackground, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f),
-							size * 0.4f, size * 0.4f);
-					p.tint(75);
-					p.image(cornerIcon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f,
-							size * 0.3f);
-					p.noTint();
+					drawFunctionIcon(cornerIcon, currentX, currentY, objectWidth);
+//					p.imageMode(CENTER);
+//					p.image(iconBackground, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f),
+//							size * 0.4f, size * 0.4f);
+//					p.tint(75);
+//					p.image(cornerIcon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f,
+//							size * 0.3f);
+//					p.noTint();
 				}
 
 			} else if (object instanceof View) {
 				((View) object).drawToolbar(currentX, currentY, size);
 				if (cornerIcon != null) {
-					p.imageMode(CENTER);
-					p.image(iconBackground, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f),
-							size * 0.4f, size * 0.4f);
-					p.tint(75);
-					p.image(cornerIcon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f,
-							size * 0.3f);
-					p.noTint();
+					drawFunctionIcon(cornerIcon, currentX, currentY, objectWidth);
+//					p.imageMode(CENTER);
+//					p.image(iconBackground, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f),
+//							size * 0.4f, size * 0.4f);
+//					p.tint(75);
+//					p.image(cornerIcon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f,
+//							size * 0.3f);
+//					p.noTint();
 				}
 
 			}
@@ -233,6 +241,16 @@ public class EditorBottom extends Toolbar {
 		p.imageMode(CORNER);
 		p.rectMode(CORNER);
 		p.popMatrix();
+	}
+	
+	private void drawFunctionIcon(PImage icon, float currentX, float currentY, float objectWidth) {
+		p.imageMode(CENTER);
+		p.image(iconBackground, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f),
+				size * 0.4f, size * 0.4f);
+		p.tint(75);
+		p.image(icon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f,
+				size * 0.3f);
+		p.noTint();
 	}
 
 	@Override
