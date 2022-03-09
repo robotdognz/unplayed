@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import editor.Editor;
 import editor.Tool;
 import editor.Editor.editorMode;
+import game.AppLogic;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -160,7 +161,9 @@ public class AreaTool implements Tool {
 			p.rectMode(CORNERS);
 			p.noFill();
 			p.stroke(255, 0, 0);
-			p.strokeWeight(4); //FIXME: should be dynamic?
+			float currentScale = AppLogic.convert.getScale();
+			int strokeWeight = (int) currentScale / 2;
+			p.strokeWeight(strokeWeight); //FIXME: should be dynamic?
 			p.rect(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
 			p.rectMode(CORNER);
 		}

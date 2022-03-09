@@ -109,6 +109,12 @@ public class PageViewObject extends Editable {
 		g.popMatrix();
 	}
 	
+	@Override
+	public int getSelectionStrokeWeight(float scale) {
+		return Math.min(2, (int) (scale/size) / 2);
+//		size
+	}
+	
 	public void drawCornersAsChild() {
 		// draw page corners
 		p.rectMode(CENTER);
