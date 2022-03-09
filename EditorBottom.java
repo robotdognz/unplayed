@@ -214,7 +214,8 @@ public class EditorBottom extends Toolbar {
 				if (cornerIcon != null) {
 					p.tint(75);
 					p.imageMode(CENTER);
-					p.image(cornerIcon, currentX + (objectWidth * 0.5f), currentY - (objectWidth * 0.5f), 50, 50);
+					p.image(cornerIcon, currentX + (objectWidth * 0.35f), currentY - (objectWidth * 0.35f), size * 0.5f,
+							size * 0.5f);
 					p.noTint();
 				}
 
