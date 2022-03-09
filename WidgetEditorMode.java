@@ -34,23 +34,23 @@ public class WidgetEditorMode extends Widget {
 			// not currently active
 			active = true;
 			editor.controller = new EditorControl(p, editor);
-			editor.camera = new FreeCamera();
+//			editor.camera = new FreeCamera();
 		} else {
 			// currently active
-			super.clicked();
+			super.clicked(); // run default code, open menu
 		}
-
-//		clickedOld();
 	}
 
 	public void clickedOld() {
 		// old code that made the widget work without a drop-down menu
+		
 		if (active == false) {
+			// not currently active
 			active = true;
 			editor.controller = new EditorControl(p, editor);
 			editor.camera = new FreeCamera();
 		} else {
-
+			// currently active
 			if (editor.eMode == editorMode.EXTERNAL) {
 				subWidgets.get(2).clicked();
 				editor.editorSide.clearExternalModes();
