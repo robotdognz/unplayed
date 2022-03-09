@@ -191,11 +191,7 @@ public class EditorBottom extends Toolbar {
 	public void onTap(float x, float y) {
 		// select object
 		if (y >= selectionArea.getY() + 70) { // the 70 acts as padding so clicking on widgets doesn't select stuff
-			editor.controller = new EditorControl(p, editor);
-			// editor.eMode = editorMode.ADD; this is in the below so it doesn't happen when
-			// selecting a loading screen. It is preceded by
-			// editor.editorSide.clearExternalModes(); so that it isn't overwritten by code
-			// in editorSide
+//			editor.controller = new EditorControl(p, editor);
 
 			// figure out what type is being clicked on
 			ArrayList<Object> objects = new ArrayList<Object>(); // current objects to draw in the scroll bar
@@ -205,16 +201,11 @@ public class EditorBottom extends Toolbar {
 					objects.addAll(loadings);
 					offset = loadingOffset;
 				} else {
-//					editor.editorSide.clearExternalModes();
-//					editor.eMode = editorMode.ADD;
-
 					objects.addAll(tiles);
 					offset = tileOffset;
 				}
 
 			} else if (editor.currentTool instanceof ImageTool) {
-//				editor.editorSide.clearExternalModes();
-//				editor.eMode = editorMode.ADD;
 
 				if (Editor.showPageView) {
 					objects.addAll(backgrounds);
@@ -225,8 +216,6 @@ public class EditorBottom extends Toolbar {
 				}
 
 			} else if (editor.currentTool instanceof EventTool) {
-//				editor.editorSide.clearExternalModes();
-//				editor.eMode = editorMode.ADD;
 
 				objects.addAll(events);
 				offset = eventOffset;
@@ -236,6 +225,7 @@ public class EditorBottom extends Toolbar {
 					// do nothing in page view
 				} else {
 					// pencil tool when clicking on no view in level view
+					editor.controller = new EditorControl(p, editor);
 					editor.editorSide.clearExternalModes();
 					editor.eMode = editorMode.ADD;
 				}
@@ -256,8 +246,9 @@ public class EditorBottom extends Toolbar {
 
 						} else {
 							editor.currentTile = (TileHandler) objects.get(i);
-							
+
 							// switch to pencil mode when selecting a new tile
+							editor.controller = new EditorControl(p, editor);
 							editor.editorSide.clearExternalModes();
 							editor.eMode = editorMode.ADD;
 						}
@@ -267,28 +258,38 @@ public class EditorBottom extends Toolbar {
 							editor.currentBackground = (BackgroundHandler) objects.get(i);
 						} else {
 							editor.currentImage = (ImageHandler) objects.get(i);
-							
+
 							// switch to pencil mode when selecting a new image
-							clearExternalModes();
+							editor.controller = new EditorControl(p, editor);
+							editor.editorSide.clearExternalModes();
 							editor.eMode = editorMode.ADD;
 						}
 
 					} else if (editor.currentTool instanceof EventTool) {
 						editor.currentEvent = (EventHandler) objects.get(i);
-						
+
+						editor.controller = new EditorControl(p, editor);
 						editor.editorSide.clearExternalModes();
 						editor.eMode = editorMode.ADD;
 
 					} else if (editor.currentTool instanceof PageTool) {
-						editor.currentView = (View) objects.get(i);
-						if (!Editor.showPageView) {
+						if (Editor.showPageView) {
 							View view = (View) objects.get(i);
 							editor.currentView = view;
-							// select mode so that you can resize the view right away
+
+						} else {
+							View view = (View) objects.get(i);
+							editor.currentView = view;
+
+							// enable select mode so that you can resize the view right away
+							editor.controller = new EditorControl(p, editor);
+							editor.editorSide.clearExternalModes();
 							editor.eMode = editorMode.SELECT;
-							// update selected and page tool so that resizing can hapen right away
+							// update selected and page tool so that resizing can happen right away
 							editor.selected = view;
+							// pass it to the page tool area system
 							((PageTool) editor.currentTool).edit = view;
+
 						}
 					}
 				}

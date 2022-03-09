@@ -10,7 +10,6 @@ import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
 import controllers.EditorControl;
-import objects.View;
 
 public class AreaTool implements Tool {
 	protected PApplet p;
