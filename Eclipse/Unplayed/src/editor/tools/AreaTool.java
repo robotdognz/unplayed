@@ -49,15 +49,15 @@ public class AreaTool implements Tool {
 			if (edit != null && editor.point != null) {
 				if (PVector.dist(edit.getTopLeft(), editor.point.getTopLeft()) < 150) { // 200
 					// prevent adjustments that swap the corners
-					if (editor.point.getTopLeft().x < edit.getBottomRight().x-100
-							&& editor.point.getTopLeft().y < edit.getBottomRight().y-100) {
+					if (editor.point.getTopLeft().x < edit.getBottomRight().x - 100
+							&& editor.point.getTopLeft().y < edit.getBottomRight().y - 100) {
 						edit.adjustTopLeft(editor.point.getTopLeft());
 					}
 				}
 				if (PVector.dist(edit.getBottomRight(), editor.point.getBottomRight()) < 150) { // 200
 					// prevent adjustments that swap the corners
-					if (editor.point.getBottomRight().x > edit.getTopLeft().x+100
-							&& editor.point.getBottomRight().y > edit.getTopLeft().y+100) {
+					if (editor.point.getBottomRight().x > edit.getTopLeft().x + 100
+							&& editor.point.getBottomRight().y > edit.getTopLeft().y + 100) {
 						edit.setBottomRight(editor.point.getBottomRight());
 					}
 				}
@@ -131,6 +131,8 @@ public class AreaTool implements Tool {
 
 	@Override
 	public void draw() {
+		float currentScale = AppLogic.convert.getScale();
+
 		if (start != null && end != null) {
 
 			// top left corner
@@ -161,18 +163,19 @@ public class AreaTool implements Tool {
 			p.rectMode(CORNERS);
 			p.noFill();
 			p.stroke(255, 0, 0);
-			float currentScale = AppLogic.convert.getScale();
+
 			int strokeWeight = (int) currentScale / 2;
-			p.strokeWeight(strokeWeight); //FIXME: should be dynamic?
+			p.strokeWeight(strokeWeight); // FIXME: should be dynamic?
 			p.rect(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
 			p.rectMode(CORNER);
 		}
-		if(edit != null) {
+		if (edit != null) {
 			p.noStroke();
 			p.fill(255, 0, 0);
 			p.rectMode(CENTER);
-			p.rect(edit.getX(), edit.getY(), 30, 30); //topLeft
-			p.rect(edit.getBottomRight().x, edit.getBottomRight().y, 30, 30); //bottomRight
+			int resizeBoxSize = (int) currentScale * 4; // 30
+			p.rect(edit.getX(), edit.getY(), resizeBoxSize, resizeBoxSize); // topLeft
+			p.rect(edit.getBottomRight().x, edit.getBottomRight().y, resizeBoxSize, resizeBoxSize); // bottomRight
 			p.rectMode(CORNER);
 		}
 	}
