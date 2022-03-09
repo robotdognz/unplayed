@@ -106,13 +106,13 @@ public class PageTool extends AreaTool {
 		// page resize
 		if (Editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
-				((Page) editor.selected).addSize(AppLogic.convert.screenToLevel(d) / 500); // TODO: figure out what the
-																							// 500
-				// should be
-				// old code
+				((Page) editor.selected).addSize(AppLogic.convert.screenToLevel(d) / 500); 
+				// TODO: figure out what the 500 should be
+				
 				PVector center = AppLogic.convert.screenToLevel(x, y);
 				((Page) editor.selected).setPosition(center);
 
+				// old code
 //				if (pX != 0 && pY != 0) {
 //					float xDist = x-pX;
 //					float yDist = y-pY;
@@ -243,22 +243,6 @@ public class PageTool extends AreaTool {
 		if (found != null) {
 			editor.selected = found; // select it
 			// set current view to corresponding view
-//			for (View view : AppLogic.game.views) {
-//				if (view.getX() != found.getX()) {
-//					continue;
-//				}
-//				if (view.getY() != found.getY()) {
-//					continue;
-//				}
-//				if (view.getWidth() != found.getWidth()) {
-//					continue;
-//				}
-//				if (view.getHeight() != found.getHeight()) {
-//					continue;
-//				}
-//				editor.currentView = view;
-//				return;
-//			}
 			if (found instanceof Page) {
 				Page page = (Page) found;
 				editor.currentView = page.getView();

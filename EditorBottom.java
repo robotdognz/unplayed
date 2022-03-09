@@ -232,12 +232,7 @@ public class EditorBottom extends Toolbar {
 				offset = eventOffset;
 			} else if (editor.currentTool instanceof PageTool) {
 				editor.editorSide.clearExternalModes();
-//				if (Editor.showPageView) {
-					editor.eMode = editorMode.ADD;
-//				} else {
-//					// select mode so that you can resize the view right away
-//					editor.eMode = editorMode.SELECT;
-//				}
+				editor.eMode = editorMode.ADD;
 
 				objects.addAll(views);
 				offset = viewOffset;
@@ -251,7 +246,6 @@ public class EditorBottom extends Toolbar {
 
 					if (editor.currentTool instanceof TileTool) {
 						if (Editor.showPageView) {
-//							editor.currentLoading = (LoadingHandler) objects.get(i);
 							AppLogic.game.currentLoading = (LoadingHandler) objects.get(i);
 
 						} else {
@@ -267,14 +261,17 @@ public class EditorBottom extends Toolbar {
 
 					} else if (editor.currentTool instanceof EventTool) {
 						editor.currentEvent = (EventHandler) objects.get(i);
+
 					} else if (editor.currentTool instanceof PageTool) {
 						editor.currentView = (View) objects.get(i);
 						if (!Editor.showPageView) {
-							editor.selected = (View) objects.get(i);
+							View view = (View) objects.get(i);
+							editor.currentView = view;
 							// select mode so that you can resize the view right away
 							editor.eMode = editorMode.SELECT;
-						} else {
-
+							// update selected and page tool so that resizing can hapen right away
+							editor.selected = view;
+							((PageTool) editor.currentTool).edit = view;
 						}
 					}
 				}
