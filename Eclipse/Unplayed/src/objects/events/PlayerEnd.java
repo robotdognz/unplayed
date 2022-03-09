@@ -76,7 +76,6 @@ public class PlayerEnd extends Event {
 
 		graphics.pushMatrix();
 		graphics.translate(getX() + getWidth() / 2, getY() + getHeight() / 2);
-//		TextureCache.drawPlayerEnd(graphics, getWidth(), getHeight());
 		graphics.imageMode(CENTER);
 		AppLogic.texture.getImageList().get(0).draw(graphics, 0, 0, getWidth(), getHeight(), scale);
 		graphics.popMatrix();
@@ -151,10 +150,10 @@ public class PlayerEnd extends Event {
 		}
 
 		Vec2 playerPos = player.getCenter();
-		if (Math.abs(playerPos.x - center.x) > 0.5f) {
+		if (Math.abs(playerPos.x - center.x) > 3) { // 0.5f
 			return;
 		}
-		if (Math.abs(playerPos.y - center.y) > 0.5f) {
+		if (Math.abs(playerPos.y - center.y) > 3) { // 0.5f
 			return;
 		}
 		if (required != null) {
