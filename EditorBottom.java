@@ -167,11 +167,10 @@ public class EditorBottom extends Toolbar {
 		float areaLeftEdge = selectionArea.getTopLeft().x;
 		float areaRightEdge = selectionArea.getBottomRight().x;
 
-		// TODO tap function icon system
+		// tap function icon system
 		PImage cornerIcon = null;
 		String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
 		PImage iconBackground = p.loadImage(folder + "inactive.png");
-		boolean selectedOnly = false;
 		if (Editor.showPageView) { // in page view
 
 		} else { // in level view
@@ -179,7 +178,6 @@ public class EditorBottom extends Toolbar {
 			if (editor.currentTool instanceof TileTool) {
 				if (editor.eMode == editorMode.ADD || editor.controller instanceof EditorControl) {
 					cornerIcon = p.loadImage(folder + "rotateClockwise.png");
-					selectedOnly = true;
 				}
 			} else if (editor.currentTool instanceof PageTool) {
 				cornerIcon = p.loadImage(folder + "PlaceBlock.png");
@@ -208,6 +206,15 @@ public class EditorBottom extends Toolbar {
 
 			if (object instanceof Handler) {
 				((Handler) object).drawEditor(currentX, currentY, size);
+				if (cornerIcon != null && object instanceof TileHandler && object.equals(currentHandler)) {
+					p.imageMode(CENTER);
+					p.image(iconBackground, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f),
+							size * 0.4f, size * 0.4f);
+					p.tint(75);
+					p.image(cornerIcon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f,
+							size * 0.3f);
+					p.noTint();
+				}
 
 			} else if (object instanceof View) {
 				((View) object).drawToolbar(currentX, currentY, size);
