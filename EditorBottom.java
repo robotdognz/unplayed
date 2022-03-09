@@ -212,8 +212,10 @@ public class EditorBottom extends Toolbar {
 			} else if (object instanceof View) {
 				((View) object).drawToolbar(currentX, currentY, size);
 				if (cornerIcon != null) {
+					p.tint(75);
 					p.imageMode(CENTER);
-					p.image(cornerIcon, currentX, currentY, 10, 10);
+					p.image(cornerIcon, currentX + (objectWidth * 0.5f), currentY - (objectWidth * 0.5f), 50, 50);
+					p.noTint();
 				}
 
 			}
