@@ -110,7 +110,7 @@ public class PageViewObject extends Editable {
 
 	@Override
 	public int getSelectionStrokeWeight(float scale) {
-		return Math.min(2, (int) (size / scale)); // / 2
+		return Math.min(2, (int) (scale / size)); // / 2
 	}
 
 	public void drawCornersAsChild() {
