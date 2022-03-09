@@ -30,11 +30,14 @@ public class WidgetEditorMode extends Widget {
 
 	@Override
 	public void clicked() {
-		super.clicked();
 		if (active == false) {
+			// not currently active
 			active = true;
 			editor.controller = new EditorControl(p, editor);
 			editor.camera = new FreeCamera();
+		} else {
+			// currently active
+			super.clicked();
 		}
 
 //		clickedOld();
