@@ -13,17 +13,18 @@ public class WidgetExtra extends Widget {
 		Widget w1 = new WidgetPlayMode(p, editor, parent);
 		Widget w2 = new WidgetRestart(p, editor, parent);
 //		Widget w3 = new WidgetConfirm(p, editor, parent);
-		Widget w4 = new WidgetShowViews(p, editor, parent);
 //		Widget w5 = new WidgetSnap(p, editor, parent);
-		Widget w6 = new WidgetDebug(p, editor, parent);
-		Widget w7 = new WidgetQuadtree(p, editor, parent);
+//		Widget w4 = new WidgetShowViews(p, editor, parent);
+//		Widget w6 = new WidgetDebug(p, editor, parent);
+//		Widget w7 = new WidgetQuadtree(p, editor, parent);
+		Widget wSettings = new WidgetSettings(p, editor, parent);
 
 		subWidgets.add(w1);
 		subWidgets.add(w2);
-//		subWidgets.add(w3);
-		subWidgets.add(w4);
+		subWidgets.add(wSettings);
+//		subWidgets.add(w4);
 //		subWidgets.add(w5);
-		subWidgets.add(w6);
-		subWidgets.add(w7);
+//		subWidgets.add(w6);
+//		subWidgets.add(w7);
 	}
 }
