@@ -229,7 +229,7 @@ public class EditorBottom extends Toolbar {
 			} else if (object instanceof View) {
 				((View) object).drawToolbar(currentX, currentY, size);
 				if (cornerIcon != null) {
-//					drawFunctionIcon(cornerIcon, currentX, currentY, objectWidth);
+					drawFunctionIcon(cornerIcon, currentX, currentY, objectWidth);
 				}
 
 			} else if (object instanceof NewViewButton) {
@@ -251,8 +251,8 @@ public class EditorBottom extends Toolbar {
 		p.imageMode(CENTER);
 		p.image(iconBackground, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.4f,
 				size * 0.4f);
-		p.tint(75);
-		p.image(icon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f, size * 0.3f);
+//		p.tint(75);
+//		p.image(icon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f, size * 0.3f);
 		p.noTint();
 	}
 
