@@ -93,15 +93,15 @@ public abstract class Widget {
 		// subWidget draw - comes before current widget so the sub widgets slide out
 		// from behind
 		if (subWidgets.size() > 0) { // if this widget is a menu and it has been opened
-			for (int i = subWidgets.size() - 1; i >= 0; i--) { // go through them backwards so that they are drawn
-																// bottom to top
+			// go through them backwards so that they are drawn bottom to top
+			for (int i = subWidgets.size() - 1; i >= 0; i--) {
 				float widgetOffset = 0;
 				if ((!hasSActive && active) || (hasSActive && sActive)) {
 					// if this widget is active, open the subWidgets
 					widgetOffset = subWidgetSpacing + i * subWidgetSpacing;
 				} else {
-					// if the subWidget is a menu, deactivate it so it closes
-					if (subWidgets.get(i).isMenu()) {
+					// if the subWidget is a menu and it is active, deactivate it so it closes
+					if (subWidgets.get(i).isMenu() && subWidgets.get(i).isActive()) {
 						subWidgets.get(i).deactivate();
 					}
 				}
@@ -181,7 +181,7 @@ public abstract class Widget {
 			for (Widget w : subWidgets) {
 				if (w.click()) { // both does the click and returns true if the click happened
 					if (w.getCloseAfter()) { // if the widget that was clicked should close the widget menu, close it
-						DebugOutput.pushMessage("Close widget menu after tap", 1);
+						DebugOutput.pushMessage("CloseAfterSubWidget was true", 1);
 						if (hasSActive) {
 							sActive = false;
 						} else {
