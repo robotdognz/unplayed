@@ -150,7 +150,7 @@ public class PageView {
 
 		// draw auto generated camera
 		if (EditorSettings.cameraLogic() && !Camera.getGame()) {
-			pageCamera.draw();
+			pageCamera.draw(currentScale);
 		}
 
 		p.popMatrix();

@@ -110,8 +110,8 @@ public class PageViewCamera {
 					(float) (1 - Math.pow(zoomSpeed, deltaTime)));
 			cameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
 		}
-		
-		if (Math.abs(center.x - newCenter.x) < 3 && Math.abs(center.y - newCenter.y) < 3) { //0.5 //1
+
+		if (Math.abs(center.x - newCenter.x) < 3 && Math.abs(center.y - newCenter.y) < 3) { // 0.5 //1
 			// this only returns false when the numbers are very similar to each other
 			// which means that the camera isn't moving
 			temp = false;
@@ -120,11 +120,13 @@ public class PageViewCamera {
 		return temp;
 	}
 
-	public void draw() {
+	public void draw(float scale) {
+		int strokeWeight = Math.max(1, (int) (scale * 0.5f));
+
 		// draw page area
 		p.noFill();
 		p.stroke(255, 0, 0);
-		p.strokeWeight(3);
+		p.strokeWeight(strokeWeight);
 		p.rectMode(CORNERS);
 		p.rect(pageArea.getTopLeft().x, pageArea.getTopLeft().y, pageArea.getBottomRight().x,
 				pageArea.getBottomRight().y);
@@ -132,7 +134,7 @@ public class PageViewCamera {
 		// draw new camera area
 		p.noFill();
 		p.stroke(0, 255, 0);
-		p.strokeWeight(3);
+		p.strokeWeight(strokeWeight);
 		p.rectMode(CORNERS);
 		p.rect(newCameraArea.getTopLeft().x, newCameraArea.getTopLeft().y, newCameraArea.getBottomRight().x,
 				newCameraArea.getBottomRight().y);
@@ -140,7 +142,7 @@ public class PageViewCamera {
 		// draw camera area
 		p.noFill();
 		p.stroke(0, 0, 255);
-		p.strokeWeight(3);
+		p.strokeWeight(strokeWeight);
 		p.rectMode(CORNERS);
 		p.rect(cameraArea.getTopLeft().x, cameraArea.getTopLeft().y, cameraArea.getBottomRight().x,
 				cameraArea.getBottomRight().y);
@@ -156,7 +158,7 @@ public class PageViewCamera {
 		updateNewCenter();
 		updateNewScale();
 	}
-	
+
 	public void updateMenu(float minX, float minY, float maxX, float maxY) {
 		// update page area boundary
 		pageArea.setCorners(minX, minY, maxX, maxY);
@@ -192,7 +194,7 @@ public class PageViewCamera {
 		newCameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
 				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + bottomAreaPadding);
 	}
-	
+
 	private static void updateNewCameraMenu() {
 		newCameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
 				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + sideAreaPadding);

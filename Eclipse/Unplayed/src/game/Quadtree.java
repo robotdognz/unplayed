@@ -55,8 +55,8 @@ public class Quadtree {
 		this.root = newRoot;
 	}
 
-	public void draw(PApplet p) {
-		root.draw(p);
+	public void draw(PApplet p, float scale) {
+		root.draw(p, scale);
 	}
 
 	public void clear() {

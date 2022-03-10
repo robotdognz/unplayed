@@ -14,7 +14,6 @@ public class WidgetCameraLogic extends Widget {
 
 	@Override
 	public void clicked() {
-//		Editor.autoCameraSearch = Editor.tileSearch;
 		EditorSettings.toggleCameraLogic();
 	}
 

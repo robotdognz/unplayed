@@ -98,9 +98,6 @@ public class Editor {
 	private int textSize;
 	private int frameDelay;
 	private float frame;
-//	public static boolean quadVis; // is the quad tree being draw
-//	public static boolean tileSearch; // display the logic for searching for slots
-//	public static boolean autoCameraSearch; // display the logic for searching for pages to draw
 
 	private CountdownTimer tapTimer; // prevent taps for a time after each tap
 
@@ -119,7 +116,6 @@ public class Editor {
 		this.currentTool = new TileTool(this);
 		this.eMode = editorMode.ADD;
 		this.eventVis = true;
-//		quadVis = false;
 		this.viewVis = true;
 
 		// Initialize camera backup fields
@@ -133,7 +129,6 @@ public class Editor {
 		// debug display
 		frameDelay = 60; // 100
 		textSize = (int) (p.width / 28.8); // 50
-//		tileSearch = false;
 
 		// Initialize screen objects set
 		screenObjects = new HashSet<Rectangle>();
@@ -338,14 +333,12 @@ public class Editor {
 		}
 
 		// draw quad tree logic for testing
-		if (EditorSettings.quadTreeLogic() && AppLogic.game.player != null) {
-			world.draw(p);
+		if (EditorSettings.quadTreeLogic()) {
+			world.draw(p, currentScale);
 			p.fill(0, 0, 0, 150);
 			for (Rectangle r : AppLogic.game.playerObjects) {
 				p.rect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
 			}
-//			p.rect(game.player.getPlayerArea().getX(), game.player.getPlayerArea().getY(),
-//					game.player.getPlayerArea().getWidth(), game.player.getPlayerArea().getHeight());
 		}
 
 		// draw block placement selection if one exists and snapping is turned off

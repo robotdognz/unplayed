@@ -331,7 +331,7 @@ public class QuadNode {
 		newBottomRight = new QuadNode(bottomRight, newRoot, tree);
 		newRoot.addNodes(newTopLeft, newTopRight, newBottomLeft, newBottomRight);
 
-		// add existing overlapping rectangles to the new leavs
+		// add existing overlapping rectangles to the new leaves
 		HashSet<Rectangle> toAdd = new HashSet<Rectangle>();
 		retrieve(toAdd, topRight);
 		retrieve(toAdd, bottomLeft);
@@ -340,23 +340,23 @@ public class QuadNode {
 		// insert the new rectangle
 		tree.root.nodeInsert(current);
 
-		// add overlaping rectangles
+		// add overlapping rectangles
 		for (Rectangle r : toAdd) {
 			tree.root.nodeInsert(r);
 		}
 	}
 
-	public void draw(PApplet p) {
+	public void draw(PApplet p, float scale) {
 		// draw the bounds of all the nodes in the tree
 		if (topLeft != null) {
-			topLeft.draw(p);
-			topRight.draw(p);
-			bottomLeft.draw(p);
-			bottomRight.draw(p);
+			topLeft.draw(p, scale);
+			topRight.draw(p, scale);
+			bottomLeft.draw(p, scale);
+			bottomRight.draw(p, scale);
 		} else {
 			p.noFill();
 			p.stroke(0);
-			p.strokeWeight(10);
+			p.strokeWeight(Math.max(1, (int) (scale * 0.5f)));
 			p.rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 			p.noStroke();
 		}

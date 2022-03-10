@@ -14,7 +14,6 @@ public class WidgetPlayerPhysicsLogic extends Widget {
 
 	@Override
 	public void clicked() {
-//		Editor.tileSearch = !Editor.tileSearch;
 		EditorSettings.togglePlayerLogic();
 	}
 
