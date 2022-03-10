@@ -10,7 +10,6 @@ public class WidgetDebug extends Widget {
 	public WidgetDebug(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "debugging.png");
-		closeAfterSubWidget = true;
 	}
 
 	@Override

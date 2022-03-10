@@ -278,6 +278,10 @@ public abstract class Widget {
 	public void setActive(boolean newActive) {
 		active = newActive;
 	}
+	
+	public Widget.widgetDirection getMenuDirection(){
+		return wd;
+	}
 
 	public enum widgetDirection {
 		DOWN, UP, LEFT, RIGHT

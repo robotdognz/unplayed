@@ -10,7 +10,6 @@ public class WidgetPlayerPhysicsLogic extends Widget {
 	public WidgetPlayerPhysicsLogic(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "PLayerIcon.png");
-		closeAfterSubWidget = true;
 	}
 
 	@Override
