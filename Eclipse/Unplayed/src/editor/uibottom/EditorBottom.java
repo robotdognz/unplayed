@@ -284,17 +284,22 @@ public class EditorBottom extends Toolbar {
 				offset = eventOffset;
 
 			} else if (editor.currentTool instanceof PageTool) {
+				objects.addAll(views);
+				offset = viewOffset;
+
 				if (Editor.showPageView) {
 					// do nothing in page view
 				} else {
 					// pencil tool when clicking on no view in level view
-					editor.controller = new EditorControl(p, editor);
-					editor.editorSide.clearExternalModes();
-					editor.eMode = editorMode.ADD;
+//					editor.controller = new EditorControl(p, editor);
+//					editor.editorSide.clearExternalModes();
+//					editor.eMode = editorMode.ADD;
+
+//					editor.currentView = null;
+//					editor.selected = null;
+					objects.add(newViewButton);
 				}
 
-				objects.addAll(views);
-				offset = viewOffset;
 			}
 
 			// click on that object
@@ -359,17 +364,27 @@ public class EditorBottom extends Toolbar {
 							editor.eMode = editorMode.ADD;
 
 						} else {
-							View view = (View) objects.get(i);
-							editor.currentView = view;
+							Object object = objects.get(i);
+							if (object instanceof View) {
+								View view = (View) object;
+								editor.currentView = view;
 
-							// enable select mode so that you can resize the view right away
-							editor.controller = new EditorControl(p, editor);
-							editor.editorSide.clearExternalModes();
-							editor.eMode = editorMode.SELECT;
-							// update selected and page tool so that resizing can happen right away
-							editor.selected = view;
-							// pass it to the page tool area system
-							((PageTool) editor.currentTool).edit = view;
+								// enable select mode so that you can resize the view right away
+								editor.controller = new EditorControl(p, editor);
+								editor.editorSide.clearExternalModes();
+								editor.eMode = editorMode.SELECT;
+								// update selected and page tool so that resizing can happen right away
+								editor.selected = view;
+								// pass it to the page tool area system
+								((PageTool) editor.currentTool).edit = view;
+								
+							} else if (object instanceof NewViewButton) {
+								editor.controller = new EditorControl(p, editor);
+								editor.editorSide.clearExternalModes();
+								editor.eMode = editorMode.ADD;
+								editor.currentView = null;
+								editor.selected = null;
+							}
 
 						}
 					}
@@ -469,7 +484,7 @@ public class EditorBottom extends Toolbar {
 				}
 			} else if (editor.currentTool instanceof PageTool && views.size() > 0) {
 				if (Editor.showPageView) {
-					
+
 					float objectsWidth = views.size() * selectionArea.getHeight();
 					if (objectsWidth > selectionArea.getWidth()) {
 						// scroll
@@ -483,9 +498,9 @@ public class EditorBottom extends Toolbar {
 							pageOffset = 0;
 						}
 					}
-					
+
 				} else {
-					
+
 					float objectsWidth = (views.size() + 1) * selectionArea.getHeight();
 					if (objectsWidth > selectionArea.getWidth()) {
 						// scroll
@@ -499,7 +514,7 @@ public class EditorBottom extends Toolbar {
 							viewOffset = 0;
 						}
 					}
-					
+
 				}
 			}
 		}
