@@ -233,7 +233,7 @@ public class EditorBottom extends Toolbar {
 
 			} else if (object instanceof NewViewButton) {
 				// TODO: draw new view button
-				((NewViewButton) object).draw(p, currentX, currentY, objectWidth);
+				((NewViewButton) object).draw(p, currentX, currentY, objectWidth * 0.5f);
 			}
 		}
 		p.imageMode(CORNER);
@@ -467,7 +467,13 @@ public class EditorBottom extends Toolbar {
 					}
 				}
 			} else if (editor.currentTool instanceof PageTool && views.size() > 0) {
-				float objectsWidth = views.size() * selectionArea.getHeight();
+				float objectsWidth = 0;
+				if (Editor.showPageView) {
+					objectsWidth = views.size() * selectionArea.getHeight();
+				} else {
+					objectsWidth = (views.size() + 1) * selectionArea.getHeight();
+				}
+
 				if (objectsWidth > selectionArea.getWidth()) {
 					// scroll
 					viewOffset += (p.pmouseX - p.mouseX) / 3;
