@@ -229,7 +229,7 @@ public class EditorBottom extends Toolbar {
 			} else if (object instanceof View) {
 				((View) object).drawToolbar(currentX, currentY, size);
 				if (cornerIcon != null) {
-					drawFunctionIcon(cornerIcon, currentX, currentY, objectWidth);
+//					drawFunctionIcon(cornerIcon, currentX, currentY, objectWidth);
 				}
 
 			} else if (object instanceof NewViewButton) {
@@ -381,8 +381,6 @@ public class EditorBottom extends Toolbar {
 								editor.controller = new EditorControl(p, editor);
 								editor.editorSide.clearExternalModes();
 								editor.eMode = editorMode.ADD;
-//								editor.currentView = null;
-//								editor.selected = null;
 							}
 
 						}
