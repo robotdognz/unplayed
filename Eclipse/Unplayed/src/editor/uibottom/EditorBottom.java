@@ -233,7 +233,7 @@ public class EditorBottom extends Toolbar {
 				}
 
 			} else if (object instanceof NewViewButton) {
-				// TODO: draw new view button
+				// draw new view button
 				boolean selected = false;
 				// && editor.currentView == null
 				if (editor.controller instanceof EditorControl && editor.eMode == Editor.editorMode.ADD) {
@@ -295,13 +295,7 @@ public class EditorBottom extends Toolbar {
 				if (Editor.showPageView) {
 					// do nothing in page view
 				} else {
-					// pencil tool when clicking on no view in level view
-//					editor.controller = new EditorControl(p, editor);
-//					editor.editorSide.clearExternalModes();
-//					editor.eMode = editorMode.ADD;
-
-//					editor.currentView = null;
-//					editor.selected = null;
+					// add the new view button to the objects list
 					objects.add(newViewButton);
 				}
 
@@ -387,8 +381,8 @@ public class EditorBottom extends Toolbar {
 								editor.controller = new EditorControl(p, editor);
 								editor.editorSide.clearExternalModes();
 								editor.eMode = editorMode.ADD;
-								editor.currentView = null;
-								editor.selected = null;
+//								editor.currentView = null;
+//								editor.selected = null;
 							}
 
 						}
