@@ -1,6 +1,5 @@
 package editor.uitop;
 
-import editor.DebugOutput;
 import editor.Editor;
 import editor.Toolbar;
 import processing.core.PApplet;
@@ -21,17 +20,4 @@ public class WidgetExtra extends Widget {
 		subWidgets.add(w2);
 		subWidgets.add(wSettings);
 	}
-
-	@Override
-	public void deactivate() {
-		DebugOutput.pushMessage("Deactivated extra menu", 1);
-		super.deactivate();
-	}
-
-	@Override
-	public void clicked() {
-		DebugOutput.pushMessage("Clicked extra menu", 1);
-		super.clicked();
-	}
-
 }

@@ -67,11 +67,6 @@ public class EditorTop extends Toolbar {
 		p.imageMode(CENTER);
 		p.image(uiExtra, widgetOffset + widgetSpacing * 3, widgetY, uiExtraWidth, uiExtraHeight);
 
-		// TODO: this system is terrible. The ideal system would calculate areas around
-		// open widget menus that if you touch outside of they close. A middle system
-		// would do the same thing as this one, but with a recursive 'get lowest point'
-		// call to the widget class that goes through all its children if it is open
-
 		// widget menus - draw them and close them if lastTouch is below longest open
 		// widget menu
 		float currentWidgetHeight = 0; // used to find the bottom of the longest open widget menu
@@ -91,10 +86,10 @@ public class EditorTop extends Toolbar {
 				}
 			}
 
-			widgets.get(i).draw(deltaTime, widgetOffset + widgetSpacing * i, widgetY);
-			widgets.get(i).updateActive();
+			currentWidget.draw(deltaTime, widgetOffset + widgetSpacing * i, widgetY);
+			currentWidget.updateActive();
 			if (menu == null) {
-				widgets.get(i).hover(touch);
+				currentWidget.hover(touch);
 			}
 		}
 		currentWidgetHeight += widgets.get(0).getSize() * 1.5; // add a little padding onto the bottom
