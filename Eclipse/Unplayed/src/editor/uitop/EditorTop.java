@@ -2,6 +2,7 @@ package editor.uitop;
 
 import java.util.ArrayList;
 
+import editor.DebugOutput;
 import editor.Editor;
 import editor.Toolbar;
 import editor.Editor.editorMode;
@@ -127,6 +128,7 @@ public class EditorTop extends Toolbar {
 		// if the last touch was below the longest open widget menu, close all widget
 		// menus
 		if (wMenuOpen && touch.y > currentWidgetHeight || menu != null) {
+			DebugOutput.pushMessage("Close widget menus " + currentWidgetHeight, 1);
 			for (Widget w : widgets) {
 				if (w.isMenu()) {
 					w.deactivate();

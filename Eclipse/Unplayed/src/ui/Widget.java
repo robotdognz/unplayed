@@ -294,7 +294,7 @@ public abstract class Widget {
 				}
 			}
 		}
-		DebugOutput.pushMessage("Getting lowest widget point", 1);
+		
 		return output;
 	}
 
