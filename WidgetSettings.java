@@ -1,5 +1,6 @@
 package editor.uitop;
 
+import editor.DebugOutput;
 import editor.Editor;
 import editor.Toolbar;
 import processing.core.PApplet;
@@ -22,5 +23,17 @@ public class WidgetSettings extends Widget {
 		subWidgets.add(w3);
 		subWidgets.add(w4);
 		subWidgets.add(w5);
+	}
+
+	@Override
+	public void deactivate() {
+		DebugOutput.pushMessage("Deactivated settings menu", 1);
+		super.deactivate();
+	}
+
+	@Override
+	public void clicked() {
+		DebugOutput.pushMessage("Clicked settings menu", 1);
+		super.deactivate();
 	}
 }

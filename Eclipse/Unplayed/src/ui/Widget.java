@@ -181,7 +181,7 @@ public abstract class Widget {
 			for (Widget w : subWidgets) {
 				if (w.click()) { // both does the click and returns true if the click happened
 					if (w.getCloseAfter()) { // if the widget that was clicked should close the widget menu, close it
-						DebugOutput.pushMessage("Yes, close after is true for child", 2);
+						DebugOutput.pushMessage("Close widget menu after tap", 1);
 						if (hasSActive) {
 							sActive = false;
 						} else {
