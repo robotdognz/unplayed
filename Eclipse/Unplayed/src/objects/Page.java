@@ -85,7 +85,7 @@ public class Page extends PageViewObject {
 		}
 		children.add(child);
 	}
-	
+
 	public void removeChild(PageViewObject child) {
 		if (child == null) {
 			return;
@@ -308,14 +308,15 @@ public class Page extends PageViewObject {
 		}
 	}
 
-	public void drawCorners() {
+	public void drawCorners(float scale) {
+		int cornerBoxSize = (int) scale * 2;
 		// draw page corners
 		p.rectMode(CENTER);
 		p.fill(255, 0, 0);
-		p.rect(topLeft.x, topLeft.y, 20, 20);
-		p.rect(topRight.x, topRight.y, 20, 20);
-		p.rect(bottomLeft.x, bottomLeft.y, 20, 20);
-		p.rect(bottomRight.x, bottomRight.y, 20, 20);
+		p.rect(topLeft.x, topLeft.y, cornerBoxSize, cornerBoxSize);
+		p.rect(topRight.x, topRight.y, cornerBoxSize, cornerBoxSize);
+		p.rect(bottomLeft.x, bottomLeft.y, cornerBoxSize, cornerBoxSize);
+		p.rect(bottomRight.x, bottomRight.y, cornerBoxSize, cornerBoxSize);
 	}
 
 	public boolean playerVisible() {
