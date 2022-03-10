@@ -49,6 +49,7 @@ public class EditorBottom extends Toolbar {
 	private float viewOffset;
 
 	private PImage iconBackground;
+	private NewViewButton newViewButton;
 
 	public EditorBottom(PApplet p, Editor editor, TextureCache texture) {
 		super(p, editor);
@@ -91,6 +92,8 @@ public class EditorBottom extends Toolbar {
 
 		String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
 		iconBackground = p.loadImage(folder + "inactive.png");
+
+		newViewButton = new NewViewButton(p);
 	}
 
 	@Override
@@ -159,6 +162,13 @@ public class EditorBottom extends Toolbar {
 			objects.addAll(views);
 			offset = viewOffset;
 			currentHandler = editor.currentView;
+
+			if (Editor.showPageView) {
+				// do nothing in page view
+			} else {
+				// add new view button object to end of objects list
+				objects.add(newViewButton);
+			}
 		}
 
 		// draw scroll bar for that type
@@ -221,6 +231,9 @@ public class EditorBottom extends Toolbar {
 					drawFunctionIcon(cornerIcon, currentX, currentY, objectWidth);
 				}
 
+			} else if (object instanceof NewViewButton) {
+				// TODO: draw new view button
+				((NewViewButton) object).draw(p, currentX, currentY, objectWidth);
 			}
 		}
 		p.imageMode(CORNER);
@@ -294,7 +307,7 @@ public class EditorBottom extends Toolbar {
 							AppLogic.game.currentLoading = (LoadingHandler) objects.get(i);
 
 						} else {
-							// TODO: implement 90 degree rotate function
+							// do 90 degree rotation of tile handler
 
 							if (objects.get(i).equals(editor.currentTile)) {
 								// clicking on the already selected tile
