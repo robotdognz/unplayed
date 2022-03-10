@@ -65,7 +65,7 @@ public class AppLogic {
 
 	private static ArrayList<File> levels;
 	private static int currentLevel;
-	private static SharedPreferences settings;
+	public static SharedPreferences settings;
 	public static SharedPreferences.Editor saveGame;
 	public static int savedLevel = 0;
 	public static boolean externalLevels = false; // true if running an external level folder
@@ -106,7 +106,6 @@ public class AppLogic {
 		widgetSpacing = p.width / (widgets.size() + 1);
 		widgetHeight = p.displayWidth / 12; // 120
 
-//		getLevels();
 		// setup shared preferences (used for save games)
 		settings = activity.getPreferences(0);
 		saveGame = settings.edit();

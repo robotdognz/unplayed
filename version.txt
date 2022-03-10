@@ -48,6 +48,13 @@
 -Added child objects to pages, this is used for more control of the camera
 -Levels can now be assigned specific loading screen images in the editor, this is used for narrative and tutorials
 -Loading screens now can have a 'Continue' button if required e.g. they have text the user needs to read
+-Changed the way the edit mode widget works in the level editor
+-Added external tool system to level editor
+-Added secondary function system to objects in the editor bottom toolbar
+	-Rotate already selected tiles by clicking on them
+	-Edit views by clicking on them
+	-Create new view by clicking on '+' object in view tab
+-Various editor improvements and fixes
 
 1.2.1: Improving physics and tuning player 'feel'
 

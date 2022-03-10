@@ -37,6 +37,8 @@ import static processing.core.PConstants.*;
 
 public class Editor {
 	public boolean nextTouchInactive = false;
+	
+	public EditorSettings settings;
 
 	private PApplet p;
 	public DoToast toast;
@@ -94,7 +96,7 @@ public class Editor {
 
 	// frame count and debug visualization
 	private int textSize;
-	public boolean debugVis;
+//	public boolean debugVis;
 	private int frameDelay;
 	private float frame;
 	public static boolean quadVis; // is the quad tree being draw
@@ -130,7 +132,7 @@ public class Editor {
 		pvCenter = new PVector(Camera.getCenter().x, Camera.getCenter().y);
 
 		// debug display
-		debugVis = false;
+//		debugVis = false;
 		frameDelay = 60; // 100
 		textSize = (int) (p.width / 28.8); // 50
 		tileSearch = false;
@@ -139,6 +141,7 @@ public class Editor {
 		screenObjects = new HashSet<Rectangle>();
 
 		tapTimer = new CountdownTimer(0.1f);
+		settings = new EditorSettings();
 	}
 
 	public void step(ArrayList<PVector> touches, float deltaTime) {
@@ -217,7 +220,7 @@ public class Editor {
 		editorSide.draw(touch, menu, deltaTime);
 
 		// draw frame counter and other readouts
-		if (debugVis) {
+		if (EditorSettings.debugOutput()) {
 			p.fill(80);
 			p.textSize(textSize);
 			p.textAlign(CENTER, CENTER);

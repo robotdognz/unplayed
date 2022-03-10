@@ -1,6 +1,7 @@
 package editor.uitop;
 
 import editor.Editor;
+import editor.EditorSettings;
 import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
@@ -13,13 +14,19 @@ public class WidgetDebug extends Widget {
 
 	@Override
 	public void clicked() {
-		editor.debugVis = !editor.debugVis;
+//		editor.debugVis = !editor.debugVis;
+		EditorSettings.toggleDebugOutput();
 	}
 
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (editor.debugVis) {
+//		if (editor.debugVis) {
+//			active = true;
+//		} else {
+//			active = false;
+//		}
+		if (EditorSettings.debugOutput()) {
 			active = true;
 		} else {
 			active = false;
