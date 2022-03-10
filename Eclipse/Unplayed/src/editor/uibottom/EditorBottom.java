@@ -195,11 +195,9 @@ public class EditorBottom extends Toolbar {
 			// pencil in corners of views
 			if (editor.currentTool instanceof TileTool) {
 				if (editor.eMode == Editor.editorMode.ADD && editor.controller instanceof EditorControl) {
-//					String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
 					cornerIcon = tileRotateIcon;
 				}
 			} else if (editor.currentTool instanceof PageTool) {
-//				String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
 				cornerIcon = viewEditIcon;
 			}
 		}
@@ -232,7 +230,7 @@ public class EditorBottom extends Toolbar {
 
 			} else if (object instanceof View) {
 				((View) object).drawToolbar(currentX, currentY, size);
-				if (cornerIcon != null) {
+				if (cornerIcon != null && object != editor.currentView) {
 					drawFunctionIcon(cornerIcon, currentX, currentY, objectWidth);
 				}
 
