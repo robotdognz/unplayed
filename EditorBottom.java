@@ -47,6 +47,7 @@ public class EditorBottom extends Toolbar {
 	private float eventOffset;
 	public ArrayList<View> views;// views
 	private float viewOffset;
+	private float pageOffset;
 
 	private PImage iconBackground;
 	private NewViewButton newViewButton;
@@ -160,12 +161,12 @@ public class EditorBottom extends Toolbar {
 			currentHandler = editor.currentEvent;
 		} else if (editor.currentTool instanceof PageTool) {
 			objects.addAll(views);
-			offset = viewOffset;
 			currentHandler = editor.currentView;
 
 			if (Editor.showPageView) {
-				// do nothing in page view
+				offset = pageOffset;
 			} else {
+				offset = viewOffset;
 				// add new view button object to end of objects list
 				objects.add(newViewButton);
 			}
@@ -467,24 +468,38 @@ public class EditorBottom extends Toolbar {
 					}
 				}
 			} else if (editor.currentTool instanceof PageTool && views.size() > 0) {
-				float objectsWidth = 0;
 				if (Editor.showPageView) {
-					objectsWidth = views.size() * selectionArea.getHeight();
+					
+					float objectsWidth = views.size() * selectionArea.getHeight();
+					if (objectsWidth > selectionArea.getWidth()) {
+						// scroll
+						pageOffset += (p.pmouseX - p.mouseX) / 3;
+						// prevent scrolling off right edge
+						if (pageOffset > objectsWidth - selectionArea.getWidth() + 1) {
+							pageOffset = objectsWidth - selectionArea.getWidth();
+						}
+						// prevent scrolling off left edge
+						if (pageOffset < 0) {
+							pageOffset = 0;
+						}
+					}
+					
 				} else {
-					objectsWidth = (views.size() + 1) * selectionArea.getHeight();
-				}
-
-				if (objectsWidth > selectionArea.getWidth()) {
-					// scroll
-					viewOffset += (p.pmouseX - p.mouseX) / 3;
-					// prevent scrolling off right edge
-					if (viewOffset > objectsWidth - selectionArea.getWidth() + 1) {
-						viewOffset = objectsWidth - selectionArea.getWidth();
+					
+					float objectsWidth = (views.size() + 1) * selectionArea.getHeight();
+					if (objectsWidth > selectionArea.getWidth()) {
+						// scroll
+						viewOffset += (p.pmouseX - p.mouseX) / 3;
+						// prevent scrolling off right edge
+						if (viewOffset > objectsWidth - selectionArea.getWidth() + 1) {
+							viewOffset = objectsWidth - selectionArea.getWidth();
+						}
+						// prevent scrolling off left edge
+						if (viewOffset < 0) {
+							viewOffset = 0;
+						}
 					}
-					// prevent scrolling off left edge
-					if (viewOffset < 0) {
-						viewOffset = 0;
-					}
+					
 				}
 			}
 		}
