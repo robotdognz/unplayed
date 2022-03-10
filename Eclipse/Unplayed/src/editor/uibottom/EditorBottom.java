@@ -230,8 +230,13 @@ public class EditorBottom extends Toolbar {
 
 			} else if (object instanceof View) {
 				((View) object).drawToolbar(currentX, currentY, size);
-				if (cornerIcon != null && object != editor.currentView) {
-					drawFunctionIcon(cornerIcon, currentX, currentY, objectWidth);
+				if (cornerIcon != null) {
+					if (!(object == editor.currentView && editor.eMode == Editor.editorMode.SELECT)) {
+						// don't draw the icon if the current item is selected and we're in select mode
+						// because in that case we're already editing the view, so clicking on it does
+						// nothing
+						drawFunctionIcon(cornerIcon, currentX, currentY, objectWidth);
+					}
 				}
 
 			} else if (object instanceof NewViewButton) {
