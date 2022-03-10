@@ -31,7 +31,7 @@ public class WidgetExtra extends Widget {
 	@Override
 	public void clicked() {
 		DebugOutput.pushMessage("Clicked extra menu", 1);
-		super.deactivate();
+		super.clicked();
 	}
 
 }

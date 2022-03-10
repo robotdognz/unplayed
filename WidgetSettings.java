@@ -34,6 +34,6 @@ public class WidgetSettings extends Widget {
 	@Override
 	public void clicked() {
 		DebugOutput.pushMessage("Clicked settings menu", 1);
-		super.deactivate();
+		super.clicked();
 	}
 }
