@@ -6,6 +6,7 @@ import camera.Camera;
 import camera.PageViewCamera;
 import editor.DebugOutput;
 import editor.Editor;
+import editor.EditorSettings;
 import handlers.TextureCache;
 import misc.Converter;
 import objects.Background;
@@ -123,7 +124,7 @@ public class PageView {
 			}
 
 			page.draw(currentScale);
-			if (Editor.autoCameraSearch && !Camera.getGame()) {
+			if (EditorSettings.cameraLogic() && !Camera.getGame()) {
 				if (((Page) page).playerVisible()) {
 					((Page) page).drawCorners();
 					List<PageViewObject> children = ((Page) page).getChildren();
@@ -149,7 +150,7 @@ public class PageView {
 		}
 
 		// draw auto generated camera
-		if (Editor.autoCameraSearch && !Camera.getGame()) {
+		if (EditorSettings.cameraLogic() && !Camera.getGame()) {
 			pageCamera.draw();
 		}
 

@@ -14,18 +14,12 @@ public class WidgetDebug extends Widget {
 
 	@Override
 	public void clicked() {
-//		editor.debugVis = !editor.debugVis;
 		EditorSettings.toggleDebugOutput();
 	}
 
 	@Override
 	public void updateActive() {
 		super.updateActive();
-//		if (editor.debugVis) {
-//			active = true;
-//		} else {
-//			active = false;
-//		}
 		if (EditorSettings.debugOutput()) {
 			active = true;
 		} else {

@@ -96,12 +96,11 @@ public class Editor {
 
 	// frame count and debug visualization
 	private int textSize;
-//	public boolean debugVis;
 	private int frameDelay;
 	private float frame;
-	public static boolean quadVis; // is the quad tree being draw
-	public static boolean tileSearch; // display the logic for searching for slots
-	public static boolean autoCameraSearch; // display the logic for searching for pages to draw
+//	public static boolean quadVis; // is the quad tree being draw
+//	public static boolean tileSearch; // display the logic for searching for slots
+//	public static boolean autoCameraSearch; // display the logic for searching for pages to draw
 
 	private CountdownTimer tapTimer; // prevent taps for a time after each tap
 
@@ -120,7 +119,7 @@ public class Editor {
 		this.currentTool = new TileTool(this);
 		this.eMode = editorMode.ADD;
 		this.eventVis = true;
-		quadVis = false;
+//		quadVis = false;
 		this.viewVis = true;
 
 		// Initialize camera backup fields
@@ -132,10 +131,9 @@ public class Editor {
 		pvCenter = new PVector(Camera.getCenter().x, Camera.getCenter().y);
 
 		// debug display
-//		debugVis = false;
 		frameDelay = 60; // 100
 		textSize = (int) (p.width / 28.8); // 50
-		tileSearch = false;
+//		tileSearch = false;
 
 		// Initialize screen objects set
 		screenObjects = new HashSet<Rectangle>();
@@ -174,7 +172,7 @@ public class Editor {
 
 		// this is jank as hell
 		if (AppLogic.game.player != null) {
-			if (tileSearch) {
+			if (EditorSettings.playerLogic()) {
 				AppLogic.game.player.showChecking = true;
 			} else {
 				AppLogic.game.player.showChecking = false;
@@ -340,7 +338,7 @@ public class Editor {
 		}
 
 		// draw quad tree logic for testing
-		if (quadVis && AppLogic.game.player != null) {
+		if (EditorSettings.quadTreeLogic() && AppLogic.game.player != null) {
 			world.draw(p);
 			p.fill(0, 0, 0, 150);
 			for (Rectangle r : AppLogic.game.playerObjects) {

@@ -6,21 +6,22 @@ import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class WidgetDebug extends Widget {
-	public WidgetDebug(PApplet p, Editor editor, Toolbar parent) {
+public class WidgetCameraLogic extends Widget {
+	public WidgetCameraLogic(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
-		icon = p.loadImage(folder + "debugging.png");
+		icon = p.loadImage(folder + "CameraControls.png");
 	}
 
 	@Override
 	public void clicked() {
-		EditorSettings.toggleDebugOutput();
+//		Editor.autoCameraSearch = Editor.tileSearch;
+		EditorSettings.toggleCameraLogic();
 	}
 
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (EditorSettings.debugOutput()) {
+		if (EditorSettings.cameraLogic()) {
 			active = true;
 		} else {
 			active = false;

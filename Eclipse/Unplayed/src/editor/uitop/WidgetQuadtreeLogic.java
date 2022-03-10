@@ -6,21 +6,21 @@ import editor.Toolbar;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class WidgetDebug extends Widget {
-	public WidgetDebug(PApplet p, Editor editor, Toolbar parent) {
+public class WidgetQuadtreeLogic extends Widget {
+	public WidgetQuadtreeLogic(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
-		icon = p.loadImage(folder + "debugging.png");
+		icon = p.loadImage(folder + "quadTree.png");
 	}
 
 	@Override
 	public void clicked() {
-		EditorSettings.toggleDebugOutput();
+		EditorSettings.toggleQuadTreeLogic();
 	}
 
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (EditorSettings.debugOutput()) {
+		if (EditorSettings.quadTreeLogic()) {
 			active = true;
 		} else {
 			active = false;
