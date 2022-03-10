@@ -76,34 +76,48 @@ public class EditorTop extends Toolbar {
 		float currentWidgetHeight = 0; // used to find the bottom of the longest open widget menu
 		boolean wMenuOpen = false;
 		for (int i = 0; i < widgets.size(); i++) {
-			if (widgets.get(i).isActive()) {
-				ArrayList<Widget> children = widgets.get(i).getChildren();
-				if (children.size() > 0) {
-					wMenuOpen = true;
-					editor.nextTouchInactive = true; // controls won't work until the touch after widget menus are
-														// closed
-					float current = children.get(children.size() - 1).getPosition().y;
+//			if (widgets.get(i).isActive()) {
+//				ArrayList<Widget> children = widgets.get(i).getChildren();
+//				if (children.size() > 0) {
+//					wMenuOpen = true;
+//					editor.nextTouchInactive = true; // controls won't work until the touch after widget menus are
+//														// closed
+//					float current = children.get(children.size() - 1).getPosition().y;
+//
+//					// check for an open downwards sub-menu widget
+//					for (Widget w : children) {
+//						if (w.isActive() && w.isMenu()) {
+//							// found an open menu
+//							Widget.widgetDirection direction = w.getMenuDirection();
+//							if (direction == Widget.widgetDirection.DOWN) {
+//								// the open menu opens downwards, so it should be added to the current height
+//								ArrayList<Widget> subChildren = widgets.get(i).getChildren();
+//								current = subChildren.get(subChildren.size() - 1).getPosition().y;
+//							}
+//						}
+//					}
+//
+//					// update widget height
+//					if (current > currentWidgetHeight) {
+//						currentWidgetHeight = current;
+//					}
+//				}
+//			}
 
-					// check for an open downwards sub-menu widget
-					for (Widget w : children) {
-						if (w.isActive() && w.isMenu()) {
-							// found an open menu
-							Widget.widgetDirection direction = w.getMenuDirection();
-							if (direction == Widget.widgetDirection.DOWN) {
-								// the open menu opens downwards, so it should be added to the current height
-								ArrayList<Widget> subChildren = widgets.get(i).getChildren();
-								current = subChildren.get(subChildren.size() - 1).getPosition().y;
-							}
-						}
-					}
+			Widget currentWidget = widgets.get(i);
+			if (currentWidget.isMenu() && currentWidget.isActive()) {
+				wMenuOpen = true;
+				// controls won't work until the touch after widget menus are closed
+				editor.nextTouchInactive = true;
 
-					// update widget height
-					if (current > currentWidgetHeight) {
-						currentWidgetHeight = current;
-					}
+				float current = currentWidget.getLowestPoint();
+				// update widget height
+				if (current > currentWidgetHeight) {
+					currentWidgetHeight = current;
 				}
 			}
-			widgets.get(i).draw(deltaTime, widgetOffset + widgetSpacing * i, widgetY); // FIXME: send delta time
+
+			widgets.get(i).draw(deltaTime, widgetOffset + widgetSpacing * i, widgetY);
 			widgets.get(i).updateActive();
 			if (menu == null) {
 				widgets.get(i).hover(touch);

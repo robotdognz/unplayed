@@ -278,9 +278,23 @@ public abstract class Widget {
 	public void setActive(boolean newActive) {
 		active = newActive;
 	}
-	
-	public Widget.widgetDirection getMenuDirection(){
+
+	public Widget.widgetDirection getMenuDirection() {
 		return wd;
+	}
+
+	public float getLowestPoint() {
+		float output = position.y;
+		if (isActive() && isMenu()) {
+			// if this widget is an open menu, go through children
+			for (Widget w : subWidgets) {
+				float childPos = w.getPosition().y;
+				if (childPos > output) {
+					output = childPos;
+				}
+			}
+		}
+		return output;
 	}
 
 	public enum widgetDirection {
