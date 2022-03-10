@@ -2,6 +2,7 @@ package editor.uitop;
 
 import editor.Editor;
 import editor.Toolbar;
+import editor.uibottom.EditorBottom;
 import game.AppLogic;
 import processing.core.PApplet;
 import ui.Widget;
@@ -44,11 +45,10 @@ public class WidgetLoad extends Widget {
 				AppLogic.game.getPageView().resetSystems();
 				// restart the game
 				AppLogic.game.startGame();
-//				if(Editor.showPageView) {
-//					editor.game.getPageView().forceRedraw();
-//				}
 				// end loading
 				editorTop.loading = false;
+				// clear view/page offset in editor bottom
+				((EditorBottom) editor.editorBottom).resetViewAndPageOffset();
 			}
 		}
 	}

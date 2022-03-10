@@ -234,7 +234,11 @@ public class EditorBottom extends Toolbar {
 
 			} else if (object instanceof NewViewButton) {
 				// TODO: draw new view button
-				((NewViewButton) object).draw(p, currentX, currentY, objectWidth * 0.5f);
+				boolean selected = false;
+				if (editor.eMode == Editor.editorMode.ADD && editor.currentView == null) {
+					selected = true;
+				}
+				((NewViewButton) object).draw(p, currentX, currentY, objectWidth * 0.5f, selected);
 			}
 		}
 		p.imageMode(CORNER);
@@ -377,7 +381,7 @@ public class EditorBottom extends Toolbar {
 								editor.selected = view;
 								// pass it to the page tool area system
 								((PageTool) editor.currentTool).edit = view;
-								
+
 							} else if (object instanceof NewViewButton) {
 								editor.controller = new EditorControl(p, editor);
 								editor.editorSide.clearExternalModes();
@@ -531,5 +535,10 @@ public class EditorBottom extends Toolbar {
 	@Override
 	public float getHeight() {
 		return selectionArea.getHeight();
+	}
+
+	public void resetViewAndPageOffset() {
+		viewOffset = 0;
+		pageOffset = 0;
 	}
 }

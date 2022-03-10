@@ -2,6 +2,7 @@ package editor.uitop;
 
 import editor.Editor;
 import editor.Toolbar;
+import editor.uibottom.EditorBottom;
 import game.AppLogic;
 import processing.core.PApplet;
 import ui.Widget;
@@ -34,6 +35,8 @@ public class WidgetNew extends Widget {
 		AppLogic.game.buildWorld();
 		// clear selected
 		editor.selected = null;
+		// clear view/page offset in editor bottom
+		((EditorBottom) editor.editorBottom).resetViewAndPageOffset();
 	}
 
 }
