@@ -50,6 +50,8 @@ public class EditorBottom extends Toolbar {
 	private float pageOffset;
 
 	private PImage iconBackground;
+	private PImage tileRotateIcon;
+	private PImage viewEditIcon;
 	private NewViewButton newViewButton;
 
 	public EditorBottom(PApplet p, Editor editor, TextureCache texture) {
@@ -93,6 +95,8 @@ public class EditorBottom extends Toolbar {
 
 		String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
 		iconBackground = p.loadImage(folder + "inactive.png");
+		tileRotateIcon = p.loadImage(folder + "rotateClockwise.png");
+		viewEditIcon = p.loadImage(folder + "PlaceBlock.png");
 
 		newViewButton = new NewViewButton(p);
 	}
@@ -191,12 +195,12 @@ public class EditorBottom extends Toolbar {
 			// pencil in corners of views
 			if (editor.currentTool instanceof TileTool) {
 				if (editor.eMode == Editor.editorMode.ADD && editor.controller instanceof EditorControl) {
-					String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
-					cornerIcon = p.loadImage(folder + "rotateClockwise.png");
+//					String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
+					cornerIcon = tileRotateIcon;
 				}
 			} else if (editor.currentTool instanceof PageTool) {
-				String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
-				cornerIcon = p.loadImage(folder + "PlaceBlock.png");
+//				String folder = "ui" + '/' + "widgets" + '/'; // data path of widget icons
+				cornerIcon = viewEditIcon;
 			}
 		}
 
@@ -251,8 +255,8 @@ public class EditorBottom extends Toolbar {
 		p.imageMode(CENTER);
 		p.image(iconBackground, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.4f,
 				size * 0.4f);
-//		p.tint(75);
-//		p.image(icon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f, size * 0.3f);
+		p.tint(75);
+		p.image(icon, currentX + (objectWidth * 0.30f), currentY - (objectWidth * 0.30f), size * 0.3f, size * 0.3f);
 		p.noTint();
 	}
 
