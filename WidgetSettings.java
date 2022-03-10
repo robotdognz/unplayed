@@ -15,6 +15,8 @@ public class WidgetSettings extends Widget {
 		Widget w3 = new WidgetPlayerPhysicsLogic(p, editor, parent);
 		Widget w4 = new WidgetCameraLogic(p, editor, parent);
 		Widget w5 = new WidgetQuadtreeLogic(p, editor, parent);
+		
+		closeAfterSubWidget = false;
 
 		subWidgets.add(w1);
 		subWidgets.add(w2);

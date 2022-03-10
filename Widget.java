@@ -32,7 +32,7 @@ public abstract class Widget {
 	protected widgetDirection wd = widgetDirection.DOWN; // subWidget direction, defaults to down
 	protected ArrayList<Widget> subWidgets = new ArrayList<Widget>(); // if this is not null then this widget is a menu
 	protected float subWidgetSpacing; // = 180; // how far apart to draw subWidgets
-	protected boolean iconIsCurrentSubWidget = false; // does this widget icon change depending on its sub wigets?
+	protected boolean iconIsCurrentSubWidget = false; // does this widget icon change depending on its sub widgets?
 	protected boolean closeAfterSubWidget = false; // does this sub widget close the sub widget menu after being clicked
 
 	public Widget(PApplet p, Editor editor, Toolbar parent) {

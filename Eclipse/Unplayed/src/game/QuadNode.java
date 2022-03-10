@@ -355,7 +355,7 @@ public class QuadNode {
 			bottomRight.draw(p, scale);
 		} else {
 			p.noFill();
-			p.stroke(0);
+			p.stroke(100);
 			p.strokeWeight(Math.max(1, (int) (scale * 0.5f)));
 			p.rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 			p.noStroke();
