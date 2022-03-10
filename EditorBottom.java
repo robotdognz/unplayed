@@ -235,7 +235,8 @@ public class EditorBottom extends Toolbar {
 			} else if (object instanceof NewViewButton) {
 				// TODO: draw new view button
 				boolean selected = false;
-				if (editor.eMode == Editor.editorMode.ADD && editor.currentView == null) {
+				// && editor.currentView == null
+				if (editor.controller instanceof EditorControl && editor.eMode == Editor.editorMode.ADD) {
 					selected = true;
 				}
 				((NewViewButton) object).draw(p, currentX, currentY, objectWidth * 0.5f, selected);
