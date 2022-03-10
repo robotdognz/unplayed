@@ -288,7 +288,7 @@ public abstract class Widget {
 		if (isActive() && isMenu()) {
 			// if this widget is an open menu, go through children
 			for (Widget w : subWidgets) {
-				float childPos = w.getPosition().y;
+				float childPos = w.getLowestPoint();
 				if (childPos > output) {
 					output = childPos;
 				}
