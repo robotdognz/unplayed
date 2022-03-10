@@ -5,7 +5,6 @@ import java.util.List;
 import camera.Camera;
 import camera.PageViewCamera;
 import editor.DebugOutput;
-import editor.Editor;
 import editor.EditorSettings;
 import handlers.TextureCache;
 import misc.Converter;
