@@ -3,6 +3,7 @@ package ui;
 import java.util.ArrayList;
 import static processing.core.PConstants.*;
 
+import editor.DebugOutput;
 import editor.Editor;
 import editor.Toolbar;
 import processing.core.*;
@@ -179,13 +180,14 @@ public abstract class Widget {
 		if (subWidgets.size() > 0) {
 			for (Widget w : subWidgets) {
 				if (w.click()) { // both does the click and returns true if the click happened
-//					if (w.getCloseAfter()) { // if the widget that was clicked should close the widget menu, close it
-//						if (hasSActive) {
-//							sActive = false;
-//						} else {
-//							active = false;
-//						}
-//					}
+					if (w.getCloseAfter()) { // if the widget that was clicked should close the widget menu, close it
+						DebugOutput.pushMessage("Yes, close after is true for child", 2);
+						if (hasSActive) {
+							sActive = false;
+						} else {
+							active = false;
+						}
+					}
 				}
 			}
 		}
