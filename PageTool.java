@@ -36,7 +36,7 @@ public class PageTool extends AreaTool {
 		if (!Editor.showPageView) {// views
 			if (editor.selected != null && editor.selected instanceof View && editor.eMode == editorMode.SELECT) {
 				super.touchMoved(touch);
-				AppLogic.game.getPageView().updateVisiblePages();
+				AppLogic.game.getPageView().resetSystems();
 			} else {
 				edit = null;
 			}
@@ -70,7 +70,7 @@ public class PageTool extends AreaTool {
 					xDist = AppLogic.convert.screenToLevel(xDist / 3);
 					yDist = AppLogic.convert.screenToLevel(yDist / 3);
 					((Page) editor.selected).addPosition(xDist, yDist);
-					AppLogic.game.getPageView().updateVisiblePages();
+					AppLogic.game.getPageView().resetSystems();
 				}
 			}
 		}
@@ -112,18 +112,8 @@ public class PageTool extends AreaTool {
 
 				PVector center = AppLogic.convert.screenToLevel(x, y);
 				((Page) editor.selected).setPosition(center);
-				AppLogic.game.getPageView().updateVisiblePages();
+				AppLogic.game.getPageView().resetSystems();
 
-				// old code
-//				if (pX != 0 && pY != 0) {
-//					float xDist = x-pX;
-//					float yDist = y-pY;
-//					xDist = convert.screenToLevel(xDist);
-//					yDist = convert.screenToLevel(yDist);
-//					((Page) editor.selected).addPosition(xDist, yDist);
-//				}
-//				pX = x;
-//				pY = y;
 			}
 		}
 	}
@@ -134,7 +124,7 @@ public class PageTool extends AreaTool {
 		if (Editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
 				((Page) editor.selected).addAngle(PApplet.degrees(angle));
-				AppLogic.game.getPageView().updateVisiblePages();
+				AppLogic.game.getPageView().resetSystems();
 			}
 		}
 	}
