@@ -333,15 +333,10 @@ public class PageView {
 
 		// get area of pages
 		for (PageViewObject object : pageViewObjects) {
-			if (!(object instanceof Page)) {
-				continue;
-			}
-			Page page = (Page) object;
-
-			minX = Math.min(minX, page.getLeftmostPoint());
-			minY = Math.min(minY, page.getTopmostPoint());
-			maxX = Math.max(maxX, page.getRightmostPoint());
-			maxY = Math.max(maxY, page.getBottommostPoint());
+			minX = Math.min(minX, object.getLeftmostPoint());
+			minY = Math.min(minY, object.getTopmostPoint());
+			maxX = Math.max(maxX, object.getRightmostPoint());
+			maxY = Math.max(maxY, object.getBottommostPoint());
 		}
 
 		Menu temp = storedMenu;
