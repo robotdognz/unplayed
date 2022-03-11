@@ -518,6 +518,6 @@ public class PageView {
 
 	public void resetSystems() {
 		previousPageArea = null;
-		updateVisiblePages();
+//		updateVisiblePages();
 	}
 }
