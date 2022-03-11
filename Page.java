@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import org.jbox2d.common.Vec2;
+
+import game.AppLogic;
 import game.Game;
 import objects.events.PlayerEnd;
 import processing.core.*;
@@ -84,6 +86,8 @@ public class Page extends PageViewObject {
 			return;
 		}
 		children.add(child);
+
+		AppLogic.game.getPageView().resetSystems();
 	}
 
 	public void removeChild(PageViewObject child) {

@@ -33,9 +33,8 @@ public class WidgetPlayMode extends Widget {
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		// only works if there is at least one page in the page view and there is a
-		// player to control
-		if (pageView.getPageCount() > 0) { // && AppLogic.game.player != null
+		// only works if there is at least one page in the page view
+		if (pageView.getPageCount() > 0) {
 			available = true;
 		} else {
 			available = false;
