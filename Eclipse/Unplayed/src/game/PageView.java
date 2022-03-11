@@ -518,6 +518,7 @@ public class PageView {
 
 	public void resetSystems() {
 		previousPageArea = null;
+		DebugOutput.pushMessage("Reset page view", 1);
 //		updateVisiblePages();
 	}
 }
