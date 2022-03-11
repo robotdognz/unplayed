@@ -410,6 +410,8 @@ public class PageView {
 		if (object instanceof Page) {
 			this.pages++;
 		}
+
+		resetSystems();
 	}
 
 	public void addPageViewObjects(List<PageViewObject> objects) {
@@ -420,6 +422,8 @@ public class PageView {
 				this.pages++;
 			}
 		}
+
+		resetSystems();
 	}
 
 	public void removePageViewObject(PageViewObject object) {
@@ -439,9 +443,10 @@ public class PageView {
 				Page page = (Page) pvo;
 				page.removeChild(object);
 			}
+
+			resetSystems();
 		}
 
-		resetSystems();
 	}
 
 	public List<PageViewObject> getPageViewObjects() {
