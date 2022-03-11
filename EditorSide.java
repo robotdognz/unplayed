@@ -337,7 +337,6 @@ public class EditorSide extends Toolbar {
 	public boolean isLevelEnd() {
 		if (editor.selected != null) {
 			if (editor.selected instanceof PlayerEnd) {
-//				clearExternalModes();
 				return ((PlayerEnd) editor.selected).getLevelEnd();
 			}
 		}

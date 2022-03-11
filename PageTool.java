@@ -70,6 +70,7 @@ public class PageTool extends AreaTool {
 					xDist = AppLogic.convert.screenToLevel(xDist / 3);
 					yDist = AppLogic.convert.screenToLevel(yDist / 3);
 					((Page) editor.selected).addPosition(xDist, yDist);
+					AppLogic.game.getPageView().initCamera();
 				}
 			}
 		}
@@ -111,6 +112,7 @@ public class PageTool extends AreaTool {
 
 				PVector center = AppLogic.convert.screenToLevel(x, y);
 				((Page) editor.selected).setPosition(center);
+				AppLogic.game.getPageView().initCamera();
 
 				// old code
 //				if (pX != 0 && pY != 0) {
@@ -132,6 +134,7 @@ public class PageTool extends AreaTool {
 		if (Editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
 				((Page) editor.selected).addAngle(PApplet.degrees(angle));
+				AppLogic.game.getPageView().initCamera();
 			}
 		}
 	}
