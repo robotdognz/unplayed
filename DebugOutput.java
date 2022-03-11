@@ -66,12 +66,12 @@ public class DebugOutput {
 			p.textAlign(CENTER, CENTER);
 
 			int line = 0;
-			for (int i = messageQueue.size() - 1; i >= 0; i--) {
-				try {
+			try {
+				for (int i = messageQueue.size() - 1; i >= 0; i--) {
 					line += messageQueue.get(i).drawMessage(p, p.width / 2, y + textSize * line);
-				} catch (Error e) {
-					AppLogic.toast.showToast(e.toString());
 				}
+			} catch (Error e) {
+				AppLogic.toast.showToast(e.toString());
 			}
 		}
 	}
