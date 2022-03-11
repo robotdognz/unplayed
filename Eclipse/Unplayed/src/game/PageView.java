@@ -149,7 +149,7 @@ public class PageView {
 		}
 
 		// draw auto generated camera
-		if (EditorSettings.cameraLogic() && !Camera.getGame()) {
+		if (EditorSettings.cameraLogic() && getPageCount() > 0 && !Camera.getGame()) {
 			pageCamera.draw(currentScale);
 		}
 
