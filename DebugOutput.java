@@ -2,6 +2,8 @@ package editor;
 
 import static processing.core.PConstants.CENTER;
 import java.util.LinkedList;
+
+import game.AppLogic;
 import processing.core.PApplet;
 
 public class DebugOutput {
@@ -65,7 +67,11 @@ public class DebugOutput {
 
 			int line = 0;
 			for (int i = messageQueue.size() - 1; i >= 0; i--) {
-				line += messageQueue.get(i).drawMessage(p, p.width / 2, y + textSize * line);
+				try {
+					line += messageQueue.get(i).drawMessage(p, p.width / 2, y + textSize * line);
+				} catch (Error e) {
+					AppLogic.toast.showToast(e.toString());
+				}
 			}
 		}
 	}
