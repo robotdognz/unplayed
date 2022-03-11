@@ -81,13 +81,13 @@ public class Page extends PageViewObject {
 		if (child == null) {
 			return;
 		}
+		AppLogic.game.getPageView().resetSystems(); // reset page view camera
 		if (children.contains(child)) {
 			children.remove(child);
 			return;
 		}
 		children.add(child);
 
-		AppLogic.game.getPageView().resetSystems();
 	}
 
 	public void removeChild(PageViewObject child) {
