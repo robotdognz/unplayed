@@ -343,19 +343,25 @@ public class EditorBottom extends Toolbar {
 					} else if (editor.currentTool instanceof ImageTool) {
 
 						if (Editor.showPageView) {
+							// select the handler
 							editor.currentBackground = (BackgroundHandler) objects.get(i);
+							// switch to pencil mode when selecting a background
+							editor.controller = new EditorControl(p, editor);
+							editor.editorSide.clearExternalModes();
+							editor.eMode = editorMode.ADD;
 						} else {
+							// select the handler
 							editor.currentImage = (ImageHandler) objects.get(i);
-
-							// switch to pencil mode when selecting a new image
+							// switch to pencil mode when selecting an image
 							editor.controller = new EditorControl(p, editor);
 							editor.editorSide.clearExternalModes();
 							editor.eMode = editorMode.ADD;
 						}
 
 					} else if (editor.currentTool instanceof EventTool) {
+						// select the handler
 						editor.currentEvent = (EventHandler) objects.get(i);
-
+						// switch to pencil mode when selecting an event
 						editor.controller = new EditorControl(p, editor);
 						editor.editorSide.clearExternalModes();
 						editor.eMode = editorMode.ADD;
