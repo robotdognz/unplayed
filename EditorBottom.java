@@ -528,9 +528,11 @@ public class EditorBottom extends Toolbar {
 						viewOffset = 0;
 					}
 //					} else if (offsetAmount > 0) { // scroll right
-					if (objectsWidth > selectionArea.getWidth()) {
-						// prevent scrolling off right edge
-						if (viewOffset > objectsWidth - selectionArea.getWidth() + 1) {
+
+					// objects are left of the right edge
+					if (viewOffset > objectsWidth - selectionArea.getWidth() + 1) {
+						// the total width of all the views is larger than the width of the tool-bar
+						if (objectsWidth > selectionArea.getWidth()) {
 							viewOffset = objectsWidth - selectionArea.getWidth();
 						}
 					}
