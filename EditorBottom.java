@@ -408,13 +408,15 @@ public class EditorBottom extends Toolbar {
 	@Override
 	public void touchMoved(ArrayList<PVector> touch) {
 		if (touch.size() == 1 && p.mouseY >= selectionArea.getY()) {
+			float offsetAmount = (p.pmouseX - p.mouseX) / 3;
+
 			if (editor.currentTool instanceof TileTool) {
 				if (Editor.showPageView) {
 
 					float objectsWidth = loadings.size() * selectionArea.getHeight();
 					if (objectsWidth > selectionArea.getWidth()) {
 						// scroll
-						loadingOffset += (p.pmouseX - p.mouseX) / 3;
+						loadingOffset += offsetAmount;
 						// prevent scrolling off right edge
 						if (loadingOffset > objectsWidth - selectionArea.getWidth() + 1) {
 							loadingOffset = objectsWidth - selectionArea.getWidth();
@@ -430,7 +432,7 @@ public class EditorBottom extends Toolbar {
 					float objectsWidth = tiles.size() * selectionArea.getHeight();
 					if (objectsWidth > selectionArea.getWidth()) {
 						// scroll
-						tileOffset += (p.pmouseX - p.mouseX) / 3;
+						tileOffset += offsetAmount;
 						// prevent scrolling off right edge
 						if (tileOffset > objectsWidth - selectionArea.getWidth() + 1) {
 							tileOffset = objectsWidth - selectionArea.getWidth();
@@ -450,7 +452,7 @@ public class EditorBottom extends Toolbar {
 					float objectsWidth = backgrounds.size() * selectionArea.getHeight();
 					if (objectsWidth > selectionArea.getWidth()) {
 						// scroll
-						backgroundOffset += (p.pmouseX - p.mouseX) / 3;
+						backgroundOffset += offsetAmount;
 						// prevent scrolling off right edge
 						if (backgroundOffset > objectsWidth - selectionArea.getWidth() + 1) {
 							backgroundOffset = objectsWidth - selectionArea.getWidth();
@@ -466,7 +468,7 @@ public class EditorBottom extends Toolbar {
 					float objectsWidth = images.size() * selectionArea.getHeight();
 					if (objectsWidth > selectionArea.getWidth()) {
 						// scroll
-						imageOffset += (p.pmouseX - p.mouseX) / 3;
+						imageOffset += offsetAmount;
 						// prevent scrolling off right edge
 						if (imageOffset > objectsWidth - selectionArea.getWidth() + 1) {
 							imageOffset = objectsWidth - selectionArea.getWidth();
@@ -483,7 +485,7 @@ public class EditorBottom extends Toolbar {
 				float objectsWidth = events.size() * selectionArea.getHeight();
 				if (objectsWidth > selectionArea.getWidth()) {
 					// scroll
-					eventOffset += (p.pmouseX - p.mouseX) / 3;
+					eventOffset += offsetAmount;
 					// prevent scrolling off right edge
 					if (eventOffset > objectsWidth - selectionArea.getWidth() + 1) {
 						eventOffset = objectsWidth - selectionArea.getWidth();
@@ -495,11 +497,12 @@ public class EditorBottom extends Toolbar {
 				}
 			} else if (editor.currentTool instanceof PageTool && views.size() > 0) {
 				if (Editor.showPageView) {
-
 					float objectsWidth = views.size() * selectionArea.getHeight();
 					if (objectsWidth > selectionArea.getWidth()) {
+						// if the total width of all the views is larger than the width of the tool-bar
+
 						// scroll
-						pageOffset += (p.pmouseX - p.mouseX) / 3;
+						pageOffset += offsetAmount;
 						// prevent scrolling off right edge
 						if (pageOffset > objectsWidth - selectionArea.getWidth() + 1) {
 							pageOffset = objectsWidth - selectionArea.getWidth();
@@ -508,14 +511,18 @@ public class EditorBottom extends Toolbar {
 						if (pageOffset < 0) {
 							pageOffset = 0;
 						}
+					} else {
+						// the total width of all the views is smaller than or equal to tool-bar
+						pageOffset = 0;
 					}
 
 				} else {
-
 					float objectsWidth = (views.size() + 1) * selectionArea.getHeight();
 					if (objectsWidth > selectionArea.getWidth()) {
+						// if the total width of all the views is larger than the width of the tool-bar
+
 						// scroll
-						viewOffset += (p.pmouseX - p.mouseX) / 3;
+						viewOffset += offsetAmount;
 						// prevent scrolling off right edge
 						if (viewOffset > objectsWidth - selectionArea.getWidth() + 1) {
 							viewOffset = objectsWidth - selectionArea.getWidth();
@@ -524,6 +531,9 @@ public class EditorBottom extends Toolbar {
 						if (viewOffset < 0) {
 							viewOffset = 0;
 						}
+					} else {
+						// the total width of all the views is smaller than or equal to tool-bar
+						viewOffset = 0;
 					}
 
 				}
