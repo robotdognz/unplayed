@@ -105,17 +105,17 @@ public class PageTool extends AreaTool {
 	@Override
 	public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
 		// page resize
-		if (Editor.showPageView && editorSide.adjust) {
-			if (editor.selected != null && editor.selected instanceof Page) {
-				((Page) editor.selected).addSize(AppLogic.convert.screenToLevel(d) / 500);
-				// TODO: figure out what the 500 should be
-
-				PVector center = AppLogic.convert.screenToLevel(x, y);
-				((Page) editor.selected).setPosition(center);
-				AppLogic.game.getPageView().resetSystems();
-
-			}
-		}
+//		if (Editor.showPageView && editorSide.adjust) {
+//			if (editor.selected != null && editor.selected instanceof Page) {
+//				((Page) editor.selected).addSize(AppLogic.convert.screenToLevel(d) / 500);
+//				// TODO: figure out what the 500 should be
+//
+//				PVector center = AppLogic.convert.screenToLevel(x, y);
+//				((Page) editor.selected).setPosition(center);
+//				AppLogic.game.getPageView().resetSystems();
+//
+//			}
+//		}
 	}
 
 	@Override
