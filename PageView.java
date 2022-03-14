@@ -224,9 +224,16 @@ public class PageView {
 	public void updateVisiblePages() {
 		Rectangle area = getPlayerVisibleArea();
 		if (area != null) {
+			// found pages with visible player
 			pageCamera.update(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,
 					area.getBottomRight().y);
 		} else {
+
+			if (pageViewObjects.size() == 0) {
+				// nothing in page view at all
+				return;
+			}
+
 			// no pages with visible player, just do whole level instead, minus menus
 			float minX = Float.POSITIVE_INFINITY;
 			float minY = Float.POSITIVE_INFINITY;
@@ -235,15 +242,15 @@ public class PageView {
 
 			// get area of pages
 			for (PageViewObject object : pageViewObjects) {
-				if (!(object instanceof Page)) {
-					continue;
-				}
-				Page page = (Page) object;
+//				if (!(object instanceof Page)) {
+//					continue;
+//				}
+//				Page page = (Page) object;
 
-				minX = Math.min(minX, page.getLeftmostPoint());
-				minY = Math.min(minY, page.getTopmostPoint());
-				maxX = Math.max(maxX, page.getRightmostPoint());
-				maxY = Math.max(maxY, page.getBottommostPoint());
+				minX = Math.min(minX, object.getLeftmostPoint());
+				minY = Math.min(minY, object.getTopmostPoint());
+				maxX = Math.max(maxX, object.getRightmostPoint());
+				maxY = Math.max(maxY, object.getBottommostPoint());
 			}
 
 			float x = minX;
@@ -424,7 +431,7 @@ public class PageView {
 				this.pages++;
 			}
 		}
-		
+
 		pageCamera.rebuildCameraArea();
 		resetSystems();
 	}
