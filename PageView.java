@@ -408,6 +408,9 @@ public class PageView {
 		pageViewObjects.add(object);
 		if (object instanceof Page) {
 			this.pages++;
+			if (this.pages == 1) {
+				pageCamera.rebuildCameraArea();
+			}
 		}
 
 		resetSystems();
@@ -428,6 +431,7 @@ public class PageView {
 	public void removePageViewObject(PageViewObject object) {
 
 		if (pageViewObjects.remove(object)) {
+
 			// if it was removed
 			if (object instanceof Page) {
 				// if the removed was a page
@@ -443,7 +447,7 @@ public class PageView {
 				page.removeChild(object);
 			}
 
-			if (pageViewObjects.size() > 0) {
+			if (this.pages > 0) {
 				resetSystems();
 			}
 		}

@@ -131,13 +131,13 @@ public class PageViewCamera {
 		p.rect(focusArea.getTopLeft().x, focusArea.getTopLeft().y, focusArea.getBottomRight().x,
 				focusArea.getBottomRight().y);
 
-//		// draw new camera area
-//		p.noFill();
-//		p.stroke(0, 255, 0); // green
-//		p.strokeWeight(strokeWeight);
-//		p.rectMode(CORNERS);
-//		p.rect(newCameraArea.getTopLeft().x, newCameraArea.getTopLeft().y, newCameraArea.getBottomRight().x,
-//				newCameraArea.getBottomRight().y);
+		// draw new camera area
+		p.noFill();
+		p.stroke(0, 255, 0); // green
+		p.strokeWeight(strokeWeight);
+		p.rectMode(CORNERS);
+		p.rect(newCameraArea.getTopLeft().x, newCameraArea.getTopLeft().y, newCameraArea.getBottomRight().x,
+				newCameraArea.getBottomRight().y);
 
 		// draw camera area
 		p.noFill();
@@ -223,6 +223,10 @@ public class PageViewCamera {
 
 	public float getBottomAreaPadding() {
 		return bottomAreaPadding;
+	}
+	
+	public void rebuildCameraArea() {
+		cameraArea = new Rectangle(0, 0, 0, 0);
 	}
 
 	static public PVector screenToLevel(float screenX, float screenY) {
