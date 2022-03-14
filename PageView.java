@@ -398,6 +398,7 @@ public class PageView {
 
 			page.updateSizeFromView();
 		}
+		resetSystems();
 	}
 
 	public void clearMenus() {
@@ -409,9 +410,6 @@ public class PageView {
 		pageViewObjects.add(object);
 		if (object instanceof Page) {
 			this.pages++;
-			if (this.pages == 1) {
-//				pageCamera.rebuildCameraArea();
-			}
 		}
 
 		resetSystems();
@@ -426,7 +424,6 @@ public class PageView {
 			}
 		}
 
-//		pageCamera.rebuildCameraArea();
 		resetSystems();
 	}
 
