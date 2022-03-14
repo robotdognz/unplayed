@@ -30,7 +30,7 @@ public class WidgetNew extends Widget {
 		AppLogic.game.world.clear();
 		AppLogic.game.views.clear();
 		AppLogic.game.getPageView().clearPageViewObjects();
-		AppLogic.game.getPageView().resetSystems();
+//		AppLogic.game.getPageView().resetSystems();
 		// clear box2d
 		AppLogic.game.buildWorld();
 		// clear selected

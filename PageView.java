@@ -424,7 +424,8 @@ public class PageView {
 				this.pages++;
 			}
 		}
-
+		
+		pageCamera.rebuildCameraArea();
 		resetSystems();
 	}
 

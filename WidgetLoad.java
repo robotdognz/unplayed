@@ -42,7 +42,7 @@ public class WidgetLoad extends Widget {
 				editor.currentView = null;
 				editor.currentPage = null;
 				editor.selected = null;
-				AppLogic.game.getPageView().resetSystems();
+//				AppLogic.game.getPageView().resetSystems();
 				// restart the game
 				AppLogic.game.startGame();
 				// end loading
