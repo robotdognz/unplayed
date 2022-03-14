@@ -43,7 +43,7 @@ public class Background extends PageViewObject {
 			p.rotate(PApplet.radians(angle)); // rotate the page
 			p.scale(flipX, flipY); // flip the page
 			p.imageMode(CENTER);
-			p.image(backgroundTexture.getSprite(scale), 0, 0, getWidth(), getHeight()); // draw the page
+			p.image(backgroundTexture.getSprite(scale * 0.25f), 0, 0, getWidth(), getHeight()); // draw the page
 //			p.image(backgroundTexture.getSprite(0), 0, 0, getWidth(), getHeight()); // draw the page
 			p.popMatrix();
 		} else {
