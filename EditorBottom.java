@@ -522,21 +522,22 @@ public class EditorBottom extends Toolbar {
 					// scroll
 					viewOffset += offsetAmount;
 
-//					if (offsetAmount < 0) { // scroll left
 					// prevent scrolling off left edge
 					if (viewOffset < 0) {
 						viewOffset = 0;
 					}
-//					} else if (offsetAmount > 0) { // scroll right
 
-					// objects are left of the right edge
-					if (viewOffset > objectsWidth - selectionArea.getWidth() + 1) {
-						// the total width of all the views is larger than the width of the tool-bar
-						if (objectsWidth > selectionArea.getWidth()) {
+					// TODO: need to write an equation that calculates the maximum right direction
+					// scroll
+					if (objectsWidth < selectionArea.getWidth()) {
+						viewOffset = 0;
+					} else {
+						// prevent scrolling off right edge
+						if (viewOffset > objectsWidth - selectionArea.getWidth() + 1) {
 							viewOffset = objectsWidth - selectionArea.getWidth();
 						}
 					}
-//					}
+
 
 //					if (objectsWidth > selectionArea.getWidth()) {
 //						// if the total width of all the views is larger than the width of the tool-bar
