@@ -495,26 +495,45 @@ public class EditorBottom extends Toolbar {
 						eventOffset = 0;
 					}
 				}
-			} else if (editor.currentTool instanceof PageTool && views.size() > 0) {
+			} else if (editor.currentTool instanceof PageTool) { // && views.size() > 0
 				if (Editor.showPageView) {
 					float objectsWidth = views.size() * selectionArea.getHeight();
-					if (objectsWidth > selectionArea.getWidth()) {
-						// if the total width of all the views is larger than the width of the tool-bar
+					
+					// scroll
+					pageOffset += offsetAmount;
 
-						// scroll
-						pageOffset += offsetAmount;
+					// prevent scrolling off left edge
+					if (pageOffset < 0) {
+						pageOffset = 0;
+					}
+
+					if (objectsWidth < selectionArea.getWidth()) {
+						// prevent scrolling when width of all the views is shorter than the tool-bar
+						pageOffset = 0;
+					} else {
 						// prevent scrolling off right edge
 						if (pageOffset > objectsWidth - selectionArea.getWidth() + 1) {
 							pageOffset = objectsWidth - selectionArea.getWidth();
 						}
-						// prevent scrolling off left edge
-						if (pageOffset < 0) {
-							pageOffset = 0;
-						}
-					} else {
-						// the total width of all the views is smaller than or equal to tool-bar
-						pageOffset = 0;
 					}
+					
+//					if (objectsWidth > selectionArea.getWidth()) {
+//						// if the total width of all the views is larger than the width of the tool-bar
+//
+//						// scroll
+//						pageOffset += offsetAmount;
+//						// prevent scrolling off right edge
+//						if (pageOffset > objectsWidth - selectionArea.getWidth() + 1) {
+//							pageOffset = objectsWidth - selectionArea.getWidth();
+//						}
+//						// prevent scrolling off left edge
+//						if (pageOffset < 0) {
+//							pageOffset = 0;
+//						}
+//					} else {
+//						// the total width of all the views is smaller than or equal to tool-bar
+//						pageOffset = 0;
+//					}
 
 				} else {
 					float objectsWidth = (views.size() + 1) * selectionArea.getHeight();
@@ -527,9 +546,8 @@ public class EditorBottom extends Toolbar {
 						viewOffset = 0;
 					}
 
-					// TODO: need to write an equation that calculates the maximum right direction
-					// scroll
 					if (objectsWidth < selectionArea.getWidth()) {
+						// prevent scrolling when width of all the views is shorter than the tool-bar
 						viewOffset = 0;
 					} else {
 						// prevent scrolling off right edge
@@ -537,25 +555,6 @@ public class EditorBottom extends Toolbar {
 							viewOffset = objectsWidth - selectionArea.getWidth();
 						}
 					}
-
-
-//					if (objectsWidth > selectionArea.getWidth()) {
-//						// if the total width of all the views is larger than the width of the tool-bar
-//
-//						// scroll
-//						viewOffset += offsetAmount;
-//						// prevent scrolling off right edge
-//						if (viewOffset > objectsWidth - selectionArea.getWidth() + 1) {
-//							viewOffset = objectsWidth - selectionArea.getWidth();
-//						}
-//						// prevent scrolling off left edge
-//						if (viewOffset < 0) {
-//							viewOffset = 0;
-//						}
-//					} else {
-//						// the total width of all the views is smaller than or equal to tool-bar
-//						viewOffset = 0;
-//					}
 
 				}
 			}
