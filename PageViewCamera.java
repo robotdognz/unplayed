@@ -125,7 +125,7 @@ public class PageViewCamera {
 
 		// draw page area
 		p.noFill();
-		p.stroke(255, 0, 0);
+		p.stroke(255, 0, 0); // red
 		p.strokeWeight(strokeWeight);
 		p.rectMode(CORNERS);
 		p.rect(pageArea.getTopLeft().x, pageArea.getTopLeft().y, pageArea.getBottomRight().x,
@@ -133,7 +133,7 @@ public class PageViewCamera {
 
 		// draw new camera area
 		p.noFill();
-		p.stroke(0, 255, 0);
+		p.stroke(0, 255, 0); // green
 		p.strokeWeight(strokeWeight);
 		p.rectMode(CORNERS);
 		p.rect(newCameraArea.getTopLeft().x, newCameraArea.getTopLeft().y, newCameraArea.getBottomRight().x,
@@ -141,7 +141,7 @@ public class PageViewCamera {
 
 		// draw camera area
 		p.noFill();
-		p.stroke(0, 0, 255);
+		p.stroke(0, 0, 255); // blue
 		p.strokeWeight(strokeWeight);
 		p.rectMode(CORNERS);
 		p.rect(cameraArea.getTopLeft().x, cameraArea.getTopLeft().y, cameraArea.getBottomRight().x,
