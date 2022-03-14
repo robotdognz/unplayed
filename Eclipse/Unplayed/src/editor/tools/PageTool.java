@@ -83,7 +83,7 @@ public class PageTool extends AreaTool {
 			} else if (editor.eMode == editorMode.ERASE) {
 				eraseView();
 			} else if (editor.eMode == editorMode.SELECT) {
-//				selectView();
+				selectView();
 			}
 		} else {// pages
 			if (editor.eMode == editorMode.ADD) {
@@ -107,7 +107,6 @@ public class PageTool extends AreaTool {
 		if (Editor.showPageView && editorSide.adjust) {
 			if (editor.selected != null && editor.selected instanceof Page) {
 //				((Page) editor.selected).addSize(AppLogic.convert.screenToLevel(d) / 500);
-				// TODO: figure out what the 500 should be
 
 				PVector center = AppLogic.convert.screenToLevel(x, y);
 				((Page) editor.selected).setPosition(center);
@@ -196,18 +195,18 @@ public class PageTool extends AreaTool {
 		}
 	}
 
-//	private void selectView() {
-//		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
-//		View found = AppLogic.game.getView(mouse.x, mouse.y);
-//		if (found != null) {
-//			editor.selected = found;
-//			editor.currentView = found;
-//			edit = found;
-//		} else {
-//			editor.selected = null;
-//			edit = null;
-//		}
-//	}
+	private void selectView() {
+		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
+		View found = AppLogic.game.getView(mouse.x, mouse.y);
+		if (found != null) {
+			editor.selected = found;
+			editor.currentView = found;
+			edit = found;
+		} else {
+			editor.selected = null;
+			edit = null;
+		}
+	}
 
 	private void addPage() {
 		if (currentPage != null) { // if there is something to create a page from
