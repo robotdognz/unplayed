@@ -91,6 +91,7 @@ public class ImageTool implements Tool {
 					xDist = AppLogic.convert.screenToLevel(xDist / 3);
 					yDist = AppLogic.convert.screenToLevel(yDist / 3);
 					((Background) editor.selected).addPosition(xDist, yDist);
+					AppLogic.game.getPageView().resetSystems(); // reset page camera
 				}
 			}
 		}

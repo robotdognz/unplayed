@@ -70,7 +70,7 @@ public class PageTool extends AreaTool {
 					xDist = AppLogic.convert.screenToLevel(xDist / 3);
 					yDist = AppLogic.convert.screenToLevel(yDist / 3);
 					((Page) editor.selected).addPosition(xDist, yDist);
-					AppLogic.game.getPageView().resetSystems();
+					AppLogic.game.getPageView().resetSystems(); // reset page camera
 				}
 			}
 		}
@@ -197,18 +197,18 @@ public class PageTool extends AreaTool {
 		}
 	}
 
-	private void selectView() {
-		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
-		View found = AppLogic.game.getView(mouse.x, mouse.y);
-		if (found != null) {
-			editor.selected = found;
-			editor.currentView = found;
-			edit = found;
-		} else {
-			editor.selected = null;
-			edit = null;
-		}
-	}
+//	private void selectView() {
+//		PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
+//		View found = AppLogic.game.getView(mouse.x, mouse.y);
+//		if (found != null) {
+//			editor.selected = found;
+//			editor.currentView = found;
+//			edit = found;
+//		} else {
+//			editor.selected = null;
+//			edit = null;
+//		}
+//	}
 
 	private void addPage() {
 		if (currentPage != null) { // if there is something to create a page from
