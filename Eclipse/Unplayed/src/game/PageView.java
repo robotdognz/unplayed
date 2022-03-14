@@ -444,7 +444,9 @@ public class PageView {
 				page.removeChild(object);
 			}
 
-			resetSystems();
+			if (pageViewObjects.size() > 0) {
+				resetSystems();
+			}
 		}
 
 	}
