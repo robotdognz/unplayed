@@ -222,7 +222,6 @@ public class PageView {
 	}
 
 	public void updateVisiblePages() {
-//		DebugOutput.pushMessage("Update visible pages", 1);
 		Rectangle area = getPlayerVisibleArea();
 		if (area != null) {
 			pageCamera.update(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,

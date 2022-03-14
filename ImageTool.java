@@ -73,7 +73,8 @@ public class ImageTool implements Tool {
 						float finalX = placement.x - 50;
 						float finalY = placement.y - 50;
 						PVector center = new PVector(finalX, finalY);
-						currentBackground = new Background(p, AppLogic.texture, editor.currentBackground.getFile(), center);
+						currentBackground = new Background(p, AppLogic.texture, editor.currentBackground.getFile(),
+								center);
 					} else {
 						PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
 						// round so blocks snap to grid
@@ -219,8 +220,9 @@ public class ImageTool implements Tool {
 	}
 
 	private void addBackground() {
-		if (currentBackground != null) { // if there is something to create a page from
+		if (currentBackground != null) { // if there is something to create a background from
 			pageView.addPageViewObject(currentBackground);
+			currentBackground.addSize(1);
 			editor.selected = currentBackground;
 			editorSide.adjust = true;
 			editor.eMode = Editor.editorMode.SELECT;

@@ -21,8 +21,8 @@ public class Background extends PageViewObject {
 			// TODO: textures are stored in grid amounts 1x1 etc, whereas actual world
 			// objects are stored as 100x100 etc. This should be fixed so everything uses
 			// the 1x1 system. Then remove the * 100 from the two below lines
-			setWidth(backgroundTexture.getWidth() * 200); // 100
-			setHeight(backgroundTexture.getHeight() * 200); // 100
+			setWidth(backgroundTexture.getWidth() * 100); // 100
+			setHeight(backgroundTexture.getHeight() * 100); // 100
 		} else {
 			hasTexture = false;
 			setWidth(100);
@@ -43,8 +43,8 @@ public class Background extends PageViewObject {
 			p.rotate(PApplet.radians(angle)); // rotate the page
 			p.scale(flipX, flipY); // flip the page
 			p.imageMode(CENTER);
-			p.image(backgroundTexture.getSprite(scale * 0.25f), 0, 0, getWidth(), getHeight()); // draw the page
-//			p.image(backgroundTexture.getSprite(0), 0, 0, getWidth(), getHeight()); // draw the page
+//			p.image(backgroundTexture.getSprite(scale * 0.25f), 0, 0, getWidth(), getHeight()); // draw the page
+			p.image(backgroundTexture.getSprite(0), 0, 0, getWidth(), getHeight()); // draw the page
 			p.popMatrix();
 		} else {
 			// texture is missing

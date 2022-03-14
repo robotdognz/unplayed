@@ -10,7 +10,7 @@ public class PageViewCamera {
 
 	static private PApplet p;
 
-	static private Rectangle pageArea; // always represents the current page area
+	static private Rectangle focusArea; // always represents the current page area
 	static private float sideAreaPadding; // amount to pad the sides of the camera around page area
 	static private float bottomAreaPadding; // amount to pad the bottom of the camera around page area
 
@@ -35,7 +35,7 @@ public class PageViewCamera {
 		bottomAreaPadding = 300;
 
 		// setup temp initial values
-		pageArea = new Rectangle(0, 0, 0, 0); // (-400, -400, 900, 1000);
+		focusArea = new Rectangle(0, 0, 0, 0);
 
 		cameraArea = new Rectangle(0, 0, 0, 0);
 		newCameraArea = cameraArea.copy();
@@ -64,11 +64,11 @@ public class PageViewCamera {
 	}
 
 	public PVector getTopLeft() {
-		return pageArea.getTopLeft();
+		return focusArea.getTopLeft();
 	}
 
 	public PVector getBottomRight() {
-		return pageArea.getBottomRight();
+		return focusArea.getBottomRight();
 	}
 
 	public boolean step(float deltaTime) {
@@ -128,16 +128,16 @@ public class PageViewCamera {
 		p.stroke(255, 0, 0); // red
 		p.strokeWeight(strokeWeight);
 		p.rectMode(CORNERS);
-		p.rect(pageArea.getTopLeft().x, pageArea.getTopLeft().y, pageArea.getBottomRight().x,
-				pageArea.getBottomRight().y);
+		p.rect(focusArea.getTopLeft().x, focusArea.getTopLeft().y, focusArea.getBottomRight().x,
+				focusArea.getBottomRight().y);
 
-		// draw new camera area
-		p.noFill();
-		p.stroke(0, 255, 0); // green
-		p.strokeWeight(strokeWeight);
-		p.rectMode(CORNERS);
-		p.rect(newCameraArea.getTopLeft().x, newCameraArea.getTopLeft().y, newCameraArea.getBottomRight().x,
-				newCameraArea.getBottomRight().y);
+//		// draw new camera area
+//		p.noFill();
+//		p.stroke(0, 255, 0); // green
+//		p.strokeWeight(strokeWeight);
+//		p.rectMode(CORNERS);
+//		p.rect(newCameraArea.getTopLeft().x, newCameraArea.getTopLeft().y, newCameraArea.getBottomRight().x,
+//				newCameraArea.getBottomRight().y);
 
 		// draw camera area
 		p.noFill();
@@ -151,7 +151,7 @@ public class PageViewCamera {
 
 	public void update(float minX, float minY, float maxX, float maxY) {
 		// update page area boundary
-		pageArea.setCorners(minX, minY, maxX, maxY);
+		focusArea.setCorners(minX, minY, maxX, maxY);
 
 		// calculate center
 		updateNewCamera();
@@ -161,7 +161,7 @@ public class PageViewCamera {
 
 	public void updateMenu(float minX, float minY, float maxX, float maxY) {
 		// update page area boundary
-		pageArea.setCorners(minX, minY, maxX, maxY);
+		focusArea.setCorners(minX, minY, maxX, maxY);
 
 		// calculate center
 		updateNewCameraMenu();
@@ -171,11 +171,11 @@ public class PageViewCamera {
 
 	public void initCamera(float minX, float minY, float maxX, float maxY) {
 		// update page area boundary
-		pageArea.setCorners(minX, minY, maxX, maxY);
+		focusArea.setCorners(minX, minY, maxX, maxY);
 
 		// set camera area, doesn't use bottom area padding, assumes focusing on a menu
-		cameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
-				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + sideAreaPadding);
+		cameraArea.setCorners(focusArea.getTopLeft().x - sideAreaPadding, focusArea.getTopLeft().y - sideAreaPadding,
+				focusArea.getBottomRight().x + sideAreaPadding, focusArea.getBottomRight().y + sideAreaPadding);
 		newCameraArea = cameraArea.copy();
 		// set center
 		int centerX = (int) ((newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) / 2
@@ -191,13 +191,13 @@ public class PageViewCamera {
 	}
 
 	private static void updateNewCamera() {
-		newCameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
-				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + bottomAreaPadding);
+		newCameraArea.setCorners(focusArea.getTopLeft().x - sideAreaPadding, focusArea.getTopLeft().y - sideAreaPadding,
+				focusArea.getBottomRight().x + sideAreaPadding, focusArea.getBottomRight().y + bottomAreaPadding);
 	}
 
 	private static void updateNewCameraMenu() {
-		newCameraArea.setCorners(pageArea.getTopLeft().x - sideAreaPadding, pageArea.getTopLeft().y - sideAreaPadding,
-				pageArea.getBottomRight().x + sideAreaPadding, pageArea.getBottomRight().y + sideAreaPadding);
+		newCameraArea.setCorners(focusArea.getTopLeft().x - sideAreaPadding, focusArea.getTopLeft().y - sideAreaPadding,
+				focusArea.getBottomRight().x + sideAreaPadding, focusArea.getBottomRight().y + sideAreaPadding);
 	}
 
 	private static void updateNewCenter() {
