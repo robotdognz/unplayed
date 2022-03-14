@@ -495,7 +495,7 @@ public class EditorBottom extends Toolbar {
 						eventOffset = 0;
 					}
 				}
-			} else if (editor.currentTool instanceof PageTool) { // && views.size() > 0
+			} else if (editor.currentTool instanceof PageTool) {
 				if (Editor.showPageView) {
 					float objectsWidth = views.size() * selectionArea.getHeight();
 					
@@ -516,24 +516,6 @@ public class EditorBottom extends Toolbar {
 							pageOffset = objectsWidth - selectionArea.getWidth();
 						}
 					}
-					
-//					if (objectsWidth > selectionArea.getWidth()) {
-//						// if the total width of all the views is larger than the width of the tool-bar
-//
-//						// scroll
-//						pageOffset += offsetAmount;
-//						// prevent scrolling off right edge
-//						if (pageOffset > objectsWidth - selectionArea.getWidth() + 1) {
-//							pageOffset = objectsWidth - selectionArea.getWidth();
-//						}
-//						// prevent scrolling off left edge
-//						if (pageOffset < 0) {
-//							pageOffset = 0;
-//						}
-//					} else {
-//						// the total width of all the views is smaller than or equal to tool-bar
-//						pageOffset = 0;
-//					}
 
 				} else {
 					float objectsWidth = (views.size() + 1) * selectionArea.getHeight();

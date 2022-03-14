@@ -84,7 +84,7 @@ public class PageTool extends AreaTool {
 			} else if (editor.eMode == editorMode.ERASE) {
 				eraseView();
 			} else if (editor.eMode == editorMode.SELECT) {
-				selectView();
+//				selectView();
 			}
 		} else {// pages
 			if (editor.eMode == editorMode.ADD) {
