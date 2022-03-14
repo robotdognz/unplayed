@@ -518,23 +518,39 @@ public class EditorBottom extends Toolbar {
 
 				} else {
 					float objectsWidth = (views.size() + 1) * selectionArea.getHeight();
-					if (objectsWidth > selectionArea.getWidth()) {
-						// if the total width of all the views is larger than the width of the tool-bar
 
-						// scroll
-						viewOffset += offsetAmount;
-						// prevent scrolling off right edge
-						if (viewOffset > objectsWidth - selectionArea.getWidth() + 1) {
-							viewOffset = objectsWidth - selectionArea.getWidth();
-						}
-						// prevent scrolling off left edge
-						if (viewOffset < 0) {
-							viewOffset = 0;
-						}
-					} else {
-						// the total width of all the views is smaller than or equal to tool-bar
+					// scroll
+					viewOffset += offsetAmount;
+
+//					if (offsetAmount < 0) { // scroll left
+					// prevent scrolling off left edge
+					if (viewOffset < 0) {
 						viewOffset = 0;
 					}
+//					} else if (offsetAmount > 0) { // scroll right
+					// prevent scrolling off right edge
+					if (viewOffset > objectsWidth - selectionArea.getWidth() + 1) {
+						viewOffset = objectsWidth - selectionArea.getWidth();
+					}
+//					}
+
+//					if (objectsWidth > selectionArea.getWidth()) {
+//						// if the total width of all the views is larger than the width of the tool-bar
+//
+//						// scroll
+//						viewOffset += offsetAmount;
+//						// prevent scrolling off right edge
+//						if (viewOffset > objectsWidth - selectionArea.getWidth() + 1) {
+//							viewOffset = objectsWidth - selectionArea.getWidth();
+//						}
+//						// prevent scrolling off left edge
+//						if (viewOffset < 0) {
+//							viewOffset = 0;
+//						}
+//					} else {
+//						// the total width of all the views is smaller than or equal to tool-bar
+//						viewOffset = 0;
+//					}
 
 				}
 			}
