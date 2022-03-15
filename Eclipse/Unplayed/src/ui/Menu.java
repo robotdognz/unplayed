@@ -160,7 +160,7 @@ public abstract class Menu {
 
 		p.pushMatrix();
 		p.translate(position.x, position.y);
-		p.rotate(PApplet.radians(angle)); // rotate the page
+//		p.rotate(PApplet.radians(angle)); // rotate the page
 
 		// draw the shadow
 		p.translate(shadow, shadow);
