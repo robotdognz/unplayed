@@ -158,11 +158,11 @@ public class LoadingMenu extends Menu {
 			p.imageMode(CENTER);
 			float objectYPosition = -pageMenu.getHeight() / 2;
 			for (MenuObject object : objects) {
-				objectYPosition += buttonDistance;
 				float objectHeight = object.getHeight();
 
 				object.drawOnPage(p, 0, objectYPosition + objectHeight * 0.5f);
 				objectYPosition += objectHeight;
+				objectYPosition += buttonDistance;
 			}
 
 			p.popMatrix();
