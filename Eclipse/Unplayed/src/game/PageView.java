@@ -5,6 +5,7 @@ import java.util.List;
 import camera.Camera;
 import camera.PageViewCamera;
 import editor.DebugOutput;
+import editor.Editor;
 import editor.EditorSettings;
 import handlers.TextureCache;
 import misc.Converter;
@@ -14,6 +15,7 @@ import objects.PageViewObject;
 import objects.Rectangle;
 import processing.core.*;
 import ui.Menu;
+import ui.LoadingMenu;
 
 public class PageView {
 	private PApplet p;
@@ -226,7 +228,13 @@ public class PageView {
 		boolean temp = pageCamera.step(deltaTime);
 		// if the camera has finished moving
 		if (!temp && storedMenu != null) {
-			storedMenu.activate();
+
+			if (AppLogic.editorToggle && Editor.showPageView) {
+				// in editor, and in page view
+				((LoadingMenu) storedMenu).skipLoadingScreen();
+			} else {
+				storedMenu.activate();
+			}
 		}
 
 	}
