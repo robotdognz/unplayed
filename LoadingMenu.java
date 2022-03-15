@@ -57,16 +57,9 @@ public class LoadingMenu extends Menu {
 		constructMenu();
 	}
 
+	@Override
 	protected void setAngle(float range) {
-//		if (previousTilt) {
-//			angle = angleOffset;
-//			previousTilt = !previousTilt;
-//		} else {
-//			angle = -angleOffset;
-//			previousTilt = !previousTilt;
-//		}
-//
-//		angle += (float) (Math.random() * range) - (range / 2);
+		// remove this override method to re-enable random angle
 	}
 
 	@Override
@@ -102,7 +95,14 @@ public class LoadingMenu extends Menu {
 			// draw the page background
 			p.fill(240);
 			p.rect(0, 0, width, height);
+			p.imageMode(CENTER);
 			image.drawOnPage(p, 0, 0);
+
+			if (button) {
+				// assume there will be only one button
+				MenuObject button = objects.get(1);
+				button.drawOnPage(p, 0, 0);
+			}
 
 			// end drawing
 			p.popMatrix();
