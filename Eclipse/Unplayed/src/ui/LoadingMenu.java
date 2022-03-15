@@ -203,11 +203,11 @@ public class LoadingMenu extends Menu {
 			p.fill(0, 40);
 			p.noStroke();
 			p.rectMode(CENTER);
-			p.rotate(PApplet.radians(angle)); // rotate the page
+			p.rotate(PApplet.radians(angle)); // rotate the image
 			p.rect(0, objectYPosition + imageHeight * 0.5f, imageWidth, imageHeight); // draw the shadow
-			p.rotate(PApplet.radians(-angle)); // rotate the page
+			p.rotate(PApplet.radians(-angle)); // rotate the image
 			p.translate(-shadow, -shadow);
-			p.rotate(PApplet.radians(angle)); // rotate the page
+			p.rotate(PApplet.radians(angle)); // rotate the image
 
 			p.fill(240);
 			p.rect(0, objectYPosition + imageHeight * 0.5f, imageWidth, imageHeight);
@@ -215,13 +215,15 @@ public class LoadingMenu extends Menu {
 			image.drawOnPage(p, 0, objectYPosition + imageHeight * 0.5f);
 			objectYPosition += imageHeight;
 
-//			// button
-//			if (button) {
+			// button
+			if (button) {
 //				// assume there will be only one button
-//				MenuObject button = objects.get(1);
+				MenuObject button = objects.get(1);
 //				float buttonY = (height * 0.5f) - button.getHeight();
-//				button.drawOnPage(p, 0, buttonY);
-//			}
+				objectYPosition += buttonDistance;
+				float buttonHeight = button.getHeight();
+				button.drawOnPage(p, 0, objectYPosition + buttonHeight * 0.5f);
+			}
 
 			p.popMatrix();
 
