@@ -128,7 +128,6 @@ public class PageView {
 					page.drawCorners(currentScale);
 					List<PageViewObject> children = ((Page) page).getChildren();
 					for (PageViewObject child : children) {
-//						child.drawCornersAsChild(currentScale);
 						child.drawCorners(currentScale);
 					}
 				}
@@ -152,6 +151,9 @@ public class PageView {
 		// draw auto generated camera
 		if (EditorSettings.cameraLogic() && getPageCount() > 0 && !Camera.getGame()) {
 			pageCamera.draw(currentScale);
+			if (storedMenu != null) {
+				storedMenu.drawCorners(currentScale);
+			}
 		}
 
 		p.popMatrix();

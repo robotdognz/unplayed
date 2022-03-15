@@ -266,6 +266,20 @@ public abstract class Menu {
 
 		p.popMatrix();
 	}
+	
+	public void drawCorners(float scale) {
+		int cornerBoxSize = (int) scale * 2;
+		int strokeWeight = Math.max(1, (int) (scale * 0.5f));
+		p.strokeWeight(strokeWeight);
+		// draw page corners
+		p.rectMode(CENTER);
+		p.stroke(100, 170); // grey
+		p.noFill();
+		p.rect(topLeft.x, topLeft.y, cornerBoxSize, cornerBoxSize);
+		p.rect(topRight.x, topRight.y, cornerBoxSize, cornerBoxSize);
+		p.rect(bottomLeft.x, bottomLeft.y, cornerBoxSize, cornerBoxSize);
+		p.rect(bottomRight.x, bottomRight.y, cornerBoxSize, cornerBoxSize);
+	}
 
 	public void hover(PVector lastTouch) {
 		if (Camera.getGame()) {
