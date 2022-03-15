@@ -2,6 +2,7 @@ package ui;
 
 import static processing.core.PConstants.CENTER;
 import game.AppLogic;
+import handlers.ButtonHandler;
 import handlers.LoadingHandler;
 import processing.core.PApplet;
 
@@ -36,8 +37,12 @@ public class LoadingMenu extends Menu {
 		objects.add(loadingImage);
 
 		if (button) {
-			Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
-			objects.add(continueB);
+//			Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
+//			objects.add(continueB);
+			
+			ButtonHandler temp = AppLogic.texture.getButtonList().get(1);
+			Button continueBwImage = new Button(temp, p.width / 2, continueGame);
+			objects.add(continueBwImage);
 		}
 
 		constructMenu();

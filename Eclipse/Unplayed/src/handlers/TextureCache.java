@@ -40,9 +40,6 @@ public class TextureCache {
 	static private PImage pageViewBackgroundLOD64;
 	static private PImage pageViewBackgroundLOD32;
 
-//	static private PImage loadingText;
-//	static private PImage playerEnd;
-
 	// level images
 	private File[] imagePaths;
 	private HashMap<File, ImageHandler> imageMap;
@@ -55,6 +52,10 @@ public class TextureCache {
 	private File[] loadingPaths;
 	private HashMap<File, LoadingHandler> loadingMap;
 	private ArrayList<LoadingHandler> loadingList;
+	// buttons
+	private File[] buttonPaths;
+	private HashMap<File, ButtonHandler> buttonMap;
+	private ArrayList<ButtonHandler> buttonList;
 	// tiles
 	private File[] tilePaths;
 	private HashMap<File, TileHandler> tileMap;
@@ -91,12 +92,11 @@ public class TextureCache {
 		pageViewBackgroundLOD32 = pageViewBackgroundLOD256.get();
 		pageViewBackgroundLOD32.resize(32 * pvbSize, 32 * pvbSize);
 
-//		playerEnd = p.loadImage("playerEndBackground.png");
-
 		// level assets
 		loadLevelImages();
 		loadBackgroundImages();
 		loadLoadingImages();
+		loadButtonImages();
 		loadTiles();
 		loadEvents();
 	}
@@ -318,7 +318,7 @@ public class TextureCache {
 		backgroundList = new ArrayList<BackgroundHandler>(backgroundMap.values());
 		Collections.sort(backgroundList);
 	}
-	
+
 	private void loadLoadingImages() {
 		// generate all the relative file paths
 		try {
@@ -368,14 +368,73 @@ public class TextureCache {
 					temp.add(i);
 				}
 				if (temp.size() >= 3) {
-					loadingMap.put(file,
-							new LoadingHandler(p, this, file, temp.get(temp.size() - 3), temp.get(temp.size() - 2), temp.get(temp.size() - 1)));
+					loadingMap.put(file, new LoadingHandler(p, this, file, temp.get(temp.size() - 3),
+							temp.get(temp.size() - 2), temp.get(temp.size() - 1)));
 				}
 			}
 			temp.clear();
 		}
 		loadingList = new ArrayList<LoadingHandler>(loadingMap.values());
 		Collections.sort(loadingList);
+	}
+
+	private void loadButtonImages() {
+		// generate all the relative file paths
+		try {
+			// App mode
+
+			AssetManager am = context.getAssets();
+			String buttonPath = "unplayed_buttons";
+			String[] buttonStrings = am.list(buttonPath);
+
+			if (buttonStrings.length == 0) {
+				throw new IOException();
+			}
+
+			buttonPaths = new File[buttonStrings.length];
+
+			// make relative files from all of the tile strings
+			for (int i = 0; i < buttonStrings.length; i++) {
+				buttonPaths[i] = new File(buttonPath + '/' + buttonStrings[i]);
+			}
+
+		} catch (IOException e) {
+			// Preview mode
+
+			String base = p.sketchPath("");
+			File buttonPath = new File(base + "/unplayed_buttons" + '/');
+
+			File[] absoluteFiles = buttonPath.listFiles();
+			buttonPaths = new File[absoluteFiles.length];
+
+			// make relative files from all of the tile strings
+			for (int i = 0; i < absoluteFiles.length; i++) {
+				String relativeFile = absoluteFiles[i].toString();
+				relativeFile = relativeFile.replace(base + '/', "");
+				buttonPaths[i] = new File(relativeFile);
+			}
+		}
+
+		buttonMap = new HashMap<File, ButtonHandler>();
+		ArrayList<Integer> temp = new ArrayList<Integer>(); // holds the numbers found in the file name
+		for (File file : buttonPaths) {
+			String path = file.getAbsolutePath();
+			if (path.matches(".+([0-9]+)x([0-9]+)\\.png$")) { // check file ends with number "x" number ".png"
+				Pattern pattern = Pattern.compile("\\d+");
+				Matcher m = pattern.matcher(path);
+				while (m.find()) {
+					int i = Integer.parseInt(m.group());
+					temp.add(i);
+				}
+				if (temp.size() >= 2) {
+					buttonMap.put(file,
+							new ButtonHandler(p, this, file, temp.get(temp.size() - 2), temp.get(temp.size() - 1)));
+				}
+			}
+			temp.clear();
+		}
+		buttonList = new ArrayList<ButtonHandler>(buttonMap.values());
+		Collections.sort(buttonList);
 	}
 
 	private void loadEvents() {
@@ -467,13 +526,21 @@ public class TextureCache {
 	public ArrayList<BackgroundHandler> getBackgroundList() {
 		return backgroundList;
 	}
-	
+
 	public HashMap<File, LoadingHandler> getLoadingMap() {
 		return loadingMap;
 	}
 
 	public ArrayList<LoadingHandler> getLoadingList() {
 		return loadingList;
+	}
+
+	public HashMap<File, ButtonHandler> getButtonMap() {
+		return buttonMap;
+	}
+
+	public ArrayList<ButtonHandler> getButtonList() {
+		return buttonList;
 	}
 
 	public HashMap<String, EventHandler> getEventMap() {
@@ -484,7 +551,4 @@ public class TextureCache {
 		return eventList;
 	}
 
-//	public PImage getPageViewBackground() {
-//		return pageViewBackground;
-//	}
 }

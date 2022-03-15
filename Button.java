@@ -1,6 +1,8 @@
 package ui;
 
 import static processing.core.PConstants.*;
+
+import handlers.ButtonHandler;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -13,8 +15,16 @@ public class Button extends MenuObject {
 
 	private Rectangle pageButton;
 
+	private ButtonHandler handler = null;
+
 	public Button(float xCenter, float width, float height, String text) {
 		super(width, height);
+		this.xCenter = xCenter;
+		this.text = text;
+	}
+
+	public Button(ButtonHandler handler, float xCenter, String text) {
+		super(handler.getWidth() * 100, handler.getHeight() * 100);
 		this.xCenter = xCenter;
 		this.text = text;
 	}
@@ -27,19 +37,31 @@ public class Button extends MenuObject {
 		// can use textWidth() to figure out how wide text is and center it
 		float xCenter = x;
 		float yCenter = y;
-		if (!hover) {
-			p.fill(200);
+		if (handler == null) { // no sprite
+			if (!hover) {
+				p.fill(200);
+			} else {
+				p.fill(100);
+			}
+			p.rectMode(CENTER);
+			p.rect(xCenter, yCenter, width, height);
+			p.rectMode(CORNER);
+			p.fill(50);
+			int textSize = p.width / 24; // 60;
+			p.textSize(textSize);
+			p.textAlign(CENTER, CENTER);
+			p.text(text, xCenter, yCenter);
 		} else {
-			p.fill(100);
+			p.pushMatrix();
+			p.translate(xCenter, yCenter);
+//			p.scale(size); // size the page will appear in the page view
+//			p.rotate(PApplet.radians(angle)); // rotate the page
+//			p.scale(flipX, flipY); // flip the page
+			p.imageMode(CENTER);
+//			p.image(backgroundTexture.getSprite(scale * 0.25f), 0, 0, getWidth(), getHeight()); // draw the page
+			p.image(handler.getSprite(0), 0, 0, getWidth(), getHeight()); // draw the button
+			p.popMatrix();
 		}
-		p.rectMode(CENTER);
-		p.rect(xCenter, yCenter, width, height);
-		p.rectMode(CORNER);
-		p.fill(50);
-		int textSize = p.width / 24; // 60;
-		p.textSize(textSize);
-		p.textAlign(CENTER, CENTER);
-		p.text(text, xCenter, yCenter);
 	}
 
 	public void draw(PApplet p, float y) {
