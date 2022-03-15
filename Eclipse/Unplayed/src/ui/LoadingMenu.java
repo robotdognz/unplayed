@@ -68,21 +68,21 @@ public class LoadingMenu extends Menu {
 //			menuCenterX = p.width / 2;
 		this.shadow = 9;
 //		} else {
-			// get's called in the child class constructor
-			// create basic menu
-			menuCenterX = p.width / 2;
-			menuWidth = buttonDistance * 2; // buttonWidth + buttonDistance * 2;
-			menuHeight = buttonDistance;
-			float largestWidth = 0;
-			for (MenuObject object : objects) {
-				menuHeight += object.getHeight() + buttonDistance;
-				if (object.getWidth() > largestWidth) {
-					largestWidth = object.getWidth();
-				}
+		// get's called in the child class constructor
+		// create basic menu
+		menuCenterX = p.width / 2;
+		menuWidth = buttonDistance * 2; // buttonWidth + buttonDistance * 2;
+		menuHeight = buttonDistance;
+		float largestWidth = 0;
+		for (MenuObject object : objects) {
+			menuHeight += object.getHeight() + buttonDistance;
+			if (object.getWidth() > largestWidth) {
+				largestWidth = object.getWidth();
 			}
-			menuWidth += largestWidth;
+		}
+		menuWidth += largestWidth;
 
-			menuTopY = p.height / 2 - menuHeight / 2;
+		menuTopY = p.height / 2 - menuHeight / 2;
 //		}
 	}
 
@@ -128,68 +128,68 @@ public class LoadingMenu extends Menu {
 	@Override
 	public void drawPageView(float scale) {
 
-		if (fullPage) {
-			// draw full page loading screen with shadow and button on the page
+//		if (fullPage) {
+//			// draw full page loading screen with shadow and button on the page
+//
+//			if (objects.size() < 1) {
+//				return;
+//			}
+//
+//			MenuObject image = objects.get(0);
+//
+//			float width = image.getWidth();
+//			float height = image.getHeight();
+//
+//			// draw the page
+//			p.pushMatrix();
+//			p.translate(position.x, position.y);
+//
+//			// draw the shadow
+//			p.translate(shadow, shadow);
+//			p.fill(0, 40);
+//			p.noStroke();
+//			p.rectMode(CENTER);
+//			p.rotate(PApplet.radians(angle)); // rotate the page
+//			p.rect(0, 0, width, height); // draw the shadow
+//			p.rotate(PApplet.radians(-angle)); // rotate the page
+//			p.translate(-shadow, -shadow);
+//			p.rotate(PApplet.radians(angle)); // rotate the page
+//
+//			// draw the page background
+//			p.fill(240);
+//			p.rect(0, 0, width, height);
+//			p.imageMode(CENTER);
+//			image.drawOnPage(p, 0, 0);
+//
+//			if (button) {
+//				// assume there will be only one button
+//				MenuObject button = objects.get(1);
+//				float buttonY = (height * 0.5f) - button.getHeight();
+//				button.drawOnPage(p, 0, buttonY);
+//			}
+//
+//			// end drawing
+//			p.popMatrix();
+//
+//		} else {
+		// draw transparent background loading screen with button below image
 
-			if (objects.size() < 1) {
-				return;
-			}
+		p.pushMatrix();
+		p.translate(position.x, position.y);
+		p.rotate(PApplet.radians(angle)); // rotate the page
 
-			MenuObject image = objects.get(0);
-
-			float width = image.getWidth();
-			float height = image.getHeight();
-
-			// draw the page
-			p.pushMatrix();
-			p.translate(position.x, position.y);
-
-			// draw the shadow
-			p.translate(shadow, shadow);
-			p.fill(0, 40);
-			p.noStroke();
-			p.rectMode(CENTER);
-			p.rotate(PApplet.radians(angle)); // rotate the page
-			p.rect(0, 0, width, height); // draw the shadow
-			p.rotate(PApplet.radians(-angle)); // rotate the page
-			p.translate(-shadow, -shadow);
-			p.rotate(PApplet.radians(angle)); // rotate the page
-
-			// draw the page background
-			p.fill(240);
-			p.rect(0, 0, width, height);
-			p.imageMode(CENTER);
-			image.drawOnPage(p, 0, 0);
-
-			if (button) {
-				// assume there will be only one button
-				MenuObject button = objects.get(1);
-				float buttonY = (height * 0.5f) - button.getHeight();
-				button.drawOnPage(p, 0, buttonY);
-			}
-
-			// end drawing
-			p.popMatrix();
-
-		} else {
-			// draw transparent background loading screen with button below image
-
-			p.pushMatrix();
-			p.translate(position.x, position.y);
-			p.rotate(PApplet.radians(angle)); // rotate the page
-
-			// draw the images and buttons
-			p.imageMode(CENTER);
-			float objectYPosition = -pageMenu.getHeight() / 2;
-			for (MenuObject object : objects) {
-				objectYPosition += buttonDistance;
-				float objectHeight = object.getHeight();
-				object.drawOnPage(p, 0, objectYPosition + objectHeight * 0.5f);
-				objectYPosition += objectHeight;
-			}
-
-			p.popMatrix();
+		// draw the images and buttons
+		p.imageMode(CENTER);
+		float objectYPosition = -pageMenu.getHeight() / 2;
+		for (MenuObject object : objects) {
+			objectYPosition += buttonDistance;
+			float objectHeight = object.getHeight();
+			object.drawOnPage(p, 0, objectYPosition + objectHeight * 0.5f);
+			objectYPosition += objectHeight;
 		}
+
+		p.popMatrix();
+//		}
 
 		if (child != null && child.isBuilt()) {
 			child.drawPageView(scale);
