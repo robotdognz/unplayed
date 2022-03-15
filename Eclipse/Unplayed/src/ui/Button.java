@@ -27,6 +27,7 @@ public class Button extends MenuObject {
 		super(handler.getWidth() * 100, handler.getHeight() * 100);
 		this.xCenter = xCenter;
 		this.text = text;
+		this.handler = handler;
 		
 		PApplet.print("Yup");
 	}
