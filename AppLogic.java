@@ -223,7 +223,7 @@ public class AppLogic {
 	static public void restartLevel() {
 		// used when running level in editor
 
-		if (editorToggle) {
+		if (editorToggle && !Editor.showPageView) {
 			// playing with editor open, just restart
 			startLevel();
 		} else {

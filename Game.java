@@ -199,14 +199,11 @@ public class Game {
 			return;
 		}
 
-//		Editor editor = AppLogic.getEditor();
-
 		if (AppLogic.getEditor() == null) { // in a normal game
 			pauseTimer.start();
 			pauseType = PauseType.NEXT_LEVEL;
 		} else { // in the editor
 			if (AppLogic.editorToggle) {
-//				editor.toast.showToast("Level Complete");
 				AppLogic.toast.showToast("Level Complete");
 			}
 			pauseTimer.start();
