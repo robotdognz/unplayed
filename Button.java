@@ -40,9 +40,7 @@ public class Button extends MenuObject {
 	}
 
 	public void drawOnPage(PApplet p, float x, float y) {
-		// can use textWidth() to figure out how wide text is and center it
-		float xCenter = x;
-		float yCenter = y;
+		
 		if (handler == null) { // no sprite
 			if (!hover) {
 				p.fill(200);
@@ -50,16 +48,16 @@ public class Button extends MenuObject {
 				p.fill(100);
 			}
 			p.rectMode(CENTER);
-			p.rect(xCenter, yCenter, width, height);
+			p.rect(x, y, width, height);
 			p.rectMode(CORNER);
 			p.fill(50);
-			int textSize = p.width / 24; // 60;
+			int textSize = p.width / 24;
 			p.textSize(textSize);
 			p.textAlign(CENTER, CENTER);
-			p.text(text, xCenter, yCenter);
+			p.text(text, x, y);
 		} else {
 			p.pushMatrix();
-			p.translate(xCenter, yCenter);
+			p.translate(x, y);
 			p.imageMode(CENTER);
 			handler.draw(p.g, 0, 0, getWidth(), getHeight(), 8); // draw the button
 			if (hover) {

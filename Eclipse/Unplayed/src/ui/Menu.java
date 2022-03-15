@@ -37,11 +37,11 @@ public abstract class Menu {
 	PVector bottomLeft;
 	PVector bottomRight;
 
-	private float size = 1;
-	private int shadowOffset; // the absolute amount to offset the shadow by
+//	private float size = 1;
+//	private int shadowOffset; // the absolute amount to offset the shadow by
 	private int shadow; // the relative amount to offset the shadow by
 
-	private boolean built = false;
+	protected boolean built = false;
 	float angleOffset; // used for random angle when created
 
 	static boolean previousTilt = false;
@@ -53,7 +53,7 @@ public abstract class Menu {
 		buttonHeight = 100;
 		buttonDistance = 100;
 
-		this.shadowOffset = 9;
+//		this.shadowOffset = 9;
 		this.shadow = 9;
 		this.angleOffset = 5;
 	}
@@ -128,7 +128,7 @@ public abstract class Menu {
 		setupMenuContents();
 	}
 
-	private void setupMenuContents() {
+	protected void setupMenuContents() {
 		// create page view menu and buttons
 		pageMenu = new Rectangle(0 - menuWidth / 2, 0 - menuHeight / 2, menuWidth, menuHeight);
 
@@ -147,14 +147,14 @@ public abstract class Menu {
 		}
 
 		setAngle(0);
-		updateShadow();
+//		updateShadow();
 		updateCorners();
 		built = true;
 	}
 
-	private void updateShadow() {
-		this.shadow = (int) (shadowOffset / size);
-	}
+//	private void updateShadow() {
+//		this.shadow = (int) (shadowOffset / size);
+//	}
 
 	public void drawPageView(float scale) {
 
@@ -352,7 +352,7 @@ public abstract class Menu {
 	}
 
 	// --------------update the corner PVectors---------------
-	private void updateCorners() {
+	protected void updateCorners() {
 		if (topLeft == null) {
 			// Initialize
 			topLeft = new PVector();

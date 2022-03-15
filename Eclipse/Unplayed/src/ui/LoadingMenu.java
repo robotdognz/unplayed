@@ -4,6 +4,7 @@ import static processing.core.PConstants.CENTER;
 import game.AppLogic;
 import handlers.ButtonHandler;
 import handlers.LoadingHandler;
+import objects.Rectangle;
 import processing.core.PApplet;
 
 public class LoadingMenu extends Menu {
@@ -60,6 +61,53 @@ public class LoadingMenu extends Menu {
 	@Override
 	protected void setAngle(float range) {
 		// remove this override method to re-enable random angle
+	}
+	
+	protected void constructMenu() {
+//		// get's called in the child class constructor
+//		// create basic menu
+//		menuCenterX = p.width / 2;
+//		menuWidth = buttonDistance * 2; // buttonWidth + buttonDistance * 2;
+//		menuHeight = buttonDistance;
+//		float largestWidth = 0;
+//		for (MenuObject object : objects) {
+//			menuHeight += object.getHeight() + buttonDistance;
+//			if (object.getWidth() > largestWidth) {
+//				largestWidth = object.getWidth();
+//			}
+//		}
+//		menuWidth += largestWidth;
+//
+//		menuTopY = p.height / 2 - menuHeight / 2;
+		
+		
+		MenuObject image = objects.get(0);
+		menuWidth = image.getWidth();
+		menuHeight = image.getHeight();
+		menuCenterX = p.width / 2;
+	}
+	
+	protected void setupMenuContents() {
+		// create page view menu and buttons
+		pageMenu = new Rectangle(0 - menuWidth / 2, 0 - menuHeight / 2, menuWidth, menuHeight);
+
+		float objectYPosition = pageMenu.getY();
+		for (MenuObject object : objects) {
+			objectYPosition += buttonDistance;
+			float objectHeight = object.getHeight();
+
+			if (object instanceof Button) {
+				Button button = (Button) object;
+				button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2,
+						objectYPosition + objectHeight * 0.5f);
+			}
+
+			objectYPosition += objectHeight;
+		}
+
+		setAngle(0);
+		updateCorners();
+		built = true;
 	}
 
 	@Override
