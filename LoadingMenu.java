@@ -217,7 +217,7 @@ public class LoadingMenu extends Menu {
 
 	public void skipLoadingScreen() {
 		// shouldn't need to press the 'continue' button if in the editor, to prevent
-		// editor locking up
+		// editor locking up. So this is called instead of activate().
 		
 		// alreadyUsed prevents this being triggered multiple times
 		if (!alreadyUsed) {

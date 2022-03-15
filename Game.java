@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.HashSet;
 import camera.Camera;
+import editor.Editor;
 import game.player.Player;
 import handlers.LoadingHandler;
 import handlers.TextureCache;
@@ -203,7 +204,7 @@ public class Game {
 			pauseTimer.start();
 			pauseType = PauseType.NEXT_LEVEL;
 		} else { // in the editor
-			if (AppLogic.editorToggle) {
+			if (AppLogic.editorToggle && !Editor.showPageView) {
 				AppLogic.toast.showToast("Level Complete");
 			}
 			pauseTimer.start();
