@@ -212,8 +212,8 @@ public class PageTool extends AreaTool {
 		if (currentPage != null) { // if there is something to create a page from
 			pageView.addPageViewObject(currentPage);
 			editor.selected = currentPage;
-			editor.eMode = Editor.editorMode.SELECT;
 			editorSide.adjust = true;
+//			editor.eMode = Editor.editorMode.SELECT;
 		}
 	}
 
