@@ -67,38 +67,22 @@ public class LoadingMenu extends Menu {
 		menuHeight = 0; // buttonDistance;
 		float largestWidth = 0;
 		for (MenuObject object : objects) {
-			if (menuHeight == 0) {
-				menuHeight += object.getHeight() + buttonDistance;
-			} else {
-				menuHeight += object.getHeight();
-			}
+			menuHeight += object.getHeight();
 			if (object.getWidth() > largestWidth) {
 				largestWidth = object.getWidth();
 			}
 		}
-		menuWidth += largestWidth;
 
+		// add spaces between objects
+		menuHeight += buttonDistance * (objects.size() - 1);
+
+		menuWidth += largestWidth;
 		menuTopY = p.height / 2 - menuHeight / 2;
 	}
 
 	protected void setupMenuContents() {
 		// create page view menu and buttons
 		pageMenu = new Rectangle(0 - (menuWidth * 0.5f), 0 - (menuHeight * 0.5f), menuWidth, menuHeight);
-
-//		if (fullPage) {
-//
-//			if (button) {
-//				Button button = (Button) objects.get(1);
-//				float objectYPosition = (pageMenu.getY() + pageMenu.getHeight()) - button.getHeight() * 1.5f;
-//				button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2,
-//						objectYPosition + button.getHeight() * 0.5f);
-//
-//			} else {
-//
-//			}
-//
-//			
-//		} else {
 
 		float objectYPosition = pageMenu.getY();
 		for (MenuObject object : objects) {
@@ -114,7 +98,6 @@ public class LoadingMenu extends Menu {
 			objectYPosition += objectHeight;
 		}
 
-//		}
 		setAngle(0);
 		updateCorners();
 		built = true;
