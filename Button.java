@@ -61,10 +61,8 @@ public class Button extends MenuObject {
 			p.pushMatrix();
 			p.translate(xCenter, yCenter);
 			p.imageMode(CENTER);
-//			p.image(handler.getSprite(0), 0, 0, getWidth(), getHeight()); // draw the button
 			handler.draw(p.g, 0, 0, getWidth(), getHeight(), 8); // draw the button
 			if (hover) {
-//				p.image(highlight.getSprite(0), 0, 0, getWidth(), getHeight()); // draw the button highlight
 				highlight.draw(p.g, 0, 0, getWidth(), getHeight(), 8); // draw the button highlight
 			}
 			p.popMatrix();

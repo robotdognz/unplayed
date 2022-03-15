@@ -137,15 +137,22 @@ public class PageView {
 
 		// draw current menu, destroy it if it's off camera
 		if (storedMenu != null) {
-			storedMenu.drawPageView(currentScale);
-
-			if (removeMenu == true && (storedMenu.leftOf(pageCamera.getCameraArea().getTopLeft().x)
-					|| storedMenu.rightOf(pageCamera.getCameraArea().getBottomRight().x)
-					|| storedMenu.above(pageCamera.getCameraArea().getTopLeft().y)
-					|| storedMenu.below(pageCamera.getCameraArea().getBottomRight().y))) {
+			if (getPageCount() > 0) {
+				// draw the menu in page view if there are pages
+				storedMenu.drawPageView(currentScale);
+				if (removeMenu == true && (storedMenu.leftOf(pageCamera.getCameraArea().getTopLeft().x)
+						|| storedMenu.rightOf(pageCamera.getCameraArea().getBottomRight().x)
+						|| storedMenu.above(pageCamera.getCameraArea().getTopLeft().y)
+						|| storedMenu.below(pageCamera.getCameraArea().getBottomRight().y))) {
+					removeMenu = false;
+					storedMenu = null;
+				}
+			} else {
+				// remove the menu if there are no pages
 				removeMenu = false;
 				storedMenu = null;
 			}
+
 		}
 
 		// draw auto generated camera
