@@ -61,13 +61,13 @@ public class LoadingMenu extends Menu {
 
 	protected void constructMenu() {
 
-		if (fullPage) {
-			MenuObject image = objects.get(0);
-			menuWidth = image.getWidth();
-			menuHeight = image.getHeight();
-			menuCenterX = p.width / 2;
-			this.shadow = 9;
-		} else {
+//		if (fullPage) {
+//			MenuObject image = objects.get(0);
+//			menuWidth = image.getWidth();
+//			menuHeight = image.getHeight();
+//			menuCenterX = p.width / 2;
+		this.shadow = 9;
+//		} else {
 			// get's called in the child class constructor
 			// create basic menu
 			menuCenterX = p.width / 2;
@@ -83,7 +83,7 @@ public class LoadingMenu extends Menu {
 			menuWidth += largestWidth;
 
 			menuTopY = p.height / 2 - menuHeight / 2;
-		}
+//		}
 	}
 
 	protected void setupMenuContents() {
