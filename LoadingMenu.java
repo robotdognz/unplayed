@@ -113,7 +113,7 @@ public class LoadingMenu extends Menu {
 			p.translate(position.x, position.y);
 
 			float objectYPosition = -pageMenu.getHeight() * 0.5f;
-			objectYPosition += buttonDistance;
+//			objectYPosition += buttonDistance;
 
 			// loading screen page
 			MenuObject image = objects.get(0);
