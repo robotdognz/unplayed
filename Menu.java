@@ -45,6 +45,7 @@ public abstract class Menu {
 	float angleOffset; // used for random angle when created
 
 	static boolean previousTilt = false;
+	static PVector previousPosition = null;
 
 	public Menu(PApplet p) {
 		this.p = p;
@@ -55,8 +56,29 @@ public abstract class Menu {
 		this.shadowOffset = 9;
 		this.shadow = 9;
 		this.angleOffset = 5;
+	}
 
-		setAngle(0);
+	private void setAngle(float range) {
+		if (previousPosition == null || previousPosition.dist(position) < 5) {
+			// in same position as previous menu
+			if (previousTilt) {
+				angle = angleOffset;
+			} else {
+				angle = -angleOffset;
+			}
+			previousPosition = position.copy();
+		} else {
+			// in different position
+			if (previousTilt) {
+				angle = angleOffset;
+				previousTilt = !previousTilt;
+			} else {
+				angle = -angleOffset;
+				previousTilt = !previousTilt;
+			}
+		}
+
+		angle += (float) (Math.random() * range) - (range / 2);
 	}
 
 	public void setImage(Handler handler) {
@@ -67,7 +89,7 @@ public abstract class Menu {
 		// get's called in the child class constructor
 		// create basic menu
 		menuCenterX = p.width / 2;
-		menuWidth = buttonDistance * 2; //buttonWidth + buttonDistance * 2;
+		menuWidth = buttonDistance * 2; // buttonWidth + buttonDistance * 2;
 		menuHeight = buttonDistance;
 		float largestWidth = 0;
 		for (MenuObject object : objects) {
@@ -77,7 +99,7 @@ public abstract class Menu {
 			}
 		}
 		menuWidth += largestWidth;
-		
+
 		menuTopY = p.height / 2 - menuHeight / 2;
 
 	}
@@ -135,21 +157,10 @@ public abstract class Menu {
 			objectYPosition += objectHeight;
 		}
 
+		setAngle(0);
 		updateShadow();
 		updateCorners();
 		built = true;
-	}
-
-	private void setAngle(float range) {
-		if (previousTilt) {
-			angle = angleOffset;
-			previousTilt = !previousTilt;
-		} else {
-			angle = -angleOffset;
-			previousTilt = !previousTilt;
-		}
-
-		angle += (float) (Math.random() * range) - (range / 2);
 	}
 
 	private void updateShadow() {
