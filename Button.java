@@ -2,6 +2,7 @@ package ui;
 
 import static processing.core.PConstants.*;
 
+import game.AppLogic;
 import handlers.ButtonHandler;
 import objects.Rectangle;
 import processing.core.PApplet;
@@ -16,6 +17,7 @@ public class Button extends MenuObject {
 	private Rectangle pageButton;
 
 	private ButtonHandler handler = null;
+	private ButtonHandler highlight = null;
 
 	public Button(float xCenter, float width, float height, String text) {
 		super(width, height);
@@ -28,8 +30,9 @@ public class Button extends MenuObject {
 		this.xCenter = xCenter;
 		this.text = text;
 		this.handler = handler;
-		
-		PApplet.print("Yup");
+		if (handler != null) {
+			this.highlight = AppLogic.texture.getButtonList().get(0);
+		}
 	}
 
 	public void setupPageButton(float centerX, float centerY) {// , float width, float height) {
@@ -57,12 +60,11 @@ public class Button extends MenuObject {
 		} else {
 			p.pushMatrix();
 			p.translate(xCenter, yCenter);
-//			p.scale(size); // size the page will appear in the page view
-//			p.rotate(PApplet.radians(angle)); // rotate the page
-//			p.scale(flipX, flipY); // flip the page
 			p.imageMode(CENTER);
-//			p.image(backgroundTexture.getSprite(scale * 0.25f), 0, 0, getWidth(), getHeight()); // draw the page
 			p.image(handler.getSprite(0), 0, 0, getWidth(), getHeight()); // draw the button
+			if (hover) {
+				p.image(highlight.getSprite(0), 0, 0, getWidth(), getHeight()); // draw the button highlight
+			}
 			p.popMatrix();
 		}
 	}
