@@ -86,7 +86,6 @@ public class LoadingMenu extends Menu {
 
 		float objectYPosition = pageMenu.getY();
 		for (MenuObject object : objects) {
-			objectYPosition += buttonDistance;
 			float objectHeight = object.getHeight();
 
 			if (object instanceof Button) {
@@ -95,6 +94,7 @@ public class LoadingMenu extends Menu {
 						objectYPosition + objectHeight * 0.5f);
 			}
 
+			objectYPosition += buttonDistance;
 			objectYPosition += objectHeight;
 		}
 
