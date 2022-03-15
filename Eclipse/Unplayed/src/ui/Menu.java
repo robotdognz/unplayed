@@ -69,12 +69,13 @@ public abstract class Menu {
 			previousPosition = position.copy();
 		} else {
 			// in different position
+			previousTilt = !previousTilt;
 			if (previousTilt) {
 				angle = angleOffset;
-				previousTilt = !previousTilt;
+//				previousTilt = !previousTilt;
 			} else {
 				angle = -angleOffset;
-				previousTilt = !previousTilt;
+//				previousTilt = !previousTilt;
 			}
 			previousPosition = position.copy();
 		}
