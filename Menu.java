@@ -59,17 +59,6 @@ public abstract class Menu {
 	}
 
 	private void setAngle(float range) {
-//		if (previousPosition == null || previousPosition.dist(position) < 5) {
-//			// in same position as previous menu
-//			if (previousTilt) {
-//				angle = angleOffset;
-//			} else {
-//				angle = -angleOffset;
-//			}
-//			previousPosition = position.copy();
-//		} else {
-//			// in different position
-//			previousTilt = !previousTilt;
 		if (previousTilt) {
 			angle = angleOffset;
 			previousTilt = !previousTilt;
@@ -77,8 +66,6 @@ public abstract class Menu {
 			angle = -angleOffset;
 			previousTilt = !previousTilt;
 		}
-//		previousPosition = position.copy();
-//		}
 
 		angle += (float) (Math.random() * range) - (range / 2);
 	}
