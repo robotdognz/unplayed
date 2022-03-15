@@ -64,10 +64,14 @@ public class LoadingMenu extends Menu {
 		this.shadow = 9;
 		menuCenterX = p.width / 2;
 		menuWidth = 0; // buttonDistance * 2;
-		menuHeight = buttonDistance;
+		menuHeight = 0; // buttonDistance;
 		float largestWidth = 0;
 		for (MenuObject object : objects) {
-			menuHeight += object.getHeight() + buttonDistance;
+			if (menuHeight == 0) {
+				menuHeight += object.getHeight() + buttonDistance;
+			} else {
+				menuHeight += object.getHeight();
+			}
 			if (object.getWidth() > largestWidth) {
 				largestWidth = object.getWidth();
 			}
@@ -218,7 +222,7 @@ public class LoadingMenu extends Menu {
 	public void skipLoadingScreen() {
 		// shouldn't need to press the 'continue' button if in the editor, to prevent
 		// editor locking up. So this is called instead of activate().
-		
+
 		// alreadyUsed prevents this being triggered multiple times
 		if (!alreadyUsed) {
 			alreadyUsed = true;
