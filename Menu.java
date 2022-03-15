@@ -58,7 +58,7 @@ public abstract class Menu {
 		this.angleOffset = 5;
 	}
 
-	private void setAngle(float range) {
+	protected void setAngle(float range) {
 		if (previousTilt) {
 			angle = angleOffset;
 			previousTilt = !previousTilt;

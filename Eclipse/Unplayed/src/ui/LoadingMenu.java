@@ -47,6 +47,18 @@ public class LoadingMenu extends Menu {
 
 		constructMenu();
 	}
+	
+	protected void setAngle(float range) {
+//		if (previousTilt) {
+//			angle = angleOffset;
+//			previousTilt = !previousTilt;
+//		} else {
+//			angle = -angleOffset;
+//			previousTilt = !previousTilt;
+//		}
+//
+//		angle += (float) (Math.random() * range) - (range / 2);
+	}
 
 	@Override
 	public void drawPageView(float scale) {
