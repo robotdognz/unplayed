@@ -90,50 +90,37 @@ public class LoadingMenu extends Menu {
 		// create page view menu and buttons
 		pageMenu = new Rectangle(0 - (menuWidth * 0.5f), 0 - (menuHeight * 0.5f), menuWidth, menuHeight);
 
-		if (fullPage) {
-
-			if (button) {
-//				float objectYPosition = pageMenu.getY();
-//				for (MenuObject object : objects) {
-//					objectYPosition += buttonDistance;
-//					float objectHeight = object.getHeight();
+//		if (fullPage) {
 //
-//					if (object instanceof Button) {
-//						Button button = (Button) object;
-//						button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2,
-//								objectYPosition + objectHeight * 0.5f);
-//					}
+//			if (button) {
+//				Button button = (Button) objects.get(1);
+//				float objectYPosition = (pageMenu.getY() + pageMenu.getHeight()) - button.getHeight() * 1.5f;
+//				button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2,
+//						objectYPosition + button.getHeight() * 0.5f);
 //
-//					objectYPosition += objectHeight;
-//				}
+//			} else {
+//
+//			}
+//
+//			
+//		} else {
 
-				Button button = (Button) objects.get(1);
-				float objectYPosition = (pageMenu.getY() + pageMenu.getHeight()) - button.getHeight() * 1.5f;
+		float objectYPosition = pageMenu.getY();
+		for (MenuObject object : objects) {
+			objectYPosition += buttonDistance;
+			float objectHeight = object.getHeight();
+
+			if (object instanceof Button) {
+				Button button = (Button) object;
 				button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2,
-						objectYPosition + button.getHeight() * 0.5f);
-
-			} else {
-
+						objectYPosition + objectHeight * 0.5f);
 			}
 
-			setAngle(0);
-		} else {
-
-			float objectYPosition = pageMenu.getY();
-			for (MenuObject object : objects) {
-				objectYPosition += buttonDistance;
-				float objectHeight = object.getHeight();
-
-				if (object instanceof Button) {
-					Button button = (Button) object;
-					button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2,
-							objectYPosition + objectHeight * 0.5f);
-				}
-
-				objectYPosition += objectHeight;
-			}
-
+			objectYPosition += objectHeight;
 		}
+
+//		}
+		setAngle(0);
 		updateCorners();
 		built = true;
 	}
