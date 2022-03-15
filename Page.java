@@ -312,17 +312,6 @@ public class Page extends PageViewObject {
 		}
 	}
 
-	public void drawCorners(float scale) {
-		int cornerBoxSize = (int) scale * 2;
-		// draw page corners
-		p.rectMode(CENTER);
-		p.fill(255, 0, 0);
-		p.rect(topLeft.x, topLeft.y, cornerBoxSize, cornerBoxSize);
-		p.rect(topRight.x, topRight.y, cornerBoxSize, cornerBoxSize);
-		p.rect(bottomLeft.x, bottomLeft.y, cornerBoxSize, cornerBoxSize);
-		p.rect(bottomRight.x, bottomRight.y, cornerBoxSize, cornerBoxSize);
-	}
-
 	public boolean playerVisible() {
 		return playerVisibleExternal;
 	}

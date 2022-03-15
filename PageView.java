@@ -128,7 +128,7 @@ public class PageView {
 					((Page) page).drawCorners(currentScale);
 					List<PageViewObject> children = ((Page) page).getChildren();
 					for (PageViewObject child : children) {
-						child.drawCornersAsChild();
+						child.drawCornersAsChild(currentScale);
 					}
 				}
 			}
