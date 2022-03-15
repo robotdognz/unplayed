@@ -77,7 +77,7 @@ public class EditorTop extends Toolbar {
 			if (currentWidget.isMenu() && currentWidget.isActive()) {
 				wMenuOpen = true;
 				// controls won't work until the touch after widget menus are closed
-				editor.nextTouchInactive = true;
+				editor.nextTouchInactive();
 
 				float current = currentWidget.getLowestPoint();
 				// update widget height

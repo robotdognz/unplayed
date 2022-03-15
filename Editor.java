@@ -36,7 +36,7 @@ import ui.Menu;
 import static processing.core.PConstants.*;
 
 public class Editor {
-	public boolean nextTouchInactive = false;
+	private boolean nextTouchInactive = false;
 	
 	public EditorSettings settings;
 
@@ -474,6 +474,10 @@ public class Editor {
 			// force re-render of pages
 			pageView.forceRedraw();
 		}
+	}
+	
+	public void nextTouchInactive() {
+		nextTouchInactive = true;
 	}
 
 	public void resetUI() {

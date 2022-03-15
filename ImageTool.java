@@ -225,7 +225,7 @@ public class ImageTool implements Tool {
 			pageView.addPageViewObject(currentBackground);
 			editor.selected = currentBackground;
 			editorSide.adjust = true;
-			editor.eMode = Editor.editorMode.SELECT;
+//			editor.eMode = Editor.editorMode.SELECT;
 		}
 	}
 

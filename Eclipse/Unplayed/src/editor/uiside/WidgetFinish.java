@@ -17,7 +17,7 @@ public class WidgetFinish extends Widget {
 	@Override
 	public void clicked() {
 		editor.selected = null;
-		editor.nextTouchInactive = true; // prevent selecting or erasing after clicking this widget
+		editor.nextTouchInactive(); // prevent selecting or erasing after clicking this widget
 
 	}
 

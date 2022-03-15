@@ -20,6 +20,8 @@ public class WidgetSelect extends Widget {
 
 		// new code, for use when drop-down menu is enabled
 		editor.editorSide.clearExternalModes();
+		
+		editor.nextTouchInactive();
 	}
 
 	@Override

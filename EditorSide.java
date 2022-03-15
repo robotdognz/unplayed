@@ -243,7 +243,7 @@ public class EditorSide extends Toolbar {
 					ArrayList<Widget> children = widgets.get(i).getChildren();
 					if (children.size() > 0) {
 						wMenuOpen = true;
-						editor.nextTouchInactive = true; // controls won't work until the touch after widget menus are
+						editor.nextTouchInactive(); // controls won't work until the touch after widget menus are
 															// closed
 						float current = children.get(children.size() - 1).getPosition().x;
 						if (current > currentWidgetHeight) {
