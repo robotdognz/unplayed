@@ -54,10 +54,10 @@ public class LoadingMenu extends Menu {
 		constructMenu();
 	}
 
-	@Override
-	protected void setAngle(float range) {
-		// remove this override method to re-enable random angle
-	}
+//	@Override
+//	protected void setAngle(float range) {
+//		// remove this override method to re-enable random angle
+//	}
 
 	protected void constructMenu() {
 
@@ -88,23 +88,52 @@ public class LoadingMenu extends Menu {
 
 	protected void setupMenuContents() {
 		// create page view menu and buttons
-		pageMenu = new Rectangle(0 - menuWidth / 2, 0 - menuHeight / 2, menuWidth, menuHeight);
+		pageMenu = new Rectangle(0 - (menuWidth * 0.5f), 0 - (menuHeight * 0.5f), menuWidth, menuHeight);
 
-		float objectYPosition = pageMenu.getY();
-		for (MenuObject object : objects) {
-			objectYPosition += buttonDistance;
-			float objectHeight = object.getHeight();
+		if (fullPage) {
 
-			if (object instanceof Button) {
-				Button button = (Button) object;
+			if (button) {
+//				float objectYPosition = pageMenu.getY();
+//				for (MenuObject object : objects) {
+//					objectYPosition += buttonDistance;
+//					float objectHeight = object.getHeight();
+//
+//					if (object instanceof Button) {
+//						Button button = (Button) object;
+//						button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2,
+//								objectYPosition + objectHeight * 0.5f);
+//					}
+//
+//					objectYPosition += objectHeight;
+//				}
+
+				Button button = (Button) objects.get(1);
+				float objectYPosition = pageMenu.getY() + pageMenu.getHeight();
 				button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2,
-						objectYPosition + objectHeight * 0.5f);
+						objectYPosition + button.getHeight() * 0.5f);
+
+			} else {
+
 			}
 
-			objectYPosition += objectHeight;
-		}
+			setAngle(0);
+		} else {
 
-		setAngle(0);
+			float objectYPosition = pageMenu.getY();
+			for (MenuObject object : objects) {
+				objectYPosition += buttonDistance;
+				float objectHeight = object.getHeight();
+
+				if (object instanceof Button) {
+					Button button = (Button) object;
+					button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2,
+							objectYPosition + objectHeight * 0.5f);
+				}
+
+				objectYPosition += objectHeight;
+			}
+
+		}
 		updateCorners();
 		built = true;
 	}
