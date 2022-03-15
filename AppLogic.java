@@ -644,6 +644,22 @@ public class AppLogic {
 				file.delete();
 			}
 		}
+		// loading images
+		File loadingDir = new File(p.dataPath("unplayed_loading") + '/');
+		File[] loadingPaths = loadingDir.listFiles();
+		for (File file : loadingPaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		// button images
+		File buttonDir = new File(p.dataPath("unplayed_buttons") + '/');
+		File[] buttonPaths = buttonDir.listFiles();
+		for (File file : buttonPaths) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
 		// events
 		File eventDir = new File(p.dataPath("unplayed_events") + '/');
 		File[] eventPaths = eventDir.listFiles();
