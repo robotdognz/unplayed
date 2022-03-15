@@ -27,6 +27,8 @@ public class Button extends MenuObject {
 		super(handler.getWidth() * 100, handler.getHeight() * 100);
 		this.xCenter = xCenter;
 		this.text = text;
+		
+		PApplet.print("Yup");
 	}
 
 	public void setupPageButton(float centerX, float centerY) {// , float width, float height) {
