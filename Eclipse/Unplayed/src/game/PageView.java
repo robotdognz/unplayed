@@ -534,4 +534,14 @@ public class PageView {
 		DebugOutput.pushMessage("Reset page view", 1);
 		updateVisiblePages();
 	}
+
+	public void recenterObjects() {
+		// re-center page view objects
+		Rectangle area = getLevelArea();
+		if (area != null) {
+			PVector center = area.getRectangleCenter();
+			// there are page view objects in the level
+			offsetAll(-center.x, -center.y);
+		}
+	}
 }

@@ -340,12 +340,8 @@ public class AppLogic {
 			editor = new Editor(p, camera, toast);
 
 			// re-center page view objects
-			Rectangle area = game.getPageView().getLevelArea();
-			if (area != null) {
-				PVector center = area.getRectangleCenter();
-				// there are page view objects in the level
-				game.getPageView().offsetAll(-center.x, -center.y);
-			}
+			game.getPageView().recenterObjects();
+
 		}
 		menu = null;
 		game.getPageView().clearMenus();
