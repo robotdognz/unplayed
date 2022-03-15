@@ -133,16 +133,6 @@ public class TextureCache {
 		}
 	}
 
-//	static public void drawLoadingText(PApplet p) {
-//		p.imageMode(CENTER);
-//		p.image(loadingText, 0, 0);
-//	}
-
-//	static public void drawPlayerEnd(PGraphics graphics, float width, float height) {
-//		graphics.imageMode(CENTER);
-//		graphics.image(playerEnd, 0, 0, width, height);
-//	}
-
 	private void loadTiles() {
 
 		// generate all the relative file paths
@@ -360,7 +350,7 @@ public class TextureCache {
 		ArrayList<Integer> temp = new ArrayList<Integer>(); // holds the numbers found in the file name
 		for (File file : loadingPaths) {
 			String path = file.getAbsolutePath();
-			if (path.matches(".+([0-9]+)x([0-9]+)_([0-9])\\.png$")) { // check file ends with number "x" number ".png"
+			if (path.matches(".+([0-9]+)x([0-9]+)_([0-9])_([0-9])\\.png$")) { // check file ends with number "x" number ".png"
 				Pattern pattern = Pattern.compile("\\d+");
 				Matcher m = pattern.matcher(path);
 				while (m.find()) {
@@ -368,7 +358,7 @@ public class TextureCache {
 					temp.add(i);
 				}
 				if (temp.size() >= 3) {
-					loadingMap.put(file, new LoadingHandler(p, this, file, temp.get(temp.size() - 3),
+					loadingMap.put(file, new LoadingHandler(p, this, file, temp.get(temp.size() - 4), temp.get(temp.size() - 3),
 							temp.get(temp.size() - 2), temp.get(temp.size() - 1)));
 				}
 			}

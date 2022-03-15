@@ -1,0 +1,8 @@
+name can be anything at the start, they are loaded in alphabetically, so take that into account
+
+they end with two sets of digits: []x[] and []_[]
+
+[]x[] is used to determine their size [width]x[height]
+
+[]_[] is used to determine options [continue button]_[full image with background]
+1 = 'true' for either of these, any other digit = 'false'
