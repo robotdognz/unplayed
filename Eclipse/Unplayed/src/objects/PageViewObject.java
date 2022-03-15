@@ -117,7 +117,8 @@ public class PageViewObject extends Editable {
 		int cornerBoxSize = (int) scale * 2;
 		// draw page corners
 		p.rectMode(CENTER);
-		p.fill(255, 0, 0); // red
+//		p.fill(255, 0, 0); // red
+		p.stroke(100, 170); // grey
 		p.rect(topLeft.x, topLeft.y, cornerBoxSize, cornerBoxSize);
 		p.rect(topRight.x, topRight.y, cornerBoxSize, cornerBoxSize);
 		p.rect(bottomLeft.x, bottomLeft.y, cornerBoxSize, cornerBoxSize);

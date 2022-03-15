@@ -123,12 +123,13 @@ public class PageView {
 			}
 
 			page.draw(currentScale);
-			if (EditorSettings.cameraLogic() && !Camera.getGame()) {
+			if (EditorSettings.cameraLogic() && getPageCount() > 0 && !Camera.getGame()) {
 				if (((Page) page).playerVisible()) {
-					((Page) page).drawCorners(currentScale);
+					page.drawCorners(currentScale);
 					List<PageViewObject> children = ((Page) page).getChildren();
 					for (PageViewObject child : children) {
 						child.drawCornersAsChild(currentScale);
+						child.drawCorners(currentScale);
 					}
 				}
 			}
