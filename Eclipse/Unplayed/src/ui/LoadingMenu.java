@@ -108,7 +108,7 @@ public class LoadingMenu extends Menu {
 //				}
 
 				Button button = (Button) objects.get(1);
-				float objectYPosition = pageMenu.getY() + pageMenu.getHeight();
+				float objectYPosition = (pageMenu.getY() + pageMenu.getHeight()) - button.getHeight() * 1.5f;
 				button.setupPageButton(pageMenu.getTopLeft().x + pageMenu.getWidth() / 2,
 						objectYPosition + button.getHeight() * 0.5f);
 
@@ -177,7 +177,8 @@ public class LoadingMenu extends Menu {
 			if (button) {
 				// assume there will be only one button
 				MenuObject button = objects.get(1);
-				button.drawOnPage(p, 0, 0);
+				float buttonY = (height * 0.5f);
+				button.drawOnPage(p, 0, buttonY);
 			}
 
 			// end drawing
