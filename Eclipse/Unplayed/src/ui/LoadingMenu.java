@@ -51,10 +51,6 @@ public class LoadingMenu extends Menu {
 			objects.add(continueBwImage);
 		}
 
-		if (fullPage) {
-			this.shadow = 9;
-		}
-
 		constructMenu();
 	}
 
@@ -62,31 +58,34 @@ public class LoadingMenu extends Menu {
 	protected void setAngle(float range) {
 		// remove this override method to re-enable random angle
 	}
-	
+
 	protected void constructMenu() {
-//		// get's called in the child class constructor
-//		// create basic menu
-//		menuCenterX = p.width / 2;
-//		menuWidth = buttonDistance * 2; // buttonWidth + buttonDistance * 2;
-//		menuHeight = buttonDistance;
-//		float largestWidth = 0;
-//		for (MenuObject object : objects) {
-//			menuHeight += object.getHeight() + buttonDistance;
-//			if (object.getWidth() > largestWidth) {
-//				largestWidth = object.getWidth();
-//			}
-//		}
-//		menuWidth += largestWidth;
-//
-//		menuTopY = p.height / 2 - menuHeight / 2;
-		
-		
-		MenuObject image = objects.get(0);
-		menuWidth = image.getWidth();
-		menuHeight = image.getHeight();
-		menuCenterX = p.width / 2;
+
+		if (fullPage) {
+			MenuObject image = objects.get(0);
+			menuWidth = image.getWidth();
+			menuHeight = image.getHeight();
+			menuCenterX = p.width / 2;
+			this.shadow = 9;
+		} else {
+			// get's called in the child class constructor
+			// create basic menu
+			menuCenterX = p.width / 2;
+			menuWidth = buttonDistance * 2; // buttonWidth + buttonDistance * 2;
+			menuHeight = buttonDistance;
+			float largestWidth = 0;
+			for (MenuObject object : objects) {
+				menuHeight += object.getHeight() + buttonDistance;
+				if (object.getWidth() > largestWidth) {
+					largestWidth = object.getWidth();
+				}
+			}
+			menuWidth += largestWidth;
+
+			menuTopY = p.height / 2 - menuHeight / 2;
+		}
 	}
-	
+
 	protected void setupMenuContents() {
 		// create page view menu and buttons
 		pageMenu = new Rectangle(0 - menuWidth / 2, 0 - menuHeight / 2, menuWidth, menuHeight);
