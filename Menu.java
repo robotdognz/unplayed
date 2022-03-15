@@ -76,6 +76,7 @@ public abstract class Menu {
 				angle = -angleOffset;
 				previousTilt = !previousTilt;
 			}
+			previousPosition = position.copy();
 		}
 
 		angle += (float) (Math.random() * range) - (range / 2);
