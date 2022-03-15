@@ -177,7 +177,7 @@ public class LoadingMenu extends Menu {
 			if (button) {
 				// assume there will be only one button
 				MenuObject button = objects.get(1);
-				float buttonY = (height * 0.5f);
+				float buttonY = (height * 0.5f) - button.getHeight();
 				button.drawOnPage(p, 0, buttonY);
 			}
 
