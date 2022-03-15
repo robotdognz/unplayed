@@ -138,7 +138,7 @@ public class PageView {
 		// draw current menu, destroy it if it's off camera
 		if (storedMenu != null) {
 			if (!AppLogic.editorToggle || getPageCount() > 0) {
-				// draw the menu in page view if there are pages
+				// draw the menu in page view if there are pages, or not in editor
 				storedMenu.drawPageView(currentScale);
 				if (removeMenu == true && (storedMenu.leftOf(pageCamera.getCameraArea().getTopLeft().x)
 						|| storedMenu.rightOf(pageCamera.getCameraArea().getBottomRight().x)
