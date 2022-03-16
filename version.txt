@@ -1,6 +1,6 @@
 (Major version).(Minor version).(Revision number)
 
-1.2.2: First 2021 build
+1.3.0: Pre-release 'big push' build
 
 -Cleaned up a bunch of old dodgy code
 -Fixed player getting stuck in tunnels and slots issue

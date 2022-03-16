@@ -54,11 +54,6 @@ public class LoadingMenu extends Menu {
 		constructMenu();
 	}
 
-//	@Override
-//	protected void setAngle(float range) {
-//		// remove this override method to re-enable random angle
-//	}
-
 	@Override
 	protected void constructMenu() {
 		// setup all the menu dimensions and parameters
@@ -136,10 +131,6 @@ public class LoadingMenu extends Menu {
 			p.translate(-shadow, -shadow);
 			p.rotate(PApplet.radians(angle)); // rotate the image
 
-//			// draw temp image background TODO: remove this
-//			p.fill(240);
-//			p.rect(0, objectYPosition + imageHeight * 0.5f, imageWidth, imageHeight);
-
 		} else {
 			p.rotate(PApplet.radians(angle)); // rotate the image
 		}
@@ -147,7 +138,7 @@ public class LoadingMenu extends Menu {
 		// draw the image
 		image.drawOnPage(p, 0, objectYPosition + imageHeight * 0.5f);
 		objectYPosition += imageHeight; // update drawing position
-		
+
 		p.rotate(PApplet.radians(-angle)); // rotate the image back
 
 		// loading screen button
@@ -168,7 +159,7 @@ public class LoadingMenu extends Menu {
 
 	@Override
 	public void drawOnTop() {
-		// loading screens never get drawn on top
+		// loading screens never get drawn on top, so do nothing
 	}
 
 	@Override
@@ -184,8 +175,7 @@ public class LoadingMenu extends Menu {
 		PVector point = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);
 		point.x -= position.x;
 		point.y -= position.y;
-//		point.rotate(PApplet.radians(-angle));
-		
+
 		MenuObject button = objects.get(1);
 		((Button) button).hoverPage(point); // levelTouch
 	}
