@@ -1,8 +1,6 @@
 package ui;
 
 import static processing.core.PConstants.CENTER;
-
-import camera.Camera;
 import camera.PageViewCamera;
 import game.AppLogic;
 import handlers.ButtonHandler;
@@ -66,6 +64,7 @@ public class LoadingMenu extends Menu {
 		// setup all the menu dimensions and parameters
 
 		shadow = 9;
+		buttonDistance = 200;
 		menuCenterX = p.width / 2;
 		menuWidth = 0;
 		menuHeight = 0;
@@ -189,14 +188,6 @@ public class LoadingMenu extends Menu {
 		
 		MenuObject button = objects.get(1);
 		((Button) button).hoverPage(point); // levelTouch
-
-//		for (MenuObject object : objects) {
-//			if (!(object instanceof Button)) {
-//				continue;
-//			}
-//			((Button) object).hoverPage(point); // levelTouch
-//		}
-
 	}
 
 	@Override
