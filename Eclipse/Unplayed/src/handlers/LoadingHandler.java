@@ -5,7 +5,7 @@ import processing.core.PApplet;
 
 public class LoadingHandler extends Handler implements Comparable<LoadingHandler> {
 	private boolean hasButton = false;
-	private boolean fullPage = false;
+	private boolean hasShadow = false;
 
 	public LoadingHandler(PApplet p, TextureCache texture, File file, int width, int height, int button, int fullPage) {
 		super(p, texture, file, width, height);
@@ -13,7 +13,7 @@ public class LoadingHandler extends Handler implements Comparable<LoadingHandler
 			this.hasButton = true;
 		}
 		if (fullPage == 1) {
-			this.fullPage = true;
+			this.hasShadow = true;
 		}
 	}
 
@@ -28,8 +28,8 @@ public class LoadingHandler extends Handler implements Comparable<LoadingHandler
 		return hasButton;
 	}
 
-	public boolean fullPage() {
-		return fullPage;
+	public boolean hasShadow() {
+		return hasShadow;
 	}
 
 }

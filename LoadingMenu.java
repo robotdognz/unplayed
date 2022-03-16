@@ -8,14 +8,14 @@ import objects.Rectangle;
 import processing.core.PApplet;
 
 public class LoadingMenu extends Menu {
-	String continueGame = "Continue";
-	boolean button;
-	boolean fullPage;
-	boolean alreadyUsed = false;
+	private String continueGame = "Continue";
+	private boolean hasButton; // has 'continue' button
+	private boolean hasShadow; // loading screen image should have a shadow
+	private int shadow; // the relative amount to offset the shadow by
+
+	private boolean alreadyUsed = false;
 	// this boolean prevents this loading menu from infinitely restarting the level
 	// each frame. With this it is only used once
-
-	private int shadow; // the relative amount to offset the shadow by
 
 	public LoadingMenu(PApplet p, LoadingHandler loading) {
 		super(p);
@@ -28,24 +28,22 @@ public class LoadingMenu extends Menu {
 			float imageWidth = loading.getWidth() * 100 * 3;
 			float imageHeight = loading.getHeight() * 100 * 3;
 			loadingImage = new MenuObject(imageWidth, imageHeight, loading);
-			this.button = loading.hasButton();
-			this.fullPage = loading.fullPage();
+			this.hasButton = loading.hasButton();
+			this.hasShadow = loading.hasShadow();
 		} else {
 			// no valid loading handler provided, get default
 			LoadingHandler temp = AppLogic.texture.getLoadingList().get(0);
 			float imageWidth = temp.getWidth() * 100 * 3;
 			float imageHeight = temp.getHeight() * 100 * 3;
 			loadingImage = new MenuObject(imageWidth, imageHeight, temp);
-			this.button = temp.hasButton();
-			this.fullPage = temp.fullPage();
+			this.hasButton = temp.hasButton();
+			this.hasShadow = temp.hasShadow();
 		}
 
 		objects.add(loadingImage);
 
-		if (button) {
-//			Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
-//			objects.add(continueB);
-
+		if (hasButton) {
+			// setup the 'continue' button
 			ButtonHandler temp = AppLogic.texture.getButtonList().get(1);
 			Button continueBwImage = new Button(temp, p.width / 2, continueGame);
 			objects.add(continueBwImage);
@@ -63,8 +61,8 @@ public class LoadingMenu extends Menu {
 
 		this.shadow = 9;
 		menuCenterX = p.width / 2;
-		menuWidth = 0; // buttonDistance * 2;
-		menuHeight = 0; // buttonDistance;
+		menuWidth = 0;
+		menuHeight = 0;
 		float largestWidth = 0;
 		for (MenuObject object : objects) {
 			menuHeight += object.getHeight();
@@ -80,7 +78,10 @@ public class LoadingMenu extends Menu {
 		menuTopY = p.height / 2 - menuHeight / 2;
 	}
 
+	@Override
 	protected void setupMenuContents() {
+		// called by buildMenu() which is in the parent class
+
 		// create page view menu and buttons
 		pageMenu = new Rectangle(0 - (menuWidth * 0.5f), 0 - (menuHeight * 0.5f), menuWidth, menuHeight);
 
@@ -106,21 +107,22 @@ public class LoadingMenu extends Menu {
 	@Override
 	public void drawInWorld(float scale) {
 
-		if (fullPage) {
-			// draw full page loading screen with shadow and button below
+//		if (hasShadow) {
+		// draw full page loading screen with shadow and button below
 
-			p.pushMatrix();
-			p.translate(position.x, position.y);
+		p.pushMatrix();
+		p.translate(position.x, position.y);
 
-			// setup drawing for the loading screen
-			p.imageMode(CENTER);
-			float objectYPosition = -pageMenu.getHeight() * 0.5f;
+		// setup drawing for the loading screen
+		p.imageMode(CENTER);
+		float objectYPosition = -pageMenu.getHeight() * 0.5f;
 
-			// get loading screen image and important values
-			MenuObject image = objects.get(0);
-			float imageWidth = image.getWidth();
-			float imageHeight = image.getHeight();
+		// get loading screen image and important values
+		MenuObject image = objects.get(0);
+		float imageWidth = image.getWidth();
+		float imageHeight = image.getHeight();
 
+		if (hasShadow) {
 			// shadow
 			p.translate(shadow, shadow);
 			p.fill(0, 40);
@@ -136,59 +138,55 @@ public class LoadingMenu extends Menu {
 			p.fill(240);
 			p.rect(0, objectYPosition + imageHeight * 0.5f, imageWidth, imageHeight);
 
-			// draw the image
-			image.drawOnPage(p, 0, objectYPosition + imageHeight * 0.5f);
-			objectYPosition += imageHeight; // update drawing position
-
-			// loading screen button
-			if (button) {
-				// assume there will be only one button
-				MenuObject button = objects.get(1);
-				objectYPosition += buttonDistance;
-				float buttonHeight = button.getHeight();
-				button.drawOnPage(p, 0, objectYPosition + buttonHeight * 0.5f);
-			}
-
-			p.popMatrix();
-
 		} else {
-			// draw transparent background loading screen with button below image
-
-			p.pushMatrix();
-			p.translate(position.x, position.y);
 			p.rotate(PApplet.radians(angle)); // rotate the page
-
-			// setup drawing for the loading screen
-			p.imageMode(CENTER);
-			float objectYPosition = -pageMenu.getHeight() * 0.5f;
-
-			// get loading screen image and important values
-			MenuObject image = objects.get(0);
-			float imageHeight = image.getHeight();
-
-			// draw the image
-			image.drawOnPage(p, 0, objectYPosition + imageHeight * 0.5f);
-			objectYPosition += imageHeight; // update drawing position
-
-			// loading screen button
-			if (button) {
-				// assume there will be only one button
-				MenuObject button = objects.get(1);
-				objectYPosition += buttonDistance;
-				float buttonHeight = button.getHeight();
-				button.drawOnPage(p, 0, objectYPosition + buttonHeight * 0.5f);
-			}
-
-//			for (MenuObject object : objects) {
-//				float objectHeight = object.getHeight();
-//
-//				object.drawOnPage(p, 0, objectYPosition + objectHeight * 0.5f);
-//				objectYPosition += objectHeight;
-//				objectYPosition += buttonDistance;
-//			}
-
-			p.popMatrix();
 		}
+
+		// draw the image
+		image.drawOnPage(p, 0, objectYPosition + imageHeight * 0.5f);
+		objectYPosition += imageHeight; // update drawing position
+
+		// loading screen button
+		if (hasButton) {
+			// assume there will be only one button
+			MenuObject button = objects.get(1);
+			objectYPosition += buttonDistance;
+			float buttonHeight = button.getHeight();
+			button.drawOnPage(p, 0, objectYPosition + buttonHeight * 0.5f);
+		}
+
+		p.popMatrix();
+
+//		} else {
+//			// draw transparent background loading screen with button below image
+//
+//			p.pushMatrix();
+//			p.translate(position.x, position.y);
+//			p.rotate(PApplet.radians(angle)); // rotate the page
+//
+//			// setup drawing for the loading screen
+//			p.imageMode(CENTER);
+//			float objectYPosition = -pageMenu.getHeight() * 0.5f;
+//
+//			// get loading screen image and important values
+//			MenuObject image = objects.get(0);
+//			float imageHeight = image.getHeight();
+//
+//			// draw the image
+//			image.drawOnPage(p, 0, objectYPosition + imageHeight * 0.5f);
+//			objectYPosition += imageHeight; // update drawing position
+//
+//			// loading screen button
+//			if (hasButton) {
+//				// assume there will be only one button
+//				MenuObject button = objects.get(1);
+//				objectYPosition += buttonDistance;
+//				float buttonHeight = button.getHeight();
+//				button.drawOnPage(p, 0, objectYPosition + buttonHeight * 0.5f);
+//			}
+//
+//			p.popMatrix();
+//		}
 
 		if (child != null && child.isBuilt()) {
 			child.drawInWorld(scale);
@@ -217,7 +215,7 @@ public class LoadingMenu extends Menu {
 	@Override
 	public void activate() {
 		// alreadyUsed prevents this being triggered multiple times
-		if (!button && !alreadyUsed) {
+		if (!hasButton && !alreadyUsed) {
 			alreadyUsed = true;
 			child = null; // remove any child menus
 			AppLogic.startLevel(); // load in the next level
