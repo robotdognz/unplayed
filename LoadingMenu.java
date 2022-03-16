@@ -104,22 +104,24 @@ public class LoadingMenu extends Menu {
 	}
 
 	@Override
-	public void drawPageView(float scale) {
+	public void drawInWorld(float scale) {
 
 		if (fullPage) {
-			// draw full page loading screen with shadow and button on the page
+			// draw full page loading screen with shadow and button below
 
 			p.pushMatrix();
 			p.translate(position.x, position.y);
 
+			// setup drawing for the loading screen
+			p.imageMode(CENTER);
 			float objectYPosition = -pageMenu.getHeight() * 0.5f;
-//			objectYPosition += buttonDistance;
 
-			// loading screen page
+			// get loading screen image and important values
 			MenuObject image = objects.get(0);
-
 			float imageWidth = image.getWidth();
 			float imageHeight = image.getHeight();
+
+			// shadow
 			p.translate(shadow, shadow);
 			p.fill(0, 40);
 			p.noStroke();
@@ -130,13 +132,15 @@ public class LoadingMenu extends Menu {
 			p.translate(-shadow, -shadow);
 			p.rotate(PApplet.radians(angle)); // rotate the image
 
+			// draw temp image background TODO: remove this
 			p.fill(240);
 			p.rect(0, objectYPosition + imageHeight * 0.5f, imageWidth, imageHeight);
-			p.imageMode(CENTER);
-			image.drawOnPage(p, 0, objectYPosition + imageHeight * 0.5f);
-			objectYPosition += imageHeight;
 
-			// button
+			// draw the image
+			image.drawOnPage(p, 0, objectYPosition + imageHeight * 0.5f);
+			objectYPosition += imageHeight; // update drawing position
+
+			// loading screen button
 			if (button) {
 				// assume there will be only one button
 				MenuObject button = objects.get(1);
@@ -154,27 +158,45 @@ public class LoadingMenu extends Menu {
 			p.translate(position.x, position.y);
 			p.rotate(PApplet.radians(angle)); // rotate the page
 
-			// draw the images and buttons
+			// setup drawing for the loading screen
 			p.imageMode(CENTER);
-			float objectYPosition = -pageMenu.getHeight() / 2;
-			for (MenuObject object : objects) {
-				float objectHeight = object.getHeight();
+			float objectYPosition = -pageMenu.getHeight() * 0.5f;
 
-				object.drawOnPage(p, 0, objectYPosition + objectHeight * 0.5f);
-				objectYPosition += objectHeight;
+			// get loading screen image and important values
+			MenuObject image = objects.get(0);
+			float imageHeight = image.getHeight();
+
+			// draw the image
+			image.drawOnPage(p, 0, objectYPosition + imageHeight * 0.5f);
+			objectYPosition += imageHeight; // update drawing position
+
+			// loading screen button
+			if (button) {
+				// assume there will be only one button
+				MenuObject button = objects.get(1);
 				objectYPosition += buttonDistance;
+				float buttonHeight = button.getHeight();
+				button.drawOnPage(p, 0, objectYPosition + buttonHeight * 0.5f);
 			}
+
+//			for (MenuObject object : objects) {
+//				float objectHeight = object.getHeight();
+//
+//				object.drawOnPage(p, 0, objectYPosition + objectHeight * 0.5f);
+//				objectYPosition += objectHeight;
+//				objectYPosition += buttonDistance;
+//			}
 
 			p.popMatrix();
 		}
 
 		if (child != null && child.isBuilt()) {
-			child.drawPageView(scale);
+			child.drawInWorld(scale);
 		}
 	}
 
 	@Override
-	public void draw() {
+	public void drawOnTop() {
 	}
 
 	@Override

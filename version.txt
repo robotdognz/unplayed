@@ -58,6 +58,7 @@
 -Editor now saves its settings and reloads them each time
 -PlayerEnds are more forgiving now, so they can be used in emptyspace on the ground
 -Reworked the auto camera system so that it never freaks out or breaks
+-Implemented advanced loading screen system
 
 1.2.1: Improving physics and tuning player 'feel'
 

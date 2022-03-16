@@ -156,11 +156,10 @@ public abstract class Menu {
 //		this.shadow = (int) (shadowOffset / size);
 //	}
 
-	public void drawPageView(float scale) {
+	public void drawInWorld(float scale) {
 
 		p.pushMatrix();
 		p.translate(position.x, position.y);
-//		p.rotate(PApplet.radians(angle)); // rotate the page
 
 		// draw the shadow
 		p.translate(shadow, shadow);
@@ -218,11 +217,11 @@ public abstract class Menu {
 		p.popMatrix();
 
 		if (child != null && child.isBuilt()) {
-			child.drawPageView(scale);
+			child.drawInWorld(scale);
 		}
 	}
 
-	public void draw() {
+	public void drawOnTop() {
 		// used only in editor
 		p.stroke(0);
 		p.strokeWeight(6);

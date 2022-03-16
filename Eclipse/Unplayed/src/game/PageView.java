@@ -15,7 +15,6 @@ import objects.PageViewObject;
 import objects.Rectangle;
 import processing.core.*;
 import ui.Menu;
-import ui.LoadingMenu;
 
 public class PageView {
 	private PApplet p;
@@ -141,7 +140,7 @@ public class PageView {
 		if (storedMenu != null) {
 			if (!AppLogic.editorToggle || getPageCount() > 0) {
 				// draw the menu in page view if there are pages, or not in editor
-				storedMenu.drawPageView(currentScale);
+				storedMenu.drawInWorld(currentScale);
 				if (removeMenu == true && (storedMenu.leftOf(pageCamera.getCameraArea().getTopLeft().x)
 						|| storedMenu.rightOf(pageCamera.getCameraArea().getBottomRight().x)
 						|| storedMenu.above(pageCamera.getCameraArea().getTopLeft().y)
