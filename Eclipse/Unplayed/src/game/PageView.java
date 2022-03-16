@@ -231,7 +231,7 @@ public class PageView {
 
 			if (AppLogic.editorToggle && Editor.showPageView) {
 				// in editor, and in page view
-				((LoadingMenu) storedMenu).skipLoadingScreen();
+				storedMenu.skipLoadingScreen();
 			} else {
 				storedMenu.activate();
 			}

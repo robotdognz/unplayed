@@ -266,7 +266,7 @@ public abstract class Menu {
 
 		p.popMatrix();
 	}
-	
+
 	public void drawCorners(float scale) {
 		int cornerBoxSize = (int) scale * 2;
 		int strokeWeight = Math.max(1, (int) (scale * 0.5f));
@@ -482,5 +482,8 @@ public abstract class Menu {
 
 	public boolean isBuilt() {
 		return built;
+	}
+
+	public void skipLoadingScreen() {
 	}
 }
