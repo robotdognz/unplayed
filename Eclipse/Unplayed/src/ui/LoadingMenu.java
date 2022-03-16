@@ -136,9 +136,9 @@ public class LoadingMenu extends Menu {
 			p.translate(-shadow, -shadow);
 			p.rotate(PApplet.radians(angle)); // rotate the image
 
-			// draw temp image background TODO: remove this
-			p.fill(240);
-			p.rect(0, objectYPosition + imageHeight * 0.5f, imageWidth, imageHeight);
+//			// draw temp image background TODO: remove this
+//			p.fill(240);
+//			p.rect(0, objectYPosition + imageHeight * 0.5f, imageWidth, imageHeight);
 
 		} else {
 			p.rotate(PApplet.radians(angle)); // rotate the image

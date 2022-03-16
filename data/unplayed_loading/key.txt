@@ -4,5 +4,5 @@ they end with two sets of digits: []x[] and []_[]
 
 []x[] is used to determine their size [width]x[height]
 
-[]_[] is used to determine options [continue button]_[full image with background]
+[]_[] is used to determine options [continue button]_[draw shadow]
 1 = 'true' for either of these, any other digit = 'false'
