@@ -24,22 +24,32 @@ public class LoadingMenu extends Menu {
 		this.angleOffset = 7; // 10
 
 		MenuObject loadingImage;
+		
+		int imageSizeIncrease = 5;
 
 		if (loading != null) {
 			// we have a valid loading handler to build from
-			float imageWidth = loading.getWidth() * 100 * 3;
-			float imageHeight = loading.getHeight() * 100 * 3;
-			loadingImage = new MenuObject(imageWidth, imageHeight, loading);
+			float imageWidth = loading.getWidth() * 100;
+			float imageHeight = loading.getHeight() * 100;
 			this.hasButton = loading.hasButton();
 			this.hasShadow = loading.hasShadow();
+			if (hasShadow) {
+				imageWidth *= imageSizeIncrease;
+				imageHeight *= imageSizeIncrease;
+			}
+			loadingImage = new MenuObject(imageWidth, imageHeight, loading);
 		} else {
 			// no valid loading handler provided, get default
 			LoadingHandler temp = AppLogic.texture.getLoadingList().get(0);
-			float imageWidth = temp.getWidth() * 100 * 3;
-			float imageHeight = temp.getHeight() * 100 * 3;
-			loadingImage = new MenuObject(imageWidth, imageHeight, temp);
+			float imageWidth = temp.getWidth() * 100;
+			float imageHeight = temp.getHeight() * 100;
 			this.hasButton = temp.hasButton();
 			this.hasShadow = temp.hasShadow();
+			if (hasShadow) {
+				imageWidth *= imageSizeIncrease;
+				imageHeight *= imageSizeIncrease;
+			}
+			loadingImage = new MenuObject(imageWidth, imageHeight, temp);
 		}
 
 		this.objects.add(loadingImage);
