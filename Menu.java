@@ -282,29 +282,13 @@ public abstract class Menu {
 
 	public void hover(PVector lastTouch) {
 		if (Camera.getGame()) {
+			// interacting with in world menu
 
 			PVector point = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);
 			point.x -= position.x;
 			point.y -= position.y;
 			point.rotate(PApplet.radians(-angle));
 
-//			if (-(menuWidth / 2) * size > point.x) {
-//				return;
-//			}
-//			if ((menuWidth / 2) * size < point.x) {
-//				return;
-//			}
-//			if (-(menuHeight / 2) * size > point.y) {
-//				return;
-//			}
-//			if ((menuHeight / 2) * size < point.y) {
-//				return;
-//			}
-
-			// interacting with in page view menu
-//			PVector levelTouch = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);
-//			levelTouch.x -= position.x;
-//			levelTouch.y -= position.y;
 			for (MenuObject object : objects) {
 				if (!(object instanceof Button)) {
 					continue;

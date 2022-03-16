@@ -1,11 +1,15 @@
 package ui;
 
 import static processing.core.PConstants.CENTER;
+
+import camera.Camera;
+import camera.PageViewCamera;
 import game.AppLogic;
 import handlers.ButtonHandler;
 import handlers.LoadingHandler;
 import objects.Rectangle;
 import processing.core.PApplet;
+import processing.core.PVector;
 
 public class LoadingMenu extends Menu {
 	private String continueGame = "Continue";
@@ -19,7 +23,7 @@ public class LoadingMenu extends Menu {
 
 	public LoadingMenu(PApplet p, LoadingHandler loading) {
 		super(p);
-		this.angleOffset = 10;
+		this.angleOffset = 7; // 10
 
 		MenuObject loadingImage;
 
@@ -40,12 +44,12 @@ public class LoadingMenu extends Menu {
 			this.hasShadow = temp.hasShadow();
 		}
 
-		objects.add(loadingImage);
+		this.objects.add(loadingImage);
 
-		if (hasButton) {
+		if (this.hasButton) {
 			// setup the 'continue' button
 			ButtonHandler temp = AppLogic.texture.getButtonList().get(1);
-			Button continueBwImage = new Button(temp, p.width / 2, continueGame);
+			Button continueBwImage = new Button(temp, p.width / 2, this.continueGame);
 			objects.add(continueBwImage);
 		}
 
@@ -57,9 +61,11 @@ public class LoadingMenu extends Menu {
 //		// remove this override method to re-enable random angle
 //	}
 
+	@Override
 	protected void constructMenu() {
+		// setup all the menu dimensions and parameters
 
-		this.shadow = 9;
+		shadow = 9;
 		menuCenterX = p.width / 2;
 		menuWidth = 0;
 		menuHeight = 0;
@@ -107,9 +113,6 @@ public class LoadingMenu extends Menu {
 	@Override
 	public void drawInWorld(float scale) {
 
-//		if (hasShadow) {
-		// draw full page loading screen with shadow and button below
-
 		p.pushMatrix();
 		p.translate(position.x, position.y);
 
@@ -123,14 +126,14 @@ public class LoadingMenu extends Menu {
 		float imageHeight = image.getHeight();
 
 		if (hasShadow) {
-			// shadow
+			// draw a shadow under the loading screen image
 			p.translate(shadow, shadow);
 			p.fill(0, 40);
 			p.noStroke();
 			p.rectMode(CENTER);
 			p.rotate(PApplet.radians(angle)); // rotate the image
 			p.rect(0, objectYPosition + imageHeight * 0.5f, imageWidth, imageHeight); // draw the shadow
-			p.rotate(PApplet.radians(-angle)); // rotate the image
+			p.rotate(PApplet.radians(-angle)); // rotate the image back
 			p.translate(-shadow, -shadow);
 			p.rotate(PApplet.radians(angle)); // rotate the image
 
@@ -139,12 +142,14 @@ public class LoadingMenu extends Menu {
 			p.rect(0, objectYPosition + imageHeight * 0.5f, imageWidth, imageHeight);
 
 		} else {
-			p.rotate(PApplet.radians(angle)); // rotate the page
+			p.rotate(PApplet.radians(angle)); // rotate the image
 		}
 
 		// draw the image
 		image.drawOnPage(p, 0, objectYPosition + imageHeight * 0.5f);
 		objectYPosition += imageHeight; // update drawing position
+		
+		p.rotate(PApplet.radians(-angle)); // rotate the image back
 
 		// loading screen button
 		if (hasButton) {
@@ -157,37 +162,6 @@ public class LoadingMenu extends Menu {
 
 		p.popMatrix();
 
-//		} else {
-//			// draw transparent background loading screen with button below image
-//
-//			p.pushMatrix();
-//			p.translate(position.x, position.y);
-//			p.rotate(PApplet.radians(angle)); // rotate the page
-//
-//			// setup drawing for the loading screen
-//			p.imageMode(CENTER);
-//			float objectYPosition = -pageMenu.getHeight() * 0.5f;
-//
-//			// get loading screen image and important values
-//			MenuObject image = objects.get(0);
-//			float imageHeight = image.getHeight();
-//
-//			// draw the image
-//			image.drawOnPage(p, 0, objectYPosition + imageHeight * 0.5f);
-//			objectYPosition += imageHeight; // update drawing position
-//
-//			// loading screen button
-//			if (hasButton) {
-//				// assume there will be only one button
-//				MenuObject button = objects.get(1);
-//				objectYPosition += buttonDistance;
-//				float buttonHeight = button.getHeight();
-//				button.drawOnPage(p, 0, objectYPosition + buttonHeight * 0.5f);
-//			}
-//
-//			p.popMatrix();
-//		}
-
 		if (child != null && child.isBuilt()) {
 			child.drawInWorld(scale);
 		}
@@ -195,6 +169,34 @@ public class LoadingMenu extends Menu {
 
 	@Override
 	public void drawOnTop() {
+		// loading screens never get drawn on top
+	}
+
+	@Override
+	public void hover(PVector lastTouch) {
+		// interacting with in world menu is assumed,
+		// loading screens never get drawn on top
+
+		if (!hasButton) {
+			// if this loading screen has no 'continue' button, exit method
+			return;
+		}
+
+		PVector point = PageViewCamera.screenToLevel(lastTouch.x, lastTouch.y);
+		point.x -= position.x;
+		point.y -= position.y;
+//		point.rotate(PApplet.radians(-angle));
+		
+		MenuObject button = objects.get(1);
+		((Button) button).hoverPage(point); // levelTouch
+
+//		for (MenuObject object : objects) {
+//			if (!(object instanceof Button)) {
+//				continue;
+//			}
+//			((Button) object).hoverPage(point); // levelTouch
+//		}
+
 	}
 
 	@Override
