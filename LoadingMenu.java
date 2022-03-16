@@ -24,8 +24,9 @@ public class LoadingMenu extends Menu {
 		this.angleOffset = 7; // 10
 
 		MenuObject loadingImage;
-		
-		int imageSizeIncrease = 5;
+
+		int imageIncreaseNormal = 3;
+		int imageIncreasePostit = 5;
 
 		if (loading != null) {
 			// we have a valid loading handler to build from
@@ -34,8 +35,11 @@ public class LoadingMenu extends Menu {
 			this.hasButton = loading.hasButton();
 			this.hasShadow = loading.hasShadow();
 			if (hasShadow) {
-				imageWidth *= imageSizeIncrease;
-				imageHeight *= imageSizeIncrease;
+				imageWidth *= imageIncreasePostit;
+				imageHeight *= imageIncreasePostit;
+			} else {
+				imageWidth *= imageIncreaseNormal;
+				imageHeight *= imageIncreaseNormal;
 			}
 			loadingImage = new MenuObject(imageWidth, imageHeight, loading);
 		} else {
@@ -46,8 +50,11 @@ public class LoadingMenu extends Menu {
 			this.hasButton = temp.hasButton();
 			this.hasShadow = temp.hasShadow();
 			if (hasShadow) {
-				imageWidth *= imageSizeIncrease;
-				imageHeight *= imageSizeIncrease;
+				imageWidth *= imageIncreasePostit;
+				imageHeight *= imageIncreasePostit;
+			} else {
+				imageWidth *= imageIncreaseNormal;
+				imageHeight *= imageIncreaseNormal;
 			}
 			loadingImage = new MenuObject(imageWidth, imageHeight, temp);
 		}
