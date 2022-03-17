@@ -1,0 +1,8 @@
+tile_type[x]_[y]
+
+x = number in series starting from 00
+
+y = rotation code
+0 = cares about rotation, 1 = ignore 180 rotation, 2 = ignore all rotation
+
+
