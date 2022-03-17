@@ -1,2 +1,3 @@
 # Ignore files in the build folder
 app/build/*
+.gradle
