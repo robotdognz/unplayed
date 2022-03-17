@@ -23,10 +23,10 @@ public abstract class Handler {
 	protected int width;
 	protected int height;
 
-	private float widthRenderRatio;
-	private float heightRenderRatio;
+	protected float widthRenderRatio;
+	protected float heightRenderRatio;
 
-	private boolean isRotatable; // can the editor default angle for this object be changed
+	protected boolean isRotatable; // can the editor default angle for this object be changed
 	protected int editorRotation; // angle to add when creating new instance with level editor
 
 	public Handler(PApplet p, TextureCache texture, File file, int width, int height) {
