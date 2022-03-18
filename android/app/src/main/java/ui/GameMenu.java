@@ -7,7 +7,6 @@ import processing.core.PApplet;
 public class GameMenu extends Menu {
 	Game game;
 	String resume = "Resume";
-//	String checkpoint = "Checkpoint";
 	String titleScreen = "Main Menu";
 	String edit = "Edit Level";
 	String quit = "Quit";
@@ -17,12 +16,10 @@ public class GameMenu extends Menu {
 		this.game = game;
 
 		Button resumeB = new Button(p.width / 2, buttonWidth, buttonHeight, resume);
-//		Button checkpointB = new Button(p.width / 2, buttonWidth, buttonHeight, checkpoint);
 		Button titleScreenB = new Button(p.width / 2, buttonWidth, buttonHeight, titleScreen);
 		Button editB = new Button(p.width / 2, buttonWidth, buttonHeight, edit);
 		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
 		objects.add(resumeB);
-//		objects.add(checkpointB);
 		objects.add(titleScreenB);
 		objects.add(editB);
 		objects.add(quitB);
@@ -40,10 +37,6 @@ public class GameMenu extends Menu {
 
 			if (b.click().equals(resume)) {
 				AppLogic.removeMenu(); // remove pause menu
-
-//			}else if (b.click().equals(checkpoint)) {
-//				AppLogic.game.restart(); // return to last checkpoint
-//				AppLogic.removeMenu(); // remove pause menu
 
 			} else if (b.click().equals(titleScreen)) {
 				game.emptyGame();
