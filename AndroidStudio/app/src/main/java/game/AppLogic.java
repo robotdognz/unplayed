@@ -84,9 +84,9 @@ public class AppLogic {
 
 	static public void init() {
 		editorToggle = false; // editor is closed on startup
-		touches = new ArrayList<PVector>();
+		touches = new ArrayList<>();
 		lastTouch = new PVector(0, 0);
-		widgets = new ArrayList<Widget>();
+		widgets = new ArrayList<>();
 
 		texture = new TextureCache(p, context);
 		gesture = new KetaiGesture(p);
@@ -103,8 +103,8 @@ public class AppLogic {
 		// setup non editor widget(s)
 		Widget menuW = new WidgetPauseMenu(p, game, null);
 		widgets.add(menuW);
-		widgetSpacing = p.width / (widgets.size() + 1);
-		widgetHeight = p.displayWidth / 12; // 120
+		widgetSpacing = p.width / (widgets.size() + 1f);
+		widgetHeight = p.displayWidth / 12f; // 120
 
 		// setup shared preferences (used for save games)
 		settings = activity.getPreferences(0);
@@ -136,17 +136,12 @@ public class AppLogic {
 	}
 
 	static public void clearSaveGame() {
-//		if (externalLevels) {
-//			// return if we're running an external campaign, so as not to overwrite main
-//			// campaign progress
-//			return;
-//		}
 		saveGame.putInt("level", 0);
 		saveGame.apply();
 	}
 
 	static public void getLevels() {
-		levels = new ArrayList<File>();
+		levels = new ArrayList<>();
 		// generate all the relative file paths
 		try {
 			// App mode
@@ -160,8 +155,8 @@ public class AppLogic {
 			}
 
 			// make relative files from all of the level strings
-			for (int i = 0; i < levelStrings.length; i++) {
-				levels.add(new File(levelPath + '/' + levelStrings[i]));
+			for (String levelString : levelStrings) {
+				levels.add(new File(levelPath + '/' + levelString));
 			}
 
 		} catch (IOException e) {
@@ -173,10 +168,12 @@ public class AppLogic {
 			File[] absoluteFiles = levelPath.listFiles();
 
 			// make relative files from all of the tile strings
-			for (int i = 0; i < absoluteFiles.length; i++) {
-				String relativeFile = absoluteFiles[i].toString();
-				relativeFile = relativeFile.replace(base + '/', "");
-				levels.add(new File(relativeFile));
+			if (absoluteFiles != null) {
+				for (File absoluteFile : absoluteFiles) {
+					String relativeFile = absoluteFile.toString();
+					relativeFile = relativeFile.replace(base + '/', "");
+					levels.add(new File(relativeFile));
+				}
 			}
 		}
 
@@ -187,6 +184,7 @@ public class AppLogic {
 	static public void setLevels(ArrayList<File> newLevels) {
 		levels = newLevels;
 		externalLevels = true;
+		files.removeUri();
 	}
 
 	static public void continueGame() {
@@ -262,8 +260,8 @@ public class AppLogic {
 
 				PVector menuCenter = menuArea.getRectangleCenter();
 
-				float offsetX = 0;
-				float offsetY = 0;
+				float offsetX;
+				float offsetY;
 				offsetX = menuCenter.x - playerAreaCenter.x;
 				offsetY = menuCenter.y - playerAreaCenter.y;
 
@@ -282,7 +280,7 @@ public class AppLogic {
 				// force draw all assets in level
 				List<PageViewObject> tempPageViewObjects = game.getPageView().getPageViewObjects();
 				p.pushMatrix();
-				p.translate(p.width / 2, p.height / 2);
+				p.translate(p.width * 0.5f, p.height * 0.5f);
 				for (PageViewObject object : tempPageViewObjects) {
 					if (object instanceof Page) {
 						((Page) object).step();
@@ -478,7 +476,7 @@ public class AppLogic {
 				DebugOutput.pushMessage("Did tap", 0.5f);
 				editor.onTap(x, y);
 			} else {
-				// controller.onTap(x, y);
+//				 controller.onTap(x, y);
 			}
 		}
 	}
@@ -520,10 +518,7 @@ public class AppLogic {
 	// menu
 
 	static public boolean hasMenu() {
-		if (menu != null) {
-			return true;
-		}
-		return false;
+		return menu != null;
 	}
 
 	static public void addMenu(Menu newMenu) {
