@@ -42,7 +42,6 @@ public class AppLogic {
 
 	public static KetaiGesture gesture;
 	public static FileChooser files;
-	public static Vibe vibe;
 	static public Converter convert;
 	public static TextureCache texture;
 
@@ -74,8 +73,8 @@ public class AppLogic {
 													// lag spike
 	private static boolean startLevel = false; // run start level this frame
 
-	public AppLogic(PApplet papp, Activity masterActivity, Context masterContext) {
-		p = papp;
+	public AppLogic(PApplet pApplet, Activity masterActivity, Context masterContext) {
+		p = pApplet;
 		activity = masterActivity;
 		context = masterContext;
 		toast = new DoToast(activity);
@@ -91,7 +90,9 @@ public class AppLogic {
 		texture = new TextureCache(p, context);
 		gesture = new KetaiGesture(p);
 		files = new FileChooser(activity);
-		vibe = new Vibe(context);
+
+		// setup vibration class
+		Vibe.setup(context);
 
 		Camera camera = new GameCamera();
 		convert = new Converter(p);
@@ -475,22 +476,26 @@ public class AppLogic {
 			if (editorToggle && editor != null) {
 				DebugOutput.pushMessage("Did tap", 0.5f);
 				editor.onTap(x, y);
-			} else {
-//				 controller.onTap(x, y);
 			}
+//			else {
+//				 controller.onTap(x, y);
+//			}
 		}
 	}
 
+	@SuppressWarnings("unused")
 	static public void onDoubleTap(float x, float y) {
 
 	}
 
+	@SuppressWarnings("unused")
 	static public void onFlick(float x, float y, float px, float py, float v) {
 		// x/y start of flick
 		// px/yx end of flick
 		// v velocity of flick
 	}
 
+	@SuppressWarnings("unused")
 	static public void onLongPress(float x, float y) {
 
 	}
@@ -599,6 +604,7 @@ public class AppLogic {
 		activity.finish();
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	static public void quitPurge() {
 		// should update this so it deletes directories etc
 
@@ -606,81 +612,101 @@ public class AppLogic {
 		// root
 		File rootDir = new File(p.dataPath("") + '/');
 		File[] rootPaths = rootDir.listFiles();
-		for (File file : rootPaths) {
-			if (file.exists()) {
-				file.delete();
+		if (rootPaths != null) {
+			for (File file : rootPaths) {
+				if (file.exists()) {
+					file.delete();
+				}
 			}
 		}
 		// levels
 		File levelDir = new File(p.dataPath("levels") + '/');
 		File[] levelPaths = levelDir.listFiles();
-		for (File file : levelPaths) {
-			if (file.exists()) {
-				file.delete();
+		if (levelPaths != null) {
+			for (File file : levelPaths) {
+				if (file.exists()) {
+					file.delete();
+				}
 			}
 		}
 		// tiles
 		File tileDir = new File(p.dataPath("unplayed_tiles") + '/');
 		File[] tilePaths = tileDir.listFiles();
-		for (File file : tilePaths) {
-			if (file.exists()) {
-				file.delete();
+		if (tilePaths != null) {
+			for (File file : tilePaths) {
+				if (file.exists()) {
+					file.delete();
+				}
 			}
 		}
 		// images
 		File imageDir = new File(p.dataPath("unplayed_images") + '/');
 		File[] imagePaths = imageDir.listFiles();
-		for (File file : imagePaths) {
-			if (file.exists()) {
-				file.delete();
+		if (imagePaths != null) {
+			for (File file : imagePaths) {
+				if (file.exists()) {
+					file.delete();
+				}
 			}
 		}
 		// background images
 		File backgroundDir = new File(p.dataPath("unplayed_backgrounds") + '/');
 		File[] backgroundPaths = backgroundDir.listFiles();
-		for (File file : backgroundPaths) {
-			if (file.exists()) {
-				file.delete();
+		if (backgroundPaths != null) {
+			for (File file : backgroundPaths) {
+				if (file.exists()) {
+					file.delete();
+				}
 			}
 		}
 		// loading images
 		File loadingDir = new File(p.dataPath("unplayed_loading") + '/');
 		File[] loadingPaths = loadingDir.listFiles();
-		for (File file : loadingPaths) {
-			if (file.exists()) {
-				file.delete();
+		if (loadingPaths != null) {
+			for (File file : loadingPaths) {
+				if (file.exists()) {
+					file.delete();
+				}
 			}
 		}
 		// button images
 		File buttonDir = new File(p.dataPath("unplayed_buttons") + '/');
 		File[] buttonPaths = buttonDir.listFiles();
-		for (File file : buttonPaths) {
-			if (file.exists()) {
-				file.delete();
+		if (buttonPaths != null) {
+			for (File file : buttonPaths) {
+				if (file.exists()) {
+					file.delete();
+				}
 			}
 		}
 		// events
 		File eventDir = new File(p.dataPath("unplayed_events") + '/');
 		File[] eventPaths = eventDir.listFiles();
-		for (File file : eventPaths) {
-			if (file.exists()) {
-				file.delete();
+		if (eventPaths != null) {
+			for (File file : eventPaths) {
+				if (file.exists()) {
+					file.delete();
+				}
 			}
 		}
 		// ui
 		File uiDir = new File(p.dataPath("ui") + '/');
 		File[] uiPaths = uiDir.listFiles();
-		for (File file : uiPaths) {
-			if (file.exists()) {
-				file.delete();
+		if (uiPaths != null) {
+			for (File file : uiPaths) {
+				if (file.exists()) {
+					file.delete();
+				}
 			}
 		}
 		// widgets
 		File widgetDir = new File(p.dataPath("ui") + '/' + "widgets" + '/');
 		File[] widgetPaths = widgetDir.listFiles();
-		for (File file : widgetPaths) {
-			if (file.exists()) {
-				file.delete();
+		if (widgetPaths != null) {
+			for (File file : widgetPaths) {
+				if (file.exists()) {
+					file.delete();
+				}
 			}
 		}
 		// clear save game

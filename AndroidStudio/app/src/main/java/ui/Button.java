@@ -9,9 +9,9 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 public class Button extends MenuObject {
-	private float xCenter;
+	private final float xCenter;
 	private float yCenter = 0;
-	private String text;
+	private final String text;
 	private boolean hover = false;
 
 	private Rectangle pageButton;
@@ -30,9 +30,7 @@ public class Button extends MenuObject {
 		this.xCenter = xCenter;
 		this.text = text;
 		this.handler = handler;
-		if (handler != null) {
-			this.highlight = AppLogic.texture.getButtonList().get(0);
-		}
+		this.highlight = AppLogic.texture.getButtonList().get(0);
 	}
 
 	public void setupPageButton(float centerX, float centerY) {// , float width, float height) {
@@ -94,20 +92,14 @@ public class Button extends MenuObject {
 	}
 
 	public void hover(PVector lastTouch) {
-		if (lastTouch.x >= xCenter - width / 2 && lastTouch.y >= yCenter - height / 2
-				&& lastTouch.x <= xCenter + width / 2 && lastTouch.y <= yCenter + height / 2) {
-			hover = true;
-		} else {
-			hover = false;
-		}
+		// using a boolean statement to set the variable instead of an if/else
+		hover = lastTouch.x >= xCenter - width / 2 && lastTouch.y >= yCenter - height / 2
+				&& lastTouch.x <= xCenter + width / 2 && lastTouch.y <= yCenter + height / 2;
 	}
 
 	public void hoverPage(PVector levelTouch) {
-		if (levelTouch.x >= pageButton.getTopLeft().x && levelTouch.y >= pageButton.getTopLeft().y
-				&& levelTouch.x <= pageButton.getBottomRight().x && levelTouch.y <= pageButton.getBottomRight().y) {
-			hover = true;
-		} else {
-			hover = false;
-		}
+		// using a boolean statement to set the variable instead of an if/else
+		hover = levelTouch.x >= pageButton.getTopLeft().x && levelTouch.y >= pageButton.getTopLeft().y
+				&& levelTouch.x <= pageButton.getBottomRight().x && levelTouch.y <= pageButton.getBottomRight().y;
 	}
 }

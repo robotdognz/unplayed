@@ -10,9 +10,9 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 public class LoadingMenu extends Menu {
-	private String continueGame = "Continue";
-	private boolean hasButton; // has 'continue' button
-	private boolean hasShadow; // loading screen image should have a shadow
+	private final String continueGame = "Continue";
+	private final boolean hasButton; // has 'continue' button
+	private final boolean hasShadow; // loading screen image should have a shadow
 	private int shadow; // the relative amount to offset the shadow by
 
 	private boolean alreadyUsed = false;
@@ -64,7 +64,7 @@ public class LoadingMenu extends Menu {
 		if (this.hasButton) {
 			// setup the 'continue' button
 			ButtonHandler temp = AppLogic.texture.getButtonList().get(1);
-			Button continueBwImage = new Button(temp, p.width / 2, this.continueGame);
+			Button continueBwImage = new Button(temp, p.width * 0.5f, this.continueGame);
 			objects.add(continueBwImage);
 		}
 
@@ -77,7 +77,7 @@ public class LoadingMenu extends Menu {
 
 		shadow = 9;
 		buttonDistance = 200;
-		menuCenterX = p.width / 2;
+		menuCenterX = p.width * 0.5f;
 		menuWidth = 0;
 		menuHeight = 0;
 		float largestWidth = 0;
@@ -92,7 +92,7 @@ public class LoadingMenu extends Menu {
 		menuHeight += buttonDistance * (objects.size() - 1);
 
 		menuWidth += largestWidth;
-		menuTopY = p.height / 2 - menuHeight / 2;
+		menuTopY = p.height * 0.5f - menuHeight * 0.5f;
 	}
 
 	@Override
@@ -136,6 +136,7 @@ public class LoadingMenu extends Menu {
 		float imageWidth = image.getWidth();
 		float imageHeight = image.getHeight();
 
+		// rotate the image
 		if (hasShadow) {
 			// draw a shadow under the loading screen image
 			p.translate(shadow, shadow);
@@ -146,11 +147,9 @@ public class LoadingMenu extends Menu {
 			p.rect(0, objectYPosition + imageHeight * 0.5f, imageWidth, imageHeight); // draw the shadow
 			p.rotate(PApplet.radians(-angle)); // rotate the image back
 			p.translate(-shadow, -shadow);
-			p.rotate(PApplet.radians(angle)); // rotate the image
 
-		} else {
-			p.rotate(PApplet.radians(angle)); // rotate the image
 		}
+		p.rotate(PApplet.radians(angle)); // rotate the image
 
 		// draw the image
 		image.drawOnPage(p, 0, objectYPosition + imageHeight * 0.5f);

@@ -1,5 +1,6 @@
 package misc;
 
+import android.annotation.SuppressLint;
 import android.os.Vibrator;
 import android.os.VibrationEffect;
 import android.content.Context;
@@ -15,7 +16,15 @@ public class Vibe {
 		// using a combination of amount and level
 	}
 
-	@SuppressWarnings("deprecation")
+	public static void setup(Context c){
+		vibe = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE); //changed from getActivity() to context
+		deprecated = android.os.Build.VERSION.SDK_INT < 26;// && vibe.hasVibrator();
+		// this class needs to be updated to calculate fine grained vibration strength
+		// using a combination of amount and level
+	}
+
+
+	@SuppressLint("NewApi")
 	public static void vibrate(long amount) {
 		// amount = duration
 		if (!deprecated) {
@@ -27,7 +36,7 @@ public class Vibe {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
+	@SuppressLint("NewApi")
 	public static void vibrate(long amount, int level) {
 		// amount = duration
 		// level = intensity

@@ -12,18 +12,20 @@ import processing.core.PVector;
 
 import static processing.core.PConstants.*;
 
+import android.annotation.SuppressLint;
+
 public abstract class Menu {
 	public Menu child;
 
 	protected PApplet p;
-	protected float buttonHeight = 0;
-	protected float buttonWidth = 0;
-	protected float menuTopY = 0;
-	protected float menuCenterX = 0;
-	protected float menuWidth = 0;
-	protected float menuHeight = 0;
-	protected float buttonDistance = 0;
-	protected ArrayList<MenuObject> objects = new ArrayList<MenuObject>();
+	protected float buttonHeight;
+	protected float buttonWidth;
+	protected float menuTopY;
+	protected float menuCenterX;
+	protected float menuWidth;
+	protected float menuHeight;
+	protected float buttonDistance;
+	protected ArrayList<MenuObject> objects = new ArrayList<>();
 
 	protected Handler image = null;
 
@@ -314,13 +316,13 @@ public abstract class Menu {
 
 	}
 
+	@SuppressLint("NewApi")
 	protected boolean getPermission() {
 
 		if (!p.hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
 
 			// find out if the user has permanently blocked this permission
-			boolean test = AppLogic.activity
-					.shouldShowRequestPermissionRationale("android.permission.WRITE_EXTERNAL_STORAGE");
+			boolean test = AppLogic.activity.shouldShowRequestPermissionRationale("android.permission.WRITE_EXTERNAL_STORAGE");
 
 			if (!test) {
 				AppLogic.toast.showToast(
