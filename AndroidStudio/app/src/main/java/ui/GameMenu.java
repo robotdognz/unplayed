@@ -5,11 +5,11 @@ import game.Game;
 import processing.core.PApplet;
 
 public class GameMenu extends Menu {
-	Game game;
-	String resume = "Resume";
-	String titleScreen = "Main Menu";
-	String edit = "Edit Level";
-	String quit = "Quit";
+	private final Game game;
+	private final String resume = "Resume";
+	private final String titleScreen = "Main Menu";
+	private final String edit = "Edit Level";
+	private final String quit = "Quit";
 
 	public GameMenu(PApplet p, Game game) {
 		super(p);
@@ -35,18 +35,24 @@ public class GameMenu extends Menu {
 			}
 			Button b = (Button) object;
 
-			if (b.click().equals(resume)) {
-				AppLogic.removeMenu(); // remove pause menu
+			switch (b.click()) {
+				case resume:
+					AppLogic.removeMenu(); // remove pause menu
 
-			} else if (b.click().equals(titleScreen)) {
-				game.emptyGame();
-				AppLogic.titleScreen(); // open title screen menu
+					break;
+				case titleScreen:
+					game.emptyGame();
+					AppLogic.titleScreen(); // open title screen menu
 
-			} else if (b.click().equals(edit)) {
-				AppLogic.toggleEditor(); // enable the editor
+					break;
+				case edit:
+					AppLogic.toggleEditor(); // enable the editor
 
-			} else if (b.click().equals(quit)) {
-				AppLogic.quit(); // exit the game
+					break;
+				case quit:
+					AppLogic.quit(); // exit the game
+
+					break;
 			}
 		}
 	}

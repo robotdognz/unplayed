@@ -9,10 +9,10 @@ import game.Game;
 import processing.core.PApplet;
 
 public class DeveloperMenu extends Menu {
-    Game game;
-    String editor = "Start Editor";
-    String folder = "Play Level(s)";
-    String back = "Back";
+    private final Game game;
+    private final String editor = "Start Editor";
+    private final String folder = "Play Level(s)";
+    private final String back = "Back";
 
     boolean loadingFile = false; // true if this menu should start loading a campaign from a file
 
@@ -37,18 +37,20 @@ public class DeveloperMenu extends Menu {
             }
             Button b = (Button) object;
 
-            if (b.click().equals(editor)) {
+            switch (b.click()) {
+                case editor:
+                    game.emptyGame();
+                    AppLogic.toggleEditor();
 
-                game.emptyGame();
-                AppLogic.toggleEditor();
+                    break;
+                case folder:
+                    AppLogic.files.createLoadFiles();
+                    loadingFile = true;
 
-            } else if (b.click().equals(folder)) {
-
-                AppLogic.files.createLoadFiles();
-                loadingFile = true;
-
-            } else if (b.click().equals(back)) {
-                AppLogic.previousMenu();
+                    break;
+                case back:
+                    AppLogic.previousMenu();
+                    break;
             }
         }
     }

@@ -18,9 +18,9 @@ import objects.events.Spike;
 import processing.core.*;
 
 public class TextureCache {
-	private PApplet p;
+	private final PApplet p;
 	private Game game;
-	private Context context;
+	private final Context context;
 
 	// LODs
 	static public int LOD256 = 4;
@@ -28,36 +28,33 @@ public class TextureCache {
 	static public int LOD64 = 16;
 	static public int LOD32 = 64;
 
-	// paper textures
+	// grid paper textures
 	static private PImage gridLOD256;
 	static private PImage gridLOD128;
 	static private PImage gridLOD64;
 	static private PImage gridLOD32;
 	static private PImage gridLOD16;
 	static private PImage gridLOD8;
+
+	// page view background textures
 	static private PImage pageViewBackgroundLOD256;
 	static private PImage pageViewBackgroundLOD128;
 	static private PImage pageViewBackgroundLOD64;
 	static private PImage pageViewBackgroundLOD32;
 
-	// level images
-	private File[] imagePaths;
+	// images
 	private HashMap<File, ImageHandler> imageMap;
 	private ArrayList<ImageHandler> imageList;
 	// background images
-	private File[] backgroundPaths;
 	private HashMap<File, BackgroundHandler> backgroundMap;
 	private ArrayList<BackgroundHandler> backgroundList;
 	// loading screens
-	private File[] loadingPaths;
 	private HashMap<File, LoadingHandler> loadingMap;
 	private ArrayList<LoadingHandler> loadingList;
-	// buttons
-	private File[] buttonPaths;
+	//buttons
 	private HashMap<File, ButtonHandler> buttonMap;
 	private ArrayList<ButtonHandler> buttonList;
 	// tiles
-	private File[] tilePaths;
 	private HashMap<File, TileHandler> tileMap;
 	private ArrayList<TileHandler> tileList;
 	// events
@@ -136,6 +133,8 @@ public class TextureCache {
 	private void loadTiles() {
 
 		// generate all the relative file paths
+		// tiles
+		File[] tilePaths;
 		try {
 			// App mode
 
@@ -161,7 +160,8 @@ public class TextureCache {
 			File tilePath = new File(base + "/unplayed_tiles" + '/');
 
 			File[] absoluteFiles = tilePath.listFiles();
-			tilePaths = new File[absoluteFiles.length];
+            assert absoluteFiles != null;
+            tilePaths = new File[absoluteFiles.length];
 
 			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
@@ -171,7 +171,7 @@ public class TextureCache {
 			}
 		}
 
-		tileMap = new HashMap<File, TileHandler>();
+		tileMap = new HashMap<>();
 		for (File file : tilePaths) {
 			String path = file.getAbsolutePath();
 
@@ -187,12 +187,14 @@ public class TextureCache {
 				}
 			}
 		}
-		tileList = new ArrayList<TileHandler>(tileMap.values());
+		tileList = new ArrayList<>(tileMap.values());
 		Collections.sort(tileList);
 	}
 
 	private void loadLevelImages() {
 		// generate all the relative file paths
+		// level images
+		File[] imagePaths;
 		try {
 			// App mode
 
@@ -218,7 +220,8 @@ public class TextureCache {
 			File imagePath = new File(base + "/unplayed_images" + '/');
 
 			File[] absoluteFiles = imagePath.listFiles();
-			imagePaths = new File[absoluteFiles.length];
+            assert absoluteFiles != null;
+            imagePaths = new File[absoluteFiles.length];
 
 			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
@@ -228,8 +231,8 @@ public class TextureCache {
 			}
 		}
 
-		imageMap = new HashMap<File, ImageHandler>();
-		ArrayList<Integer> temp = new ArrayList<Integer>(); // holds the numbers found in the file name
+		imageMap = new HashMap<>();
+		ArrayList<Integer> temp = new ArrayList<>(); // holds the numbers found in the file name
 		for (File file : imagePaths) {
 			String path = file.getAbsolutePath();
 			if (path.matches(".+([0-9]+)x([0-9]+)\\.png$")) { // check file ends with number "x" number ".png"
@@ -246,12 +249,13 @@ public class TextureCache {
 			}
 			temp.clear();
 		}
-		imageList = new ArrayList<ImageHandler>(imageMap.values());
+		imageList = new ArrayList<>(imageMap.values());
 		Collections.sort(imageList);
 	}
 
 	private void loadBackgroundImages() {
 		// generate all the relative file paths
+		File[] backgroundPaths;
 		try {
 			// App mode
 
@@ -277,7 +281,8 @@ public class TextureCache {
 			File backgroundPath = new File(base + "/unplayed_backgrounds" + '/');
 
 			File[] absoluteFiles = backgroundPath.listFiles();
-			backgroundPaths = new File[absoluteFiles.length];
+            assert absoluteFiles != null;
+            backgroundPaths = new File[absoluteFiles.length];
 
 			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
@@ -287,8 +292,8 @@ public class TextureCache {
 			}
 		}
 
-		backgroundMap = new HashMap<File, BackgroundHandler>();
-		ArrayList<Integer> temp = new ArrayList<Integer>(); // holds the numbers found in the file name
+		backgroundMap = new HashMap<>();
+		ArrayList<Integer> temp = new ArrayList<>(); // holds the numbers found in the file name
 		for (File file : backgroundPaths) {
 			String path = file.getAbsolutePath();
 			if (path.matches(".+([0-9]+)x([0-9]+)\\.png$")) { // check file ends with number "x" number ".png"
@@ -305,12 +310,13 @@ public class TextureCache {
 			}
 			temp.clear();
 		}
-		backgroundList = new ArrayList<BackgroundHandler>(backgroundMap.values());
+		backgroundList = new ArrayList<>(backgroundMap.values());
 		Collections.sort(backgroundList);
 	}
 
 	private void loadLoadingImages() {
 		// generate all the relative file paths
+		File[] loadingPaths;
 		try {
 			// App mode
 
@@ -336,7 +342,8 @@ public class TextureCache {
 			File loadingPath = new File(base + "/unplayed_loading" + '/');
 
 			File[] absoluteFiles = loadingPath.listFiles();
-			loadingPaths = new File[absoluteFiles.length];
+            assert absoluteFiles != null;
+            loadingPaths = new File[absoluteFiles.length];
 
 			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
@@ -346,8 +353,8 @@ public class TextureCache {
 			}
 		}
 
-		loadingMap = new HashMap<File, LoadingHandler>();
-		ArrayList<Integer> temp = new ArrayList<Integer>(); // holds the numbers found in the file name
+		loadingMap = new HashMap<>();
+		ArrayList<Integer> temp = new ArrayList<>(); // holds the numbers found in the file name
 		for (File file : loadingPaths) {
 			String path = file.getAbsolutePath();
 			if (path.matches(".+([0-9]+)x([0-9]+)_([0-9])_([0-9])\\.png$")) { // check file ends with number "x" number ".png"
@@ -364,12 +371,14 @@ public class TextureCache {
 			}
 			temp.clear();
 		}
-		loadingList = new ArrayList<LoadingHandler>(loadingMap.values());
+		loadingList = new ArrayList<>(loadingMap.values());
 		Collections.sort(loadingList);
 	}
 
 	private void loadButtonImages() {
 		// generate all the relative file paths
+		// buttons
+		File[] buttonPaths;
 		try {
 			// App mode
 
@@ -395,7 +404,8 @@ public class TextureCache {
 			File buttonPath = new File(base + "/unplayed_buttons" + '/');
 
 			File[] absoluteFiles = buttonPath.listFiles();
-			buttonPaths = new File[absoluteFiles.length];
+            assert absoluteFiles != null;
+            buttonPaths = new File[absoluteFiles.length];
 
 			// make relative files from all of the tile strings
 			for (int i = 0; i < absoluteFiles.length; i++) {
@@ -405,8 +415,8 @@ public class TextureCache {
 			}
 		}
 
-		buttonMap = new HashMap<File, ButtonHandler>();
-		ArrayList<Integer> temp = new ArrayList<Integer>(); // holds the numbers found in the file name
+		buttonMap = new HashMap<>();
+		ArrayList<Integer> temp = new ArrayList<>(); // holds the numbers found in the file name
 		for (File file : buttonPaths) {
 			String path = file.getAbsolutePath();
 			if (path.matches(".+([0-9]+)x([0-9]+)\\.png$")) { // check file ends with number "x" number ".png"
@@ -423,7 +433,7 @@ public class TextureCache {
 			}
 			temp.clear();
 		}
-		buttonList = new ArrayList<ButtonHandler>(buttonMap.values());
+		buttonList = new ArrayList<>(buttonMap.values());
 		Collections.sort(buttonList);
 	}
 
@@ -431,7 +441,7 @@ public class TextureCache {
 
 		// get directory and make map
 		File eventDir = new File("unplayed_events" + '/');
-		eventMap = new HashMap<String, EventHandler>();
+		eventMap = new HashMap<>();
 
 		// ----------------PlayerStart----------------
 		final String playerStartString = "PlayerStart";
@@ -466,17 +476,6 @@ public class TextureCache {
 		};
 		eventMap.put(playerDeathString, playerDeath);
 
-//		// ----------------CameraChange----------------
-//		final String cameraChangeString = "CameraChange";
-//		File cameraChangeFile = new File(eventDir + "/Event_CameraChange.png");
-//		EventHandler cameraChange = new EventHandler(p, this, cameraChangeFile) {
-//			@Override
-//			public Event makeEvent(int x, int y) {
-//				return new CameraChange(game, p, texture, cameraChangeString, x, y);
-//			}
-//		};
-//		eventMap.put(cameraChangeString, cameraChange);
-
 		// ----------------Spike----------------
 		final String spikeString = "Spike";
 		File spikeFile = new File(eventDir + "/Event_Spikes.png");
@@ -489,7 +488,7 @@ public class TextureCache {
 		eventMap.put(spikeString, spike);
 
 		// make sorted list
-		eventList = new ArrayList<EventHandler>(eventMap.values());
+		eventList = new ArrayList<>(eventMap.values());
 		Collections.sort(eventList);
 	}
 

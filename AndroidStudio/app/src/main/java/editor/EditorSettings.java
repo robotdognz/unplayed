@@ -17,11 +17,11 @@ public class EditorSettings {
 		settings = AppLogic.settings;
 		saveGame = AppLogic.saveGame;
 
-		// load settings from save file
+		// load settings from save file, the booleans are the default state
 		debugOutput = settings.getBoolean("debugOutput", false);
 		quadTreeLogic = settings.getBoolean("quadTreeLogic", false);
 		playerLogic = settings.getBoolean("playerLogic", false);
-		cameraLogic = settings.getBoolean("cameraLogic", false);
+		cameraLogic = settings.getBoolean("cameraLogic", true);
 	}
 
 	public static boolean debugOutput() {

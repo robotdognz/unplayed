@@ -1,9 +1,7 @@
 package handlers;
 
 import static processing.core.PConstants.CENTER;
-
 import java.io.File;
-
 import editor.DebugOutput;
 import processing.core.PApplet;
 import processing.core.PGraphics;
