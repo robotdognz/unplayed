@@ -26,7 +26,7 @@ public class WidgetSave extends Widget {
 			p.delay(500); // delay so animation happens after the file browser is open
 		} else {
 			// we already have the file, just save
-			editor.eJSON.save(editor, AppLogic.files.getUri());
+			editor.eJSON.save(AppLogic.files.getUri());
 		}
 	}
 
@@ -37,7 +37,7 @@ public class WidgetSave extends Widget {
 		if (editorTop.saving) {
 			if (AppLogic.files.hasUri()) {
 				// save the level
-				editor.eJSON.save(editor, AppLogic.files.getUri());
+				editor.eJSON.save(AppLogic.files.getUri());
 				// end saving
 				editorTop.saving = false;
 			}

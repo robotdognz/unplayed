@@ -11,7 +11,7 @@ import processing.core.PApplet;
 public class DeveloperMenu extends Menu {
     Game game;
     String editor = "Start Editor";
-    String folder = "Load Levels";
+    String folder = "Play Level(s)";
     String back = "Back";
 
     boolean loadingFile = false; // true if this menu should start loading a campaign from a file
@@ -63,17 +63,13 @@ public class DeveloperMenu extends Menu {
                 ArrayList<Uri> uris = AppLogic.files.getUris();
                 PApplet.print("Found Uri's: " + uris.size());
 
-                //TODO: make system for handling uri's
-                AppLogic.setExternalLevels(uris);
-                AppLogic.files.removeUri();
-
-//                AppLogic.toast.showToast("Loading levels is currently not implemented correctly");
-
-                // end loading
-                loadingFile = false;
+                AppLogic.setExternalLevels(uris); // pass uri's to the game to be played through
+                AppLogic.files.removeUri(); // remove uri's
 
                 child = null; // clear any existing menus
                 AppLogic.newGame(); // start game
+
+                loadingFile = false; // end loading
             }
         }
     }

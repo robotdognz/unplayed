@@ -6,25 +6,24 @@ import objects.Rectangle;
 import processing.core.PApplet;
 
 public class LaunchMenu extends Menu {
-	Game game;
-	String continueGame = "Continue";
-	String newGame = "New Game";
-	String editor = "Level Editor";
-	String quit = "Quit";
-
-	boolean alreadyUsed = false;
+	protected Game game;
+	protected String continueGame = "Continue";
+	protected String newGame = "New Game";
+	protected String editor = "Level Editor";
+	protected String quit = "Quit";
+	protected boolean alreadyUsed = false;
 
 	public LaunchMenu(PApplet p) {
 		super(p);
 		this.game = AppLogic.game;
 
-		Button newGameB = new Button(p.width / 2, buttonWidth, buttonHeight, newGame);
-		Button editorB = new Button(p.width / 2, buttonWidth, buttonHeight, editor);
-		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
+		Button newGameB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, newGame);
+		Button editorB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, editor);
+		Button quitB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, quit);
 
 		AppLogic.getSaveGame();
 		if (AppLogic.savedLevel > 0) {
-			Button continueB = new Button(p.width / 2, buttonWidth, buttonHeight, continueGame);
+			Button continueB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, continueGame);
 			objects.add(continueB);
 		}
 		objects.add(newGameB);

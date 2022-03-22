@@ -2,14 +2,11 @@ package misc;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,16 +14,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
-import editor.Editor;
 import game.AppLogic;
 import game.Game;
 import handlers.LoadingHandler;
@@ -59,22 +50,21 @@ public class EditorJSON {
         this.toast = toast;
     }
 
-    public void save(Editor editor, Uri uri) {
+    public void save(Uri uri) {
         values = new JSONArray();
 
-        saveWorldObjects(values, editor);
-        savePlayerStart(values, editor);
-        saveRemoved(values, editor);
-        saveViews(values, editor);
-        saveBackgrounds(values, editor);
-        saveLoading(values, editor);
+        saveWorldObjects(values);
+        savePlayerStart(values);
+        saveRemoved(values);
+        saveViews(values);
+        saveBackgrounds(values);
+        saveLoading(values);
 
-        OutputStream output = null;
         try {
-            output = fileOutputStreamFromUri(uri, AppLogic.activity);
+            OutputStream output = fileOutputStreamFromUri(uri, AppLogic.activity);
             PrintWriter writer = PApplet.createWriter((OutputStream) output);
 
-            boolean success = values.write(writer, (String)null);
+            boolean success = values.write(writer, (String) null);
             writer.close();
             if (toast != null && success) {
                 toast.showToast("Level Saved");
@@ -84,38 +74,13 @@ public class EditorJSON {
         }
     }
 
-    public void save(Editor editor, String path) {
-        // old saving method
-        values = new JSONArray();
-
-        saveWorldObjects(values, editor);
-        savePlayerStart(values, editor);
-        saveRemoved(values, editor);
-        saveViews(values, editor);
-        saveBackgrounds(values, editor);
-        saveLoading(values, editor);
-
-        try {
-            File file = new File(path);
-            p.saveJSONArray(values, file.getAbsolutePath());
-            if (toast != null) {
-                toast.showToast("Level Saved");
-            }
-        } catch (Exception e) {
-            if (toast != null) {
-                toast.showToast(e.getMessage());
-            }
-        }
-    }
-
     private FileOutputStream fileOutputStreamFromUri(Uri uri, Activity activity) throws FileNotFoundException {
         ParcelFileDescriptor pfd = activity.getContentResolver().openFileDescriptor(uri, "w");
-        FileOutputStream fileOutputStream = new FileOutputStream(pfd.getFileDescriptor());
-        return fileOutputStream;
+        return new FileOutputStream(pfd.getFileDescriptor());
     }
 
-    private void saveWorldObjects(JSONArray values, Editor editor) {
-        HashSet<Rectangle> worldObjects = new HashSet<Rectangle>();
+    private void saveWorldObjects(JSONArray values) {
+        HashSet<Rectangle> worldObjects = new HashSet<>();
         AppLogic.game.world.getAll(worldObjects);
 
         for (Rectangle r : worldObjects) {
@@ -166,8 +131,8 @@ public class EditorJSON {
         }
     }
 
-    private void savePlayerStart(JSONArray values, Editor editor) {
-        HashSet<Rectangle> worldObjects = new HashSet<Rectangle>();
+    private void savePlayerStart(JSONArray values) {
+        HashSet<Rectangle> worldObjects = new HashSet<>();
         AppLogic.game.world.getAll(worldObjects);
 
         for (Rectangle r : worldObjects) {
@@ -201,7 +166,7 @@ public class EditorJSON {
         values.setJSONObject(values.size(), object); // add it on to the end
     }
 
-    private void saveRemoved(JSONArray values, Editor editor) {
+    private void saveRemoved(JSONArray values) {
         ArrayList<Tile> removed = AppLogic.game.removed;
         ArrayList<Tile> placed = AppLogic.game.placed;
         if (removed != null) {
@@ -226,7 +191,7 @@ public class EditorJSON {
 
     }
 
-    private void saveViews(JSONArray values, Editor editor) {
+    private void saveViews(JSONArray values) {
         ArrayList<View> views = AppLogic.game.views;
         List<PageViewObject> pages = AppLogic.game.getPageView().getPageViewObjects();
 
@@ -285,7 +250,7 @@ public class EditorJSON {
 
     }
 
-    private void saveBackgrounds(JSONArray values, Editor editor) {
+    private void saveBackgrounds(JSONArray values) {
         List<PageViewObject> backgrounds = AppLogic.game.getPageView().getPageViewObjects();
 
         for (PageViewObject backgroundObject : backgrounds) {
@@ -311,7 +276,7 @@ public class EditorJSON {
 
     }
 
-    private void saveLoading(JSONArray values, Editor editor) {
+    private void saveLoading(JSONArray values) {
         LoadingHandler loading = AppLogic.game.currentLoading;
         if (loading == null) {
             return;
@@ -390,9 +355,8 @@ public class EditorJSON {
     public JSONArray loadJSONArray(Uri uri, Context context) {
         PApplet.print("Start loading from file");
         JSONArray outgoing = null;
-        BufferedReader reader = null;
         try {
-            reader = readerFromUri(uri, context);
+            BufferedReader reader = readerFromUri(uri, context);
             outgoing = new JSONArray(reader);
             try {
                 reader.close();
@@ -408,14 +372,12 @@ public class EditorJSON {
     }
 
     private BufferedReader readerFromUri(Uri uri, Context context) throws IOException {
-        StringBuilder stringBuilder = new StringBuilder();
         InputStream inputStream = context.getContentResolver().openInputStream(uri);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(java.util.Objects.requireNonNull(inputStream)));
-        return reader;
+        return new BufferedReader(new InputStreamReader(java.util.Objects.requireNonNull(inputStream)));
     }
 
     private void loadTiles(JSONArray values, Game game) {
-        HashSet<Rectangle> worldObjects = new HashSet<Rectangle>();
+        HashSet<Rectangle> worldObjects = new HashSet<>();
         for (int i = 0; i < values.size(); i++) {
             JSONObject object = values.getJSONObject(i);
             String type = object.getString("type");
@@ -443,7 +405,7 @@ public class EditorJSON {
     }
 
     private void loadWorldObjects(JSONArray values, Game game) {
-        HashSet<Rectangle> worldObjects = new HashSet<Rectangle>();
+        HashSet<Rectangle> worldObjects = new HashSet<>();
 
         // logic for loading
         for (int i = 0; i < values.size(); i++) {
@@ -456,44 +418,53 @@ public class EditorJSON {
                 int pWidth = object.getInt("pWidth");
                 int pHeight = object.getInt("pHeight");
 
-                if (type.equals("image")) { // if it is an image
-                    File textureFile = new File(object.getString("file"));
-                    boolean flipH = object.getBoolean("flipH");
-                    boolean flipV = object.getBoolean("flipV");
-                    float angle = object.getFloat("angle");
-                    Image im = new Image(texture, textureFile, pX, pY, pWidth, pHeight);
-                    im.setAngle(angle);
-                    if (flipH) {
-                        im.flipH();
-                    }
-                    if (flipV) {
-                        im.flipV();
-                    }
-                    worldObjects.add(im);
-                } else if (type.equals("PlayerEnd")) {
-                    String name = object.getString("name");
-                    boolean end = object.getBoolean("end");
-                    Rectangle newPlayerArea = new Rectangle(object.getFloat("newPlayerX"),
-                            object.getFloat("newPlayerY"), object.getFloat("newPlayerWidth"),
-                            object.getFloat("newPlayerHeight"));
-                    PlayerEnd pe = new PlayerEnd(game, texture, name, pX, pY);
-                    pe.setLevelEnd(end);
-                    pe.setNewPlayerArea(newPlayerArea);
-                    worldObjects.add(pe);
-                } else if (type.equals("PlayerDeath")) {
-                    String name = object.getString("name");
-                    PlayerDeath pd = new PlayerDeath(game, texture, name, pX, pY);
-                    worldObjects.add(pd);
-                } else if (type.equals("Spike")) {
-                    String name = object.getString("name");
-                    Spike s = new Spike(game, texture, name, pX, pY, 0);
-                    try {
+                switch (type) {
+                    case "image": {
+                        File textureFile = new File(object.getString("file"));
+                        boolean flipH = object.getBoolean("flipH");
+                        boolean flipV = object.getBoolean("flipV");
                         float angle = object.getFloat("angle");
-                        s.setAngle(angle);
-                    } catch (Exception e) {
-
+                        Image im = new Image(texture, textureFile, pX, pY, pWidth, pHeight);
+                        im.setAngle(angle);
+                        if (flipH) {
+                            im.flipH();
+                        }
+                        if (flipV) {
+                            im.flipV();
+                        }
+                        worldObjects.add(im);
+                        break;
                     }
-                    worldObjects.add(s);
+                    case "PlayerEnd": {
+                        String name = object.getString("name");
+                        boolean end = object.getBoolean("end");
+                        Rectangle newPlayerArea = new Rectangle(object.getFloat("newPlayerX"),
+                                object.getFloat("newPlayerY"), object.getFloat("newPlayerWidth"),
+                                object.getFloat("newPlayerHeight"));
+                        PlayerEnd pe = new PlayerEnd(game, texture, name, pX, pY);
+                        pe.setLevelEnd(end);
+                        pe.setNewPlayerArea(newPlayerArea);
+                        worldObjects.add(pe);
+                        break;
+                    }
+                    case "PlayerDeath": {
+                        String name = object.getString("name");
+                        PlayerDeath pd = new PlayerDeath(game, texture, name, pX, pY);
+                        worldObjects.add(pd);
+                        break;
+                    }
+                    case "Spike": {
+                        String name = object.getString("name");
+                        Spike s = new Spike(game, texture, name, pX, pY, 0);
+                        try {
+                            float angle = object.getFloat("angle");
+                            s.setAngle(angle);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        worldObjects.add(s);
+                        break;
+                    }
                 }
             }
         }
@@ -504,7 +475,7 @@ public class EditorJSON {
     }
 
     private void loadPlayerStart(JSONArray values, Game game) {
-        HashSet<Rectangle> worldObjects = new HashSet<Rectangle>();
+        HashSet<Rectangle> worldObjects = new HashSet<>();
         for (int i = 0; i < values.size(); i++) {
             JSONObject object = values.getJSONObject(i);
             String type = object.getString("type");
@@ -522,8 +493,8 @@ public class EditorJSON {
     }
 
     private void loadViews(JSONArray values, Game game) {
-        ArrayList<View> views = new ArrayList<View>();
-        ArrayList<PageViewObject> pages = new ArrayList<PageViewObject>();
+        ArrayList<View> views = new ArrayList<>();
+        ArrayList<PageViewObject> pages = new ArrayList<>();
 
         for (int i = 0; i < values.size(); i++) {
             JSONObject object = values.getJSONObject(i);
@@ -570,7 +541,7 @@ public class EditorJSON {
                                 page.showTiles = jPage.getBoolean("showTiles");
                                 page.showImages = jPage.getBoolean("showImages");
                             } catch (Exception e) {
-
+                                e.printStackTrace();
                             }
 
                             pages.add(page);
@@ -590,7 +561,7 @@ public class EditorJSON {
     }
 
     private void loadBackgrounds(JSONArray values, Game game) {
-        ArrayList<PageViewObject> backgrounds = new ArrayList<PageViewObject>();
+        ArrayList<PageViewObject> backgrounds = new ArrayList<>();
 
         for (int i = 0; i < values.size(); i++) {
             JSONObject object = values.getJSONObject(i);
@@ -706,8 +677,7 @@ public class EditorJSON {
             String type = object.getString("type");
             if (type.equals("loading")) {
                 File textureFile = new File(object.getString("file"));
-                LoadingHandler loading = AppLogic.texture.getLoadingMap().get(textureFile);
-                game.currentLoading = loading;
+                game.currentLoading = AppLogic.texture.getLoadingMap().get(textureFile);
                 // found a loading (null if no matching key), set it and return
                 return;
             }

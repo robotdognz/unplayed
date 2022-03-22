@@ -15,10 +15,10 @@ public class GameMenu extends Menu {
 		super(p);
 		this.game = game;
 
-		Button resumeB = new Button(p.width / 2, buttonWidth, buttonHeight, resume);
-		Button titleScreenB = new Button(p.width / 2, buttonWidth, buttonHeight, titleScreen);
-		Button editB = new Button(p.width / 2, buttonWidth, buttonHeight, edit);
-		Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
+		Button resumeB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, resume);
+		Button titleScreenB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, titleScreen);
+		Button editB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, edit);
+		Button quitB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, quit);
 		objects.add(resumeB);
 		objects.add(titleScreenB);
 		objects.add(editB);

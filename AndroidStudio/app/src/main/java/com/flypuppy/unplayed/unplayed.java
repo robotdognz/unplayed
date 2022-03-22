@@ -45,12 +45,7 @@ public class unplayed extends PApplet {
         context = activity.getApplicationContext();
         app = new AppLogic(this, activity, context);
 
-        //check and get permissions
-        //if (!hasPermission("android.permission.WRITE_EXTERNAL_STORAGE")) {
-        //  requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-        //}
-
-        //initalise the game
+        //initialise the game
         AppLogic.init();
     }
 
@@ -150,9 +145,9 @@ public class unplayed extends PApplet {
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         if (resultCode == this.getActivity().RESULT_OK) {
             if (requestCode == SELECT_LEVEL) {
-                Uri uri = null;
+                // get single uri if in single uri file select mode
                 if (resultData != null) {
-                    uri = resultData.getData();
+                    Uri uri = resultData.getData();
                     // Perform operations on the document using its URI.
                     AppLogic.setUri(uri);
                 } else {
@@ -160,7 +155,7 @@ public class unplayed extends PApplet {
                 }
 
             } else if (requestCode == SELECT_LEVELS) {
-                // get all the Uri's if multiple were selected
+                // get all the Uri's if multiple select mode
                 ClipData clipData = resultData.getClipData();
                 ArrayList<Uri> uris = new ArrayList<>();
                 if (clipData != null) {

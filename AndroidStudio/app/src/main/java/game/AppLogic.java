@@ -71,10 +71,8 @@ public class AppLogic {
     public static int savedLevel = 0;
 
     private static ArrayList<Uri> externalLevels;
-//	public static boolean externalLevels = false; // true if running an external level folder
 
-    private static boolean skipNextFrame = false; // skips running for a step so we don't see force drawn assets or a
-    // lag spike
+    private static boolean skipNextFrame = false; // skips running for a step so we don't see force drawn assets or a lag spike
     private static boolean startLevel = false; // run start level this frame
 
     public AppLogic(PApplet pApplet, Activity masterActivity, Context masterContext) {
@@ -354,6 +352,15 @@ public class AppLogic {
 
             // re-center page view objects
             game.getPageView().recenterObjects();
+
+            // set the save file for the level being edited
+            if (externalLevels != null) {
+                if (externalLevels.size() > currentLevel) {
+                    files.setUri(externalLevels.get(currentLevel));
+                }
+
+                externalLevels = null;
+            }
 
         }
         menu = null;

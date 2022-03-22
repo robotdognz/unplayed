@@ -39,7 +39,7 @@
 -Added loading screen between levels to hide lag spike caused by loading in the next level
 -Level pages are now dynamically repositioned when loading in a new level, to make the process apear seamless
 -Assets in levels are now force loaded at level start instead of when acessed, to minimise lag spikes
--Added basic savegame functionality
+-Added basic save-game functionality
 -Removed tumble option from player, this is now the default behaviour
 -Removed player locked rotation when sitting on top of a slot
 -Extended tumble physics to enable rotating in ground slots and more natural animations
@@ -59,6 +59,10 @@
 -PlayerEnds are more forgiving now, so they can be used in emptyspace on the ground
 -Reworked the auto camera system so that it never freaks out or breaks
 -Implemented advanced loading screen system
+-Rebuilt permissions and file systems to work on all recent versions of android
+-Added useful default file name to level saving window
+-'Play Level(s)' button in dev menu now allows for loading any number of levels in any order
+-Editing a level when running through external levels will now keep track of the correct save file
 
 1.2.1: Improving physics and tuning player 'feel'
 
