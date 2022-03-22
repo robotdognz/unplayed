@@ -1,9 +1,8 @@
 package ui;
 
-import java.io.File;
+import android.net.Uri;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 import game.AppLogic;
 import game.Game;
@@ -12,7 +11,7 @@ import processing.core.PApplet;
 public class DeveloperMenu extends Menu {
     Game game;
     String editor = "Start Editor";
-    String folder = "Load Level";
+    String folder = "Load Levels";
     String back = "Back";
 
     boolean loadingFile = false; // true if this menu should start loading a campaign from a file
@@ -39,19 +38,15 @@ public class DeveloperMenu extends Menu {
             Button b = (Button) object;
 
             if (b.click().equals(editor)) {
-                if (!getPermission()) {
-                    return;
-                }
 
                 game.emptyGame();
                 AppLogic.toggleEditor();
-            } else if (b.click().equals(folder)) {
-                if (!getPermission()) {
-                    return;
-                }
 
-                AppLogic.files.createLoadFile();
+            } else if (b.click().equals(folder)) {
+
+                AppLogic.files.createLoadFiles();
                 loadingFile = true;
+
             } else if (b.click().equals(back)) {
                 AppLogic.previousMenu();
             }
@@ -64,44 +59,15 @@ public class DeveloperMenu extends Menu {
         // going to use this instead
 
         if (loadingFile) {
-            if (AppLogic.files.hasUri()) {
-                File selectedFile = new File(AppLogic.files.getPath()); // selected file path
-                String fileName = selectedFile.getName(); // get current file on it's own
-                String folder = selectedFile.toString().replace(fileName, ""); // get base folder on it's own
+            if (AppLogic.files.hasUris()) {
+                ArrayList<Uri> uris = AppLogic.files.getUris();
+                PApplet.print("Found Uri's: " + uris.size());
 
-                // print for testing
-                PApplet.print("\n");
-                PApplet.print(fileName + "\n");
-                PApplet.print(folder + "\n");
-                PApplet.print("\n");
+                //TODO: make system for handling uri's
+                AppLogic.setExternalLevels(uris);
+                AppLogic.files.removeUri();
 
-                // get all files in folder
-                File levelPath = new File(folder);
-                File[] absoluteFiles = levelPath.listFiles();
-                ArrayList<File> levels = null;
-                if (absoluteFiles != null) {
-                    levels = new ArrayList<>(Arrays.asList(absoluteFiles));
-                    Collections.sort(levels);
-                }
-
-                // remove levels before selected level
-                if (levels != null) {
-                    while (true) {
-                        if (levels.get(0).equals(selectedFile)) {
-                            break;
-                        } else {
-                            levels.remove(0);
-                        }
-                    }
-
-                    // print remaining levels, for testing
-                    for (File level : levels) {
-                        PApplet.print(level.toString() + "\n");
-                    }
-                }
-
-                // pass found levels to AppLogic
-                AppLogic.setLevels(levels);
+//                AppLogic.toast.showToast("Loading levels is currently not implemented correctly");
 
                 // end loading
                 loadingFile = false;

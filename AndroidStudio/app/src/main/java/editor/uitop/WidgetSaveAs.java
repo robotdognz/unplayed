@@ -32,8 +32,7 @@ public class WidgetSaveAs extends Widget {
 		if (editorTop.saving) {
 			if (AppLogic.files.hasUri()) {
 				// save the level
-				String file = AppLogic.files.getPath();
-				editor.eJSON.save(editor, file);
+				editor.eJSON.save(editor, AppLogic.files.getUri());
 				// end saving
 				editorTop.saving = false;
 			}

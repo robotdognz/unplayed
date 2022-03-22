@@ -33,8 +33,7 @@ public class WidgetLoad extends Widget {
 		if (editorTop.loading) {
 			if (AppLogic.files.hasUri()) {
 				// load the level
-				String file = AppLogic.files.getPath();
-				editor.eJSON.load(AppLogic.game, file);
+				editor.eJSON.load(AppLogic.game,AppLogic.files.getUri());
 				// deselect old objects
 				editor.currentTile = null;
 				editor.currentImage = null;

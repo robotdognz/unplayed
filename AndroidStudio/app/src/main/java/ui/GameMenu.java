@@ -43,10 +43,6 @@ public class GameMenu extends Menu {
 				AppLogic.titleScreen(); // open title screen menu
 
 			} else if (b.click().equals(edit)) {
-				if (!getPermission()) {
-					return;
-				}
-
 				AppLogic.toggleEditor(); // enable the editor
 
 			} else if (b.click().equals(quit)) {
