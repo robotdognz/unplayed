@@ -8,7 +8,7 @@
 -Added on screen controls
 -Added double jump when wall boosting
 -Adjusted wall jump and boost strengths
--Simplified wall boost machanics, may not be final
+-Simplified wall boost machanics, may not be final (dependent on wall double jump implementation)
 
 1.3.0: Pre-release 'big push' build
 
