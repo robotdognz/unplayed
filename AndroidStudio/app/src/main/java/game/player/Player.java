@@ -29,8 +29,8 @@ import org.jbox2d.common.*;
 public class Player extends Editable {
 
     // player fields
-    private File file;
-    private boolean hasTexture;
+    private final File file;
+    private final boolean hasTexture;
     private TileHandler tileTexture;
 
     private boolean left = false;
@@ -39,8 +39,8 @@ public class Player extends Editable {
     // box2d player
     private static Box2DProcessing box2d; // the box2d world
     public static Body dynamicBody; // the player's physics body
-    private float density; // the player's density
-    private float friction; // the player's friction
+    private final float density; // the player's density
+    private final float friction; // the player's friction
 
     public int groundContacts; // the number of grounds touching the player's body
     public int leftWallContacts; // the number of left walls touching the player's body
@@ -48,63 +48,65 @@ public class Player extends Editable {
 
     public boolean pseudoGround = false; // pretend we are touching the ground
 
-    private ArrayList<Event> events; // list of events touching the player
-    private PlayerVibration vibration; // vibration system
+    private final ArrayList<Event> events; // list of events touching the player
+    private final PlayerVibration vibration; // vibration system
 
     // environment checking
     public boolean showChecking = false;
-    private HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
+    private final HashSet<Tile> sensorContacts; // list of all the fixtures inside the player's sensor
 
     // tunnel checking
-    private ArrayList<Tile> tunnelChecking; // list of tiles currently being checked for tunnels
-    private PlayerTileXComparator xCompare; // comparator used for x axis tunnel checking
+    private final ArrayList<Tile> tunnelChecking; // list of tiles currently being checked for tunnels
+    private final PlayerTileXComparator xCompare; // comparator used for x axis tunnel checking
 
     // ground slot checking
-    private ArrayList<Tile> groundChecking; // list of tiles currently being checked for ground slots
+    private final ArrayList<Tile> groundChecking; // list of tiles currently being checked for ground slots
     private Body groundBarrier; // barrier used to stop the player moving past a slot
     private Fixture groundFixture; // reference to the barrier fixture
 
     // wall slot checking
-    private ArrayList<Tile> wallChecking; // list of tiles currently being checked for wall slots
+    private final ArrayList<Tile> wallChecking; // list of tiles currently being checked for wall slots
     private Body wallBarrier; // barrier used to stop the player moving past a slot
     private Fixture wallFixture; // reference to the barrier fixture
 
     // roof slot checking
-    private ArrayList<Tile> roofChecking; // list of tiles currently being checked for roof slots
+    private final ArrayList<Tile> roofChecking; // list of tiles currently being checked for roof slots
     private Body roofBarrier; // barrier used to stop the player moving past a slot
     private Fixture roofFixture; // reference to the barrier fixture
     public boolean touchingRoofBarrier; // is the player touching a roof barrier
 
     // movement timers
-    private CountdownTimer groundTimer; // used to make ground collision more forgiving, walking off edges, etc.
-    private CountdownTimer groundTimerPadding; // how long the player must touch the ground before getting double jump
+    private final CountdownTimer groundTimer; // used to make ground collision more forgiving, walking off edges, etc.
+    private final CountdownTimer groundTimerPadding; // how long the player must touch the ground before getting double jump
 
-    private CountdownTimer leftWallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
-    private CountdownTimer rightWallTimer; // used to make wall collision more forgiving, recovering from bad jumps,
-    // etc.
+    private final CountdownTimer leftWallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
+    private final CountdownTimer rightWallTimer; // used to make wall collision more forgiving, recovering from bad jumps, etc.
 
-    private CountdownTimer jumpTimer; // used to correct the ground timer, stop it from starting after a jump
-    private CountdownTimer roofBoostTimer; // used for boosting up into roof slots
+    private final CountdownTimer jumpTimer; // used to correct the ground timer, stop it from starting after a jump
+    private final CountdownTimer roofBoostTimer; // used for boosting up into roof slots
 
-    private CountdownTimer pushLeftTimer; // keeps the player pushing left for a time after wall jumping
-    private CountdownTimer pushRightTimer; // keeps the player pushing right for a time after wall jumping
+    private final CountdownTimer pushLeftTimer; // keeps the player pushing left for a time after wall jumping
+    private final CountdownTimer pushRightTimer; // keeps the player pushing right for a time after wall jumping
 
     // wall jumping, magnetism, and boosting
-    private CountdownTimer leftStickTimer; // keep player sticking to left wall
-    private CountdownTimer rightStickTimer; // keep player sticking to right wall
-    private CountdownTimer leftWallBoostTimer; // boost off wall timer, if active player will boost in direction pressed
-    private CountdownTimer rightWallBoostTimer; // boost off wall timer, if active player will boost in direction
-    // pressed
-    private float wallJumpPower; // power for wall jumping against a wall
-    private float wallJumpAwayPower; // power for wall jumping away from a wall
-    private float wallBoostPower; // power for boosting off a wall
+    private final CountdownTimer leftStickTimer; // keep player sticking to left wall
+    private final CountdownTimer rightStickTimer; // keep player sticking to right wall
+    private final CountdownTimer leftWallBoostTimer; // boost off wall timer, if active player will boost in direction pressed
+    private final CountdownTimer rightWallBoostTimer; // boost off wall timer, if active player will boost in direction pressed
+    private final float wallJumpPower; // power for wall jumping against a wall
+    private final float wallJumpAwayPower; // power for wall jumping away from a wall
+    private final float wallBoostPower; // power for boosting off a wall
 
     // rotation snapping
     private RotationSmooth rotationSmooth;
 
     // movement / jumping
-    private float movementSpeed;
-    private float jumpPower; // the strength of the player's jump
+    private final float movementSpeed; // max movement speed
+    private final float movementIncrease; // the rate speed increases when holding a movement button
+    private final float movementIncreaseAir;
+    private final float movementIncreaseGround;
+    private final float movementSlow; // the rate of speed loss when not holding a movement button
+    private final float jumpPower; // the strength of the player's jump
     private boolean extraJump; // does the player have an extra jump
     private boolean verticalTunnel; // used to check if player should jump away from the wall or not
     private boolean horizontalTunnel;
@@ -154,13 +156,17 @@ public class Player extends Editable {
         this.horizontalTunnel = false;
 
         // movement / jumping values
-        this.movementSpeed = 60.0f;
-        this.jumpPower = 120;
-        this.wallJumpPower = 48; // 48;
-        this.wallJumpAwayPower = 10; // 30;
-        this.wallBoostPower = 40; // 90 // 102;
-
+        this.movementSpeed = 60f; // 60f
+        this.movementIncrease = 2f; // 2f
+        this.movementSlow = 0.999f; // 0.999f
+        this.jumpPower = 120; // 120
+        this.wallJumpPower = 48; // 48
+        this.wallJumpAwayPower = 10; // 30 - early 2022;
+        this.wallBoostPower = 10; // 40 - removed for testing // 90 - early 2022 // 102 - old, 2021;
         this.extraJump = false;
+
+        this.movementIncreaseAir = 1f; // 2f
+        this.movementIncreaseGround = 2f; // 2f
 
         // timers
 
@@ -372,11 +378,11 @@ public class Player extends Editable {
 
             if (vel.x >= -movementSpeed) {
                 // standard movement
-                desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
+                desiredVel = Math.max(vel.x - movementIncrease, -movementSpeed);
 
                 // stick to right wall
                 if (rightStickTimer.isRunning()) {
-                    desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
+                    desiredVel = Math.min(vel.x + movementIncrease, movementSpeed);
                 }
             } else {
                 return;
@@ -402,18 +408,18 @@ public class Player extends Editable {
 
             if (vel.x <= movementSpeed) {
                 // standard movement
-                desiredVel = Math.min(vel.x + 2.0f, movementSpeed);
+                desiredVel = Math.min(vel.x + movementIncrease, movementSpeed);
 
                 // stick to left wall
                 if (leftStickTimer.isRunning()) {
-                    desiredVel = Math.max(vel.x - 2.0f, -movementSpeed);
+                    desiredVel = Math.max(vel.x - movementIncrease, -movementSpeed);
                 }
             } else {
                 return;
             }
         } else {
             // slow down
-            desiredVel = vel.x * 0.999f;
+            desiredVel = vel.x * movementSlow;
         }
 
         // apply horizontal movement calculations
@@ -798,7 +804,7 @@ public class Player extends Editable {
             previousX = t.getX();
         }
 
-        // conditions wern't met, remove the barrier
+        // conditions weren't met, remove the barrier
         destroyGroundBarrier(resetRotation);
     }
 
@@ -884,7 +890,7 @@ public class Player extends Editable {
             previousX = t.getX();
         }
 
-        // conditions wern't met, remove the barrier
+        // conditions weren't met, remove the barrier
         destroyGroundBarrier(resetRotation);
         return;
     }
@@ -1019,7 +1025,7 @@ public class Player extends Editable {
             previousY = t.getY();
         }
 
-        // conditions wern't met, remove the barrier
+        // conditions weren't met, remove the barrier
         destroyWallBarrier(resetRotation);
     }
 
@@ -1080,7 +1086,7 @@ public class Player extends Editable {
             previousY = t.getY();
         }
 
-        // conditions wern't met, remove the barrier
+        // conditions weren't met, remove the barrier
         return false;
     }
 
@@ -1179,7 +1185,7 @@ public class Player extends Editable {
             previousX = t.getX();
         }
 
-        // conditions wern't met, remove the barrier
+        // conditions weren't met, remove the barrier
         destroyRoofBarrier();
     }
 

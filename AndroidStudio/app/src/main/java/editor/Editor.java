@@ -350,9 +350,9 @@ public class Editor {
 			p.fill(0);
 			p.textSize(30);
 			p.textAlign(LEFT, CENTER);
-			int xCoord = (int) point.getX();
-			int yCoord = (int) point.getY();
-			String s = "[" + xCoord + ", " + yCoord + "]";
+			int xCoordinate = (int) point.getX();
+			int yCoordinate = (int) point.getY();
+			String s = "[" + xCoordinate + ", " + yCoordinate + "]";
 			p.text(s, point.getX() + 105, point.getY() + 50);
 		}
 
@@ -425,7 +425,7 @@ public class Editor {
 		}
 		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
 				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
-			AppLogic.controller.onPinch(touches, x, y, d); // controlls for on pinch event
+			AppLogic.controller.onPinch(touches, x, y, d); // controls for on pinch event
 		}
 	}
 
@@ -435,7 +435,7 @@ public class Editor {
 		}
 		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
 				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
-			AppLogic.controller.onRotate(x, y, angle); // controlls for on rotate event
+			AppLogic.controller.onRotate(x, y, angle); // controls for on rotate event
 		}
 	}
 
