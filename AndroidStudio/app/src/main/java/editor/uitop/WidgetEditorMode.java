@@ -5,6 +5,7 @@ import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
 import editor.Editor.editorMode;
+import game.AppLogic;
 import processing.core.PApplet;
 import processing.core.PImage;
 import ui.Widget;
@@ -33,7 +34,7 @@ public class WidgetEditorMode extends Widget {
 		if (active == false) {
 			// not currently active
 			active = true; // activate
-			editor.controller = new EditorControl(p, editor); // editor control mode
+			AppLogic.controller = new EditorControl(p, editor); // editor control mode
 		} else {
 			// currently active
 			super.clicked(); // run default code, open menu
@@ -46,7 +47,7 @@ public class WidgetEditorMode extends Widget {
 		if (active == false) {
 			// not currently active
 			active = true;
-			editor.controller = new EditorControl(p, editor);
+			AppLogic.controller = new EditorControl(p, editor);
 			editor.camera = new FreeCamera();
 		} else {
 			// currently active
@@ -86,7 +87,7 @@ public class WidgetEditorMode extends Widget {
 			}
 		}
 
-		if (editor.controller instanceof EditorControl) {
+		if (AppLogic.controller instanceof EditorControl) {
 			active = true;
 		} else {
 			active = false;

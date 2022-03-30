@@ -4,6 +4,7 @@ import camera.FreeCamera;
 import controllers.CameraControl;
 import editor.Editor;
 import editor.Toolbar;
+import game.AppLogic;
 import processing.core.PApplet;
 import ui.Widget;
 
@@ -16,7 +17,7 @@ public class WidgetCameraControl extends Widget {
 	@Override
 	public void clicked() {
 		if (!active) {
-			editor.controller = new CameraControl(p, editor);
+			AppLogic.controller = new CameraControl(p, editor);
 			editor.camera = new FreeCamera();
 		}
 	}
@@ -24,7 +25,7 @@ public class WidgetCameraControl extends Widget {
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (available == true && editor.controller instanceof CameraControl) {
+		if (available == true && AppLogic.controller instanceof CameraControl) {
 			active = true;
 		} else {
 			active = false;

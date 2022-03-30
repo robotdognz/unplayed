@@ -216,7 +216,7 @@ public class EditorSide extends Toolbar {
 		}
 
 		// step if controlling the editor and there is something selected
-		if (editor.controller instanceof EditorControl) {
+		if (AppLogic.controller instanceof EditorControl) {
 
 			float currentWidgetHeight = 0; // used to find the right most edge of the longest open widget menu
 			boolean wMenuOpen = false;
@@ -278,7 +278,7 @@ public class EditorSide extends Toolbar {
 	public boolean insideBoundary(float x, float y) {
 		// prevent editor controls in this area if controlling the editor and something
 		// is selected
-		if (editor.controller instanceof EditorControl && editor.selected != null) {
+		if (AppLogic.controller instanceof EditorControl && editor.selected != null) {
 			return super.insideBoundary(x, y);
 		}
 		return false;
@@ -287,7 +287,7 @@ public class EditorSide extends Toolbar {
 	@Override
 	public void touchEnded() {
 		// check for clicking on widgets
-		if (editor.controller instanceof EditorControl) {
+		if (AppLogic.controller instanceof EditorControl) {
 			for (int i = 0; i < widgets.size(); i++) {
 				widgets.get(i).click();
 			}

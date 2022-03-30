@@ -194,7 +194,7 @@ public class EditorBottom extends Toolbar {
 		} else { // in level view
 			// pencil in corners of views
 			if (editor.currentTool instanceof TileTool) {
-				if (editor.eMode == Editor.editorMode.ADD && editor.controller instanceof EditorControl) {
+				if (editor.eMode == Editor.editorMode.ADD && AppLogic.controller instanceof EditorControl) {
 					cornerIcon = tileRotateIcon;
 				}
 			} else if (editor.currentTool instanceof PageTool) {
@@ -244,7 +244,7 @@ public class EditorBottom extends Toolbar {
 				// draw new view button
 				boolean selected = false;
 				// && editor.currentView == null
-				if (editor.controller instanceof EditorControl && editor.eMode == Editor.editorMode.ADD) {
+				if (AppLogic.controller instanceof EditorControl && editor.eMode == Editor.editorMode.ADD) {
 					selected = true;
 				}
 				((NewViewButton) object).draw(p, currentX, currentY, objectWidth * 0.5f, selected);
@@ -325,7 +325,7 @@ public class EditorBottom extends Toolbar {
 							if (objects.get(i).equals(editor.currentTile)) {
 								// clicking on the already selected tile
 								if (editor.eMode == Editor.editorMode.ADD
-										&& editor.controller instanceof EditorControl) {
+										&& AppLogic.controller instanceof EditorControl) {
 									// parameters are correct for rotation to happen
 									TileHandler currentHandler = (TileHandler) objects.get(i);
 									int angle = currentHandler.getEditorAngle() + 90;
@@ -336,7 +336,7 @@ public class EditorBottom extends Toolbar {
 							editor.currentTile = (TileHandler) objects.get(i);
 
 							// switch to pencil mode when selecting a new tile
-							editor.controller = new EditorControl(p, editor);
+							AppLogic.controller = new EditorControl(p, editor);
 							editor.editorSide.clearExternalModes();
 							editor.eMode = editorMode.ADD;
 						}
@@ -346,14 +346,14 @@ public class EditorBottom extends Toolbar {
 							// select the handler
 							editor.currentBackground = (BackgroundHandler) objects.get(i);
 							// switch to pencil mode when selecting a background
-							editor.controller = new EditorControl(p, editor);
+							AppLogic.controller = new EditorControl(p, editor);
 							editor.editorSide.clearExternalModes();
 							editor.eMode = editorMode.ADD;
 						} else {
 							// select the handler
 							editor.currentImage = (ImageHandler) objects.get(i);
 							// switch to pencil mode when selecting an image
-							editor.controller = new EditorControl(p, editor);
+							AppLogic.controller = new EditorControl(p, editor);
 							editor.editorSide.clearExternalModes();
 							editor.eMode = editorMode.ADD;
 						}
@@ -362,7 +362,7 @@ public class EditorBottom extends Toolbar {
 						// select the handler
 						editor.currentEvent = (EventHandler) objects.get(i);
 						// switch to pencil mode when selecting an event
-						editor.controller = new EditorControl(p, editor);
+						AppLogic.controller = new EditorControl(p, editor);
 						editor.editorSide.clearExternalModes();
 						editor.eMode = editorMode.ADD;
 
@@ -372,7 +372,7 @@ public class EditorBottom extends Toolbar {
 							editor.currentView = view;
 
 							// enable add mode so that you can place the page right away
-							editor.controller = new EditorControl(p, editor);
+							AppLogic.controller = new EditorControl(p, editor);
 							editor.editorSide.clearExternalModes();
 							editor.eMode = editorMode.ADD;
 
@@ -383,7 +383,7 @@ public class EditorBottom extends Toolbar {
 								editor.currentView = view;
 
 								// enable select mode so that you can resize the view right away
-								editor.controller = new EditorControl(p, editor);
+								AppLogic.controller = new EditorControl(p, editor);
 								editor.editorSide.clearExternalModes();
 								editor.eMode = editorMode.SELECT;
 								// update selected and page tool so that resizing can happen right away
@@ -392,7 +392,7 @@ public class EditorBottom extends Toolbar {
 								((PageTool) editor.currentTool).edit = view;
 
 							} else if (object instanceof NewViewButton) {
-								editor.controller = new EditorControl(p, editor);
+								AppLogic.controller = new EditorControl(p, editor);
 								editor.editorSide.clearExternalModes();
 								editor.eMode = editorMode.ADD;
 							}

@@ -3,6 +3,7 @@ package editor.uitop;
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
+import game.AppLogic;
 import processing.core.PApplet;
 import ui.Widget;
 
@@ -16,7 +17,7 @@ public class WidgetAdd extends Widget {
 	@Override
 	public void clicked() {
 		editor.eMode = Editor.editorMode.ADD;
-		editor.controller = new EditorControl(p, editor);
+		AppLogic.controller = new EditorControl(p, editor);
 
 		// new code, for use when drop-down menu is enabled
 		editor.editorSide.clearExternalModes();

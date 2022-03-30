@@ -18,7 +18,7 @@ public class WidgetPlayerControl extends Widget {
 	public void clicked() {
 		if (AppLogic.game.player != null) {
 			if (!active) {
-				editor.controller = new PlayerControl(p, AppLogic.game);
+				AppLogic.controller = new PlayerControl(p, AppLogic.game);
 			} else {
 				AppLogic.game.restart();
 			}
@@ -28,7 +28,7 @@ public class WidgetPlayerControl extends Widget {
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (editor.controller instanceof PlayerControl) {
+		if (AppLogic.controller instanceof PlayerControl) {
 			active = true;
 		} else {
 			active = false;

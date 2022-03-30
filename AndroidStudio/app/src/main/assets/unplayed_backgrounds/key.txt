@@ -5,5 +5,5 @@ they end with two sets of digits: []x[] and []_[]
 []x[] is used to determine their size [width]x[height], these dimentions indicate size in grid paper squares, 
 so 1x1 means the loaded image will be exactly the size of one grid paper square.
 
-[]_[] is used to determine options [continue button]_[draw shadow]
+[]_[] is used to determine options [fixed size]_[draw shadow]
 1 = 'true' for either of these, any other digit = 'false'

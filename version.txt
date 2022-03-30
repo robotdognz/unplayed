@@ -1,5 +1,14 @@
 (Major version).(Minor version).(Revision number)
 
+1.3.1: TBD
+-Cleaned up a bunch of depricted code
+-Rebuilt the image loading system to improve loading screens and backgrounds
+-Added shadow support to backgrounds
+-Reworked navigation and status bar hiding code
+-Added on screen controls
+-Added double jump when wall boosting
+-Adjusted wall jump and boost strengths
+
 1.3.0: Pre-release 'big push' build
 
 -Cleaned up a bunch of old dodgy code

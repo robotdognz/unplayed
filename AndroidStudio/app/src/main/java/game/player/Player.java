@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.Iterator;
+
+import game.AppLogic;
 import handlers.TextureCache;
 import handlers.TileHandler;
 import misc.CollisionEnum;
@@ -153,8 +155,8 @@ public class Player extends Editable {
 		this.movementSpeed = 60.0f;
 		this.jumpPower = 120;
 		this.wallJumpPower = 48; // 48;
-		this.wallJumpAwayPower = 30; // 30;
-		this.wallBoostPower = 90; // 102;
+		this.wallJumpAwayPower = 10; // 30;
+		this.wallBoostPower = 40; // 90 // 102;
 
 		this.extraJump = false;
 
@@ -352,6 +354,7 @@ public class Player extends Editable {
 
 			if (rightWallBoostTimer.isRunning()) {
 				float xImpulse = -(dynamicBody.getMass() * wallBoostPower);
+				extraJump = true;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 				// apply impulse
@@ -381,6 +384,7 @@ public class Player extends Editable {
 
 			if (leftWallBoostTimer.isRunning()) {
 				float xImpulse = (dynamicBody.getMass() * wallBoostPower);
+				extraJump = true;
 				// reset horizontal speed
 				dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 				// apply impulse
@@ -1389,18 +1393,6 @@ public class Player extends Editable {
 
 			if (!verticalTunnel) {
 				// the player is not in a tunnel
-//				if ((leftWallContacts > rightWallContacts || leftWallTimer.isRunning()) && left) {
-//					// pushing into left wall
-//					extraJump = false;
-//				}
-//				if ((rightWallContacts > leftWallContacts || rightWallTimer.isRunning()) && right) {
-//					// pushing into right wall
-//					extraJump = false;
-//				}
-//				if (extraJump) {
-//					yImpulse = dynamicBody.getMass() * jumpPower;
-//					extraJump = false;
-//				}else 
 
 				if (leftWallContacts > rightWallContacts || leftWallTimer.isRunning()) {
 					// touching left wall
@@ -1408,34 +1400,31 @@ public class Player extends Editable {
 					if (left) { // pushing into left wall
 						if (!checkForWallSlotsJump(true)) {
 							// normal wall jump
-
 							xImpulse = (dynamicBody.getMass() * wallJumpPower);
-							pushLeftTimer.start();
-
 //							DebugOutput.pushMessage("Wall jump on left wall", 2);
 
 						} else {
 							// there is a slot directly above
-							pushLeftTimer.start();
-
 //							DebugOutput.pushMessage("Slot above jump", 2);
 						}
+						pushLeftTimer.start();
+						extraJump = false;
 
 					} else if (right) { // pulling away from left wall
 						// boost of left wall
 
 						xImpulse = (dynamicBody.getMass() * wallBoostPower);
+						extraJump = true;
 						// reset horizontal speed
 						dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 						// turn off timer
 						leftStickTimer.stop();
-
 //						DebugOutput.pushMessage("Boost off left wall", 2);
 
 					} else { // no direction left wall
 
 						xImpulse = (dynamicBody.getMass() * wallJumpAwayPower);
-//						xImpulse = (dynamicBody.getMass() * wallBoostPower);
+						extraJump = false;
 						// reset horizontal speed
 						dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 						// turn off timer
@@ -1443,7 +1432,6 @@ public class Player extends Editable {
 						// timers
 						leftWallBoostTimer.start();
 						rightWallBoostTimer.stop();
-
 //						DebugOutput.pushMessage("Jump off left wall no direction", 2);
 					}
 
@@ -1453,33 +1441,32 @@ public class Player extends Editable {
 					if (right) { // pushing into right wall
 						if (!checkForWallSlotsJump(false)) {
 							// normal wall jump
-
 							xImpulse = -(dynamicBody.getMass() * wallJumpPower);
-							pushRightTimer.start();
-
 //							DebugOutput.pushMessage("Wall jump on right wall", 2);
 
 						} else {
 							// there is a slot directly above
-							pushRightTimer.start();
 
 //							DebugOutput.pushMessage("Slot above jump", 2);
 						}
+						pushRightTimer.start();
+						extraJump = false;
+
 					} else if (left) { // pulling away from right wall
 						// boost off right wall
 
 						xImpulse = -(dynamicBody.getMass() * wallBoostPower);
+						extraJump = true;
 						// reset horizontal speed
 						dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 						// turn off timer
 						rightStickTimer.stop();
-
 //						DebugOutput.pushMessage("Boost off right wall", 2);
 
 					} else { // no direction right wall
 
 						xImpulse = -(dynamicBody.getMass() * wallJumpAwayPower);
-//						xImpulse = -(dynamicBody.getMass() * wallBoostPower);
+						extraJump = false;
 						// reset horizontal speed
 						dynamicBody.setLinearVelocity(new Vec2(0, dynamicBody.getLinearVelocity().y));
 						// turn off timer
@@ -1487,7 +1474,6 @@ public class Player extends Editable {
 						// timers
 						rightWallBoostTimer.start();
 						leftWallBoostTimer.stop();
-
 //						DebugOutput.pushMessage("Jump off right wall no direction", 2);
 					}
 				}
@@ -1495,7 +1481,6 @@ public class Player extends Editable {
 			}
 
 			yImpulse = dynamicBody.getMass() * jumpPower;
-			extraJump = false; // double jumping off wall is currently disabled
 
 		} else { // touching nothing
 
@@ -1511,6 +1496,9 @@ public class Player extends Editable {
 			dynamicBody.setLinearVelocity(new Vec2(dynamicBody.getLinearVelocity().x, 0));
 			// apply impulse
 			dynamicBody.applyLinearImpulse(new Vec2(xImpulse, yImpulse), dynamicBody.getWorldCenter(), true);
+
+			// successful jump, tell that to the on screen controls
+			AppLogic.drawControls.jump();
 		}
 
 		leftStickTimer.stop();

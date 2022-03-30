@@ -25,22 +25,12 @@ public class LoadingMenu extends Menu {
 
 		MenuObject loadingImage;
 
-		int imageIncreaseNormal = 3;
-		int imageIncreasePostit = 5;
-
 		if (loading != null) {
 			// we have a valid loading handler to build from
 			float imageWidth = loading.getWidth() * 100;
 			float imageHeight = loading.getHeight() * 100;
 			this.hasButton = loading.hasButton();
 			this.hasShadow = loading.hasShadow();
-			if (hasShadow) {
-				imageWidth *= imageIncreasePostit;
-				imageHeight *= imageIncreasePostit;
-			} else {
-				imageWidth *= imageIncreaseNormal;
-				imageHeight *= imageIncreaseNormal;
-			}
 			loadingImage = new MenuObject(imageWidth, imageHeight, loading);
 		} else {
 			// no valid loading handler provided, get default
@@ -49,13 +39,6 @@ public class LoadingMenu extends Menu {
 			float imageHeight = temp.getHeight() * 100;
 			this.hasButton = temp.hasButton();
 			this.hasShadow = temp.hasShadow();
-			if (hasShadow) {
-				imageWidth *= imageIncreasePostit;
-				imageHeight *= imageIncreasePostit;
-			} else {
-				imageWidth *= imageIncreaseNormal;
-				imageHeight *= imageIncreaseNormal;
-			}
 			loadingImage = new MenuObject(imageWidth, imageHeight, temp);
 		}
 

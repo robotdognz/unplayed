@@ -64,6 +64,8 @@ public class AppLogic {
     public static float widgetSpacing; // size of gap between widgets
     public static float widgetHeight;
 
+    public static OnScreenControls drawControls; // draws the on screen controls
+
     private static ArrayList<File> levels;
     private static int currentLevel;
     public static SharedPreferences settings;
@@ -102,6 +104,7 @@ public class AppLogic {
         texture.passGame(game);
         controller = new PlayerControl(p, game);
         editor = null;
+        drawControls = new OnScreenControls(p.width, p.height);
 
         // setup non editor widget(s)
         Widget menuW = new WidgetPauseMenu(p, game, null);
@@ -425,6 +428,7 @@ public class AppLogic {
         if (editorToggle && editor != null) {
             editor.draw(deltaTime, lastTouch, menu);
         } else {
+            // TODO: this needs to be updated so the widget is drawn from drawControls. It's height should be accessible from the same place, for calculating camera regions
             for (int i = 0; i < widgets.size(); i++) {
                 widgets.get(i).draw(deltaTime, widgetSpacing * (i + 1), widgetHeight);
                 widgets.get(i).updateActive();
@@ -433,6 +437,13 @@ public class AppLogic {
                 }
             }
         }
+
+        // on screen controls
+        // tell the controls the current state
+        boolean draw = (game.player != null && controller instanceof PlayerControl && menu == null && !editorToggle);
+        drawControls.step(deltaTime, draw, p.height);
+        // draw the controls
+        drawControls.draw(p);
 
         // draw the menu
         if (menu != null) {

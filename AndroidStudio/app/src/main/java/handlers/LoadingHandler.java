@@ -7,14 +7,10 @@ public class LoadingHandler extends Handler implements Comparable<LoadingHandler
 	private boolean hasButton = false;
 	private boolean hasShadow = false;
 
-	public LoadingHandler(PApplet p, TextureCache texture, File file, int width, int height, int button, int fullPage) {
-		super(p, texture, file, width, height);
-		if (button == 1) {
-			this.hasButton = true;
-		}
-		if (fullPage == 1) {
-			this.hasShadow = true;
-		}
+	public LoadingHandler(PApplet p, TextureCache texture, File file, int width, int height, boolean button, boolean shadow) {
+		super(p, texture, file, width, height,false);
+			this.hasButton = button;
+			this.hasShadow = shadow;
 	}
 
 	@Override

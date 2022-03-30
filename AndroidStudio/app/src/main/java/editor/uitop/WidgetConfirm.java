@@ -3,6 +3,7 @@ package editor.uitop;
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
+import game.AppLogic;
 import processing.core.PApplet;
 import processing.core.PVector;
 import ui.Widget;
@@ -25,7 +26,7 @@ public class WidgetConfirm extends Widget {
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (editor.controller instanceof EditorControl && !editor.snap && editor.point != null) {
+		if (AppLogic.controller instanceof EditorControl && !editor.snap && editor.point != null) {
 			available = true;
 		} else {
 			available = false;

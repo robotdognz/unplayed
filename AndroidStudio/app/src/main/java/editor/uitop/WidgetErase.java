@@ -2,6 +2,7 @@ package editor.uitop;
 
 import editor.Editor;
 import editor.Toolbar;
+import game.AppLogic;
 import processing.core.PApplet;
 import ui.Widget;
 import controllers.EditorControl;
@@ -16,7 +17,7 @@ public class WidgetErase extends Widget {
 	@Override
 	public void clicked() {
 		editor.eMode = Editor.editorMode.ERASE;
-		editor.controller = new EditorControl(p, editor);
+		AppLogic.controller = new EditorControl(p, editor);
 
 		// new code, for use when drop-down menu is enabled
 		editor.editorSide.clearExternalModes();

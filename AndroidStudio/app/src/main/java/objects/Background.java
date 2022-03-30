@@ -1,7 +1,9 @@
 package objects;
 
 import static processing.core.PConstants.CENTER;
+
 import java.io.File;
+
 import handlers.BackgroundHandler;
 import handlers.TextureCache;
 import processing.core.PApplet;
@@ -9,69 +11,109 @@ import processing.core.PVector;
 
 public class Background extends PageViewObject {
 
-	private boolean hasTexture;
-	private BackgroundHandler backgroundTexture;
+    private final boolean hasTexture;
+    private BackgroundHandler texture;
 
-	public Background(PApplet p, TextureCache texture, File file, PVector position) {
-		super(p, position, 1, 1);
+    private boolean hasShadow = false; // background image should have a shadow
+    private int shadowOffset; // the absolute amount to offset the shadow by
+    private int shadow; // the relative amount to offset the shadow by
 
-		if (file != null && texture != null && texture.getBackgroundMap().containsKey(file)) {
-			this.backgroundTexture = texture.getBackgroundMap().get(file);
-			hasTexture = true;
-			// TODO: textures are stored in grid amounts 1x1 etc, whereas actual world
-			// objects are stored as 100x100 etc. This should be fixed so everything uses
-			// the 1x1 system. Then remove the * 100 from the two below lines
-			setWidth(backgroundTexture.getWidth() * 100); // 100
-			setHeight(backgroundTexture.getHeight() * 100); // 100
-		} else {
-			hasTexture = false;
-			setWidth(100);
-			setHeight(100);
-		}
+    public Background(PApplet p, TextureCache textureCache, File file, PVector position) {
+        super(p, position, 1, 1);
 
-		setPosition(position);
-	}
+        if (file != null && textureCache != null && textureCache.getBackgroundMap().containsKey(file)) {
+            this.texture = textureCache.getBackgroundMap().get(file);
+            hasTexture = true;
+            // TODO: textures are stored in grid amounts 1x1 etc, whereas actual world
+            // objects are stored as 100x100 etc. This should be fixed so everything uses
+            // the 1x1 system. Then remove the * 100 from the two below lines
+            setWidth(this.texture.getWidth() * 100); // 100
+            setHeight(this.texture.getHeight() * 100); // 100
+            this.hasShadow = this.texture.hasShadow();
 
-	@Override
-	public void draw(float scale) {
+            this.shadowOffset = 9;
+            this.shadow = 9;
 
-		if (hasTexture) {
-			// texture isn't missing
-			p.pushMatrix();
-			p.translate(position.x, position.y);
-			p.scale(size); // size the page will appear in the page view
-			p.rotate(PApplet.radians(angle)); // rotate the page
-			p.scale(flipX, flipY); // flip the page
-			p.imageMode(CENTER);
-//			p.image(backgroundTexture.getSprite(scale * 0.25f), 0, 0, getWidth(), getHeight()); // draw the page
-			p.image(backgroundTexture.getSprite(0), 0, 0, getWidth(), getHeight()); // draw the page
-			p.popMatrix();
-		} else {
-			// texture is missing
-			p.pushMatrix();
-			p.translate(position.x, position.y);
-			p.scale(size); // size the background will appear in the page view
-			p.rotate(PApplet.radians(angle)); // rotate the page
-			p.scale(flipX, flipY); // flip the page
-			p.noStroke();
-			p.fill(255, 0, 0, 150);
-			p.rectMode(CENTER);
-			p.rect(0, 0, getWidth(), getHeight());
-			p.popMatrix();
-		}
+        } else {
+            hasTexture = false;
+            setWidth(100);
+            setHeight(100);
+        }
 
-	}
 
-	@Override
-	public String getName() {
-		return "background";
-	}
+        setPosition(position);
+    }
 
-	public File getFile() {
-		if (backgroundTexture != null) {
-			return backgroundTexture.getFile();
-		} else {
-			return null;
-		}
-	}
+    @Override
+    public void draw(float scale) {
+
+        if (hasTexture) {
+            // texture isn't missing
+            p.pushMatrix();
+            p.translate(position.x, position.y);
+            p.scale(size); // size the page will appear in the page view
+
+            if (hasShadow) {
+                // draw the shadow
+                p.translate(shadow, shadow);
+                p.fill(0, 40);
+                p.noStroke();
+                p.rectMode(CENTER);
+                p.rotate(PApplet.radians(angle)); // rotate the page
+                p.rect(0, 0, getWidth(), getHeight());
+                p.rotate(PApplet.radians(-angle)); // rotate the page
+                p.translate(-shadow, -shadow);
+            }
+
+            p.rotate(PApplet.radians(angle)); // rotate the page
+            p.imageMode(CENTER);
+            p.image(texture.getSprite(0), 0, 0, getWidth(), getHeight()); // draw the page
+            p.popMatrix();
+
+        } else {
+            // texture is missing
+            p.pushMatrix();
+            p.translate(position.x, position.y);
+            p.scale(size); // size the background will appear in the page view
+            p.rotate(PApplet.radians(angle)); // rotate the page
+            p.scale(flipX, flipY); // flip the page
+            p.noStroke();
+            p.fill(255, 0, 0, 150);
+            p.rectMode(CENTER);
+            p.rect(0, 0, getWidth(), getHeight());
+            p.popMatrix();
+        }
+
+    }
+
+    public void setSize(float size) {
+        super.setSize(size);
+        updateShadow();
+    }
+
+    public void addSize(float size) {
+        super.addSize(size);
+        updateShadow();
+    }
+
+    private void updateShadow() {
+        this.shadow = (int) (shadowOffset / size);
+    }
+
+    public boolean fixedSize() {
+        return texture.fixedSize();
+    }
+
+    @Override
+    public String getName() {
+        return "background";
+    }
+
+    public File getFile() {
+        if (texture != null) {
+            return texture.getFile();
+        } else {
+            return null;
+        }
+    }
 }

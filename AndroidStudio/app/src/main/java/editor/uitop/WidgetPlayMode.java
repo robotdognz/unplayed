@@ -25,7 +25,7 @@ public class WidgetPlayMode extends Widget {
 		editor.camera = new GameCamera();
 		AppLogic.toggleEditor();
 		if (AppLogic.game.player != null) {
-			editor.controller = new PlayerControl(p, AppLogic.game);
+			AppLogic.controller = new PlayerControl(p, AppLogic.game);
 			pageView.updateVisiblePages();
 		}
 	}

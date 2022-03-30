@@ -170,7 +170,7 @@ public class AreaTool implements Tool {
 			p.rect(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
 			p.rectMode(CORNER);
 		}
-		if (edit != null && editor.selected != null && editor.controller instanceof EditorControl
+		if (edit != null && editor.selected != null && AppLogic.controller instanceof EditorControl
 				&& editor.eMode == editorMode.SELECT) {
 			p.noStroke();
 			p.fill(255, 0, 0);

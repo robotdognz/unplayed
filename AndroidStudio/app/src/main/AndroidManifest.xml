@@ -6,14 +6,14 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="Unplayed">
+        <profileable android:shell="true"/>
 
         <activity
-            android:name=".MainActivity"
             android:screenOrientation="portrait"
+            android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true">
 
@@ -21,7 +21,6 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
     </application>
 </manifest>

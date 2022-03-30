@@ -2,14 +2,11 @@ package com.flypuppy.unplayed;
 
 import processing.core.*;
 import game.AppLogic;
-
 import android.content.ClipData;
 import android.content.Context;
 import android.app.Activity;
 import android.net.Uri;
-import android.os.Bundle;
 import android.content.Intent;
-
 import java.util.ArrayList;
 
 public class unplayed extends PApplet {
@@ -181,45 +178,6 @@ public class unplayed extends PApplet {
     public void onDestroy() { //This might be called when the app is killed
         //Save stuff
         super.onDestroy();
-    }
-
-    //Stop navagation bar from appearing on top of the game
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        this.activity = this.getActivity();
-
-        android.view.View decorView = activity.getWindow().getDecorView();
-        decorView.setOnSystemUiVisibilityChangeListener
-                (new android.view.View.OnSystemUiVisibilityChangeListener() {
-                     @Override
-                     public void onSystemUiVisibilityChange(int visibility) {
-                         // Note that system bars will only be "visible" if none of the
-                         // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
-                         if ((visibility & android.view.View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
-                             // TODO: The system bars are visible. Make any desired
-                             // adjustments to your UI, such as showing the action bar or
-                             // other navigational controls.
-                             android.view.View decorView = activity.getWindow().getDecorView();
-                             decorView.setSystemUiVisibility(
-                                     android.view.View.SYSTEM_UI_FLAG_IMMERSIVE
-                                             // Set the content to appear under the system bars so that the
-                                             // content doesn't resize when the system bars hide and show.
-                                             | android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                             | android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                             | android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                             // Hide the nav bar and status bar
-                                             | android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                                             | android.view.View.SYSTEM_UI_FLAG_FULLSCREEN);
-                         } else {
-                             // TODO: The system bars are NOT visible. Make any desired
-                             // adjustments to your UI, such as hiding the action bar or
-                             // other navigational controls.
-                         }
-                     }
-                 }
-                );
     }
 
     //------------------TouchTesting---------------------

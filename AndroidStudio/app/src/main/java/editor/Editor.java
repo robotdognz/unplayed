@@ -59,7 +59,7 @@ public class Editor {
 	private PVector lvCenter;
 
 	// controller
-	public Controller controller; // holds the current controller
+//	public Controller controller; // holds the current controller
 	public boolean controllerActive = true; // is the current controller active
 	public Rectangle point = null; // holds the current selection point in the game world
 	public boolean eventVis; // are events visible
@@ -107,8 +107,9 @@ public class Editor {
 		this.pageView = AppLogic.game.getPageView();
 		this.world = AppLogic.game.getWorld();
 		this.camera = camera;
-		this.controller = new CameraControl(p, this);
+//		this.controller = new CameraControl(p, this);
 		this.editorTop = new EditorTop(p, this);
+		AppLogic.controller = new CameraControl(p, this);
 		this.editorBottom = new EditorBottom(p, this, AppLogic.texture);
 		this.editorSide = new EditorSide(p, this);
 		this.eJSON = new EditorJSON(p, AppLogic.texture, toast);
@@ -148,7 +149,7 @@ public class Editor {
 		// re-enabled
 		if (controllerActive && !nextTouchInactive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
 				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
-			controller.step(touches); // draw event for controls
+			AppLogic.controller.step(touches); // draw event for controls
 		}
 
 		frameCounter();
@@ -161,7 +162,7 @@ public class Editor {
 			world.retrieve(screenObjects, AppLogic.game.screenSpace);
 		}
 
-		if (!(controller instanceof EditorControl)) {
+		if (!(AppLogic.controller instanceof EditorControl)) {
 			point = null;
 		}
 
@@ -193,7 +194,7 @@ public class Editor {
 				p.translate(-Camera.getCenter().x, -Camera.getCenter().y);
 
 				// draw selection box around selected object
-				if (selected != null && !(controller instanceof PlayerControl)) {
+				if (selected != null && !(AppLogic.controller instanceof PlayerControl)) {
 					if (selected instanceof Page || selected instanceof Background) {
 						selected.drawSelected(p.g, currentScale);
 					}
@@ -357,7 +358,7 @@ public class Editor {
 
 		// draw selection box around selected object
 		if (selected != null && !(selected instanceof Page || selected instanceof Background)
-				&& !(controller instanceof PlayerControl)) {
+				&& !(AppLogic.controller instanceof PlayerControl)) {
 			selected.drawSelected(p.g, currentScale);
 		}
 
@@ -380,7 +381,7 @@ public class Editor {
 		}
 		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
 				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
-			controller.touchStarted(touch); // Controls for touch started event
+			AppLogic.controller.touchStarted(touch); // Controls for touch started event
 		}
 	}
 
@@ -399,7 +400,7 @@ public class Editor {
 		}
 		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
 				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
-			controller.touchEnded(touch); // Controls for touch moved event
+			AppLogic.controller.touchEnded(touch); // Controls for touch moved event
 		}
 
 	}
@@ -414,7 +415,7 @@ public class Editor {
 		}
 		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
 				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
-			controller.touchMoved(touch, touches); // Controls for touch moved event
+			AppLogic.controller.touchMoved(touch, touches); // Controls for touch moved event
 		}
 	}
 
@@ -424,7 +425,7 @@ public class Editor {
 		}
 		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
 				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
-			controller.onPinch(touches, x, y, d); // controlls for on pinch event
+			AppLogic.controller.onPinch(touches, x, y, d); // controlls for on pinch event
 		}
 	}
 
@@ -434,7 +435,7 @@ public class Editor {
 		}
 		if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
 				&& !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
-			controller.onRotate(x, y, angle); // controlls for on rotate event
+			AppLogic.controller.onRotate(x, y, angle); // controlls for on rotate event
 		}
 	}
 
