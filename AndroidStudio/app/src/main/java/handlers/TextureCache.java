@@ -45,8 +45,9 @@ public class TextureCache {
     static private PImage pageViewBackgroundLOD32;
 
     static private PImage controlsLeft;
-    static private PImage controlsRight;
     static private PImage controlsJump;
+    static private PImage controlsRight;
+    static private PImage controlsMenu;
 
     // images
     private HashMap<File, ImageHandler> imageMap;
@@ -97,8 +98,9 @@ public class TextureCache {
 
         // control sprites
         controlsLeft = p.loadImage("ControlsLeft.png");
-        controlsRight = p.loadImage("ControlsRight.png");
         controlsJump = p.loadImage("ControlsJump.png");
+        controlsRight = p.loadImage("ControlsRight.png");
+        controlsMenu = p.loadImage("ControlsMenu.png");
 
         // level assets
         loadLevelImages();
@@ -144,12 +146,16 @@ public class TextureCache {
     static public PImage getControlsLeft(){
         return controlsLeft;
     }
-    static public PImage getControlsRight(){
-        return controlsRight;
-    }
     static public PImage getControlsJump(){
         return controlsJump;
     }
+    static public PImage getControlsRight(){
+        return controlsRight;
+    }
+    static public PImage getControlsMenu(){
+        return controlsMenu;
+    }
+
 
     private void loadTiles() {
 

@@ -17,7 +17,6 @@ import camera.FreeCamera;
 import camera.GameCamera;
 import controllers.Controller;
 import controllers.PlayerControl;
-import editor.DebugOutput;
 import editor.Editor;
 import editor.uitop.WidgetPauseMenu;
 import handlers.LoadingHandler;
@@ -60,11 +59,7 @@ public class AppLogic {
     public static ArrayList<PVector> touches; // all the on screen touches
     public static PVector lastTouch; // the last on screen touch
 
-    public static ArrayList<Widget> widgets;
-    public static float widgetSpacing; // size of gap between widgets
-    public static float widgetHeight;
-
-    public static OnScreenControls drawControls; // draws the on screen controls
+    public static OnScreenControls drawUI; // draws the on screen controls
 
     private static ArrayList<File> levels;
     private static int currentLevel;
@@ -89,7 +84,6 @@ public class AppLogic {
         editorToggle = false; // editor is closed on startup
         touches = new ArrayList<>();
         lastTouch = new PVector(0, 0);
-        widgets = new ArrayList<>();
 
         texture = new TextureCache(p, context);
         gesture = new KetaiGesture(p);
@@ -104,13 +98,7 @@ public class AppLogic {
         texture.passGame(game);
         controller = new PlayerControl(p, game);
         editor = null;
-        drawControls = new OnScreenControls(p.width, p.height);
-
-        // setup non editor widget(s)
-        Widget menuW = new WidgetPauseMenu(p, game, null);
-        widgets.add(menuW);
-        widgetSpacing = p.width / (widgets.size() + 1f);
-        widgetHeight = p.displayWidth / 12f; // 120
+        drawUI = new OnScreenControls(p, p.width, p.height);
 
         // setup shared preferences (used for save games)
         settings = activity.getPreferences(0);
@@ -425,25 +413,20 @@ public class AppLogic {
             game.draw(); // draw the game
         }
 
+        float controlHeight = p.height;
+
         if (editorToggle && editor != null) {
             editor.draw(deltaTime, lastTouch, menu);
-        } else {
-            // TODO: this needs to be updated so the widget is drawn from drawControls. It's height should be accessible from the same place, for calculating camera regions
-            for (int i = 0; i < widgets.size(); i++) {
-                widgets.get(i).draw(deltaTime, widgetSpacing * (i + 1), widgetHeight);
-                widgets.get(i).updateActive();
-                if (menu == null) {
-                    widgets.get(i).hover(lastTouch);
-                }
-            }
+            controlHeight = editor.getBottom();
         }
 
         // on screen controls
         // tell the controls the current state
-        boolean draw = (game.player != null && controller instanceof PlayerControl && menu == null && !editorToggle);
-        drawControls.step(deltaTime, draw, p.height);
+        boolean drawControls = (game.player != null && controller instanceof PlayerControl && menu == null);
+        boolean drawMenu = !editorToggle;
+        drawUI.step(deltaTime, drawControls, controlHeight, drawMenu, lastTouch);
         // draw the controls
-        drawControls.draw(p);
+        drawUI.draw(p);
 
         // draw the menu
         if (menu != null) {
@@ -487,9 +470,7 @@ public class AppLogic {
         if (editorToggle && editor != null) {
             editor.touchEnded(lastTouch);
         } else {
-            for (int i = 0; i < widgets.size(); i++) {
-                widgets.get(i).click();
-            }
+            drawUI.touchEnded();
         }
 
         if (menu != null) {

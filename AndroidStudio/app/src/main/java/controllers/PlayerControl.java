@@ -37,10 +37,10 @@ public class PlayerControl implements Controller {
             }
             if (left > right) {
                 game.player.left();
-                AppLogic.drawControls.left();
+                AppLogic.drawUI.left();
             } else if (left < right) {
                 game.player.right();
-                AppLogic.drawControls.right();
+                AppLogic.drawUI.right();
             } else {
                 game.player.still();
             }

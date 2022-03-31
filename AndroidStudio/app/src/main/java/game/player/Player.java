@@ -1506,7 +1506,7 @@ public class Player extends Editable {
             dynamicBody.applyLinearImpulse(new Vec2(xImpulse, yImpulse), dynamicBody.getWorldCenter(), true);
 
             // successful jump, tell that to the on screen controls
-            AppLogic.drawControls.jump();
+            AppLogic.drawUI.jump();
         }
 
         leftStickTimer.stop();

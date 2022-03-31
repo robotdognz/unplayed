@@ -17,7 +17,6 @@ public class WidgetRestart extends Widget {
 	@Override
 	public void clicked() {
 		AppLogic.game.startGame();
-
 	}
 
 	@Override

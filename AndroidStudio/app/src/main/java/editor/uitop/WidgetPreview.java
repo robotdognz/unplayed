@@ -9,11 +9,11 @@ import game.PageView;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class WidgetPlayMode extends Widget {
+public class WidgetPreview extends Widget {
 	boolean previousStatus = false;
 	PageView pageView;
 
-	public WidgetPlayMode(PApplet p, Editor editor, Toolbar parent) {
+	public WidgetPreview(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		icon = p.loadImage(folder + "Pause.png");
 		closeAfterSubWidget = true;
