@@ -241,7 +241,7 @@ public class PageView {
         Rectangle area = getPlayerVisibleArea();
         if (area != null) {
             // found pages with visible player
-            pageCamera.update(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,
+            pageCamera.updateGameplay(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,
                     area.getBottomRight().y);
         } else {
             // no pages with visible player, just do whole level instead, minus menus
@@ -269,7 +269,7 @@ public class PageView {
             float height = maxY - minY;
 
             area = new Rectangle(x, y, width, height);
-            pageCamera.update(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,
+            pageCamera.updateGameplay(area.getTopLeft().x, area.getTopLeft().y, area.getBottomRight().x,
                     area.getBottomRight().y);
         }
     }

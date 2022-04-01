@@ -49,6 +49,7 @@ public class OnScreenControls {
     // fields accessed by PageViewCamera so that level doesn't overlap on screen UI
     private final float levelAreaHeight;
     private final float levelHeightByWidthRatio;
+    private final float screenHeightByWidthRatio;
     private final float levelYOffset;
 
     public OnScreenControls(PApplet p, int screenWidth, int screenHeight) {
@@ -90,6 +91,7 @@ public class OnScreenControls {
         this.levelAreaHeight = (controlsYPosition - controlButtonArea) - (menuYPosition + menuButtonArea);
         this.levelHeightByWidthRatio = levelAreaHeight / screenWidth;
         this.levelYOffset = (menuButtonArea - controlButtonArea) / 2;
+        this.screenHeightByWidthRatio = screenHeight / (float) screenWidth;
 //        PApplet.print((16f / 9f) + " : " + levelHeightByWidthRatio);
 //        PApplet.print(idealUIHeight + " : " + levelAreaHeight);
     }
@@ -234,5 +236,9 @@ public class OnScreenControls {
 
     public float getLevelYOffset() {
         return levelYOffset;
+    }
+
+    public float getScreenHeightByWidthRatio() {
+        return screenHeightByWidthRatio;
     }
 }

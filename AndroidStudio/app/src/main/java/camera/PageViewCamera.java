@@ -75,7 +75,7 @@ public class PageViewCamera {
 
         if (!cameraArea.sameDimensions(newCameraArea)) { // camera is changing this step
             // update camera sub scale
-            newSubScale = calculateSubScale();
+            newSubScale = calculateSubScale(newCameraArea.getWidth(), newCameraArea.getHeight());
         }
 
         // amount to lerp all the values
@@ -111,11 +111,9 @@ public class PageViewCamera {
         return willMove;
     }
 
-    private static float calculateSubScale() {
+    private static float calculateSubScale(float cameraWidth, float cameraHeight) {
         // calculate newCamera area values
-        float newCameraHeight = newCameraArea.getHeight();
-        float newCameraWidth = newCameraArea.getWidth();
-        float newCameraHeightByWidthRatio = newCameraHeight / newCameraWidth;
+        float cameraHeightByWidthRatio = cameraHeight / cameraWidth;
 
         // calculate phone screen area values
         float screenWidth = p.width;
@@ -124,10 +122,10 @@ public class PageViewCamera {
         float levelAreaHeight = AppLogic.drawUI.getLevelAreaHeight();
         float levelHeightByWidthRatio = AppLogic.drawUI.getLevelHeightByWidthRatio();
 
-        if (newCameraHeightByWidthRatio > levelHeightByWidthRatio) {
+        if (cameraHeightByWidthRatio > levelHeightByWidthRatio) {
             // newCamera area has a taller aspect ratio than the phone screen
             // do 'subScale' field in addition to the 'scale' field
-            return levelAreaHeight / (screenWidth / newCameraWidth) / newCameraHeight;
+            return levelAreaHeight / (screenWidth / cameraWidth) / cameraHeight;
         } else {
             // newCamera area has shorter aspect ratio than the phone screen
             // leave camera scale to the 'scale' field
@@ -138,63 +136,91 @@ public class PageViewCamera {
     public void draw(float scale) {
         int strokeWeight = Math.max(1, (int) (scale * 0.5f));
 
-        // draw page area
+        // draw page area (region directly around the active pages)
         p.noFill();
 //		p.stroke(255, 0, 0); // red
         p.stroke(100, 170); // grey
         p.strokeWeight(strokeWeight);
         p.rectMode(CORNERS);
-        p.rect(focusArea.getTopLeft().x, focusArea.getTopLeft().y, focusArea.getBottomRight().x,
-                focusArea.getBottomRight().y);
+        p.rect(focusArea.getTopLeft().x, focusArea.getTopLeft().y, focusArea.getBottomRight().x, focusArea.getBottomRight().y);
 
-//		// draw new camera area
-//		p.noFill();
-//		p.stroke(0, 255, 0); // green
-//		p.strokeWeight(strokeWeight);
-//		p.rectMode(CORNERS);
-//		p.rect(newCameraArea.getTopLeft().x, newCameraArea.getTopLeft().y, newCameraArea.getBottomRight().x,
-//				newCameraArea.getBottomRight().y);
+        // draw screen area (region that will be rendered in game)
+        Rectangle screen = getCameraScreen(cameraArea);
+        if (screen != null) {
+            p.noFill();
+            p.stroke(255, 0, 0); // red
+            p.strokeWeight(strokeWeight);
+            p.rectMode(CORNERS);
+            p.rect(screen.getTopLeft().x, screen.getTopLeft().y, screen.getBottomRight().x, screen.getBottomRight().y);
+        }
 
-        // draw camera area
+        // draw camera area (padded region around the active pages)
         p.noFill();
 //		p.stroke(0, 0, 255); // blue
         p.stroke(100, 170); // grey
         p.strokeWeight(strokeWeight);
         p.rectMode(CORNERS);
-        p.rect(cameraArea.getTopLeft().x, cameraArea.getTopLeft().y, cameraArea.getBottomRight().x,
-                cameraArea.getBottomRight().y);
+        p.rect(cameraArea.getTopLeft().x, cameraArea.getTopLeft().y, cameraArea.getBottomRight().x, cameraArea.getBottomRight().y);
 
     }
 
-    public void update(float minX, float minY, float maxX, float maxY) {
+    /**
+     * Passes a region of the page view to the camera for it to focus on.
+     * Used when focusing on the level during gameplay.
+     *
+     * @param minX leftmost edge
+     * @param minY topmost edge
+     * @param maxX rightmost edge
+     * @param maxY bottommost edge
+     */
+    public void updateGameplay(float minX, float minY, float maxX, float maxY) {
         // update page area boundary
         focusArea.setCorners(minX, minY, maxX, maxY);
 
-//        PApplet.print("Update Page: " + minX + " " + minY + " " + maxX + " " + maxY);
-
-        // calculate center
+        // update newCamera area
         updateNewCamera();
-        updateNewScale();
-        updateNewCenter();
+
+        // update newScale
+        newScale = newCameraArea.getWidth();
+
+        // update newCenter and add offset
+        newCenter = newCameraArea.getRectangleCenter();
+        // calculate what sub scale will be, needed for offset calculation
+        float futureSubScale = calculateSubScale(newCameraArea.getWidth(), newCameraArea.getHeight());
+        // calculate offset
+        float offset = AppLogic.drawUI.getLevelYOffset() / ((float) p.width / newScale) / futureSubScale;
+        // add offset to newCenter
+        newCenter.y -= offset;
     }
 
+    /**
+     * Passes a region of the page view to the camera for it to focus on.
+     * Used when focusing on a menu, so no UI offset.
+     *
+     * @param minX leftmost edge
+     * @param minY topmost edge
+     * @param maxX rightmost edge
+     * @param maxY bottommost edge
+     */
     public void updateMenu(float minX, float minY, float maxX, float maxY) {
         // update page area boundary
         focusArea.setCorners(minX, minY, maxX, maxY);
 
-//        PApplet.print("Update Menu " + minX + " " + minY + " " + maxX + " " + maxY);
-
-        // calculate center
+        // update newCamera area
         updateNewCamera();
-        updateNewScale();
-        updateNewCenterMenu();
+
+        // update newScale
+        newScale = newCameraArea.getWidth();
+
+        // update newCenter and add offset
+        newCenter = newCameraArea.getRectangleCenter();
     }
 
     public void initCamera(float minX, float minY, float maxX, float maxY) {
         // update page area boundary
         focusArea.setCorners(minX, minY, maxX, maxY);
 
-        // set camera area, doesn't use bottom area padding, assumes focusing on a menu
+        // set camera area
         float topLeftX = focusArea.getTopLeft().x - areaPadding;
         float topLeftY = focusArea.getTopLeft().y - areaPadding;
         float bottomRightX = focusArea.getBottomRight().x + areaPadding;
@@ -202,7 +228,7 @@ public class PageViewCamera {
         cameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
         newCameraArea = cameraArea.copy();
 
-        // set center
+        // set center, no offset, assumes focusing on a menu
         newCenter = newCameraArea.getRectangleCenter();
         newCenter = center.copy();
 
@@ -219,26 +245,6 @@ public class PageViewCamera {
         float bottomRightY = focusArea.getBottomRight().y + areaPadding;
         // update newCameraArea
         newCameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
-    }
-
-    private static void updateNewCenter() {
-        // update new center
-        newCenter = newCameraArea.getRectangleCenter();
-
-        // calculate what sub scale will be, needed for offset calculation
-        float futureSubScale = calculateSubScale();
-        // calculate offset
-        float offset = AppLogic.drawUI.getLevelYOffset() / ((float) p.width / newScale) / futureSubScale;
-        // add offset to newCenter
-        newCenter.y -= offset;
-    }
-
-    private static void updateNewCenterMenu() {
-        newCenter = newCameraArea.getRectangleCenter();
-    }
-
-    private static void updateNewScale() {
-        newScale = newCameraArea.getWidth();
     }
 
     public Rectangle getCameraArea() {
@@ -260,8 +266,28 @@ public class PageViewCamera {
         return output;
     }
 
-    public Rectangle getCameraWindow(Rectangle area) {
+    public Rectangle getCameraScreen(Rectangle area) {
         // get the screen rectangle given an area of the level that will be focussed on
+
+        if (area != null) {
+            float cameraScale = area.getWidth();
+            float cameraSubScale = calculateSubScale(area.getWidth(), area.getHeight());
+            PVector cameraCenter = area.getRectangleCenter();
+
+            float width = area.getWidth() / cameraSubScale;
+            float widthDiff = (width - area.getWidth()) * 0.5f;
+
+            // only apply this when focusing on level, not menu
+            float offset = AppLogic.drawUI.getLevelYOffset() / ((float) p.width / newScale) / cameraSubScale;
+
+//            float height = width * AppLogic.drawUI.getLevelHeightByWidthRatio(); // what will be in the inside UI bounds
+            float height = width * AppLogic.drawUI.getScreenHeightByWidthRatio(); // what will be in the full screen
+            float heightDiff = (height - area.getHeight()) * 0.5f;
+
+            Rectangle output = new Rectangle(area.getX()-widthDiff, area.getY()-heightDiff-offset, width, height);
+            return output;
+
+        }
 
         return null;
     }

@@ -64,10 +64,10 @@ public abstract class Menu {
     protected void setAngle(float range) {
         if (previousTilt) {
             angle = angleOffset;
-            previousTilt = !previousTilt;
+            previousTilt = false;
         } else {
             angle = -angleOffset;
-            previousTilt = !previousTilt;
+            previousTilt = true;
         }
 
         angle += (float) (Math.random() * range) - (range / 2);
@@ -80,7 +80,7 @@ public abstract class Menu {
     protected void constructMenu() {
         // get's called in the child class constructor
         // create basic menu
-        menuCenterX = p.width / 2;
+        menuCenterX = p.width * 0.5f;
         menuWidth = buttonDistance * 2; // buttonWidth + buttonDistance * 2;
         menuHeight = buttonDistance;
         float largestWidth = 0;
@@ -92,7 +92,7 @@ public abstract class Menu {
         }
         menuWidth += largestWidth;
 
-        menuTopY = p.height / 2 - menuHeight / 2;
+        menuTopY = p.height * 0.5f - menuHeight * 0.5f;
 
     }
 
