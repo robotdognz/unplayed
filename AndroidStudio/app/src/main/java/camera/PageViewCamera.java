@@ -113,8 +113,8 @@ public class PageViewCamera {
 
     private static float calculateSubScale() {
         // calculate newCamera area values
-        float newCameraHeight = newCameraArea.getBottomRight().y - newCameraArea.getTopLeft().y;
-        float newCameraWidth = newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x;
+        float newCameraHeight = newCameraArea.getHeight();
+        float newCameraWidth = newCameraArea.getWidth();
         float newCameraHeightByWidthRatio = newCameraHeight / newCameraWidth;
 
         // calculate phone screen area values
@@ -195,31 +195,34 @@ public class PageViewCamera {
         focusArea.setCorners(minX, minY, maxX, maxY);
 
         // set camera area, doesn't use bottom area padding, assumes focusing on a menu
-        cameraArea.setCorners(focusArea.getTopLeft().x - areaPadding, focusArea.getTopLeft().y - areaPadding,
-                focusArea.getBottomRight().x + areaPadding, focusArea.getBottomRight().y + areaPadding);
-        newCameraArea = cameraArea.copy();
-        // set center
-        int centerX = (int) ((newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x) / 2
-                + newCameraArea.getTopLeft().x);
-        int centerY = (int) ((newCameraArea.getTopLeft().y - newCameraArea.getBottomRight().y) / 2
-                + newCameraArea.getBottomRight().y);
-        center.x = centerX;
-        center.y = centerY;
-        newCenter = center.copy();
-        // set scale
-        scale = (int) Math.abs(newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x);
-        newScale = scale;
-    }
-
-    private static void updateNewCamera() {
         float topLeftX = focusArea.getTopLeft().x - areaPadding;
         float topLeftY = focusArea.getTopLeft().y - areaPadding;
         float bottomRightX = focusArea.getBottomRight().x + areaPadding;
         float bottomRightY = focusArea.getBottomRight().y + areaPadding;
+        cameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
+        newCameraArea = cameraArea.copy();
+
+        // set center
+        newCenter = newCameraArea.getRectangleCenter();
+        newCenter = center.copy();
+
+        // set scale
+        scale = newCameraArea.getWidth();
+        newScale = scale;
+    }
+
+    private static void updateNewCamera() {
+        // add padding
+        float topLeftX = focusArea.getTopLeft().x - areaPadding;
+        float topLeftY = focusArea.getTopLeft().y - areaPadding;
+        float bottomRightX = focusArea.getBottomRight().x + areaPadding;
+        float bottomRightY = focusArea.getBottomRight().y + areaPadding;
+        // update newCameraArea
         newCameraArea.setCorners(topLeftX, topLeftY, bottomRightX, bottomRightY);
     }
 
     private static void updateNewCenter() {
+        // update new center
         newCenter = newCameraArea.getRectangleCenter();
 
         // calculate what sub scale will be, needed for offset calculation
@@ -235,7 +238,7 @@ public class PageViewCamera {
     }
 
     private static void updateNewScale() {
-        newScale = (int) Math.abs(newCameraArea.getBottomRight().x - newCameraArea.getTopLeft().x);
+        newScale = newCameraArea.getWidth();
     }
 
     public Rectangle getCameraArea() {
