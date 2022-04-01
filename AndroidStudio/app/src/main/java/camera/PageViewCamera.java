@@ -28,6 +28,8 @@ public class PageViewCamera {
 
     static private final float zoomSpeed = 0.05f; // lower is faster
 
+    static private Rectangle screenArea; // represents the region of the level that will be visible on screen
+
     public PageViewCamera(PApplet papplet) {
         p = papplet;
 
@@ -47,6 +49,8 @@ public class PageViewCamera {
 
         subScale = 1;
         newSubScale = subScale;
+
+        screenArea = new Rectangle(0, 0, 0, 0);
 
     }
 
@@ -76,6 +80,9 @@ public class PageViewCamera {
         if (!cameraArea.sameDimensions(newCameraArea)) { // camera is changing this step
             // update camera sub scale
             newSubScale = calculateSubScale(newCameraArea.getWidth(), newCameraArea.getHeight());
+
+            // update screen area rectangle
+            screenArea = calculateScreenArea(cameraArea, false);
         }
 
         // amount to lerp all the values
@@ -145,22 +152,23 @@ public class PageViewCamera {
         p.rect(focusArea.getTopLeft().x, focusArea.getTopLeft().y, focusArea.getBottomRight().x, focusArea.getBottomRight().y);
 
         // draw screen area (region that will be rendered in game)
-        Rectangle screen = getCameraScreen(cameraArea);
-        if (screen != null) {
+//        Rectangle screen = getCameraScreen(cameraArea);
+        if (screenArea != null) {
             p.noFill();
-            p.stroke(255, 0, 0); // red
+//            p.stroke(255, 0, 0); // red
+            p.stroke(100, 170); // grey
             p.strokeWeight(strokeWeight);
             p.rectMode(CORNERS);
-            p.rect(screen.getTopLeft().x, screen.getTopLeft().y, screen.getBottomRight().x, screen.getBottomRight().y);
+            p.rect(screenArea.getTopLeft().x, screenArea.getTopLeft().y, screenArea.getBottomRight().x, screenArea.getBottomRight().y);
         }
 
-        // draw camera area (padded region around the active pages)
-        p.noFill();
-//		p.stroke(0, 0, 255); // blue
-        p.stroke(100, 170); // grey
-        p.strokeWeight(strokeWeight);
-        p.rectMode(CORNERS);
-        p.rect(cameraArea.getTopLeft().x, cameraArea.getTopLeft().y, cameraArea.getBottomRight().x, cameraArea.getBottomRight().y);
+//        // draw camera area (padded region around the active pages)
+//        p.noFill();
+////		p.stroke(0, 0, 255); // blue
+//        p.stroke(100, 170); // grey
+//        p.strokeWeight(strokeWeight);
+//        p.rectMode(CORNERS);
+//        p.rect(cameraArea.getTopLeft().x, cameraArea.getTopLeft().y, cameraArea.getBottomRight().x, cameraArea.getBottomRight().y);
 
     }
 
@@ -266,29 +274,42 @@ public class PageViewCamera {
         return output;
     }
 
-    public Rectangle getCameraScreen(Rectangle area) {
+    /**
+     * Calculates the area of the level that will be rendered on screen given a camera focus region
+     *
+     * @param area the focus region we want to calculate the on screen render region for
+     * @param menu is this region a menu
+     *
+     * @return screen visible area
+     */
+    public Rectangle calculateScreenArea(Rectangle area, boolean menu) {
         // get the screen rectangle given an area of the level that will be focussed on
 
         if (area != null) {
             float cameraScale = area.getWidth();
             float cameraSubScale = calculateSubScale(area.getWidth(), area.getHeight());
-            PVector cameraCenter = area.getRectangleCenter();
 
             float width = area.getWidth() / cameraSubScale;
             float widthDiff = (width - area.getWidth()) * 0.5f;
 
             // only apply this when focusing on level, not menu
-            float offset = AppLogic.drawUI.getLevelYOffset() / ((float) p.width / newScale) / cameraSubScale;
+            float offset = 0;
+            if (!menu) {
+                offset = AppLogic.drawUI.getLevelYOffset() / ((float) p.width / cameraScale) / cameraSubScale;
+            }
 
 //            float height = width * AppLogic.drawUI.getLevelHeightByWidthRatio(); // what will be in the inside UI bounds
             float height = width * AppLogic.drawUI.getScreenHeightByWidthRatio(); // what will be in the full screen
             float heightDiff = (height - area.getHeight()) * 0.5f;
 
-            Rectangle output = new Rectangle(area.getX()-widthDiff, area.getY()-heightDiff-offset, width, height);
-            return output;
+            return new Rectangle(area.getX() - widthDiff, area.getY() - heightDiff - offset, width, height);
 
         }
 
         return null;
+    }
+
+    public static Rectangle getScreenArea() {
+        return screenArea;
     }
 }

@@ -1,6 +1,9 @@
 (Major version).(Minor version).(Revision number)
 
-1.3.1: TBD
+1.3.2: TBD
+-
+
+1.3.1: Polish patch
 -Cleaned up a bunch of depricted code
 -Rebuilt the image loading system to improve loading screens and backgrounds
 -Added shadow support to backgrounds
@@ -12,6 +15,7 @@
 -Added better in game menu button system (temp asset)
 -Updated editor preview menu to be more useful and clean
 -Updated camera algorithms to fit level focus area within UI correctly
+-Updated menu systems and level loading to properly take into account where the camera is
 
 1.3.0: Pre-release 'big push' build
 

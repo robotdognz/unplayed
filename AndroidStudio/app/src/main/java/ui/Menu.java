@@ -97,12 +97,14 @@ public abstract class Menu {
     }
 
     public void buildPageMenu(PVector cameraCenter, Rectangle pageArea, PageViewCamera camera) {
-        // called when there is a level on screen and we want to construct a menu off
-        // screen
+        // called when there is a level on screen and we want to construct a menu off screen
 
         // TODO: this needs work, it should build the menu on the closest side and not use the current camera position
 
         position = new PVector(0, 0);
+
+        // expand the pageArea rectangle to include the current camera screenArea
+        pageArea.expandToFit(PageViewCamera.getScreenArea());
 
         // figure out side of pageArea that cameraCenter is closest to
         float leftDiff = Math.abs(cameraCenter.x - pageArea.getTopLeft().x) + camera.getSideAreaPadding();

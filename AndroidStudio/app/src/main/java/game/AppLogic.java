@@ -254,6 +254,13 @@ public class AppLogic {
             Rectangle playerArea = game.getPageView().getPlayerVisibleArea();
             Rectangle menuArea = menu.getArea();
 
+            // calculate the amount of padding there will be around the player area, this is used to prevent
+            // the level being created too close to the current menu when tall screen scaling is used
+            Rectangle visibleArea = game.getPageView().getPageCamera().calculateScreenArea(playerArea, false);
+            float horizontalOffset = visibleArea.getWidth() - playerArea.getWidth() + 200;
+            // the 200 is 2x the camera edge padding (needed when not using tall screen space scaling),
+            // shouldn't be hard coded like this
+
             // get edge of pageArea closest to center of playerArea
             PVector playerAreaCenter = playerArea.getRectangleCenter();
             PVector pageAreaCenter = pageArea.getRectangleCenter();
@@ -270,12 +277,10 @@ public class AppLogic {
 
             if (diff.x <= 0) {
                 // move off to left edge of pageArea
-                offsetX -= pageArea.getBottomRight().x - playerAreaCenter.x + menuArea.getWidth() / 2 + 200;
-                // the 200 is 2x the camera edge padding, shouldn't be hard coded like this
+                offsetX -= pageArea.getBottomRight().x - playerAreaCenter.x + menuArea.getWidth() / 2 + horizontalOffset;
             } else {
                 // move off to right edge of pageArea
-                offsetX += playerAreaCenter.x - pageArea.getTopLeft().x + menuArea.getWidth() / 2 + 200;
-                // the 200 is 2x the camera edge padding, shouldn't be hard coded like this
+                offsetX += playerAreaCenter.x - pageArea.getTopLeft().x + menuArea.getWidth() / 2 + horizontalOffset;
             }
 
             game.getPageView().offsetAll(offsetX, offsetY);

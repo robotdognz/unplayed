@@ -141,10 +141,10 @@ public class PageView {
             if (!AppLogic.editorToggle || getPageCount() > 0) {
                 // draw the menu in page view if there are pages, or not in editor
                 storedMenu.drawInWorld(currentScale);
-                if (removeMenu == true && (storedMenu.leftOf(pageCamera.getCameraArea().getTopLeft().x)
-                        || storedMenu.rightOf(pageCamera.getCameraArea().getBottomRight().x)
-                        || storedMenu.above(pageCamera.getCameraArea().getTopLeft().y)
-                        || storedMenu.below(pageCamera.getCameraArea().getBottomRight().y))) {
+                if (removeMenu == true && (storedMenu.leftOf(pageCamera.getScreenArea().getTopLeft().x)
+                        || storedMenu.rightOf(pageCamera.getScreenArea().getBottomRight().x)
+                        || storedMenu.above(pageCamera.getScreenArea().getTopLeft().y)
+                        || storedMenu.below(pageCamera.getScreenArea().getBottomRight().y))) {
                     removeMenu = false;
                     storedMenu = null;
                 }
@@ -342,13 +342,16 @@ public class PageView {
         }
     }
 
+    /**
+     * @return area of all objects in level, including menus
+     */
     public Rectangle getFullArea() {
         float minX = Float.POSITIVE_INFINITY;
         float minY = Float.POSITIVE_INFINITY;
         float maxX = Float.NEGATIVE_INFINITY;
         float maxY = Float.NEGATIVE_INFINITY;
 
-        // get area of pages
+        // get area of page view objects
         for (PageViewObject object : pageViewObjects) {
             minX = Math.min(minX, object.getLeftmostPoint());
             minY = Math.min(minY, object.getTopmostPoint());
@@ -375,6 +378,9 @@ public class PageView {
         return new Rectangle(x, y, width, height);
     }
 
+    /**
+     * @return area of all objects in level, but not including menus
+     */
     public Rectangle getLevelArea() {
         float minX = Float.POSITIVE_INFINITY;
         float minY = Float.POSITIVE_INFINITY;
