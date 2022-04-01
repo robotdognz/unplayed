@@ -18,7 +18,6 @@ import camera.GameCamera;
 import controllers.Controller;
 import controllers.PlayerControl;
 import editor.Editor;
-import editor.uitop.WidgetPauseMenu;
 import handlers.LoadingHandler;
 import handlers.TextureCache;
 import misc.Converter;
@@ -33,7 +32,6 @@ import processing.event.TouchEvent;
 import ui.LaunchMenu;
 import ui.LoadingMenu;
 import ui.Menu;
-import ui.Widget;
 
 //handles all of the logic at the application level
 public class AppLogic {
@@ -321,7 +319,7 @@ public class AppLogic {
         Menu temp = new LaunchMenu(p);
         Rectangle pageArea = game.getPageView().getFullArea();
 
-        temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
+        temp.buildPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
         addMenu(temp);
     }
 
@@ -331,7 +329,7 @@ public class AppLogic {
         Menu temp = new LoadingMenu(p, loading);
         Rectangle pageArea = game.getPageView().getFullArea();
 
-        temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
+        temp.buildPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
         addMenu(temp);
     }
 

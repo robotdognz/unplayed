@@ -96,12 +96,11 @@ public abstract class Menu {
 
     }
 
-    public void buldPageMenu(PVector cameraCenter, Rectangle pageArea, PageViewCamera camera) {
+    public void buildPageMenu(PVector cameraCenter, Rectangle pageArea, PageViewCamera camera) {
         // called when there is a level on screen and we want to construct a menu off
         // screen
 
-        // TODO: this needs work, it should build the menu on the closest side and not
-        // use the current camera position
+        // TODO: this needs work, it should build the menu on the closest side and not use the current camera position
 
         position = new PVector(0, 0);
 
@@ -122,7 +121,7 @@ public abstract class Menu {
         setupMenuContents();
     }
 
-    public void buldPageMenu() {
+    public void buildPageMenu() {
         // called when we just want to make a menu in the middle of the screen
 
         position = new PVector(0, 0);

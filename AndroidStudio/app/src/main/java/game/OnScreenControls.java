@@ -46,6 +46,11 @@ public class OnScreenControls {
     private final CountdownTimer menuTint;
     private final int tintShade; // tint shade used for tinting buttons when pressed
 
+    // fields accessed by PageViewCamera so that level doesn't overlap on screen UI
+    private final float levelAreaHeight;
+    private final float levelHeightByWidthRatio;
+    private final float levelYOffset;
+
     public OnScreenControls(PApplet p, int screenWidth, int screenHeight) {
         this.p = p;
 
@@ -57,28 +62,36 @@ public class OnScreenControls {
 
 
         // calculate control height based on screen aspect ratio
+        // this ensures that the ui will be placed in the same positions across different phones
         float idealRatio = 9f / 16f; // the aspect ratio the game is built for
-        float idealHeight = screenWidth / idealRatio; // gives the height (in pixels) the game UI should work at, relative to the actual width
-        float buttonVerticalOffset = (screenHeight - idealHeight) / 2f;
+        float idealUIHeight = screenWidth / idealRatio; // gives the height (in pixels) the game UI should work at, relative to the actual width
+        float buttonVerticalOffset = (screenHeight - idealUIHeight) / 2f;
         this.controlsInGameHeight = screenHeight - buttonVerticalOffset;
         this.controlsYPosition = this.controlsInGameHeight;
 
+
         // calculate menu height based on screen aspect ratio
-        this.menuButtonArea = screenWidth / 6f;
+        this.menuButtonArea = screenWidth / 6f; //screenWidth / 6f
         this.menuButtonSize = menuButtonArea * 0.8f;
         this.menuInGameHeight = buttonVerticalOffset;
         this.menuYPosition = this.menuInGameHeight;
         this.menuXPosition = screenWidth / 2f;
 
 
-        fade = new CountdownTimer(0.5f);
+        this.fade = new CountdownTimer(0.5f);
         float tintFadeTime = 0.2f;
-        leftTint = new CountdownTimer(tintFadeTime);
-        jumpTint = new CountdownTimer(tintFadeTime);
-        rightTint = new CountdownTimer(tintFadeTime);
-        menuTint = new CountdownTimer(0.8f);
-        tintShade = 150;
+        this.leftTint = new CountdownTimer(tintFadeTime);
+        this.jumpTint = new CountdownTimer(tintFadeTime);
+        this.rightTint = new CountdownTimer(tintFadeTime);
+        this.menuTint = new CountdownTimer(0.8f);
+        this.tintShade = 150;
 
+        // calculate dimensions for sub section of the screen to draw the level in
+        this.levelAreaHeight = (controlsYPosition - controlButtonArea) - (menuYPosition + menuButtonArea);
+        this.levelHeightByWidthRatio = levelAreaHeight / screenWidth;
+        this.levelYOffset = (menuButtonArea - controlButtonArea) / 2;
+//        PApplet.print((16f / 9f) + " : " + levelHeightByWidthRatio);
+//        PApplet.print(idealUIHeight + " : " + levelAreaHeight);
     }
 
     public void step(float deltaTime, boolean draw, float bottom, boolean drawMenu, PVector lastTouch) {
@@ -209,5 +222,17 @@ public class OnScreenControls {
 
     public void jump() {
         jumpTint.start();
+    }
+
+    public float getLevelAreaHeight() {
+        return levelAreaHeight;
+    }
+
+    public float getLevelHeightByWidthRatio() {
+        return levelHeightByWidthRatio;
+    }
+
+    public float getLevelYOffset() {
+        return levelYOffset;
     }
 }

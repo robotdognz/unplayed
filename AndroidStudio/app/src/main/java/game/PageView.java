@@ -5,7 +5,6 @@ import java.util.List;
 
 import camera.Camera;
 import camera.PageViewCamera;
-import controllers.PlayerControl;
 import editor.DebugOutput;
 import editor.Editor;
 import editor.EditorSettings;
@@ -54,7 +53,7 @@ public class PageView {
     public void draw() {
 
         p.pushMatrix(); // start working at game scale
-        p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
+        p.translate(p.width * 0.5f, p.height * 0.5f); // set x=0 and y=0 to the middle of the screen
 
         float currentScale;
         PVector topLeft;
@@ -65,7 +64,6 @@ public class PageView {
             p.scale((float) p.width / (float) pageCamera.getScale()); // width/screen fits the level scale to the screen
             p.scale(pageCamera.getSubScale()); // apply offset for tall screen spaces
             p.translate(-pageCamera.getCenter().x, -pageCamera.getCenter().y); // moves the view around the level
-
             currentScale = pageCamera.getScale() / pageCamera.getSubScale() / 100;
             topLeft = convert.screenToLevel(0, 0, pageCamera.getScale(), pageCamera.getSubScale(),
                     pageCamera.getCenter());
@@ -180,13 +178,13 @@ public class PageView {
                 Rectangle pageArea = getLevelArea();
 
                 if (pageArea != null) {
-                    storedMenu.buldPageMenu(pageCamera.getCenter(), pageArea, pageCamera);
+                    storedMenu.buildPageMenu(pageCamera.getCenter(), pageArea, pageCamera);
                 } else {
                     if (storedMenu.child == null) {
-                        storedMenu.buldPageMenu();
+                        storedMenu.buildPageMenu();
                     } else {
                         Rectangle area = getFullArea();
-                        storedMenu.buldPageMenu(pageCamera.getCenter(), area, pageCamera);
+                        storedMenu.buildPageMenu(pageCamera.getCenter(), area, pageCamera);
                     }
                 }
             }
@@ -332,7 +330,7 @@ public class PageView {
         if (AppLogic.hasMenu()) {
             // initialize camera for menu
             storedMenu = AppLogic.getMenu();
-            storedMenu.buldPageMenu();
+            storedMenu.buildPageMenu();
 
             removeMenu = false;
 

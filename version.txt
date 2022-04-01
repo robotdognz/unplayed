@@ -11,6 +11,7 @@
 -Simplified wall boost machanics, may not be final (dependent on wall double jump implementation, etc)
 -Added better in game menu button system (temp asset)
 -Updated editor preview menu to be more useful and clean
+-Updated camera algorithms to fit level focus area within UI correctly
 
 1.3.0: Pre-release 'big push' build
 

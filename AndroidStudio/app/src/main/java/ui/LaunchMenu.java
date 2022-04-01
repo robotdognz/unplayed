@@ -57,7 +57,7 @@ public class LaunchMenu extends Menu {
 					Menu temp = new DeveloperMenu(p);
 					Rectangle pageArea = game.getPageView().getFullArea();
 
-					temp.buldPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea,
+					temp.buildPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea,
 							game.getPageView().getPageCamera());
 					AppLogic.addMenu(temp);
 				} else {
