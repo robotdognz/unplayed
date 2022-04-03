@@ -9,8 +9,8 @@ import ui.GameMenu;
 
 import static processing.core.PConstants.*;
 
-public class OnScreenControls {
-    private PApplet p;
+public class InGameUI {
+    private final PApplet p;
 
     private final float controlButtonArea; // the region of the screen taken up by a control button
     private final float controlButtonSize; // actual render size of the control buttons
@@ -52,7 +52,7 @@ public class OnScreenControls {
     private final float screenHeightByWidthRatio;
     private final float levelYOffset;
 
-    public OnScreenControls(PApplet p, int screenWidth, int screenHeight) {
+    public InGameUI(PApplet p, int screenWidth, int screenHeight) {
         this.p = p;
 
         this.controlButtonArea = screenWidth / 3f;
@@ -74,7 +74,7 @@ public class OnScreenControls {
         // calculate menu height based on screen aspect ratio
         this.menuButtonArea = screenWidth / 6f; //screenWidth / 6f
         this.menuButtonSize = menuButtonArea * 0.8f;
-        this.menuInGameHeight = buttonVerticalOffset;
+        this.menuInGameHeight = 0; //buttonVerticalOffset; // change this value to move the menu button position, everything else will adjust correctly
         this.menuYPosition = this.menuInGameHeight;
         this.menuXPosition = screenWidth / 2f;
 
@@ -88,12 +88,10 @@ public class OnScreenControls {
         this.tintShade = 150;
 
         // calculate dimensions for sub section of the screen to draw the level in
-        this.levelAreaHeight = (controlsYPosition - controlButtonArea) - (menuYPosition + menuButtonArea);
+        this.levelAreaHeight = (controlsInGameHeight - controlButtonArea) - (menuInGameHeight + menuButtonArea);
         this.levelHeightByWidthRatio = levelAreaHeight / screenWidth;
-        this.levelYOffset = (menuButtonArea - controlButtonArea) / 2;
+        this.levelYOffset = ((menuInGameHeight + menuButtonArea) - ((screenHeight - controlsInGameHeight) + controlButtonArea)) / 2;
         this.screenHeightByWidthRatio = screenHeight / (float) screenWidth;
-//        PApplet.print((16f / 9f) + " : " + levelHeightByWidthRatio);
-//        PApplet.print(idealUIHeight + " : " + levelAreaHeight);
     }
 
     public void step(float deltaTime, boolean draw, float bottom, boolean drawMenu, PVector lastTouch) {
@@ -140,8 +138,6 @@ public class OnScreenControls {
                 fadeInt = ratio;
             }
         }
-
-
     }
 
     public void draw(PApplet p) {
@@ -240,5 +236,13 @@ public class OnScreenControls {
 
     public float getScreenHeightByWidthRatio() {
         return screenHeightByWidthRatio;
+    }
+
+    public float getControlsBottom() {
+        return controlsYPosition;
+    }
+
+    public float getControlsTop() {
+        return controlsYPosition - controlButtonArea;
     }
 }

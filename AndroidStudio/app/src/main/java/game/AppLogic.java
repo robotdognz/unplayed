@@ -57,7 +57,7 @@ public class AppLogic {
     public static ArrayList<PVector> touches; // all the on screen touches
     public static PVector lastTouch; // the last on screen touch
 
-    public static OnScreenControls drawUI; // draws the on screen controls
+    public static InGameUI drawUI; // draws the on screen controls
 
     private static ArrayList<File> levels;
     private static int currentLevel;
@@ -96,7 +96,7 @@ public class AppLogic {
         texture.passGame(game);
         controller = new PlayerControl(p, game);
         editor = null;
-        drawUI = new OnScreenControls(p, p.width, p.height);
+        drawUI = new InGameUI(p, p.width, p.height);
 
         // setup shared preferences (used for save games)
         settings = activity.getPreferences(0);
@@ -275,7 +275,8 @@ public class AppLogic {
             offsetX = menuCenter.x - playerAreaCenter.x;
             offsetY = menuCenter.y - playerAreaCenter.y;
 
-            if (diff.x <= 0) {
+            float bias = 200; // this bias makes menus and loading screens tend towards being placed to the right
+            if (diff.x <= 0 - bias) {
                 // move off to left edge of pageArea
                 offsetX -= pageArea.getBottomRight().x - playerAreaCenter.x + menuArea.getWidth() / 2 + horizontalOffset;
             } else {

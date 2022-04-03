@@ -22,30 +22,43 @@ public class PlayerControl implements Controller {
             return;
         }
 
-        if (game.player != null) {
-            int left = 0;
-            int right = 0;
-            for (PVector t : touch) {
-                if (t.y >= p.height / 3f) {
-                    if (t.x < p.width / 3f) { // p.width * 0.25f // left chunk of screen
-                        left++;
-                    }
-                    if (t.x > p.width - p.width / 3f) { // p.width * 0.75f // right chunk of screen
-                        right++;
-                    }
-                }
-            }
-            if (left > right) {
-                game.player.left();
-                AppLogic.drawUI.left();
-            } else if (left < right) {
-                game.player.right();
-                AppLogic.drawUI.right();
-            } else {
-                game.player.still();
+        // prevent input if no player
+        if (game.player == null) {
+            return;
+        }
+
+        int left = 0;
+        int right = 0;
+
+        for (PVector t : touch) {
+            // continue if touch below controls
+            if (t.y > AppLogic.drawUI.getControlsBottom()) {
+                continue;
             }
 
+            // continue if touch above controls
+            if (t.y < AppLogic.drawUI.getControlsTop()) { // t.y < p.height / 3f
+                continue;
+            }
+
+            // do left and right control regions
+            if (t.x < p.width / 3f) { // left chunk of screen
+                left++;
+            }
+            if (t.x > p.width - p.width / 3f) { // right chunk of screen
+                right++;
+            }
         }
+        if (left > right) {
+            game.player.left();
+            AppLogic.drawUI.left();
+        } else if (left < right) {
+            game.player.right();
+            AppLogic.drawUI.right();
+        } else {
+            game.player.still();
+        }
+
     }
 
     @Override
@@ -56,8 +69,19 @@ public class PlayerControl implements Controller {
         }
 
         if (game.player != null) {
-            // jump if the last true touch was in the middle of the screen
-            if (touch.y >= p.height / 3f && touch.x > p.width / 4f && touch.x < (p.width / 4f) * 3) {
+
+            // return if touch below controls
+            if (touch.y > AppLogic.drawUI.getControlsBottom()) {
+                return;
+            }
+
+            // return if touch above controls
+            if (touch.y < AppLogic.drawUI.getControlsTop()) {
+                return;
+            }
+
+            // jump if the touch is in the middle third of the screen
+            if (touch.x > p.width / 4f && touch.x < (p.width / 4f) * 3) {
                 game.player.jump();
 //                AppLogic.drawControls.jump();
             }

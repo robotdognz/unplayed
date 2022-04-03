@@ -9,7 +9,7 @@ import processing.core.PApplet;
 public class EditorMenu extends Menu {
     Game game;
     String resume = "Resume";
-    String editor = "Editor";
+    String editor = "Edit";
     String restart = "Restart";
     String mainMenu = "Main Menu";
 //  String quit = "Reset Game";

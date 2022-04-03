@@ -140,35 +140,36 @@ public class PageViewCamera {
         }
     }
 
+    /**
+     * Draw a visualisation of the cameras logic, useful for laying out levels and debugging the camera.
+     *
+     * @param scale the current camera scale, used for line thickness
+     */
     public void draw(float scale) {
         int strokeWeight = Math.max(1, (int) (scale * 0.5f));
 
         // draw page area (region directly around the active pages)
-        p.noFill();
-//		p.stroke(255, 0, 0); // red
-        p.stroke(100, 170); // grey
-        p.strokeWeight(strokeWeight);
-        p.rectMode(CORNERS);
-        p.rect(focusArea.getTopLeft().x, focusArea.getTopLeft().y, focusArea.getBottomRight().x, focusArea.getBottomRight().y);
+//        p.noFill();
+//        p.stroke(100, 170); // grey
+//        p.strokeWeight(strokeWeight);
+//        p.rectMode(CORNERS);
+//        p.rect(focusArea.getTopLeft().x, focusArea.getTopLeft().y, focusArea.getBottomRight().x, focusArea.getBottomRight().y);
 
         // draw screen area (region that will be rendered in game)
-//        Rectangle screen = getCameraScreen(cameraArea);
         if (screenArea != null) {
             p.noFill();
-//            p.stroke(255, 0, 0); // red
             p.stroke(100, 170); // grey
             p.strokeWeight(strokeWeight);
             p.rectMode(CORNERS);
             p.rect(screenArea.getTopLeft().x, screenArea.getTopLeft().y, screenArea.getBottomRight().x, screenArea.getBottomRight().y);
         }
 
-//        // draw camera area (padded region around the active pages)
-//        p.noFill();
-////		p.stroke(0, 0, 255); // blue
-//        p.stroke(100, 170); // grey
-//        p.strokeWeight(strokeWeight);
-//        p.rectMode(CORNERS);
-//        p.rect(cameraArea.getTopLeft().x, cameraArea.getTopLeft().y, cameraArea.getBottomRight().x, cameraArea.getBottomRight().y);
+        // draw camera area (padded region around the active pages)
+        p.noFill();
+        p.stroke(100, 170); // grey
+        p.strokeWeight(strokeWeight);
+        p.rectMode(CORNERS);
+        p.rect(cameraArea.getTopLeft().x, cameraArea.getTopLeft().y, cameraArea.getBottomRight().x, cameraArea.getBottomRight().y);
 
     }
 

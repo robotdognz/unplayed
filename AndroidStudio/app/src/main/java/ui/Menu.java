@@ -111,7 +111,8 @@ public abstract class Menu {
         float rightDiff = Math.abs(pageArea.getBottomRight().x - cameraCenter.x) + camera.getSideAreaPadding();
         float offset = 200;
 
-        if (leftDiff < rightDiff) {
+        float bias = 200; // this bias makes menus and loading screens tend towards being placed to the right
+        if (leftDiff + bias < rightDiff) {
             // left
             position = new PVector(cameraCenter.x - leftDiff - (menuWidth / 2) - offset, cameraCenter.y);
         } else {
