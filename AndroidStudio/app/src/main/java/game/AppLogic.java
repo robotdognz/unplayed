@@ -18,6 +18,7 @@ import camera.GameCamera;
 import controllers.Controller;
 import controllers.PlayerControl;
 import editor.Editor;
+import game.player.PlayerFace;
 import handlers.LoadingHandler;
 import handlers.TextureCache;
 import misc.Converter;
@@ -59,6 +60,7 @@ public class AppLogic {
     public static PVector lastTouch; // the last on screen touch
 
     public static InGameUI drawUI; // draws the on screen controls
+    public static PlayerFace playerFace; // draw the player face
 
     private static ArrayList<File> levels;
     private static int currentLevel;
@@ -98,6 +100,7 @@ public class AppLogic {
         controller = new PlayerControl(p, game);
         editor = null;
         drawUI = new InGameUI(p, p.width, p.height);
+        playerFace = new PlayerFace(p);
 
         // setup shared preferences (used for save games)
         settings = activity.getPreferences(0);
@@ -332,7 +335,6 @@ public class AppLogic {
     }
 
     static public void titleScreen() {
-
         // load in the title splash screen
         File testFile = new File("TitleScreen.png");
         LoadingHandler loading = new LoadingHandler(p, texture, testFile, 8, 8, true, true);
@@ -544,10 +546,9 @@ public class AppLogic {
         if (menu == null) {
             if (editorToggle && editor != null) {
                 editor.onTap(x, y);
+            } else {
+                controller.onTap(x, y);
             }
-//			else {
-//				 controller.onTap(x, y);
-//			}
         }
     }
 

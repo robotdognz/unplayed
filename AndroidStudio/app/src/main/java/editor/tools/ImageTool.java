@@ -11,6 +11,7 @@ import game.AppLogic;
 import game.PageView;
 import objects.Background;
 import objects.Image;
+import objects.Page;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -86,14 +87,21 @@ public class ImageTool implements Tool {
                     }
                 }
             } else {
-                // adjust the page with a single finger
+                // adjust the background with a single finger
                 if (editor.selected != null && editor.selected instanceof Background) {
-                    float xDist = p.mouseX - p.pmouseX;
-                    float yDist = p.mouseY - p.pmouseY;
-                    xDist = AppLogic.convert.screenToLevel(xDist / 3);
-                    yDist = AppLogic.convert.screenToLevel(yDist / 3);
-                    ((Background) editor.selected).addPosition(xDist, yDist);
-                    AppLogic.game.getPageView().resetSystems(); // reset page camera
+                    Background current = (Background) editor.selected;
+
+                    // make sure the current touch is inside the bounds of the background
+                    PVector inLevelTouch = AppLogic.convert.screenToLevel(touch.x, touch.y);
+                    boolean isInside = current.isInside(inLevelTouch.x, inLevelTouch.y);
+                    if (isInside) {
+                        float xDist = p.mouseX - p.pmouseX;
+                        float yDist = p.mouseY - p.pmouseY;
+                        xDist = AppLogic.convert.screenToLevel(xDist / 3);
+                        yDist = AppLogic.convert.screenToLevel(yDist / 3);
+                        current.addPosition(xDist, yDist);
+                        AppLogic.game.getPageView().resetSystems(); // reset page camera
+                    }
                 }
             }
         }
@@ -224,8 +232,8 @@ public class ImageTool implements Tool {
         if (currentBackground != null) { // if there is something to create a background from
             pageView.addPageViewObject(currentBackground);
             editor.selected = currentBackground;
+            editor.eMode = Editor.editorMode.SELECT;
             editorSide.adjust = true;
-//			editor.eMode = Editor.editorMode.SELECT;
         }
     }
 
@@ -245,6 +253,8 @@ public class ImageTool implements Tool {
         Background found = pageView.getBackground(mouse.x, mouse.y);
         if (found != null) {
             editor.selected = found; // select it
+            // set editor side to adjust mode
+            editorSide.adjust = true;
         } else {
             editor.selected = null;
         }
@@ -288,6 +298,18 @@ public class ImageTool implements Tool {
         if (Editor.showPageView && editorSide.adjust) {
             if (editor.selected != null && editor.selected instanceof Background) {
                 ((Background) editor.selected).addAngle(PApplet.degrees(angle));
+            }
+        }
+    }
+
+    @Override
+    public void onTap(float x, float y) {
+        if (Editor.showPageView && editorSide.adjust) {
+            // adjusting a background
+            PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
+            Background found = pageView.getBackground(mouse.x, mouse.y);
+            if (found != null && found != editor.selected) {
+                editor.selected = found; // select it
             }
         }
     }

@@ -66,4 +66,11 @@ public class EditorControl implements Controller {
 			editor.currentTool.onRotate(x, y, angle);
 		}
 	}
+
+	@Override
+	public void onTap(float x, float y) {
+		if (editor.currentTool != null) {
+			editor.currentTool.onTap(x, y);
+		}
+	}
 }

@@ -16,4 +16,6 @@ public interface Controller {
 	public void onPinch(ArrayList<PVector> touch, float x, float y, float d);
 	
 	public void onRotate(float x, float y, float angle);
+
+	public void onTap(float x, float y);
 }

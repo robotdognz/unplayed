@@ -228,4 +228,8 @@ public class EventTool implements Tool {
 	@Override
 	public void onRotate(float x, float y, float angle) {
 	}
+
+	@Override
+	public void onTap(float x, float y){
+	}
 }

@@ -198,4 +198,8 @@ public class AreaTool implements Tool {
 	public void onRotate(float x, float y, float angle) {
 	}
 
+	@Override
+	public void onTap(float x, float y){
+	}
+
 }

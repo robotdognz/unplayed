@@ -45,7 +45,6 @@ public class WidgetAdjust extends Widget {
 	public void clicked() {
 		if (toolbar.adjust) {
 			editor.editorSide.clearExternalModes();
-			editor.eMode = Editor.editorMode.SELECT;
 		} else {
 			toolbar.adjustMode();
 		}

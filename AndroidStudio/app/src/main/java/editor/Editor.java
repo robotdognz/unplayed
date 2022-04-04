@@ -455,6 +455,11 @@ public class Editor {
         } else {
             editorBottom.onTap(x, y);
             tapTimer.start();
+
+            if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
+                    && !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
+                AppLogic.controller.onTap(x, y); // controls for on rotate event
+            }
         }
     }
 

@@ -2,8 +2,6 @@ package ui;
 
 import java.util.ArrayList;
 import static processing.core.PConstants.*;
-
-import editor.DebugOutput;
 import editor.Editor;
 import editor.Toolbar;
 import processing.core.*;

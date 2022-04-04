@@ -103,4 +103,8 @@ public class PlayerControl implements Controller {
     @Override
     public void onRotate(float x, float y, float angle) {
     }
+
+    @Override
+    public void onTap(float x, float y){
+    }
 }

@@ -1554,6 +1554,7 @@ public class Player extends Editable {
         if (hasTexture) {
             graphics.imageMode(CENTER);
             graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
+            AppLogic.playerFace.draw(graphics, getWidth(), getHeight());
         }
     }
 
@@ -1586,35 +1587,37 @@ public class Player extends Editable {
             }
 
             graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
+            AppLogic.playerFace.draw(graphics, getWidth(), getHeight());
             graphics.noTint();
 
-            if (showChecking && !Editor.showPageView && verticalTunnel) {
-                graphics.noStroke();
-                graphics.fill(0, 255, 0, 100);
-                graphics.rectMode(CORNER);
-                graphics.rect(-getWidth() / 2, -getHeight() / 2, getWidth() / 2, getHeight());
-            }
-            if (showChecking && !Editor.showPageView && horizontalTunnel) {
-                graphics.noStroke();
-                graphics.fill(0, 255, 0, 100);
-                graphics.rectMode(CORNER);
-                graphics.rect(0, -getHeight() / 2, getWidth() / 2, getHeight());
-            }
+            // draw the slot checking logic
+            if (showChecking) {
+                if (!Editor.showPageView && verticalTunnel) {
+                    graphics.noStroke();
+                    graphics.fill(0, 255, 0, 100);
+                    graphics.rectMode(CORNER);
+                    graphics.rect(-getWidth() / 2, -getHeight() / 2, getWidth() / 2, getHeight());
+                }
+                if (!Editor.showPageView && horizontalTunnel) {
+                    graphics.noStroke();
+                    graphics.fill(0, 255, 0, 100);
+                    graphics.rectMode(CORNER);
+                    graphics.rect(0, -getHeight() / 2, getWidth() / 2, getHeight());
+                }
 
-            if (showChecking && !Editor.showPageView
-                    && (leftStickTimer.isRunning() || leftWallBoostTimer.isRunning())) { // left stick timer
-                graphics.noStroke();
-                graphics.fill(235, 235, 52, 100);
-                graphics.rectMode(CENTER);
-                graphics.rect(0, 0, getWidth() / 2, getHeight() / 2);
-            }
+                if (!Editor.showPageView && (leftStickTimer.isRunning() || leftWallBoostTimer.isRunning())) { // left stick timer
+                    graphics.noStroke();
+                    graphics.fill(235, 235, 52, 100);
+                    graphics.rectMode(CENTER);
+                    graphics.rect(0, 0, getWidth() / 2, getHeight() / 2);
+                }
 
-            if (showChecking && !Editor.showPageView
-                    && (rightStickTimer.isRunning() || rightWallBoostTimer.isRunning())) { // right stick timer
-                graphics.noStroke();
-                graphics.fill(235, 52, 52, 100);
-                graphics.rectMode(CENTER);
-                graphics.rect(0, 0, getWidth() / 2, getHeight() / 2);
+                if (!Editor.showPageView && (rightStickTimer.isRunning() || rightWallBoostTimer.isRunning())) { // right stick timer
+                    graphics.noStroke();
+                    graphics.fill(235, 52, 52, 100);
+                    graphics.rectMode(CENTER);
+                    graphics.rect(0, 0, getWidth() / 2, getHeight() / 2);
+                }
             }
 
             graphics.popMatrix();
