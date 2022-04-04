@@ -27,6 +27,8 @@ public class LoadingMenu extends Menu {
 
 		if (loading != null) {
 			// we have a valid loading handler to build from
+			loading.drawAll(); // draw all its LODs for optimisation
+
 			float imageWidth = loading.getWidth() * 100;
 			float imageHeight = loading.getHeight() * 100;
 			this.hasButton = loading.hasButton();
@@ -35,6 +37,8 @@ public class LoadingMenu extends Menu {
 		} else {
 			// no valid loading handler provided, get default
 			LoadingHandler temp = AppLogic.texture.getLoadingList().get(0);
+			temp.drawAll(); // draw all its LODs for optimisation
+
 			float imageWidth = temp.getWidth() * 100;
 			float imageHeight = temp.getHeight() * 100;
 			this.hasButton = temp.hasButton();

@@ -181,7 +181,7 @@ public class AppLogic {
         currentLevel = savedLevel - 1;
 
         if (levels != null && levels.size() > currentLevel) {
-            loadingScreen();
+            loadingScreen(true);
         }
     }
 
@@ -190,26 +190,26 @@ public class AppLogic {
         currentLevel = 0;
 
         if ((externalLevels != null && externalLevels.size() > currentLevel) || (levels != null && levels.size() > currentLevel)) {
-            loadingScreen();
+            loadingScreen(true);
         }
     }
 
     static public void nextLevel() {
         currentLevel++;
 
-        if ((externalLevels != null && externalLevels.size() > currentLevel) ||
-                (externalLevels == null && levels != null && levels.size() > currentLevel)) {
-            // there is an external campaign running and it has more levels
-            // or there is no external campaign and main campaign has more levels
-            loadingScreen();
-        } else {
-            menu = null;
-            if (externalLevels == null) {
-                // only clear save game if we're not running an external campaign
-                clearSaveGame();
-            }
-            titleScreen();
-        }
+//        if ((externalLevels != null && externalLevels.size() > currentLevel) ||
+//                (externalLevels == null && levels != null && levels.size() > currentLevel)) {
+//            // there is an external campaign running and it has more levels
+//            // or there is no external campaign and main campaign has more levels
+//        } else {
+//            menu = null;
+//            if (externalLevels == null) {
+//                // only clear save game if we're not running an external campaign
+//                clearSaveGame();
+//            }
+////            titleScreen();
+//        }
+        loadingScreen(false);
     }
 
     static public void restartLevel() {
@@ -220,7 +220,7 @@ public class AppLogic {
             startLevel();
         } else {
             // playing in preview mode with no editor visible, restart with menu
-            loadingScreen();
+            loadingScreen(false);
         }
     }
 
@@ -230,17 +230,25 @@ public class AppLogic {
             game.startGame();
         } else {
             // not in the editor
+
             EditorJSON json = new EditorJSON(p, texture, null);
 
             if (externalLevels != null && externalLevels.size() > currentLevel) {
-                // external campaign
+                // in external campaign
                 json.load(game, externalLevels.get(currentLevel));
             } else if (externalLevels == null && levels != null && levels.size() > currentLevel) {
-                // main campaign
+                // in main campaign
                 json.load(game, levels.get(currentLevel).toString());
             } else {
                 // neither
-                removeMenu();
+                if (externalLevels == null) {
+                    // only clear save game if we're not running an external campaign
+                    clearSaveGame();
+                } else {
+                    // otherwise remove the external campaign
+                    externalLevels = null;
+                }
+                titleScreen();
                 return;
             }
 
@@ -329,13 +337,30 @@ public class AppLogic {
         addMenu(temp);
     }
 
-    static public void loadingScreen() {
+    /**
+     * Creates a loading screen that will be used to transition between the current level or menu
+     * and the next level or menu.
+     *
+     * @param useDefault true if the loading screen should be telling the player how to hold their
+     *                   phone, otherwise false
+     */
+    static public void loadingScreen(boolean useDefault) {
         LoadingHandler loading = game.currentLoading;
 
-        Menu temp = new LoadingMenu(p, loading);
-        Rectangle pageArea = game.getPageView().getFullArea();
+        if (useDefault) {
+            // load in the phone holding instructions loading screen
+            File testFile = new File("StartLoadingScreen.png");
+            loading = new LoadingHandler(p, texture, testFile, 8, 8, true, true);
+        }
 
+        // create the loading screen
+        Menu temp = new LoadingMenu(p, loading);
+
+        // do calculations and place the loading screen into the game world
+        Rectangle pageArea = game.getPageView().getFullArea();
         temp.buildPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
+
+        // pass the loading screen to the game logic
         addMenu(temp);
     }
 
