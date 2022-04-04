@@ -32,6 +32,7 @@ import processing.event.TouchEvent;
 import ui.LaunchMenu;
 import ui.LoadingMenu;
 import ui.Menu;
+import ui.TitleMenu;
 
 //handles all of the logic at the application level
 public class AppLogic {
@@ -102,7 +103,8 @@ public class AppLogic {
         settings = activity.getPreferences(0);
         saveGame = settings.edit();
 
-        menu = new LaunchMenu(p);
+        // add the title screen and initialise the camera logic
+        titleScreen();
         game.getPageView().initCamera();
 
         p.background(100);
@@ -330,10 +332,31 @@ public class AppLogic {
     }
 
     static public void titleScreen() {
-        Menu temp = new LaunchMenu(p);
-        Rectangle pageArea = game.getPageView().getFullArea();
 
+        // load in the title splash screen
+        File testFile = new File("TitleScreen.png");
+        LoadingHandler loading = new LoadingHandler(p, texture, testFile, 8, 8, true, true);
+
+        // create the loading screen
+        Menu temp = new TitleMenu(p, loading);
+
+        // do calculations and place the loading screen into the game world
+        Rectangle pageArea = game.getPageView().getFullArea();
         temp.buildPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
+
+        // pass the loading screen to the game logic
+        addMenu(temp);
+    }
+
+    static public void mainMenu() {
+        // create main menu screen
+        Menu temp = new LaunchMenu(p);
+
+        // do calculations and place the menu into the game world
+        Rectangle pageArea = game.getPageView().getFullArea();
+        temp.buildPageMenu(game.getPageView().getPageCamera().getCenter(), pageArea, game.getPageView().getPageCamera());
+
+        // pass the menu to the game logic
         addMenu(temp);
     }
 

@@ -10,12 +10,12 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 public class LoadingMenu extends Menu {
-	private final String continueGame = "Continue";
-	private final boolean hasButton; // has 'continue' button
+	protected final String continueGame = "Continue";
+	protected final boolean hasButton; // has 'continue' button
 	private final boolean hasShadow; // loading screen image should have a shadow
 	private int shadow; // the relative amount to offset the shadow by
 
-	private boolean alreadyUsed = false;
+	protected boolean alreadyUsed = false;
 	// this boolean prevents this loading menu from infinitely restarting the level
 	// each frame. With this it is only used once
 
