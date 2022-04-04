@@ -20,7 +20,6 @@ public class WidgetExcludeTiles extends Widget {
 	public void clicked() {
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
 			((Page) editor.selected).showTiles = !((Page) editor.selected).showTiles;
-			AppLogic.game.getPageView().forceRedraw();
 		}
 	}
 

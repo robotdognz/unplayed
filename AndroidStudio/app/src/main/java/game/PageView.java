@@ -409,7 +409,7 @@ public class PageView {
         return new Rectangle(x, y, width, height);
     }
 
-    public void forceRedraw() {
+    public void recalculatePageViewObjects() {
         // force recalculate pages sizes
         for (PageViewObject object : pageViewObjects) {
             if (!(object instanceof Page)) {

@@ -26,6 +26,7 @@ public class WidgetPreview extends Widget {
 		AppLogic.toggleEditor();
 		if (AppLogic.game.player != null) {
 			AppLogic.controller = new PlayerControl(p, AppLogic.game);
+			pageView.recalculatePageViewObjects();
 			pageView.updateVisiblePages();
 		}
 	}

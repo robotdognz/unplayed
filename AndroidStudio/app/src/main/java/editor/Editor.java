@@ -7,7 +7,6 @@ import org.jbox2d.common.Vec2;
 
 import camera.Camera;
 import controllers.CameraControl;
-import controllers.Controller;
 import controllers.EditorControl;
 import controllers.PlayerControl;
 import editor.tools.TileTool;
@@ -488,7 +487,7 @@ public class Editor {
             Camera.setCenter(pvCenter);
 
             // force re-render of pages
-            pageView.forceRedraw();
+            pageView.recalculatePageViewObjects();
         }
     }
 
