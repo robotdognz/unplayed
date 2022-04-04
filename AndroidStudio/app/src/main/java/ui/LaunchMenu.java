@@ -22,7 +22,7 @@ public class LaunchMenu extends Menu {
 		Button quitB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, quit);
 
 		AppLogic.getSaveGame();
-		if (AppLogic.savedLevel > 0) {
+		if (AppLogic.savedLevel > 1) {
 			Button continueB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, continueGame);
 			objects.add(continueB);
 		}

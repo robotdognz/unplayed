@@ -2,7 +2,6 @@ package game;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import camera.Camera;
 import camera.PageViewCamera;
 import editor.DebugOutput;

@@ -119,6 +119,15 @@ public class Rectangle {
         this.height = this.bottomRight.y - this.topLeft.y;
     }
 
+    public void enlarge(float amount){
+        this.topLeft.x -= amount * 0.5f;
+        this.topLeft.y -= amount * 0.5f;
+        this.bottomRight.x += amount * 0.5f;
+        this.bottomRight.y += amount * 0.5f;
+        this.width += amount;
+        this.height += amount;
+    }
+
     public void drawSelected(PGraphics g, float scale) {
         g.noFill();
         g.stroke(255, 0, 0); // selection color, red
