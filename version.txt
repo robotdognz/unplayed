@@ -13,7 +13,7 @@
 -Fixed camera bug when previewing level in editor
 -Restored old (more effective) navigation bar hiding code
 -Fixed editor ui side bug and cleaned up editor control code
--Added new tutorial campaign
+-Added new tutorial campaign and other levels
 
 1.3.1: Polish patch
 -Cleaned up a bunch of depricted code
