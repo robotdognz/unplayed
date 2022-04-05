@@ -2,11 +2,14 @@ package com.flypuppy.unplayed;
 
 import processing.core.*;
 import game.AppLogic;
+
 import android.content.ClipData;
 import android.content.Context;
 import android.app.Activity;
 import android.net.Uri;
 import android.content.Intent;
+import android.os.Bundle;
+
 import java.util.ArrayList;
 
 public class unplayed extends PApplet {
@@ -88,17 +91,39 @@ public class unplayed extends PApplet {
         }
         // nonsense...
         return super.sketchPath(where);
-  /* which is (stinking dead code...) this:
-    // isAbsolute() could throw an access exception, but so will writing
-   // to the local disk using the sketch path, so this is safe here.
-   // for 0120, added a try/catch anyways.
-   try {
-   if (new File(where).isAbsolute()) return where;
-   } catch (Exception e) { }
-   
-   return surface.getFileStreamPath(where).getAbsolutePath();
-   
-   */
+    }
+
+    // Stop navigation bar from appearing on top of the game
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        this.activity = this.getActivity();
+
+        android.view.View decorView = activity.getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener
+                (visibility -> {
+                            // Note that system bars will only be "visible" if none of the
+                            // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                            if ((visibility & android.view.View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                                // The system bars are visible. Make any desired
+                                // adjustments to your UI, such as showing the action bar or
+                                // other navigational controls.
+                                android.view.View decorView1 = activity.getWindow().getDecorView();
+                                decorView1.setSystemUiVisibility(
+                                        android.view.View.SYSTEM_UI_FLAG_IMMERSIVE
+                                                // Set the content to appear under the system bars so that the
+                                                // content doesn't resize when the system bars hide and show.
+                                                | android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                                | android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                                | android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                                // Hide the nav bar and status bar
+                                                | android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                                | android.view.View.SYSTEM_UI_FLAG_FULLSCREEN);
+                            }
+
+                        }
+                );
     }
 
     public void touchStarted() {

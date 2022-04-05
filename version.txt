@@ -11,6 +11,8 @@
 -Added crude implementation of player face
 -Added ability to select another page or background when adjusting one of either type
 -Fixed camera bug when previewing level in editor
+-Restored old (more effective) navigation bar hiding code
+-Fixed editor ui side bug and cleaned up editor control code
 
 1.3.1: Polish patch
 -Cleaned up a bunch of depricted code

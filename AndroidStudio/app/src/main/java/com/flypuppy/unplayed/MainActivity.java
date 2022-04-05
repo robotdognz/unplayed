@@ -2,13 +2,10 @@ package com.flypuppy.unplayed;
 
 import android.os.Bundle;
 import android.content.Intent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import processing.android.PFragment;
 import processing.android.CompatUtils;
 import processing.core.PApplet;
@@ -28,12 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
         PFragment fragment = new PFragment(sketch);
         fragment.setView(frame, this);
-
-        // Hide both the navigation bar and the status bar.
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
-
     }
 
     @Override

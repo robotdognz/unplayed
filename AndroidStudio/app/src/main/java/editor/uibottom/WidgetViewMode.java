@@ -18,6 +18,11 @@ public class WidgetViewMode extends Widget {
 	public void clicked() {
 		editor.selected = null;
 		editor.currentTool = new PageTool(p, editor);
+
+		// default to select mode when using this tab
+		if (Editor.showPageView) {
+			editor.eMode = Editor.editorMode.SELECT;
+		}
 	}
 
 	@Override

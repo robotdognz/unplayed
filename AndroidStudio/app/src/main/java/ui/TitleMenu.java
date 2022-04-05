@@ -1,19 +1,14 @@
 package ui;
 
-import static processing.core.PConstants.CENTER;
-
-import camera.PageViewCamera;
 import game.AppLogic;
-import handlers.ButtonHandler;
 import handlers.LoadingHandler;
-import objects.Rectangle;
 import processing.core.PApplet;
-import processing.core.PVector;
 
 public class TitleMenu extends LoadingMenu {
 
 	public TitleMenu(PApplet p, LoadingHandler loading) {
 		super(p, loading);
+		child = null;
 	}
 
 	@Override

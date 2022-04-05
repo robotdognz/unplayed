@@ -367,9 +367,7 @@ public class Editor {
     }
 
     public float getBottom() {
-        // used to determine the draw position on the on screen controls
-        // editorBottom.getHeight() returns the ribbon dimensions, got to increase it to include the widgets
-//        return editorBottom.getHeight() * 1.4f;
+        // used to determine the draw position of the on screen controls
         return ((EditorBottom) editorBottom).getTopOfBounds();
     }
 
@@ -388,8 +386,7 @@ public class Editor {
         if (nextTouchInactive) {
             return;
         }
-        if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
-                && !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
+        if (validEditPoint(touch.x, touch.y)) {
             AppLogic.controller.touchStarted(touch); // Controls for touch started event
         }
     }
@@ -407,8 +404,7 @@ public class Editor {
             nextTouchInactive = false;
             return;
         }
-        if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
-                && !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
+        if (validEditPoint(touch.x, touch.y)) {
             AppLogic.controller.touchEnded(touch); // Controls for touch moved event
         }
 
@@ -422,8 +418,7 @@ public class Editor {
         if (nextTouchInactive) { // don't do controller if next touch inactive
             return;
         }
-        if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
-                && !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
+        if (validEditPoint(touch.x, touch.y)) {
             AppLogic.controller.touchMoved(touch, touches); // Controls for touch moved event
         }
     }
@@ -432,8 +427,7 @@ public class Editor {
         if (nextTouchInactive) {
             return;
         }
-        if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
-                && !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
+        if (validEditPoint(x, y)) {
             AppLogic.controller.onPinch(touches, x, y, d); // controls for on pinch event
         }
     }
@@ -442,8 +436,7 @@ public class Editor {
         if (nextTouchInactive) {
             return;
         }
-        if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
-                && !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
+        if (validEditPoint(x, y)) {
             AppLogic.controller.onRotate(x, y, angle); // controls for on rotate event
         }
     }
@@ -451,15 +444,31 @@ public class Editor {
     public void onTap(float x, float y) {
         if (tapTimer.isRunning()) {
             return;
-        } else {
-            editorBottom.onTap(x, y);
-            tapTimer.start();
-
-            if (controllerActive && !editorTop.insideBoundary(p.mouseX, p.mouseY)
-                    && !editorBottom.insideBoundary(p.mouseX, p.mouseY) && !editorSide.insideBoundary(p.mouseX, p.mouseY)) {
-                AppLogic.controller.onTap(x, y); // controls for on rotate event
-            }
         }
+
+        editorBottom.onTap(x, y);
+        tapTimer.start();
+
+        if (validEditPoint(x, y)) {
+            AppLogic.controller.onTap(x, y); // controls for on rotate event
+        }
+
+    }
+
+    /**
+     * Checks the provided coordinates aren't overlapping part of the editor interface and that
+     * the controller is currently active (it's inactive in some situations to prevent performing
+     * an editor action in the same tap as using a UI widget).
+     *
+     * @param x x position on screen
+     * @param y y position on screen
+     * @return true if this point is within the edit space, false if it overlaps the editor UI.
+     */
+    public boolean validEditPoint(float x, float y) {
+        return controllerActive
+                && !editorTop.insideBoundary(x, y)
+                && !editorBottom.insideBoundary(x, y)
+                && !editorSide.insideBoundary(x, y);
     }
 
     public void switchView() {
@@ -493,6 +502,7 @@ public class Editor {
 
     public void nextTouchInactive() {
         nextTouchInactive = true;
+        tapTimer.start();
     }
 
     public void resetUI() {
