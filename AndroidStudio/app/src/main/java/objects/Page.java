@@ -3,11 +3,16 @@ package objects;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
 import org.jbox2d.common.Vec2;
+
 import game.AppLogic;
 import game.Game;
+import game.player.BezierLerp;
+import game.player.ClippedDraw;
 import objects.events.PlayerEnd;
 import processing.core.*;
+
 import static processing.core.PConstants.*;
 
 public class Page extends PageViewObject {
@@ -33,11 +38,7 @@ public class Page extends PageViewObject {
     private boolean playerVisibleExternal;
     private boolean playerVisibleChanged;
 
-    // player drawing algorithm
-    private int playerRez;
-    private PGraphics player;
-    private PGraphics playerMask;
-
+    // used for scaling
     private float actualSize = 1;
 
     public Page(PApplet p, Game game, View view, PVector position) {
@@ -57,11 +58,6 @@ public class Page extends PageViewObject {
         this.shadowOffset = 9;
         this.shadow = 9;
 
-        // create player drawer
-        playerRez = 256;
-        player = p.createGraphics(playerRez, playerRez, P2D);
-        playerMask = p.createGraphics(playerRez, playerRez, P2D);
-
         // setup children
         children = new ArrayList<PageViewObject>();
 
@@ -70,6 +66,7 @@ public class Page extends PageViewObject {
 
         setPosition(position);
         updateCorners();
+
     }
 
     public List<PageViewObject> getChildren() {
@@ -245,54 +242,21 @@ public class Page extends PageViewObject {
             }
         }
 
-        // draw player and paper effect
-        if (playerVisible && game.player != null && showPlayer) {
-            drawPlayer(p.g, 3);
+        // draw the player transition animation
+        if (game.playerTransition.isActive()) { // && playerVisible
+            game.playerTransition.draw(p.g);
+            ClippedDraw.drawTransition(p.g, paddedView, 3);
         }
-        // game.paper.draw(p.g, view, scale / size, (int) size);
+
+        // draw the player
+        if (playerVisible && game.player != null && showPlayer) {
+            ClippedDraw.drawPlayerSimple(p.g, paddedView, 3);
+        }
+
+        // draw the grid paper effect
         game.paper.draw(p.g, paddedView, scale, (int) size); // paper effect
 
         p.popMatrix();
-    }
-
-    private void drawPlayer(PGraphics graphics, float scale) {
-
-        Vec2 center = game.player.getCenter();
-        float angle = game.player.getDrawingAngle();
-
-        // draw the mask at the player position and add masking
-        playerMask.beginDraw();
-        playerMask.background(0); // black
-        playerMask.translate(playerMask.width * 0.5f, playerMask.height * 0.5f); // set to center
-
-        float xDiff = paddedView.getX() - center.x;
-        float yDiff = paddedView.getY() - center.y;
-
-        playerMask.noStroke();
-        playerMask.rotate(angle);
-        playerMask.scale(256 / 100f);
-        playerMask.fill(255); // white
-        playerMask.rect(xDiff, yDiff, paddedView.getWidth(), paddedView.getHeight());
-        playerMask.endDraw();
-
-        // draw the player
-        player.beginDraw();
-        player.translate(playerMask.width * 0.5f, playerMask.height * 0.5f); // set to center
-        player.background(240, 0);
-        player.scale(256 / 100f);
-        game.player.drawNoTransform(player, scale);
-        player.endDraw();
-
-        player.mask(playerMask);
-
-        graphics.pushMatrix();
-        graphics.imageMode(CENTER);
-        graphics.translate(center.x, center.y);
-        graphics.rotate(-angle);
-        graphics.scale(100 / 256f);
-        graphics.image(player, 0, 0);
-        graphics.popMatrix();
-
     }
 
     @Override

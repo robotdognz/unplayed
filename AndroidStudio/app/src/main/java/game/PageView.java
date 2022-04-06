@@ -1,12 +1,17 @@
 package game;
 
+import org.jbox2d.common.Vec2;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import camera.Camera;
 import camera.PageViewCamera;
 import editor.DebugOutput;
 import editor.Editor;
 import editor.EditorSettings;
+import game.player.BezierLerp;
+import game.player.ClippedDraw;
 import handlers.TextureCache;
 import misc.Converter;
 import objects.Background;
@@ -35,6 +40,9 @@ public class PageView {
     private Menu storedMenu;
     private boolean removeMenu = false;
 
+    // player drawing class
+    public ClippedDraw clippedDraw;
+
     public PageView(PApplet p, Game game, TextureCache texture, Converter convert) {
         this.p = p;
         this.convert = convert;
@@ -47,6 +55,8 @@ public class PageView {
         this.pages = 0;
 
         this.previousPageArea = null;
+
+        clippedDraw = new ClippedDraw(p);
     }
 
     public void draw() {

@@ -41,7 +41,7 @@ public class Editor {
 
     public EditorSettings settings;
 
-    private PApplet p;
+    private final PApplet p;
     public DoToast toast;
     PageView pageView;
     public Quadtree world;
@@ -53,11 +53,11 @@ public class Editor {
     // page view camera backup
     private float pvScale;
     private float pvSubScale;
-    private PVector pvCenter;
+    private final PVector pvCenter;
     // level view camera backup
     private float lvScale;
     private float lvSubScale;
-    private PVector lvCenter;
+    private final PVector lvCenter;
 
     // controller
 //	public Controller controller; // holds the current controller
@@ -96,11 +96,11 @@ public class Editor {
     public HashSet<Rectangle> screenObjects;
 
     // frame count and debug visualization
-    private int textSize;
+    private final int textSize;
     private int frameDelay;
     private float frame;
 
-    private CountdownTimer tapTimer; // prevent taps for a time after each tap
+    private final CountdownTimer tapTimer; // prevent taps for a time after each tap
 
     public Editor(PApplet p, Camera camera, DoToast toast) {
         this.p = p;
@@ -108,7 +108,6 @@ public class Editor {
         this.pageView = AppLogic.game.getPageView();
         this.world = AppLogic.game.getWorld();
         this.camera = camera;
-//		this.controller = new CameraControl(p, this);
         this.editorTop = new EditorTop(p, this);
         AppLogic.controller = new CameraControl(p, this);
         this.editorBottom = new EditorBottom(p, this, AppLogic.texture);
@@ -133,7 +132,7 @@ public class Editor {
         textSize = (int) (p.width / 28.8); // 50
 
         // Initialize screen objects set
-        screenObjects = new HashSet<Rectangle>();
+        screenObjects = new HashSet<>();
 
         tapTimer = new CountdownTimer(0.1f);
         settings = new EditorSettings();
@@ -189,8 +188,8 @@ public class Editor {
                 float currentScale = AppLogic.convert.getScale();
                 // start working at game scale
                 p.pushMatrix();
-                p.translate(p.width / 2, p.height / 2);
-                p.scale((float) p.width / (float) Camera.getScale());
+                p.translate(p.width * 0.5f, p.height * 0.5f);
+                p.scale((float) p.width / Camera.getScale());
                 p.scale(Camera.getSubScale());
                 p.translate(-Camera.getCenter().x, -Camera.getCenter().y);
 
@@ -223,29 +222,29 @@ public class Editor {
                 Vec2 vel = Player.dynamicBody.getLinearVelocity();
                 float aVel = Player.dynamicBody.getAngularVelocity();
                 p.text("Velocity x: " + PApplet.nf(Math.abs(vel.x), 1, 2) + " y: " + PApplet.nf(Math.abs(vel.y), 1, 2)
-                                + " a: " + PApplet.nf(Math.abs(aVel), 1, 2), p.width / 2,
+                                + " a: " + PApplet.nf(Math.abs(aVel), 1, 2), p.width * 0.5f,
                         p.height - editorBottom.getHeight() - textSize * 8);
                 float angle = PApplet.degrees(Player.dynamicBody.getAngle());
-                p.text("Angle: " + PApplet.nf(angle, 1, 4), p.width / 2,
+                p.text("Angle: " + PApplet.nf(angle, 1, 4), p.width * 0.5f,
                         p.height - editorBottom.getHeight() - textSize * 7);
                 p.text("ground: " + AppLogic.game.player.groundContacts + " left wall: "
                                 + AppLogic.game.player.leftWallContacts + " right wall: "
-                                + AppLogic.game.player.rightWallContacts, p.width / 2,
+                                + AppLogic.game.player.rightWallContacts, p.width * 0.5f,
                         p.height - editorBottom.getHeight() - textSize * 6);
             }
             if (AppLogic.game.placed != null) {
-                p.text("Placed: " + AppLogic.game.placed.size(), p.width / 2,
+                p.text("Placed: " + AppLogic.game.placed.size(), p.width * 0.5f,
                         p.height - editorBottom.getHeight() - textSize * 5);
             }
             if (AppLogic.game.removed != null) {
-                p.text("Removed: " + AppLogic.game.removed.size(), p.width / 2,
+                p.text("Removed: " + AppLogic.game.removed.size(), p.width * 0.5f,
                         p.height - editorBottom.getHeight() - textSize * 4);
             }
-            p.text(PApplet.nf(AppLogic.convert.getScale(), 1, 2), p.width / 2,
+            p.text(PApplet.nf(AppLogic.convert.getScale(), 1, 2), p.width * 0.5f,
                     p.height - editorBottom.getHeight() - textSize * 3);
-            p.text("FPS: " + PApplet.nf(this.frame, 1, 2), p.width / 2,
+            p.text("FPS: " + PApplet.nf(this.frame, 1, 2), p.width * 0.5f,
                     p.height - editorBottom.getHeight() - textSize * 2);
-            p.text("DT: " + PApplet.nf(deltaTime, 1, 4), p.width / 2, p.height - editorBottom.getHeight() - textSize);
+            p.text("DT: " + PApplet.nf(deltaTime, 1, 4), p.width * 0.5f, p.height - editorBottom.getHeight() - textSize);
 
             // draw debug messages
             DebugOutput.drawMessages(p, editorTop.getHeight() + textSize, textSize);
@@ -256,10 +255,10 @@ public class Editor {
     private void drawLevel() {
         // start working at game scale
         p.pushMatrix();
-        p.translate(p.width / 2, p.height / 2); // set x=0 and y=0 to the middle of the screen
+        p.translate(p.width * 0.5f, p.height * 0.5f); // set x=0 and y=0 to the middle of the screen
 
         // camera
-        p.scale((float) p.width / (float) Camera.getScale()); // width/screen fits the level scale to the screen
+        p.scale((float) p.width / Camera.getScale()); // width/screen fits the level scale to the screen
         p.scale(Camera.getSubScale()); // apply offset for tall screen spaces
         p.translate(-Camera.getCenter().x, -Camera.getCenter().y); // moves the view around the level
 
@@ -450,7 +449,7 @@ public class Editor {
         tapTimer.start();
 
         if (validEditPoint(x, y)) {
-            AppLogic.controller.onTap(x, y); // controls for on rotate event
+            AppLogic.controller.onTap(x, y); // controls for on tap event
         }
 
     }
@@ -471,6 +470,9 @@ public class Editor {
                 && !editorSide.insideBoundary(x, y);
     }
 
+    /**
+     * Switch between the Page View and the Level View.
+     */
     public void switchView() {
         if (showPageView) {
             showPageView = false;
@@ -500,6 +502,11 @@ public class Editor {
         }
     }
 
+    /**
+     * Prevent the next touch from editing the level.
+     * Used to prevent touching widgets in the editor side toolbar or in a
+     * dropdown menu from editing the level.
+     */
     public void nextTouchInactive() {
         nextTouchInactive = true;
         tapTimer.start();
