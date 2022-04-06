@@ -1,15 +1,21 @@
 package game.player;
 
 import static processing.core.PConstants.*;
+
 import org.jbox2d.common.Vec2;
+
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class PlayerTransition {
+    final float movementSpeed;
+
     Vec2 p0;
     Vec2 p1;
     Vec2 p2;
     Vec2 p3;
+
+    float distance;
 
     Vec2 point;
 
@@ -21,30 +27,36 @@ public class PlayerTransition {
         update(start, end);
         point = start.clone();
 
+        movementSpeed = 0.8f; // 1 = 1 second, 0.5 = 2 seconds, etc.
     }
 
-    public void update(Vec2 start, Vec2 end){
+    public void update(Vec2 start, Vec2 end) {
         p0 = start;
         p3 = end;
 
         // TODO: write robust algorithm for figuring out p1 and p2
 
-        float distance = (float) Math.sqrt(Math.pow((p0.x - p3.x) + Math.pow((p0.y - p3.y), 2), 2));
-        p1 = new Vec2(start.x + distance / 3, start.y - distance / 3);
-        p2 = new Vec2(end.x - distance / 3, end.y - distance / 3);
+        distance = (float) Math.sqrt(Math.pow((p0.x - p3.x), 2) + Math.pow((p0.y - p3.y), 2));
+
+        float offset = 300;
+        p1 = new Vec2(start.x, start.y - offset / 3);
+        p2 = new Vec2(end.x, end.y - offset / 3);
 
         isActive = true;
     }
 
     public void step(float deltaTime) {
+        // prevent running when inactive or missing data
+        if (!isActive || p0 == null || p1 == null || p2 == null || p3 == null) {
+            return;
+        }
 
         if (position >= 0.99) {
             position = 0; // reset
             isActive = false; // stop
         } else {
-//            position += 0.02;
-//            position = PApplet.lerp(position, 1, 0.05f);
-            position = PApplet.lerp(position, 1, 4 * deltaTime);
+            position += deltaTime * movementSpeed;
+//            position = PApplet.lerp(position, 1, 2 * deltaTime); // lower is slower
         }
 
         point = calculateBezierPoint(p0, p1, p2, p3, position);
@@ -63,7 +75,7 @@ public class PlayerTransition {
         );
     }
 
-    public Vec2 getCenter(){
+    public Vec2 getCenter() {
         return point;
     }
 

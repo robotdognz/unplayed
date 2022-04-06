@@ -239,16 +239,16 @@ public class Page extends PageViewObject {
             }
         }
 
-//        // draw the player transition animation
-//        if (game.playerTransition.isActive() && playerVisible) {
-//            game.playerTransition.draw(p.g);
-//            ClippedDraw.drawTransition(p.g, paddedView, 3);
-//        }
+        // draw the player transition animation
+        if (game.playerTransition.isActive()) { // TODO: only draw if inside page bounds
+            ClippedDraw.drawTransition(p.g, paddedView, 3);
+        }
 
         // draw the player
         if (playerVisible && game.player != null && showPlayer) {
             ClippedDraw.drawPlayerOptimised(p.g, paddedView, 3);
         }
+
 
         // draw the grid paper effect
         game.paper.draw(p.g, paddedView, scale, (int) size); // paper effect

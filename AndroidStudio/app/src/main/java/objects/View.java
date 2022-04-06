@@ -1,6 +1,7 @@
 package objects;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PGraphics;
 
 public class View extends Rectangle {
@@ -15,6 +16,7 @@ public class View extends Rectangle {
 
 	public void draw(PGraphics graphics) {
 		graphics.noStroke();
+		graphics.rectMode(PConstants.CORNER);
 		graphics.fill(color, 40); //
 		graphics.rect(getX(), getY(), getWidth(), getHeight());
 		graphics.noStroke();

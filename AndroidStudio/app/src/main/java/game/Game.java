@@ -273,13 +273,27 @@ public class Game {
     }
 
     public void createPlayer(Rectangle playerArea) {
+        // store previous player position
+        Vec2 previousPlayerPosition = null;
+        if (player != null) {
+            previousPlayerPosition = player.getCenter();
+        }
+
         if (playerArea instanceof PlayerStart) {
             Tile current = ((PlayerStart) playerArea).getRequired();
             if (this.player != null) {
                 this.player.destroy();
 
             }
+            // make new player
             player = new Player(p, box2d, texture, current);
+
+            // setup player transition
+            if (previousPlayerPosition != null) {
+                Vec2 newPlayerPosition = player.getCenter();
+                playerTransition.update(previousPlayerPosition, newPlayerPosition);
+            }
+
         } else if (playerArea instanceof Tile) {
             HashSet<Rectangle> returnObjects = new HashSet<>();
             world.retrieve(returnObjects, playerArea);
@@ -310,14 +324,30 @@ public class Game {
                     if (this.player != null) {
                         this.player.destroy();
                     }
+
+                    // make new player
                     player = new Player(p, box2d, texture, playerCheckpoint);
+
+                    // setup player transition
+                    if (previousPlayerPosition != null) {
+                        Vec2 newPlayerPosition = player.getCenter();
+                        playerTransition.update(previousPlayerPosition, newPlayerPosition);
+                    }
                 } else if (playerStart != null) {
                     Tile current = playerStart.getRequired();
                     if (current != null) {
                         if (this.player != null) {
                             this.player.destroy();
                         }
+
+                        // make new player
                         player = new Player(p, box2d, texture, current);
+
+                        // setup player transition
+                        if (previousPlayerPosition != null) {
+                            Vec2 newPlayerPosition = player.getCenter();
+                            playerTransition.update(previousPlayerPosition, newPlayerPosition);
+                        }
                     }
                 }
 
@@ -400,9 +430,9 @@ public class Game {
             // update player transition
             Vec2 centerPlus = player.getCenter().clone();
             centerPlus.x += 600;
-            playerTransition.update(player.getCenter(), centerPlus);
-            playerTransition.step(deltaTime);
+//            playerTransition.update(player.getCenter(), centerPlus);
         }
+        playerTransition.step(deltaTime);
 
     }
 
