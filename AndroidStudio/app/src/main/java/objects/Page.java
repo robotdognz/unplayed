@@ -115,7 +115,7 @@ public class Page extends PageViewObject {
         if (game.player != null) {
             boolean temp = false;
             while (!temp) {
-                if (game.playerTransition.isActive()) {
+                if (game.playerTransition.isCameraDominant()) {
                     // use the transition's position instead of the player's
 
                     Vec2 transitionCenter = game.playerTransition.getCenter();

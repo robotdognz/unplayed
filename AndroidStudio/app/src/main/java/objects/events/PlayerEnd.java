@@ -183,7 +183,7 @@ public class PlayerEnd extends Event {
 		if (!alreadyUsed) { // only ever do this once
 			alreadyUsed = true;
 			if (levelEnd) { // if this is the end of the level
-				game.endGame();
+				game.endLevel();
 			} else { // if this is just part of the puzzle
 				game.endPuzzle(newPlayerArea);
 			}

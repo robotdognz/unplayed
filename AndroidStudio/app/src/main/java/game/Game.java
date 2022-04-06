@@ -200,7 +200,10 @@ public class Game {
 
     }
 
-    public void endGame() {
+    /**
+     * Called when the level should be ended
+     */
+    public void endLevel() {
         // if already in the process of doing something, return
         if (pauseTimer.isRunning()) {
             return;
@@ -220,7 +223,7 @@ public class Game {
 
     public void endPuzzle(Rectangle playerArea) {
         if (world.playerEndCount() - puzzlesCompleted == 1) {
-            endGame();
+            endLevel();
             return;
         }
 
@@ -289,9 +292,13 @@ public class Game {
             player = new Player(p, box2d, texture, current);
 
             // setup player transition
+            Vec2 newPlayerPosition = player.getCenter();
             if (previousPlayerPosition != null) {
-                Vec2 newPlayerPosition = player.getCenter();
-                playerTransition.update(previousPlayerPosition, newPlayerPosition);
+                playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.TRANSITION);
+            } else {
+                // it is the start of the level, tell playerTransition to do a start animation
+                PApplet.print("Level intro animation");
+                playerTransition.update(null, newPlayerPosition, PlayerTransition.Type.START);
             }
 
         } else if (playerArea instanceof Tile) {
@@ -331,7 +338,7 @@ public class Game {
                     // setup player transition
                     if (previousPlayerPosition != null) {
                         Vec2 newPlayerPosition = player.getCenter();
-                        playerTransition.update(previousPlayerPosition, newPlayerPosition);
+                        playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.TRANSITION);
                     }
                 } else if (playerStart != null) {
                     Tile current = playerStart.getRequired();
@@ -346,7 +353,7 @@ public class Game {
                         // setup player transition
                         if (previousPlayerPosition != null) {
                             Vec2 newPlayerPosition = player.getCenter();
-                            playerTransition.update(previousPlayerPosition, newPlayerPosition);
+                            playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.TRANSITION);
                         }
                     }
                 }
