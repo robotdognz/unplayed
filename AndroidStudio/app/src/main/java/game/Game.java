@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 import camera.Camera;
 import editor.Editor;
-import game.player.BezierLerp;
+import game.player.PlayerTransition;
 import game.player.Player;
 import handlers.LoadingHandler;
 import handlers.TextureCache;
@@ -24,35 +24,33 @@ import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.common.Vec2;
 
 public class Game {
-    private PApplet p;
+    private final PApplet p;
     public Player player;
     public MathsPaper paper;
     public Converter convert;
-    private TextureCache texture;
+    private final TextureCache texture;
 
     public Quadtree world;
-    public ArrayList<Tile> removed; // holds the tiles that the player has become and have been removed from the
-    // world
+    public ArrayList<Tile> removed; // holds the tiles that the player has become and have been removed from the world
     public ArrayList<Tile> placed; // holds the tiles the player has left behind after slotting in
     public int puzzlesCompleted;
     public ArrayList<View> views;
     public Rectangle startingWorld;
     public HashSet<Rectangle> playerObjects;
-    private PageView pageView;
+    private final PageView pageView;
     private PlayerStart playerStart;
     public Tile playerCheckpoint;
 
-    private CountdownTimer pauseTimer; // used to pause game during puzzles
+    private final CountdownTimer pauseTimer; // used to pause game during puzzles
     private PauseType pauseType;
     private Rectangle playerAreaTemp;
 
     public LoadingHandler currentLoading = null;
 
+    // enum used to indicate what type of pause has happened
     private enum PauseType {
         NEXT_LEVEL, RESTART_LEVEL, NEXT_PLAYER, NONE
     }
-
-    ; // used to indicate what type of pause has happened
 
     public Camera camera;
 
@@ -66,11 +64,11 @@ public class Game {
     public ContactListener contactListener;
 
     // delta time
-    float accumulator = 0;
+//    float accumulator = 0;
     float stepSize = 1f / 240f;
 
     // player transition animation
-    public BezierLerp playerTransition;
+    public PlayerTransition playerTransition;
 
     public Game(PApplet p, Camera c, TextureCache texture, Converter convert) {
         this.p = p;
@@ -78,12 +76,12 @@ public class Game {
         this.texture = texture;
         this.convert = convert;
 
-        startingWorld = new Rectangle(0 - 400, 0 - 400, 900, 900);
+        startingWorld = new Rectangle(-400, -400, 900, 900);
         world = new Quadtree(startingWorld);
-        removed = new ArrayList<Tile>();
-        placed = new ArrayList<Tile>();
-        views = new ArrayList<View>();
-        playerObjects = new HashSet<Rectangle>();
+        removed = new ArrayList<>();
+        placed = new ArrayList<>();
+        views = new ArrayList<>();
+        playerObjects = new HashSet<>();
         player = null;
 
         pageView = new PageView(p, this, texture, convert);
@@ -103,7 +101,7 @@ public class Game {
         // box2d
         buildWorld();
 
-        playerTransition = new BezierLerp(new Vec2(0, 0), new Vec2(0, 0));
+        playerTransition = new PlayerTransition(new Vec2(0, 0), new Vec2(0, 0));
     }
 
     public void emptyGame() {
@@ -185,7 +183,7 @@ public class Game {
         removed.clear();
 
         // reset player ends
-        HashSet<Rectangle> allObjects = new HashSet<Rectangle>();
+        HashSet<Rectangle> allObjects = new HashSet<>();
         world.getAll(allObjects);
         for (Rectangle temp : allObjects) {
             if (temp instanceof PlayerEnd) {
@@ -232,7 +230,7 @@ public class Game {
     }
 
     private void nextPlayer() {
-        HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
+        HashSet<Rectangle> returnObjects = new HashSet<>();
         world.retrieve(returnObjects, playerAreaTemp);
         Tile found = null;
         for (Rectangle r : returnObjects) {
@@ -260,8 +258,8 @@ public class Game {
             this.playerCheckpoint = found;
 
             // make the matching tile to fill the slot
-            int tileX = (int) (Math.round((player.getCenter().x - player.getWidth() / 2) / 10) * 10);
-            int tileY = (int) (Math.round((player.getCenter().y - player.getHeight() / 2) / 10) * 10);
+            int tileX = (Math.round((player.getCenter().x - player.getWidth() / 2) / 10) * 10);
+            int tileY = (Math.round((player.getCenter().y - player.getHeight() / 2) / 10) * 10);
             Tile newTile = new Tile(box2d, texture, player.getFile(), tileX, tileY);
             newTile.setAngle(player.getAdjustedAngle());
             // insert the new tile into the world and add it to placed
@@ -283,7 +281,7 @@ public class Game {
             }
             player = new Player(p, box2d, texture, current);
         } else if (playerArea instanceof Tile) {
-            HashSet<Rectangle> returnObjects = new HashSet<Rectangle>();
+            HashSet<Rectangle> returnObjects = new HashSet<>();
             world.retrieve(returnObjects, playerArea);
             Tile found = null;
             for (Rectangle r : returnObjects) {
@@ -314,7 +312,7 @@ public class Game {
                     }
                     player = new Player(p, box2d, texture, playerCheckpoint);
                 } else if (playerStart != null) {
-                    Tile current = ((PlayerStart) playerStart).getRequired();
+                    Tile current = playerStart.getRequired();
                     if (current != null) {
                         if (this.player != null) {
                             this.player.destroy();
@@ -460,9 +458,7 @@ public class Game {
 
     public void setViews(ArrayList<View> views) {
         this.views.clear();
-        for (View view : views) {
-            this.views.add(view);
-        }
+        this.views.addAll(views);
     }
 
     public boolean isPaused() {
@@ -490,9 +486,5 @@ public class Game {
         else
             return 1; // 240 Hz ( 160 Hz to .. )
     }
-
-//	public int getRemainingPuzzles() {
-//		return world.playerEndCount() - puzzlesCompleted;
-//	}
 
 }

@@ -1,7 +1,5 @@
 package game;
 
-import org.jbox2d.common.Vec2;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +8,6 @@ import camera.PageViewCamera;
 import editor.DebugOutput;
 import editor.Editor;
 import editor.EditorSettings;
-import game.player.BezierLerp;
 import game.player.ClippedDraw;
 import handlers.TextureCache;
 import misc.Converter;

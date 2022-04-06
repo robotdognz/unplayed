@@ -5,7 +5,7 @@ import org.jbox2d.common.Vec2;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
-public class BezierLerp {
+public class PlayerTransition {
     Vec2 p0;
     Vec2 p1;
     Vec2 p2;
@@ -17,7 +17,7 @@ public class BezierLerp {
 
     private boolean isActive;
 
-    public BezierLerp(Vec2 start, Vec2 end) {
+    public PlayerTransition(Vec2 start, Vec2 end) {
         update(start, end);
         point = start.clone();
 
@@ -39,7 +39,8 @@ public class BezierLerp {
     public void step(float deltaTime) {
 
         if (position >= 0.99) {
-            position = 0;
+            position = 0; // reset
+            isActive = false; // stop
         } else {
 //            position += 0.02;
 //            position = PApplet.lerp(position, 1, 0.05f);

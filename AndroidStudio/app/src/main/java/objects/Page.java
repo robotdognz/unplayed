@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import org.jbox2d.common.Vec2;
-
 import game.AppLogic;
 import game.Game;
-import game.player.BezierLerp;
 import game.player.ClippedDraw;
 import objects.events.PlayerEnd;
 import processing.core.*;

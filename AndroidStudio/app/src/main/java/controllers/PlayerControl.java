@@ -81,7 +81,7 @@ public class PlayerControl implements Controller {
             }
 
             // jump if the touch is in the middle third of the screen
-            if (touch.x > p.width / 4f && touch.x < (p.width / 4f) * 3) {
+            if (touch.x > p.width / 3f && touch.x < (p.width / 3f) * 2) {
                 game.player.jump();
 //                AppLogic.drawControls.jump();
             }
