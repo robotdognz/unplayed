@@ -12,17 +12,19 @@ import processing.core.*;
 
 import static processing.core.PConstants.*;
 
+import org.jbox2d.common.Vec2;
+
 public class Page extends PageViewObject {
-    private Game game;
-    private View view;
-    private float padding;
+    private final Game game;
+    private final View view;
+    private final float padding;
     private Rectangle paddedView = new Rectangle(0, 0, 0, 0);
-    private HashSet<Rectangle> pageObjects;
+    private final HashSet<Rectangle> pageObjects;
     // private HashSet<PVector> excludedTiles; // a list of tiles to exclude while drawing
 
     private List<PageViewObject> children; // all the pageViewObjects that should be visible with this page
 
-    private int shadowOffset; // the absolute amount to offset the shadow by
+    private final int shadowOffset; // the absolute amount to offset the shadow by
     private int shadow; // the relative amount to offset the shadow by
 
     // exclusion booleans
@@ -32,8 +34,8 @@ public class Page extends PageViewObject {
     public boolean showImages;
 
     // player visibility
-    private boolean playerVisibleExternal;
-    private boolean playerVisibleChanged;
+    private boolean playerVisibleExternal; // true if the page is broadcasting that the player is in it and it should be focused on by the auto camera
+    private boolean playerVisibleChanged; // true if the player has left or entered the page this step
 
     // used for scaling
     private float actualSize = 1;
@@ -43,7 +45,7 @@ public class Page extends PageViewObject {
         this.p = p;
         this.game = game;
         this.view = view;
-        this.pageObjects = new HashSet<Rectangle>();
+        this.pageObjects = new HashSet<>();
         // this.excludedObjects = new HashSet<String>();
 
         // booleans
@@ -56,7 +58,7 @@ public class Page extends PageViewObject {
         this.shadow = 9;
 
         // setup children
-        children = new ArrayList<PageViewObject>();
+        children = new ArrayList<>();
 
         padding = 100;
         buildPaddedView();
@@ -78,23 +80,20 @@ public class Page extends PageViewObject {
         if (child == null) {
             return;
         }
+        // reset page view camera
         if (children.contains(child)) {
             children.remove(child);
-            AppLogic.game.getPageView().resetSystems(); // reset page view camera
         } else {
             children.add(child);
-            AppLogic.game.getPageView().resetSystems(); // reset page view camera
         }
+        AppLogic.game.getPageView().resetSystems(); // reset page view camera
     }
 
     public void removeChild(PageViewObject child) {
         if (child == null) {
             return;
         }
-        if (children.contains(child)) {
-            children.remove(child);
-            return;
-        }
+        children.remove(child);
     }
 
     public void step() {
@@ -104,37 +103,77 @@ public class Page extends PageViewObject {
         updatePlayerVisibility();
     }
 
+    /**
+     * Updates the status of player visibility for the page. This is used to keep the auto camera
+     * accurately informed about what pages to focus on.
+     *
+     * When the player transition animation is active, this method uses its position instead of the
+     * player's to update the player visibility variables.
+     */
     private void updatePlayerVisibility() {
         // update player visibility
         if (game.player != null) {
             boolean temp = false;
-            while (temp == false) {
-                if (game.player.getCenter().x + game.player.getWidth() * 0.1 > view.getBottomRight().x) { // - 1
-                    break;
-                }
-                if (game.player.getCenter().x - game.player.getWidth() * 0.1 < view.getTopLeft().x) { // + 1
-                    break;
-                }
-                if (game.player.getCenter().y + game.player.getWidth() * 0.1 > view.getBottomRight().y) { // - 1
-                    break;
-                }
-                if (game.player.getCenter().y - game.player.getWidth() * 0.1 < view.getTopLeft().y) { // + 1
-                    break;
-                }
+            while (!temp) {
+                if (game.playerTransition.isActive()) {
+                    // use the transition's position instead of the player's
 
+                    Vec2 transitionCenter = game.playerTransition.getCenter();
+                    float padding = game.playerTransition.getSize();
+
+                    if (transitionCenter.x + padding > view.getBottomRight().x) { // - 1
+                        break;
+                    }
+                    if (transitionCenter.x - padding < view.getTopLeft().x) { // + 1
+                        break;
+                    }
+                    if (transitionCenter.y + padding > view.getBottomRight().y) { // - 1
+                        break;
+                    }
+                    if (transitionCenter.y - padding < view.getTopLeft().y) { // + 1
+                        break;
+                    }
+                } else {
+                    // use the player's position
+
+                    Vec2 playerCenter = game.player.getCenter();
+                    float padding = game.player.getWidth() * 0.1f;
+
+                    if (playerCenter.x + padding > view.getBottomRight().x) { // - 1
+                        break;
+                    }
+                    if (playerCenter.x - padding < view.getTopLeft().x) { // + 1
+                        break;
+                    }
+                    if (playerCenter.y + padding > view.getBottomRight().y) { // - 1
+                        break;
+                    }
+                    if (playerCenter.y - padding < view.getTopLeft().y) { // + 1
+                        break;
+                    }
+                }
+                // made it to the end, player or transition is visible on this page
                 temp = true;
             }
 
+            // if this is a change, update the variables
             if (temp != playerVisibleExternal) {
                 playerVisibleExternal = temp;
                 playerVisibleChanged = true;
             }
 
         } else {
+            // no player exists, so it can't be visible
             playerVisibleExternal = false;
         }
     }
 
+    /**
+     * Used to check if the visibility of the player on this page has changed. It clears its result
+     * each time it is called.
+     *
+     * @return true if the player visibility on this page has changed since this method was last called
+     */
     public boolean playerVisibilityChanged() {
         // has player visibility changed since last check?
         boolean temp = playerVisibleChanged;
@@ -220,35 +259,55 @@ public class Page extends PageViewObject {
             }
         }
 
+        // draw the player
         boolean playerVisible = false;
         if (game.player != null) {
-            while (playerVisible == false) {
-                if (game.player.getCenter().x - game.player.getWidth() * 0.6 > paddedView.getBottomRight().x) {
+            while (!playerVisible) {
+                Vec2 playerCenter = game.player.getCenter();
+                float padding = game.player.getWidth() * 0.6f;
+                if (playerCenter.x - padding > paddedView.getBottomRight().x) {
                     break;
                 }
-                if (game.player.getCenter().x + game.player.getWidth() * 0.6 < paddedView.getTopLeft().x) {
+                if (playerCenter.x + padding < paddedView.getTopLeft().x) {
                     break;
                 }
-                if (game.player.getCenter().y - game.player.getWidth() * 0.6 > paddedView.getBottomRight().y) {
+                if (playerCenter.y - padding > paddedView.getBottomRight().y) {
                     break;
                 }
-                if (game.player.getCenter().y + game.player.getWidth() * 0.6 < paddedView.getTopLeft().y) {
+                if (playerCenter.y + padding < paddedView.getTopLeft().y) {
                     break;
                 }
                 playerVisible = true;
             }
         }
-
-        // draw the player transition animation
-        if (game.playerTransition.isActive()) { // TODO: only draw if inside page bounds
-            ClippedDraw.drawTransition(p.g, paddedView, 3);
-        }
-
-        // draw the player
-        if (playerVisible && game.player != null && showPlayer) {
+        if (playerVisible && showPlayer) {
             ClippedDraw.drawPlayerOptimised(p.g, paddedView, 3);
         }
 
+        // draw the player transition animation
+        boolean transitionVisible = false;
+        if (game.playerTransition.isActive()) {
+            while (!transitionVisible) {
+                Vec2 transitionCenter = game.playerTransition.getCenter();
+                float padding = game.playerTransition.getSize();
+                if (transitionCenter.x - padding > paddedView.getBottomRight().x) {
+                    break;
+                }
+                if (transitionCenter.x + padding < paddedView.getTopLeft().x) {
+                    break;
+                }
+                if (transitionCenter.y - padding > paddedView.getBottomRight().y) {
+                    break;
+                }
+                if (transitionCenter.y + padding < paddedView.getTopLeft().y) {
+                    break;
+                }
+                transitionVisible = true;
+            }
+        }
+        if (transitionVisible && showPlayer) {
+            ClippedDraw.drawTransition(p.g, paddedView, 3);
+        }
 
         // draw the grid paper effect
         game.paper.draw(p.g, paddedView, scale, (int) size); // paper effect

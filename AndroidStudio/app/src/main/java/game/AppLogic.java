@@ -476,7 +476,7 @@ public class AppLogic {
 
         // on screen controls
         // tell the controls the current state
-        boolean drawControls = (game.player != null && controller instanceof PlayerControl && menu == null);
+        boolean drawControls = (game.player != null && !game.playerTransition.isActive() && controller instanceof PlayerControl && menu == null);
         boolean drawMenu = !editorToggle;
         drawUI.step(deltaTime, drawControls, controlHeight, drawMenu, lastTouch);
         // draw the controls

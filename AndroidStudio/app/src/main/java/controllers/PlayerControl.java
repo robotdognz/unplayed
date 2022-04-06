@@ -27,6 +27,11 @@ public class PlayerControl implements Controller {
             return;
         }
 
+        // prevent input when transitioning between players
+        if (game.playerTransition.isActive()) {
+            return;
+        }
+
         int left = 0;
         int right = 0;
 
@@ -68,23 +73,30 @@ public class PlayerControl implements Controller {
             return;
         }
 
-        if (game.player != null) {
+        // prevent input if no player
+        if (game.player == null) {
+            return;
+        }
 
-            // return if touch below controls
-            if (touch.y > AppLogic.drawUI.getControlsBottom()) {
-                return;
-            }
+        // prevent input when transitioning between players
+        if (game.playerTransition.isActive()) {
+            return;
+        }
 
-            // return if touch above controls
-            if (touch.y < AppLogic.drawUI.getControlsTop()) {
-                return;
-            }
+        // return if touch below controls
+        if (touch.y > AppLogic.drawUI.getControlsBottom()) {
+            return;
+        }
 
-            // jump if the touch is in the middle third of the screen
-            if (touch.x > p.width / 3f && touch.x < (p.width / 3f) * 2) {
-                game.player.jump();
-//                AppLogic.drawControls.jump();
-            }
+        // return if touch above controls
+        if (touch.y < AppLogic.drawUI.getControlsTop()) {
+            return;
+        }
+
+        // jump if the touch is in the middle third of the screen
+        if (touch.x > p.width / 3f && touch.x < (p.width / 3f) * 2) {
+            game.player.jump();
+//          AppLogic.drawControls.jump();
         }
     }
 
@@ -105,6 +117,6 @@ public class PlayerControl implements Controller {
     }
 
     @Override
-    public void onTap(float x, float y){
+    public void onTap(float x, float y) {
     }
 }

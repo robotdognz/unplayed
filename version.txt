@@ -14,6 +14,13 @@
 -Restored old (more effective) navigation bar hiding code
 -Fixed editor ui side bug and cleaned up editor control code
 -Added new tutorial campaign and other levels
+-Improved clipped rendering algorithm used for drawing dynamic objects on pages
+-Added a transition animation when moving between controllable tiles
+-Auto camera now follows pages with player transition in them
+-Player is inactive and frozen in place when a transition is happening, face is only drawn when it finishes
+-Added start and end clipping to player transition drawing algorithm
+-Controller UI fades in and out during a transition
+-Various bits of cleanup and optimisation
 
 1.3.1: Polish patch
 -Cleaned up a bunch of depricted code

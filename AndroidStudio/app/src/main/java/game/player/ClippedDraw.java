@@ -165,8 +165,12 @@ public class ClippedDraw {
      * @param scale        the LOD to use
      */
     public static void drawTransition(PGraphics graphics, Rectangle clippingArea, float scale) {
-        float objectAngle = 0;
         Vec2 objectCenter = AppLogic.game.playerTransition.getCenter();
+        float size = AppLogic.game.playerTransition.getSize();
+
+        Vec2 start = AppLogic.game.playerTransition.getStart();
+        Vec2 end = AppLogic.game.playerTransition.getEnd();
+        float tileSize = 100;
 
         // draw the mask ot the transition effect position and add masking
 
@@ -174,39 +178,38 @@ public class ClippedDraw {
         mask.beginDraw();
         mask.blendMode(BLEND);
         mask.background(0); // white
-
         // translate to middle of mask PImage
         mask.translate(mask.width * 0.5f, mask.height * 0.5f); // set to center
-
         // calculate the amount to offset the clipping area by so it correctly overlaps the mask
-        float xDiff = clippingArea.getX() - objectCenter.x;
-        float yDiff = clippingArea.getY() - objectCenter.y;
-
+        float clippingAreaOffsetX = clippingArea.getX() - objectCenter.x;
+        float clippingAreaOffsetY = clippingArea.getY() - objectCenter.y;
         // draw the clipping area rectangle over the mask in black
         mask.noStroke();
-        mask.rotate(objectAngle);
         mask.scale(256 / 100f);
         mask.fill(255); // black
         mask.rectMode(CORNER);
-        mask.rect(xDiff, yDiff, clippingArea.getWidth(), clippingArea.getHeight());
-
+        mask.rect(clippingAreaOffsetX, clippingAreaOffsetY, clippingArea.getWidth(), clippingArea.getHeight());
         // draw the sprite to be masked onto the mask PImage, tinted to black
         // this is used to determine what area of the mask will be used to draw the final sprite
         mask.fill(0);
         mask.rectMode(CENTER);
-        mask.rect(0, 0, 50, 50); // TODO: replace with actual sprite
-
+        mask.rect(0, 0, size, size); // TODO: replace with actual sprite and tinting
         // draw the clipping area rectangle over the mask again but in white using EXCLUSION blend mode
         mask.blendMode(EXCLUSION);
         mask.fill(255); // white
         mask.rectMode(CORNER);
-        mask.rect(xDiff, yDiff, clippingArea.getWidth(), clippingArea.getHeight());
-
-        // reset the blend mode to normal, invert the mask PImage, and end drawing
+        mask.rect(clippingAreaOffsetX, clippingAreaOffsetY, clippingArea.getWidth(), clippingArea.getHeight());
+        // reset the blend mode to normal
         mask.blendMode(BLEND);
+        // draw start and end onto the clipping mask
+        mask.rectMode(CENTER);
+        mask.fill(0); // black
+        mask.rect(start.x - objectCenter.x, start.y - objectCenter.y, tileSize, tileSize);
+        mask.rect(end.x - objectCenter.x, end.y - objectCenter.y, tileSize, tileSize);
+        // end working on mask
         mask.endDraw();
 
-        // draw the transition effect
+        // draw the transition effect using the mask
 
         canvas.beginDraw();
         canvas.translate(mask.width * 0.5f, mask.height * 0.5f); // set to center
@@ -215,15 +218,15 @@ public class ClippedDraw {
         canvas.rectMode(CENTER);
         canvas.noStroke();
         canvas.fill(0, 0, 255); // blue
-        canvas.rect(0, 0, 50, 50);
+        canvas.rect(0, 0, size, size);  // TODO: replace with actual sprite
         canvas.endDraw();
+        canvas.mask(mask); // do masking
 
-        canvas.mask(mask);
+        // draw the transition onto the actual page
 
         graphics.pushMatrix();
         graphics.imageMode(CENTER);
         graphics.translate(objectCenter.x, objectCenter.y);
-        graphics.rotate(-objectAngle);
         graphics.scale(100 / 256f);
         graphics.image(canvas, 0, 0); //player
         graphics.popMatrix();

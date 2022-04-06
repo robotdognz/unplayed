@@ -405,16 +405,18 @@ public class Game {
             player.step(deltaTime);
         }
 
-        // step physics
-        int steps = calculateSteps(deltaTime);
-        while (steps > 0) {
-            if (player != null) {
-                player.physicsStep(stepSize);
+        // step physics, only when there is no player transition
+        if (!playerTransition.isActive()) {
+            int steps = calculateSteps(deltaTime);
+            while (steps > 0) {
+                if (player != null) {
+                    player.physicsStep(stepSize);
+                }
+                box2d.step(stepSize, 8, 3);
+                steps--;
             }
-            box2d.step(stepSize, 8, 3);
-            steps--;
+            box2d.world.clearForces();
         }
-        box2d.world.clearForces();
 
 
         // update screen space
@@ -426,12 +428,7 @@ public class Game {
         // step the pause timer
         pauseTimer.deltaStep(deltaTime);
 
-        if (player != null) {
-            // update player transition
-            Vec2 centerPlus = player.getCenter().clone();
-            centerPlus.x += 600;
-//            playerTransition.update(player.getCenter(), centerPlus);
-        }
+        // step player transition
         playerTransition.step(deltaTime);
 
     }

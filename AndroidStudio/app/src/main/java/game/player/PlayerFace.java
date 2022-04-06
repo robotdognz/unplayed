@@ -1,8 +1,10 @@
 package game.player;
 
+import game.AppLogic;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PImage;
+
 import static processing.core.PConstants.*;
 
 public class PlayerFace {
@@ -29,6 +31,12 @@ public class PlayerFace {
      * @param height height to draw the face
      */
     public void draw(PGraphics g, float width, float height) {
+        // don't draw the face if player transition is active
+        if (AppLogic.game.playerTransition.isActive()) {
+            return;
+        }
+
+        // draw the face
         g.imageMode(CENTER);
         switch (state) {
             case DEFAULT:

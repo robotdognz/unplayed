@@ -311,12 +311,12 @@ public class Editor {
             ((Tile) r).draw(p.g, currentScale);
         }
 
-        if (AppLogic.game.playerTransition.isActive()) {
-            AppLogic.game.playerTransition.draw(p.g);
-        }
-
         if (AppLogic.game.player != null) { // draw the player on top of tiles and images
             AppLogic.game.player.draw(p.g, currentScale);
+        }
+
+        if (AppLogic.game.playerTransition.isActive()) {
+            AppLogic.game.playerTransition.draw(p.g, currentScale);
         }
 
         if (viewVis) { // draw the views behind events
