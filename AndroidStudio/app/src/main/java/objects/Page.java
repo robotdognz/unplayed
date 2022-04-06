@@ -242,15 +242,15 @@ public class Page extends PageViewObject {
             }
         }
 
-        // draw the player transition animation
-        if (game.playerTransition.isActive()) { // && playerVisible
-            game.playerTransition.draw(p.g);
-            ClippedDraw.drawTransition(p.g, paddedView, 3);
-        }
+//        // draw the player transition animation
+//        if (game.playerTransition.isActive() && playerVisible) {
+//            game.playerTransition.draw(p.g);
+//            ClippedDraw.drawTransition(p.g, paddedView, 3);
+//        }
 
         // draw the player
         if (playerVisible && game.player != null && showPlayer) {
-            ClippedDraw.drawPlayerSimple(p.g, paddedView, 3);
+            ClippedDraw.drawPlayerOptimised(p.g, paddedView, 3);
         }
 
         // draw the grid paper effect
