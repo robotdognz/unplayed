@@ -31,11 +31,6 @@ public class PlayerFace {
      * @param height height to draw the face
      */
     public void draw(PGraphics g, float width, float height) {
-        // don't draw the face if player transition is active
-        if (AppLogic.game.playerTransition.isActive()) {
-            return;
-        }
-
         // draw the face
         g.imageMode(CENTER);
         switch (state) {
@@ -46,6 +41,10 @@ public class PlayerFace {
                 break;
 
         }
+    }
+
+    public void drawAll(PGraphics g) {
+        g.image(defaultFace, 0, 0, 100, 100);
     }
 
     /**

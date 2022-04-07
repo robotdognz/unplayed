@@ -111,6 +111,8 @@ public class Player extends Editable {
     private boolean verticalTunnel; // used to check if player should jump away from the wall or not
     private boolean horizontalTunnel;
 
+    private boolean isActive; // should the face be drawn and gravity be applied
+
     public Player(PApplet p, Box2DProcessing box2d, TextureCache texture, Tile tile) {
         super(tile.getX(), tile.getY(), 100, 100);
         this.file = tile.getFile();
@@ -191,6 +193,8 @@ public class Player extends Editable {
         this.pushLeftTimer = new CountdownTimer(0.150f); // 0.200f
         this.pushRightTimer = new CountdownTimer(0.150f); // 0.200f
 
+        isActive = false;
+
         create();
     }
 
@@ -232,6 +236,11 @@ public class Player extends Editable {
             sensorFixtureDef.isSensor = true;
             sensorFixtureDef.userData = CollisionEnum.PLAYER_SENSOR;
             dynamicBody.createFixture(sensorFixtureDef);
+
+            // if the player isn't active, turn off their gravity
+            if (!isActive) {
+                dynamicBody.setGravityScale(0);
+            }
 
         }
     }
@@ -1522,7 +1531,9 @@ public class Player extends Editable {
     }
 
     public void step(float deltaTime) {
-        vibration.step(deltaTime);
+        if (isActive) {
+            vibration.step(deltaTime);
+        }
 
         if (rotationSmooth != null) {
             rotationSmooth.deltaStep(deltaTime);
@@ -1554,7 +1565,9 @@ public class Player extends Editable {
         if (hasTexture) {
             graphics.imageMode(CENTER);
             graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
-            AppLogic.playerFace.draw(graphics, getWidth(), getHeight());
+            if (isActive) {
+                AppLogic.playerFace.draw(graphics, getWidth(), getHeight());
+            }
         }
     }
 
@@ -1587,8 +1600,10 @@ public class Player extends Editable {
             }
 
             graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
-            AppLogic.playerFace.draw(graphics, getWidth(), getHeight());
             graphics.noTint();
+            if (isActive) {
+                AppLogic.playerFace.draw(graphics, getWidth(), getHeight());
+            }
 
             // draw the slot checking logic
             if (showChecking) {
@@ -1778,4 +1793,16 @@ public class Player extends Editable {
         return playerAngle;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        this.isActive = active;
+
+        // turn gravity on now that the player is active
+        if (active) {
+            dynamicBody.setGravityScale(1);
+        }
+    }
 }

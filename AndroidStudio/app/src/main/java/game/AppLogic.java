@@ -110,11 +110,13 @@ public class AppLogic {
         titleScreen();
         game.getPageView().initCamera();
 
-        p.background(100);
+        // force draw player face
+        AppLogic.playerFace.drawAll(p.g);
+        // force draw controls
+        AppLogic.drawUI.drawAll();
 
         // print android api version
         PApplet.println(android.os.Build.VERSION.SDK_INT);
-
     }
 
     static public void getSaveGame() {
@@ -202,18 +204,6 @@ public class AppLogic {
     static public void nextLevel() {
         currentLevel++;
 
-//        if ((externalLevels != null && externalLevels.size() > currentLevel) ||
-//                (externalLevels == null && levels != null && levels.size() > currentLevel)) {
-//            // there is an external campaign running and it has more levels
-//            // or there is no external campaign and main campaign has more levels
-//        } else {
-//            menu = null;
-//            if (externalLevels == null) {
-//                // only clear save game if we're not running an external campaign
-//                clearSaveGame();
-//            }
-////            titleScreen();
-//        }
         loadingScreen(false);
     }
 
@@ -316,6 +306,10 @@ public class AppLogic {
                 object.draw(TextureCache.LOD32);
                 p.popMatrix();
             }
+//            // force draw player face
+//            AppLogic.playerFace.drawAll(p.g);
+//            // force draw controls
+//            AppLogic.drawUI.drawAll();
             // force draw next loading screen
             if (game.currentLoading != null) {
                 game.currentLoading.drawAll();
@@ -370,6 +364,8 @@ public class AppLogic {
      *                   phone, otherwise false
      */
     static public void loadingScreen(boolean useDefault) {
+        // when the loading screen is completed it calls startLevel()
+
         LoadingHandler loading = game.currentLoading;
 
         if (useDefault) {
@@ -476,7 +472,7 @@ public class AppLogic {
 
         // on screen controls
         // tell the controls the current state
-        boolean drawControls = (game.player != null && !game.playerTransition.isActive() && controller instanceof PlayerControl && menu == null);
+        boolean drawControls = (game.player != null && game.player.isActive() && controller instanceof PlayerControl && menu == null);
         boolean drawMenu = !editorToggle;
         drawUI.step(deltaTime, drawControls, controlHeight, drawMenu, lastTouch);
         // draw the controls

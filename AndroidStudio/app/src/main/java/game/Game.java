@@ -212,6 +212,8 @@ public class Game {
         if (AppLogic.getEditor() == null) { // in a normal game
             pauseTimer.start();
             pauseType = PauseType.NEXT_LEVEL;
+            playerTransition.update(player.getCenter(), null, PlayerTransition.Type.END);
+            player.setActive(false);
         } else { // in the editor
             if (AppLogic.editorToggle && !Editor.showPageView) {
                 AppLogic.toast.showToast("Level Complete");
@@ -389,18 +391,21 @@ public class Game {
                 case NONE:
                     pauseTimer.stop();
                     break;
+                case NEXT_PLAYER:
+                    nextPlayer();
+                    pauseType = PauseType.NONE;
+                    pauseTimer.stop();
+                    break;
                 case NEXT_LEVEL:
+                    if (playerTransition.isActive()) {
+                        break;
+                    }
                     AppLogic.nextLevel();
                     pauseType = PauseType.NONE;
                     pauseTimer.stop();
                     break;
                 case RESTART_LEVEL:
                     AppLogic.restartLevel();
-                    pauseType = PauseType.NONE;
-                    pauseTimer.stop();
-                    break;
-                case NEXT_PLAYER:
-                    nextPlayer();
                     pauseType = PauseType.NONE;
                     pauseTimer.stop();
                     break;
@@ -413,17 +418,15 @@ public class Game {
         }
 
         // step physics, only when there is no player transition
-        if (!playerTransition.isActive()) {
-            int steps = calculateSteps(deltaTime);
-            while (steps > 0) {
-                if (player != null) {
-                    player.physicsStep(stepSize);
-                }
-                box2d.step(stepSize, 8, 3);
-                steps--;
+        int steps = calculateSteps(deltaTime);
+        while (steps > 0) {
+            if (player != null) {
+                player.physicsStep(stepSize);
             }
-            box2d.world.clearForces();
+            box2d.step(stepSize, 8, 3);
+            steps--;
         }
+        box2d.world.clearForces();
 
 
         // update screen space

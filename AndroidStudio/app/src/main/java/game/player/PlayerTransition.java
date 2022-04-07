@@ -4,6 +4,7 @@ import static processing.core.PConstants.*;
 
 import org.jbox2d.common.Vec2;
 
+import game.AppLogic;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -39,10 +40,19 @@ public class PlayerTransition {
         p3 = end;
         this.type = type;
 
-        if (type == Type.START) {
-            // TODO: actually calculate where the start should be
-            p0 = new Vec2(end.x - 500, end.y);
+        switch (type) {
+            case START:
+                // TODO: actually calculate where the start should be
+                // needs to work both with and without views
+                p0 = new Vec2(end.x - 500, end.y);
+                break;
+            case END:
+                // TODO: actually calculate where the end should be
+                // needs to work both with and without views
+                p3 = new Vec2(start.x + 500, start.y);
+                break;
         }
+
 
         // TODO: write robust algorithm for figuring out p1 and p2
 
@@ -50,7 +60,7 @@ public class PlayerTransition {
 
         float offset = 300;
         p1 = new Vec2(p0.x, p0.y - offset / 3);
-        p2 = new Vec2(end.x, end.y - offset / 3);
+        p2 = new Vec2(p3.x, p3.y - offset / 3);
 
         isActive = true;
         PApplet.print("Player Transition started");
@@ -65,12 +75,21 @@ public class PlayerTransition {
         if (position >= 0.99) {
             position = 0; // reset
             isActive = false; // stop
+            if (AppLogic.game.player != null) {
+                switch (type) {
+                    case START:
+                    case TRANSITION:
+                        AppLogic.game.player.setActive(true);
+                        break;
+                }
+            }
         } else {
             position += deltaTime * movementSpeed;
 //            position = PApplet.lerp(position, 1, 2 * deltaTime); // lower is slower
         }
 
         point = calculateBezierPoint(p0, p1, p2, p3, position);
+
 
     }
 

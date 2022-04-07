@@ -186,6 +186,13 @@ public class InGameUI {
         p.noTint();
     }
 
+    public void drawAll(){
+        p.image(TextureCache.getControlsLeft(), leftButtonXPosition, controlsYPosition - (controlButtonArea * 0.5f), controlButtonSize, controlButtonSize);
+        p.image(TextureCache.getControlsJump(), jumpButtonXPosition, controlsYPosition - (controlButtonArea * 0.5f), controlButtonSize, controlButtonSize);
+        p.image(TextureCache.getControlsRight(), rightButtonXPosition, controlsYPosition - (controlButtonArea * 0.5f), controlButtonSize, controlButtonSize);
+        p.image(TextureCache.getControlsMenu(), menuXPosition, menuYPosition + (menuButtonArea * 0.5f), menuButtonSize, menuButtonSize);
+    }
+
     public void touchEnded() {
         if (menuTint.isRunning() || AppLogic.hasMenu()) {
             return;

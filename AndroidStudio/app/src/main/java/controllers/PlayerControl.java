@@ -23,12 +23,7 @@ public class PlayerControl implements Controller {
         }
 
         // prevent input if no player
-        if (game.player == null) {
-            return;
-        }
-
-        // prevent input when transitioning between players
-        if (game.playerTransition.isActive()) {
+        if (game.player == null || !game.player.isActive()) {
             return;
         }
 
@@ -74,12 +69,7 @@ public class PlayerControl implements Controller {
         }
 
         // prevent input if no player
-        if (game.player == null) {
-            return;
-        }
-
-        // prevent input when transitioning between players
-        if (game.playerTransition.isActive()) {
+        if (game.player == null || !game.player.isActive()) {
             return;
         }
 
