@@ -14,6 +14,7 @@ import editor.uibottom.EditorBottom;
 import editor.uiside.EditorSide;
 import editor.uitop.EditorTop;
 import game.AppLogic;
+import game.MathsPaper;
 import game.PageView;
 import game.Quadtree;
 import game.player.Player;
@@ -330,7 +331,7 @@ public class Editor {
             }
         }
 
-        AppLogic.game.paper.draw(p.g, AppLogic.game.screenSpace, currentScale, 1);
+        MathsPaper.draw(p.g, AppLogic.game.screenSpace, currentScale, 1);
 
         // draw tool effects
         if (currentTool != null) {

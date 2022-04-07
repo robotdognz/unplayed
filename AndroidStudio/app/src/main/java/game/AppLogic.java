@@ -110,10 +110,17 @@ public class AppLogic {
         titleScreen();
         game.getPageView().initCamera();
 
+        // force draw
+
         // force draw player face
         AppLogic.playerFace.drawAll(p.g);
         // force draw controls
         AppLogic.drawUI.drawAll();
+        // force draw loaded assets
+        texture.drawAll(p);
+        // force draw math paper
+        Rectangle screen = new Rectangle(0, 0, p.width, p.height);
+        MathsPaper.draw(p.g, screen, 3, 1);
 
         // print android api version
         PApplet.println(android.os.Build.VERSION.SDK_INT);
@@ -306,10 +313,6 @@ public class AppLogic {
                 object.draw(TextureCache.LOD32);
                 p.popMatrix();
             }
-//            // force draw player face
-//            AppLogic.playerFace.drawAll(p.g);
-//            // force draw controls
-//            AppLogic.drawUI.drawAll();
             // force draw next loading screen
             if (game.currentLoading != null) {
                 game.currentLoading.drawAll();

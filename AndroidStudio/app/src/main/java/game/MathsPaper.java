@@ -7,26 +7,22 @@ import processing.core.PGraphics;
 import static processing.core.PConstants.*;
 
 public class MathsPaper {
-	int gridSize;
+	private static final int gridSize = 400;
 
-	public MathsPaper() {
-		gridSize = 400;
-	}
-
-	public void draw(PGraphics graphics, Rectangle screen, float scale, int gridMultiply) {
+	public static void draw(PGraphics graphics, Rectangle screen, float scale, int gridMultiply) {
 		// TODO: this could be made more efficient for pages because they draw the same
 		// every time, the numbers shouldn't be recalculated each frame
 
-		int gridSize = this.gridSize / gridMultiply;
+		int gridSize = MathsPaper.gridSize / gridMultiply;
 
 		// find x start position
-		float startX = (int) Math.round((screen.getTopLeft().x - (gridSize / 2)) / gridSize);
+		float startX = (int) Math.round((screen.getTopLeft().x - (gridSize * 0.5f)) / gridSize);
 		// find y start position;
-		float startY = (int) Math.round((screen.getTopLeft().y - (gridSize / 2)) / gridSize);
+		float startY = (int) Math.round((screen.getTopLeft().y - (gridSize * 0.5f)) / gridSize);
 		// find x end position
-		float endX = (int) Math.round((screen.getBottomRight().x + (gridSize / 2)) / gridSize);
+		float endX = (int) Math.round((screen.getBottomRight().x + (gridSize * 0.5f)) / gridSize);
 		// find y end position
-		float endY = (int) Math.round((screen.getBottomRight().y + (gridSize / 2)) / gridSize);
+		float endY = (int) Math.round((screen.getBottomRight().y + (gridSize * 0.5f)) / gridSize);
 
 		float xTileStart = 0; // where to start horizontal tiling in texture units
 		float yTileStart = 0; // where to start vertical tiling in texture units

@@ -143,16 +143,19 @@ public class TextureCache {
         }
     }
 
-    static public PImage getControlsLeft(){
+    static public PImage getControlsLeft() {
         return controlsLeft;
     }
-    static public PImage getControlsJump(){
+
+    static public PImage getControlsJump() {
         return controlsJump;
     }
-    static public PImage getControlsRight(){
+
+    static public PImage getControlsRight() {
         return controlsRight;
     }
-    static public PImage getControlsMenu(){
+
+    static public PImage getControlsMenu() {
         return controlsMenu;
     }
 
@@ -573,6 +576,19 @@ public class TextureCache {
 
     public ArrayList<EventHandler> getEventList() {
         return eventList;
+    }
+
+    public void drawAll(PApplet p) {
+        float x = p.width * 0.5f;
+        float y = p.height * 0.5f;
+        // draw all tiles
+        for (TileHandler t : tileList) {
+            t.draw(p.g, x, y, TextureCache.LOD256);
+            t.draw(p.g, x, y, TextureCache.LOD128);
+            t.draw(p.g, x, y, TextureCache.LOD64);
+            t.draw(p.g, x, y, TextureCache.LOD32);
+        }
+
     }
 
 }

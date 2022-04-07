@@ -26,7 +26,6 @@ import org.jbox2d.common.Vec2;
 public class Game {
     private final PApplet p;
     public Player player;
-    public MathsPaper paper;
     public Converter convert;
     private final TextureCache texture;
 
@@ -85,8 +84,6 @@ public class Game {
         player = null;
 
         pageView = new PageView(p, this, texture, convert);
-
-        paper = new MathsPaper();
 
         pauseTimer = new CountdownTimer(0.4f);
         pauseType = PauseType.NONE;

@@ -9,7 +9,7 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class PlayerTransition {
-    final float movementSpeed;
+    private float movementDuration; // duration of animation in seconds
 
     // bezier curve coordinates
     private Vec2 p0;
@@ -30,7 +30,7 @@ public class PlayerTransition {
     public PlayerTransition(Vec2 start, Vec2 end) {
         point = start.clone();
 
-        movementSpeed = 0.8f; // 1 = 1 second, 0.5 = 2 seconds, etc.
+        movementDuration = 1;
 
         size = 50;
     }
@@ -44,12 +44,24 @@ public class PlayerTransition {
             case START:
                 // TODO: actually calculate where the start should be
                 // needs to work both with and without views
+                // when the end is inside a view, make the start just outside that view to the left
+                // if not in a view, just exit this method
                 p0 = new Vec2(end.x - 500, end.y);
+                movementDuration = 1;
                 break;
             case END:
                 // TODO: actually calculate where the end should be
                 // needs to work both with and without views
+                // when the start is inside a view, make the end just outside that view to the right
+                // if not in a view, just exit this method
                 p3 = new Vec2(start.x + 500, start.y);
+                movementDuration = 1;
+                break;
+            case TRANSITION:
+                movementDuration = 1;
+                break;
+            case DEATH:
+                movementDuration = 0.5f;
                 break;
         }
 
@@ -84,8 +96,7 @@ public class PlayerTransition {
                 }
             }
         } else {
-            position += deltaTime * movementSpeed;
-//            position = PApplet.lerp(position, 1, 2 * deltaTime); // lower is slower
+            position += deltaTime / movementDuration;
         }
 
         point = calculateBezierPoint(p0, p1, p2, p3, position);

@@ -569,4 +569,8 @@ public class PageView {
             offsetAll(-center.x, -center.y);
         }
     }
+
+    public BackgroundPaper getPaper() {
+        return paper;
+    }
 }

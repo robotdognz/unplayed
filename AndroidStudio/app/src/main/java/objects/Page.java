@@ -6,6 +6,7 @@ import java.util.List;
 
 import game.AppLogic;
 import game.Game;
+import game.MathsPaper;
 import game.player.ClippedDraw;
 import objects.events.PlayerEnd;
 import processing.core.*;
@@ -310,7 +311,7 @@ public class Page extends PageViewObject {
         }
 
         // draw the grid paper effect
-        game.paper.draw(p.g, paddedView, scale, (int) size); // paper effect
+        MathsPaper.draw(p.g, paddedView, scale, (int) size); // paper effect
 
         p.popMatrix();
     }
