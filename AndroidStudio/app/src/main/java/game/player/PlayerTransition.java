@@ -21,7 +21,7 @@ public class PlayerTransition {
 
     private Vec2 point; // where the transition effect is currently
     private float position = 0; // where the transition is on its journey between 0 and 1
-    private float size;
+    private final float size;
 
     private Type type;
 
@@ -68,11 +68,16 @@ public class PlayerTransition {
 
         // TODO: write robust algorithm for figuring out p1 and p2
 
+        float xDistance = Math.abs(p0.x - p3.x);
+        float yDistance = Math.abs(p0.y - p3.y);
+
         distance = (float) Math.sqrt(Math.pow((p0.x - p3.x), 2) + Math.pow((p0.y - p3.y), 2));
 
+        float yOffset = xDistance / 5;
+
         float offset = 300;
-        p1 = new Vec2(p0.x, p0.y - offset / 3);
-        p2 = new Vec2(p3.x, p3.y - offset / 3);
+        p1 = new Vec2(p0.x, p0.y - yOffset); // - offset / 3
+        p2 = new Vec2(p3.x, p3.y - yOffset);
 
         isActive = true;
         PApplet.print("Player Transition started");
@@ -121,21 +126,21 @@ public class PlayerTransition {
         return point;
     }
 
-    public void draw(PGraphics g, float scale) {
+    public void drawVisualisation(PGraphics g, float scale) {
         // draw the curve and connecting lines
         g.noFill();
         g.stroke(80);
-        g.strokeWeight(120 / scale);
+        g.strokeWeight(0.5f * scale); // 120 / scale
         g.bezier(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
         g.stroke(150);
-        g.strokeWeight(80 / scale);
+        g.strokeWeight(0.25f * scale); // 80 / scale
         g.line(p0.x, p0.y, p1.x, p1.y);
         g.line(p1.x, p1.y, p2.x, p2.y);
         g.line(p2.x, p2.y, p3.x, p3.y);
 
         g.rectMode(CENTER);
         g.noStroke();
-        float rectSize = 800 / scale;
+        float rectSize = 2 * scale; // 800 / scale
         g.fill(255, 0, 0); // red
         g.rect(p0.x, p0.y, rectSize, rectSize);
         g.fill(0, 255, 0); // green

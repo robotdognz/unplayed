@@ -317,7 +317,7 @@ public class Editor {
         }
 
         if (AppLogic.game.playerTransition.isActive()) {
-            AppLogic.game.playerTransition.draw(p.g, currentScale);
+            AppLogic.game.playerTransition.drawVisualisation(p.g, currentScale);
         }
 
         if (viewVis) { // draw the views behind events
