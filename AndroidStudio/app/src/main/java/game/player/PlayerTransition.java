@@ -91,6 +91,7 @@ public class PlayerTransition {
                 switch (type) {
                     case START:
                     case TRANSITION:
+                    case DEATH:
                         AppLogic.game.player.setActive(true);
                         break;
                 }
@@ -156,7 +157,7 @@ public class PlayerTransition {
     }
 
     public boolean isCameraDominant() {
-        if (isActive && type == Type.TRANSITION) {
+        if (isActive && (type == Type.TRANSITION || type == Type.DEATH)) {
             return true;
         }
         return false;
@@ -172,6 +173,10 @@ public class PlayerTransition {
 
     public Vec2 getEnd() {
         return p3;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public enum Type {

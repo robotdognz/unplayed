@@ -138,7 +138,7 @@ public class Game {
             // set player start
             playerStart = start;
             // create new player
-            createPlayer(start);
+            createPlayer(start, false);
         }
     }
 
@@ -190,7 +190,7 @@ public class Game {
 
         // Initialize player
         if (playerStart != null) {
-            createPlayer(playerStart);
+            createPlayer(playerStart, false);
         }
 
         puzzlesCompleted = 0;
@@ -270,11 +270,17 @@ public class Game {
 
             // create the new player
             puzzlesCompleted++;
-            createPlayer(found);
+            createPlayer(found, false);
         }
     }
 
-    public void createPlayer(Rectangle playerArea) {
+    /**
+     * Creates new player. Used for moving to the next player as well as respawning after death.
+     *
+     * @param playerArea the area to take the tile that will become the next player from
+     * @param death has the player died and is now respawning
+     */
+    public void createPlayer(Rectangle playerArea, boolean death) {
         // store previous player position
         Vec2 previousPlayerPosition = null;
         if (player != null) {
@@ -293,7 +299,8 @@ public class Game {
             // setup player transition
             Vec2 newPlayerPosition = player.getCenter();
             if (previousPlayerPosition != null) {
-                playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.TRANSITION);
+                PApplet.print("Player death (first player) animation");
+                playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.DEATH);
             } else {
                 // it is the start of the level, tell playerTransition to do a start animation
                 PApplet.print("Level intro animation");
@@ -337,7 +344,13 @@ public class Game {
                     // setup player transition
                     if (previousPlayerPosition != null) {
                         Vec2 newPlayerPosition = player.getCenter();
-                        playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.TRANSITION);
+                        if (!death) {
+                            PApplet.print("Player typical transition");
+                            playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.TRANSITION);
+                        } else {
+                            PApplet.print("Player death animation");
+                            playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.DEATH);
+                        }
                     }
                 } else if (playerStart != null) {
                     Tile current = playerStart.getRequired();
@@ -352,7 +365,8 @@ public class Game {
                         // setup player transition
                         if (previousPlayerPosition != null) {
                             Vec2 newPlayerPosition = player.getCenter();
-                            playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.TRANSITION);
+                            PApplet.print("Player transition, Haven't seen this one used before");
+                            playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.DEATH);
                         }
                     }
                 }
@@ -367,14 +381,18 @@ public class Game {
         }
     }
 
+    /**
+     * Restarts the player. Used for when the player is killed and also by the player reset action
+     * in the level editor.
+     */
     public void restart() {
         if (playerCheckpoint != null) { // if there is a player checkpoint
             Rectangle previousPlayer = removed.get(removed.size() - 1);
             removed.remove(previousPlayer);
             world.insert(previousPlayer);
-            createPlayer(playerCheckpoint);
+            createPlayer(playerCheckpoint, true);
         } else if (playerStart != null) { // if there is a player start
-            createPlayer(playerStart);
+            createPlayer(playerStart, true);
         }
     }
 

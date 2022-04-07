@@ -204,7 +204,10 @@ public class ClippedDraw {
         // draw start and end onto the clipping mask
         mask.rectMode(CENTER);
         mask.fill(0); // black
-        mask.rect(start.x - objectCenter.x, start.y - objectCenter.y, tileSize, tileSize);
+        if (AppLogic.game.playerTransition.getType() != PlayerTransition.Type.DEATH) {
+            // only mask the start if it's not a death animation
+            mask.rect(start.x - objectCenter.x, start.y - objectCenter.y, tileSize, tileSize);
+        }
         mask.rect(end.x - objectCenter.x, end.y - objectCenter.y, tileSize, tileSize);
         // end working on mask
         mask.endDraw();
