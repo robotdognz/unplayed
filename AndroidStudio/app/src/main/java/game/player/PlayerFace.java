@@ -23,8 +23,8 @@ public class PlayerFace {
         String folder = "player" + '/'; // data path for player face sprites
         defaultFace = p.loadImage(folder + "PF_Default.png");
         transition = p.loadImage(folder + "Transition.png");
-        AppLogic.cacheImage(defaultFace);
-        AppLogic.cacheImage(transition);
+        AppLogic.cacheImage(p.g, defaultFace);
+        AppLogic.cacheImage(p.g, transition);
     }
 
     /**
@@ -50,6 +50,10 @@ public class PlayerFace {
     public void drawTransition(PGraphics g, float x, float y, float width, float height) {
         g.imageMode(CENTER);
         g.image(transition, x, y, width, height);
+    }
+
+    public PImage getTransition() {
+        return transition;
     }
 
     public void drawAll(PGraphics g) {

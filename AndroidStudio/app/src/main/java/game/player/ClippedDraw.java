@@ -9,6 +9,7 @@ import handlers.TextureCache;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import processing.core.PImage;
 
 public class ClippedDraw {
     // player drawing algorithm
@@ -21,13 +22,18 @@ public class ClippedDraw {
         canvas = p.createGraphics(renderResolution, renderResolution, P2D);
         mask = p.createGraphics(renderResolution, renderResolution, P2D);
 
-        AppLogic.cacheImage(canvas);
-        AppLogic.cacheImage(mask);
-//        Object cache = p.g.getCache(canvas);
-//        p.g.setCache(canvas, cache);
-//
-//        cache = p.g.getCache(mask);
-//        p.g.setCache(mask, cache);
+        AppLogic.cacheImage(p.g, canvas);
+        AppLogic.cacheImage(p.g, mask);
+        AppLogic.cacheImage(canvas, AppLogic.playerFace.getTransition());
+        AppLogic.cacheImage(mask, AppLogic.playerFace.getTransition());
+    }
+
+    public PImage getCanvas(){
+        return canvas;
+    }
+
+    public PImage getMask(){
+        return mask;
     }
 
     /**

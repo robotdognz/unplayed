@@ -96,12 +96,12 @@ public class AppLogic {
 
         Camera camera = new GameCamera();
         convert = new Converter(p);
+        playerFace = new PlayerFace(p);
         game = new Game(p, camera, texture, convert);
         texture.passGame(game);
         controller = new PlayerControl(p, game);
         editor = null;
         drawUI = new InGameUI(p, p.width, p.height);
-        playerFace = new PlayerFace(p);
 
         // setup shared preferences (used for save games)
         settings = activity.getPreferences(0);
@@ -133,9 +133,9 @@ public class AppLogic {
         PApplet.println(android.os.Build.VERSION.SDK_INT);
     }
 
-    static public void cacheImage(PImage image){
-        Object cache = p.g.getCache(image);
-        p.g.setCache(image, cache);
+    static public void cacheImage(PGraphics g, PImage image){
+        Object cache = g.getCache(image);
+        g.setCache(image, cache);
     }
 
     static public void getSaveGame() {

@@ -44,10 +44,10 @@ public class Page extends PageViewObject {
     // rendering
     private DrawType playerDraw;
     private DrawType transitionDraw;
-    private ArrayList<Image> imagesToDraw;
-    private ArrayList<Tile> tilesToDraw;
-    private ArrayList<Event> eventsToDraw;
-    private ArrayList<PlayerEnd> playerEndsToDraw;
+    private final ArrayList<Image> imagesToDraw;
+    private final ArrayList<Tile> tilesToDraw;
+    private final ArrayList<Event> eventsToDraw;
+    private final ArrayList<PlayerEnd> playerEndsToDraw;
 
     public Page(PApplet p, Game game, View view, PVector position) {
         super(p, position, view.getWidth(), view.getHeight());
