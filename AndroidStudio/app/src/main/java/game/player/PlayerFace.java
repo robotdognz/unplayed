@@ -23,7 +23,8 @@ public class PlayerFace {
         String folder = "player" + '/'; // data path for player face sprites
         defaultFace = p.loadImage(folder + "PF_Default.png");
         transition = p.loadImage(folder + "Transition.png");
-
+        AppLogic.cacheImage(defaultFace);
+        AppLogic.cacheImage(transition);
     }
 
     /**

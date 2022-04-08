@@ -113,24 +113,29 @@ public class AppLogic {
 
         // force draw
 
-        p.pushMatrix();
-        p.translate(p.width * 0.5f, p.height * 0.5f);
+//        p.pushMatrix();
+//        p.translate(p.width * 0.5f, p.height * 0.5f);
         // force draw player face
-        AppLogic.playerFace.drawAll(p.g);
+//        AppLogic.playerFace.drawAll(p.g);
         // force draw controls
-        AppLogic.drawUI.drawAll();
+//        AppLogic.drawUI.drawAll();
         // force draw loaded assets
         texture.drawAll(p);
         // force draw math paper
-        Rectangle screen = new Rectangle(0, 0, p.width, p.height);
-        MathsPaper.draw(p.g, screen, 3, 1);
+//        Rectangle screen = new Rectangle(0, 0, p.width, p.height);
+//        MathsPaper.draw(p.g, screen, 3, 1);
         // force draw clipped renderer
-        ClippedDraw.forceDraw(p.g);
-        p.popMatrix();
+//        ClippedDraw.forceDraw(p.g);
+//        p.popMatrix();
 
 
         // print android api version
         PApplet.println(android.os.Build.VERSION.SDK_INT);
+    }
+
+    static public void cacheImage(PImage image){
+        Object cache = p.g.getCache(image);
+        p.g.setCache(image, cache);
     }
 
     static public void getSaveGame() {
@@ -433,7 +438,7 @@ public class AppLogic {
     static public void step(float deltaTime) {
         // some steps are skipped
         if (skipNextStep) {
-            skipNextStep = false;
+//            skipNextStep = false;
             return;
         }
 
@@ -483,6 +488,11 @@ public class AppLogic {
     }
 
     static public void draw(float deltaTime) {
+        if (skipNextStep) {
+            skipNextStep = false;
+            return;
+        }
+
         // draw the game
         if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView) || (editor == null)) {
             game.draw(); // draw the game

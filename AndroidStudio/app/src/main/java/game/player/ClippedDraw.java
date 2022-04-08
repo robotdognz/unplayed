@@ -5,6 +5,7 @@ import static processing.core.PConstants.*;
 import org.jbox2d.common.Vec2;
 
 import game.AppLogic;
+import handlers.TextureCache;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -19,6 +20,14 @@ public class ClippedDraw {
         int renderResolution = 256;
         canvas = p.createGraphics(renderResolution, renderResolution, P2D);
         mask = p.createGraphics(renderResolution, renderResolution, P2D);
+
+        AppLogic.cacheImage(canvas);
+        AppLogic.cacheImage(mask);
+//        Object cache = p.g.getCache(canvas);
+//        p.g.setCache(canvas, cache);
+//
+//        cache = p.g.getCache(mask);
+//        p.g.setCache(mask, cache);
     }
 
     /**

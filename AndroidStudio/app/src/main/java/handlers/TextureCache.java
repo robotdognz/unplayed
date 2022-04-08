@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import android.content.Context;
 import android.content.res.AssetManager;
 
+import game.AppLogic;
 import game.Game;
 import objects.Event;
 import objects.events.PlayerDeath;
@@ -84,6 +85,12 @@ public class TextureCache {
         gridLOD32 = p.loadImage("PaperGrid_128x128.png");
         gridLOD16 = p.loadImage("PaperGrid_64x64.png");
         gridLOD8 = p.loadImage("PaperGrid_32x32.png");
+        AppLogic.cacheImage(gridLOD256);
+        AppLogic.cacheImage(gridLOD128);
+        AppLogic.cacheImage(gridLOD64);
+        AppLogic.cacheImage(gridLOD32);
+        AppLogic.cacheImage(gridLOD16);
+        AppLogic.cacheImage(gridLOD8);
 
         // page view background texture
         int pvbSize = 4;
@@ -95,12 +102,20 @@ public class TextureCache {
         pageViewBackgroundLOD64.resize(64 * pvbSize, 64 * pvbSize);
         pageViewBackgroundLOD32 = pageViewBackgroundLOD256.get();
         pageViewBackgroundLOD32.resize(32 * pvbSize, 32 * pvbSize);
+        AppLogic.cacheImage(pageViewBackgroundLOD256);
+        AppLogic.cacheImage(pageViewBackgroundLOD128);
+        AppLogic.cacheImage(pageViewBackgroundLOD64);
+        AppLogic.cacheImage(pageViewBackgroundLOD32);
 
         // control sprites
         controlsLeft = p.loadImage("ControlsLeft.png");
         controlsJump = p.loadImage("ControlsJump.png");
         controlsRight = p.loadImage("ControlsRight.png");
         controlsMenu = p.loadImage("ControlsMenu.png");
+        AppLogic.cacheImage(controlsLeft);
+        AppLogic.cacheImage(controlsJump);
+        AppLogic.cacheImage(controlsRight);
+        AppLogic.cacheImage(controlsMenu);
 
         // level assets
         loadLevelImages();
@@ -583,8 +598,8 @@ public class TextureCache {
         // draw all tiles
         for (TileHandler t : tileList) {
             t.draw(p.g, 0, 0, TextureCache.LOD256);
-            Object object = p.g.getCache(t.getSprite(TextureCache.LOD256));
-            p.g.setCache(t.getSprite(TextureCache.LOD256), object);
+            Object cache = p.g.getCache(t.getSprite(TextureCache.LOD256));
+            p.g.setCache(t.getSprite(TextureCache.LOD256), cache);
 
 
 //            t.draw(p.g, x, y, TextureCache.LOD128);
