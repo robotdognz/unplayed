@@ -34,12 +34,20 @@ public class Page extends PageViewObject {
     public boolean showTiles;
     public boolean showImages;
 
-    // player visibility
+    // player visibility, signaling the outside
     private boolean playerVisibleExternal; // true if the page is broadcasting that the player is in it and it should be focused on by the auto camera
     private boolean playerVisibleChanged; // true if the player has left or entered the page this step
 
     // used for scaling
     private float actualSize = 1;
+
+    // rendering
+    private DrawType playerDraw;
+    private DrawType transitionDraw;
+    private ArrayList<Image> imagesToDraw;
+    private ArrayList<Tile> tilesToDraw;
+    private ArrayList<Event> eventsToDraw;
+    private ArrayList<PlayerEnd> playerEndsToDraw;
 
     public Page(PApplet p, Game game, View view, PVector position) {
         super(p, position, view.getWidth(), view.getHeight());
@@ -60,6 +68,14 @@ public class Page extends PageViewObject {
 
         // setup children
         children = new ArrayList<>();
+
+        // setup rendering
+        playerDraw = DrawType.SKIP;
+        transitionDraw = DrawType.SKIP;
+        imagesToDraw = new ArrayList<>();
+        tilesToDraw = new ArrayList<>();
+        eventsToDraw = new ArrayList<>();
+        playerEndsToDraw = new ArrayList<>();
 
         padding = 100;
         buildPaddedView();
@@ -102,6 +118,48 @@ public class Page extends PageViewObject {
         pageObjects.clear();
         game.world.retrieve(pageObjects, view);
         updatePlayerVisibility();
+        updatePlayerRendering();
+
+        // step rendering
+        imagesToDraw.clear();
+        tilesToDraw.clear();
+        eventsToDraw.clear();
+        playerEndsToDraw.clear();
+        for (Rectangle r : pageObjects) {
+            if (r.getTopLeft().x > view.getBottomRight().x - 1) {
+                continue;
+            }
+            if (r.getBottomRight().x < view.getTopLeft().x + 1) {
+                continue;
+            }
+            if (r.getTopLeft().y > view.getBottomRight().y - 1) {
+                continue;
+            }
+            if (r.getBottomRight().y < view.getTopLeft().y + 1) {
+                continue;
+            }
+            if (r instanceof Tile) {
+                if (showTiles) {
+                    tilesToDraw.add((Tile) r);
+                }
+                continue;
+            }
+            if (r instanceof Event && ((Event) r).visible) {
+                if (showObstacles) {
+                    eventsToDraw.add((Event) r);
+                }
+                continue;
+            }
+            if (r instanceof PlayerEnd) {
+                playerEndsToDraw.add((PlayerEnd) r);
+                continue;
+            }
+            if (r instanceof Image) {
+                if (showImages) {
+                    imagesToDraw.add((Image) r);
+                }
+            }
+        }
     }
 
     /**
@@ -183,95 +241,9 @@ public class Page extends PageViewObject {
 
     }
 
-    public void draw(float scale) {
-
-        // draw the page
-        p.pushMatrix();
-        p.translate(position.x, position.y);
-        p.scale(size); // size the page will appear in the page view
-
-        // draw the shadow
-        p.translate(shadow, shadow);
-        p.fill(0, 40);
-        p.noStroke();
-        p.rectMode(CENTER);
-        p.rotate(PApplet.radians(angle)); // rotate the page
-        p.rect(0, 0, paddedView.getWidth(), paddedView.getHeight());
-        p.rotate(PApplet.radians(-angle)); // rotate the page
-        p.translate(-shadow, -shadow);
-        p.rotate(PApplet.radians(angle)); // rotate the page
-
-        // draw the page itself
-        p.scale(flipX, flipY); // flip the page
-
-        // draw the page background
-        p.fill(240);
-        p.rect(0, 0, paddedView.getWidth(), paddedView.getHeight());
-
-        p.translate((float) -(view.getX() + view.getWidth() * 0.5), (float) -(view.getY() + view.getHeight() * 0.5));
-
-        // draw images and playerEnds
-        for (Rectangle r : pageObjects) { // draw images and player end backgrounds
-            if (!(r instanceof Image || r instanceof PlayerEnd)) {
-                continue;
-            }
-            if (r.getTopLeft().x > view.getBottomRight().x - 1) {
-                continue;
-            }
-            if (r.getBottomRight().x < view.getTopLeft().x + 1) {
-                continue;
-            }
-            if (r.getTopLeft().y > view.getBottomRight().y - 1) {
-                continue;
-            }
-            if (r.getBottomRight().y < view.getTopLeft().y + 1) {
-                continue;
-            }
-            if (r instanceof Image && showImages) {
-                ((Image) r).drawClipped(p.g, view, 3); // scale/size
-                continue;
-            }
-            if (r instanceof PlayerEnd) {
-                ((PlayerEnd) r).drawPageView(p.g, 3);
-            }
-        }
-        for (Rectangle r : pageObjects) { // draw tiles and events
-            if (!(r instanceof Tile || r instanceof Event)) {
-                continue;
-            }
-            if (r.getTopLeft().x > view.getBottomRight().x - 1) {
-                continue;
-            }
-            if (r.getBottomRight().x < view.getTopLeft().x + 1) {
-                continue;
-            }
-            if (r.getTopLeft().y > view.getBottomRight().y - 1) {
-                continue;
-            }
-            if (r.getBottomRight().y < view.getTopLeft().y + 1) {
-                continue;
-            }
-            if (r instanceof Tile && showTiles) {
-                ((Tile) r).draw(p.g, 3); // scale/size
-                continue;
-            }
-            if (r instanceof Event && ((Event) r).visible && showObstacles) {
-                ((Event) r).draw(p.g, 3); // scale/size
-            }
-        }
-
-        if (showPlayer) {
-            drawPlayer();
-        }
-
-        // draw the grid paper effect
-        MathsPaper.draw(p.g, paddedView, scale, (int) size); // paper effect
-
-        p.popMatrix();
-    }
-
-    private void drawPlayer() {
+    private void updatePlayerRendering() {
         // draw the player
+        playerDraw = DrawType.SKIP;
         if (game.player != null) {
             Vec2 playerCenter = game.player.getCenter();
             boolean playerVisible = false;
@@ -312,15 +284,16 @@ public class Page extends PageViewObject {
 
                 if (!playerAtEdge) {
                     // draw the player normally
-                    AppLogic.game.player.draw(p.g, 3);
+                    playerDraw = DrawType.NORMAL;
                 } else {
                     // draw the player clipped
-                    ClippedDraw.drawPlayerOptimised(p.g, paddedView, 3);
+                    playerDraw = DrawType.CLIPPED;
                 }
             }
         }
 
         // draw the player transition animation
+        transitionDraw = DrawType.SKIP;
         if (game.playerTransition.isActive()) {
             Vec2 transitionCenter = game.playerTransition.getCenter();
             boolean transitionVisible = false;
@@ -361,15 +334,92 @@ public class Page extends PageViewObject {
 
                 if (!transitionAtEdge) {
                     // draw the transition normally
-                    float transitionSize = game.playerTransition.getSize();
-                    AppLogic.playerFace.drawTransition(p.g, transitionCenter.x, transitionCenter.y, transitionSize, transitionSize);
+                    transitionDraw = DrawType.NORMAL;
                 } else {
                     // draw the transition clipped
-                    ClippedDraw.drawTransition(p.g, paddedView, 3);
+                    transitionDraw = DrawType.CLIPPED;
                 }
-
             }
         }
+    }
+
+
+    public void draw(float scale) {
+
+        // draw the page
+        p.pushMatrix();
+        p.translate(position.x, position.y);
+        p.scale(size); // size the page will appear in the page view
+
+        // draw the shadow
+        p.translate(shadow, shadow);
+        p.fill(0, 40);
+        p.noStroke();
+        p.rectMode(CENTER);
+        p.rotate(PApplet.radians(angle)); // rotate the page
+        p.rect(0, 0, paddedView.getWidth(), paddedView.getHeight());
+        p.rotate(PApplet.radians(-angle)); // rotate the page
+        p.translate(-shadow, -shadow);
+        p.rotate(PApplet.radians(angle)); // rotate the page
+
+        // draw the page itself
+        if (flipX != 0 || flipY != 0) {
+            p.scale(flipX, flipY); // flip the page
+        }
+
+        // draw the page background
+        p.fill(240);
+        p.rect(0, 0, paddedView.getWidth(), paddedView.getHeight());
+
+        p.translate((float) -(view.getX() + view.getWidth() * 0.5), (float) -(view.getY() + view.getHeight() * 0.5));
+
+        // draw page contents
+        for (Image image : imagesToDraw) {
+            image.drawClipped(p.g, view, 3); // scale/size
+        }
+        for (PlayerEnd playerEnd : playerEndsToDraw) {
+            playerEnd.drawPageView(p.g, 3); // scale/size
+        }
+        for (Tile tile : tilesToDraw) {
+            tile.draw(p.g, 3); // scale/size
+        }
+        for (Event event : eventsToDraw) {
+            event.draw(p.g, 3); // scale/size
+        }
+
+        // draw player and transition
+        if (showPlayer) {
+            // player
+            switch (playerDraw) {
+                case SKIP:
+                    break;
+                case NORMAL:
+                    AppLogic.game.player.draw(p.g, 3);
+                    break;
+                case CLIPPED:
+                    ClippedDraw.drawPlayerOptimised(p.g, paddedView, 3);
+                    break;
+            }
+
+            // transition
+            switch (transitionDraw) {
+                case SKIP:
+                    break;
+                case NORMAL:
+                    Vec2 transitionCenter = game.playerTransition.getCenter();
+                    float transitionSize = game.playerTransition.getSize();
+                    AppLogic.playerFace.drawTransition(p.g, transitionCenter.x, transitionCenter.y, transitionSize, transitionSize);
+                    break;
+                case CLIPPED:
+                    ClippedDraw.drawTransition(p.g, paddedView, 3);
+                    break;
+            }
+        }
+
+        // draw the grid paper effect
+        MathsPaper.draw(p.g, paddedView, scale, (int) size); // paper effect
+
+        p.popMatrix();
     }
 
     @Override
@@ -446,6 +496,12 @@ public class Page extends PageViewObject {
     @Override
     public String getName() {
         return "page";
+    }
+
+    private enum DrawType {
+        SKIP, // don't draw
+        NORMAL, // draw using normal fast drawing
+        CLIPPED // draw using the heavy clipped drawing algorithm
     }
 
 }

@@ -30,15 +30,19 @@ public class PageView {
     private PageViewCamera pageCamera;
     private Rectangle previousPageArea; // used when switching between menu and level when player isn't visible
 
-    public PageViewCamera getPageCamera() {
-        return pageCamera;
-    }
-
     private Menu storedMenu;
     private boolean removeMenu = false;
 
     // player drawing class
     public ClippedDraw clippedDraw;
+
+    // rendering
+    private float currentScale; // what scale (LOD) will objects be rendered at
+    private PVector renderTopLeft;
+    private PVector renderBottomRight;
+    private ArrayList<PageViewObject> backgroundsToDraw;
+    private ArrayList<Page> pagesToDraw;
+
 
     public PageView(PApplet p, Game game, TextureCache texture, Converter convert) {
         this.p = p;
@@ -48,12 +52,19 @@ public class PageView {
 
         this.paper = new BackgroundPaper(p);
 
-        this.pageViewObjects = new ArrayList<PageViewObject>();
+        this.pageViewObjects = new ArrayList<>();
         this.pages = 0;
 
         this.previousPageArea = null;
 
         clippedDraw = new ClippedDraw(p);
+
+        // rendering
+        currentScale = 1;
+        renderTopLeft = new PVector(0, 0);
+        renderBottomRight = new PVector(0, 0);
+        backgroundsToDraw = new ArrayList<>();
+        pagesToDraw = new ArrayList<>();
     }
 
     public void draw() {
@@ -61,85 +72,38 @@ public class PageView {
         p.pushMatrix(); // start working at game scale
         p.translate(p.width * 0.5f, p.height * 0.5f); // set x=0 and y=0 to the middle of the screen
 
-        float currentScale;
-        PVector topLeft;
-        PVector bottomRight;
-
         if (Camera.getGame()) {
             // auto camera
-            p.scale((float) p.width / (float) pageCamera.getScale()); // width/screen fits the level scale to the screen
+            p.scale((float) p.width / pageCamera.getScale()); // width/screen fits the level scale to the screen
             p.scale(pageCamera.getSubScale()); // apply offset for tall screen spaces
             p.translate(-pageCamera.getCenter().x, -pageCamera.getCenter().y); // moves the view around the level
-            currentScale = pageCamera.getScale() / pageCamera.getSubScale() / 100;
-            topLeft = convert.screenToLevel(0, 0, pageCamera.getScale(), pageCamera.getSubScale(),
-                    pageCamera.getCenter());
-            bottomRight = convert.screenToLevel(p.width, p.height, pageCamera.getScale(), pageCamera.getSubScale(),
-                    pageCamera.getCenter());
-
         } else {
             // editor camera
-            p.scale((float) p.width / (float) Camera.getScale()); // width/screen fits the level scale to the screen
+            p.scale((float) p.width / Camera.getScale()); // width/screen fits the level scale to the screen
             p.scale(Camera.getSubScale()); // apply offset for tall screen spaces
             p.translate(-Camera.getCenter().x, -Camera.getCenter().y); // moves the view around the level
-
-            currentScale = convert.getScale();
-            topLeft = convert.screenToLevel(0, 0);
-            bottomRight = convert.screenToLevel(p.width, p.height);
         }
 
         // draw the looping background
-//		p.background(217, 201, 170);
-        paper.draw(p.getGraphics(), topLeft, bottomRight, currentScale); // background paper effect
+        paper.draw(p.getGraphics(), renderTopLeft, renderBottomRight, currentScale); // background paper effect
 
-        // draw backgrounds that are inside that area
-        for (PageViewObject background : pageViewObjects) {
-            if (!(background instanceof Background)) {
-                continue;
-            }
-            if (background.leftOf(topLeft.x)) {
-                continue;
-            }
-            if (background.rightOf(bottomRight.x)) {
-                continue;
-            }
-            if (background.above(topLeft.y)) {
-                continue;
-            }
-            if (background.below(bottomRight.y)) {
-                continue;
-            }
-
+        // draw backgrounds that are visible
+        for (PageViewObject background : backgroundsToDraw) {
             background.draw(currentScale);
         }
-        // draw pages that are inside that area
-        for (PageViewObject page : pageViewObjects) {
-            if (!(page instanceof Page)) {
-                continue;
-            }
-            if (page.leftOf(topLeft.x)) {
-                continue;
-            }
-            if (page.rightOf(bottomRight.x)) {
-                continue;
-            }
-            if (page.above(topLeft.y)) {
-                continue;
-            }
-            if (page.below(bottomRight.y)) {
-                continue;
-            }
 
+        // draw pages that are visible
+        for (Page page : pagesToDraw) {
             page.draw(currentScale);
-            if (EditorSettings.cameraLogic() && getPageCount() > 0 && !Camera.getGame()) {
-                if (((Page) page).playerVisible()) {
+            if (EditorSettings.cameraLogic() && !Camera.getGame()) {
+                if (page.playerVisible()) {
                     page.drawCorners(currentScale);
-                    List<PageViewObject> children = ((Page) page).getChildren();
+                    List<PageViewObject> children = page.getChildren();
                     for (PageViewObject child : children) {
                         child.drawCorners(currentScale);
                     }
                 }
             }
-
         }
 
         // draw current menu, destroy it if it's off camera
@@ -147,23 +111,11 @@ public class PageView {
             if (!AppLogic.editorToggle || getPageCount() > 0) {
                 // draw the menu in page view if there are pages, or not in editor
                 storedMenu.drawInWorld(currentScale);
-                if (removeMenu == true && (storedMenu.leftOf(pageCamera.getScreenArea().getTopLeft().x)
-                        || storedMenu.rightOf(pageCamera.getScreenArea().getBottomRight().x)
-                        || storedMenu.above(pageCamera.getScreenArea().getTopLeft().y)
-                        || storedMenu.below(pageCamera.getScreenArea().getBottomRight().y))) {
-                    removeMenu = false;
-                    storedMenu = null;
-                }
-            } else {
-                // remove the menu if there are no pages
-                removeMenu = false;
-                storedMenu = null;
             }
-
         }
 
         // draw auto generated camera
-        if (EditorSettings.cameraLogic() && getPageCount() > 0 && !Camera.getGame()) {
+        if (!Camera.getGame() && EditorSettings.cameraLogic() && getPageCount() > 0) {
             pageCamera.draw(currentScale);
             if (storedMenu != null) {
                 storedMenu.drawCorners(currentScale);
@@ -241,6 +193,82 @@ public class PageView {
             }
         }
 
+        // ------ moved from draw -------
+
+        PVector topLeft;
+        PVector bottomRight;
+
+        if (Camera.getGame()) {
+            // auto camera
+            currentScale = pageCamera.getScale() / pageCamera.getSubScale() / 100;
+            topLeft = convert.screenToLevel(0, 0, pageCamera.getScale(), pageCamera.getSubScale(), pageCamera.getCenter());
+            bottomRight = convert.screenToLevel(p.width, p.height, pageCamera.getScale(), pageCamera.getSubScale(), pageCamera.getCenter());
+        } else {
+            // editor camera
+            currentScale = convert.getScale();
+            topLeft = convert.screenToLevel(0, 0);
+            bottomRight = convert.screenToLevel(p.width, p.height);
+        }
+        renderTopLeft = topLeft;
+        renderBottomRight = bottomRight;
+
+        // draw backgrounds that are inside that area
+        backgroundsToDraw.clear();
+        for (PageViewObject background : pageViewObjects) {
+            if (!(background instanceof Background)) {
+                continue;
+            }
+            if (background.leftOf(topLeft.x)) {
+                continue;
+            }
+            if (background.rightOf(bottomRight.x)) {
+                continue;
+            }
+            if (background.above(topLeft.y)) {
+                continue;
+            }
+            if (background.below(bottomRight.y)) {
+                continue;
+            }
+            backgroundsToDraw.add(background);
+        }
+        // draw pages that are inside that area
+        pagesToDraw.clear();
+        for (PageViewObject page : pageViewObjects) {
+            if (!(page instanceof Page)) {
+                continue;
+            }
+            if (page.leftOf(topLeft.x)) {
+                continue;
+            }
+            if (page.rightOf(bottomRight.x)) {
+                continue;
+            }
+            if (page.above(topLeft.y)) {
+                continue;
+            }
+            if (page.below(bottomRight.y)) {
+                continue;
+            }
+            pagesToDraw.add((Page) page);
+        }
+
+        // draw current menu, destroy it if it's off camera
+        if (storedMenu != null) {
+            if (!AppLogic.editorToggle || getPageCount() > 0) {
+                if (removeMenu && (storedMenu.leftOf(PageViewCamera.getScreenArea().getTopLeft().x)
+                        || storedMenu.rightOf(PageViewCamera.getScreenArea().getBottomRight().x)
+                        || storedMenu.above(PageViewCamera.getScreenArea().getTopLeft().y)
+                        || storedMenu.below(PageViewCamera.getScreenArea().getBottomRight().y))) {
+                    removeMenu = false;
+                    storedMenu = null;
+                }
+            } else {
+                // remove the menu if there are no pages
+                removeMenu = false;
+                storedMenu = null;
+            }
+        }
     }
 
     public void updateVisiblePages() {
@@ -572,5 +600,9 @@ public class PageView {
 
     public BackgroundPaper getPaper() {
         return paper;
+    }
+
+    public PageViewCamera getPageCamera() {
+        return pageCamera;
     }
 }

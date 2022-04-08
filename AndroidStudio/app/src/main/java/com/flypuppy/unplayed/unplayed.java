@@ -76,8 +76,9 @@ public class unplayed extends PApplet {
             return;
         }
 
-        //testing.draw(); //draw touch events
+        AppLogic.step(delta_time);
         AppLogic.draw(delta_time);
+        //testing.draw(); //draw touch events
     }
 
     @Override

@@ -70,7 +70,7 @@ public class AppLogic {
 
     private static ArrayList<Uri> externalLevels;
 
-    private static boolean skipNextFrame = false; // skips running for a step so we don't see force drawn assets or a lag spike
+    private static boolean skipNextStep = false; // skips running for a step so we don't see force drawn assets or a lag spike
     private static boolean startLevel = false; // run start level this frame
 
     public AppLogic(PApplet pApplet, Activity masterActivity, Context masterContext) {
@@ -301,9 +301,9 @@ public class AppLogic {
             p.pushMatrix();
             p.translate(p.width * 0.5f, p.height * 0.5f);
             for (PageViewObject object : tempPageViewObjects) {
-                if (object instanceof Page) {
-                    ((Page) object).step();
-                }
+//                if (object instanceof Page) {
+//                    ((Page) object).step();
+//                }
                 p.pushMatrix();
                 PVector pos = object.getPosition();
                 p.translate(-pos.x, -pos.y);
@@ -320,7 +320,7 @@ public class AppLogic {
             p.popMatrix();
 
             // prevent animation jump by skipping the next frame
-            skipNextFrame = true;
+            skipNextStep = true;
 
             // update save game to this level
             updateSaveGame();
@@ -423,15 +423,14 @@ public class AppLogic {
         files.setUris(uris);
     }
 
-    static public void draw(float deltaTime) {
-        // This is the step method for the whole game, as well as the draw method
-
-        if (skipNextFrame) {
-            skipNextFrame = false;
+    static public void step(float deltaTime) {
+        // some steps are skipped
+        if (skipNextStep) {
+            skipNextStep = false;
             return;
         }
 
-        // touch screen
+        // touch screen calculations
         touches.clear();
         for (TouchEvent.Pointer t : p.touches) {
             touches.add(new PVector(t.x, t.y));
@@ -461,33 +460,39 @@ public class AppLogic {
             startLevel();
         }
 
+        // on screen controls
+        // tell the controls the current state
+        float controlHeight = p.height;
+        if (editorToggle && editor != null) {
+            controlHeight = editor.getBottom();
+        }
+        boolean drawControls = (game.player != null && game.player.isActive() && controller instanceof PlayerControl && menu == null);
+        boolean drawMenu = !editorToggle;
+        drawUI.step(deltaTime, drawControls, controlHeight, drawMenu, lastTouch);
+
+        if (menu != null) {
+            menu.hover(lastTouch);
+        }
+    }
+
+    static public void draw(float deltaTime) {
         // draw the game
         if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView) || (editor == null)) {
             game.draw(); // draw the game
         }
 
-        float controlHeight = p.height;
-
+        // draw the editor
         if (editorToggle && editor != null) {
             editor.draw(deltaTime, lastTouch, menu);
-            controlHeight = editor.getBottom();
+            // draw the menu
+            if (menu != null) { // && !Camera.getGame()
+                menu.drawOnTop();
+            }
         }
 
-        // on screen controls
-        // tell the controls the current state
-        boolean drawControls = (game.player != null && game.player.isActive() && controller instanceof PlayerControl && menu == null);
-        boolean drawMenu = !editorToggle;
-        drawUI.step(deltaTime, drawControls, controlHeight, drawMenu, lastTouch);
         // draw the controls
         drawUI.draw(p);
 
-        // draw the menu
-        if (menu != null) {
-            if (!Camera.getGame()) {
-                menu.drawOnTop();
-            }
-            menu.hover(lastTouch);
-        }
     }
 
     static public void touchStarted() {
