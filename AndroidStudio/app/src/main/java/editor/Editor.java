@@ -17,7 +17,6 @@ import game.AppLogic;
 import game.MathsPaper;
 import game.PageView;
 import game.Quadtree;
-import game.player.ClippedDraw;
 import game.player.Player;
 import handlers.BackgroundHandler;
 import handlers.EventHandler;

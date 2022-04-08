@@ -19,9 +19,6 @@ public class ClippedDraw {
         int renderResolution = 256;
         canvas = p.createGraphics(renderResolution, renderResolution, P2D);
         mask = p.createGraphics(renderResolution, renderResolution, P2D);
-
-        canvas = p.createGraphics(renderResolution, renderResolution, P2D);
-        mask = p.createGraphics(renderResolution, renderResolution, P2D);
     }
 
     /**
@@ -232,5 +229,18 @@ public class ClippedDraw {
         graphics.scale(100 / 256f);
         graphics.image(canvas, 0, 0); //player
         graphics.popMatrix();
+    }
+
+    public static void forceDraw(PGraphics graphics){
+        mask.beginDraw();
+        mask.background(0);
+        mask.endDraw();
+
+        canvas.beginDraw();
+        canvas.background(0);
+        canvas.endDraw();
+
+        graphics.image(mask, 0, 0, 500, 500);
+        graphics.image(canvas, 0, 0, 500, 500);
     }
 }

@@ -579,14 +579,17 @@ public class TextureCache {
     }
 
     public void drawAll(PApplet p) {
-        float x = p.width * 0.5f;
-        float y = p.height * 0.5f;
+
         // draw all tiles
         for (TileHandler t : tileList) {
-            t.draw(p.g, x, y, TextureCache.LOD256);
-            t.draw(p.g, x, y, TextureCache.LOD128);
-            t.draw(p.g, x, y, TextureCache.LOD64);
-            t.draw(p.g, x, y, TextureCache.LOD32);
+            t.draw(p.g, 0, 0, TextureCache.LOD256);
+            Object object = p.g.getCache(t.getSprite(TextureCache.LOD256));
+            p.g.setCache(t.getSprite(TextureCache.LOD256), object);
+
+
+//            t.draw(p.g, x, y, TextureCache.LOD128);
+//            t.draw(p.g, x, y, TextureCache.LOD64);
+//            t.draw(p.g, x, y, TextureCache.LOD32);
         }
 
     }

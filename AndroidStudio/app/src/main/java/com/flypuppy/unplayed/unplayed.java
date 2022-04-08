@@ -71,7 +71,7 @@ public class unplayed extends PApplet {
         } else if (splash == 2) { //initialize game
             init();
             background(0, 78, 83);
-            delay(736);
+            delay(736); //736
             splash = 3;
             return;
         }

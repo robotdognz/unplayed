@@ -18,6 +18,7 @@ import camera.GameCamera;
 import controllers.Controller;
 import controllers.PlayerControl;
 import editor.Editor;
+import game.player.ClippedDraw;
 import game.player.PlayerFace;
 import handlers.LoadingHandler;
 import handlers.TextureCache;
@@ -112,6 +113,8 @@ public class AppLogic {
 
         // force draw
 
+        p.pushMatrix();
+        p.translate(p.width * 0.5f, p.height * 0.5f);
         // force draw player face
         AppLogic.playerFace.drawAll(p.g);
         // force draw controls
@@ -121,6 +124,10 @@ public class AppLogic {
         // force draw math paper
         Rectangle screen = new Rectangle(0, 0, p.width, p.height);
         MathsPaper.draw(p.g, screen, 3, 1);
+        // force draw clipped renderer
+        ClippedDraw.forceDraw(p.g);
+        p.popMatrix();
+
 
         // print android api version
         PApplet.println(android.os.Build.VERSION.SDK_INT);
