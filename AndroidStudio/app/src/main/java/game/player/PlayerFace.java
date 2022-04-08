@@ -13,6 +13,8 @@ public class PlayerFace {
 
     private PImage sleepingFace;
 
+    private PImage transition;
+
     public PlayerFace(PApplet p) {
         // initialise the player state
         state = PlayerState.DEFAULT;
@@ -20,6 +22,7 @@ public class PlayerFace {
         // load in the face sprites
         String folder = "player" + '/'; // data path for player face sprites
         defaultFace = p.loadImage(folder + "PF_Default.png");
+        transition = p.loadImage(folder + "Transition.png");
 
     }
 
@@ -41,6 +44,11 @@ public class PlayerFace {
                 break;
 
         }
+    }
+
+    public void drawTransition(PGraphics g, float x, float y, float width, float height) {
+        g.imageMode(CENTER);
+        g.image(transition, x, y, width, height);
     }
 
     public void drawAll(PGraphics g) {

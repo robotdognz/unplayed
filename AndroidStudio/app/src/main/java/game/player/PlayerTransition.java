@@ -5,11 +5,16 @@ import static processing.core.PConstants.*;
 import org.jbox2d.common.Vec2;
 
 import game.AppLogic;
+import objects.View;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class PlayerTransition {
     private float movementDuration; // duration of animation in seconds
+    private final float normalSpeed; // the distance travelled per second for normal transitions
+    private final float respawnSpeed; // the distance travelled per second for death transitions
+    private Type type; // what type of transition is currently happening
+    private boolean isActive = false; // true if a transition is currently happening
 
     // bezier curve coordinates
     private Vec2 p0;
@@ -17,22 +22,19 @@ public class PlayerTransition {
     private Vec2 p2;
     private Vec2 p3;
 
-    private float distance; // the current distance being traversed by the transition
-
     private Vec2 point; // where the transition effect is currently
     private float position = 0; // where the transition is on its journey between 0 and 1
-    private final float size;
+    private float positionEnd = 0; // early end for the transition, between 1 and 0
 
-    private Type type;
+    private final float size; // the size of the transition effect
 
-    private boolean isActive; // true if a transition is currently happening
-
-    public PlayerTransition(Vec2 start, Vec2 end) {
-        point = start.clone();
-
+    public PlayerTransition() { //Vec2 start, Vec2 end
+        point = new Vec2(0, 0);
         movementDuration = 1;
-
         size = 50;
+
+        normalSpeed = 800; // 8 squares per second
+        respawnSpeed = 1400; // 14 squares per second
     }
 
     public void update(Vec2 start, Vec2 end, Type type) {
@@ -40,56 +42,69 @@ public class PlayerTransition {
         p3 = end;
         this.type = type;
 
+        // fill in missing start or end points and calculate start and end points on the arc
+        View view; // the view the player is currently in
         switch (type) {
             case START:
-                // TODO: actually calculate where the start should be
-                // needs to work both with and without views
-                // when the end is inside a view, make the start just outside that view to the left
-                // if not in a view, just exit this method
-                p0 = new Vec2(end.x - 500, end.y);
-                movementDuration = 1;
+                view = AppLogic.game.getView(p3.x, p3.y);
+                if (view != null) {
+                    // when the end is inside a view, make the start just outside that view to the left
+                    float leftEdge = view.getTopLeft().x;
+                    float diff = p3.x - leftEdge;
+                    p0 = new Vec2(leftEdge - diff, p3.y);
+                    position = 0.3f;
+                } else {
+                    // if not in a view, just do a demo start transition
+                    p0 = new Vec2(p3.x - 300, p3.y - 100);
+                    position = 0;
+                }
+                positionEnd = 1;
                 break;
             case END:
-                // TODO: actually calculate where the end should be
-                // needs to work both with and without views
-                // when the start is inside a view, make the end just outside that view to the right
-                // if not in a view, just exit this method
-                p3 = new Vec2(start.x + 500, start.y);
-                movementDuration = 1;
-                break;
-            case TRANSITION:
-                movementDuration = 1;
-                break;
-            case DEATH:
-                movementDuration = 0.5f;
+                view = AppLogic.game.getView(p0.x, p0.y);
+                if (view != null) {
+                    // when the start is inside a view, make the end just outside that view to the right
+                    float rightEdge = view.getBottomRight().x;
+                    float diff = rightEdge - p0.x;
+                    p3 = new Vec2(rightEdge + diff, p0.y);
+                    positionEnd = 0.7f;
+                } else {
+                    // if not in a view, just do a demo end transition
+                    p3 = new Vec2(p0.x + 300, p0.y + 100);
+                    positionEnd = 1;
+                }
+                position = 0;
                 break;
         }
 
+        // figure out movement speed
+        float distanceToTravel = (float) Math.sqrt(Math.pow((p0.x - p3.x), 2) + Math.pow((p0.y - p3.y), 2));
+        float distancePerSecond; // how far the transition travels in a second
+        if (type == Type.DEATH) {
+            distancePerSecond = respawnSpeed;
+        } else {
+            distancePerSecond = normalSpeed;
+        }
+        movementDuration = distanceToTravel / distancePerSecond;
 
-        // TODO: write robust algorithm for figuring out p1 and p2
-
+        // figure out p1 and p2 // TODO: this could be made a lot better
         float xDistance = Math.abs(p0.x - p3.x);
-        float yDistance = Math.abs(p0.y - p3.y);
-
-        distance = (float) Math.sqrt(Math.pow((p0.x - p3.x), 2) + Math.pow((p0.y - p3.y), 2));
-
         float yOffset = xDistance / 5;
-
-        float offset = 300;
-        p1 = new Vec2(p0.x, p0.y - yOffset); // - offset / 3
+        p1 = new Vec2(p0.x, p0.y - yOffset);
         p2 = new Vec2(p3.x, p3.y - yOffset);
 
+        // start the transition
         isActive = true;
         PApplet.print("Player Transition started");
     }
 
     public void step(float deltaTime) {
         // prevent running when inactive or missing data
-        if (!isActive || p0 == null || p1 == null || p2 == null || p3 == null) {
+        if (!isActive || p0 == null || p3 == null || p1 == null || p2 == null) {
             return;
         }
 
-        if (position >= 0.99) {
+        if (position >= positionEnd) {
             position = 0; // reset
             isActive = false; // stop
             if (AppLogic.game.player != null) {
@@ -153,19 +168,20 @@ public class PlayerTransition {
 
         g.fill(0, 0, 255); // blue
         g.rect(point.x, point.y, rectSize, rectSize);
-
-
     }
 
     public boolean isActive() {
         return isActive;
     }
 
+    /**
+     * Should the current transition be used to control the auto camera instead of the player.
+     *
+     * @return true if this transition should be tracked instead of the player
+     */
     public boolean isCameraDominant() {
-        if (isActive && (type == Type.TRANSITION || type == Type.DEATH)) {
-            return true;
-        }
-        return false;
+        // is the transition active and of type TRANSITION or DEATH
+        return isActive && (type == Type.TRANSITION || type == Type.DEATH);
     }
 
     public float getSize() {

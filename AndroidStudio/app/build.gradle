@@ -35,12 +35,10 @@ android {
     }
     androidResources {
         noCompress 'lite'
+        additionalParameters '--warn-manifest-validation'
     }
     lint {
         abortOnError false
-    }
-    aaptOptions {
-        additionalParameters =["--warn-manifest-validation"]
     }
 }
 

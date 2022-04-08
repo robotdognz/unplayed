@@ -98,7 +98,7 @@ public class Game {
         // box2d
         buildWorld();
 
-        playerTransition = new PlayerTransition(new Vec2(0, 0), new Vec2(0, 0));
+        playerTransition = new PlayerTransition(); //new Vec2(0, 0), new Vec2(0, 0)
     }
 
     public void emptyGame() {

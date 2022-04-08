@@ -191,9 +191,9 @@ public class ClippedDraw {
         mask.rect(clippingAreaOffsetX, clippingAreaOffsetY, clippingArea.getWidth(), clippingArea.getHeight());
         // draw the sprite to be masked onto the mask PImage, tinted to black
         // this is used to determine what area of the mask will be used to draw the final sprite
-        mask.fill(0);
-        mask.rectMode(CENTER);
-        mask.rect(0, 0, size, size); // TODO: replace with actual sprite and tinting
+        mask.tint(0);
+        AppLogic.playerFace.drawTransition(mask, 0, 0, size, size);
+        mask.noTint();
         // draw the clipping area rectangle over the mask again but in white using EXCLUSION blend mode
         mask.blendMode(EXCLUSION);
         mask.fill(255); // white
@@ -201,14 +201,14 @@ public class ClippedDraw {
         mask.rect(clippingAreaOffsetX, clippingAreaOffsetY, clippingArea.getWidth(), clippingArea.getHeight());
         // reset the blend mode to normal
         mask.blendMode(BLEND);
-        // draw start and end onto the clipping mask
-        mask.rectMode(CENTER);
-        mask.fill(0); // black
-        if (AppLogic.game.playerTransition.getType() != PlayerTransition.Type.DEATH) {
-            // only mask the start if it's not a death animation
-            mask.rect(start.x - objectCenter.x, start.y - objectCenter.y, tileSize, tileSize);
-        }
-        mask.rect(end.x - objectCenter.x, end.y - objectCenter.y, tileSize, tileSize);
+//        // draw start and end onto the clipping mask
+//        mask.rectMode(CENTER);
+//        mask.fill(0); // black
+//        if (AppLogic.game.playerTransition.getType() != PlayerTransition.Type.DEATH) {
+//            // only mask the start if it's not a death animation
+//            mask.rect(start.x - objectCenter.x, start.y - objectCenter.y, tileSize, tileSize);
+//        }
+//        mask.rect(end.x - objectCenter.x, end.y - objectCenter.y, tileSize, tileSize);
         // end working on mask
         mask.endDraw();
 
@@ -220,8 +220,7 @@ public class ClippedDraw {
         canvas.scale(256 / 100f);
         canvas.rectMode(CENTER);
         canvas.noStroke();
-        canvas.fill(0, 0, 255); // blue
-        canvas.rect(0, 0, size, size);  // TODO: replace with actual sprite
+        AppLogic.playerFace.drawTransition(canvas, 0, 0, size, size);
         canvas.endDraw();
         canvas.mask(mask); // do masking
 

@@ -346,7 +346,7 @@ public class Player extends Editable {
         pushRightTimer.deltaStep(delta);
 
         // run checks
-        checkJumps();
+//        checkJumps(); // TODO: testing no double jump after falling off an edge
         checkTiles();
 
         Vec2 vel = dynamicBody.getLinearVelocity();

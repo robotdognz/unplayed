@@ -107,7 +107,7 @@ public class Page extends PageViewObject {
     /**
      * Updates the status of player visibility for the page. This is used to keep the auto camera
      * accurately informed about what pages to focus on.
-     *
+     * <p>
      * When the player transition animation is active, this method uses its position instead of the
      * player's to update the player visibility variables.
      */
@@ -260,11 +260,22 @@ public class Page extends PageViewObject {
             }
         }
 
+        if (showPlayer) {
+            drawPlayer();
+        }
+
+        // draw the grid paper effect
+        MathsPaper.draw(p.g, paddedView, scale, (int) size); // paper effect
+
+        p.popMatrix();
+    }
+
+    private void drawPlayer() {
         // draw the player
-        boolean playerVisible = false;
         if (game.player != null) {
+            Vec2 playerCenter = game.player.getCenter();
+            boolean playerVisible = false;
             while (!playerVisible) {
-                Vec2 playerCenter = game.player.getCenter();
                 float padding = game.player.getWidth() * 0.6f;
                 if (playerCenter.x - padding > paddedView.getBottomRight().x) {
                     break;
@@ -280,16 +291,40 @@ public class Page extends PageViewObject {
                 }
                 playerVisible = true;
             }
-        }
-        if (playerVisible && showPlayer) {
-            ClippedDraw.drawPlayerOptimised(p.g, paddedView, 3);
+            if (playerVisible) {
+                boolean playerAtEdge = true;
+                while (playerAtEdge) {
+                    float padding = 0;
+                    if (playerCenter.x - padding > view.getBottomRight().x) {
+                        break;
+                    }
+                    if (playerCenter.x + padding < view.getTopLeft().x) {
+                        break;
+                    }
+                    if (playerCenter.y - padding > view.getBottomRight().y) {
+                        break;
+                    }
+                    if (playerCenter.y + padding < view.getTopLeft().y) {
+                        break;
+                    }
+                    playerAtEdge = false;
+                }
+
+                if (!playerAtEdge) {
+                    // draw the player normally
+                    AppLogic.game.player.draw(p.g, 3);
+                } else {
+                    // draw the player clipped
+                    ClippedDraw.drawPlayerOptimised(p.g, paddedView, 3);
+                }
+            }
         }
 
         // draw the player transition animation
-        boolean transitionVisible = false;
         if (game.playerTransition.isActive()) {
+            Vec2 transitionCenter = game.playerTransition.getCenter();
+            boolean transitionVisible = false;
             while (!transitionVisible) {
-                Vec2 transitionCenter = game.playerTransition.getCenter();
                 float padding = game.playerTransition.getSize();
                 if (transitionCenter.x - padding > paddedView.getBottomRight().x) {
                     break;
@@ -305,15 +340,36 @@ public class Page extends PageViewObject {
                 }
                 transitionVisible = true;
             }
-        }
-        if (transitionVisible && showPlayer) {
-            ClippedDraw.drawTransition(p.g, paddedView, 3);
-        }
+            if (transitionVisible) {
+                boolean transitionAtEdge = true;
+                while (transitionAtEdge) {
+                    float padding = 0;
+                    if (transitionCenter.x - padding > view.getBottomRight().x) {
+                        break;
+                    }
+                    if (transitionCenter.x + padding < view.getTopLeft().x) {
+                        break;
+                    }
+                    if (transitionCenter.y - padding > view.getBottomRight().y) {
+                        break;
+                    }
+                    if (transitionCenter.y + padding < view.getTopLeft().y) {
+                        break;
+                    }
+                    transitionAtEdge = false;
+                }
 
-        // draw the grid paper effect
-        MathsPaper.draw(p.g, paddedView, scale, (int) size); // paper effect
+                if (!transitionAtEdge) {
+                    // draw the transition normally
+                    float transitionSize = game.playerTransition.getSize();
+                    AppLogic.playerFace.drawTransition(p.g, transitionCenter.x, transitionCenter.y, transitionSize, transitionSize);
+                } else {
+                    // draw the transition clipped
+                    ClippedDraw.drawTransition(p.g, paddedView, 3);
+                }
 
-        p.popMatrix();
+            }
+        }
     }
 
     @Override

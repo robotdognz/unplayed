@@ -17,6 +17,7 @@ import game.AppLogic;
 import game.MathsPaper;
 import game.PageView;
 import game.Quadtree;
+import game.player.ClippedDraw;
 import game.player.Player;
 import handlers.BackgroundHandler;
 import handlers.EventHandler;
@@ -318,6 +319,9 @@ public class Editor {
 
         if (AppLogic.game.playerTransition.isActive()) {
             AppLogic.game.playerTransition.drawVisualisation(p.g, currentScale);
+            Vec2 position = AppLogic.game.playerTransition.getCenter();
+            float size = AppLogic.game.playerTransition.getSize();
+            AppLogic.playerFace.drawTransition(p.g, position.x, position.y, size, size);
         }
 
         if (viewVis) { // draw the views behind events
