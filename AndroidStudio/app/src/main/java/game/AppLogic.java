@@ -134,6 +134,7 @@ public class AppLogic {
     }
 
     static public void cacheImage(PGraphics g, PImage image){
+        image.loadPixels();
         Object cache = g.getCache(image);
         g.setCache(image, cache);
     }

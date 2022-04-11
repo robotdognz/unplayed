@@ -168,6 +168,8 @@ public class PageView {
                 }
                 Page page = (Page) object;
 
+                //TODO: only step the page if it's on screen
+
                 page.step();
                 if (page.playerVisibilityChanged()) {
                     adjustCamera = true;
@@ -251,6 +253,7 @@ public class PageView {
                 continue;
             }
             pagesToDraw.add((Page) page);
+            ((Page) page).stepRendering();
         }
 
         // draw current menu, destroy it if it's off camera
@@ -447,7 +450,8 @@ public class PageView {
             }
             Page page = (Page) object;
 
-            page.updateSizeFromView();
+            page.updatePageContents(); // rebuilds the contents of the page
+            page.updateSizeFromView(); // makes sure the page has the correct view size
         }
         resetSystems();
     }

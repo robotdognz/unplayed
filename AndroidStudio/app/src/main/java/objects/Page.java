@@ -83,6 +83,8 @@ public class Page extends PageViewObject {
         setPosition(position);
         updateCorners();
 
+        updatePageContents();
+
     }
 
     public List<PageViewObject> getChildren() {
@@ -113,14 +115,28 @@ public class Page extends PageViewObject {
         children.remove(child);
     }
 
-    public void step() {
+    /**
+     * Pulls all the tiles and other objects that should be rendered on this page from
+     * the world quad tree.
+     */
+    public void updatePageContents() {
         // get objects visible to this page
         pageObjects.clear();
         game.world.retrieve(pageObjects, view);
+    }
+
+    public void step() {
+//        // get objects visible to this page
+//        pageObjects.clear();
+//        game.world.retrieve(pageObjects, view);
         updatePlayerVisibility();
+
+    }
+
+    public void stepRendering() {
+        // step rendering
         updatePlayerRendering();
 
-        // step rendering
         imagesToDraw.clear();
         tilesToDraw.clear();
         eventsToDraw.clear();
@@ -160,6 +176,33 @@ public class Page extends PageViewObject {
                 }
             }
         }
+
+        // remove tiles from rendering that have been removed during the level
+        ArrayList<Tile> removed = AppLogic.game.removed;
+        for (Tile t : removed) {
+            tilesToDraw.remove(t);
+        }
+
+        // add tiles to rendering that were created during the level
+        ArrayList<Tile> placed = AppLogic.game.placed;
+        for (Tile t : placed) {
+            if (t.getTopLeft().x > view.getBottomRight().x - 1) {
+                continue;
+            }
+            if (t.getBottomRight().x < view.getTopLeft().x + 1) {
+                continue;
+            }
+            if (t.getTopLeft().y > view.getBottomRight().y - 1) {
+                continue;
+            }
+            if (t.getBottomRight().y < view.getTopLeft().y + 1) {
+                continue;
+            }
+            if (showTiles) {
+                tilesToDraw.add(t);
+            }
+        }
+
     }
 
     /**
