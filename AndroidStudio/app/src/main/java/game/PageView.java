@@ -168,9 +168,7 @@ public class PageView {
                 }
                 Page page = (Page) object;
 
-                //TODO: only step the page if it's on screen
-
-                page.step();
+                page.updatePlayerVisibility();
                 if (page.playerVisibilityChanged()) {
                     adjustCamera = true;
                 }
@@ -253,7 +251,7 @@ public class PageView {
                 continue;
             }
             pagesToDraw.add((Page) page);
-            ((Page) page).stepRendering();
+            ((Page) page).step();
         }
 
         // draw current menu, destroy it if it's off camera
@@ -314,7 +312,7 @@ public class PageView {
                 continue;
             }
             Page page = (Page) object;
-            page.step();
+            page.updatePlayerVisibility(); // .step();
         }
     }
 
@@ -442,16 +440,21 @@ public class PageView {
         return new Rectangle(x, y, width, height);
     }
 
+    /**
+     * Forces a recalculation of all page sizes and contents.
+     * <p>
+     * Used when switching between level view and page view and previewing a level in editor.
+     */
     public void recalculatePageViewObjects() {
-        // force recalculate pages sizes
+        // force recalculate pages contents and sizes
         for (PageViewObject object : pageViewObjects) {
             if (!(object instanceof Page)) {
                 continue;
             }
             Page page = (Page) object;
 
-            page.updatePageContents(); // rebuilds the contents of the page
             page.updateSizeFromView(); // makes sure the page has the correct view size
+            page.updatePageContents(); // rebuilds the contents of the page
         }
         resetSystems();
     }

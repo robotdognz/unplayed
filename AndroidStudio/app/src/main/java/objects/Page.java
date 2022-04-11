@@ -126,14 +126,6 @@ public class Page extends PageViewObject {
     }
 
     public void step() {
-//        // get objects visible to this page
-//        pageObjects.clear();
-//        game.world.retrieve(pageObjects, view);
-        updatePlayerVisibility();
-
-    }
-
-    public void stepRendering() {
         // step rendering
         updatePlayerRendering();
 
@@ -212,7 +204,7 @@ public class Page extends PageViewObject {
      * When the player transition animation is active, this method uses its position instead of the
      * player's to update the player visibility variables.
      */
-    private void updatePlayerVisibility() {
+    public void updatePlayerVisibility() {
         // update player visibility
         if (game.player != null) {
             boolean temp = false;
