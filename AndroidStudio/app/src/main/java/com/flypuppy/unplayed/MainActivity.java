@@ -57,4 +57,12 @@ public class MainActivity extends AppCompatActivity {
             sketch.onBackPressed();
         }
     }
+
+    @Override
+    public void onDestroy() {
+        if (sketch != null) {
+            sketch.onDestroy();
+        }
+        super.onDestroy();
+    }
 }

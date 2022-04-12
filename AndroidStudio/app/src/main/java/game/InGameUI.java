@@ -37,6 +37,7 @@ public class InGameUI {
     // UI fade logic
     private boolean draw; // current draw state
     private final CountdownTimer fade; // fade timer
+    private boolean fading;
     private int fadeInt; // current fade level
 
     // UI tint logic
@@ -92,6 +93,8 @@ public class InGameUI {
         this.levelHeightByWidthRatio = levelAreaHeight / screenWidth;
         this.levelYOffset = ((menuInGameHeight + menuButtonArea) - ((screenHeight - controlsInGameHeight) + controlButtonArea)) / 2;
         this.screenHeightByWidthRatio = screenHeight / (float) screenWidth;
+
+        fading = false;
     }
 
     public void step(float deltaTime, boolean draw, float bottom, boolean drawMenu, PVector lastTouch) {
@@ -111,31 +114,27 @@ public class InGameUI {
             controlsYPosition = PApplet.lerp(controlsYPosition, controlsInGameHeight, 4 * deltaTime);
         }
 
-        if (fade.isFinished()) {
+
+        // update the animation direction
+        if (this.draw != draw) {
             this.draw = draw;
-            fade.stop();
-            if (this.draw) {
-                // fading out
-                fadeInt = 255;
-            } else {
-                // fading in
-                fadeInt = 0;
-            }
-            return;
+            // start it if it isn't already running
+            fading = true;
         }
-        if (draw != this.draw && !fade.isRunning()) {
-            fade.start();
-        }
-        if (fade.isRunning()) {
+        if (fading) {
             // doing a fade animation
-            int ratio = (int) (255 * fade.deltaRemainingRatio());
+            int increment = (int) (510 * deltaTime);
 
             if (this.draw) {
-                // fading out
-                fadeInt = 255 - ratio;
-            } else {
                 // fading in
-                fadeInt = ratio;
+                fadeInt = (int) Math.min(255, fadeInt + increment);
+            } else {
+                // fading out
+                fadeInt = (int) Math.max(0, fadeInt - increment);
+            }
+
+            if (fadeInt == 255 || fadeInt == 0) {
+                fading = false;
             }
         }
     }
