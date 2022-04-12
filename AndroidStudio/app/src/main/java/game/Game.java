@@ -64,7 +64,9 @@ public class Game {
 
     // delta time
 //    float accumulator = 0;
-    float stepSize = 1f / 240f;
+    float stepSize = 1f / 240f; // 240f
+    // to change the number of physics steps per render step, change the above
+    // and change movementIncrease in the Player class
 
     // player transition animation
     public PlayerTransition playerTransition;
@@ -522,21 +524,21 @@ public class Game {
 
         // We will pretend our display sync rate is one of these:
         if (elapsed > 7.5 * stepSize)
-            return 8; // 30 Hz ( .. to 32 Hz )
+            return 8;  // 240 hz = [30 Hz ( .. to 32 Hz )],             120 hz = [15 Hz ( .. to 16 Hz )]
         else if (elapsed > 6.5 * stepSize)
-            return 7; // 34.29 Hz ( 32 Hz to 36.92 Hz )
+            return 7; // 240 hz = [34.29 Hz ( 32 Hz to 36.92 Hz )],     120 hz = [17 Hz ( 16 Hz to 18.46 Hz )]
         else if (elapsed > 5.5 * stepSize)
-            return 6; // 40 Hz ( 36.92 Hz to 43.64 Hz )
+            return 6; // 240 hz = [40 Hz ( 36.92 Hz to 43.64 Hz )],     120 hz = [20 Hz ( 18.46 Hz to 21.82 Hz )]
         else if (elapsed > 4.5 * stepSize)
-            return 5; // 48 Hz ( 43.64 Hz to 53.33 Hz )
+            return 5; // 240 hz = [48 Hz ( 43.64 Hz to 53.33 Hz )],     120 hz = [24 Hz ( 21.82 Hz to 26.67 Hz )]
         else if (elapsed > 3.5 * stepSize)
-            return 4; // 60 Hz ( 53.33 Hz to 68.57 Hz )
+            return 4; // 240 hz = [60 Hz ( 53.33 Hz to 68.57 Hz )],     120 hz = [30 Hz ( 26.67 Hz to 34.29 Hz )]
         else if (elapsed > 2.5 * stepSize)
-            return 3; // 90 Hz ( 68.57 Hz to 96 Hz )
+            return 3; // 240 hz = [90 Hz ( 68.57 Hz to 96 Hz )],        120 hz = [41 Hz ( 34.29 Hz to 48 Hz )]
         else if (elapsed > 1.5 * stepSize)
-            return 2; // 120 Hz ( 96 Hz to 160 Hz )
+            return 2; // 240 hz = [120 Hz ( 96 Hz to 160 Hz )],         120 hz = [60 Hz ( 48 Hz to 80 Hz )]
         else
-            return 1; // 240 Hz ( 160 Hz to .. )
+            return 1; // 240 hz = [240 Hz ( 160 Hz to .. )],            120 hz = [120 Hz ( 80 Hz to .. )]
     }
 
 }

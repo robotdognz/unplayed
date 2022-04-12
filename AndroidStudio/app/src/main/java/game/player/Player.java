@@ -159,7 +159,7 @@ public class Player extends Editable {
 
         // movement / jumping values
         this.movementSpeed = 60f; // 60f
-        this.movementIncrease = 2f; // 2f
+        this.movementIncrease = 2f; // 2f = 240hz, 4f = 120hz, 8f = 60hz
         this.movementSlow = 0.999f; // 0.999f
         this.jumpPower = 120; // 120
         this.wallJumpPower = 48; // 48

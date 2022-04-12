@@ -349,6 +349,8 @@ public class AppLogic {
         File testFile = new File("TitleScreen.png");
         LoadingHandler loading = new LoadingHandler(p, texture, testFile, 8, 8, true, true);
 
+        menu = null;
+
         // create the loading screen
         Menu temp = new TitleMenu(p, loading);
 
