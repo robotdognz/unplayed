@@ -85,7 +85,7 @@ public class Game {
         playerObjects = new HashSet<>();
         player = null;
 
-        pageView = new PageView(p, this, texture, convert);
+        pageView = new PageView(p, convert);
 
         pauseTimer = new CountdownTimer(0.4f);
         pauseType = PauseType.NONE;

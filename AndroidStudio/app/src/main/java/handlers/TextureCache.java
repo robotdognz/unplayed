@@ -7,10 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import android.content.Context;
 import android.content.res.AssetManager;
-
 import game.AppLogic;
 import game.Game;
 import objects.Event;
@@ -23,7 +20,6 @@ import processing.core.*;
 public class TextureCache {
     private final PApplet p;
     private Game game;
-    private final Context context;
 
     // LODs, these numbers represent how many squares across is the current zoom level
     static public int LOD256 = 4;
@@ -69,9 +65,8 @@ public class TextureCache {
     private HashMap<String, EventHandler> eventMap;
     private ArrayList<EventHandler> eventList;
 
-    public TextureCache(PApplet p, Context context) {
+    public TextureCache(PApplet p) {
         this.p = p;
-        this.context = context;
         // sprite = requestImage("image.png") // this loads the image on a separate
         // thread
         // you can check if it has loaded by querying its dimensions, they will be 0 if
@@ -183,7 +178,7 @@ public class TextureCache {
         try {
             // App mode
 
-            AssetManager am = context.getAssets();
+            AssetManager am = p.getContext().getAssets();
             String tilePath = "unplayed_tiles";
             String[] tileStrings = am.list(tilePath);
 
@@ -243,7 +238,7 @@ public class TextureCache {
         try {
             // App mode
 
-            AssetManager am = context.getAssets();
+            AssetManager am = p.getContext().getAssets();
             String imagePath = "unplayed_images";
             String[] imageStrings = am.list(imagePath);
 
@@ -359,7 +354,7 @@ public class TextureCache {
         try {
             // App mode
 
-            AssetManager am = context.getAssets();
+            AssetManager am = p.getContext().getAssets();
             String backgroundPath = "unplayed_backgrounds";
             String[] backgroundStrings = am.list(backgroundPath);
 
@@ -424,7 +419,7 @@ public class TextureCache {
         try {
             // App mode
 
-            AssetManager am = context.getAssets();
+            AssetManager am = p.getContext().getAssets();
             String loadingPath = "unplayed_loading";
             String[] loadingStrings = am.list(loadingPath);
 
@@ -490,7 +485,7 @@ public class TextureCache {
         try {
             // App mode
 
-            AssetManager am = context.getAssets();
+            AssetManager am = p.getContext().getAssets();
             String buttonPath = "unplayed_buttons";
             String[] buttonStrings = am.list(buttonPath);
 

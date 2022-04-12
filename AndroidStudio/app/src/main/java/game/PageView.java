@@ -2,14 +2,12 @@ package game;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import camera.Camera;
 import camera.PageViewCamera;
 import editor.DebugOutput;
 import editor.Editor;
 import editor.EditorSettings;
 import game.player.ClippedDraw;
-import handlers.TextureCache;
 import misc.Converter;
 import objects.Background;
 import objects.Page;
@@ -19,15 +17,15 @@ import processing.core.*;
 import ui.Menu;
 
 public class PageView {
-    private PApplet p;
-    private Converter convert;
+    private final PApplet p;
+    private final Converter convert;
 
-    private BackgroundPaper paper;
+    private final BackgroundPaper paper;
 
-    private ArrayList<PageViewObject> pageViewObjects;
+    private final ArrayList<PageViewObject> pageViewObjects;
     private int pages;
 
-    private PageViewCamera pageCamera;
+    private final PageViewCamera pageCamera;
     private Rectangle previousPageArea; // used when switching between menu and level when player isn't visible
 
     private Menu storedMenu;
@@ -40,11 +38,11 @@ public class PageView {
     private float currentScale; // what scale (LOD) will objects be rendered at
     private PVector renderTopLeft;
     private PVector renderBottomRight;
-    private ArrayList<PageViewObject> backgroundsToDraw;
-    private ArrayList<Page> pagesToDraw;
+    private final ArrayList<PageViewObject> backgroundsToDraw;
+    private final ArrayList<Page> pagesToDraw;
 
 
-    public PageView(PApplet p, Game game, TextureCache texture, Converter convert) {
+    public PageView(PApplet p, Converter convert) {
         this.p = p;
         this.convert = convert;
 
@@ -128,7 +126,7 @@ public class PageView {
     public void step(float deltaTime) {
         boolean adjustCamera = false;
 
-        if (AppLogic.menuAdded() == true) {
+        if (AppLogic.menuAdded()) {
             storedMenu = AppLogic.getMenu();
 
             if (!storedMenu.isBuilt()) {
@@ -157,7 +155,7 @@ public class PageView {
 
             DebugOutput.pushMessage("Page menu built", 1);
 
-        } else if (AppLogic.menuRemoved() == true) {
+        } else if (AppLogic.menuRemoved()) {
             removeMenu = true;
             adjustCamera = true;
 
@@ -598,10 +596,6 @@ public class PageView {
             // there are page view objects in the level
             offsetAll(-center.x, -center.y);
         }
-    }
-
-    public BackgroundPaper getPaper() {
-        return paper;
     }
 
     public PageViewCamera getPageCamera() {

@@ -5,20 +5,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.net.Uri;
-
 import camera.Camera;
 import camera.FreeCamera;
 import camera.GameCamera;
 import controllers.Controller;
 import controllers.PlayerControl;
 import editor.Editor;
-import game.player.ClippedDraw;
 import game.player.PlayerFace;
 import handlers.LoadingHandler;
 import handlers.TextureCache;
@@ -39,8 +34,6 @@ import ui.TitleMenu;
 //handles all of the logic at the application level
 public class AppLogic {
     private static PApplet p;
-    public static Activity activity;
-    private static Context context;
 
     public static KetaiGesture gesture;
     public static FileChooser files;
@@ -74,11 +67,9 @@ public class AppLogic {
     private static boolean skipNextStep = false; // skips running for a step so we don't see force drawn assets or a lag spike
     private static boolean startLevel = false; // run start level this frame
 
-    public AppLogic(PApplet pApplet, Activity masterActivity, Context masterContext) {
+    public AppLogic(PApplet pApplet) {
         p = pApplet;
-        activity = masterActivity;
-        context = masterContext;
-        toast = new DoToast(activity);
+        toast = new DoToast(p);
         editorToggle = false;
     }
 
@@ -87,12 +78,12 @@ public class AppLogic {
         touches = new ArrayList<>();
         lastTouch = new PVector(0, 0);
 
-        texture = new TextureCache(p, context);
+        texture = new TextureCache(p);
         gesture = new KetaiGesture(p);
-        files = new FileChooser(activity);
+        files = new FileChooser(p);
 
         // setup vibration class
-        Vibe.setup(context);
+        Vibe.setup(p);
 
         Camera camera = new GameCamera();
         convert = new Converter(p);
@@ -104,7 +95,7 @@ public class AppLogic {
         drawUI = new InGameUI(p, p.width, p.height);
 
         // setup shared preferences (used for save games)
-        settings = activity.getPreferences(0);
+        settings = p.getActivity().getPreferences(0);
         saveGame = settings.edit();
 
         // add the title screen and initialise the camera logic
@@ -165,7 +156,7 @@ public class AppLogic {
         try {
             // App mode
 
-            AssetManager am = context.getAssets();
+            AssetManager am = p.getContext().getAssets();
             String levelPath = "levels";
             String[] levelStrings = am.list(levelPath);
 
@@ -314,9 +305,6 @@ public class AppLogic {
             p.pushMatrix();
             p.translate(p.width * 0.5f, p.height * 0.5f);
             for (PageViewObject object : tempPageViewObjects) {
-//                if (object instanceof Page) {
-//                    ((Page) object).step();
-//                }
                 p.pushMatrix();
                 PVector pos = object.getPosition();
                 p.translate(-pos.x, -pos.y);
@@ -348,8 +336,6 @@ public class AppLogic {
         // load in the title splash screen
         File testFile = new File("TitleScreen.png");
         LoadingHandler loading = new LoadingHandler(p, texture, testFile, 8, 8, true, true);
-
-        menu = null;
 
         // create the loading screen
         Menu temp = new TitleMenu(p, loading);
@@ -694,7 +680,7 @@ public class AppLogic {
     // quit
 
     static public void quit() {
-        activity.finish();
+        p.getActivity().finish();
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")

@@ -61,7 +61,7 @@ public class EditorJSON {
         saveLoading(values);
 
         try {
-            OutputStream output = fileOutputStreamFromUri(uri, AppLogic.activity);
+            OutputStream output = fileOutputStreamFromUri(uri, p.getActivity());
             PrintWriter writer = PApplet.createWriter((OutputStream) output);
 
             boolean success = values.write(writer, (String) null);

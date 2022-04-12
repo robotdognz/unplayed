@@ -43,7 +43,7 @@ public class unplayed extends PApplet {
         //setup game logic
         activity = this.getActivity();
         context = activity.getApplicationContext();
-        app = new AppLogic(this, activity, context);
+        app = new AppLogic(this);
 
         //initialise the game
         AppLogic.init();

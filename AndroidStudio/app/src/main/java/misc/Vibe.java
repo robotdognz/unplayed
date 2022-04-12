@@ -5,19 +5,23 @@ import android.os.Vibrator;
 import android.os.VibrationEffect;
 import android.content.Context;
 
+import processing.core.PApplet;
+
 public class Vibe {
+//	PApplet p;
 	private static Vibrator vibe;
 	private static boolean deprecated;
 
-	public Vibe(Context c) {
-		vibe = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE); //changed from getActivity() to context
-		deprecated = android.os.Build.VERSION.SDK_INT < 26;// && vibe.hasVibrator();
-		// this class needs to be updated to calculate fine grained vibration strength
-		// using a combination of amount and level
-	}
+//	public Vibe(PApplet p) { //Context c
+//		this.p = p;
+//		vibe = (Vibrator) p.getContext().getSystemService(Context.VIBRATOR_SERVICE); //changed from getActivity() to context
+//		deprecated = android.os.Build.VERSION.SDK_INT < 26;// && vibe.hasVibrator();
+//		// this class needs to be updated to calculate fine grained vibration strength
+//		// using a combination of amount and level
+//	}
 
-	public static void setup(Context c){
-		vibe = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE); //changed from getActivity() to context
+	public static void setup(PApplet p){
+		vibe = (Vibrator) p.getContext().getSystemService(Context.VIBRATOR_SERVICE); //changed from getActivity() to context
 		deprecated = android.os.Build.VERSION.SDK_INT < 26;// && vibe.hasVibrator();
 		// this class needs to be updated to calculate fine grained vibration strength
 		// using a combination of amount and level

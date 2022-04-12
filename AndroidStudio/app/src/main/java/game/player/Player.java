@@ -103,8 +103,6 @@ public class Player extends Editable {
     // movement / jumping
     private final float movementSpeed; // max movement speed
     private final float movementIncrease; // the rate speed increases when holding a movement button
-    private final float movementIncreaseAir;
-    private final float movementIncreaseGround;
     private final float movementSlow; // the rate of speed loss when not holding a movement button
     private final float jumpPower; // the strength of the player's jump
     private boolean extraJump; // does the player have an extra jump
@@ -125,7 +123,7 @@ public class Player extends Editable {
             hasTexture = false;
         }
 
-        this.events = new ArrayList<Event>();
+        this.events = new ArrayList<>();
 
         // box2d
         Player.box2d = box2d;
@@ -135,18 +133,18 @@ public class Player extends Editable {
         this.vibration = new PlayerVibration();
 
         // environment checking
-        this.sensorContacts = new HashSet<Tile>();
+        this.sensorContacts = new HashSet<>();
 
-        this.tunnelChecking = new ArrayList<Tile>();
+        this.tunnelChecking = new ArrayList<>();
         this.xCompare = new PlayerTileXComparator();
 
-        this.groundChecking = new ArrayList<Tile>();
+        this.groundChecking = new ArrayList<>();
         this.groundBarrier = null;
 
-        this.wallChecking = new ArrayList<Tile>();
+        this.wallChecking = new ArrayList<>();
         this.wallBarrier = null;
 
-        this.roofChecking = new ArrayList<Tile>();
+        this.roofChecking = new ArrayList<>();
         this.roofBarrier = null;
         this.touchingRoofBarrier = false;
 
@@ -166,9 +164,6 @@ public class Player extends Editable {
         this.wallJumpAwayPower = 10; // 30 - early 2022;
         this.wallBoostPower = 10; // 40 - removed for testing // 90 - early 2022 // 102 - old, 2021;
         this.extraJump = false;
-
-        this.movementIncreaseAir = 1f; // 2f
-        this.movementIncreaseGround = 2f; // 2f
 
         // timers
 
@@ -365,7 +360,7 @@ public class Player extends Editable {
 
         // do horizontal movement calculations
         checkWallStick(vel);
-        float desiredVel = 0;
+        float desiredVel;
 
         if (!roofBoostTimer.isRunning() && (left || pushLeftTimer.isRunning())) {
             // TODO: testing out a kind of nullified boost jump gameplay (dependent on wall double jump implementation)
@@ -655,7 +650,7 @@ public class Player extends Editable {
             }
 
             // return boolean telling subsequent algorithms if they can unlock the player
-            if (returnBoolean == false) {
+            if (!returnBoolean) {
                 return false;
             }
 
@@ -901,7 +896,6 @@ public class Player extends Editable {
 
         // conditions weren't met, remove the barrier
         destroyGroundBarrier(resetRotation);
-        return;
     }
 
     private void checkForWallSlots(PVector pos, Vec2 vel, boolean resetRotation) {

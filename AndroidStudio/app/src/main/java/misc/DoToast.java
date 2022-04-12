@@ -3,14 +3,16 @@ package misc;
 import android.app.Activity;
 import android.widget.Toast;
 
-public class DoToast {
-	Activity activity;
+import processing.core.PApplet;
 
-	public DoToast(Activity activity) {
-		this.activity = activity;
+public class DoToast {
+	PApplet p;
+
+	public DoToast(PApplet p) {
 	}
 
 	public void showToast(final String message) {
+		Activity activity = p.getActivity();
 		activity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
