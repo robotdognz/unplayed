@@ -186,7 +186,7 @@ public class InGameUI {
         p.noTint();
     }
 
-    public void drawAll(){
+    public void drawAll() {
         p.image(TextureCache.getControlsLeft(), leftButtonXPosition, controlsYPosition - (controlButtonArea * 0.5f), controlButtonSize, controlButtonSize);
         p.image(TextureCache.getControlsJump(), jumpButtonXPosition, controlsYPosition - (controlButtonArea * 0.5f), controlButtonSize, controlButtonSize);
         p.image(TextureCache.getControlsRight(), rightButtonXPosition, controlsYPosition - (controlButtonArea * 0.5f), controlButtonSize, controlButtonSize);
@@ -211,6 +211,7 @@ public class InGameUI {
             AppLogic.addMenu(new EditorMenu(p));
             //AppLogic.toggleEditor();
         } else {
+            AppLogic.clearMenus();
             AppLogic.addMenu(new GameMenu(p, AppLogic.game));
         }
 

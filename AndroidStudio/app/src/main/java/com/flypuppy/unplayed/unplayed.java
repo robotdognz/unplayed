@@ -2,9 +2,7 @@ package com.flypuppy.unplayed;
 
 import processing.core.*;
 import game.AppLogic;
-
 import android.content.ClipData;
-import android.content.Context;
 import android.app.Activity;
 import android.net.Uri;
 import android.content.Intent;
@@ -17,8 +15,6 @@ public class unplayed extends PApplet {
     private static final int SELECT_LEVEL = 1;
     private static final int SELECT_LEVELS = 2;
 
-    Activity activity;
-    Context context;
     AppLogic app; //manages the application level game logic
 
     //splash screen
@@ -32,7 +28,6 @@ public class unplayed extends PApplet {
 
     public void setup() {
         //setup graphics
-
         background(0, 78, 83);
         frameRate(FPS);
         splash = 0;
@@ -41,8 +36,6 @@ public class unplayed extends PApplet {
 
     public void init() {
         //setup game logic
-        activity = this.getActivity();
-        context = activity.getApplicationContext();
         app = new AppLogic(this);
 
         //initialise the game
@@ -100,7 +93,7 @@ public class unplayed extends PApplet {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.activity = this.getActivity();
+        Activity activity = getActivity();
 
         android.view.View decorView = activity.getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener
@@ -223,6 +216,6 @@ public class unplayed extends PApplet {
     }
 
     public void settings() {
-        fullScreen(P2D);
+        fullScreen(P2D); // p2d
     }
 }

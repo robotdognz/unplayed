@@ -605,6 +605,11 @@ public class AppLogic {
         return menu != null;
     }
 
+    static public void clearMenus(){
+        menu = null;
+        game.getPageView().clearMenus();
+    }
+
     static public void addMenu(Menu newMenu) {
         // menus act as a linked list
         // add to head

@@ -9,6 +9,7 @@ public class DoToast {
 	PApplet p;
 
 	public DoToast(PApplet p) {
+		this.p = p;
 	}
 
 	public void showToast(final String message) {

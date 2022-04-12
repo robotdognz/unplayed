@@ -324,6 +324,7 @@ public class Page extends PageViewObject {
                     // draw the player clipped
                     playerDraw = DrawType.CLIPPED;
                 }
+//                playerDraw = DrawType.CLIPPED;
             }
         }
 
@@ -374,6 +375,7 @@ public class Page extends PageViewObject {
                     // draw the transition clipped
                     transitionDraw = DrawType.CLIPPED;
                 }
+//                transitionDraw = DrawType.CLIPPED;
             }
         }
     }

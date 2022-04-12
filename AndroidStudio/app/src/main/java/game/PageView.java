@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import camera.Camera;
 import camera.PageViewCamera;
 import editor.DebugOutput;
@@ -542,7 +543,7 @@ public class PageView {
                 continue;
             }
             // return the first overlap
-            if (((Page) object).isInside(x, y)) {
+            if (object.isInside(x, y)) {
                 return (Page) object;
             }
 
@@ -564,7 +565,7 @@ public class PageView {
                 continue;
             }
             // return the first overlap
-            if (((Background) object).isInside(x, y)) {
+            if (object.isInside(x, y)) {
                 return (Background) object;
             }
 
