@@ -95,7 +95,7 @@ public class PlayerTransition {
 
         // start the transition
         isActive = true;
-        PApplet.print("Player Transition started");
+//        PApplet.print("Player Transition started");
     }
 
     public void step(float deltaTime) {

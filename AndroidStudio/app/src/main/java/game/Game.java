@@ -301,11 +301,11 @@ public class Game {
             // setup player transition
             Vec2 newPlayerPosition = player.getCenter();
             if (previousPlayerPosition != null) {
-                PApplet.print("Player death (first player) animation");
+//                PApplet.print("Player death (first player) animation");
                 playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.DEATH);
             } else {
                 // it is the start of the level, tell playerTransition to do a start animation
-                PApplet.print("Level intro animation");
+//                PApplet.print("Level intro animation");
                 playerTransition.update(null, newPlayerPosition, PlayerTransition.Type.START);
             }
 
@@ -347,10 +347,10 @@ public class Game {
                     if (previousPlayerPosition != null) {
                         Vec2 newPlayerPosition = player.getCenter();
                         if (!death) {
-                            PApplet.print("Player typical transition");
+//                            PApplet.print("Player typical transition");
                             playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.TRANSITION);
                         } else {
-                            PApplet.print("Player death animation");
+//                            PApplet.print("Player death animation");
                             playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.DEATH);
                         }
                     }
@@ -367,7 +367,7 @@ public class Game {
                         // setup player transition
                         if (previousPlayerPosition != null) {
                             Vec2 newPlayerPosition = player.getCenter();
-                            PApplet.print("Player transition, Haven't seen this one used before");
+//                            PApplet.print("Player transition, Haven't seen this one used before");
                             playerTransition.update(previousPlayerPosition, newPlayerPosition, PlayerTransition.Type.DEATH);
                         }
                     }
