@@ -168,7 +168,7 @@ public class Player extends Editable {
         // timers
 
         // how long to pad leaving the ground
-        this.groundTimer = new CountdownTimer(0.256f); // 0.200
+        this.groundTimer = new CountdownTimer(0.200f); // 0.245f
         this.groundTimerPadding = new CountdownTimer(0.032f); // 0.064f
         // how long to pad leaving a wall
         this.leftWallTimer = new CountdownTimer(0.064f);
@@ -677,24 +677,9 @@ public class Player extends Editable {
         }
 
         boolean direction = false; // true = left, false = right
-//		if (left || vel.x <= -4) {
-//			direction = true;
-//		} else if (right || vel.x >= 4) {
-//			direction = false;
-//		}
-
-        // restRotation == false
 
         if (!left && !right) {
-//			if (Math.abs(vel.x) <= 4) {
-//				destroyGroundBarrier(resetRotation);
-//				return;
-//			}
-//			if (vel.x < 0) {
-//				direction = true;
-//			} else {
-//				direction = false;
-//			}
+            // not holding either movement button
 
             if (!resetRotation) { // in tunnel
                 if (vel.x < 0) {
@@ -703,13 +688,15 @@ public class Player extends Editable {
                     direction = false;
                 }
             } else { // not in tunnel
-                destroyGroundBarrier(resetRotation);
+                destroyGroundBarrier(true); // resetRotation is always true
                 return;
             }
         } else {
+            // holding one movement button (both is impossible)
+
             if (left) {
                 direction = true;
-            } else if (right) {
+            } else { // else right is true
                 direction = false;
             }
         }
