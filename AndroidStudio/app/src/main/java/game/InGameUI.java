@@ -36,7 +36,7 @@ public class InGameUI {
 
     // UI fade logic
     private boolean draw; // current draw state
-    private final CountdownTimer fade; // fade timer
+//    private final CountdownTimer fade; // fade timer
     private boolean fading;
     private int fadeInt; // current fade level
 
@@ -80,7 +80,7 @@ public class InGameUI {
         this.menuXPosition = screenWidth / 2f;
 
 
-        this.fade = new CountdownTimer(0.5f);
+//        this.fade = new CountdownTimer(0.5f);
         float tintFadeTime = 0.2f;
         this.leftTint = new CountdownTimer(tintFadeTime);
         this.jumpTint = new CountdownTimer(tintFadeTime);
@@ -98,7 +98,7 @@ public class InGameUI {
     }
 
     public void step(float deltaTime, boolean draw, float bottom, boolean drawMenu, PVector lastTouch) {
-        fade.deltaStep(deltaTime);
+//        fade.deltaStep(deltaTime);
         leftTint.deltaStep(deltaTime);
         jumpTint.deltaStep(deltaTime);
         rightTint.deltaStep(deltaTime);
@@ -127,10 +127,10 @@ public class InGameUI {
 
             if (this.draw) {
                 // fading in
-                fadeInt = (int) Math.min(255, fadeInt + increment);
+                fadeInt = Math.min(255, fadeInt + increment);
             } else {
                 // fading out
-                fadeInt = (int) Math.max(0, fadeInt - increment);
+                fadeInt = Math.max(0, fadeInt - increment);
             }
 
             if (fadeInt == 255 || fadeInt == 0) {
@@ -176,8 +176,8 @@ public class InGameUI {
         // menu button
         if (drawMenu) {
             if (menuTint.isRunning()) {
-                int temp = (int) ((255 - tintShade) * rightTint.deltaRemainingRatio());
-                temp = Math.min(tintShade + temp, 255);
+//                int temp = (int) ((255 - tintShade) * rightTint.deltaRemainingRatio());
+//                temp = Math.min(tintShade + temp, 255);
                 p.tint(tintShade, fadeInt);
             }
             p.image(TextureCache.getControlsMenu(), menuXPosition, menuYPosition + (menuButtonArea * 0.5f), menuButtonSize, menuButtonSize);
