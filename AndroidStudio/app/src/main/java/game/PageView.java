@@ -84,8 +84,7 @@ public class PageView {
         }
 
         // draw the looping background
-//        p.background(150);
-        paper.draw(p.getGraphics(), renderTopLeft, renderBottomRight, currentScale); // background paper effect
+        paper.drawShape(p, renderTopLeft, renderBottomRight, currentScale); // background paper effect
 
         // draw backgrounds that are visible
         for (PageViewObject background : backgroundsToDraw) {
@@ -95,6 +94,7 @@ public class PageView {
         // draw pages that are visible
         for (Page page : pagesToDraw) {
             page.draw(currentScale);
+            page.drawShape(currentScale);
             if (EditorSettings.cameraLogic() && !Camera.getGame()) {
                 if (page.playerVisible()) {
                     page.drawCorners(currentScale);

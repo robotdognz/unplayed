@@ -34,7 +34,7 @@ import ui.TitleMenu;
 
 //handles all of the logic at the application level
 public class AppLogic {
-    private static PApplet p;
+    public static PApplet p;
 
     public static KetaiGesture gesture;
     public static FileChooser files;

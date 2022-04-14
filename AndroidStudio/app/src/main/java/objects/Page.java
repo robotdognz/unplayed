@@ -49,6 +49,8 @@ public class Page extends PageViewObject {
     private final ArrayList<Event> eventsToDraw;
     private final ArrayList<PlayerEnd> playerEndsToDraw;
 
+    private PShape white;
+    private PShape contents;
     private PShape paper;
 
     public Page(PApplet p, Game game, View view, PVector position) {
@@ -125,6 +127,27 @@ public class Page extends PageViewObject {
         // get objects visible to this page
         pageObjects.clear();
         game.world.retrieve(pageObjects, view);
+
+        contents = p.createShape(GROUP);
+
+        // add tiles
+        for (Rectangle r : pageObjects) {
+            if (r.getTopLeft().x > view.getBottomRight().x - 1) {
+                continue;
+            }
+            if (r.getBottomRight().x < view.getTopLeft().x + 1) {
+                continue;
+            }
+            if (r.getTopLeft().y > view.getBottomRight().y - 1) {
+                continue;
+            }
+            if (r.getBottomRight().y < view.getTopLeft().y + 1) {
+                continue;
+            }
+            if (r instanceof Tile) {
+                contents.addChild(((Tile) r).getShape());
+            }
+        }
     }
 
     public void step() {
@@ -396,7 +419,7 @@ public class Page extends PageViewObject {
         p.noStroke();
         p.rectMode(CENTER);
         p.rotate(PApplet.radians(angle)); // rotate the page
-        p.rect(0, 0, paddedView.getWidth(), paddedView.getHeight());
+//        p.rect(0, 0, paddedView.getWidth(), paddedView.getHeight());
         p.rotate(PApplet.radians(-angle)); // rotate the page
         p.translate(-shadow, -shadow);
 
@@ -408,8 +431,8 @@ public class Page extends PageViewObject {
         }
 
         // draw the page background
-        p.fill(240);
-        p.rect(0, 0, paddedView.getWidth(), paddedView.getHeight());
+//        p.fill(240);
+//        p.rect(0, 0, paddedView.getWidth(), paddedView.getHeight());
 
         p.translate((float) -(view.getX() + view.getWidth() * 0.5), (float) -(view.getY() + view.getHeight() * 0.5));
 
@@ -418,11 +441,13 @@ public class Page extends PageViewObject {
             image.drawClipped(p.g, view, 3); // scale/size
         }
         for (PlayerEnd playerEnd : playerEndsToDraw) {
-            playerEnd.drawPageView(p.g, 3); // scale/size
+//            playerEnd.drawPageView(p.g, 3); // scale/size
         }
+
         for (Tile tile : tilesToDraw) {
             tile.draw(p.g, 3); // scale/size
         }
+
         for (Event event : eventsToDraw) {
             event.draw(p.g, 3); // scale/size
         }
@@ -457,7 +482,85 @@ public class Page extends PageViewObject {
         }
 
         // draw the grid paper effect
-        MathsPaper.draw(p.g, paddedView, scale, (int) size); // paper effect
+//        MathsPaper.draw(p.g, paddedView, scale, (int) size); // paper effect
+//        p.resetShader();
+//        p.shape(paper);
+
+        p.popMatrix();
+    }
+
+    public void drawShape(float scale) {
+
+        // draw the page
+        p.pushMatrix();
+        p.translate(position.x, position.y);
+        p.scale(size); // size the page will appear in the page view
+
+        // draw the shadow
+        p.translate(shadow, shadow);
+        p.fill(0, 40);
+        p.noStroke();
+        p.rectMode(CENTER);
+        p.rotate(PApplet.radians(angle)); // rotate the page
+//        p.rect(0, 0, paddedView.getWidth(), paddedView.getHeight());
+        p.rotate(PApplet.radians(-angle)); // rotate the page
+        p.translate(-shadow, -shadow);
+
+        p.rotate(PApplet.radians(angle)); // rotate the page
+
+        // draw the page itself
+        if (flipX != 0 || flipY != 0) {
+            p.scale(flipX, flipY); // flip the page
+        }
+
+        // draw the page background
+//        p.fill(240);
+//        p.rect(0, 0, paddedView.getWidth(), paddedView.getHeight());
+
+        p.translate((float) -(view.getX() + view.getWidth() * 0.5), (float) -(view.getY() + view.getHeight() * 0.5));
+
+        // draw page contents
+        for (Image image : imagesToDraw) {
+            image.drawClipped(p.g, view, 3); // scale/size
+        }
+
+        p.shape(contents);
+
+        for (Event event : eventsToDraw) {
+            event.draw(p.g, 3); // scale/size
+        }
+
+        // draw player and transition
+        if (showPlayer) {
+            // player
+            switch (playerDraw) {
+                case SKIP:
+                    break;
+                case NORMAL:
+                    AppLogic.game.player.draw(p.g, 3);
+                    break;
+                case CLIPPED:
+                    ClippedDraw.drawPlayerOptimised(p.g, paddedView, 3);
+                    break;
+            }
+
+            // transition
+            switch (transitionDraw) {
+                case SKIP:
+                    break;
+                case NORMAL:
+                    Vec2 transitionCenter = game.playerTransition.getCenter();
+                    float transitionSize = game.playerTransition.getSize();
+                    AppLogic.playerFace.drawTransition(p.g, transitionCenter.x, transitionCenter.y, transitionSize, transitionSize);
+                    break;
+                case CLIPPED:
+                    ClippedDraw.drawTransition(p.g, paddedView, 3);
+                    break;
+            }
+        }
+
+        // draw the grid paper effect
+//        MathsPaper.draw(p.g, paddedView, scale, (int) size); // paper effect
 //        p.resetShader();
 //        p.shape(paper);
 
@@ -519,6 +622,7 @@ public class Page extends PageViewObject {
 
     private void buildMathsPaper() {
         paper = MathsPaper.makePaper(p, paddedView, 3, (int) size);
+//        white =
     }
 
     /**

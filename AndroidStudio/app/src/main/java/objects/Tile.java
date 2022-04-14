@@ -5,11 +5,13 @@ import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 
+import game.AppLogic;
 import handlers.TextureCache;
 import handlers.TileHandler;
 import misc.CollisionEnum;
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import processing.core.PShape;
 import shiffman.box2d.Box2DProcessing;
 
 import static processing.core.PConstants.*;
@@ -24,6 +26,8 @@ public class Tile extends Editable implements Comparable<Tile> {
 	float density;
 	float friction;
 
+	PShape shape;
+
 	public Tile(Box2DProcessing box2d, TextureCache texture, File file, float x, float y) {
 		super(x, y, 100, 100);
 		this.box2d = box2d;
@@ -36,7 +40,7 @@ public class Tile extends Editable implements Comparable<Tile> {
 		} else {
 			hasTexture = false;
 		}
-
+		createShape();
 	}
 
 	public void create() {
@@ -164,6 +168,37 @@ public class Tile extends Editable implements Comparable<Tile> {
 		}
 	}
 
+	private void createShape(){
+		// find x start position
+		float startX = getX();
+		// find y start position;
+		float startY = getY();
+		// find x end position
+		float endX = startX + getWidth();
+		// find y end position
+		float endY = startY + getHeight();
+
+		float xTileStart = 0; // where to start horizontal tiling in texture units
+		float yTileStart = 0; // where to start vertical tiling in texture units
+		float xTileEnd = 1; // where to end horizontal tiling in texture units
+		float yTileEnd = 1; // where to end vertical tiling in texture units
+
+		PApplet p = AppLogic.p;
+
+		p.textureMode(NORMAL);
+		p.textureWrap(NORMAL);
+		shape = p.createShape();
+		shape.noStroke();
+		shape.beginShape();
+		// Here, we are hardcoding a series of vertices
+		shape.texture(tileTexture.getSprite(3));
+		shape.vertex(startX, startY, xTileStart, yTileStart); // top left
+		shape.vertex(endX, startY, xTileEnd, yTileStart); // top right
+		shape.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right
+		shape.vertex(startX, endY, xTileStart, yTileEnd); // bottom left
+		shape.endShape(CLOSE);
+	}
+
 	public TileHandler getHandler() {
 		return tileTexture;
 	}
@@ -221,6 +256,14 @@ public class Tile extends Editable implements Comparable<Tile> {
 			graphics.rectMode(CORNER);
 			graphics.rect(getX(), getY(), getWidth(), getHeight());
 		}
+	}
+
+	public void drawShape(PApplet p){
+		p.shape(shape);
+	}
+
+	public PShape getShape(){
+		return shape;
 	}
 
 	@Override

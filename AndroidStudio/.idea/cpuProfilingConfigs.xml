@@ -5,7 +5,7 @@
       <list>
         <CpuProfilerConfig>
           <option name="name" value="High Frequency Method Sample" />
-          <option name="samplingIntervalUs" value="208" />
+          <option name="samplingIntervalUs" value="50" />
         </CpuProfilerConfig>
       </list>
     </option>
