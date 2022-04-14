@@ -1,5 +1,6 @@
 package game;
 
+import static processing.core.PConstants.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -477,10 +478,6 @@ public class AppLogic {
     }
 
     static public void draw(float deltaTime) {
-//        if (skipNextStep) {
-//            skipNextStep = false;
-//            return;
-//        }
 
         // draw the game
         if ((editor != null && !editorToggle) || (editor != null && Editor.showPageView) || (editor == null)) {

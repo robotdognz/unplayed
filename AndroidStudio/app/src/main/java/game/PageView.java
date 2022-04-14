@@ -84,6 +84,7 @@ public class PageView {
         }
 
         // draw the looping background
+//        p.background(150);
         paper.draw(p.getGraphics(), renderTopLeft, renderBottomRight, currentScale); // background paper effect
 
         // draw backgrounds that are visible
