@@ -49,8 +49,6 @@ public class Page extends PageViewObject {
     private final ArrayList<Event> eventsToDraw;
     private final ArrayList<PlayerEnd> playerEndsToDraw;
 
-    private PShape paper;
-
     public Page(PApplet p, Game game, View view, PVector position) {
         super(p, position, view.getWidth(), view.getHeight());
         this.p = p;
@@ -86,7 +84,6 @@ public class Page extends PageViewObject {
         updateCorners();
 
         updatePageContents();
-        buildMathsPaper();
     }
 
     public List<PageViewObject> getChildren() {
@@ -514,11 +511,6 @@ public class Page extends PageViewObject {
         setCorners(view.getTopLeft(), view.getBottomRight());
         buildPaddedView();
         updateCorners();
-        buildMathsPaper();
-    }
-
-    private void buildMathsPaper() {
-        paper = MathsPaper.makePaper(p, paddedView, 3, (int) size);
     }
 
     /**

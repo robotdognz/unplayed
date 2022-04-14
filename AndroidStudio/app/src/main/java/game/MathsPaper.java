@@ -136,10 +136,10 @@ public class MathsPaper {
 		s.beginShape();
 		// Here, we are hardcoding a series of vertices
 		s.texture(TextureCache.getGrid(scale));
-		s.vertex(startX-100, startY, xTileStart, yTileStart); // top left
+		s.vertex(startX, startY, xTileStart, yTileStart); // top left
 		s.vertex(endX, startY, xTileEnd, yTileStart); // top right
 		s.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right
-		s.vertex(startX-100, endY, xTileStart, yTileEnd); // bottom left
+		s.vertex(startX, endY, xTileStart, yTileEnd); // bottom left
 		s.endShape(CLOSE);
 
 		return s;
