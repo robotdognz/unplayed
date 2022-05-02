@@ -28,12 +28,6 @@ public class Page extends PageViewObject {
     private final int shadowOffset; // the absolute amount to offset the shadow by
     private int shadow; // the relative amount to offset the shadow by
 
-    // exclusion booleans
-    public boolean showPlayer;
-    public boolean showObstacles;
-    public boolean showTiles;
-    public boolean showImages;
-
     // player visibility, signaling the outside
     private boolean playerVisibleExternal; // true if the page is broadcasting that the player is in it and it should be focused on by the auto camera
     private boolean playerVisibleChanged; // true if the player has left or entered the page this step
@@ -56,12 +50,6 @@ public class Page extends PageViewObject {
         this.view = view;
         this.pageObjects = new HashSet<>();
         // this.excludedObjects = new HashSet<String>();
-
-        // booleans
-        showPlayer = true;
-        showObstacles = true;
-        showTiles = true;
-        showImages = true;
 
         this.shadowOffset = 9;
         this.shadow = 9;
@@ -146,15 +134,11 @@ public class Page extends PageViewObject {
                 continue;
             }
             if (r instanceof Tile) {
-                if (showTiles) {
-                    tilesToDraw.add((Tile) r);
-                }
+                tilesToDraw.add((Tile) r);
                 continue;
             }
             if (r instanceof Event && ((Event) r).visible) {
-                if (showObstacles) {
-                    eventsToDraw.add((Event) r);
-                }
+                eventsToDraw.add((Event) r);
                 continue;
             }
             if (r instanceof PlayerEnd) {
@@ -162,9 +146,7 @@ public class Page extends PageViewObject {
                 continue;
             }
             if (r instanceof Image) {
-                if (showImages) {
-                    imagesToDraw.add((Image) r);
-                }
+                imagesToDraw.add((Image) r);
             }
         }
 
@@ -189,9 +171,7 @@ public class Page extends PageViewObject {
             if (t.getBottomRight().y < view.getTopLeft().y + 1) {
                 continue;
             }
-            if (showTiles) {
-                tilesToDraw.add(t);
-            }
+            tilesToDraw.add(t);
         }
 
     }
@@ -425,32 +405,30 @@ public class Page extends PageViewObject {
         }
 
         // draw player and transition
-        if (showPlayer) {
-            // player
-            switch (playerDraw) {
-                case SKIP:
-                    break;
-                case NORMAL:
-                    AppLogic.game.player.draw(p.g, 3);
-                    break;
-                case CLIPPED:
-                    ClippedDraw.drawPlayerOptimised(p.g, paddedView, 3);
-                    break;
-            }
+        // player
+        switch (playerDraw) {
+            case SKIP:
+                break;
+            case NORMAL:
+                AppLogic.game.player.draw(p.g, 3);
+                break;
+            case CLIPPED:
+                ClippedDraw.drawPlayerOptimised(p.g, paddedView, 3);
+                break;
+        }
 
-            // transition
-            switch (transitionDraw) {
-                case SKIP:
-                    break;
-                case NORMAL:
-                    Vec2 transitionCenter = game.playerTransition.getCenter();
-                    float transitionSize = game.playerTransition.getSize();
-                    AppLogic.playerFace.drawTransition(p.g, transitionCenter.x, transitionCenter.y, transitionSize, transitionSize);
-                    break;
-                case CLIPPED:
-                    ClippedDraw.drawTransition(p.g, paddedView, 3);
-                    break;
-            }
+        // transition
+        switch (transitionDraw) {
+            case SKIP:
+                break;
+            case NORMAL:
+                Vec2 transitionCenter = game.playerTransition.getCenter();
+                float transitionSize = game.playerTransition.getSize();
+                AppLogic.playerFace.drawTransition(p.g, transitionCenter.x, transitionCenter.y, transitionSize, transitionSize);
+                break;
+            case CLIPPED:
+                ClippedDraw.drawTransition(p.g, paddedView, 3);
+                break;
         }
 
         // draw the grid paper effect
@@ -464,6 +442,9 @@ public class Page extends PageViewObject {
     @Override
     public void drawSelected(PGraphics g, float scale) {
         super.drawSelected(g, scale);
+
+        // TODO: draw removed squares if in removal mode, depending on what removal mode we are in
+
         for (PageViewObject object : children) {
             object.drawSelectedAsChild(g, scale);
         }

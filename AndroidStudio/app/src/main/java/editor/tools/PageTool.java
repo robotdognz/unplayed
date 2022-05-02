@@ -31,7 +31,7 @@ public class PageTool extends AreaTool {
     @Override
     public void touchMoved(PVector touch) {
         if (!Editor.showPageView) {// views
-            if (editor.selected != null && editor.selected instanceof View && editor.eMode == EditorMode.SELECT) {
+            if (editor.selected != null && editor.selected instanceof View && editor.editorMode == EditorMode.SELECT) {
                 super.touchMoved(touch);
             } else {
                 edit = null;
@@ -39,7 +39,7 @@ public class PageTool extends AreaTool {
             super.touchMoved(touch);
         } else { // pages
             if (!editor.isAdjustMode()) {
-                if (editor.eMode == EditorMode.ADD) {
+                if (editor.editorMode == EditorMode.ADD) {
                     if (editor.currentView != null) {
                         PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
                         float finalX = placement.x - 50;
@@ -78,21 +78,21 @@ public class PageTool extends AreaTool {
     @Override
     public void touchEnded(PVector touch) {
         if (!Editor.showPageView) { // views
-            if (editor.eMode == EditorMode.ADD) {
+            if (editor.editorMode == EditorMode.ADD) {
                 addView(touch);
-            } else if (editor.eMode == EditorMode.ERASE) {
+            } else if (editor.editorMode == EditorMode.ERASE) {
                 eraseView();
-            } else if (editor.eMode == EditorMode.SELECT) {
+            } else if (editor.editorMode == EditorMode.SELECT) {
                 selectView();
             }
         } else {// pages
-            if (editor.eMode == EditorMode.ADD) {
+            if (editor.editorMode == EditorMode.ADD) {
                 addPage();
-            } else if (editor.eMode == EditorMode.ERASE) {
+            } else if (editor.editorMode == EditorMode.ERASE) {
                 erasePage();
-            } else if (editor.eMode == EditorMode.SELECT) {
+            } else if (editor.editorMode == EditorMode.SELECT) {
                 selectPage();
-            } else if (editor.eMode == EditorMode.EXTERNAL) {
+            } else if (editor.editorMode == EditorMode.EXTERNAL) {
                 if (editor.isChildMode()) {
                     addOrRemoveChild();
                 }
@@ -226,7 +226,7 @@ public class PageTool extends AreaTool {
         if (currentPage != null) { // if there is something to create a page from
             pageView.addPageViewObject(currentPage);
             editor.selected = currentPage;
-            editor.eMode = EditorMode.SELECT;
+            editor.editorMode = EditorMode.SELECT;
             editor.setAdjustMode();
         }
     }

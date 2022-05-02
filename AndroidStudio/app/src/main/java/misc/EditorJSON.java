@@ -221,10 +221,10 @@ public class EditorJSON {
                     pageJsonObject.setFloat("angle", page.getAngle());
                     pageJsonObject.setBoolean("flipH", page.isFlippedH());
                     pageJsonObject.setBoolean("flipV", page.isFlippedV());
-                    pageJsonObject.setBoolean("showPlayer", page.showPlayer);
-                    pageJsonObject.setBoolean("showObstacles", page.showObstacles);
-                    pageJsonObject.setBoolean("showTiles", page.showTiles);
-                    pageJsonObject.setBoolean("showImages", page.showImages);
+//                    pageJsonObject.setBoolean("showPlayer", page.showPlayer);
+//                    pageJsonObject.setBoolean("showObstacles", page.showObstacles);
+//                    pageJsonObject.setBoolean("showTiles", page.showTiles);
+//                    pageJsonObject.setBoolean("showImages", page.showImages);
 
                     // save children of this page
                     List<PageViewObject> children = page.getChildren();
@@ -535,14 +535,14 @@ public class EditorJSON {
                             page.setAngle(angle);
 
                             // exclusion booleans
-                            try {
-                                page.showPlayer = jPage.getBoolean("showPlayer");
-                                page.showObstacles = jPage.getBoolean("showObstacles");
-                                page.showTiles = jPage.getBoolean("showTiles");
-                                page.showImages = jPage.getBoolean("showImages");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                page.showPlayer = jPage.getBoolean("showPlayer");
+//                                page.showObstacles = jPage.getBoolean("showObstacles");
+//                                page.showTiles = jPage.getBoolean("showTiles");
+//                                page.showImages = jPage.getBoolean("showImages");
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
 
                             pages.add(page);
                         }

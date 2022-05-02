@@ -139,8 +139,8 @@ public class EditorSide extends Toolbar {
 
     public void clearExternalModes() {
         editor.clearExternalMode();
-        if (editor.eMode == EditorMode.EXTERNAL) {
-            editor.eMode = ((EditorTop) editor.editorTop).getEditingMode();
+        if (editor.editorMode == EditorMode.EXTERNAL) {
+            editor.editorMode = ((EditorTop) editor.editorTop).getEditingMode();
         }
     }
 

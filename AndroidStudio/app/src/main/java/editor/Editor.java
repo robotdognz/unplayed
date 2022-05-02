@@ -71,8 +71,10 @@ public class Editor {
     // editor settings
     public boolean snap = true; // things placed in the level will snap to grid
     public Tool currentTool;
-    public EditorMode eMode;
+    public EditorMode editorMode;
     private ExternalMode externalMode;
+    private RemoveMode removeMode;
+
     public static boolean showPageView = false; // are we seeing the page view
 
     // current object to put into level
@@ -117,8 +119,9 @@ public class Editor {
         this.eJSON = new EditorJSON(p, AppLogic.texture, toast);
 
         this.currentTool = new TileTool(this);
-        this.eMode = EditorMode.ADD;
+        this.editorMode = EditorMode.ADD;
         this.externalMode = ExternalMode.NONE;
+        this.removeMode = RemoveMode.TILE;
         this.eventVis = true;
         this.viewVis = true;
 
@@ -567,5 +570,44 @@ public class Editor {
 
     public void clearExternalMode() {
         externalMode = ExternalMode.NONE;
+    }
+
+    public enum RemoveMode {
+        TILE,
+        IMAGE,
+        OBSTACLE,
+        PLAYER
+    }
+
+    public boolean removingTiles() {
+        return removeMode == RemoveMode.TILE;
+    }
+
+    public void setRemoveTiles() {
+        removeMode = RemoveMode.TILE;
+    }
+
+    public boolean removingImages() {
+        return removeMode == RemoveMode.IMAGE;
+    }
+
+    public void setRemoveImages() {
+        removeMode = RemoveMode.IMAGE;
+    }
+
+    public boolean removingObstacles() {
+        return removeMode == RemoveMode.OBSTACLE;
+    }
+
+    public void setRemoveObstacles() {
+        removeMode = RemoveMode.OBSTACLE;
+    }
+
+    public boolean removingPlayer() {
+        return removeMode == RemoveMode.PLAYER;
+    }
+
+    public void setRemovePlayer() {
+        removeMode = RemoveMode.PLAYER;
     }
 }

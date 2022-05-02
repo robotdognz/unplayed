@@ -18,22 +18,26 @@ public class WidgetExcludeObstacles extends Widget {
 	
 	@Override
 	public void clicked() {
-		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-			((Page) editor.selected).showObstacles = !((Page) editor.selected).showObstacles;
-		}
+//		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
+//			((Page) editor.selected).showObstacles = !((Page) editor.selected).showObstacles;
+//		}
+
+		editor.setRemoveObstacles();
 	}
 
 	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-			if (((Page) editor.selected).showObstacles) {
-				active = true;
-			}else {
-				active = false;
-			}
+			available = true;
+//			if (((Page) editor.selected).showObstacles) {
+//				active = true;
+//			}else {
+//				active = false;
+//			}
+			active = editor.removingObstacles();
 		} else {
-			active = false;
+			available = false;
 		}
 	}
 }

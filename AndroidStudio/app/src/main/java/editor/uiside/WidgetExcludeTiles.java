@@ -2,7 +2,6 @@ package editor.uiside;
 
 import editor.Editor;
 import editor.Toolbar;
-import game.AppLogic;
 import objects.Page;
 import processing.core.PApplet;
 import ui.Widget;
@@ -18,22 +17,25 @@ public class WidgetExcludeTiles extends Widget {
 	
 	@Override
 	public void clicked() {
-		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-			((Page) editor.selected).showTiles = !((Page) editor.selected).showTiles;
-		}
+//		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
+//			((Page) editor.selected).showTiles = !((Page) editor.selected).showTiles;
+//		}
+		editor.setRemoveTiles();
 	}
 
 	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-			if (((Page) editor.selected).showTiles) {
-				active = true;
-			}else {
-				active = false;
-			}
+			available = true;
+//			if (((Page) editor.selected).showTiles) {
+//				active = true;
+//			}else {
+//				active = false;
+//			}
+			active = editor.removingTiles();
 		} else {
-			active = false;
+			available = false;
 		}
 	}
 }

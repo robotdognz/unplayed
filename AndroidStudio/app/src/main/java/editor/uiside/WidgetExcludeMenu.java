@@ -16,13 +16,14 @@ public class WidgetExcludeMenu extends Widget {
 
         iconIsCurrentSubWidget = true;
         hasSActive = true;
+        closeAfterSubWidget = true; // TODO: not working
 
         wd = widgetDirection.RIGHT;
 
-        Widget w1 = new WidgetExcludePlayer(p, editor, parent);
-        Widget w2 = new WidgetExcludeObstacles(p, editor, parent);
-        Widget w3 = new WidgetExcludeTiles(p, editor, parent);
-        Widget w4 = new WidgetExcludeImages(p, editor, parent);
+        Widget w1 = new WidgetExcludeTiles(p, editor, parent);
+        Widget w2 = new WidgetExcludeImages(p, editor, parent);
+        Widget w3 = new WidgetExcludeObstacles(p, editor, parent);
+        Widget w4 = new WidgetExcludePlayer(p, editor, parent);
 
         subWidgets.add(w1);
         subWidgets.add(w2);

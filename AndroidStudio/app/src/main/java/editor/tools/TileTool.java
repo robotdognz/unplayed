@@ -41,11 +41,11 @@ public class TileTool implements Tool {
 				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 				editor.world.retrieve(getRectangles, toInsert);
 
-				if (editor.eMode == EditorMode.ADD) { // adding tile
+				if (editor.editorMode == EditorMode.ADD) { // adding tile
 					add(toInsert, getRectangles);
-				} else if (editor.eMode == EditorMode.ERASE) { // erasing tile
+				} else if (editor.editorMode == EditorMode.ERASE) { // erasing tile
 					erase(toInsert, getRectangles);
-				} else if (editor.eMode == EditorMode.SELECT) { // selecting tile
+				} else if (editor.editorMode == EditorMode.SELECT) { // selecting tile
 					select(toInsert, getRectangles);
 				}
 				editor.point = null;

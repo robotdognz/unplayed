@@ -25,7 +25,7 @@ public class WidgetAddChild extends Widget {
 				available = true;
 				if (editor.isChildMode()) {
 					active = true;
-					editor.eMode = EditorMode.EXTERNAL;
+					editor.editorMode = EditorMode.EXTERNAL;
 				} else {
 					active = false;
 				}

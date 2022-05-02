@@ -17,22 +17,26 @@ public class WidgetExcludePlayer extends Widget {
 	
 	@Override
 	public void clicked() {
-		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-			((Page) editor.selected).showPlayer = !((Page) editor.selected).showPlayer;
-		}
+//		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
+//			((Page) editor.selected).showPlayer = !((Page) editor.selected).showPlayer;
+//		}
+
+		editor.setRemovePlayer();
 	}
 
 	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-			if (((Page) editor.selected).showPlayer) {
-				active = true;
-			}else {
-				active = false;
-			}
+			available = true;
+//			if (((Page) editor.selected).showPlayer) {
+//				active = true;
+//			}else {
+//				active = false;
+//			}
+			active = editor.removingPlayer();
 		} else {
-			active = false;
+			available = false;
 		}
 	}
 }

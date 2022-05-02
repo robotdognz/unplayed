@@ -18,22 +18,29 @@ public class WidgetExcludeImages extends Widget {
 	
 	@Override
 	public void clicked() {
-		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-			((Page) editor.selected).showImages = !((Page) editor.selected).showImages;
-		}
+//		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
+//			((Page) editor.selected).showImages = !((Page) editor.selected).showImages;
+//		}
+
+		editor.setRemoveImages();
 	}
 
 	@Override
 	public void updateActive() {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-			if (((Page) editor.selected).showImages) {
-				active = true;
-			}else {
-				active = false;
-			}
+			available = true;
+
+			active = editor.removingImages();
+
+//			if (((Page) editor.selected).showImages) {
+//				active = true;
+//			}else {
+//				active = false;
+//			}
+
 		} else {
-			active = false;
+			available = false;
 		}
 	}
 }

@@ -28,7 +28,7 @@ public class WidgetAdjust extends Widget {
 				available = true;
 				if (editor.isAdjustMode()) {
 					active = true;
-					editor.eMode = EditorMode.EXTERNAL;
+					editor.editorMode = EditorMode.EXTERNAL;
 				} else {
 					active = false;
 				}

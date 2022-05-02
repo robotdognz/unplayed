@@ -194,7 +194,7 @@ public class EditorBottom extends Toolbar {
         } else { // in level view
             // pencil in corners of views
             if (editor.currentTool instanceof TileTool) {
-                if (editor.eMode == EditorMode.ADD && AppLogic.controller instanceof EditorControl) {
+                if (editor.editorMode == EditorMode.ADD && AppLogic.controller instanceof EditorControl) {
                     cornerIcon = tileRotateIcon;
                 }
             } else if (editor.currentTool instanceof PageTool) {
@@ -232,7 +232,7 @@ public class EditorBottom extends Toolbar {
                 ((View) object).drawToolbar(currentX, currentY, size);
                 if (cornerIcon != null) {
                     if (!(object == editor.currentView && object == editor.selected
-                            && editor.eMode == EditorMode.SELECT)) {
+                            && editor.editorMode == EditorMode.SELECT)) {
                         // don't draw the icon if the current item is selected and we're in select mode
                         // because in that case we're already editing the view, so clicking on it does
                         // nothing
@@ -244,7 +244,7 @@ public class EditorBottom extends Toolbar {
                 // draw new view button
                 boolean selected = false;
                 // && editor.currentView == null
-                if (AppLogic.controller instanceof EditorControl && editor.eMode == EditorMode.ADD) {
+                if (AppLogic.controller instanceof EditorControl && editor.editorMode == EditorMode.ADD) {
                     selected = true;
                 }
                 ((NewViewButton) object).draw(p, currentX, currentY, objectWidth * 0.5f, selected);
@@ -324,7 +324,7 @@ public class EditorBottom extends Toolbar {
 
                             if (objects.get(i).equals(editor.currentTile)) {
                                 // clicking on the already selected tile
-                                if (editor.eMode == EditorMode.ADD
+                                if (editor.editorMode == EditorMode.ADD
                                         && AppLogic.controller instanceof EditorControl) {
                                     // parameters are correct for rotation to happen
                                     TileHandler currentHandler = (TileHandler) objects.get(i);
@@ -338,7 +338,7 @@ public class EditorBottom extends Toolbar {
                             // switch to pencil mode when selecting a new tile
                             AppLogic.controller = new EditorControl(p, editor);
                             editor.editorSide.clearExternalModes();
-                            editor.eMode = EditorMode.ADD;
+                            editor.editorMode = EditorMode.ADD;
                         }
                     } else if (editor.currentTool instanceof ImageTool) {
 
@@ -348,14 +348,14 @@ public class EditorBottom extends Toolbar {
                             // switch to pencil mode when selecting a background
                             AppLogic.controller = new EditorControl(p, editor);
                             editor.editorSide.clearExternalModes();
-                            editor.eMode = EditorMode.ADD;
+                            editor.editorMode = EditorMode.ADD;
                         } else {
                             // select the handler
                             editor.currentImage = (ImageHandler) objects.get(i);
                             // switch to pencil mode when selecting an image
                             AppLogic.controller = new EditorControl(p, editor);
                             editor.editorSide.clearExternalModes();
-                            editor.eMode = EditorMode.ADD;
+                            editor.editorMode = EditorMode.ADD;
                         }
 
                     } else if (editor.currentTool instanceof EventTool) {
@@ -364,7 +364,7 @@ public class EditorBottom extends Toolbar {
                         // switch to pencil mode when selecting an event
                         AppLogic.controller = new EditorControl(p, editor);
                         editor.editorSide.clearExternalModes();
-                        editor.eMode = EditorMode.ADD;
+                        editor.editorMode = EditorMode.ADD;
 
                     } else if (editor.currentTool instanceof PageTool) {
                         if (Editor.showPageView) {
@@ -374,7 +374,7 @@ public class EditorBottom extends Toolbar {
                             // enable add mode so that you can place the page right away
                             AppLogic.controller = new EditorControl(p, editor);
                             editor.editorSide.clearExternalModes();
-                            editor.eMode = EditorMode.ADD;
+                            editor.editorMode = EditorMode.ADD;
 
                         } else {
                             Object object = objects.get(i);
@@ -385,7 +385,7 @@ public class EditorBottom extends Toolbar {
                                 // enable select mode so that you can resize the view right away
                                 AppLogic.controller = new EditorControl(p, editor);
                                 editor.editorSide.clearExternalModes();
-                                editor.eMode = EditorMode.SELECT;
+                                editor.editorMode = EditorMode.SELECT;
                                 // update selected and page tool so that resizing can happen right away
                                 editor.selected = view;
                                 // pass it to the page tool area system
@@ -394,7 +394,7 @@ public class EditorBottom extends Toolbar {
                             } else if (object instanceof NewViewButton) {
                                 AppLogic.controller = new EditorControl(p, editor);
                                 editor.editorSide.clearExternalModes();
-                                editor.eMode = EditorMode.ADD;
+                                editor.editorMode = EditorMode.ADD;
                             }
 
                         }

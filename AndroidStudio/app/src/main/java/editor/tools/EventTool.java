@@ -37,7 +37,7 @@ public class EventTool implements Tool {
 
 				// figure out what to insert
 				Event toInsert;
-				if (editor.currentEvent != null && editor.eMode == EditorMode.ADD) { // TODO: janky code to stop player
+				if (editor.currentEvent != null && editor.editorMode == EditorMode.ADD) { // TODO: janky code to stop player
 																						// start messing things up
 					// create correct event
 					toInsert = editor.currentEvent.makeEvent((int) editor.point.getX(), (int) editor.point.getY());
@@ -50,11 +50,11 @@ public class EventTool implements Tool {
 				HashSet<Rectangle> getRectangles = new HashSet<>();
 				editor.world.retrieve(getRectangles, toInsert);
 
-				if (editor.eMode == EditorMode.ADD) { // adding event
+				if (editor.editorMode == EditorMode.ADD) { // adding event
 					add(toInsert, getRectangles);
-				} else if (editor.eMode == EditorMode.ERASE) { // erasing event
+				} else if (editor.editorMode == EditorMode.ERASE) { // erasing event
 					erase(toInsert, getRectangles);
-				} else if (editor.eMode == EditorMode.SELECT) { // selecting event
+				} else if (editor.editorMode == EditorMode.SELECT) { // selecting event
 					select(toInsert, getRectangles);
 				}
 				editor.point = null;

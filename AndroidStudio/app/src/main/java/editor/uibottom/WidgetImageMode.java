@@ -20,7 +20,7 @@ public class WidgetImageMode extends Widget {
 
         // default to select mode when using this tab
         if (Editor.showPageView) {
-			editor.eMode = Editor.EditorMode.SELECT;
+			editor.editorMode = Editor.EditorMode.SELECT;
         }
     }
 

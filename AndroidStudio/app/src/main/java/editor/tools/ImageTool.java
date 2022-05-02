@@ -51,11 +51,11 @@ public class ImageTool implements Tool {
                     HashSet<Rectangle> getRectangles = new HashSet<>();
                     editor.world.retrieve(getRectangles, toInsert);
 
-                    if (editor.eMode == EditorMode.ADD) { // adding image
+                    if (editor.editorMode == EditorMode.ADD) { // adding image
                         add(toInsert, getRectangles);
-                    } else if (editor.eMode == EditorMode.ERASE) { // erasing image
+                    } else if (editor.editorMode == EditorMode.ERASE) { // erasing image
                         erase(toInsert, getRectangles);
-                    } else if (editor.eMode == EditorMode.SELECT) { // selecting image
+                    } else if (editor.editorMode == EditorMode.SELECT) { // selecting image
                         select(toInsert, getRectangles);
                     }
                     editor.point = null;
@@ -63,7 +63,7 @@ public class ImageTool implements Tool {
             }
         } else { // backgrounds
             if (!editor.isAdjustMode()) { // !editorSide.adjust
-                if (editor.eMode == EditorMode.ADD) {
+                if (editor.editorMode == EditorMode.ADD) {
                     PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
                     float finalX = placement.x - 50;
                     float finalY = placement.y - 50;
@@ -207,11 +207,11 @@ public class ImageTool implements Tool {
         if (Editor.showPageView) { // backgrounds
 
             if (!editor.isAdjustMode()) {
-                if (editor.eMode == EditorMode.ADD) {
+                if (editor.editorMode == EditorMode.ADD) {
                     addBackground();
-                } else if (editor.eMode == EditorMode.ERASE) {
+                } else if (editor.editorMode == EditorMode.ERASE) {
                     eraseBackground();
-                } else if (editor.eMode == EditorMode.SELECT) {
+                } else if (editor.editorMode == EditorMode.SELECT) {
                     selectBackground();
                 }
                 currentBackground = null;
@@ -223,7 +223,7 @@ public class ImageTool implements Tool {
         if (currentBackground != null) { // if there is something to create a background from
             pageView.addPageViewObject(currentBackground);
             editor.selected = currentBackground;
-            editor.eMode = EditorMode.SELECT;
+            editor.editorMode = EditorMode.SELECT;
             editor.setAdjustMode();
         }
     }
