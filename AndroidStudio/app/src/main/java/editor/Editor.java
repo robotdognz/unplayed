@@ -545,26 +545,29 @@ public class Editor {
     }
 
     public boolean isAdjustMode() {
-        return externalMode == ExternalMode.ADJUST;
+        return editorMode == EditorMode.EXTERNAL && externalMode == ExternalMode.ADJUST;
     }
 
     public void setAdjustMode() {
+        editorMode = EditorMode.EXTERNAL;
         externalMode = ExternalMode.ADJUST;
     }
 
     public boolean isChildMode() {
-        return externalMode == ExternalMode.CHILD;
+        return editorMode == EditorMode.EXTERNAL && externalMode == ExternalMode.CHILD;
     }
 
     public void setChildMode() {
+        editorMode = EditorMode.EXTERNAL;
         externalMode = ExternalMode.CHILD;
     }
 
     public boolean isRemovalMode() {
-        return externalMode == ExternalMode.REMOVE;
+        return editorMode == EditorMode.EXTERNAL && externalMode == ExternalMode.REMOVE;
     }
 
     public void setRemovalMode() {
+        editorMode = EditorMode.EXTERNAL;
         externalMode = ExternalMode.REMOVE;
     }
 
@@ -609,5 +612,9 @@ public class Editor {
 
     public void setRemovePlayer() {
         removeMode = RemoveMode.PLAYER;
+    }
+
+    public RemoveMode getRemoveMode(){
+        return removeMode;
     }
 }

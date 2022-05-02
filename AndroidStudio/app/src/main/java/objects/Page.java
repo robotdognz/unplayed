@@ -1,5 +1,7 @@
 package objects;
 
+import static processing.core.PConstants.*;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,8 +13,6 @@ import game.player.ClippedDraw;
 import objects.events.PlayerEnd;
 import processing.core.*;
 
-import static processing.core.PConstants.*;
-
 import org.jbox2d.common.Vec2;
 
 public class Page extends PageViewObject {
@@ -22,6 +22,11 @@ public class Page extends PageViewObject {
     private Rectangle paddedView = new Rectangle(0, 0, 0, 0);
     private final HashSet<Rectangle> pageObjects;
     // private HashSet<PVector> excludedTiles; // a list of tiles to exclude while drawing
+
+    private boolean[][] tiles;
+    private boolean[][] images;
+    private boolean[][] obstacles;
+    private boolean[][] player;
 
     private List<PageViewObject> children; // all the pageViewObjects that should be visible with this page
 
@@ -72,6 +77,21 @@ public class Page extends PageViewObject {
         updateCorners();
 
         updatePageContents();
+        setupRemovalArrays();
+    }
+
+    private void setupRemovalArrays() {
+        int cols = (int) (view.getWidth() / 100);
+        int rows = (int) (view.getHeight() / 100);
+
+        // TODO: currently this erases removals when the page is resized, this should be improved
+        if (tiles == null || tiles.length != rows || tiles[0].length != cols) {
+            tiles = new boolean[rows][cols];
+            images = new boolean[rows][cols];
+            obstacles = new boolean[rows][cols];
+            player = new boolean[rows][cols];
+        }
+
     }
 
     public List<PageViewObject> getChildren() {
@@ -120,6 +140,10 @@ public class Page extends PageViewObject {
         tilesToDraw.clear();
         eventsToDraw.clear();
         playerEndsToDraw.clear();
+
+        float viewX = view.getX();
+        float viewY = view.getY();
+
         for (Rectangle r : pageObjects) {
             if (r.getTopLeft().x > view.getBottomRight().x - 1) {
                 continue;
@@ -134,7 +158,13 @@ public class Page extends PageViewObject {
                 continue;
             }
             if (r instanceof Tile) {
-                tilesToDraw.add((Tile) r);
+                // add the tile to the tile draw list if it hasn't been removed
+                int currentX = (int) (r.getX() - viewX) / 100;
+                int currentY = (int) (r.getY() - viewY) / 100;
+                if (!tiles[currentY][currentX]) {
+                    tilesToDraw.add((Tile) r);
+                }
+
                 continue;
             }
             if (r instanceof Event && ((Event) r).visible) {
@@ -441,13 +471,109 @@ public class Page extends PageViewObject {
 
     @Override
     public void drawSelected(PGraphics g, float scale) {
-        super.drawSelected(g, scale);
+        g.pushMatrix();
+        g.noFill();
+        g.stroke(255, 0, 0); // selection color, red
+        g.strokeWeight(getSelectionStrokeWeight(scale));
+        g.translate(position.x, position.y);
+        g.scale(size); // size the page will appear in the page view
+        g.rotate(PApplet.radians(angle)); // angle of the page
+        g.rectMode(CENTER);
+        g.rect(0, 0, getWidth(), getHeight());
 
         // TODO: draw removed squares if in removal mode, depending on what removal mode we are in
+        if (AppLogic.editor.isRemovalMode()) {
+
+            boolean[][] current = new boolean[0][0];
+            switch (AppLogic.editor.getRemoveMode()) {
+                case TILE:
+                    current = tiles;
+                    break;
+                case IMAGE:
+                    current = images;
+                    break;
+                case OBSTACLE:
+                    current = obstacles;
+                    break;
+                case PLAYER:
+                    current = player;
+                    break;
+            }
+
+            g.fill(255, 0, 0, 100); // removal color, red
+            g.noStroke();
+
+            int xOffset = (int) (-view.getWidth() + 100) / 2;
+            int yOffset = (int) (-view.getHeight() + 100) / 2;
+
+            for (int i = 0; i < current.length; i++) { // rows
+                for (int j = 0; j < current[0].length; j++) { // cols
+                    if (current[i][j]) {
+                        g.rect(xOffset + j * 100, yOffset + i * 100, 100, 100);
+                    }
+                }
+            }
+
+        }
+
+        g.popMatrix();
 
         for (PageViewObject object : children) {
             object.drawSelectedAsChild(g, scale);
         }
+    }
+
+    public void toggleSquare(float x, float y) {
+
+        PVector point = new PVector(x, y);
+        point.x -= position.x;
+        point.y -= position.y;
+        point.rotate(PApplet.radians(-angle));
+
+        if (-(view.getWidth() / 2) * size > point.x) {
+            return;
+        }
+        if ((view.getWidth() / 2) * size < point.x) {
+            return;
+        }
+        if (-(view.getHeight() / 2) * size > point.y) {
+            return;
+        }
+        if ((view.getHeight() / 2) * size < point.y) {
+            return;
+        }
+
+        // the point touched is inside the page, find exact square to toggle
+        int squareX = (int) Math.round((point.x + view.getWidth() / 2 - 50) / 100);
+        int squareY = (int) Math.round((point.y + view.getHeight() / 2 - 50) / 100);
+
+        // prevent out of bounds access
+        if (squareX < 0 || squareY < 0) {
+            return;
+        }
+        if (squareY >= tiles.length) {
+            return;
+        }
+        if (squareX >= tiles[0].length) {
+            return;
+        }
+
+        // toggle the square
+        switch (AppLogic.editor.getRemoveMode()) {
+            case TILE:
+                tiles[squareY][squareX] = true;
+                break;
+            case IMAGE:
+                images[squareY][squareX] = true;
+                break;
+            case OBSTACLE:
+                obstacles[squareY][squareX] = true;
+                break;
+            case PLAYER:
+                player[squareY][squareX] = true;
+                break;
+        }
+
     }
 
     public boolean playerVisible() {
@@ -492,6 +618,7 @@ public class Page extends PageViewObject {
         setCorners(view.getTopLeft(), view.getBottomRight());
         buildPaddedView();
         updateCorners();
+        setupRemovalArrays();
     }
 
     /**

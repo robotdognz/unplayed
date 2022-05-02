@@ -8,8 +8,10 @@ import objects.Rectangle;
 import objects.View;
 import processing.core.PApplet;
 import processing.core.PVector;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import editor.Editor;
 import editor.Editor.EditorMode;
 
@@ -53,6 +55,12 @@ public class PageTool extends AreaTool {
                             currentPage.setPosition(center);
                         }
                     }
+                }
+                if (editor.isRemovalMode() && editor.selected != null && editor.selected instanceof Page) {
+                    // toggle removal square in page
+                    Page current = (Page) editor.selected;
+                    PVector inLevelTouch = AppLogic.convert.screenToLevel(touch.x, touch.y);
+                    current.toggleSquare(inLevelTouch.x, inLevelTouch.y);
                 }
             } else {
                 // adjust the page with a single finger
