@@ -11,6 +11,7 @@ import game.Game;
 import game.MathsPaper;
 import game.player.ClippedDraw;
 import objects.events.PlayerEnd;
+import objects.events.Spike;
 import processing.core.*;
 
 import org.jbox2d.common.Vec2;
@@ -168,7 +169,17 @@ public class Page extends PageViewObject {
                 continue;
             }
             if (r instanceof Event && ((Event) r).visible) {
-                eventsToDraw.add((Event) r);
+                if (r instanceof Spike) {
+                    // add the spike to the event draw list if it hasn't been removed
+                    int currentX = (int) (r.getX() - viewX) / 100;
+                    int currentY = (int) (r.getY() - viewY) / 100;
+                    if (!obstacles[currentY][currentX]) {
+                        eventsToDraw.add((Event) r);
+                    }
+                } else {
+                    // just add it, it's not an obstacle
+                    eventsToDraw.add((Event) r);
+                }
                 continue;
             }
             if (r instanceof PlayerEnd) {
