@@ -4,7 +4,7 @@ import camera.FreeCamera;
 import controllers.EditorControl;
 import editor.Editor;
 import editor.Toolbar;
-import editor.Editor.editorMode;
+import editor.Editor.EditorMode;
 import game.AppLogic;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -51,7 +51,7 @@ public class WidgetEditorMode extends Widget {
 			editor.camera = new FreeCamera();
 		} else {
 			// currently active
-			if (editor.eMode == editorMode.EXTERNAL) {
+			if (editor.eMode == EditorMode.EXTERNAL) {
 				subWidgets.get(2).clicked();
 				editor.editorSide.clearExternalModes();
 				return;
@@ -76,7 +76,7 @@ public class WidgetEditorMode extends Widget {
 
 	@Override
 	public void updateActive() {
-		if (editor.eMode == editorMode.EXTERNAL) {
+		if (editor.eMode == EditorMode.EXTERNAL) {
 			this.icon = externalModeIcon;
 		} else if (subWidgets.size() > 0) {
 			for (Widget w : subWidgets) {

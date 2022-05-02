@@ -71,7 +71,8 @@ public class Editor {
     // editor settings
     public boolean snap = true; // things placed in the level will snap to grid
     public Tool currentTool;
-    public editorMode eMode;
+    public EditorMode eMode;
+    private ExternalMode externalMode;
     public static boolean showPageView = false; // are we seeing the page view
 
     // current object to put into level
@@ -116,7 +117,8 @@ public class Editor {
         this.eJSON = new EditorJSON(p, AppLogic.texture, toast);
 
         this.currentTool = new TileTool(this);
-        this.eMode = editorMode.ADD;
+        this.eMode = EditorMode.ADD;
+        this.externalMode = ExternalMode.NONE;
         this.eventVis = true;
         this.viewVis = true;
 
@@ -525,7 +527,45 @@ public class Editor {
         editorSide.resetWidgets();
     }
 
-    public enum editorMode {
-        ADD, ERASE, SELECT, EXTERNAL
+    public enum EditorMode {
+        ADD,
+        ERASE,
+        SELECT,
+        EXTERNAL
+    }
+
+    public enum ExternalMode {
+        NONE,
+        ADJUST,
+        CHILD,
+        REMOVE
+    }
+
+    public boolean isAdjustMode() {
+        return externalMode == ExternalMode.ADJUST;
+    }
+
+    public void setAdjustMode() {
+        externalMode = ExternalMode.ADJUST;
+    }
+
+    public boolean isChildMode() {
+        return externalMode == ExternalMode.CHILD;
+    }
+
+    public void setChildMode() {
+        externalMode = ExternalMode.CHILD;
+    }
+
+    public boolean isRemovalMode() {
+        return externalMode == ExternalMode.REMOVE;
+    }
+
+    public void setRemovalMode() {
+        externalMode = ExternalMode.REMOVE;
+    }
+
+    public void clearExternalMode() {
+        externalMode = ExternalMode.NONE;
     }
 }

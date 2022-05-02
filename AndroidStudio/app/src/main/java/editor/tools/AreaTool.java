@@ -4,7 +4,7 @@ import static processing.core.PConstants.*;
 import java.util.ArrayList;
 import editor.Editor;
 import editor.Tool;
-import editor.Editor.editorMode;
+import editor.Editor.EditorMode;
 import game.AppLogic;
 import objects.Rectangle;
 import processing.core.PApplet;
@@ -33,7 +33,7 @@ public class AreaTool implements Tool {
 
 	@Override
 	public void touchMoved(PVector touch) {
-		if (editor.eMode == editorMode.ADD) {
+		if (editor.eMode == EditorMode.ADD) {
 			if (start == null) {
 				// if there is no start, make a new start
 				start = editor.point.copy();
@@ -44,9 +44,9 @@ public class AreaTool implements Tool {
 				// if there is a working end, update it
 				end.setTopLeft(editor.point.getX(), editor.point.getY());
 			}
-		} else if (editor.eMode == editorMode.ERASE) {
+		} else if (editor.eMode == EditorMode.ERASE) {
 
-		} else if (editor.eMode == editorMode.SELECT) { // resize rectangle
+		} else if (editor.eMode == EditorMode.SELECT) { // resize rectangle
 			if (edit != null && editor.point != null) {
 				if (PVector.dist(edit.getTopLeft(), editor.point.getTopLeft()) < 150) { // 200
 					// prevent adjustments that swap the corners
@@ -69,7 +69,7 @@ public class AreaTool implements Tool {
 
 	@Override
 	public void touchEnded(PVector touch) {
-		if (editor.eMode == editorMode.ADD) {
+		if (editor.eMode == EditorMode.ADD) {
 			// if there is both a start and an end
 			if (start != null && end != null) {
 				// figure out which point is the topleft/bottomright and create/add the view
@@ -122,9 +122,9 @@ public class AreaTool implements Tool {
 				start = null;
 				end = null;
 			}
-		} else if (editor.eMode == editorMode.ERASE) {
+		} else if (editor.eMode == EditorMode.ERASE) {
 
-		} else if (editor.eMode == editorMode.SELECT) {
+		} else if (editor.eMode == EditorMode.SELECT) {
 
 		}
 
@@ -171,7 +171,7 @@ public class AreaTool implements Tool {
 			p.rectMode(CORNER);
 		}
 		if (edit != null && editor.selected != null && AppLogic.controller instanceof EditorControl
-				&& editor.eMode == editorMode.SELECT) {
+				&& editor.eMode == EditorMode.SELECT) {
 			p.noStroke();
 			p.fill(255, 0, 0);
 			p.rectMode(CENTER);

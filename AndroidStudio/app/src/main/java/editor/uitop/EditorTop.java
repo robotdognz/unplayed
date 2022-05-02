@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import editor.DebugOutput;
 import editor.Editor;
 import editor.Toolbar;
-import editor.Editor.editorMode;
+import editor.Editor.EditorMode;
 import objects.Rectangle;
 import processing.core.*;
 import static processing.core.PConstants.*;
@@ -119,13 +119,13 @@ public class EditorTop extends Toolbar {
 		return bounds.getHeight();
 	}
 
-	public Editor.editorMode getEditingMode() {
+	public EditorMode getEditingMode() {
 		ArrayList<Widget> children = modeWidget.getChildren();
 		for (int i = 0; i < children.size(); i++) {
 			if (children.get(i).isActive()) {
-				return editorMode.values()[i];
+				return EditorMode.values()[i];
 			}
 		}
-		return editorMode.SELECT;
+		return EditorMode.SELECT;
 	}
 }

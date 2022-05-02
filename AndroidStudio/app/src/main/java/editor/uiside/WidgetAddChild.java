@@ -1,7 +1,7 @@
 package editor.uiside;
 
 import editor.Editor;
-import editor.Editor.editorMode;
+import editor.Editor.EditorMode;
 import editor.Toolbar;
 import objects.Page;
 import processing.core.PApplet;
@@ -23,9 +23,9 @@ public class WidgetAddChild extends Widget {
 			// if it's a Page or a Background, or a PlayerEnd that is not a level end
 			if (editor.selected instanceof Page) {
 				available = true;
-				if (toolbar.addChild) {
+				if (editor.isChildMode()) {
 					active = true;
-					editor.eMode = editorMode.EXTERNAL;
+					editor.eMode = EditorMode.EXTERNAL;
 				} else {
 					active = false;
 				}
@@ -40,10 +40,10 @@ public class WidgetAddChild extends Widget {
 
 	@Override
 	public void clicked() {
-		if (toolbar.addChild) {
+		if (editor.isChildMode()) {
 			editor.editorSide.clearExternalModes();
 		} else {
-			toolbar.addChildMode();
+			editor.setChildMode();
 		}
 	}
 

@@ -1,7 +1,7 @@
 package editor.uiside;
 
 import editor.Editor;
-import editor.Editor.editorMode;
+import editor.Editor.EditorMode;
 import editor.Toolbar;
 import objects.Background;
 import objects.Page;
@@ -26,9 +26,9 @@ public class WidgetAdjust extends Widget {
 			if (editor.selected instanceof Page || editor.selected instanceof Background
 					|| (editor.selected instanceof PlayerEnd && !((PlayerEnd) editor.selected).getLevelEnd())) {
 				available = true;
-				if (toolbar.adjust) {
+				if (editor.isAdjustMode()) {
 					active = true;
-					editor.eMode = editorMode.EXTERNAL;
+					editor.eMode = EditorMode.EXTERNAL;
 				} else {
 					active = false;
 				}
@@ -43,10 +43,10 @@ public class WidgetAdjust extends Widget {
 
 	@Override
 	public void clicked() {
-		if (toolbar.adjust) {
+		if (editor.isAdjustMode()) {
 			editor.editorSide.clearExternalModes();
 		} else {
-			toolbar.adjustMode();
+			editor.setAdjustMode();
 		}
 	}
 }

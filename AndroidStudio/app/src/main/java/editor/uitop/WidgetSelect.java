@@ -16,7 +16,7 @@ public class WidgetSelect extends Widget {
 
 	@Override
 	public void clicked() {
-		editor.eMode = Editor.editorMode.SELECT;
+		editor.eMode = Editor.EditorMode.SELECT;
 		AppLogic.controller = new EditorControl(p, editor);
 
 		// new code, for use when drop-down menu is enabled
@@ -28,7 +28,7 @@ public class WidgetSelect extends Widget {
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (editor.eMode == Editor.editorMode.SELECT) {
+		if (editor.eMode == Editor.EditorMode.SELECT) {
 			active = true;
 		} else {
 			active = false;

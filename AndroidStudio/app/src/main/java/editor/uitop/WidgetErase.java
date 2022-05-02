@@ -16,7 +16,7 @@ public class WidgetErase extends Widget {
 
 	@Override
 	public void clicked() {
-		editor.eMode = Editor.editorMode.ERASE;
+		editor.eMode = Editor.EditorMode.ERASE;
 		AppLogic.controller = new EditorControl(p, editor);
 
 		// new code, for use when drop-down menu is enabled
@@ -28,7 +28,7 @@ public class WidgetErase extends Widget {
 	@Override
 	public void updateActive() {
 		super.updateActive();
-		if (editor.eMode == Editor.editorMode.ERASE) {
+		if (editor.eMode == Editor.EditorMode.ERASE) {
 			active = true;
 		} else {
 			active = false;

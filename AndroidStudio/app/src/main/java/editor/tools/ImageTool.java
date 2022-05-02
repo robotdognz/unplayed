@@ -2,16 +2,13 @@ package editor.tools;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-
 import editor.Editor;
 import editor.Tool;
-import editor.Editor.editorMode;
-import editor.uiside.EditorSide;
+import editor.Editor.EditorMode;
 import game.AppLogic;
 import game.PageView;
 import objects.Background;
 import objects.Image;
-import objects.Page;
 import objects.Rectangle;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -19,14 +16,12 @@ import processing.core.PVector;
 public class ImageTool implements Tool {
     Editor editor;
     PApplet p;
-    private EditorSide editorSide;
     private Background currentBackground;
-    private PageView pageView;
+    private final PageView pageView;
 
     public ImageTool(PApplet p, Editor editor) {
         this.p = p;
         this.editor = editor;
-        this.editorSide = (EditorSide) editor.editorSide;
         this.pageView = AppLogic.game.getPageView();
         this.currentBackground = null;
     }
@@ -36,7 +31,7 @@ public class ImageTool implements Tool {
         if (!Editor.showPageView) {// images
             if (editor.point != null) {
                 // figure out what to insert
-                Image toInsert = null;
+                Image toInsert;
                 if (editor.currentImage != null) {
                     // create correct image
 
@@ -53,36 +48,32 @@ public class ImageTool implements Tool {
 
                 // get all rectangles that overlap toInsert and pass them to the right method
                 if (editor.point != null) {
-                    HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
+                    HashSet<Rectangle> getRectangles = new HashSet<>();
                     editor.world.retrieve(getRectangles, toInsert);
 
-                    if (editor.eMode == editorMode.ADD) { // adding image
+                    if (editor.eMode == EditorMode.ADD) { // adding image
                         add(toInsert, getRectangles);
-                    } else if (editor.eMode == editorMode.ERASE) { // erasing image
+                    } else if (editor.eMode == EditorMode.ERASE) { // erasing image
                         erase(toInsert, getRectangles);
-                    } else if (editor.eMode == editorMode.SELECT) { // selecting image
+                    } else if (editor.eMode == EditorMode.SELECT) { // selecting image
                         select(toInsert, getRectangles);
                     }
                     editor.point = null;
                 }
             }
         } else { // backgrounds
-            if (!editorSide.adjust) {
-                if (editor.eMode == editorMode.ADD) {
+            if (!editor.isAdjustMode()) { // !editorSide.adjust
+                if (editor.eMode == EditorMode.ADD) {
+                    PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
+                    float finalX = placement.x - 50;
+                    float finalY = placement.y - 50;
+                    PVector center = new PVector(finalX, finalY);
                     if (currentBackground == null) {
-                        PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
                         // offset placement by 50
-                        float finalX = placement.x - 50;
-                        float finalY = placement.y - 50;
-                        PVector center = new PVector(finalX, finalY);
                         currentBackground = new Background(p, AppLogic.texture, editor.currentBackground.getFile(),
                                 center);
                     } else {
-                        PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
                         // round so blocks snap to grid
-                        float finalX = placement.x - 50;
-                        float finalY = placement.y - 50;
-                        PVector center = new PVector(finalX, finalY);
                         currentBackground.setPosition(center);
                     }
                 }
@@ -215,12 +206,12 @@ public class ImageTool implements Tool {
 
         if (Editor.showPageView) { // backgrounds
 
-            if (!editorSide.adjust) {
-                if (editor.eMode == editorMode.ADD) {
+            if (!editor.isAdjustMode()) {
+                if (editor.eMode == EditorMode.ADD) {
                     addBackground();
-                } else if (editor.eMode == editorMode.ERASE) {
+                } else if (editor.eMode == EditorMode.ERASE) {
                     eraseBackground();
-                } else if (editor.eMode == editorMode.SELECT) {
+                } else if (editor.eMode == EditorMode.SELECT) {
                     selectBackground();
                 }
                 currentBackground = null;
@@ -232,8 +223,8 @@ public class ImageTool implements Tool {
         if (currentBackground != null) { // if there is something to create a background from
             pageView.addPageViewObject(currentBackground);
             editor.selected = currentBackground;
-            editor.eMode = Editor.editorMode.SELECT;
-            editorSide.adjust = true;
+            editor.eMode = EditorMode.SELECT;
+            editor.setAdjustMode();
         }
     }
 
@@ -254,7 +245,7 @@ public class ImageTool implements Tool {
         if (found != null) {
             editor.selected = found; // select it
             // set editor side to adjust mode
-            editorSide.adjust = true;
+            editor.setAdjustMode();
         } else {
             editor.selected = null;
         }
@@ -277,7 +268,7 @@ public class ImageTool implements Tool {
     @Override
     public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
         // background resize
-        if (Editor.showPageView && editorSide.adjust) {
+        if (Editor.showPageView && editor.isAdjustMode()) {
             if (editor.selected != null && editor.selected instanceof Background) {
                 Background background = (Background) editor.selected;
                 if (!background.fixedSize()) {
@@ -295,7 +286,7 @@ public class ImageTool implements Tool {
     @Override
     public void onRotate(float x, float y, float angle) {
         // background rotate
-        if (Editor.showPageView && editorSide.adjust) {
+        if (Editor.showPageView && editor.isAdjustMode()) {
             if (editor.selected != null && editor.selected instanceof Background) {
                 ((Background) editor.selected).addAngle(PApplet.degrees(angle));
             }
@@ -304,7 +295,7 @@ public class ImageTool implements Tool {
 
     @Override
     public void onTap(float x, float y) {
-        if (Editor.showPageView && editorSide.adjust) {
+        if (Editor.showPageView && editor.isAdjustMode()) {
             // adjusting a background
             PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
             Background found = pageView.getBackground(mouse.x, mouse.y);

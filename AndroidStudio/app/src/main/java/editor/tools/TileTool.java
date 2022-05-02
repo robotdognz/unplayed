@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import editor.Editor;
 import editor.Tool;
-import editor.Editor.editorMode;
+import editor.Editor.EditorMode;
 import game.AppLogic;
 import handlers.TileHandler;
 import objects.Rectangle;
@@ -41,11 +41,11 @@ public class TileTool implements Tool {
 				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
 				editor.world.retrieve(getRectangles, toInsert);
 
-				if (editor.eMode == editorMode.ADD) { // adding tile
+				if (editor.eMode == EditorMode.ADD) { // adding tile
 					add(toInsert, getRectangles);
-				} else if (editor.eMode == editorMode.ERASE) { // erasing tile
+				} else if (editor.eMode == EditorMode.ERASE) { // erasing tile
 					erase(toInsert, getRectangles);
-				} else if (editor.eMode == editorMode.SELECT) { // selecting tile
+				} else if (editor.eMode == EditorMode.SELECT) { // selecting tile
 					select(toInsert, getRectangles);
 				}
 				editor.point = null;

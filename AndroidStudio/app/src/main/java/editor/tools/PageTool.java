@@ -8,18 +8,14 @@ import objects.Rectangle;
 import objects.View;
 import processing.core.PApplet;
 import processing.core.PVector;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import editor.Editor;
-import editor.Editor.editorMode;
-import editor.uiside.EditorSide;
+import editor.Editor.EditorMode;
 
 public class PageTool extends AreaTool {
     // extends AreaTool because it functions like an AreaTool when making views
-    private EditorSide editorSide;
-    private PageView pageView;
+    private final PageView pageView;
     private Page currentPage;
 
     // variables for adjusting selected page
@@ -28,7 +24,6 @@ public class PageTool extends AreaTool {
 
     public PageTool(PApplet p, Editor editor) {
         super(p, editor);
-        this.editorSide = (EditorSide) editor.editorSide;
         this.pageView = AppLogic.game.getPageView();
         this.currentPage = null;
     }
@@ -36,29 +31,25 @@ public class PageTool extends AreaTool {
     @Override
     public void touchMoved(PVector touch) {
         if (!Editor.showPageView) {// views
-            if (editor.selected != null && editor.selected instanceof View && editor.eMode == editorMode.SELECT) {
+            if (editor.selected != null && editor.selected instanceof View && editor.eMode == EditorMode.SELECT) {
                 super.touchMoved(touch);
             } else {
                 edit = null;
             }
             super.touchMoved(touch);
         } else { // pages
-            if (!editorSide.adjust) {
-                if (editor.eMode == editorMode.ADD) {
+            if (!editor.isAdjustMode()) {
+                if (editor.eMode == EditorMode.ADD) {
                     if (editor.currentView != null) {
+                        PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
+                        float finalX = placement.x - 50;
+                        float finalY = placement.y - 50;
+                        PVector center = new PVector(finalX, finalY);
                         if (currentPage == null) {
-                            PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
                             // offset placement by 50
-                            float finalX = placement.x - 50;
-                            float finalY = placement.y - 50;
-                            PVector center = new PVector(finalX, finalY);
                             currentPage = new Page(p, AppLogic.game, editor.currentView, center);
                         } else {
-                            PVector placement = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
                             // round so blocks snap to grid
-                            float finalX = placement.x - 50;
-                            float finalY = placement.y - 50;
-                            PVector center = new PVector(finalX, finalY);
                             currentPage.setPosition(center);
                         }
                     }
@@ -87,22 +78,22 @@ public class PageTool extends AreaTool {
     @Override
     public void touchEnded(PVector touch) {
         if (!Editor.showPageView) { // views
-            if (editor.eMode == editorMode.ADD) {
+            if (editor.eMode == EditorMode.ADD) {
                 addView(touch);
-            } else if (editor.eMode == editorMode.ERASE) {
+            } else if (editor.eMode == EditorMode.ERASE) {
                 eraseView();
-            } else if (editor.eMode == editorMode.SELECT) {
+            } else if (editor.eMode == EditorMode.SELECT) {
                 selectView();
             }
         } else {// pages
-            if (editor.eMode == editorMode.ADD) {
+            if (editor.eMode == EditorMode.ADD) {
                 addPage();
-            } else if (editor.eMode == editorMode.ERASE) {
+            } else if (editor.eMode == EditorMode.ERASE) {
                 erasePage();
-            } else if (editor.eMode == editorMode.SELECT) {
+            } else if (editor.eMode == EditorMode.SELECT) {
                 selectPage();
-            } else if (editor.eMode == editorMode.EXTERNAL) {
-                if (editorSide.addChild) {
+            } else if (editor.eMode == EditorMode.EXTERNAL) {
+                if (editor.isChildMode()) {
                     addOrRemoveChild();
                 }
             }
@@ -113,7 +104,7 @@ public class PageTool extends AreaTool {
     @Override
     public void onPinch(ArrayList<PVector> touches, float x, float y, float d) {
         // page resize
-        if (Editor.showPageView && editorSide.adjust) {
+        if (Editor.showPageView && editor.isAdjustMode()) {
             if (editor.selected != null && editor.selected instanceof Page) {
 //				((Page) editor.selected).addSize(AppLogic.convert.screenToLevel(d) / 500);
 
@@ -128,7 +119,7 @@ public class PageTool extends AreaTool {
     @Override
     public void onRotate(float x, float y, float angle) {
         // page rotate
-        if (Editor.showPageView && editorSide.adjust) {
+        if (Editor.showPageView && editor.isAdjustMode()) {
             if (editor.selected != null && editor.selected instanceof Page) {
                 ((Page) editor.selected).addAngle(PApplet.degrees(angle));
                 AppLogic.game.getPageView().resetSystems();
@@ -138,7 +129,7 @@ public class PageTool extends AreaTool {
 
     @Override
     public void onTap(float x, float y) {
-        if (Editor.showPageView && editorSide.adjust) {
+        if (Editor.showPageView && editor.isAdjustMode()) {
             // adjusting a page
             PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
             Page found = pageView.getPage(mouse.x, mouse.y);
@@ -235,8 +226,8 @@ public class PageTool extends AreaTool {
         if (currentPage != null) { // if there is something to create a page from
             pageView.addPageViewObject(currentPage);
             editor.selected = currentPage;
-            editor.eMode = Editor.editorMode.SELECT;
-            editorSide.adjust = true;
+            editor.eMode = EditorMode.SELECT;
+            editor.setAdjustMode();
         }
     }
 
@@ -259,7 +250,7 @@ public class PageTool extends AreaTool {
             // set current view to corresponding view
             editor.currentView = found.getView();
             // set editor side to adjust mode
-            editorSide.adjust = true;
+            editor.setAdjustMode();
         } else {
             editor.selected = null;
         }

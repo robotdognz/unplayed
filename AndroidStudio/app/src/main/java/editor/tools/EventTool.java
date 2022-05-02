@@ -3,9 +3,8 @@ package editor.tools;
 import java.util.ArrayList;
 import java.util.HashSet;
 import editor.Editor;
-import editor.Editor.editorMode;
+import editor.Editor.EditorMode;
 import editor.Tool;
-import editor.uiside.EditorSide;
 import game.AppLogic;
 import handlers.EventHandler;
 import objects.Event;
@@ -20,18 +19,16 @@ import processing.core.PVector;
 
 public class EventTool implements Tool {
 	Editor editor;
-	private EditorSide editorSide;
 
 	public EventTool(PApplet p, Editor editor) {
 		this.editor = editor;
-		this.editorSide = (EditorSide) editor.editorSide;
 	}
 
 	public void touchMoved(PVector touch) {
 		if (!Editor.showPageView) { // world view
 			if (editor.point != null) {
 				// if adjusting a PlayerEnd
-				if (editorSide.adjust && editor.selected instanceof PlayerEnd) {
+				if (editor.isAdjustMode() && editor.selected instanceof PlayerEnd) { // editorSide.adjust
 					if (!((PlayerEnd) editor.selected).getLevelEnd()) {
 						((PlayerEnd) editor.selected).setNewPlayerArea(editor.point.copy());
 						return;
@@ -39,8 +36,8 @@ public class EventTool implements Tool {
 				}
 
 				// figure out what to insert
-				Event toInsert = null;
-				if (editor.currentEvent != null && editor.eMode == editorMode.ADD) { // TODO: janky code to stop player
+				Event toInsert;
+				if (editor.currentEvent != null && editor.eMode == EditorMode.ADD) { // TODO: janky code to stop player
 																						// start messing things up
 					// create correct event
 					toInsert = editor.currentEvent.makeEvent((int) editor.point.getX(), (int) editor.point.getY());
@@ -50,14 +47,14 @@ public class EventTool implements Tool {
 				}
 
 				// get all rectangles that overlap toInsert and pass them to the right method
-				HashSet<Rectangle> getRectangles = new HashSet<Rectangle>();
+				HashSet<Rectangle> getRectangles = new HashSet<>();
 				editor.world.retrieve(getRectangles, toInsert);
 
-				if (editor.eMode == editorMode.ADD) { // adding event
+				if (editor.eMode == EditorMode.ADD) { // adding event
 					add(toInsert, getRectangles);
-				} else if (editor.eMode == editorMode.ERASE) { // erasing event
+				} else if (editor.eMode == EditorMode.ERASE) { // erasing event
 					erase(toInsert, getRectangles);
-				} else if (editor.eMode == editorMode.SELECT) { // selecting event
+				} else if (editor.eMode == EditorMode.SELECT) { // selecting event
 					select(toInsert, getRectangles);
 				}
 				editor.point = null;
@@ -83,7 +80,6 @@ public class EventTool implements Tool {
 					} else {
 						foundAtPoint = (Event) p;
 					}
-					continue;
 				}
 			}
 		}
@@ -170,7 +166,6 @@ public class EventTool implements Tool {
 			if (foundAtPoint instanceof Event) {
 				updateHandler((Event) foundAtPoint);
 			}
-			return;
 		} else {
 			// if there is no exact match, look for overlaps
 			for (Rectangle p : getRectangles) {

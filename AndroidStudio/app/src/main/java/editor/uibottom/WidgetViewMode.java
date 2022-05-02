@@ -21,7 +21,7 @@ public class WidgetViewMode extends Widget {
 
 		// default to select mode when using this tab
 		if (Editor.showPageView) {
-			editor.eMode = Editor.editorMode.SELECT;
+			editor.eMode = Editor.EditorMode.SELECT;
 		}
 	}
 

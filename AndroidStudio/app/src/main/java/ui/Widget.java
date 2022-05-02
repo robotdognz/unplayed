@@ -29,7 +29,7 @@ public abstract class Widget {
 	// subWidget fields
 	protected float animationSpeed = 0.0128f; // 0.8f; // speed of subWidget animation
 	protected widgetDirection wd = widgetDirection.DOWN; // subWidget direction, defaults to down
-	protected ArrayList<Widget> subWidgets = new ArrayList<Widget>(); // if this is not null then this widget is a menu
+	protected ArrayList<Widget> subWidgets = new ArrayList<>(); // if this is not null then this widget is a menu
 	protected float subWidgetSpacing; // = 180; // how far apart to draw subWidgets
 	protected boolean iconIsCurrentSubWidget = false; // does this widget icon change depending on its sub widgets?
 	protected boolean closeAfterSubWidget = false; // does this sub widget close the sub widget menu after being clicked
@@ -45,18 +45,14 @@ public abstract class Widget {
 		defaultIcon();
 
 		this.wSize = p.width / 19.2f;
-		this.subWidgetSpacing = p.width / 8;
+		this.subWidgetSpacing = p.width / 8f;
 
 	}
 
 	public void hover(PVector lastTouch) {
-		if (lastTouch.x >= position.x - wSize * touchScale && lastTouch.y >= position.y - wSize * touchScale
+		hover = lastTouch.x >= position.x - wSize * touchScale && lastTouch.y >= position.y - wSize * touchScale
 				&& lastTouch.x <= position.x + wSize * touchScale && lastTouch.y <= position.y + wSize * touchScale
-				&& available) {
-			hover = true;
-		} else {
-			hover = false;
-		}
+				&& available;
 
 		// subWidget hover
 		if (subWidgets.size() > 0 && ((!hasSActive && active) || (hasSActive && sActive))) {
@@ -145,11 +141,7 @@ public abstract class Widget {
 	}
 
 	public boolean isMenu() {
-		if (subWidgets.size() > 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return subWidgets.size() > 0;
 	}
 
 	public boolean isActive() {
