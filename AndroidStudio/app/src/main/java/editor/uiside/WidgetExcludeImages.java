@@ -14,13 +14,12 @@ public class WidgetExcludeImages extends Widget {
 		super(p, editor, parent);
 		toolbar = (EditorSide) parent;
 		icon = p.loadImage(folder + "image.png");
+
+		closeAfterSubWidget = true;
 	}
 	
 	@Override
 	public void clicked() {
-//		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-//			((Page) editor.selected).showImages = !((Page) editor.selected).showImages;
-//		}
 
 		editor.setRemoveImages();
 	}
@@ -30,15 +29,7 @@ public class WidgetExcludeImages extends Widget {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
 			available = true;
-
 			active = editor.removingImages();
-
-//			if (((Page) editor.selected).showImages) {
-//				active = true;
-//			}else {
-//				active = false;
-//			}
-
 		} else {
 			available = false;
 		}

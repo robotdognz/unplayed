@@ -13,14 +13,12 @@ public class WidgetExcludePlayer extends Widget {
 		super(p, editor, parent);
 		toolbar = (EditorSide) parent;
 		icon = p.loadImage(folder + "PLayerIcon.png");
+
+		closeAfterSubWidget = true;
 	}
 	
 	@Override
 	public void clicked() {
-//		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-//			((Page) editor.selected).showPlayer = !((Page) editor.selected).showPlayer;
-//		}
-
 		editor.setRemovePlayer();
 	}
 
@@ -29,11 +27,6 @@ public class WidgetExcludePlayer extends Widget {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
 			available = true;
-//			if (((Page) editor.selected).showPlayer) {
-//				active = true;
-//			}else {
-//				active = false;
-//			}
 			active = editor.removingPlayer();
 		} else {
 			available = false;

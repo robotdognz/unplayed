@@ -16,7 +16,6 @@ public class WidgetExcludeMenu extends Widget {
 
         iconIsCurrentSubWidget = true;
         hasSActive = true;
-        closeAfterSubWidget = true; // TODO: not working
 
         wd = widgetDirection.RIGHT;
 

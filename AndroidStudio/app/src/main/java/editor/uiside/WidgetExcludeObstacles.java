@@ -14,13 +14,12 @@ public class WidgetExcludeObstacles extends Widget {
 		super(p, editor, parent);
 		toolbar = (EditorSide) parent;
 		icon = p.loadImage(folder + "ExcludeObstacels.png");
+
+		closeAfterSubWidget = true;
 	}
 	
 	@Override
 	public void clicked() {
-//		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-//			((Page) editor.selected).showObstacles = !((Page) editor.selected).showObstacles;
-//		}
 
 		editor.setRemoveObstacles();
 	}
@@ -30,11 +29,6 @@ public class WidgetExcludeObstacles extends Widget {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
 			available = true;
-//			if (((Page) editor.selected).showObstacles) {
-//				active = true;
-//			}else {
-//				active = false;
-//			}
 			active = editor.removingObstacles();
 		} else {
 			available = false;

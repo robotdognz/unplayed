@@ -13,13 +13,12 @@ public class WidgetExcludeTiles extends Widget {
 		super(p, editor, parent);
 		toolbar = (EditorSide) parent;
 		icon = p.loadImage(folder + "colider.png");
+
+		closeAfterSubWidget = true;
 	}
 	
 	@Override
 	public void clicked() {
-//		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
-//			((Page) editor.selected).showTiles = !((Page) editor.selected).showTiles;
-//		}
 		editor.setRemoveTiles();
 	}
 
@@ -28,11 +27,6 @@ public class WidgetExcludeTiles extends Widget {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
 			available = true;
-//			if (((Page) editor.selected).showTiles) {
-//				active = true;
-//			}else {
-//				active = false;
-//			}
 			active = editor.removingTiles();
 		} else {
 			available = false;

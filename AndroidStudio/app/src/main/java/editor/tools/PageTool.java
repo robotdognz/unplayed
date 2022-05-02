@@ -150,7 +150,7 @@ public class PageTool extends AreaTool {
 
     @Override
     public void onTap(float x, float y) {
-        if (Editor.showPageView && editor.isAdjustMode()) {
+        if (Editor.showPageView && (editor.isAdjustMode() || editor.isRemovalMode())) {
             // adjusting a page
             PVector mouse = AppLogic.convert.screenToLevel(p.mouseX, p.mouseY);
             Page found = pageView.getPage(mouse.x, mouse.y);
