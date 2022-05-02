@@ -19,6 +19,8 @@ public class PageTool extends AreaTool {
     // extends AreaTool because it functions like an AreaTool when making views
     private final PageView pageView;
     private Page currentPage;
+    private boolean removalStarted; // have we started using the removal tool yet this touch?
+    private boolean currentPageRemoval; // are we adding or removing removals?
 
     // variables for adjusting selected page
 //	private float pX = 0;
@@ -57,10 +59,19 @@ public class PageTool extends AreaTool {
                     }
                 }
                 if (editor.isRemovalMode() && editor.selected != null && editor.selected instanceof Page) {
-                    // toggle removal square in page
+                    // does a bunch of weird stuff so that setting/unsetting removal squares changes
+                    // depending on what type of square you start dragging on
+
                     Page current = (Page) editor.selected;
                     PVector inLevelTouch = AppLogic.convert.screenToLevel(touch.x, touch.y);
-                    current.toggleSquare(inLevelTouch.x, inLevelTouch.y);
+                    if (!removalStarted) {
+                        // get current removal type
+                        currentPageRemoval = !current.getSquare(inLevelTouch.x, inLevelTouch.y);
+                        removalStarted = true;
+                    }
+                    // toggle removal square in page
+                    current.setSquare(inLevelTouch.x, inLevelTouch.y, currentPageRemoval);
+
                 }
             } else {
                 // adjust the page with a single finger
@@ -85,6 +96,8 @@ public class PageTool extends AreaTool {
 
     @Override
     public void touchEnded(PVector touch) {
+        removalStarted = false;
+
         if (!Editor.showPageView) { // views
             if (editor.editorMode == EditorMode.ADD) {
                 addView(touch);

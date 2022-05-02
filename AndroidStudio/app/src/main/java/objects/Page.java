@@ -523,7 +523,56 @@ public class Page extends PageViewObject {
         }
     }
 
-    public void toggleSquare(float x, float y) {
+    public boolean getSquare(float x, float y) {
+
+        PVector point = new PVector(x, y);
+        point.x -= position.x;
+        point.y -= position.y;
+        point.rotate(PApplet.radians(-angle));
+
+        if (-(view.getWidth() / 2) * size > point.x) {
+            return true;
+        }
+        if ((view.getWidth() / 2) * size < point.x) {
+            return true;
+        }
+        if (-(view.getHeight() / 2) * size > point.y) {
+            return true;
+        }
+        if ((view.getHeight() / 2) * size < point.y) {
+            return true;
+        }
+
+        // the point touched is inside the page, find exact square to toggle
+        int squareX = (int) Math.round((point.x + view.getWidth() / 2 - 50) / 100);
+        int squareY = (int) Math.round((point.y + view.getHeight() / 2 - 50) / 100);
+
+        // prevent out of bounds access
+        if (squareX < 0 || squareY < 0) {
+            return true;
+        }
+        if (squareY >= tiles.length) {
+            return true;
+        }
+        if (squareX >= tiles[0].length) {
+            return true;
+        }
+
+        // toggle the square
+        switch (AppLogic.editor.getRemoveMode()) {
+            case TILE:
+                return tiles[squareY][squareX];
+            case IMAGE:
+                return images[squareY][squareX];
+            case OBSTACLE:
+                return obstacles[squareY][squareX];
+            case PLAYER:
+                return player[squareY][squareX];
+        }
+        return true;
+    }
+
+    public void setSquare(float x, float y, boolean setting) {
 
         PVector point = new PVector(x, y);
         point.x -= position.x;
@@ -561,16 +610,16 @@ public class Page extends PageViewObject {
         // toggle the square
         switch (AppLogic.editor.getRemoveMode()) {
             case TILE:
-                tiles[squareY][squareX] = true;
+                tiles[squareY][squareX] = setting;
                 break;
             case IMAGE:
-                images[squareY][squareX] = true;
+                images[squareY][squareX] = setting;
                 break;
             case OBSTACLE:
-                obstacles[squareY][squareX] = true;
+                obstacles[squareY][squareX] = setting;
                 break;
             case PLAYER:
-                player[squareY][squareX] = true;
+                player[squareY][squareX] = setting;
                 break;
         }
 
