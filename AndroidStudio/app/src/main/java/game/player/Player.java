@@ -7,6 +7,7 @@ import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import editor.DebugOutput;
 import game.AppLogic;
 import handlers.TextureCache;
 import handlers.TileHandler;
@@ -498,14 +499,12 @@ public class Player extends Editable {
             return;
         }
 
-//		if (tumble) {
         // check the player isn't spinning
         float av = dynamicBody.getAngularVelocity();
         if (Math.abs(av) >= 2) {
             destroyAllBarriers(true);
             return;
         }
-//		}
 
         // run the algorithms
         // if tunnel checking locks the player's rotation, the other algorithms
@@ -538,12 +537,26 @@ public class Player extends Editable {
 
     private void fixRotationOffset() {
 
+        if (!dynamicBody.isFixedRotation()) {
+            // only perform a rotation correction if the player has locked rotation
+            return;
+        }
+
         // calculate angles
         float angle = PApplet.degrees(dynamicBody.getAngle());
         float angleRounded = Math.round(angle / 90) * 90;
         float angleRemainder = Math.abs(angle - angleRounded);
 
-        if (dynamicBody.isFixedRotation() && angleRemainder > 0.0001) {
+        if (angleRemainder > 0.0001) {
+
+            if (horizontalTunnel) {
+                DebugOutput.pushMessage("Reset rotation horizontal tunnel", 1);
+            } else if (verticalTunnel) {
+                DebugOutput.pushMessage("Reset rotation vertical tunnel", 1);
+            } else {
+                DebugOutput.pushMessage("Reset no tunnel", 1);
+            }
+
             Vec2 newPos = dynamicBody.getPosition();
             Vec2 vel = dynamicBody.getLinearVelocity();
 
@@ -824,15 +837,6 @@ public class Player extends Editable {
                     // found a tile roughly on the same level as the player
                     if (Math.abs((t.getX() + t.getWidth() * 0.5) - pos.x) < t.getWidth() * 1.5) {
                         // this tile is close to the player on the x axis
-//						if (t.getX() < pos.x) {
-//							// to the left
-//							dynamicBody.setLinearVelocity(new Vec2(-20, dynamicBody.getLinearVelocity().y)); // -25
-//							continue;
-//						} else {
-//							// to the right
-//							dynamicBody.setLinearVelocity(new Vec2(20, dynamicBody.getLinearVelocity().y)); // 25
-//							continue;
-//						}
 
                         pseudoGround = true;
                         destroyGroundBarrier(resetRotation);
