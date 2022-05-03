@@ -175,7 +175,7 @@ public class Page extends PageViewObject {
             if (r instanceof Event && ((Event) r).visible) {
                 if (r instanceof Spike) {
                     // add the spike to the event draw list if it hasn't been removed
-                    if (!obstacles[currentY][currentX]) {
+                    if (!tiles[currentY][currentX]) {
                         eventsToDraw.add((Event) r);
                     }
                 } else {

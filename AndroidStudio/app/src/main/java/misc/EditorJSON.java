@@ -226,13 +226,12 @@ public class EditorJSON {
                     // save removal arrays
                     JSONArray removedTileArray = make2DJSONArray(page.getRemovedTiles());
                     JSONArray removedImageArray = make2DJSONArray(page.getRemovedImages());
-                    JSONArray removedObstacleArray = make2DJSONArray(page.getRemovedObstacles());
+//                    JSONArray removedObstacleArray = make2DJSONArray(page.getRemovedObstacles());
                     JSONArray removedPlayerArray = make2DJSONArray(page.getRemovedPlayer());
                     pageJsonObject.setJSONArray("removedTiles", removedTileArray);
                     pageJsonObject.setJSONArray("removedImages", removedImageArray);
-                    pageJsonObject.setJSONArray("removedObstacles", removedObstacleArray);
+//                    pageJsonObject.setJSONArray("removedObstacles", removedObstacleArray);
                     pageJsonObject.setJSONArray("removedPlayer", removedPlayerArray);
-//                    PApplet.print(removedTileArray);
 
                     // save children of this page
                     List<PageViewObject> children = page.getChildren();
@@ -565,13 +564,13 @@ public class EditorJSON {
                                 boolean[][] tileRemovalArray = make2DArrayFromJSON(removalJSONArray);
                                 removalJSONArray = jPage.getJSONArray("removedImages");
                                 boolean[][] imageRemovalArray = make2DArrayFromJSON(removalJSONArray);
-                                removalJSONArray = jPage.getJSONArray("removedObstacles");
-                                boolean[][] obstacleRemovalArray = make2DArrayFromJSON(removalJSONArray);
+//                                removalJSONArray = jPage.getJSONArray("removedObstacles");
+//                                boolean[][] obstacleRemovalArray = make2DArrayFromJSON(removalJSONArray);
                                 removalJSONArray = jPage.getJSONArray("removedPlayer");
                                 boolean[][] playerRemovalArray = make2DArrayFromJSON(removalJSONArray);
                                 page.setRemovedTiles(tileRemovalArray);
                                 page.setRemovedImages(imageRemovalArray);
-                                page.setRemovedObstacles(obstacleRemovalArray);
+//                                page.setRemovedObstacles(obstacleRemovalArray);
                                 page.setRemovedPlayer(playerRemovalArray);
 
                             } catch (Exception e) {
