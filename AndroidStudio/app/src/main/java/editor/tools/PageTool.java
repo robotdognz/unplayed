@@ -64,6 +64,8 @@ public class PageTool extends AreaTool {
 
                     Page current = (Page) editor.selected;
                     PVector inLevelTouch = AppLogic.convert.screenToLevel(touch.x, touch.y);
+
+                    // if removal hasn't started, start it
                     if (!removalStarted) {
                         // get current removal type
                         currentPageRemoval = !current.getSquare(inLevelTouch.x, inLevelTouch.y);

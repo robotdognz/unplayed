@@ -145,6 +145,7 @@ public class Page extends PageViewObject {
         float viewX = view.getX();
         float viewY = view.getY();
 
+        outerloop:
         for (Rectangle r : pageObjects) {
             if (r.getTopLeft().x > view.getBottomRight().x - 1) {
                 continue;
@@ -158,10 +159,13 @@ public class Page extends PageViewObject {
             if (r.getBottomRight().y < view.getTopLeft().y + 1) {
                 continue;
             }
+
+            // calculate which removal square this object is inside
+            int currentX = (int) (r.getX() - viewX) / 100;
+            int currentY = (int) (r.getY() - viewY) / 100;
+
             if (r instanceof Tile) {
                 // add the tile to the tile draw list if it hasn't been removed
-                int currentX = (int) (r.getX() - viewX) / 100;
-                int currentY = (int) (r.getY() - viewY) / 100;
                 if (!tiles[currentY][currentX]) {
                     tilesToDraw.add((Tile) r);
                 }
@@ -171,8 +175,6 @@ public class Page extends PageViewObject {
             if (r instanceof Event && ((Event) r).visible) {
                 if (r instanceof Spike) {
                     // add the spike to the event draw list if it hasn't been removed
-                    int currentX = (int) (r.getX() - viewX) / 100;
-                    int currentY = (int) (r.getY() - viewY) / 100;
                     if (!obstacles[currentY][currentX]) {
                         eventsToDraw.add((Event) r);
                     }
@@ -187,7 +189,34 @@ public class Page extends PageViewObject {
                 continue;
             }
             if (r instanceof Image) {
-                imagesToDraw.add((Image) r);
+
+                if (r.getWidth() > 100 || r.getHeight() > 100) {
+                    // the image is bigger than a single square
+
+                    // adjusted bottom of image
+                    int currentBottomX = (int) (r.getBottomRight().x - viewX) / 100;
+                    int currentBottomY = (int) (r.getBottomRight().y - viewY) / 100;
+
+                    // check if the image overlaps with any removal squares
+                    for (int i = currentY; i < currentBottomY; i++) {
+                        for (int j = currentX; j < currentBottomX; j++) {
+                            if (images[i][j]) {
+                                // one of the overlapping removal squares is true
+                                continue outerloop;
+                            }
+                        }
+                    }
+
+                    // no overlaps found, add the image to the draw list
+                    imagesToDraw.add((Image) r);
+
+                } else {
+                    // the image only takes up a single square
+
+                    if (!images[currentY][currentX]) {
+                        imagesToDraw.add((Image) r);
+                    }
+                }
             }
         }
 
@@ -344,7 +373,7 @@ public class Page extends PageViewObject {
                     // draw the player clipped
                     playerDraw = DrawType.CLIPPED;
                 }
-//                playerDraw = DrawType.CLIPPED;
+                playerDraw = DrawType.CLIPPED;
             }
         }
 
@@ -454,7 +483,8 @@ public class Page extends PageViewObject {
                 AppLogic.game.player.draw(p.g, 3);
                 break;
             case CLIPPED:
-                ClippedDraw.drawPlayerOptimised(p.g, paddedView, 3);
+//                ClippedDraw.drawPlayerOptimised(p.g, paddedView, 3);
+                ClippedDraw.drawPlayerRemovalOptimised(p.g, paddedView, player,3);
                 break;
         }
 
@@ -534,7 +564,18 @@ public class Page extends PageViewObject {
         }
     }
 
+    /**
+     * Gets the value of closest square to touch.
+     *
+     * @param x x position of touch
+     * @param y y position of touch
+     * @return the value of the found square
+     */
     public boolean getSquare(float x, float y) {
+        // this method could be improved by returning three values instead of two
+        // a value for true, a value for false, and a value for neither
+        // then the removal could be determined only by the squares and
+        // not also by the outside space
 
         PVector point = new PVector(x, y);
         point.x -= position.x;
@@ -542,16 +583,16 @@ public class Page extends PageViewObject {
         point.rotate(PApplet.radians(-angle));
 
         if (-(view.getWidth() / 2) * size > point.x) {
-            return true;
+            return false;
         }
         if ((view.getWidth() / 2) * size < point.x) {
-            return true;
+            return false;
         }
         if (-(view.getHeight() / 2) * size > point.y) {
-            return true;
+            return false;
         }
         if ((view.getHeight() / 2) * size < point.y) {
-            return true;
+            return false;
         }
 
         // the point touched is inside the page, find exact square to toggle
@@ -560,13 +601,13 @@ public class Page extends PageViewObject {
 
         // prevent out of bounds access
         if (squareX < 0 || squareY < 0) {
-            return true;
+            return false;
         }
         if (squareY >= tiles.length) {
-            return true;
+            return false;
         }
         if (squareX >= tiles[0].length) {
-            return true;
+            return false;
         }
 
         // toggle the square
@@ -583,6 +624,13 @@ public class Page extends PageViewObject {
         return true;
     }
 
+    /**
+     * Sets the value of closest square to touch.
+     *
+     * @param x       x position of touch
+     * @param y       y position of touch
+     * @param setting what the square should be set to
+     */
     public void setSquare(float x, float y, boolean setting) {
 
         PVector point = new PVector(x, y);
@@ -711,4 +759,28 @@ public class Page extends PageViewObject {
         CLIPPED // draw using the heavy clipped drawing algorithm
     }
 
+    public boolean[][] getRemovedTiles() {
+        return tiles;
+    }
+    public boolean[][] getRemovedImages() {
+        return images;
+    }
+    public boolean[][] getRemovedObstacles() {
+        return obstacles;
+    }
+    public boolean[][] getRemovedPlayer() {
+        return player;
+    }
+    public void setRemovedTiles(boolean[][] tiles) {
+        this.tiles = tiles;
+    }
+    public void setRemovedImages(boolean[][] images) {
+        this.images = images;
+    }
+    public void setRemovedObstacles(boolean[][] obstacles) {
+        this.obstacles = obstacles;
+    }
+    public void setRemovedPlayer(boolean[][] player) {
+        this.player = player;
+    }
 }

@@ -3,6 +3,7 @@
 1.3.3: TBD
 -Added editor tool for removing objects from pages
 -Various micro improvements to editor usability
+-Implemented page object removal systems
 
 1.3.2: Playtester feedback tuning
 -Updated in game control dead spots

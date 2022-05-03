@@ -212,6 +212,7 @@ public class EditorJSON {
                 }
                 Page page = (Page) pageViewObject;
 
+
                 // if this page belongs to this view
                 if (view.equals(page.getView())) {
                     JSONObject pageJsonObject = new JSONObject();
@@ -221,10 +222,17 @@ public class EditorJSON {
                     pageJsonObject.setFloat("angle", page.getAngle());
                     pageJsonObject.setBoolean("flipH", page.isFlippedH());
                     pageJsonObject.setBoolean("flipV", page.isFlippedV());
-//                    pageJsonObject.setBoolean("showPlayer", page.showPlayer);
-//                    pageJsonObject.setBoolean("showObstacles", page.showObstacles);
-//                    pageJsonObject.setBoolean("showTiles", page.showTiles);
-//                    pageJsonObject.setBoolean("showImages", page.showImages);
+
+                    // save removal arrays
+                    JSONArray removedTileArray = make2DJSONArray(page.getRemovedTiles());
+                    JSONArray removedImageArray = make2DJSONArray(page.getRemovedImages());
+                    JSONArray removedObstacleArray = make2DJSONArray(page.getRemovedObstacles());
+                    JSONArray removedPlayerArray = make2DJSONArray(page.getRemovedPlayer());
+                    pageJsonObject.setJSONArray("removedTiles", removedTileArray);
+                    pageJsonObject.setJSONArray("removedImages", removedImageArray);
+                    pageJsonObject.setJSONArray("removedObstacles", removedObstacleArray);
+                    pageJsonObject.setJSONArray("removedPlayer", removedPlayerArray);
+//                    PApplet.print(removedTileArray);
 
                     // save children of this page
                     List<PageViewObject> children = page.getChildren();
@@ -248,6 +256,21 @@ public class EditorJSON {
             values.setJSONObject(values.size(), object); // add it on to the end
         }
 
+    }
+
+    private JSONArray make2DJSONArray(boolean[][] array) {
+        JSONArray jar2d = new JSONArray(); // output json array
+
+        for (final boolean[] arr1d : array) {
+            final JSONArray jar1d = new JSONArray();
+            jar2d.append(jar1d);
+
+            for (final boolean d : arr1d) {
+                jar1d.append(d);
+            }
+        }
+
+        return jar2d;
     }
 
     private void saveBackgrounds(JSONArray values) {
@@ -535,14 +558,25 @@ public class EditorJSON {
                             page.setAngle(angle);
 
                             // exclusion booleans
-//                            try {
-//                                page.showPlayer = jPage.getBoolean("showPlayer");
-//                                page.showObstacles = jPage.getBoolean("showObstacles");
-//                                page.showTiles = jPage.getBoolean("showTiles");
-//                                page.showImages = jPage.getBoolean("showImages");
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
+                            try {
+
+                                JSONArray removalJSONArray;
+                                removalJSONArray = jPage.getJSONArray("removedTiles");
+                                boolean[][] tileRemovalArray = make2DArrayFromJSON(removalJSONArray);
+                                removalJSONArray = jPage.getJSONArray("removedImages");
+                                boolean[][] imageRemovalArray = make2DArrayFromJSON(removalJSONArray);
+                                removalJSONArray = jPage.getJSONArray("removedObstacles");
+                                boolean[][] obstacleRemovalArray = make2DArrayFromJSON(removalJSONArray);
+                                removalJSONArray = jPage.getJSONArray("removedPlayer");
+                                boolean[][] playerRemovalArray = make2DArrayFromJSON(removalJSONArray);
+                                page.setRemovedTiles(tileRemovalArray);
+                                page.setRemovedImages(imageRemovalArray);
+                                page.setRemovedObstacles(obstacleRemovalArray);
+                                page.setRemovedPlayer(playerRemovalArray);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
 
                             pages.add(page);
                         }
@@ -558,6 +592,18 @@ public class EditorJSON {
         game.setViews(views);
         game.getPageView().addPageViewObjects(pages);
 
+    }
+
+    private boolean[][] make2DArrayFromJSON(JSONArray jar2d) {
+
+        final int lenY = jar2d.size();
+        final boolean[][] arr2d = new boolean[lenY][];
+
+        for (int y = 0; y < lenY; ++y) {
+            arr2d[y] = jar2d.getJSONArray(y).getBooleanArray();
+        }
+
+        return arr2d;
     }
 
     private void loadBackgrounds(JSONArray values, Game game) {

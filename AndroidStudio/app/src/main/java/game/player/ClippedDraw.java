@@ -92,6 +92,79 @@ public class ClippedDraw {
     }
 
     /**
+     * Renders the player clipped to a specific region and clipped by removal squares.
+     * Unlike the drawPlayerComplete(), this method uses an optimised version of the
+     * algorithm that is only able to render rectangles. The player that gets drawn
+     * will have a slightly unclean edge.
+     *
+     * @param graphics     the graphics object to draw the output to
+     * @param clippingArea the area used to clip the player
+     * @param removal      the array of removal squares that will clip the player
+     * @param scale        the LOD to use
+     */
+    public static void drawPlayerRemovalOptimised(PGraphics graphics, Rectangle clippingArea, boolean[][] removal, float scale) {
+        Player playerCube = AppLogic.game.player;
+        if (playerCube == null) {
+            return;
+        }
+        float objectAngle = playerCube.getDrawingAngle();
+        Vec2 objectCenter = playerCube.getCenter();
+
+        // draw the mask at the player position and add masking
+
+        mask.beginDraw();
+        mask.background(0); // black
+        mask.rectMode(CORNER);
+        mask.translate(mask.width * 0.5f, mask.height * 0.5f); // set to center
+
+        float xDiff = clippingArea.getX() - objectCenter.x;
+        float yDiff = clippingArea.getY() - objectCenter.y;
+
+        mask.noStroke();
+        mask.rotate(objectAngle);
+        mask.scale(256 / 100f);
+
+        // clip to the page
+        mask.fill(255); // white
+        mask.rect(xDiff, yDiff, clippingArea.getWidth(), clippingArea.getHeight());
+
+        // clip using the removed squares
+        mask.fill(0); // black
+        xDiff += 50;
+        yDiff += 50;
+        for (int i = 0; i < removal.length; i++) { // rows
+            for (int j = 0; j < removal[0].length; j++) { // cols
+                if (removal[i][j]) {
+                    mask.rect(xDiff + j * 100, yDiff + i * 100, 100, 100);
+                }
+            }
+        }
+
+        // finish drawing the mask
+        mask.endDraw();
+
+        // draw the player
+
+        canvas.beginDraw();
+        canvas.translate(mask.width * 0.5f, mask.height * 0.5f); // set to center
+        canvas.background(240, 0);
+        canvas.scale(256 / 100f);
+        playerCube.drawNoTransform(canvas, scale);
+        canvas.endDraw();
+
+        canvas.mask(mask);
+
+        graphics.pushMatrix();
+        graphics.imageMode(CENTER);
+        graphics.translate(objectCenter.x, objectCenter.y);
+        graphics.rotate(-objectAngle);
+        graphics.scale(100 / 256f);
+        graphics.image(canvas, 0, 0);
+        graphics.popMatrix();
+    }
+
+
+    /**
      * Renders the player clipped to a specific region.
      * Unlike the drawPlayerSimple() method, this method uses the full version of the
      * rendering algorithm, same as drawTransition(). This gives the rendered player a
