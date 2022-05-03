@@ -509,27 +509,36 @@ public class Page extends PageViewObject {
 //        p.shape(paper);
 
         // draw page removal
-        if (!Camera.getGame()) {
+        if (!Camera.getGame() && AppLogic.editor != null) {
+
             int xOffset = (int) view.getX();
             int yOffset = (int) view.getY();
 
             p.noStroke();
             p.rectMode(CORNER);
 
-            p.fill(100, 60); // removal color, grey
-            for (int i = 0; i < tiles.length; i++) { // rows
-                for (int j = 0; j < tiles[0].length; j++) { // cols
-                    if (tiles[i][j]) {
-                        p.rect(xOffset + j * 100, yOffset + i * 100, 100, 100);
+            // tile removal squares
+            if (!(AppLogic.editor.selected == this && AppLogic.editor.isRemovalMode() && AppLogic.editor.removingTiles())) {
+                // draw removed tiles only if not currently editing them
+                p.fill(0, 255, 0, 60); // removal color, green
+                for (int i = 0; i < tiles.length; i++) { // rows
+                    for (int j = 0; j < tiles[0].length; j++) { // cols
+                        if (tiles[i][j]) {
+                            p.rect(xOffset + j * 100, yOffset + i * 100, 100, 100);
+                        }
                     }
                 }
             }
 
-            p.fill(100, 30); // removal color, grey
-            for (int i = 0; i < player.length; i++) { // rows
-                for (int j = 0; j < player[0].length; j++) { // cols
-                    if (player[i][j]) {
-                        p.rect(xOffset + j * 100, yOffset + i * 100, 100, 100);
+            // player removal squares
+            if (!(AppLogic.editor.selected == this && AppLogic.editor.isRemovalMode() && AppLogic.editor.removingPlayer())) {
+                // draw removed player only if not currently editing them
+                p.fill(0, 0, 255, 60); // removal color, blue
+                for (int i = 0; i < player.length; i++) { // rows
+                    for (int j = 0; j < player[0].length; j++) { // cols
+                        if (player[i][j]) {
+                            p.rect(xOffset + j * 100, yOffset + i * 100, 100, 100);
+                        }
                     }
                 }
             }
