@@ -23,11 +23,10 @@ public class Page extends PageViewObject {
     private final float padding;
     private Rectangle paddedView = new Rectangle(0, 0, 0, 0);
     private final HashSet<Rectangle> pageObjects;
-    // private HashSet<PVector> excludedTiles; // a list of tiles to exclude while drawing
 
-    private boolean[][] tiles;
+    private boolean[][] objects; // physical objects that have been removed from the page
     private boolean[][] images;
-    private boolean[][] obstacles;
+    //    private boolean[][] obstacles;
     private boolean[][] player;
 
     private List<PageViewObject> children; // all the pageViewObjects that should be visible with this page
@@ -87,10 +86,9 @@ public class Page extends PageViewObject {
         int rows = (int) (view.getHeight() / 100);
 
         // TODO: currently this erases removals when the page is resized, this should be improved
-        if (tiles == null || tiles.length != rows || tiles[0].length != cols) {
-            tiles = new boolean[rows][cols];
+        if (objects == null || objects.length != rows || objects[0].length != cols) {
+            objects = new boolean[rows][cols];
             images = new boolean[rows][cols];
-            obstacles = new boolean[rows][cols];
             player = new boolean[rows][cols];
         }
 
@@ -167,7 +165,7 @@ public class Page extends PageViewObject {
 
             if (r instanceof Tile) {
                 // add the tile to the tile draw list if it hasn't been removed
-                if (!tiles[currentY][currentX]) {
+                if (!objects[currentY][currentX]) {
                     tilesToDraw.add((Tile) r);
                 }
 
@@ -176,7 +174,7 @@ public class Page extends PageViewObject {
             if (r instanceof Event && ((Event) r).visible) {
                 if (r instanceof Spike) {
                     // add the spike to the event draw list if it hasn't been removed
-                    if (!tiles[currentY][currentX]) {
+                    if (!objects[currentY][currentX]) {
                         eventsToDraw.add((Event) r);
                     }
                 } else {
@@ -349,32 +347,31 @@ public class Page extends PageViewObject {
                 playerVisible = true;
             }
             if (playerVisible) {
-                boolean playerAtEdge = true;
-                while (playerAtEdge) {
-                    float padding = 0;
-                    if (playerCenter.x - padding > view.getBottomRight().x) {
-                        break;
-                    }
-                    if (playerCenter.x + padding < view.getTopLeft().x) {
-                        break;
-                    }
-                    if (playerCenter.y - padding > view.getBottomRight().y) {
-                        break;
-                    }
-                    if (playerCenter.y + padding < view.getTopLeft().y) {
-                        break;
-                    }
-                    playerAtEdge = false;
-                }
-
-                if (!playerAtEdge) {
-                    // draw the player normally
-                    playerDraw = DrawType.NORMAL;
-                } else {
-                    // draw the player clipped
-                    playerDraw = DrawType.CLIPPED;
-                }
+//                boolean playerAtEdge = true;
+//                while (playerAtEdge) {
+//                    float padding = 0;
+//                    if (playerCenter.x - padding > view.getBottomRight().x) {
+//                        break;
+//                    }
+//                    if (playerCenter.x + padding < view.getTopLeft().x) {
+//                        break;
+//                    }
+//                    if (playerCenter.y - padding > view.getBottomRight().y) {
+//                        break;
+//                    }
+//                    if (playerCenter.y + padding < view.getTopLeft().y) {
+//                        break;
+//                    }
+//                    playerAtEdge = false;
+//                }
+//
+//                if (!playerAtEdge) {
+//                    // draw the player normally
+//                    playerDraw = DrawType.NORMAL;
+//                } else {
+//                    // draw the player clipped
                 playerDraw = DrawType.CLIPPED;
+//                }
             }
         }
 
@@ -425,7 +422,6 @@ public class Page extends PageViewObject {
                     // draw the transition clipped
                     transitionDraw = DrawType.CLIPPED;
                 }
-//                transitionDraw = DrawType.CLIPPED;
             }
         }
     }
@@ -508,7 +504,7 @@ public class Page extends PageViewObject {
 //        p.resetShader();
 //        p.shape(paper);
 
-        // draw page removal
+        // draw page removal visualisation
         if (!Camera.getGame() && AppLogic.editor != null) {
 
             int xOffset = (int) view.getX();
@@ -518,12 +514,12 @@ public class Page extends PageViewObject {
             p.rectMode(CORNER);
 
             // tile removal squares
-            if (!(AppLogic.editor.selected == this && AppLogic.editor.isRemovalMode() && AppLogic.editor.removingTiles())) {
+            if (!(AppLogic.editor.selected == this && AppLogic.editor.isRemovalMode() && AppLogic.editor.removingObjects())) {
                 // draw removed tiles only if not currently editing them
                 p.fill(0, 255, 0, 60); // removal color, green
-                for (int i = 0; i < tiles.length; i++) { // rows
-                    for (int j = 0; j < tiles[0].length; j++) { // cols
-                        if (tiles[i][j]) {
+                for (int i = 0; i < objects.length; i++) { // rows
+                    for (int j = 0; j < objects[0].length; j++) { // cols
+                        if (objects[i][j]) {
                             p.rect(xOffset + j * 100, yOffset + i * 100, 100, 100);
                         }
                     }
@@ -564,14 +560,11 @@ public class Page extends PageViewObject {
 
             boolean[][] current = new boolean[0][0];
             switch (AppLogic.editor.getRemoveMode()) {
-                case TILE:
-                    current = tiles;
+                case OBJECT:
+                    current = objects;
                     break;
                 case IMAGE:
                     current = images;
-                    break;
-                case OBSTACLE:
-                    current = obstacles;
                     break;
                 case PLAYER:
                     current = player;
@@ -640,21 +633,19 @@ public class Page extends PageViewObject {
         if (squareX < 0 || squareY < 0) {
             return false;
         }
-        if (squareY >= tiles.length) {
+        if (squareY >= objects.length) {
             return false;
         }
-        if (squareX >= tiles[0].length) {
+        if (squareX >= objects[0].length) {
             return false;
         }
 
         // toggle the square
         switch (AppLogic.editor.getRemoveMode()) {
-            case TILE:
-                return tiles[squareY][squareX];
+            case OBJECT:
+                return objects[squareY][squareX];
             case IMAGE:
                 return images[squareY][squareX];
-            case OBSTACLE:
-                return obstacles[squareY][squareX];
             case PLAYER:
                 return player[squareY][squareX];
         }
@@ -696,23 +687,20 @@ public class Page extends PageViewObject {
         if (squareX < 0 || squareY < 0) {
             return;
         }
-        if (squareY >= tiles.length) {
+        if (squareY >= objects.length) {
             return;
         }
-        if (squareX >= tiles[0].length) {
+        if (squareX >= objects[0].length) {
             return;
         }
 
         // toggle the square
         switch (AppLogic.editor.getRemoveMode()) {
-            case TILE:
-                tiles[squareY][squareX] = setting;
+            case OBJECT:
+                objects[squareY][squareX] = setting;
                 break;
             case IMAGE:
                 images[squareY][squareX] = setting;
-                break;
-            case OBSTACLE:
-                obstacles[squareY][squareX] = setting;
                 break;
             case PLAYER:
                 player[squareY][squareX] = setting;
@@ -796,32 +784,24 @@ public class Page extends PageViewObject {
         CLIPPED // draw using the heavy clipped drawing algorithm
     }
 
-    public boolean[][] getRemovedTiles() {
-        return tiles;
+    public boolean[][] getRemovedObjects() {
+        return objects;
     }
 
     public boolean[][] getRemovedImages() {
         return images;
     }
 
-    public boolean[][] getRemovedObstacles() {
-        return obstacles;
-    }
-
     public boolean[][] getRemovedPlayer() {
         return player;
     }
 
-    public void setRemovedTiles(boolean[][] tiles) {
-        this.tiles = tiles;
+    public void setRemovedObjects(boolean[][] tiles) {
+        this.objects = tiles;
     }
 
     public void setRemovedImages(boolean[][] images) {
         this.images = images;
-    }
-
-    public void setRemovedObstacles(boolean[][] obstacles) {
-        this.obstacles = obstacles;
     }
 
     public void setRemovedPlayer(boolean[][] player) {

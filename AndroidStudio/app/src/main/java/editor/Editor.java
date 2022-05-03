@@ -121,7 +121,7 @@ public class Editor {
         this.currentTool = new TileTool(this);
         this.editorMode = EditorMode.ADD;
         this.externalMode = ExternalMode.NONE;
-        this.removeMode = RemoveMode.TILE;
+        this.removeMode = RemoveMode.OBJECT;
         this.eventVis = true;
         this.viewVis = true;
 
@@ -576,18 +576,17 @@ public class Editor {
     }
 
     public enum RemoveMode {
-        TILE,
+        OBJECT,
         IMAGE,
-        OBSTACLE,
         PLAYER
     }
 
-    public boolean removingTiles() {
-        return removeMode == RemoveMode.TILE;
+    public boolean removingObjects() {
+        return removeMode == RemoveMode.OBJECT;
     }
 
-    public void setRemoveTiles() {
-        removeMode = RemoveMode.TILE;
+    public void setRemoveObjects() {
+        removeMode = RemoveMode.OBJECT;
     }
 
     public boolean removingImages() {
@@ -596,14 +595,6 @@ public class Editor {
 
     public void setRemoveImages() {
         removeMode = RemoveMode.IMAGE;
-    }
-
-    public boolean removingObstacles() {
-        return removeMode == RemoveMode.OBSTACLE;
-    }
-
-    public void setRemoveObstacles() {
-        removeMode = RemoveMode.OBSTACLE;
     }
 
     public boolean removingPlayer() {

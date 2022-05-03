@@ -21,7 +21,7 @@ public class WidgetExcludeObstacles extends Widget {
 	@Override
 	public void clicked() {
 
-		editor.setRemoveObstacles();
+//		editor.setRemoveObstacles();
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class WidgetExcludeObstacles extends Widget {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
 			available = true;
-			active = editor.removingObstacles();
+//			active = editor.removingObstacles();
 		} else {
 			available = false;
 		}

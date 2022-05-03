@@ -19,15 +19,13 @@ public class WidgetExcludeMenu extends Widget {
 
         wd = widgetDirection.RIGHT;
 
-        Widget w1 = new WidgetExcludeTiles(p, editor, parent);
+        Widget w1 = new WidgetExcludeObjects(p, editor, parent);
         Widget w2 = new WidgetExcludeImages(p, editor, parent);
-//        Widget w3 = new WidgetExcludeObstacles(p, editor, parent);
-        Widget w4 = new WidgetExcludePlayer(p, editor, parent);
+        Widget w3 = new WidgetExcludePlayer(p, editor, parent);
 
         subWidgets.add(w1);
         subWidgets.add(w2);
-//        subWidgets.add(w3);
-        subWidgets.add(w4);
+        subWidgets.add(w3);
     }
 
     @Override

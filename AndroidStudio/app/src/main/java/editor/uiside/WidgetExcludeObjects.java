@@ -6,10 +6,10 @@ import objects.Page;
 import processing.core.PApplet;
 import ui.Widget;
 
-public class WidgetExcludeTiles extends Widget {
+public class WidgetExcludeObjects extends Widget {
 	EditorSide toolbar;
 
-	public WidgetExcludeTiles(PApplet p, Editor editor, Toolbar parent) {
+	public WidgetExcludeObjects(PApplet p, Editor editor, Toolbar parent) {
 		super(p, editor, parent);
 		toolbar = (EditorSide) parent;
 		icon = p.loadImage(folder + "colider.png");
@@ -19,7 +19,7 @@ public class WidgetExcludeTiles extends Widget {
 	
 	@Override
 	public void clicked() {
-		editor.setRemoveTiles();
+		editor.setRemoveObjects();
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class WidgetExcludeTiles extends Widget {
 		super.updateActive();
 		if (editor.selected != null && editor.selected instanceof Page) { // if a page is selected
 			available = true;
-			active = editor.removingTiles();
+			active = editor.removingObjects();
 		} else {
 			available = false;
 		}
