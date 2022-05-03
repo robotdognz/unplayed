@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import camera.Camera;
 import game.AppLogic;
 import game.Game;
 import game.MathsPaper;
@@ -484,7 +485,7 @@ public class Page extends PageViewObject {
                 break;
             case CLIPPED:
 //                ClippedDraw.drawPlayerOptimised(p.g, paddedView, 3);
-                ClippedDraw.drawPlayerRemovalOptimised(p.g, paddedView, player,3);
+                ClippedDraw.drawPlayerRemovalOptimised(p.g, paddedView, player, 3);
                 break;
         }
 
@@ -506,6 +507,33 @@ public class Page extends PageViewObject {
         MathsPaper.draw(p.g, paddedView, scale, (int) size); // paper effect
 //        p.resetShader();
 //        p.shape(paper);
+
+        // draw page removal
+        if (!Camera.getGame()) {
+            int xOffset = (int) view.getX();
+            int yOffset = (int) view.getY();
+
+            p.noStroke();
+            p.rectMode(CORNER);
+
+            p.fill(100, 60); // removal color, grey
+            for (int i = 0; i < tiles.length; i++) { // rows
+                for (int j = 0; j < tiles[0].length; j++) { // cols
+                    if (tiles[i][j]) {
+                        p.rect(xOffset + j * 100, yOffset + i * 100, 100, 100);
+                    }
+                }
+            }
+
+            p.fill(100, 30); // removal color, grey
+            for (int i = 0; i < player.length; i++) { // rows
+                for (int j = 0; j < player[0].length; j++) { // cols
+                    if (player[i][j]) {
+                        p.rect(xOffset + j * 100, yOffset + i * 100, 100, 100);
+                    }
+                }
+            }
+        }
 
         p.popMatrix();
     }
@@ -762,24 +790,31 @@ public class Page extends PageViewObject {
     public boolean[][] getRemovedTiles() {
         return tiles;
     }
+
     public boolean[][] getRemovedImages() {
         return images;
     }
+
     public boolean[][] getRemovedObstacles() {
         return obstacles;
     }
+
     public boolean[][] getRemovedPlayer() {
         return player;
     }
+
     public void setRemovedTiles(boolean[][] tiles) {
         this.tiles = tiles;
     }
+
     public void setRemovedImages(boolean[][] images) {
         this.images = images;
     }
+
     public void setRemovedObstacles(boolean[][] obstacles) {
         this.obstacles = obstacles;
     }
+
     public void setRemovedPlayer(boolean[][] player) {
         this.player = player;
     }
