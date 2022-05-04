@@ -99,7 +99,9 @@ public class Player extends Editable {
     private final float wallBoostPower; // power for boosting off a wall
 
     // rotation snapping
-    private RotationSmooth rotationSmooth;
+    private RotationSmooth rotationSmooth; // class that performs rotation interpolation animation when snapping player
+    private LastRotationLock lastRotationLock; // what was the most recent cause for a rotation lock
+    private float mostRecentAngularVelocity; // the most recent 'significant' (big enough to matter) angular velocity, used for wall slot rotation correction
 
     // movement / jumping
     private final float movementSpeed; // max movement speed
@@ -341,11 +343,18 @@ public class Player extends Editable {
         pushLeftTimer.deltaStep(delta);
         pushRightTimer.deltaStep(delta);
 
+        storeAngularVelocity();
+
         // run checks
 //        checkJumps(); // TODO: testing no double jump after falling off an edge
         checkTiles();
+//        mostRecentYVelocity = dynamicBody.getAngularVelocity();
 
         Vec2 vel = dynamicBody.getLinearVelocity();
+
+//        if (Math.abs(aVel) > 0) {
+//            mostRecentYVelocity = aVel;
+//        }
 
         // boost up if touching roof barrier
         if (touchingRoofBarrier) {
@@ -532,7 +541,9 @@ public class Player extends Editable {
             destroyWallBarrier(false);
         }
 
-        fixRotationOffset();
+        if (dynamicBody.isFixedRotation()) {
+            fixRotationOffset();
+        }
     }
 
     private void fixRotationOffset() {
@@ -549,33 +560,13 @@ public class Player extends Editable {
 
         if (angleRemainder > 0.0001) {
 
-            if (horizontalTunnel) {
-                DebugOutput.pushMessage("Reset rotation horizontal tunnel", 1);
-            } else if (verticalTunnel) {
-                DebugOutput.pushMessage("Reset rotation vertical tunnel", 1);
-            } else {
-                DebugOutput.pushMessage("Reset no tunnel", 1);
-            }
-
             Vec2 newPos = dynamicBody.getPosition();
             Vec2 vel = dynamicBody.getLinearVelocity();
 
-            float oldAngle = getAdjustedAngleBasic(false);
-
-            float adjustedAngle = getAdjustedAngle(); // fitted into the 0-360 range to prevent large values
-
-            // destroy the old player
-            box2d.destroyBody(dynamicBody);
-            dynamicBody = null;
-
-            // create a new one with the same attributes and the correct angle
-            createBody(newPos, adjustedAngle);
-            dynamicBody.setAngularVelocity(0);
-            dynamicBody.setFixedRotation(true);
-            dynamicBody.setLinearVelocity(vel);
+            float oldAngle = getAdjustedAngle(false); // non rounded angle
 
             // calculate the old and new angles
-            float newAngle = getAdjustedAngleBasic(true);
+            float newAngle = getAdjustedAngle(true);
             if (oldAngle > 180 && newAngle < 180) {
                 newAngle += 360;
             } else if (oldAngle < 180 && newAngle > 180) {
@@ -584,8 +575,51 @@ public class Player extends Editable {
             // create a rotationSmooth to smooth over the angle adjustment
             // only if there is a reasonable difference
             if (Math.abs(oldAngle - newAngle) > 2) {
+
+                switch (lastRotationLock) {
+                    case GROUND_SLOT:
+                        DebugOutput.pushMessage("Reset rotation ground slot", 1);
+                        break;
+                    case WALL_SLOT:
+                    case H_TUNNEL:
+                        DebugOutput.pushMessage("Reset rotation wall slot", 1);
+//                        DebugOutput.pushMessage("Reset rotation horizontal tunnel", 1);
+                        float angleDiff = oldAngle - newAngle;
+
+                        // use most recent (significant) angular velocity to figure out of rotation correction
+                        // needs to be adjusted. This is done to prevent unintended rotations in wall slots
+                        if (mostRecentAngularVelocity > 0 && angleDiff > 0) {
+                            // angular velocity and angleDiff are positive, adjust accordingly
+                            newAngle += 90;
+                            DebugOutput.appendMessage("+90");
+                        } else if (mostRecentAngularVelocity < 0 && angleDiff < 0) {
+                            // angular velocity and angleDiff are negative, adjust accordingly
+                            newAngle -= 90;
+                            DebugOutput.appendMessage("-90");
+                        }
+
+                        break;
+                    case ROOF_SLOT:
+                        DebugOutput.pushMessage("Reset rotation roof slot", 1);
+                        break;
+                    case V_TUNNEL:
+                        DebugOutput.pushMessage("Reset rotation vertical tunnel", 1);
+                        break;
+                }
+
                 rotationSmooth = new RotationSmooth(oldAngle, newAngle, vibration.getImpactHistory());
+
             }
+
+            // destroy the old player
+            box2d.destroyBody(dynamicBody);
+            dynamicBody = null;
+
+            // create a new one with the same attributes and the correct angle
+            createBody(newPos, newAngle); // adjustedAngle
+            dynamicBody.setAngularVelocity(0);
+            dynamicBody.setFixedRotation(true);
+            dynamicBody.setLinearVelocity(vel);
 
         }
     }
@@ -634,6 +668,7 @@ public class Player extends Editable {
                     if (Math.abs(previousX - t.getX()) == t.getWidth() + getWidth()) {
                         dynamicBody.setFixedRotation(true);
                         verticalTunnel = true;
+                        lastRotationLock = LastRotationLock.V_TUNNEL;
                         returnBoolean = false;
                         break;
                     }
@@ -654,6 +689,7 @@ public class Player extends Editable {
                     if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
                         dynamicBody.setFixedRotation(true);
                         horizontalTunnel = true;
+                        lastRotationLock = LastRotationLock.H_TUNNEL;
                         returnBoolean = false;
                         break;
                     }
@@ -775,6 +811,7 @@ public class Player extends Editable {
 
                         // lock rotation
                         dynamicBody.setFixedRotation(true);
+                        lastRotationLock = LastRotationLock.GROUND_SLOT;
                         dynamicBody.setAngularVelocity(0);
 
                         // try create the barrier
@@ -810,6 +847,12 @@ public class Player extends Editable {
 
         // conditions weren't met, remove the barrier
         destroyGroundBarrier(resetRotation);
+    }
+
+    private void storeAngularVelocity() {
+        if (Math.abs(dynamicBody.getAngularVelocity()) > 2) {
+            mostRecentAngularVelocity = dynamicBody.getAngularVelocity();
+        }
     }
 
     private void checkGroundSlotsStatic(PVector pos, Vec2 vel, boolean resetRotation) {
@@ -877,6 +920,7 @@ public class Player extends Editable {
 
                     // lock rotation
                     dynamicBody.setFixedRotation(true);
+                    lastRotationLock = LastRotationLock.GROUND_SLOT;
                     dynamicBody.setAngularVelocity(0);
 
                     return;
@@ -966,6 +1010,7 @@ public class Player extends Editable {
 
                     // try create the barrier
                     if (leftWallContacts > 0 || rightWallContacts > 0) {
+
                         if (vel.y > 0) { // moving up
 
                             // final position check (stops barriers being made under player)
@@ -977,6 +1022,7 @@ public class Player extends Editable {
 
                                 // lock rotation
                                 dynamicBody.setFixedRotation(true);
+                                lastRotationLock = LastRotationLock.WALL_SLOT;
 
                                 if (direction) { // moving left
                                     Vec2 bottom = new Vec2(t.getBottomRight().x, t.getBottomRight().y);
@@ -1000,6 +1046,7 @@ public class Player extends Editable {
 
                                 // lock rotation
                                 dynamicBody.setFixedRotation(true);
+                                lastRotationLock = LastRotationLock.WALL_SLOT;
 
                                 if (direction) { // moving left
                                     Vec2 bottom = new Vec2(t.getBottomRight().x, t.getTopLeft().y);
@@ -1145,6 +1192,7 @@ public class Player extends Editable {
 
                         // lock rotation
                         dynamicBody.setFixedRotation(true);
+                        lastRotationLock = LastRotationLock.ROOF_SLOT;
 
                         // try create the barrier
                         if (direction) { // moving left
@@ -1531,7 +1579,7 @@ public class Player extends Editable {
                 it.next().activate();
             }
         } catch (ConcurrentModificationException e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -1732,29 +1780,15 @@ public class Player extends Editable {
         right = false;
     }
 
-    public float getAdjustedAngle() {
-        float playerAngle = -dynamicBody.getAngle(); // get angle
-        playerAngle = PApplet.degrees(playerAngle); // convert to degrees
-        playerAngle = Math.round(playerAngle / 90) * 90; // round to nearest 90
-
-        // get it into the 360 range
-        while (Math.abs(playerAngle) > 270) {
-            if (playerAngle > 0) {
-                playerAngle -= 360;
-            } else {
-                playerAngle += 360;
-            }
-        }
-
-        // make sure it's positive
-        if (playerAngle < 0) {
-            playerAngle += 360;
-        }
-
-        return playerAngle;
-    }
-
-    public float getAdjustedAngleBasic(boolean round) {
+    /**
+     * A functions that takes any angle (in radians) and converts it to degrees
+     * as well as snapping it into the 0 - 360 degree range.
+     *
+     * @param round 'true' if the angle should be rounded to the nearest 90 degrees
+     *
+     * @return returns the adjusted angle
+     */
+    public float getAdjustedAngle(boolean round) {
         float playerAngle = -dynamicBody.getAngle(); // get angle
         playerAngle = PApplet.degrees(playerAngle); // convert to degrees
         if (round) {
@@ -1789,5 +1823,16 @@ public class Player extends Editable {
         if (active) {
             dynamicBody.setGravityScale(1);
         }
+    }
+
+    /**
+     * An enum used to store the last cause of the player's angle/rotation/orientation to be corrected.
+     */
+    public enum LastRotationLock {
+        GROUND_SLOT,
+        WALL_SLOT,
+        ROOF_SLOT,
+        H_TUNNEL,
+        V_TUNNEL
     }
 }

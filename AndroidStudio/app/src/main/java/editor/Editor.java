@@ -227,8 +227,8 @@ public class Editor {
             if (AppLogic.game.player != null) {
                 Vec2 vel = Player.dynamicBody.getLinearVelocity();
                 float aVel = Player.dynamicBody.getAngularVelocity();
-                p.text("Velocity x: " + PApplet.nf(Math.abs(vel.x), 1, 2) + " y: " + PApplet.nf(Math.abs(vel.y), 1, 2)
-                                + " a: " + PApplet.nf(Math.abs(aVel), 1, 2), p.width * 0.5f,
+                p.text("Velocity x: " + PApplet.nf(vel.x, 1, 2) + " y: " + PApplet.nf(vel.y, 1, 2)
+                                + " a: " + PApplet.nf(aVel, 1, 2), p.width * 0.5f,
                         p.height - editorBottom.getHeight() - textSize * 8);
                 float angle = PApplet.degrees(Player.dynamicBody.getAngle());
                 p.text("Angle: " + PApplet.nf(angle, 1, 4), p.width * 0.5f,

@@ -265,7 +265,7 @@ public class Game {
             int tileX = (Math.round((player.getCenter().x - player.getWidth() / 2) / 10) * 10);
             int tileY = (Math.round((player.getCenter().y - player.getHeight() / 2) / 10) * 10);
             Tile newTile = new Tile(box2d, texture, player.getFile(), tileX, tileY);
-            newTile.setAngle(player.getAdjustedAngle());
+            newTile.setAngle(player.getAdjustedAngle(true));
             // insert the new tile into the world and add it to placed
             world.insert(newTile);
             placed.add(newTile);
