@@ -2,6 +2,9 @@ package game.player;
 
 //import editor.DebugOutput;
 
+import editor.DebugOutput;
+import processing.core.PApplet;
+
 public class RotationSmooth {
 	private float currentAngle;
 	private float finalAngle;
@@ -20,8 +23,8 @@ public class RotationSmooth {
 		float difference = Math.abs(oldAngle - newAngle);
 
 		// portion of a second it takes the animation to finish
-		float animationLength = difference / (300 + (impact / 400)); // calculated relative to rotation amount
-																		// (difference)
+		float animationLength = difference / Math.min(300, (300 + (impact / 400))); // calculated relative to rotation amount (difference)
+//		DebugOutput.pushMessage("Animation length: " + animationLength, 4);
 
 		// turn absolute difference back into standard difference
 		if (newAngle < oldAngle) {
@@ -31,10 +34,10 @@ public class RotationSmooth {
 		// calculate the size of the step to be taken each frame
 		this.stepSize = difference / animationLength;
 
-//		String output = "Old Angle: " + PApplet.nf(oldAngle, 0, 1) + ", New Angle: " + PApplet.nf(newAngle, 0, 1) + "\n"
-//				+ "Impact: " + PApplet.nf(impact / 400, 0, 3) + ", Animation: " + PApplet.nf(animationLength, 0, 3);
-//
-//		DebugOutput.pushMessage(output, 4);
+		String output = "Old Angle: " + PApplet.nf(oldAngle, 0, 1) + ", New Angle: " + PApplet.nf(newAngle, 0, 1) + "\n"
+				+ "Impact: " + PApplet.nf(impact / 400, 0, 3) + ", Animation: " + PApplet.nf(animationLength, 0, 3);
+
+		DebugOutput.pushMessage(output, 4);
 	}
 
 	public void deltaStep(float deltaTime) {

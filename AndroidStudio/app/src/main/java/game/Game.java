@@ -64,7 +64,7 @@ public class Game {
 
     // delta time
 //    float accumulator = 0;
-    float stepSize = 1f / 240f; // 240f
+    float stepSize = 1f / 240f; // 240f, 120f, 60f
     // to change the number of physics steps per render step, change the above
     // and change movementIncrease in the Player class
 

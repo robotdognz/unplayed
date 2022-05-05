@@ -5,6 +5,8 @@
 -Various micro improvements to editor usability
 -Implemented page object removal systems
 -Added a system that prevents the player from rotating themselves using a wall slot
+-Reimplemented auto slotting in when in a slot that's against a wall
+-Cleaned up slot correction animations
 
 1.3.2: Playtester feedback tuning
 -Updated in game control dead spots

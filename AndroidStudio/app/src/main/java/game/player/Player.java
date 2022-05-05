@@ -607,7 +607,12 @@ public class Player extends Editable {
                         break;
                 }
 
-                rotationSmooth = new RotationSmooth(oldAngle, newAngle, vibration.getImpactHistory());
+                // only start a rotation smooth if there isn't already one running, seems to clean things up a bit
+                if (rotationSmooth == null) {
+                    rotationSmooth = new RotationSmooth(oldAngle, newAngle, vibration.getImpactHistory());
+                } else if (rotationSmooth.isFinished()) {
+                    rotationSmooth = new RotationSmooth(oldAngle, newAngle, vibration.getImpactHistory());
+                }
 
             }
 
@@ -1796,7 +1801,6 @@ public class Player extends Editable {
      * as well as snapping it into the 0 - 360 degree range.
      *
      * @param round 'true' if the angle should be rounded to the nearest 90 degrees
-     *
      * @return returns the adjusted angle
      */
     public float getAdjustedAngle(boolean round) {
