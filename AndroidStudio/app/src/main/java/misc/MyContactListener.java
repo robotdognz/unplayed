@@ -186,7 +186,7 @@ public class MyContactListener implements ContactListener {
 		}
 
 		if (player != null) {
-			player.physicsImpact(impulse.normalImpulses);
+			player.physicsImpact(impulse.normalImpulses, impulse.tangentImpulses);
 		}
 	}
 

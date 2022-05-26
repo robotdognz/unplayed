@@ -7,6 +7,7 @@ import camera.Camera;
 import editor.Editor;
 import game.player.PlayerTransition;
 import game.player.Player;
+import game.player.PlayerVibration;
 import handlers.LoadingHandler;
 import handlers.TextureCache;
 import misc.Converter;
@@ -71,6 +72,9 @@ public class Game {
     // player transition animation
     public PlayerTransition playerTransition;
 
+    // universal access delta time
+    static float deltaStep = 0;
+
     public Game(PApplet p, Camera c, TextureCache texture, Converter convert) {
         this.p = p;
         this.camera = c;
@@ -101,6 +105,8 @@ public class Game {
         buildWorld();
 
         playerTransition = new PlayerTransition(); //new Vec2(0, 0), new Vec2(0, 0)
+
+        deltaStep = stepSize;
     }
 
     public void emptyGame() {
@@ -439,10 +445,13 @@ public class Game {
         while (steps > 0) {
             if (player != null) {
                 player.physicsStep(stepSize);
+                PlayerVibration.EndStep();
             }
             box2d.step(stepSize, 8, 3);
+//            PApplet.print("End Step");
             steps--;
         }
+//        PApplet.print("End Frame");
         box2d.world.clearForces();
 
 
@@ -517,6 +526,10 @@ public class Game {
 
     public boolean isPaused() {
         return pauseTimer.isRunning();
+    }
+
+    public static float DeltaStep(){
+        return deltaStep;
     }
 
     private int calculateSteps(float elapsed) {

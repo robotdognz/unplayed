@@ -1465,12 +1465,12 @@ public class Player extends Editable {
 
                     if (left) { // pushing into left wall
                         if (!checkForWallSlotsJump(true)) {
-                            // normal wall jump
+//                          // normal wall jump
                             xImpulse = (dynamicBody.getMass() * wallJumpPower);
 //							DebugOutput.pushMessage("Wall jump on left wall", 2);
-
+//
                         } else {
-                            // there is a slot directly above
+//                          // there is a slot directly above
 //							DebugOutput.pushMessage("Slot above jump", 2);
                         }
                         pushLeftTimer.start();
@@ -1506,13 +1506,13 @@ public class Player extends Editable {
 
                     if (right) { // pushing into right wall
                         if (!checkForWallSlotsJump(false)) {
-                            // normal wall jump
+//                          // normal wall jump
                             xImpulse = -(dynamicBody.getMass() * wallJumpPower);
 //							DebugOutput.pushMessage("Wall jump on right wall", 2);
-
+//
                         } else {
-                            // there is a slot directly above
-
+//                          // there is a slot directly above
+//
 //							DebugOutput.pushMessage("Slot above jump", 2);
                         }
                         pushRightTimer.start();
@@ -1571,8 +1571,8 @@ public class Player extends Editable {
         rightStickTimer.stop();
     }
 
-    public void physicsImpact(float[] impulses) {
-        vibration.physicsImpact(impulses);
+    public void physicsImpact(float[] normalImpulses, float[] tangentImpulses) {
+        vibration.physicsImpact(normalImpulses, tangentImpulses);
     }
 
     public File getFile() {

@@ -2,8 +2,11 @@ package game.player;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import game.Game;
 import misc.CountdownTimer;
 import misc.Vibe;
+import processing.core.PApplet;
 
 public class PlayerVibration {
 
@@ -23,6 +26,12 @@ public class PlayerVibration {
 
 	private int maximum;
 	private int minimum;
+
+	// new filtering system
+	static private float currentImpulse;
+	static private ArrayList<Float> usedImpulses = new ArrayList<>();
+	static private float previousImpulse2;
+	static private int vibeOutput;
 
 //	// new system
 //	HashMap<Float, Integer> stepImpacts;
@@ -61,6 +70,11 @@ public class PlayerVibration {
 			} else {
 				break;
 			}
+		}
+
+		if (vibeOutput > 0) {
+			Vibe.vibrate(vibeOutput);
+			vibeOutput = 0;
 		}
 
 //		// new system
@@ -105,23 +119,108 @@ public class PlayerVibration {
 		return total;
 	}
 
+	public static void EndStep() {
+		// get impulse and clear field
+		float currentStep = currentImpulse;
+
+		if (currentStep > 1 && currentImpulse != previousImpulse2) {
+
+			// print impulses
+			String usedOutput = "";
+			for (float used : usedImpulses) {
+				usedOutput += used + ", ";
+			}
+			PApplet.print(usedOutput);
+			PApplet.print("----------End------------ " + currentStep);
+
+			// store vibration so it can be used in Step()
+			int tempVibe = (int) Math.round(Math.log(currentStep)*2) * 2;
+			if (tempVibe > vibeOutput) {
+				vibeOutput = tempVibe;
+			}
+		}
+
+		// reset
+		previousImpulse2 = currentImpulse;
+		currentImpulse = 0;
+		usedImpulses.clear();
+
+	}
+
 	// the current system in here works, but it could be improved:
 	// there are patterns in the actual values (not converted to 'strength') that
-	// could
-	// be analyzed from some kind of list of stored recent impulses, perhaps it's
+	// could be analyzed from some kind of list of stored recent impulses, perhaps it's
 	// always looking for patterns in the data and only lets something through when
-	// it
-	// isn't part of a pattern
+	// it isn't part of a pattern
 
 	// This needs to be changed to use a range of total instead of strength, if the
 	// varying values in the impulse pattern fall on either side of the rounding of
 	// 'strength' the vibration bug still happens
-	public void physicsImpact(float[] impulses) {
+	public void physicsImpact(float[] normalImpulses, float[] tangentImpulses) {
 		// find total impulse power
 		float total = 0;
-		for (float impulse : impulses) {
+		for (float impulse : normalImpulses) {
 			total += impulse;
 		}
+
+
+
+		// new insane impulse filtering algorithm
+		float magicNumber = 6;
+		float impulse1 = Math.round(normalImpulses[0] * Game.DeltaStep());
+		float impulse2 = Math.round(normalImpulses[1] * Game.DeltaStep());
+		float newImpulse;
+		if (impulse1 < magicNumber || impulse2 < magicNumber){
+			// one equals 0 (functionally 0, less than 2)
+			newImpulse = Math.max(impulse1, impulse2);
+		} else {
+			// neither equal 0
+			float diff = Math.abs(impulse1 - impulse2);
+			if (diff > magicNumber) {
+				// there is a significant difference
+				newImpulse = Math.max(impulse1, impulse2) - Math.min(impulse1, impulse2);
+			} else {
+				// no significant difference
+				newImpulse = Math.max(impulse1, impulse2);
+			}
+		}
+
+		if (newImpulse > 1) {
+
+			// figure out if 'newImpulse' has been used
+			boolean used = false;
+			for (float usedImpulse : usedImpulses){
+				used = Math.abs(newImpulse - usedImpulse) < magicNumber;
+				if (used) {
+					break;
+				}
+			}
+
+			if (currentImpulse > newImpulse) {
+				if (!used) {
+					currentImpulse -= newImpulse;
+				}
+			} else {
+				if (!used) {
+					currentImpulse = newImpulse;
+				}
+			}
+			if(!usedImpulses.contains(newImpulse)) {
+				usedImpulses.add(newImpulse);
+			}
+		}
+
+		if (impulse1 != 0 && !usedImpulses.contains(impulse1)) {
+			usedImpulses.add(impulse1);
+		}
+		if (impulse2 != 0 && !usedImpulses.contains(impulse2)) {
+			usedImpulses.add(impulse2);
+		}
+
+
+
+
+
 
 //		// store rounded impact
 //		if (total > 800) {
@@ -139,6 +238,20 @@ public class PlayerVibration {
 
 		if (total > 800) { // && !vibeFrame) { // 400
 
+			// print impulses
+			String output = "";
+			for(float impulse : normalImpulses){
+				output += " " + (impulse * Game.DeltaStep());
+			}
+			PApplet.print(output);
+			PApplet.print("New: " + newImpulse);
+			PApplet.print("Stored: " + currentImpulse);
+//			output = "";
+//			for(float impulse : tangentImpulses){
+//				output += " " + (impulse * Game.DeltaStep());
+//			}
+//			PApplet.print(output);
+
 			// Math.abs returns positive no matter what goes in
 			// Math.log returns the log of the number it is given
 			int strength = Math.round(total / 200) * 200;
@@ -146,7 +259,7 @@ public class PlayerVibration {
 
 			if (!vibrationMonitor.isRunning()) {
 				if (!vibrationCooldown.isRunning()) {
-					Vibe.vibrate(strength);
+//					Vibe.vibrate(strength);
 					vibrationCooldown.start();
 //					vibeFrame = true;
 				}
@@ -166,7 +279,7 @@ public class PlayerVibration {
 				} else {
 					if (strength != currentBadImpulse) {
 						if (!vibrationCooldown.isRunning()) {
-							Vibe.vibrate(strength);
+//							Vibe.vibrate(strength);
 							vibrationCooldown.start();
 //							vibeFrame = true;
 						}
