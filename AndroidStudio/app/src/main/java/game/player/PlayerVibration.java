@@ -177,23 +177,24 @@ public class PlayerVibration {
 
 
 		// new insane impulse filtering algorithm
-		float magicNumber = 6;
+		float magicNumber = 4; // 6
 		float impulse1 = Math.round(normalImpulses[0] * Game.DeltaStep());
 		float impulse2 = Math.round(normalImpulses[1] * Game.DeltaStep());
 		float newImpulse;
 		if (impulse1 < magicNumber || impulse2 < magicNumber){
-			// one equals 0 (functionally 0, less than 2)
+			// one equals 0 (functionally 0, less than magic number)
+			// use the biggest number
 			newImpulse = Math.max(impulse1, impulse2);
 		} else {
-			// neither equal 0
-			float diff = Math.abs(impulse1 - impulse2);
-			if (diff > magicNumber) {
-				// there is a significant difference
-				newImpulse = Math.max(impulse1, impulse2) - Math.min(impulse1, impulse2);
-			} else {
-				// no significant difference
+			// neither equal 0 (functionally 0, less than magic number)
+//			float diff = Math.abs(impulse1 - impulse2);
+//			if (diff > magicNumber) {
+//				// there is a significant difference, subtract the smallest from the biggest
+//				newImpulse = Math.max(impulse1, impulse2) - Math.min(impulse1, impulse2);
+//			} else {
+				// no significant difference, use the max value
 				newImpulse = Math.max(impulse1, impulse2);
-			}
+//			}
 		}
 
 		if (newImpulse > 1) {
@@ -207,20 +208,26 @@ public class PlayerVibration {
 				}
 			}
 
-			if (currentImpulse > newImpulse) {
-				if (!used) {
-					currentImpulse -= newImpulse;
-				}
-			} else {
-				if (!used) {
+				// 'newImpulse' hasn't been used
+				if (currentImpulse > newImpulse) {
+					if (!used) {
+					// subtract it from the current step's impulse
+//					currentImpulse -= newImpulse;
+					}
+				} else {
+//					if (!used) {
+					// replace the current step's impulse with this impulse
 					currentImpulse = newImpulse;
+//					}
 				}
-			}
-			if(!usedImpulses.contains(newImpulse)) {
+
+			// update used impulses list
+			if (!usedImpulses.contains(newImpulse)) {
 				usedImpulses.add(newImpulse);
 			}
 		}
 
+		// update used impulses list
 		if (impulse1 != 0 && !usedImpulses.contains(impulse1)) {
 			usedImpulses.add(impulse1);
 		}
