@@ -24,8 +24,8 @@ public class PlayerVibration {
 	private int previousImpulse;
 	private int currentBadImpulse;
 
-	private int maximum;
-	private int minimum;
+	private static int maximum;
+	private static int minimum;
 
 	// new filtering system
 	static private float currentImpulse;
@@ -72,10 +72,17 @@ public class PlayerVibration {
 			}
 		}
 
-		if (vibeOutput > 0) {
-			Vibe.vibrate(vibeOutput);
+//		if (!vibrationCooldown.isRunning()) {
+			if (vibeOutput > 0) {
+//				vibrationCooldown.start();
+				Vibe.vibrate(vibeOutput);
+			}
+//		}
+
+//		if (vibeOutput > 0) {
+//			Vibe.vibrate(vibeOutput);
 			vibeOutput = 0;
-		}
+//		}
 
 //		// new system
 //		float biggestImpact = 0;
@@ -134,7 +141,11 @@ public class PlayerVibration {
 			PApplet.print("----------End------------ " + currentStep);
 
 			// store vibration so it can be used in Step()
-			int tempVibe = (int) Math.round(Math.log(currentStep)*2) * 2;
+			//int tempVibe = (int) Math.round(currentStep);
+			int tempVibe = (int) Math.round(currentStep); //Math.round(Math.log(currentStep)*2) * 2
+
+			tempVibe = (int) Math.round(currentStep * 0.4f); //Math.min(currentStep, maximum);
+
 			if (tempVibe > vibeOutput) {
 				vibeOutput = tempVibe;
 			}
