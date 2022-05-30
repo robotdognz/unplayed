@@ -268,7 +268,7 @@ public class Editor {
         p.scale(Camera.getSubScale()); // apply offset for tall screen spaces
         p.translate(-Camera.getCenter().x, -Camera.getCenter().y); // moves the view around the level
 
-        float currentScale = AppLogic.convert.getScale();
+        float currentScale = 3; //AppLogic.convert.getScale();
 
         p.background(240);
 
@@ -320,6 +320,8 @@ public class Editor {
         if (AppLogic.game.player != null) { // draw the player on top of tiles and images
             AppLogic.game.player.draw(p.g, currentScale);
         }
+
+        currentScale = AppLogic.convert.getScale();
 
         if (AppLogic.game.playerTransition.isActive()) {
             AppLogic.game.playerTransition.drawVisualisation(p.g, currentScale);

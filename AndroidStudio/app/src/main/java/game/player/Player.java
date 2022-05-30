@@ -588,11 +588,11 @@ public class Player extends Editable {
 
                         // use most recent (significant) angular velocity to figure out of rotation correction
                         // needs to be adjusted. This is done to prevent unintended rotations in wall slots
-                        if (mostRecentAngularVelocity > 0 && angleDiff > 0) {
+                        if (mostRecentAngularVelocity > 0 && angleDiff > 10) { // mostRecentAngularVelocity > 0 && angleDiff > 0
                             // angular velocity and angleDiff are positive, adjust accordingly
                             newAngle += 90;
                             DebugOutput.appendMessage("+90");
-                        } else if (mostRecentAngularVelocity < 0 && angleDiff < 0) {
+                        } else if (mostRecentAngularVelocity < 0 && angleDiff < -10) { // mostRecentAngularVelocity < 0 && angleDiff < 0
                             // angular velocity and angleDiff are negative, adjust accordingly
                             newAngle -= 90;
                             DebugOutput.appendMessage("-90");

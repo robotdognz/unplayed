@@ -7,6 +7,9 @@
 -Added a system that prevents the player from rotating themselves using a wall slot
 -Reimplemented auto slotting in when in a slot that's against a wall
 -Cleaned up slot correction animations
+-Fixed vibration bugs
+-Tuned wall slot correction algorithm
+-Rough fix for LOD issue in level editor, removed LODs
 
 1.3.2: Playtester feedback tuning
 -Updated in game control dead spots
