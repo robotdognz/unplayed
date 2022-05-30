@@ -10,6 +10,7 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
 import game.Game;
+import game.player.PlayerVibration;
 import handlers.TextureCache;
 import misc.CollisionEnum;
 import objects.Event;
@@ -93,6 +94,7 @@ public class Spike extends Event {
 
 	@Override
 	public void activate() {
+		PlayerVibration.DeathBuzz();
 		game.restart(); // TODO: this needs a custom method in Game
 	}
 

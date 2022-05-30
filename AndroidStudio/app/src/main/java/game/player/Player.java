@@ -1590,9 +1590,8 @@ public class Player extends Editable {
 
         // check all the events the player is colliding with
         try {
-            Iterator<Event> it = events.iterator();
-            while (it.hasNext()) {
-                it.next().activate();
+            for (Event event : events) {
+                event.activate();
             }
         } catch (ConcurrentModificationException e) {
             e.printStackTrace();
