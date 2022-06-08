@@ -199,8 +199,14 @@ public class Tile extends Editable implements Comparable<Tile> {
 
 	public void draw(PGraphics graphics, float scale) {
 
+		graphics.rectMode(CORNER);
 		if (hasTexture) {
 			// texture isn't missing
+
+			// draw paper background behind tile
+			graphics.fill(240, 240, 240);
+			graphics.rect(getX(), getY(), getWidth(), getHeight());
+
 			if (angle == 0) {
 				graphics.imageMode(CORNER);
 //				graphics.image(tileTexture.getSprite(scale), getX(), getY(), getWidth(), getHeight()); // draw the tile
@@ -218,7 +224,6 @@ public class Tile extends Editable implements Comparable<Tile> {
 			// texture is missing
 			graphics.noStroke();
 			graphics.fill(255, 0, 0, 150);
-			graphics.rectMode(CORNER);
 			graphics.rect(getX(), getY(), getWidth(), getHeight());
 		}
 	}

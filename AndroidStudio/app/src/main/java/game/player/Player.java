@@ -1612,10 +1612,10 @@ public class Player extends Editable {
     public void drawNoTransform(PGraphics graphics, float scale) {
         if (hasTexture) {
             graphics.imageMode(CENTER);
-            graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
             if (isActive) {
                 AppLogic.playerFace.draw(graphics, getWidth(), getHeight());
             }
+            graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
         }
     }
 
@@ -1643,15 +1643,14 @@ public class Player extends Editable {
             graphics.translate(pos.x, pos.y);
             graphics.rotate(-a);
 
-            if (showChecking && !Editor.showPageView && dynamicBody.isFixedRotation()) {
-                graphics.tint(200, 255, 200);
-            }
-
-            graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
-            graphics.noTint();
             if (isActive) {
                 AppLogic.playerFace.draw(graphics, getWidth(), getHeight());
             }
+            if (showChecking && !Editor.showPageView && dynamicBody.isFixedRotation()) {
+                graphics.tint(200, 255, 200);
+            }
+            graphics.image(tileTexture.getSprite(scale), 0, 0, getWidth(), getHeight());
+            graphics.noTint();
 
             // draw the slot checking logic
             if (showChecking) {
