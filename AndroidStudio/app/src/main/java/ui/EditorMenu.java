@@ -1,7 +1,6 @@
 package ui;
 
 import camera.FreeCamera;
-import editor.uitop.WidgetPauseMenu;
 import game.Game;
 import game.AppLogic;
 import processing.core.PApplet;
@@ -12,25 +11,22 @@ public class EditorMenu extends Menu {
     String editor = "Edit";
     String restart = "Restart";
     String mainMenu = "Main Menu";
-//  String quit = "Reset Game";
 
     public EditorMenu(PApplet p) {
         super(p);
         this.game = AppLogic.game;
 
-        Button resumeB = new Button(p.width / 2, buttonWidth, buttonHeight, resume);
+        Button resumeB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, resume);
         objects.add(resumeB);
         if (!AppLogic.editorToggle) {
-            Button restartB = new Button(p.width / 2, buttonWidth, buttonHeight, restart);
+            Button restartB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, restart);
             objects.add(restartB);
-            Button editorB = new Button(p.width / 2, buttonWidth, buttonHeight, editor);
+            Button editorB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, editor);
             objects.add(editorB);
         } else {
-            Button mainMenuB = new Button(p.width / 2, buttonWidth, buttonHeight, mainMenu);
+            Button mainMenuB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, mainMenu);
             objects.add(mainMenuB);
         }
-//      Button quitB = new Button(p.width / 2, buttonWidth, buttonHeight, quit);
-//      objects.add(quitB);
         constructMenu();
     }
 
@@ -47,7 +43,6 @@ public class EditorMenu extends Menu {
             } else if (b.click().equals(editor)) {
                 AppLogic.editorToggle = !AppLogic.editorToggle;
                 AppLogic.editor.resetUI();
-//				AppLogic.toggleEditor();
                 AppLogic.removeMenu(); // remove pause menu
                 AppLogic.editor.camera = new FreeCamera(); // back to editor camera
             } else if (b.click().equals(mainMenu)) {
@@ -56,9 +51,6 @@ public class EditorMenu extends Menu {
                 AppLogic.game.startGame();
                 AppLogic.removeMenu(); // remove pause menu
             }
-//          else if (b.click().equals(quit)) {
-//              AppLogic.quitPurge(); // exit the game
-//          }
         }
     }
 }

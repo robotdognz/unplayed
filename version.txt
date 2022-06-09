@@ -1,6 +1,9 @@
 (Major version).(Minor version).(Revision number)
 
-1.3.3: TBD
+1.3.5: TBD
+-Fixed bug where editor menu would stay on screen when quiting back to main menu
+
+1.3.4: Entering polish phase
 -Added editor tool for removing objects from pages
 -Various micro improvements to editor usability
 -Implemented page object removal systems

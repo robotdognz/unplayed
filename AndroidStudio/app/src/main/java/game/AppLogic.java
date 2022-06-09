@@ -75,6 +75,7 @@ public class AppLogic {
     }
 
     static public void init() {
+        menu = null;
         editorToggle = false; // editor is closed on startup
         touches = new ArrayList<>();
         lastTouch = new PVector(0, 0);
