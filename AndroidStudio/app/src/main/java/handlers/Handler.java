@@ -157,10 +157,10 @@ public abstract class Handler {
             p.imageMode(CENTER);
             p.translate(pX, pY);
             p.rotate(PApplet.radians(editorRotation));
-            p.image(getSprite(6), 0, 0, widthRenderRatio * size, heightRenderRatio * size);
+            p.image(getSprite(3), 0, 0, widthRenderRatio * size, heightRenderRatio * size); //getSprite(6)
             p.popMatrix();
         } else {
-            p.image(getSprite(6), pX, pY, widthRenderRatio * size, heightRenderRatio * size);
+            p.image(getSprite(3), pX, pY, widthRenderRatio * size, heightRenderRatio * size); //getSprite(6)
         }
     }
 

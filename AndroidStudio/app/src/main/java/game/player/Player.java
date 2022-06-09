@@ -582,21 +582,36 @@ public class Player extends Editable {
                         break;
                     case WALL_SLOT:
                     case H_TUNNEL:
-                        DebugOutput.pushMessage("Reset rotation wall slot", 1);
+                        DebugOutput.pushMessage("Reset rotation wall slot/ht", 3);
 //                        DebugOutput.pushMessage("Reset rotation horizontal tunnel", 1);
-                        float angleDiff = oldAngle - newAngle;
 
-                        // use most recent (significant) angular velocity to figure out of rotation correction
-                        // needs to be adjusted. This is done to prevent unintended rotations in wall slots
-                        if (mostRecentAngularVelocity > 0 && angleDiff > 10) { // mostRecentAngularVelocity > 0 && angleDiff > 0
-                            // angular velocity and angleDiff are positive, adjust accordingly
-                            newAngle += 90;
-                            DebugOutput.appendMessage("+90");
-                        } else if (mostRecentAngularVelocity < 0 && angleDiff < -10) { // mostRecentAngularVelocity < 0 && angleDiff < 0
-                            // angular velocity and angleDiff are negative, adjust accordingly
-                            newAngle -= 90;
-                            DebugOutput.appendMessage("-90");
+                        float maxRotationCorrection = 80;
+
+                        if (mostRecentAngularVelocity > 0) {
+                            // angular velocity is positive
+                            float angleDiff = oldAngle - (newAngle + 90); // angle diff with positive correction
+                            if (angleDiff > -maxRotationCorrection && angleDiff < maxRotationCorrection) {
+                                DebugOutput.appendMessage("+90, AD: " + PApplet.nf(angleDiff, 1, 1) + ", AV: " + PApplet.nf(mostRecentAngularVelocity, 1, 1));
+                                newAngle += 90;
+                            } else {
+                                DebugOutput.appendMessage("no correction, AD: " + PApplet.nf(angleDiff, 1, 1) + ", AV: " + PApplet.nf(mostRecentAngularVelocity, 1, 1));
+                            }
+                        } else if (mostRecentAngularVelocity < 0) {
+                            // angular velocity is negative
+                            float angleDiff = oldAngle - (newAngle - 90); // angle diff with negative correction
+                            if (angleDiff < maxRotationCorrection && angleDiff > - maxRotationCorrection) {
+                                // angular velocity and angleDiff are negative, adjust accordingly
+                                DebugOutput.appendMessage("-90, AD: " + PApplet.nf(angleDiff, 1, 1) + ", AV: " + PApplet.nf(mostRecentAngularVelocity, 1, 1));
+                                newAngle -= 90;
+                            } else {
+                                DebugOutput.appendMessage("no correction, AD: " + PApplet.nf(angleDiff, 1, 1) + ", AV: " + PApplet.nf(mostRecentAngularVelocity, 1, 1));
+                            }
+                        } else {
+                            // no angular velocity
+                            float angleDiff = oldAngle - newAngle;
+                            DebugOutput.appendMessage("no correction, AD: " + PApplet.nf(angleDiff, 1, 1) + ", AV: " + PApplet.nf(mostRecentAngularVelocity, 1, 1));
                         }
+
 
                         break;
                     case ROOF_SLOT:
@@ -1018,9 +1033,17 @@ public class Player extends Editable {
 
         // check the list of tiles for a playerWidth sized gap
         float previousY = 0;
+        float previousX = 0; // used to make sure the tiles are all in the same tile column
         for (int i = 0; i < wallChecking.size(); i++) {
             Tile t = wallChecking.get(i);
             if (i > 0) {
+
+                // check the tile is in the same tile column
+                if (t.getX() != previousX) {
+                    // it's not, skip it
+                    continue;
+                }
+
                 // if this tile is the far side of a gap
                 if (Math.abs(previousY - t.getY()) == t.getHeight() + getHeight()) {
 
@@ -1080,6 +1103,7 @@ public class Player extends Editable {
                 }
             }
             previousY = t.getY();
+            previousX = t.getX();
         }
 
         // conditions weren't met, remove the barrier

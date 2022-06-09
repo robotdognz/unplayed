@@ -10,6 +10,8 @@
 -Fixed vibration bugs
 -Tuned wall slot correction algorithm
 -Rough fix for LOD issue in level editor, removed LODs
+-Made some changes to wall slot algorithm, prevent weird mid wall below roof edge case
+-Rough fix for edior object toolbar rendering objects at a low resolution
 
 1.3.2: Playtester feedback tuning
 -Updated in game control dead spots

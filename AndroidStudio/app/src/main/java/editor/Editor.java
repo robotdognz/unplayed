@@ -268,7 +268,8 @@ public class Editor {
         p.scale(Camera.getSubScale()); // apply offset for tall screen spaces
         p.translate(-Camera.getCenter().x, -Camera.getCenter().y); // moves the view around the level
 
-        float currentScale = 3; //AppLogic.convert.getScale();
+        float currentScale = AppLogic.convert.getScale();
+        float fixedScale = 3;
 
         p.background(240);
 
@@ -296,7 +297,7 @@ public class Editor {
             if (r.getBottomRight().y < currentTopLeft.y + 1) {
                 continue;
             }
-            ((Image) r).draw(p.g, currentScale);
+            ((Image) r).draw(p.g, fixedScale);
         }
         for (Rectangle r : screenObjects) { // draw tiles on top of images
             if (!(r instanceof Tile)) {
@@ -314,14 +315,12 @@ public class Editor {
             if (r.getBottomRight().y < currentTopLeft.y + 1) {
                 continue;
             }
-            ((Tile) r).draw(p.g, currentScale);
+            ((Tile) r).draw(p.g, fixedScale);
         }
 
         if (AppLogic.game.player != null) { // draw the player on top of tiles and images
-            AppLogic.game.player.draw(p.g, currentScale);
+            AppLogic.game.player.draw(p.g, fixedScale);
         }
-
-        currentScale = AppLogic.convert.getScale();
 
         if (AppLogic.game.playerTransition.isActive()) {
             AppLogic.game.playerTransition.drawVisualisation(p.g, currentScale);
@@ -337,7 +336,7 @@ public class Editor {
         }
         for (Rectangle r : screenObjects) { // draw events on top of player, tiles, and images
             if (r instanceof Event && (eventVis || ((Event) r).visible)) {
-                ((Event) r).draw(p.g, currentScale);
+                ((Event) r).draw(p.g, fixedScale);
             }
         }
 
