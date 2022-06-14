@@ -2,6 +2,12 @@
 
 1.3.5: TBD
 -Fixed bug where editor menu would stay on screen when quiting back to main menu
+-Added new background paper texture
+-Added new maths paper texture
+-Added new UI sprites
+-Added temp background image assets for testing
+-Rebuilt maths paper redering system
+-Fixed bug where maths paper would render on top of buttons in overlayed menus
 
 1.3.4: Entering polish phase
 -Added editor tool for removing objects from pages

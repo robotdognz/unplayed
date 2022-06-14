@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import camera.Camera;
 import camera.PageViewCamera;
 import game.AppLogic;
+import game.MathsPaper;
 import handlers.Handler;
 import handlers.TextureCache;
 import objects.Rectangle;
@@ -94,6 +95,7 @@ public abstract class Menu {
 
         menuTopY = p.height * 0.5f - menuHeight * 0.5f;
 
+
     }
 
     public void buildPageMenu(PVector cameraCenter, Rectangle pageArea, PageViewCamera camera) {
@@ -179,7 +181,7 @@ public abstract class Menu {
 
         // draw white background
         p.noStroke();
-        p.fill(240);
+        p.fill(255); // 240
         p.rectMode(CENTER);
         p.rect(0, 0, pageMenu.getWidth(), pageMenu.getHeight());
 
@@ -208,6 +210,7 @@ public abstract class Menu {
         float xTileEnd = menuWidth / gridSize; // where to end horizontal tiling in texture units
         float yTileEnd = menuHeight / gridSize; // where to end vertical tiling in texture units
         // texture
+        p.blendMode(MULTIPLY); // render it multiplied
         p.noStroke();
         p.textureMode(NORMAL);
         p.beginShape();
@@ -218,6 +221,7 @@ public abstract class Menu {
         p.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right
         p.vertex(startX, endY, xTileStart, yTileEnd); // bottom left
         p.endShape();
+        p.blendMode(BLEND); // back to normal rendering
 
         p.popMatrix();
 
@@ -230,7 +234,7 @@ public abstract class Menu {
         // used only in editor
         p.stroke(0);
         p.strokeWeight(6);
-        p.fill(240);
+        p.fill(255); //240
         p.rectMode(CORNER);
         p.rect(menuCenterX - menuWidth / 2, menuTopY, menuWidth, menuHeight);
         // draw the buttons
@@ -257,6 +261,7 @@ public abstract class Menu {
         float xTileEnd = menuWidth / gridSize; // where to end horizontal tiling in texture units
         float yTileEnd = menuHeight / gridSize; // where to end vertical tiling in texture units
         // texture
+        p.blendMode(MULTIPLY); // render it multiplied
         p.noStroke();
         p.textureMode(NORMAL);
         p.beginShape();
@@ -267,6 +272,7 @@ public abstract class Menu {
         p.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right
         p.vertex(startX, endY, xTileStart, yTileEnd); // bottom left
         p.endShape();
+        p.blendMode(BLEND); // back to normal rendering
 
         p.popMatrix();
     }

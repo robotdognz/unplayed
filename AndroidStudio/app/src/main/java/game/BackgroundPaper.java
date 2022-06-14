@@ -11,7 +11,7 @@ public class BackgroundPaper {
 	int gridSize;
 
 	public BackgroundPaper(PApplet p) {
-		gridSize = 1100;
+		gridSize = 1500; //1100
 
 	}
 
@@ -20,13 +20,13 @@ public class BackgroundPaper {
 		// when the screen has moved
 
 		// find x start position
-		float startX = (int) Math.round((topLeft.x - (gridSize / 2)) / gridSize);
+		float startX = (int) Math.round((topLeft.x - (gridSize * 0.5f)) / gridSize);
 		// find y start position;
-		float startY = (int) Math.round((topLeft.y - (gridSize / 2)) / gridSize);
+		float startY = (int) Math.round((topLeft.y - (gridSize * 0.5f)) / gridSize);
 		// find x end position
-		float endX = (int) Math.round((bottomRight.x + (gridSize / 2)) / gridSize);
+		float endX = (int) Math.round((bottomRight.x + (gridSize * 0.5f)) / gridSize);
 		// find y end position
-		float endY = (int) Math.round((bottomRight.y + (gridSize / 2)) / gridSize);
+		float endY = (int) Math.round((bottomRight.y + (gridSize * 0.5f)) / gridSize);
 
 		float xTileStart = 0; // where to start horizontal tiling in texture units
 		float yTileStart = 0; // where to start vertical tiling in texture units

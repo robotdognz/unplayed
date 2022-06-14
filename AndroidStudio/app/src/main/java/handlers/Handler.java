@@ -44,9 +44,9 @@ public abstract class Handler {
         try {
             String path = file.toString();
             LODFull = p.loadImage(path);
-            this.gridResolution = findNextPowerOf2(LODFull.width / width); // smallest this should be is 16
+//            this.gridResolution = findNextPowerOf2(LODFull.width / width); // smallest this should be is 16
 //            PApplet.print(path + " - Actual Resolution: " + LODFull.width + "x" + LODFull.height);
-            LODFull.resize(this.gridResolution * width, this.gridResolution * height);
+//            LODFull.resize(this.gridResolution * width, this.gridResolution * height);
 //            PApplet.print(path + " - Fixed Resolution: " + LODFull.width + "x" + LODFull.height);
 
         } catch (Exception e) {

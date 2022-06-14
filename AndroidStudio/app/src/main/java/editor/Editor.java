@@ -271,7 +271,7 @@ public class Editor {
         float currentScale = AppLogic.convert.getScale();
         float fixedScale = 3;
 
-        p.background(240);
+        p.background(255); //240
 
         // find corners of camera
         PVector currentTopLeft = AppLogic.game.screenSpace.getTopLeft();

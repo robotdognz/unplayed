@@ -64,6 +64,8 @@ public class MathsPaper {
         }
 
         // texture
+        graphics.blendMode(MULTIPLY); // render it multiplied
+//        graphics.tint(255, 107); // equivalent to 42% opacity
         graphics.noStroke();
         graphics.textureMode(NORMAL);
         graphics.beginShape();
@@ -74,6 +76,8 @@ public class MathsPaper {
         graphics.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right
         graphics.vertex(startX, endY, xTileStart, yTileEnd); // bottom left
         graphics.endShape();
+
+        graphics.blendMode(BLEND); // back to normal rendering
 
     }
 

@@ -88,8 +88,8 @@ public class TextureCache {
         AppLogic.cacheImage(p.g, gridLOD8);
 
         // page view background texture
-        int pvbSize = 4;
-        pageViewBackgroundLOD256 = p.loadImage("PageViewBackground.jpg");
+        int pvbSize = 16; //4
+        pageViewBackgroundLOD256 = p.loadImage("PageViewBackground.png"); //"PageViewBackground.jpg"
         pageViewBackgroundLOD256.resize(256 * pvbSize, 256 * pvbSize);
         pageViewBackgroundLOD128 = pageViewBackgroundLOD256.get();
         pageViewBackgroundLOD128.resize(128 * pvbSize, 128 * pvbSize);

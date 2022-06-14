@@ -452,7 +452,7 @@ public class Page extends PageViewObject {
         }
 
         // draw the page background
-        p.fill(240);
+        p.fill(255); // 240
         p.rect(0, 0, paddedView.getWidth(), paddedView.getHeight());
 
         p.translate((float) -(view.getX() + view.getWidth() * 0.5), (float) -(view.getY() + view.getHeight() * 0.5));
