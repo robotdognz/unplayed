@@ -88,7 +88,7 @@ public class TextureCache {
         AppLogic.cacheImage(p.g, gridLOD8);
 
         // page view background texture
-        int pvbSize = 16; //4
+        int pvbSize = 8; //16; //4
         pageViewBackgroundLOD256 = p.loadImage("PageViewBackground.png"); //"PageViewBackground.jpg"
         pageViewBackgroundLOD256.resize(256 * pvbSize, 256 * pvbSize);
         pageViewBackgroundLOD128 = pageViewBackgroundLOD256.get();
@@ -593,8 +593,8 @@ public class TextureCache {
         // draw all tiles
         for (TileHandler t : tileList) {
             t.draw(p.g, 0, 0, TextureCache.LOD256);
-            Object cache = p.g.getCache(t.getSprite(TextureCache.LOD256));
-            p.g.setCache(t.getSprite(TextureCache.LOD256), cache);
+//            Object cache = p.g.getCache(t.getSprite(TextureCache.LOD256));
+//            p.g.setCache(t.getSprite(TextureCache.LOD256), cache);
 
 
 //            t.draw(p.g, x, y, TextureCache.LOD128);
@@ -602,6 +602,19 @@ public class TextureCache {
 //            t.draw(p.g, x, y, TextureCache.LOD32);
         }
 
+        // force draw background paper
+        p.image(pageViewBackgroundLOD256, 0, 0);
+        p.image(pageViewBackgroundLOD128, 0, 0);
+        p.image(pageViewBackgroundLOD64, 0, 0);
+        p.image(pageViewBackgroundLOD32, 0, 0);
+
+        // force draw maths paper
+        p.image(gridLOD256, 0, 0);
+        p.image(gridLOD128, 0, 0);
+        p.image(gridLOD64, 0, 0);
+        p.image(gridLOD32, 0, 0);
+        p.image(gridLOD16, 0, 0);
+        p.image(gridLOD8, 0, 0);
     }
 
 }

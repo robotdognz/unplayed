@@ -2,12 +2,12 @@ package ui;
 
 import game.AppLogic;
 import game.Game;
+import handlers.ButtonHandler;
 import processing.core.PApplet;
 
 public class GameMenu extends Menu {
 	private final Game game;
 	private final String resume = "Resume";
-	private final String titleScreen = "Main Menu";
 	private final String edit = "Edit Level";
 	private final String quit = "Quit";
 
@@ -15,14 +15,18 @@ public class GameMenu extends Menu {
 		super(p);
 		this.game = game;
 
-		Button resumeB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, resume);
-		Button titleScreenB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, titleScreen);
-		Button editB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, edit);
-		Button quitB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, quit);
-		objects.add(resumeB);
-		objects.add(titleScreenB);
-		objects.add(editB);
-		objects.add(quitB);
+		ButtonHandler resumeHandler = AppLogic.texture.getButtonList().get(5);
+		Button resumeButton = new Button(resumeHandler, p.width * 0.5f, resume);
+
+		ButtonHandler editHandler = AppLogic.texture.getButtonList().get(6);
+		Button editButton = new Button(editHandler, p.width * 0.5f, edit);
+
+		ButtonHandler quitHandler = AppLogic.texture.getButtonList().get(4);
+		Button quitButton = new Button(quitHandler, p.width * 0.5f, quit);
+
+		objects.add(resumeButton);
+		objects.add(editButton);
+		objects.add(quitButton);
 
 		constructMenu();
 	}
@@ -40,17 +44,14 @@ public class GameMenu extends Menu {
 					AppLogic.removeMenu(); // remove pause menu
 
 					break;
-				case titleScreen:
-					game.emptyGame();
-					AppLogic.titleScreen(); // open title screen menu
-
-					break;
 				case edit:
 					AppLogic.toggleEditor(); // enable the editor
 
 					break;
 				case quit:
-					AppLogic.quit(); // exit the game
+//					AppLogic.quit(); // exit the game
+					game.emptyGame();
+					AppLogic.titleScreen(); // open title screen menu
 
 					break;
 			}

@@ -23,6 +23,8 @@ public class Button extends MenuObject {
 		super(width, height);
 		this.xCenter = xCenter;
 		this.text = text;
+
+		this.highlight = AppLogic.texture.getButtonList().get(0);
 	}
 
 	public Button(ButtonHandler handler, float xCenter, String text) {
@@ -40,20 +42,29 @@ public class Button extends MenuObject {
 	public void drawOnPage(PApplet p, float x, float y) {
 		
 		if (handler == null) { // no sprite
-			if (!hover) {
-				p.fill(200);
-			} else {
-				p.fill(100);
-			}
+			p.stroke(100); // 200
+			p.noFill();
+			p.strokeWeight(5);
 			p.rectMode(CENTER);
 			p.rect(x, y, width, height);
 			p.rectMode(CORNER);
-			p.fill(50);
+			p.fill(100); // 50
 			int textSize = p.width / 24;
 			p.textSize(textSize);
 			p.textAlign(CENTER, CENTER);
 			p.text(text, x, y);
+			if (hover) {
+				p.blendMode(MULTIPLY); // render it multiplied
+				p.pushMatrix();
+				p.translate(x, y);
+				p.imageMode(CENTER);
+				highlight.draw(p.g, 0, 0, getWidth(), getHeight(), 8); // draw the button highlight
+				p.popMatrix();
+				p.blendMode(BLEND); // back to normal rendering
+			}
+
 		} else {
+			p.blendMode(MULTIPLY); // render it multiplied
 			p.pushMatrix();
 			p.translate(x, y);
 			p.imageMode(CENTER);
@@ -62,6 +73,7 @@ public class Button extends MenuObject {
 				highlight.draw(p.g, 0, 0, getWidth(), getHeight(), 8); // draw the button highlight
 			}
 			p.popMatrix();
+			p.blendMode(BLEND); // back to normal rendering
 		}
 	}
 

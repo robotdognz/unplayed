@@ -337,7 +337,7 @@ public class AppLogic {
     static public void titleScreen() {
         // load in the title splash screen
         File testFile = new File("TitleScreen.png");
-        LoadingHandler loading = new LoadingHandler(p, texture, testFile, 8, 8, true, true);
+        LoadingHandler loading = new LoadingHandler(p, texture, testFile, 4, 4, true, false);
 
         // create the loading screen
         Menu temp = new TitleMenu(p, loading);
@@ -377,7 +377,7 @@ public class AppLogic {
         if (useDefault) {
             // load in the phone holding instructions loading screen
             File testFile = new File("StartLoadingScreen.png");
-            loading = new LoadingHandler(p, texture, testFile, 8, 8, true, true);
+            loading = new LoadingHandler(p, texture, testFile, 4, 4, true, false);
         }
 
         // create the loading screen

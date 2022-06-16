@@ -75,7 +75,7 @@ public class InGameUI {
         // calculate menu height based on screen aspect ratio
         this.menuButtonArea = screenWidth / 6f; //screenWidth / 6f
         this.menuButtonSize = menuButtonArea * 0.8f;
-        this.menuInGameHeight = 0; //buttonVerticalOffset; // change this value to move the menu button position, everything else will adjust correctly
+        this.menuInGameHeight = (controlButtonArea-controlButtonSize)/2 - (menuButtonArea-menuButtonSize)/2; //0; // change this value to move the menu button position, everything else will adjust correctly
         this.menuYPosition = this.menuInGameHeight;
         this.menuXPosition = screenWidth / 2f;
 

@@ -70,7 +70,7 @@ public class BackgroundPaper {
 		graphics.textureMode(NORMAL);
 		graphics.beginShape();
 		graphics.textureWrap(REPEAT);
-		graphics.texture(TextureCache.getPageViewBackground(scale));
+		graphics.texture(TextureCache.getPageViewBackground(scale * 0.5f));
 		graphics.vertex(startX, startY, xTileStart, yTileStart); // top left
 		graphics.vertex(endX, startY, xTileEnd, yTileStart); // top right
 		graphics.vertex(endX, endY, xTileEnd, yTileEnd); // bottom right

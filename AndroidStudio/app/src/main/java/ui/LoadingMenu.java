@@ -1,6 +1,9 @@
 package ui;
 
+import static processing.core.PConstants.BLEND;
 import static processing.core.PConstants.CENTER;
+import static processing.core.PConstants.MULTIPLY;
+
 import camera.PageViewCamera;
 import game.AppLogic;
 import handlers.ButtonHandler;
@@ -103,7 +106,7 @@ public class LoadingMenu extends Menu {
 			objectYPosition += objectHeight;
 		}
 
-		setAngle(0);
+//		setAngle(0);
 		updateCorners();
 		built = true;
 	}
@@ -135,11 +138,14 @@ public class LoadingMenu extends Menu {
 			p.rotate(PApplet.radians(-angle)); // rotate the image back
 			p.translate(-shadow, -shadow);
 
+		} else {
+			p.blendMode(MULTIPLY); // render it multiplied
 		}
 		p.rotate(PApplet.radians(angle)); // rotate the image
 
 		// draw the image
 		image.drawOnPage(p, 0, objectYPosition + imageHeight * 0.5f);
+		p.blendMode(BLEND); // back to normal rendering
 		objectYPosition += imageHeight; // update drawing position
 
 		p.rotate(PApplet.radians(-angle)); // rotate the image back
