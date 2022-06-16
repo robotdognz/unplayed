@@ -602,6 +602,10 @@ public class TextureCache {
 //            t.draw(p.g, x, y, TextureCache.LOD32);
         }
 
+        for (ButtonHandler b : buttonList) {
+            b.draw(p.g, 0, 0, TextureCache.LOD256);
+        }
+
         // force draw background paper
         p.image(pageViewBackgroundLOD256, 0, 0);
         p.image(pageViewBackgroundLOD128, 0, 0);

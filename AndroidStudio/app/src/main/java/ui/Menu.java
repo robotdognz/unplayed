@@ -59,7 +59,7 @@ public abstract class Menu {
 
 //		this.shadowOffset = 9;
         this.shadow = 9;
-        this.angleOffset = 5;
+        this.angleOffset = 2.5f; // 5
     }
 
     protected void setAngle(float range) {
@@ -71,6 +71,7 @@ public abstract class Menu {
             previousTilt = true;
         }
 
+        // add random variation in 'range'
         angle += (float) (Math.random() * range) - (range / 2);
     }
 

@@ -18,25 +18,27 @@ public class LaunchMenu extends Menu {
 		super(p);
 		this.game = AppLogic.game;
 
-//		Button newGameB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, newGame);
-		ButtonHandler newGameButtonHandler = AppLogic.texture.getButtonList().get(2);
-		Button newGameButton = new Button(newGameButtonHandler, p.width * 0.5f, newGame);
-
-//		Button editorB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, editor);
-		ButtonHandler newEditorHandler = AppLogic.texture.getButtonList().get(3);
-		Button editorButton = new Button(newEditorHandler, p.width * 0.5f, editor);
-
-//		Button quitB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, quit);
-		ButtonHandler quitHandler = AppLogic.texture.getButtonList().get(4);
-		Button quitButton = new Button(quitHandler, p.width * 0.5f, quit);
-
+		// continue
 		AppLogic.getSaveGame();
 		if (AppLogic.savedLevel > 1) {
-			Button continueB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, continueGame);
-			objects.add(continueB);
+			ButtonHandler continueButtonHandler = AppLogic.texture.getButtonList().get(5);
+			Button continueButton = new Button(continueButtonHandler, p.width * 0.5f, continueGame);
+			objects.add(continueButton);
 		}
+
+		// new game
+		ButtonHandler newGameButtonHandler = AppLogic.texture.getButtonList().get(2);
+		Button newGameButton = new Button(newGameButtonHandler, p.width * 0.5f, newGame);
 		objects.add(newGameButton);
+
+		// level editor
+		ButtonHandler newEditorHandler = AppLogic.texture.getButtonList().get(3);
+		Button editorButton = new Button(newEditorHandler, p.width * 0.5f, editor);
 		objects.add(editorButton);
+
+		// quit
+		ButtonHandler quitHandler = AppLogic.texture.getButtonList().get(4);
+		Button quitButton = new Button(quitHandler, p.width * 0.5f, quit);
 		objects.add(quitButton);
 
 		constructMenu();
