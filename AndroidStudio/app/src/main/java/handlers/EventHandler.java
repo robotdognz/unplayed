@@ -8,7 +8,7 @@ import processing.core.*;
 public class EventHandler extends Handler implements Comparable<EventHandler> {
 
 	public EventHandler(PApplet p, TextureCache texture, File file) {
-		super(p, texture, file, 1, 1, true);
+		super(p, texture, file, 1, 1, false);
 	}
 
 	public Event makeEvent(int x, int y) {

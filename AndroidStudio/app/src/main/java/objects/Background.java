@@ -1,6 +1,8 @@
 package objects;
 
+import static processing.core.PConstants.BLEND;
 import static processing.core.PConstants.CENTER;
+import static processing.core.PConstants.MULTIPLY;
 
 import java.io.File;
 
@@ -53,7 +55,7 @@ public class Background extends PageViewObject {
             p.translate(position.x, position.y);
             p.scale(size); // size the page will appear in the page view
 
-            if (hasShadow) {
+            if (hasShadow) { // is a solid shape
                 // draw the shadow
                 p.translate(shadow, shadow);
                 p.fill(0, 40);
@@ -63,12 +65,20 @@ public class Background extends PageViewObject {
                 p.rect(0, 0, getWidth(), getHeight());
                 p.rotate(PApplet.radians(-angle)); // rotate the page
                 p.translate(-shadow, -shadow);
+            } else {
+                p.blendMode(MULTIPLY); // render it multiplied
             }
 
             p.rotate(PApplet.radians(angle)); // rotate the page
             p.imageMode(CENTER);
+            // flip
+            if (flipX != 0 || flipY != 0) {
+                p.scale(flipX, flipY); // flip the page
+            }
             p.image(texture.getSprite(0), 0, 0, getWidth(), getHeight()); // draw the page
             p.popMatrix();
+
+            p.blendMode(BLEND); // back to normal rendering
 
         } else {
             // texture is missing

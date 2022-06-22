@@ -10,7 +10,7 @@ public class TileHandler extends Handler implements Comparable<TileHandler> {
     // 0 = cares about rotation, 1 = ignore 180 rotation, 2 = ignore all rotation
 
     public TileHandler(PApplet p, TextureCache texture, File file, int rotationMode) {
-        super(p, texture, file, 1, 1, true);
+        super(p, texture, file, 1, 1, false);
         this.rotationMode = rotationMode;
     }
 

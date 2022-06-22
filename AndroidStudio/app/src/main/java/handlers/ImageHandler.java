@@ -7,7 +7,7 @@ import processing.core.*;
 public class ImageHandler extends Handler implements Comparable<ImageHandler> {
 
     public ImageHandler(PApplet p, TextureCache texture, File file, int width, int height) {
-        super(p, texture, file, width, height, true);
+        super(p, texture, file, width, height, false);
     }
 
     @Override
