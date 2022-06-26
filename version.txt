@@ -1,5 +1,11 @@
 (Major version).(Minor version).(Revision number)
 
+1.3.7: Temp art vserion 2
+-Improved background art rendering
+-Added temp background images v2
+-Added brick to plaster transition tileset
+-Removed the last of the early development art
+
 1.3.6: Temp art version 1
 -Replaced post it notes with more fitting temp art
 -Updated 'continue' button temp art
