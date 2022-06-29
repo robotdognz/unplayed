@@ -79,7 +79,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\robot\Documents\Unplayed\Images\Store Page\Icon.png" />
+                                                <entry key="imagePath" value="C:\Users\robot\Documents\Unplayed\Images\Store Page\Icon v2.png" />
                                                 <entry key="scalingPercent" value="72" />
                                               </map>
                                             </option>
@@ -113,7 +113,6 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="eeecec" />
                                     </map>
                                   </option>
                                 </PersistentState>
