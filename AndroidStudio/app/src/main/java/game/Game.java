@@ -394,6 +394,8 @@ public class Game {
      * in the level editor.
      */
     public void restart() {
+        player.flushVibration(); // process remaining player vibrations
+
         if (playerCheckpoint != null) { // if there is a player checkpoint
             Rectangle previousPlayer = removed.get(removed.size() - 1);
             removed.remove(previousPlayer);
@@ -447,6 +449,7 @@ public class Game {
                 player.physicsStep(stepSize);
                 PlayerVibration.EndStep();
             }
+
             box2d.step(stepSize, 8, 3);
 //            PApplet.print("End Step");
             steps--;

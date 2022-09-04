@@ -94,7 +94,6 @@ public class Spike extends Event {
 
 	@Override
 	public void activate() {
-		PlayerVibration.DeathBuzz();
 		game.restart(); // TODO: this needs a custom method in Game
 	}
 

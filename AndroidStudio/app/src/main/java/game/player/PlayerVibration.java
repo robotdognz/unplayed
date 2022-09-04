@@ -81,7 +81,7 @@ public class PlayerVibration {
 	public static void EndStep() {
 		// new filtering system (this one works)
 
-		// get impulse and clear field
+		// get impulse
 		float currentStep = currentImpulse;
 
 		if (currentStep > 1 && currentImpulse != previousImpulse) {
@@ -97,10 +97,6 @@ public class PlayerVibration {
 		// reset
 		previousImpulse = currentImpulse;
 		currentImpulse = 0;
-	}
-
-	public static void DeathBuzz() {
-		Vibe.vibrate(20);
 	}
 
 	public void physicsImpact(float[] normalImpulses, float[] tangentImpulses) {

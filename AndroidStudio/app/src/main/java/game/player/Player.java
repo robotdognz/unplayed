@@ -1622,6 +1622,12 @@ public class Player extends Editable {
         }
     }
 
+    public void flushVibration()
+    {
+        PlayerVibration.EndStep();
+        vibration.step(0.01f);
+    }
+
     public boolean isStill() {
         Vec2 vel = dynamicBody.getLinearVelocity();
         if (Math.abs(vel.x) >= 0.1f) {
