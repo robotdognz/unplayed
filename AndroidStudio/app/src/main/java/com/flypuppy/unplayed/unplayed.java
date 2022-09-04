@@ -200,6 +200,11 @@ public class unplayed extends PApplet {
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        
+    }
+
     //------------------TouchTesting---------------------
     class TouchTesting {
         public void draw() {
