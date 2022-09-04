@@ -49,7 +49,7 @@ public class Game {
 
     // enum used to indicate what type of pause has happened
     private enum PauseType {
-        NEXT_LEVEL, RESTART_LEVEL, NEXT_PLAYER, NONE
+        END_LEVEL, NEXT_LEVEL, RESTART_LEVEL, NEXT_PLAYER, NONE
     }
 
     public Camera camera;
@@ -216,9 +216,7 @@ public class Game {
 
         if (AppLogic.getEditor() == null) { // in a normal game
             pauseTimer.start();
-            pauseType = PauseType.NEXT_LEVEL;
-            playerTransition.update(player.getCenter(), null, PlayerTransition.Type.END);
-            player.setActive(false);
+            pauseType = PauseType.END_LEVEL;
         } else { // in the editor
             if (AppLogic.editorToggle && !Editor.showPageView) {
                 AppLogic.toast.showToast("Level Complete");
@@ -226,6 +224,13 @@ public class Game {
             pauseTimer.start();
             pauseType = PauseType.RESTART_LEVEL;
         }
+    }
+
+    public void nextLevel() {
+        pauseTimer.start();
+        pauseType = PauseType.NEXT_LEVEL;
+        playerTransition.update(player.getCenter(), null, PlayerTransition.Type.END);
+        player.setActive(false);
     }
 
     public void endPuzzle(Rectangle playerArea) {
@@ -421,16 +426,21 @@ public class Game {
                     pauseType = PauseType.NONE;
                     pauseTimer.stop();
                     break;
+                case END_LEVEL:
+                    pauseType = PauseType.NONE;
+                    pauseTimer.stop();
+                    nextLevel();
+                    break;
+                case RESTART_LEVEL:
+                    AppLogic.restartLevel();
+                    pauseType = PauseType.NONE;
+                    pauseTimer.stop();
+                    break;
                 case NEXT_LEVEL:
                     if (playerTransition.isActive()) {
                         break;
                     }
                     AppLogic.nextLevel();
-                    pauseType = PauseType.NONE;
-                    pauseTimer.stop();
-                    break;
-                case RESTART_LEVEL:
-                    AppLogic.restartLevel();
                     pauseType = PauseType.NONE;
                     pauseTimer.stop();
                     break;
