@@ -27,6 +27,7 @@ import misc.Vibe;
 import objects.*;
 import processing.core.*;
 import processing.event.TouchEvent;
+import sound.SoundManager;
 import ui.GameMenu;
 import ui.LaunchMenu;
 import ui.LoadingMenu;
@@ -69,6 +70,8 @@ public class AppLogic {
     private static boolean skipNextStep = false; // skips running for a step so we don't see force drawn assets or a lag spike
     private static boolean startLevel = false; // run start level this frame
 
+    private static SoundManager soundManager;
+
     public AppLogic(PApplet pApplet) {
         p = pApplet;
         toast = new DoToast(p);
@@ -87,6 +90,9 @@ public class AppLogic {
 
         // setup vibration class
         Vibe.setup(p);
+
+        // setup sound class
+        soundManager = new SoundManager(p);
 
         Camera camera = new GameCamera();
         convert = new Converter(p);
@@ -372,6 +378,9 @@ public class AppLogic {
      */
     static public void loadingScreen(boolean useDefault) {
         // when the loading screen is completed it calls startLevel()
+
+        // test sound manager
+        soundManager.test();
 
         LoadingHandler loading = game.currentLoading;
 
