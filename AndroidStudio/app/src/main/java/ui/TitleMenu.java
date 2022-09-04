@@ -12,6 +12,12 @@ public class TitleMenu extends LoadingMenu {
 	}
 
 	@Override
+	public void onBackPressed() {
+		// quit if in title screen
+		AppLogic.quit(); // exit the game
+	}
+
+	@Override
 	public void click() {
 		for (MenuObject object : objects) {
 			if (!(object instanceof Button)) {

@@ -189,20 +189,20 @@ public class unplayed extends PApplet {
     }
 
     @Override
-    public void onStop() { //This should be called when the app closes
-        //Save stuff
+    public void onStop() { // This should be called when the app closes
+        // Save stuff
         super.onStop();
     }
 
     @Override
-    public void onDestroy() { //This might be called when the app is killed
-        //Save stuff
+    public void onDestroy() { // This might be called when the app is killed
+        // Save stuff
         super.onDestroy();
     }
 
     @Override
-    public void onBackPressed() {
-        
+    public void onBackPressed() { // android back button pressed
+        app.onBackPressed();
     }
 
     //------------------TouchTesting---------------------

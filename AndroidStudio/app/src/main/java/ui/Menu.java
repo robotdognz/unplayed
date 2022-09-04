@@ -62,6 +62,10 @@ public abstract class Menu {
         this.angleOffset = 2.5f; // 5
     }
 
+    public void onBackPressed() {
+        // fill this in in the derived class
+    }
+
     protected void setAngle(float range) {
         if (previousTilt) {
             angle = angleOffset;

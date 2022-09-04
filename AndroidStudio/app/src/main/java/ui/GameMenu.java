@@ -32,6 +32,13 @@ public class GameMenu extends Menu {
 	}
 
 	@Override
+	public void onBackPressed() {
+		// go to title screen if in pause menu
+		game.emptyGame();
+		AppLogic.titleScreen(); // open title screen menu
+	}
+
+	@Override
 	public void click() {
 		for (MenuObject object : objects) {
 			if (!(object instanceof Button)) {
@@ -49,7 +56,6 @@ public class GameMenu extends Menu {
 
 					break;
 				case quit:
-//					AppLogic.quit(); // exit the game
 					game.emptyGame();
 					AppLogic.titleScreen(); // open title screen menu
 

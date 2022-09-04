@@ -30,6 +30,12 @@ public class DeveloperMenu extends Menu {
     }
 
     @Override
+    public void onBackPressed() {
+        // go back to previous menu
+        AppLogic.previousMenu();
+    }
+
+    @Override
     public void click() {
         for (MenuObject object : objects) {
             if (!(object instanceof Button)) {

@@ -27,6 +27,7 @@ import misc.Vibe;
 import objects.*;
 import processing.core.*;
 import processing.event.TouchEvent;
+import ui.GameMenu;
 import ui.LaunchMenu;
 import ui.LoadingMenu;
 import ui.Menu;
@@ -601,6 +602,16 @@ public class AppLogic {
 
     static public boolean hasMenu() {
         return menu != null;
+    }
+
+    public void onBackPressed() {
+        if (menu == null) {
+            // open menu if no menus
+            AppLogic.addMenu(new GameMenu(p, AppLogic.game));
+        } else {
+            // pass command to menu
+            menu.onBackPressed();
+        }
     }
 
     static public void clearMenus(){

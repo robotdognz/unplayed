@@ -31,6 +31,12 @@ public class EditorMenu extends Menu {
     }
 
     @Override
+    public void onBackPressed() {
+        // resume if in editor menu
+        AppLogic.removeMenu();
+    }
+
+    @Override
     public void click() {
         for (MenuObject object : objects) {
             if (!(object instanceof Button)) {
