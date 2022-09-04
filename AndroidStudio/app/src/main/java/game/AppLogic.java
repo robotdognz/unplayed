@@ -694,7 +694,7 @@ public class AppLogic {
     // quit
 
     static public void quit() {
-        p.getActivity().finish();
+        p.getActivity().finishAndRemoveTask();
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
