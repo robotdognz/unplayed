@@ -206,7 +206,7 @@ public class Game {
     }
 
     /**
-     * Called when the level should be ended
+     * Called when the level should be ended. Can be called externally by slots, etc.
      */
     public void endLevel() {
         // if already in the process of doing something, return
@@ -214,21 +214,25 @@ public class Game {
             return;
         }
 
-        if (AppLogic.getEditor() == null) { // in a normal game
-            pauseTimer.start();
-            pauseType = PauseType.END_LEVEL;
-        } else { // in the editor
-            if (AppLogic.editorToggle && !Editor.showPageView) {
-                AppLogic.toast.showToast("Level Complete");
-            }
-            pauseTimer.start();
-            pauseType = PauseType.RESTART_LEVEL;
-        }
+        // set the tag to process the level end
+        pauseTimer.start();
+        pauseType = PauseType.END_LEVEL;
     }
 
-    public void nextLevel() {
+    /**
+     * Called after end level transition effect has played.
+     * Determines if the next level should be loaded or the current level should be restarted.
+     */
+    public void processLevelEnd() {
         pauseTimer.start();
-        pauseType = PauseType.NEXT_LEVEL;
+        if (AppLogic.getEditor() == null) {
+            // not in editor, set tag to load next level
+            pauseType = PauseType.NEXT_LEVEL;
+        } else {
+            // in editor, set tag to restart level
+            pauseType = PauseType.RESTART_LEVEL;
+            AppLogic.toast.showToast("Level Complete");
+        }
         playerTransition.update(player.getCenter(), null, PlayerTransition.Type.END);
         player.setActive(false);
     }
@@ -429,18 +433,21 @@ public class Game {
                 case END_LEVEL:
                     pauseType = PauseType.NONE;
                     pauseTimer.stop();
-                    nextLevel();
-                    break;
-                case RESTART_LEVEL:
-                    AppLogic.restartLevel();
-                    pauseType = PauseType.NONE;
-                    pauseTimer.stop();
+                    processLevelEnd();
                     break;
                 case NEXT_LEVEL:
+                case RESTART_LEVEL:
+                    // break if the player transition animation is playing
                     if (playerTransition.isActive()) {
                         break;
                     }
-                    AppLogic.nextLevel();
+                    // go to next level or restart
+                    if (pauseType == PauseType.NEXT_LEVEL) {
+                        AppLogic.nextLevel();
+                    } else {
+                        AppLogic.restartLevel();
+                    }
+                    // clear timer
                     pauseType = PauseType.NONE;
                     pauseTimer.stop();
                     break;
