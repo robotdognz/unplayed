@@ -18,6 +18,33 @@ public class Quadtree {
 		root = new QuadNode(bounds, null, this); // top level node has null for parent
 	}
 
+	/**
+	 * Calculate the world area rectangle that contains all the objects currently in the world.
+	 */
+	public Rectangle calculateArea() {
+		// get all objects
+		HashSet<Rectangle> returnObjects = new HashSet<>();
+		root.getAll(returnObjects);
+
+		// store coordinates
+		float minX = Float.POSITIVE_INFINITY;
+		float minY = Float.POSITIVE_INFINITY;
+		float maxX = Float.NEGATIVE_INFINITY;
+		float maxY = Float.NEGATIVE_INFINITY;
+
+		// get coordinates
+		for (Rectangle r : returnObjects) {
+			if (r.getX() < minX) minX = r.getX();
+			if (r.getY() < minY) minY = r.getY();
+			if (r.getBottomRight().x > maxX) maxX = r.getBottomRight().x;
+			if (r.getBottomRight().y > maxY) maxY = r.getBottomRight().y;
+		}
+
+		// build and output area rectangle
+		Rectangle output = new Rectangle(minX, minY, maxX - minX, maxY - minY);
+		return output;
+	}
+
 	public HashSet<Rectangle> retrieve(HashSet<Rectangle> returnObjects, Rectangle player) {
 		root.retrieve(returnObjects, player);
 		return returnObjects;

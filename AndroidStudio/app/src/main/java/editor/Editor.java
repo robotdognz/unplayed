@@ -490,22 +490,26 @@ public class Editor {
     public void switchView() {
         if (showPageView) {
             showPageView = false;
+
             // save page view camera
             pvScale = Camera.getScale();
             pvSubScale = Camera.getSubScale();
             pvCenter.x = Camera.getCenter().x;
             pvCenter.y = Camera.getCenter().y;
+
             // set camera to level view
             Camera.setScale(lvScale);
             Camera.setSubScale(lvSubScale);
             Camera.setCenter(lvCenter);
         } else {
             showPageView = true;
+
             // save level view camera
             lvScale = Camera.getScale();
             lvSubScale = Camera.getSubScale();
             lvCenter.x = Camera.getCenter().x;
             lvCenter.y = Camera.getCenter().y;
+
             // set camera to page view
             Camera.setScale(pvScale);
             Camera.setSubScale(pvSubScale);
@@ -514,6 +518,13 @@ public class Editor {
             // force re-render of pages
             pageView.recalculatePageViewObjects();
         }
+    }
+
+    public void setPageViewCamera(float scale, float subScale, PVector center) {
+        pvScale = scale;
+        pvSubScale = subScale;
+        pvCenter.x = center.x;
+        pvCenter.y = center.y;
     }
 
     /**

@@ -52,7 +52,7 @@ public class GameMenu extends Menu {
 
 					break;
 				case edit:
-					AppLogic.toggleEditor(); // enable the editor
+					AppLogic.startEditorFromGame(); //toggleEditor(); // enable the editor
 
 					break;
 				case quit:
