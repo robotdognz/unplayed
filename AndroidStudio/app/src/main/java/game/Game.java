@@ -41,9 +41,11 @@ public class Game {
     private PlayerStart playerStart;
     public Tile playerCheckpoint;
 
+    public PlayerEnd lastSlot; // store the last slot so we can reset it if slotting in didn't work (only applicable if editing level)
+
     private final CountdownTimer pauseTimer; // used to pause game during puzzles
     private PauseType pauseType;
-    private Rectangle playerAreaTemp;
+    private Tile nextPlayer = null; // tile the next player will be built from
 
     public LoadingHandler currentLoading = null;
 
@@ -88,6 +90,8 @@ public class Game {
         views = new ArrayList<>();
         playerObjects = new HashSet<>();
         player = null;
+
+        lastSlot = null;
 
         pageView = new PageView(p, convert);
 
@@ -243,38 +247,50 @@ public class Game {
             return;
         }
 
-        pauseTimer.start();
-        pauseType = PauseType.NEXT_PLAYER;
-        playerAreaTemp = playerArea.copy();
-    }
-
-    private void nextPlayer() {
+        // try to find the next tile the player will become
         HashSet<Rectangle> returnObjects = new HashSet<>();
-        world.retrieve(returnObjects, playerAreaTemp);
-        Tile found = null;
+        world.retrieve(returnObjects, playerArea);
+        nextPlayer = null;
         for (Rectangle r : returnObjects) {
             if (!(r instanceof Tile)) {
                 continue;
             }
-            if (r.getTopLeft().x > playerAreaTemp.getBottomRight().x - 1) {
+            if (r.getTopLeft().x > playerArea.getBottomRight().x - 1) {
                 continue;
             }
-            if (r.getBottomRight().x < playerAreaTemp.getTopLeft().x + 1) {
+            if (r.getBottomRight().x < playerArea.getTopLeft().x + 1) {
                 continue;
             }
-            if (r.getTopLeft().y > playerAreaTemp.getBottomRight().y - 1) {
+            if (r.getTopLeft().y > playerArea.getBottomRight().y - 1) {
                 continue;
             }
-            if (r.getBottomRight().y < playerAreaTemp.getTopLeft().y + 1) {
+            if (r.getBottomRight().y < playerArea.getTopLeft().y + 1) {
                 continue;
             }
-            found = ((Tile) r);
+            nextPlayer = ((Tile) r);
         }
+
+        // if the next tile the player will become has been found
+        if (nextPlayer != null) {
+            // found a next player, start the transition
+            pauseTimer.start();
+            pauseType = PauseType.NEXT_PLAYER;
+        } else {
+            // no next player found, reset slot
+            if (lastSlot != null) {
+                lastSlot.reset();
+                lastSlot = null;
+            }
+        }
+
+    }
+
+    private void nextPlayer() {
         // if the next block the player will become has been found
-        if (found != null) {
+        if (nextPlayer != null) {
 
             // update the checkpoint
-            this.playerCheckpoint = found;
+            this.playerCheckpoint = nextPlayer;
 
             // make the matching tile to fill the slot
             int tileX = (Math.round((player.getCenter().x - player.getWidth() / 2) / 10) * 10);
@@ -287,7 +303,7 @@ public class Game {
 
             // create the new player
             puzzlesCompleted++;
-            createPlayer(found, false);
+            createPlayer(nextPlayer, false);
         }
     }
 

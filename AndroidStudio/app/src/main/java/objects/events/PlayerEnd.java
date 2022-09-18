@@ -145,6 +145,11 @@ public class PlayerEnd extends Event {
 			return;
 		}
 
+		if (alreadyUsed) {
+			DebugOutput.pushMessage("Slot failed at 'already used'", 2);
+			return;
+		}
+
 		Player player = game.player;
 		if (!player.isStill()) {
 			return;
@@ -186,17 +191,21 @@ public class PlayerEnd extends Event {
 
 		}
 
-		if (!alreadyUsed) { // only ever do this once
-			alreadyUsed = true;
-			if (levelEnd) { // if this is the end of the level
-				game.endLevel();
-			} else { // if this is just part of the puzzle
-				game.endPuzzle(newPlayerArea);
-			}
-		} else {
-			DebugOutput.pushMessage("Slot failed at 'already used'", 2);
-			// TODO: fix problem with alreadyUsed breaking when the slot points nowhere in the editor
+//		if (!alreadyUsed) { // only ever do this once
+		alreadyUsed = true;
+		game.lastSlot = this; // store this in case the level is being edited and this slot needs to be reset
+
+		DebugOutput.pushMessage("Slot success", 2);
+
+		if (levelEnd) { // if this is the end of the level
+			game.endLevel();
+		} else { // if this is just part of the puzzle
+			game.endPuzzle(newPlayerArea);
 		}
+//		} else {
+//			DebugOutput.pushMessage("Slot failed at 'already used'", 2);
+//			// TODO: fix problem with alreadyUsed breaking when the slot points nowhere in the editor
+//		}
 	}
 
 }
