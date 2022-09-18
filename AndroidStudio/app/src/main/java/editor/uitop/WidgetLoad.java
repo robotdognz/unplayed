@@ -47,6 +47,8 @@ public class WidgetLoad extends Widget {
 				editorTop.loading = false;
 				// clear view/page offset in editor bottom
 				((EditorBottom) editor.editorBottom).resetViewAndPageOffset();
+
+				editor.focusCameras();
 			}
 		}
 	}

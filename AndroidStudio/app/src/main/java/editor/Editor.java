@@ -520,11 +520,53 @@ public class Editor {
         }
     }
 
+    public void setEditorViewCamera(float scale, float subScale, PVector center) {
+        lvScale = scale;
+        lvSubScale = subScale;
+        lvCenter.x = center.x;
+        lvCenter.y = center.y;
+    }
+
     public void setPageViewCamera(float scale, float subScale, PVector center) {
         pvScale = scale;
         pvSubScale = subScale;
         pvCenter.x = center.x;
         pvCenter.y = center.y;
+    }
+
+    public void resetCameras() {
+        PVector centre = new PVector(0,0);
+        float scale = 1000;
+        float subScale = 1;
+        Camera.setCenter(centre);
+        Camera.setScale(scale);
+        Camera.setSubScale(subScale);
+
+        setEditorViewCamera(scale, subScale, centre);
+        setPageViewCamera(scale, subScale, centre);
+
+        Editor.showPageView = false;
+    }
+
+    public void focusCameras() {
+        // switch to level view
+        Editor.showPageView = false;
+
+        // calculate active (has objects) area in level view
+        Rectangle levelArea = AppLogic.game.world.calculateArea();
+        PApplet.print("Level area: " + levelArea.getTopLeft() + " " + levelArea.getBottomRight());
+        // fit level view camera to level area
+        Camera.setCenter(levelArea.getRectangleCenter());
+        Camera.setSubScale(1);
+        Camera.setScale(levelArea.getWidth() + 200);
+
+        // calculate active (has objects) area in page view
+        Rectangle pvArea = AppLogic.game.getPageView().getLevelArea();
+        float pvScale = pvArea.getWidth() + 200;
+        float pvSubScale = 1;
+        PVector pvCenter = new PVector(pvArea.getRectangleCenter().x,pvArea.getRectangleCenter().y);
+        // fit page view camera to page view area
+        setPageViewCamera(pvScale, pvSubScale, pvCenter);
     }
 
     /**

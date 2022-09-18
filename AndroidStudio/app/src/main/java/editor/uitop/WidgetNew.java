@@ -36,6 +36,9 @@ public class WidgetNew extends Widget {
 		editor.selected = null;
 		// clear view/page offset in editor bottom
 		((EditorBottom) editor.editorBottom).resetViewAndPageOffset();
+
+		// reset cameras
+		editor.resetCameras();
 	}
 
 }

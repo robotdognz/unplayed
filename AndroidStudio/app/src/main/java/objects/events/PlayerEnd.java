@@ -6,6 +6,7 @@ import java.util.HashSet;
 
 import org.jbox2d.common.Vec2;
 
+import editor.DebugOutput;
 import game.AppLogic;
 import game.Game;
 import game.player.Player;
@@ -151,13 +152,16 @@ public class PlayerEnd extends Event {
 
 		Vec2 playerPos = player.getCenter();
 		if (Math.abs(playerPos.x - center.x) > 4) { // 0.5f
+			DebugOutput.pushMessage("Slot failed at 'off on x'", 2);
 			return;
 		}
 		if (Math.abs(playerPos.y - center.y) > 4) { // 0.5f
+			DebugOutput.pushMessage("Slot failed at 'off on y'", 2);
 			return;
 		}
 		if (required != null) {
 			if (!player.getFile().equals(required.getFile())) {
+				DebugOutput.pushMessage("Slot failed at 'wrong tile'", 2);
 				return;
 			}
 
@@ -167,6 +171,7 @@ public class PlayerEnd extends Event {
 				float playerAngle = player.getAdjustedAngle(true);
 
 				if (!(playerAngle == required.getAngle())) {
+					DebugOutput.pushMessage("Slot failed at 'wrong angle 360' pa = " + playerAngle + ", ra = " + required.getAngle(), 2);
 					return;
 				}
 			} else if (rotationMode == 1) { // only 180 degree rotation matters
@@ -174,6 +179,7 @@ public class PlayerEnd extends Event {
 
 				if (!(playerAngle == required.getAngle() || playerAngle - 180 == required.getAngle()
 						|| playerAngle + 180 == required.getAngle())) {
+					DebugOutput.pushMessage("Slot failed at 'wrong angle 180' pa = " + playerAngle + ", ra = " + required.getAngle() + " +-180", 2);
 					return;
 				}
 			}
@@ -187,6 +193,9 @@ public class PlayerEnd extends Event {
 			} else { // if this is just part of the puzzle
 				game.endPuzzle(newPlayerArea);
 			}
+		} else {
+			DebugOutput.pushMessage("Slot failed at 'already used'", 2);
+			// TODO: fix problem with alreadyUsed breaking when the slot points nowhere in the editor
 		}
 	}
 

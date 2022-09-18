@@ -405,28 +405,29 @@ public class AppLogic {
      * Called externally to edit a level when playing a campaign
      */
     static public void startEditorFromGame() {
-        // switch to level view
-        Editor.showPageView = false;
-
-        // calculate active (has objects) area in level view
-        Rectangle levelArea = game.world.calculateArea();
-        PApplet.print("Level area: " + levelArea.getTopLeft() + " " + levelArea.getBottomRight());
-        // fit level view camera to level area
-        Camera.setCenter(levelArea.getRectangleCenter());
-        Camera.setSubScale(1);
-        Camera.setScale(levelArea.getWidth() + 200);
+//        // switch to level view
+//        Editor.showPageView = false;
+//
+//        // calculate active (has objects) area in level view
+//        Rectangle levelArea = game.world.calculateArea();
+//        PApplet.print("Level area: " + levelArea.getTopLeft() + " " + levelArea.getBottomRight());
+//        // fit level view camera to level area
+//        Camera.setCenter(levelArea.getRectangleCenter());
+//        Camera.setSubScale(1);
+//        Camera.setScale(levelArea.getWidth() + 200);
 
         // toggle the editor before setting the page view camera
         // this ensures there is a non null editor to pass the values to
         toggleEditor();
+        editor.focusCameras();
 
-        // calculate active (has objects) area in page view
-        Rectangle pvArea = game.getPageView().getLevelArea();
-        float pvScale = pvArea.getWidth() + 200;
-        float pvSubScale = 1;
-        PVector pvCenter = new PVector(pvArea.getRectangleCenter().x,pvArea.getRectangleCenter().y);
-        // fit page view camera to page view area
-        editor.setPageViewCamera(pvScale, pvSubScale, pvCenter);
+//        // calculate active (has objects) area in page view
+//        Rectangle pvArea = game.getPageView().getLevelArea();
+//        float pvScale = pvArea.getWidth() + 200;
+//        float pvSubScale = 1;
+//        PVector pvCenter = new PVector(pvArea.getRectangleCenter().x,pvArea.getRectangleCenter().y);
+//        // fit page view camera to page view area
+//        editor.setPageViewCamera(pvScale, pvSubScale, pvCenter);
 
     }
 
