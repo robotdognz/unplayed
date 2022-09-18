@@ -36,7 +36,10 @@ public class PageTool extends AreaTool {
     public void touchMoved(PVector touch) {
         if (!Editor.showPageView) {// views
             if (editor.selected != null && editor.selected instanceof View && editor.editorMode == EditorMode.SELECT) {
-                super.touchMoved(touch);
+                super.touchMoved(touch); // resize view
+                if (edit != null) {
+                    AppLogic.game.getPageView().rebuildObjectRemovalFromPage((View) edit);
+                }
             } else {
                 edit = null;
             }

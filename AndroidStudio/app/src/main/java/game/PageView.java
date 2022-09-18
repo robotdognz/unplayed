@@ -14,6 +14,7 @@ import objects.Background;
 import objects.Page;
 import objects.PageViewObject;
 import objects.Rectangle;
+import objects.View;
 import processing.core.*;
 import ui.Menu;
 
@@ -457,6 +458,25 @@ public class PageView {
             page.updatePageContents(); // rebuilds the contents of the page
         }
         resetSystems();
+    }
+
+    /**
+     * Rebuilds the removal arrays in any pages made from a given view.
+     *
+     * Called by view resizing tool.
+     * This prevents the page nulling out by trying to parse incorrect removal arrays.
+     */
+    public void rebuildObjectRemovalFromPage(View view) {
+        for (PageViewObject object : pageViewObjects) {
+            if (!(object instanceof Page)) {
+                continue;
+            }
+            Page page = (Page) object;
+
+            if (page.getView().equals(view)) {
+                page.updateSizeFromView();
+            }
+        }
     }
 
     public void clearMenus() {

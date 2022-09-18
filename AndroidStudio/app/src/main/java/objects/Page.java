@@ -85,13 +85,23 @@ public class Page extends PageViewObject {
         int cols = (int) (view.getWidth() / 100);
         int rows = (int) (view.getHeight() / 100);
 
+        if (objects == null || objects.length != rows || objects[0].length != cols) {
+            objects = new boolean[rows][cols];
+            images = new boolean[rows][cols];
+            player = new boolean[rows][cols];
+        }
+    }
+
+    public void adjustRemovalArrays() {
+        int cols = (int) (view.getWidth() / 100);
+        int rows = (int) (view.getHeight() / 100);
+
         // TODO: currently this erases removals when the page is resized, this should be improved
         if (objects == null || objects.length != rows || objects[0].length != cols) {
             objects = new boolean[rows][cols];
             images = new boolean[rows][cols];
             player = new boolean[rows][cols];
         }
-
     }
 
     public List<PageViewObject> getChildren() {
@@ -751,7 +761,7 @@ public class Page extends PageViewObject {
         setCorners(view.getTopLeft(), view.getBottomRight());
         buildPaddedView();
         updateCorners();
-        setupRemovalArrays();
+        adjustRemovalArrays();
     }
 
     /**
