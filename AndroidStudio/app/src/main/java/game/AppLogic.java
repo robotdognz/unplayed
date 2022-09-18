@@ -379,9 +379,6 @@ public class AppLogic {
     static public void loadingScreen(boolean useDefault) {
         // when the loading screen is completed it calls startLevel()
 
-        // test sound manager
-        soundManager.test();
-
         LoadingHandler loading = game.currentLoading;
 
         if (useDefault) {
