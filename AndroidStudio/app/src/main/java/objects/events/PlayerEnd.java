@@ -175,15 +175,18 @@ public class PlayerEnd extends Event {
 			if (rotationMode == 0) { // rotation matters
 				float playerAngle = player.getAdjustedAngle(true);
 
-				if (!(playerAngle == required.getAngle())) {
+				if (!(playerAngle == required.getAngle()
+						|| playerAngle + 360 == required.getAngle())) {
 					DebugOutput.pushMessage("Slot failed at 'wrong angle 360' pa = " + playerAngle + ", ra = " + required.getAngle(), 2);
 					return;
 				}
 			} else if (rotationMode == 1) { // only 180 degree rotation matters
 				float playerAngle = player.getAdjustedAngle(true);
 
-				if (!(playerAngle == required.getAngle() || playerAngle - 180 == required.getAngle()
-						|| playerAngle + 180 == required.getAngle())) {
+				if (!(playerAngle == required.getAngle()
+						|| playerAngle - 180 == required.getAngle()
+						|| playerAngle + 180 == required.getAngle() 
+						|| playerAngle + 360 == required.getAngle())) {
 					DebugOutput.pushMessage("Slot failed at 'wrong angle 180' pa = " + playerAngle + ", ra = " + required.getAngle() + " +-180", 2);
 					return;
 				}
