@@ -1,50 +1,43 @@
 [
   {
     "pHeight": 100,
-    "pX": 200,
-    "name": "Spike",
-    "pY": 500,
-    "angle": 270,
-    "pWidth": 100,
-    "type": "Spike"
-  },
-  {
-    "pHeight": 100,
     "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": -700,
+    "pX": 100,
+    "pY": -400,
     "flipV": false,
-    "angle": 0,
+    "angle": 90,
     "flipH": false,
     "type": "tile",
     "pWidth": 100
   },
   {
     "pHeight": 100,
-    "newPlayerX": -200,
-    "pX": -300,
+    "newPlayerX": 200,
+    "pX": 100,
     "name": "PlayerEnd",
-    "pY": -700,
-    "end": false,
+    "pY": -400,
+    "end": true,
     "pWidth": 100,
     "type": "PlayerEnd",
     "newPlayerWidth": 100,
     "newPlayerHeight": 100,
-    "newPlayerY": -800
-  },
-  {
-    "pHeight": 100,
-    "pX": 200,
-    "name": "Spike",
-    "pY": 100,
-    "angle": 270,
-    "pWidth": 100,
-    "type": "Spike"
+    "newPlayerY": -500
   },
   {
     "pHeight": 100,
     "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -200,
+    "pX": -400,
+    "pY": -200,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": -400,
     "pY": -100,
     "flipV": false,
     "angle": 0,
@@ -55,66 +48,13 @@
   {
     "pHeight": 100,
     "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": 200,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
     "pX": -200,
-    "pY": -1000,
+    "pY": -500,
     "flipV": false,
-    "angle": 180,
+    "angle": 90,
     "flipH": false,
     "pWidth": 100,
     "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 0,
-    "pY": 700,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -200,
-    "pY": 0,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -200,
-    "pY": 100,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 200,
-    "name": "Spike",
-    "pY": -400,
-    "angle": 270,
-    "pWidth": 100,
-    "type": "Spike"
   },
   {
     "pHeight": 100,
@@ -131,16 +71,38 @@
     "pHeight": 100,
     "pX": -200,
     "name": "Spike",
-    "pY": 200,
-    "angle": 90,
+    "pY": 100,
+    "angle": 270,
     "pWidth": 100,
     "type": "Spike"
   },
   {
     "pHeight": 100,
     "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": 500,
+    "pX": 100,
+    "pY": -500,
+    "flipV": false,
+    "angle": 90,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_puzzle04_1.png",
+    "pX": 200,
+    "pY": -200,
+    "flipV": false,
+    "angle": 180,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "pX": 100,
+    "pY": -200,
     "flipV": false,
     "angle": 0,
     "flipH": false,
@@ -149,9 +111,18 @@
   },
   {
     "pHeight": 100,
+    "pX": 0,
+    "name": "Spike",
+    "pY": 200,
+    "angle": 180,
+    "pWidth": 100,
+    "type": "Spike"
+  },
+  {
+    "pHeight": 100,
     "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": -1200,
+    "pX": -100,
+    "pY": -600,
     "flipV": false,
     "angle": 90,
     "flipH": false,
@@ -162,7 +133,29 @@
     "pHeight": 100,
     "file": "unplayed_tiles/tile_castle00_2.png",
     "pX": 300,
-    "pY": 500,
+    "pY": 200,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 200,
+    "pY": -400,
+    "flipV": false,
+    "angle": 90,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 300,
+    "pY": 100,
     "flipV": false,
     "angle": 0,
     "flipH": false,
@@ -182,245 +175,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -100,
-    "pY": -1000,
-    "flipV": false,
-    "angle": 180,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": -600,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -200,
-    "pY": 700,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": -400,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 200,
-    "name": "Spike",
-    "pY": -700,
-    "angle": 270,
-    "pWidth": 100,
-    "type": "Spike"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": -300,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": -100,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": 100,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 0,
-    "pY": -1200,
-    "flipV": false,
-    "angle": 90,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": -900,
-    "flipV": false,
-    "angle": 90,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": -1000,
-    "flipV": false,
-    "angle": 90,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": -1100,
-    "flipV": false,
-    "angle": 90,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -100,
-    "pY": 700,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": -700,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 100,
-    "pY": 700,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": 600,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 100,
-    "pY": -1000,
-    "flipV": false,
-    "angle": 180,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 200,
-    "pY": 700,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": -1200,
-    "flipV": false,
-    "angle": 90,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": -500,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 200,
-    "name": "Spike",
-    "pY": -200,
-    "angle": 270,
-    "pWidth": 100,
-    "type": "Spike"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": -100,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_puzzle02_0.png",
     "pX": -300,
     "pY": 400,
     "flipV": false,
@@ -431,18 +186,20 @@
   },
   {
     "pHeight": 100,
-    "pX": -200,
-    "name": "Spike",
-    "pY": -400,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 200,
+    "pY": -300,
+    "flipV": false,
     "angle": 90,
+    "flipH": false,
     "pWidth": 100,
-    "type": "Spike"
+    "type": "tile"
   },
   {
     "pHeight": 100,
     "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": -400,
+    "pX": -200,
+    "pY": 400,
     "flipV": false,
     "angle": 0,
     "flipH": false,
@@ -451,58 +208,9 @@
   },
   {
     "pHeight": 100,
-    "pX": 200,
-    "name": "Spike",
-    "pY": -300,
-    "angle": 270,
-    "pWidth": 100,
-    "type": "Spike"
-  },
-  {
-    "pHeight": 100,
-    "pX": 200,
-    "name": "Spike",
-    "pY": 600,
-    "angle": 270,
-    "pWidth": 100,
-    "type": "Spike"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -400,
-    "pY": -600,
-    "flipV": false,
-    "angle": 180,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -400,
-    "pY": -800,
-    "flipV": false,
-    "angle": 180,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": -100,
-    "name": "Spike",
+    "file": "unplayed_tiles/tile_puzzle02_0.png",
+    "pX": 300,
     "pY": -100,
-    "angle": 90,
-    "pWidth": 100,
-    "type": "Spike"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": -1100,
     "flipV": false,
     "angle": 90,
     "flipH": false,
@@ -511,95 +219,18 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": -800,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -400,
-    "pY": -700,
-    "flipV": false,
-    "angle": 180,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": -300,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 200,
+    "pX": -300,
     "name": "Spike",
-    "pY": -900,
-    "angle": 270,
+    "pY": 100,
+    "angle": 90,
     "pWidth": 100,
     "type": "Spike"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": 0,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": -200,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": -600,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": -900,
-    "flipV": false,
-    "angle": 90,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
   },
   {
     "pHeight": 100,
     "file": "unplayed_tiles/tile_castle00_2.png",
     "pX": -200,
-    "pY": -200,
+    "pY": -300,
     "flipV": false,
     "angle": 90,
     "flipH": false,
@@ -608,22 +239,44 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -100,
-    "pY": -1200,
-    "flipV": false,
-    "angle": 90,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
+    "file": "unplayed_tiles/tile_puzzle04_1.png",
+    "pX": -400,
     "pY": 200,
     "flipV": false,
-    "angle": 0,
+    "angle": 90,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": -200,
+    "pY": -400,
+    "flipV": false,
+    "angle": 90,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_puzzle02_0.png",
+    "pX": 100,
+    "pY": -300,
+    "flipV": false,
+    "angle": 270,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_puzzle04_1.png",
+    "pX": -400,
+    "pY": 100,
+    "flipV": false,
+    "angle": 90,
     "flipH": false,
     "pWidth": 100,
     "type": "tile"
@@ -632,7 +285,7 @@
     "pHeight": 100,
     "file": "unplayed_tiles/tile_castle00_2.png",
     "pX": 100,
-    "pY": -1200,
+    "pY": -600,
     "flipV": false,
     "angle": 90,
     "flipH": false,
@@ -641,26 +294,8 @@
   },
   {
     "pHeight": 100,
-    "pX": 200,
-    "name": "Spike",
-    "pY": 400,
-    "angle": 270,
-    "pWidth": 100,
-    "type": "Spike"
-  },
-  {
-    "pHeight": 100,
-    "pX": 200,
-    "name": "Spike",
-    "pY": -500,
-    "angle": 270,
-    "pWidth": 100,
-    "type": "Spike"
-  },
-  {
-    "pHeight": 100,
     "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
+    "pX": 0,
     "pY": 100,
     "flipV": false,
     "angle": 0,
@@ -670,147 +305,32 @@
   },
   {
     "pHeight": 100,
-    "pX": 200,
-    "name": "Spike",
+    "file": "unplayed_tiles/tile_castle01-3_0.png",
+    "pX": -200,
+    "pY": -200,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_puzzle02_0.png",
+    "pX": -400,
     "pY": 0,
+    "flipV": false,
     "angle": 270,
+    "flipH": false,
     "pWidth": 100,
-    "type": "Spike"
+    "type": "tile"
   },
   {
     "pHeight": 100,
-    "pX": 200,
+    "pX": 100,
     "name": "Spike",
-    "pY": 300,
-    "angle": 270,
-    "pWidth": 100,
-    "type": "Spike"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -200,
-    "pY": -1200,
-    "flipV": false,
+    "pY": 100,
     "angle": 90,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": 300,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": 700,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 200,
-    "name": "Spike",
-    "pY": -800,
-    "angle": 270,
-    "pWidth": 100,
-    "type": "Spike"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": 300,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 200,
-    "pY": -1000,
-    "flipV": false,
-    "angle": 180,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -200,
-    "pY": -300,
-    "flipV": false,
-    "angle": 90,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": 600,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": 700,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": -1000,
-    "flipV": false,
-    "angle": 90,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 300,
-    "pY": -500,
-    "flipV": false,
-    "angle": 0,
-    "flipH": false,
-    "pWidth": 100,
-    "type": "tile"
-  },
-  {
-    "pHeight": 100,
-    "pX": 200,
-    "name": "Spike",
-    "pY": -600,
-    "angle": 270,
     "pWidth": 100,
     "type": "Spike"
   },
@@ -827,18 +347,9 @@
   },
   {
     "pHeight": 100,
-    "pX": 200,
-    "name": "Spike",
-    "pY": -100,
-    "angle": 270,
-    "pWidth": 100,
-    "type": "Spike"
-  },
-  {
-    "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": -300,
-    "pY": -800,
+    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "pX": -400,
+    "pY": 400,
     "flipV": false,
     "angle": 0,
     "flipH": false,
@@ -847,11 +358,22 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
-    "pX": 200,
-    "pY": -1200,
+    "file": "unplayed_tiles/tile_puzzle04_1.png",
+    "pX": -400,
+    "pY": 300,
     "flipV": false,
     "angle": 90,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 100,
+    "pY": 400,
+    "flipV": false,
+    "angle": 0,
     "flipH": false,
     "pWidth": 100,
     "type": "tile"
@@ -860,7 +382,27 @@
     "pHeight": 100,
     "file": "unplayed_tiles/tile_castle00_2.png",
     "pX": 0,
-    "pY": -1000,
+    "pY": 400,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "pX": -100,
+    "name": "Spike",
+    "pY": -400,
+    "angle": 90,
+    "pWidth": 100,
+    "type": "Spike"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "pX": 300,
+    "pY": -200,
     "flipV": false,
     "angle": 180,
     "flipH": false,
@@ -869,18 +411,122 @@
   },
   {
     "pHeight": 100,
-    "pX": 200,
+    "pX": -300,
     "name": "Spike",
     "pY": 200,
-    "angle": 270,
+    "angle": 90,
     "pWidth": 100,
     "type": "Spike"
   },
   {
     "pHeight": 100,
     "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 300,
+    "pY": 300,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": -200,
+    "pY": -600,
+    "flipV": false,
+    "angle": 90,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 200,
+    "pY": -500,
+    "flipV": false,
+    "angle": 90,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "pX": -100,
+    "name": "Spike",
+    "pY": -300,
+    "angle": 90,
+    "pWidth": 100,
+    "type": "Spike"
+  },
+  {
+    "pHeight": 100,
+    "pX": -300,
+    "name": "Spike",
+    "pY": 0,
+    "angle": 90,
+    "pWidth": 100,
+    "type": "Spike"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": -100,
+    "pY": 400,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": 200,
+    "pY": 400,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
     "pX": 0,
-    "pY": 600,
+    "pY": -600,
+    "flipV": false,
+    "angle": 90,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "pX": -100,
+    "name": "Spike",
+    "pY": 200,
+    "angle": 180,
+    "pWidth": 100,
+    "type": "Spike"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle01-7_0.png",
+    "pX": -100,
+    "pY": 100,
+    "flipV": false,
+    "angle": 0,
+    "flipH": false,
+    "pWidth": 100,
+    "type": "tile"
+  },
+  {
+    "pHeight": 100,
+    "file": "unplayed_tiles/tile_castle00_2.png",
+    "pX": -200,
+    "pY": 300,
     "flipV": false,
     "angle": 90,
     "flipH": false,
@@ -889,16 +535,28 @@
   },
   {
     "name": "PlayerStart",
-    "pX": 0,
-    "pY": 600,
+    "pX": -200,
+    "pY": 300,
     "type": "PlayerStart"
   },
   {
-    "pHeight": 1800,
+    "pHeight": 700,
     "pages": [{
-      "centerY": 114,
+      "centerY": -94,
       "size": 1,
-      "centerX": 58,
+      "centerX": -11,
+      "children": [
+        {
+          "centerY": -827,
+          "centerX": -249,
+          "type": "page"
+        },
+        {
+          "centerY": 687,
+          "centerX": 130,
+          "type": "page"
+        }
+      ],
       "removedTiles": [
         [
           false,
@@ -907,27 +565,11 @@
           false,
           false,
           false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
           false,
           false
         ],
         [
           false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
           false,
           false,
           false,
@@ -943,23 +585,16 @@
           false,
           false,
           false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
           false,
           false
         ],
         [
           false,
           false,
-          false,
-          false,
-          false,
+          true,
+          true,
+          true,
+          true,
           false,
           false
         ],
@@ -967,16 +602,8 @@
           false,
           false,
           false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
+          true,
+          true,
           false,
           false,
           false
@@ -988,72 +615,11 @@
           false,
           false,
           false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
           false,
           false
         ],
         [
           false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
           false,
           false,
           false,
@@ -1063,7 +629,7 @@
           false
         ]
       ],
-      "angle": 358.9539489746094,
+      "angle": 0.3874472975730896,
       "flipV": false,
       "removedPlayer": [
         [
@@ -1073,27 +639,11 @@
           false,
           false,
           false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
           false,
           false
         ],
         [
           false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
           false,
           false,
           false,
@@ -1109,27 +659,11 @@
           false,
           false,
           false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
           false,
           false
         ],
         [
           false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
           false,
           false,
           false,
@@ -1145,14 +679,6 @@
           false,
           false,
           false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
           false,
           false
         ],
@@ -1163,63 +689,11 @@
           false,
           false,
           false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
           false,
           false
         ],
         [
           false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
           false,
           false,
           false,
@@ -1238,27 +712,11 @@
           false,
           false,
           false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
           false,
           false
         ],
         [
           false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
           false,
           false,
           false,
@@ -1274,27 +732,11 @@
           false,
           false,
           false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
           false,
           false
         ],
         [
           false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
           false,
           false,
           false,
@@ -1310,14 +752,6 @@
           false,
           false,
           false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
           false,
           false
         ],
@@ -1328,63 +762,11 @@
           false,
           false,
           false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
           false,
           false
         ],
         [
           false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        [
           false,
           false,
           false,
@@ -1395,10 +777,242 @@
         ]
       ]
     }],
-    "color": -8402359,
-    "pX": -300,
-    "pY": -1000,
+    "color": -7403190,
+    "pX": -400,
+    "pY": -200,
     "type": "view",
-    "pWidth": 700
+    "pWidth": 800
+  },
+  {
+    "pHeight": 300,
+    "pages": [{
+      "centerY": -827,
+      "size": 1,
+      "centerX": -249,
+      "children": [
+        {
+          "centerY": -94,
+          "centerX": -11,
+          "type": "page"
+        },
+        {
+          "centerY": 687,
+          "centerX": 130,
+          "type": "page"
+        }
+      ],
+      "removedTiles": [
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ],
+      "angle": 354.75006103515625,
+      "flipV": false,
+      "removedPlayer": [
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ],
+      "flipH": false,
+      "removedImages": [
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ]
+    }],
+    "color": -15800790,
+    "pX": -200,
+    "pY": 0,
+    "type": "view",
+    "pWidth": 400
+  },
+  {
+    "pHeight": 500,
+    "pages": [{
+      "centerY": 687,
+      "size": 1,
+      "centerX": 130,
+      "children": [
+        {
+          "centerY": -94,
+          "centerX": -11,
+          "type": "page"
+        },
+        {
+          "centerY": -827,
+          "centerX": -249,
+          "type": "page"
+        }
+      ],
+      "removedTiles": [
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ],
+      "angle": 95.67407989501953,
+      "flipV": false,
+      "removedPlayer": [
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ],
+      "flipH": false,
+      "removedImages": [
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ]
+    }],
+    "color": -4781753,
+    "pX": -200,
+    "pY": -600,
+    "type": "view",
+    "pWidth": 400
+  }
+]  {
+    "centerY": -771,
+    "file": "unplayed_backgrounds/1_00_iKnowBest_4x4_0_0.png",
+    "size": 1.2501722574234009,
+    "centerX": 313,
+    "angle": 2.2206997871398926,
+    "flipV": false,
+    "flipH": false,
+    "type": "background"
+  },
+  {
+    "centerY": 621,
+    "file": "unplayed_backgrounds/1_02_dreaming_4x4_0_0.png",
+    "size": 1.0610462427139282,
+    "centerX": -378,
+    "angle": 17.27099609375,
+    "flipV": false,
+    "flipH": false,
+    "type": "background"
   }
 ]
