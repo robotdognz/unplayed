@@ -66,7 +66,12 @@ public class InGameUI {
         // calculate control height based on screen aspect ratio
         // this ensures that the ui will be placed in the same positions across different phones
         float idealRatio = 9f / 16f; // the aspect ratio the game is built for
-        float idealUIHeight = screenWidth / idealRatio; // gives the height (in pixels) the game UI should work at, relative to the actual width
+
+        // gives the height (in pixels) the game UI should work at, relative to the actual width
+        // it's set up this way so that there is extra padding under the controls on tall screens
+        // the Math.min so so that idealUIHeight isn't bigger than the screen height on wide screens
+        float idealUIHeight = Math.min(screenHeight, screenWidth / idealRatio);
+
         float buttonVerticalOffset = (screenHeight - idealUIHeight) / 2f;
         this.controlsInGameHeight = screenHeight - buttonVerticalOffset;
         this.controlsYPosition = this.controlsInGameHeight;
@@ -79,8 +84,6 @@ public class InGameUI {
         this.menuYPosition = this.menuInGameHeight;
         this.menuXPosition = screenWidth / 2f;
 
-
-//        this.fade = new CountdownTimer(0.5f);
         float tintFadeTime = 0.2f;
         this.leftTint = new CountdownTimer(tintFadeTime);
         this.jumpTint = new CountdownTimer(tintFadeTime);
@@ -91,7 +94,7 @@ public class InGameUI {
         // calculate dimensions for sub section of the screen to draw the level in
         this.levelAreaHeight = (controlsInGameHeight - controlButtonArea) - (menuInGameHeight + menuButtonArea);
         this.levelHeightByWidthRatio = levelAreaHeight / screenWidth;
-        this.levelYOffset = ((menuInGameHeight + menuButtonArea) - ((screenHeight - controlsInGameHeight) + controlButtonArea)) / 2;
+        this.levelYOffset = ((menuInGameHeight + menuButtonArea) - (screenHeight - controlsInGameHeight + controlButtonArea)) / 2.0f;
         this.screenHeightByWidthRatio = screenHeight / (float) screenWidth;
 
         fading = false;

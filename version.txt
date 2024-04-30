@@ -1,5 +1,7 @@
 (Major version).(Minor version).(Revision number)
 
+1.4.0: Fix for camera alignment issues on wide phones and tablets
+
 1.3.9: Soft launch campaign
 - Added soft launch ready campaign
 

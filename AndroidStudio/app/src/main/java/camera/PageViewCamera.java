@@ -227,7 +227,10 @@ public class PageViewCamera {
 
     public void initCamera(float minX, float minY, float maxX, float maxY) {
         // update page area boundary
-        focusArea.setCorners(minX, minY, maxX, maxY);
+        // TODO: this is where the title screen issue starts (fixed, see below)
+        focusArea.setCorners(minX - 0.5f, minY, maxX, maxY);
+        // the - 0.5f is a janky fix for the title screen not positioning at startup on wide screens
+        // I have no idea why that fixes it...
 
         // set camera area
         float topLeftX = focusArea.getTopLeft().x - areaPadding;
@@ -244,6 +247,10 @@ public class PageViewCamera {
         // set scale
         scale = newCameraArea.getWidth();
         newScale = scale;
+
+//        screenArea = calculateScreenArea(cameraArea, true);
+
+//        center.x -= 20;
     }
 
     private static void updateNewCamera() {
@@ -299,7 +306,6 @@ public class PageViewCamera {
                 offset = AppLogic.drawUI.getLevelYOffset() / ((float) p.width / cameraScale) / cameraSubScale;
             }
 
-//            float height = width * AppLogic.drawUI.getLevelHeightByWidthRatio(); // what will be in the inside UI bounds
             float height = width * AppLogic.drawUI.getScreenHeightByWidthRatio(); // what will be in the full screen
             float heightDiff = (height - area.getHeight()) * 0.5f;
 
