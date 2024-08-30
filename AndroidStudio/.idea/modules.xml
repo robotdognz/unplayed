@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidStudio.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidStudio.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidStudio.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidStudio.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidStudio.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidStudio.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidStudio.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidStudio.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidStudio.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidStudio.app.unitTest.iml" />
     </modules>
