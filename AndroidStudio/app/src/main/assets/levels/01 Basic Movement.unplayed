@@ -12,7 +12,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "file": "unplayed_tiles/tile_0puzzle02_0.png",
     "pX": 7900,
     "pY": -700,
     "flipV": false,
@@ -34,7 +34,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6700,
     "pY": -1300,
     "flipV": false,
@@ -45,7 +45,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7300,
     "pY": -1300,
     "flipV": false,
@@ -56,7 +56,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8400,
     "pY": -1000,
     "flipV": false,
@@ -67,7 +67,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6700,
     "pY": -900,
     "flipV": false,
@@ -78,7 +78,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle04_1.png",
+    "file": "unplayed_tiles/tile_0puzzle01_1.png",
     "pX": 6200,
     "pY": -1300,
     "flipV": false,
@@ -89,7 +89,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle04_1.png",
+    "file": "unplayed_tiles/tile_0puzzle01_1.png",
     "pX": 8500,
     "pY": -1300,
     "flipV": false,
@@ -100,7 +100,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8200,
     "pY": -1300,
     "flipV": false,
@@ -111,7 +111,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 5600,
     "pY": -700,
     "flipV": false,
@@ -122,7 +122,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8300,
     "pY": -700,
     "flipV": false,
@@ -144,7 +144,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "file": "unplayed_tiles/tile_0puzzle02_0.png",
     "pX": 5600,
     "pY": -1000,
     "flipV": false,
@@ -155,7 +155,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7400,
     "pY": -1100,
     "flipV": false,
@@ -166,7 +166,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6300,
     "pY": -800,
     "flipV": false,
@@ -177,7 +177,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle04_1.png",
+    "file": "unplayed_tiles/tile_0puzzle01_1.png",
     "pX": 7100,
     "pY": -1300,
     "flipV": false,
@@ -188,7 +188,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6700,
     "pY": -800,
     "flipV": false,
@@ -234,7 +234,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle04_1.png",
+    "file": "unplayed_tiles/tile_0puzzle01_1.png",
     "pX": 7800,
     "pY": -700,
     "flipV": false,
@@ -245,7 +245,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7400,
     "pY": -1200,
     "flipV": false,
@@ -267,7 +267,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 5900,
     "pY": -700,
     "flipV": false,
@@ -278,7 +278,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 5800,
     "pY": -1300,
     "flipV": false,
@@ -289,7 +289,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6800,
     "pY": -1300,
     "flipV": false,
@@ -322,7 +322,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6200,
     "pY": -700,
     "flipV": false,
@@ -333,7 +333,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7400,
     "pY": -1300,
     "flipV": false,
@@ -399,7 +399,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 5800,
     "pY": -700,
     "flipV": false,
@@ -410,7 +410,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8000,
     "pY": -800,
     "flipV": false,
@@ -421,7 +421,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 5900,
     "pY": -1300,
     "flipV": false,
@@ -432,7 +432,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6700,
     "pY": -1000,
     "flipV": false,
@@ -476,7 +476,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6000,
     "pY": -1300,
     "flipV": false,
@@ -487,7 +487,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6300,
     "pY": -700,
     "flipV": false,
@@ -509,7 +509,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8400,
     "pY": -700,
     "flipV": false,
@@ -520,7 +520,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6900,
     "pY": -1300,
     "flipV": false,
@@ -553,7 +553,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7900,
     "pY": -1300,
     "flipV": false,
@@ -564,7 +564,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8600,
     "pY": -1100,
     "flipV": false,
@@ -586,7 +586,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8200,
     "pY": -700,
     "flipV": false,
@@ -597,7 +597,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_images/sprt_007_1x1.png",
+    "file": "unplayed_images/sprt_005_1x1.png",
     "pX": 7200,
     "pY": -1000,
     "flipV": false,
@@ -608,7 +608,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7800,
     "pY": -1200,
     "flipV": false,
@@ -630,7 +630,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7400,
     "pY": -1000,
     "flipV": false,
@@ -641,7 +641,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "file": "unplayed_tiles/tile_0puzzle02_0.png",
     "pX": 7400,
     "pY": -800,
     "flipV": false,
@@ -652,7 +652,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8000,
     "pY": -1300,
     "flipV": false,
@@ -663,7 +663,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6100,
     "pY": -600,
     "flipV": false,
@@ -674,7 +674,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7800,
     "pY": -1000,
     "flipV": false,
@@ -685,7 +685,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8500,
     "pY": -1000,
     "flipV": false,
@@ -707,7 +707,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "file": "unplayed_tiles/tile_0puzzle02_0.png",
     "pX": 8500,
     "pY": -1200,
     "flipV": false,
@@ -740,7 +740,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle04_1.png",
+    "file": "unplayed_tiles/tile_0puzzle01_1.png",
     "pX": 8100,
     "pY": -1300,
     "flipV": false,
@@ -751,7 +751,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7400,
     "pY": -700,
     "flipV": false,
@@ -762,7 +762,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8500,
     "pY": -700,
     "flipV": false,
@@ -784,7 +784,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_images/sprt_006_1x1.png",
+    "file": "unplayed_images/sprt_004_1x1.png",
     "pX": 8100,
     "pY": -1200,
     "flipV": true,
@@ -806,7 +806,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "file": "unplayed_tiles/tile_0puzzle02_0.png",
     "pX": 5600,
     "pY": -1100,
     "flipV": false,
@@ -817,7 +817,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6000,
     "pY": -700,
     "flipV": false,
@@ -828,7 +828,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8500,
     "pY": -900,
     "flipV": false,
@@ -839,7 +839,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6100,
     "pY": -700,
     "flipV": false,
@@ -863,7 +863,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "file": "unplayed_tiles/tile_0puzzle02_0.png",
     "pX": 6100,
     "pY": -1300,
     "flipV": false,
@@ -885,7 +885,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7800,
     "pY": -1300,
     "flipV": false,
@@ -940,7 +940,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8200,
     "pY": -800,
     "flipV": false,
@@ -962,7 +962,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "file": "unplayed_tiles/tile_0puzzle02_0.png",
     "pX": 6300,
     "pY": -1300,
     "flipV": false,
@@ -973,7 +973,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle04_1.png",
+    "file": "unplayed_tiles/tile_0puzzle01_1.png",
     "pX": 6700,
     "pY": -700,
     "flipV": false,
@@ -984,7 +984,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7200,
     "pY": -800,
     "flipV": false,
@@ -1006,7 +1006,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7300,
     "pY": -700,
     "flipV": false,
@@ -1028,7 +1028,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "file": "unplayed_tiles/tile_0puzzle02_0.png",
     "pX": 6900,
     "pY": -700,
     "flipV": false,
@@ -1039,7 +1039,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6300,
     "pY": -900,
     "flipV": false,
@@ -1050,7 +1050,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8300,
     "pY": -1300,
     "flipV": false,
@@ -1061,7 +1061,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8500,
     "pY": -1100,
     "flipV": false,
@@ -1096,7 +1096,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8500,
     "pY": -800,
     "flipV": false,
@@ -1118,7 +1118,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6600,
     "pY": -800,
     "flipV": false,
@@ -1129,7 +1129,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "file": "unplayed_tiles/tile_0puzzle02_0.png",
     "pX": 6300,
     "pY": -1200,
     "flipV": false,
@@ -1140,7 +1140,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "file": "unplayed_tiles/tile_0puzzle02_0.png",
     "pX": 7000,
     "pY": -1300,
     "flipV": false,
@@ -1151,7 +1151,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 5700,
     "pY": -1300,
     "flipV": false,
@@ -1195,7 +1195,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "file": "unplayed_tiles/tile_0puzzle02_0.png",
     "pX": 7200,
     "pY": -1300,
     "flipV": false,
@@ -1228,7 +1228,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7800,
     "pY": -1100,
     "flipV": false,
@@ -1239,7 +1239,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 5700,
     "pY": -700,
     "flipV": false,
@@ -1261,7 +1261,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8400,
     "pY": -1300,
     "flipV": false,
@@ -1283,7 +1283,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle04_1.png",
+    "file": "unplayed_tiles/tile_0puzzle01_1.png",
     "pX": 6800,
     "pY": -700,
     "flipV": false,
@@ -1294,7 +1294,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_puzzle00_0.png",
+    "file": "unplayed_tiles/tile_0puzzle02_0.png",
     "pX": 7400,
     "pY": -900,
     "flipV": false,
@@ -1305,7 +1305,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 5800,
     "pY": -800,
     "flipV": false,
@@ -2029,7 +2029,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7500,
     "pY": -1400,
     "flipV": false,
@@ -2040,7 +2040,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8500,
     "pY": -1100,
     "flipV": false,
@@ -2064,7 +2064,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6300,
     "pY": -700,
     "flipV": false,
@@ -2075,7 +2075,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 5500,
     "pY": -1300,
     "flipV": false,
@@ -2097,7 +2097,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8600,
     "pY": -700,
     "flipV": false,
@@ -2108,7 +2108,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 7400,
     "pY": -900,
     "flipV": false,
@@ -2119,7 +2119,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8600,
     "pY": -800,
     "flipV": false,
@@ -2130,7 +2130,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8100,
     "pY": -1300,
     "flipV": false,
@@ -2141,7 +2141,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6600,
     "pY": -1400,
     "flipV": false,
@@ -2152,7 +2152,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6700,
     "pY": -700,
     "flipV": false,
@@ -2163,7 +2163,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8500,
     "pY": -600,
     "flipV": false,
@@ -2174,7 +2174,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 5700,
     "pY": -600,
     "flipV": false,
@@ -2196,7 +2196,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 6400,
     "pY": -1400,
     "flipV": false,
@@ -2207,7 +2207,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 8500,
     "pY": -1000,
     "flipV": false,
@@ -2218,7 +2218,7 @@
   },
   {
     "pHeight": 100,
-    "file": "unplayed_tiles/tile_castle00_2.png",
+    "file": "unplayed_tiles/tile_0puzzle00_2.png",
     "pX": 5800,
     "pY": -800,
     "flipV": false,
