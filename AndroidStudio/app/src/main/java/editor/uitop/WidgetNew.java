@@ -4,6 +4,7 @@ import editor.Editor;
 import editor.Toolbar;
 import editor.uibottom.EditorBottom;
 import game.AppLogic;
+import handlers.LoadingHandler;
 import processing.core.PApplet;
 import ui.Widget;
 
@@ -30,6 +31,7 @@ public class WidgetNew extends Widget {
 		AppLogic.game.world.clear();
 		AppLogic.game.views.clear();
 		AppLogic.game.getPageView().clearPageViewObjects();
+		AppLogic.game.currentLoading = null;
 		// clear box2d
 		AppLogic.game.buildWorld();
 		// clear selected
