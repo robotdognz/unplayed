@@ -80,19 +80,41 @@ public class Button extends MenuObject {
 	public void draw(PApplet p, float y) {
 		// can use textWidth() to figure out how wide text is and center it
 		yCenter = y;
-		if (!hover) {
-			p.fill(200);
+
+		if (handler == null) { // no sprite
+			p.stroke(100); // 200
+			p.noFill();
+			p.strokeWeight(5);
+			p.rectMode(CENTER);
+			p.rect(xCenter, yCenter, width, height);
+			p.rectMode(CORNER);
+			p.fill(50); // 50
+			int textSize = p.width / 24;
+			p.textSize(textSize);
+			p.textAlign(CENTER, CENTER);
+			p.text(text, xCenter, yCenter);
+			if (hover) {
+				p.blendMode(MULTIPLY); // render it multiplied
+				p.pushMatrix();
+				p.translate(xCenter, yCenter);
+				p.imageMode(CENTER);
+				highlight.draw(p.g, 0, 0, getWidth(), getHeight(), 8); // draw the button highlight
+				p.popMatrix();
+				p.blendMode(BLEND); // back to normal rendering
+			}
+
 		} else {
-			p.fill(100);
+			p.blendMode(MULTIPLY); // render it multiplied
+			p.pushMatrix();
+			p.translate(xCenter, yCenter);
+			p.imageMode(CENTER);
+			handler.draw(p.g, 0, 0, getWidth(), getHeight(), 8); // draw the button
+			if (hover) {
+				highlight.draw(p.g, 0, 0, getWidth(), getHeight(), 8); // draw the button highlight
+			}
+			p.popMatrix();
+			p.blendMode(BLEND); // back to normal rendering
 		}
-		p.rectMode(CENTER);
-		p.rect(xCenter, yCenter, width, height);
-		p.rectMode(CORNER);
-		p.fill(50);
-		int textSize = p.width / 24; // 60;
-		p.textSize(textSize);
-		p.textAlign(CENTER, CENTER);
-		p.text(text, xCenter, yCenter);
 	}
 
 	public String click() {

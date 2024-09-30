@@ -3,6 +3,7 @@ package ui;
 import camera.FreeCamera;
 import game.Game;
 import game.AppLogic;
+import handlers.ButtonHandler;
 import processing.core.PApplet;
 
 public class EditorMenu extends Menu {
@@ -16,15 +17,24 @@ public class EditorMenu extends Menu {
         super(p);
         this.game = AppLogic.game;
 
-        Button resumeB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, resume);
+        // resume
+        ButtonHandler resumeHandler = AppLogic.texture.getButtonList().get(5);
+        Button resumeB = new Button(resumeHandler, p.width * 0.5f, resume);
         objects.add(resumeB);
+
         if (!AppLogic.editorToggle) {
-            Button restartB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, restart);
+            // restart
+            ButtonHandler restartHandler = AppLogic.texture.getButtonList().get(10);
+            Button restartB = new Button(restartHandler, p.width * 0.5f, restart);
             objects.add(restartB);
-            Button editorB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, editor);
+            // edit level
+            ButtonHandler editHandler = AppLogic.texture.getButtonList().get(11);
+            Button editorB = new Button(editHandler, p.width * 0.5f, editor);
             objects.add(editorB);
         } else {
-            Button mainMenuB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, mainMenu);
+            // quit editor
+            ButtonHandler quitHandler = AppLogic.texture.getButtonList().get(4);
+            Button mainMenuB = new Button(quitHandler, p.width * 0.5f, mainMenu);
             objects.add(mainMenuB);
         }
         constructMenu();
