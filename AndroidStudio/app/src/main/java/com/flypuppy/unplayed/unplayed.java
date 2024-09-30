@@ -57,6 +57,7 @@ public class unplayed extends PApplet {
             splashScreen = loadImage("SplashScreen.png");
             imageMode(CENTER);
             int size = (int) (width * 0.8f);
+            background(0, 78, 83);
             image(splashScreen, width * 0.5f, height * 0.5f, size, size);
             imageMode(CORNER);
             splash = 2;

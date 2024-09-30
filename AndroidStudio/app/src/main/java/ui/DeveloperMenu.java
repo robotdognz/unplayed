@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import game.AppLogic;
 import game.Game;
+import handlers.ButtonHandler;
 import processing.core.PApplet;
 
 public class DeveloperMenu extends Menu {
@@ -20,12 +21,21 @@ public class DeveloperMenu extends Menu {
         super(p);
         this.game = AppLogic.game;
 
-        Button editorB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, editor);
-        Button folderB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, folder);
-        Button backB = new Button(p.width * 0.5f, buttonWidth, buttonHeight, back);
+        // start editor
+        ButtonHandler startEditorHandler = AppLogic.texture.getButtonList().get(7);
+        Button editorB = new Button(startEditorHandler, p.width * 0.5f, editor);
         objects.add(editorB);
+
+        // load level(s)
+        ButtonHandler loadLevelsHandler = AppLogic.texture.getButtonList().get(8);
+        Button folderB = new Button(loadLevelsHandler, p.width * 0.5f, folder);
         objects.add(folderB);
+
+        // back
+        ButtonHandler backHandler = AppLogic.texture.getButtonList().get(9);
+        Button backB = new Button(backHandler, p.width * 0.5f, back);
         objects.add(backB);
+
         constructMenu();
     }
 
