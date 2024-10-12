@@ -343,7 +343,7 @@ public class AppLogic {
 
     static public void titleScreen() {
         // load in the title splash screen
-        File testFile = new File("TitleScreen3.png");
+        File testFile = new File("TitleScreen.png");
         LoadingHandler loading = new LoadingHandler(p, texture, testFile, 7, 5, true, false);
 
         // create the loading screen
